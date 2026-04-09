@@ -16,6 +16,7 @@
       "@type": "Person",
       "givenName": "R. E.",
       "familyName": "Gomez",
+      "@id": "https://orcid.org/0000-0002-4468-9618",
       "email": "lsgomez001@gmail.com",
       "affiliation": {
         "@type": "Organization",

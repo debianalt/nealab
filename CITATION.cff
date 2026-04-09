@@ -7,7 +7,7 @@ authors:
     family-names: Gomez
     email: lsgomez001@gmail.com
     affiliation: "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)"
-    orcid: ""
+    orcid: "https://orcid.org/0000-0002-4468-9618"
 repository-code: "https://github.com/debianalt/spatia"
 url: "https://www.spatia.ar"
 license: GPL-3.0
