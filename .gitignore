@@ -1,0 +1,21 @@
+node_modules
+build
+.svelte-kit
+.env
+.env.*
+.DS_Store
+
+# Wrangler local state
+.wrangler/
+
+# Python
+__pycache__/
+*.pyc
+
+# Pipeline outputs (large rasters & generated data)
+pipeline/output/
+
+# DB seeds (auto-generated)
+db/seed.sql
+db/seed_eudr.sql
+db/parquets/
