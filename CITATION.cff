@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: "Spatia: A Zero-Cost Platform for Subnational Territorial Intelligence"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - given-names: R. E.
+    family-names: Gomez
+    email: lsgomez001@gmail.com
+    affiliation: "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)"
+    orcid: ""
+repository-code: "https://github.com/debianalt/spatia"
+url: "https://www.spatia.ar"
+license: GPL-3.0
+version: 1.0.0
+date-released: "2026-04-09"
+doi: "10.5281/zenodo.19483041"
+keywords:
+  - territorial intelligence
+  - H3 hexagonal grid
+  - Google Earth Engine
+  - PCA scoring
+  - DuckDB-WASM
+  - remote sensing
+  - subnational analysis
+  - zero-cost infrastructure
+  - Misiones
+  - Argentina
+abstract: >-
+  Spatia is a zero-cost, reproducible platform for subnational territorial
+  analysis. It combines satellite imagery (Sentinel-1/2, MODIS, Landsat),
+  census data, and open geospatial datasets into PCA-validated composite
+  indicators on a hexagonal grid (H3 resolution 9). The pipeline runs on
+  Google Earth Engine, processes rasters into H3 zonal statistics, computes
+  scores using geometric means validated by KMO/Bartlett/PCA diagnostics
+  (OECD Handbook / UNDP HDI methodology), and serves results via DuckDB-WASM
+  on Cloudflare Pages at zero operational cost. Applied to Misiones province
+  (Argentina) with 320,000 hexagons and 27 analyses across four thematic
+  lenses: investment, production, services, and housing.

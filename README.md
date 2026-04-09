@@ -4,6 +4,8 @@ Spatia is a zero-cost, reproducible platform for subnational territorial analysi
 
 **Live instance**: [spatia.ar](https://www.spatia.ar) (Misiones province, Argentina — 320,000 hexagons, 27 analyses)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19483041.svg)](https://doi.org/10.5281/zenodo.19483041)
+
 ## Architecture
 
 ```
@@ -68,6 +70,10 @@ All composite scores follow the same validated pipeline:
 
 The `--diagnostics` flag on `compute_satellite_scores.py` outputs full PCA results as JSON for each analysis.
 
+## Quick Start
+
+See [docs/QUICKSTART.md](docs/QUICKSTART.md) for a step-by-step guide with example data instructions.
+
 ## Setup
 
 ### Pipeline (Python)
@@ -93,6 +99,8 @@ npm run build     # static build
 
 ### Environment Variables
 
+See [.env.example](.env.example) for a full template.
+
 | Variable | Purpose |
 |----------|---------|
 | `GEE_SERVICE_ACCOUNT_KEY` | GEE service account JSON (for CI) |
@@ -105,12 +113,13 @@ npm run build     # static build
 If you use Spatia in your research, please cite:
 
 ```bibtex
-@article{gomez2026spatia,
+@software{gomez2026spatia,
   title={Spatia: A Zero-Cost Platform for Subnational Territorial Intelligence},
   author={Gomez, R.E.},
-  journal={SoftwareX},
   year={2026},
-  note={Manuscript in preparation}
+  doi={10.5281/zenodo.19483041},
+  url={https://github.com/debianalt/spatia},
+  license={GPL-3.0}
 }
 ```
 
