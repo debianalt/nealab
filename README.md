@@ -118,11 +118,11 @@ If you use Spatia in your research, please cite:
   author={Gomez, R.E.},
   year={2026},
   doi={10.5281/zenodo.19483041},
-  url={https://github.com/debianalt/spatia},
-  license={GPL-3.0}
+  url={https://github.com/debianalt/nealab},
+  license={AGPL-3.0}
 }
 ```
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 — see [LICENSE](LICENSE).
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)** — see [LICENSE](LICENSE). The AGPL additionally requires that any modified version made available over a network must also be released in source form, ensuring that Spatia remains a commons even when offered as a web service.

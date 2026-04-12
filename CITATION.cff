@@ -8,10 +8,10 @@ authors:
     email: lsgomez001@gmail.com
     affiliation: "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)"
     orcid: "https://orcid.org/0000-0002-4468-9618"
-repository-code: "https://github.com/debianalt/spatia"
+repository-code: "https://github.com/debianalt/nealab"
 url: "https://www.spatia.ar"
-license: GPL-3.0
-version: 1.0.0
+license: AGPL-3.0
+version: 1.1.0
 date-released: "2026-04-09"
 doi: "10.5281/zenodo.19483041"
 keywords:
