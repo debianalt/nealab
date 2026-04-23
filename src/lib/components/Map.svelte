@@ -31,7 +31,6 @@
 			bearing: MAP_INIT.bearing,
 			minZoom: MAP_INIT.minZoom,
 			maxZoom: MAP_INIT.maxZoom,
-			antialias: true,
 			attributionControl: false
 		});
 
@@ -335,9 +334,9 @@
 			const radioHog = parseInt(p.radio_hogares) || 0;
 			const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-			let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2<br>` +
-				`<b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
+			let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2`;
 			if (redcode) {
+				html += `<br><b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
 				html += `<br><span style="color:#a3a3a3">\u2500\u2500\u2500</span><br>` +
 					`<b style="color:#d4d4d4">${i18n.t('tip.radio')}</b> <span style="color:#d4d4d4">${redcode}</span><br>` +
 					`<b style="color:#d4d4d4">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('tip.density')}</b> ${radioDens} hab/km\u00B2<br>` +
@@ -495,6 +494,13 @@
 			pitch: 50,
 			duration: 1500
 		});
+	}
+
+	export function fitBoundsDept(bbox: [number, number, number, number], padding = 40) {
+		map?.fitBounds(
+			[[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+			{ padding, duration: 1500, pitch: 50 }
+		);
 	}
 
 	// ── Lens opportunity glow layers ─────────────────────────────────────────
@@ -736,7 +742,7 @@
 	export function filterCatastroDept(deptCode: string | null) {
 		if (!map) return;
 		if (deptCode) {
-			const filter = ['==', ['get', 'departamento'], deptCode];
+			const filter: any = ['==', ['get', 'departamento'], deptCode];
 			if (map.getLayer('catastro-fill')) map.setFilter('catastro-fill', filter);
 			if (map.getLayer('catastro-line')) map.setFilter('catastro-line', filter);
 		} else {
@@ -791,7 +797,7 @@
 		const h3Filter: any = ['in', ['get', 'h3index'], ['literal', parcels.map(p => p.h3index)]];
 
 		// Color match: h3index → parcel color
-		const colorMatch: any[] = ['match', ['get', 'h3index']];
+		const colorMatch: any = ['match', ['get', 'h3index']];
 		for (const p of parcels) { colorMatch.push(p.h3index, p.color); }
 		colorMatch.push('#ffffff');
 

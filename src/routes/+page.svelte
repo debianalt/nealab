@@ -10,6 +10,7 @@
 	import { LassoStore } from '$lib/stores/lasso.svelte';
 	import { HexStore } from '$lib/stores/hex.svelte';
 	import { initDuckDB, query, isReady } from '$lib/stores/duckdb';
+	import { cellToLatLng } from 'h3-js';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { page } from '$app/stores';
@@ -376,7 +377,7 @@
 		if (!layer?.temporal || !layer?.perDepartment) return;
 		const entries = hexStore.choroplethEntries;
 		if (entries.length === 0) return;
-		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = layer.colorScale ?? 'flood';
+		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer.colorScale ?? 'flood';
 		if (mode === 'delta') colorScale = 'diverging';
 		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 	});
@@ -395,7 +396,7 @@
 				const row = result.get(i)!.toJSON() as { redcode: string; value: number };
 				entries.push(row);
 			}
-			mapComponent?.setAnalysisChoropleth(entries, analysis.choropleth.colorScale);
+			mapComponent?.setAnalysisChoropleth(entries, analysis.choropleth.colorScale as any);
 			analysisDataLoaded = true;
 		} catch (e) {
 			console.warn('Failed to load analysis choropleth:', e);
@@ -555,6 +556,8 @@
 
 			const h3ScoreMap = new Map<string, number>();
 			const h3FullData = new Map<string, Record<string, number>>();
+			const floodLats: number[] = [];
+			const floodLngs: number[] = [];
 			for (let i = 0; i < result.numRows; i++) {
 				const row = result.get(i)!.toJSON() as Record<string, any>;
 				h3ScoreMap.set(row.h3index, Number(row.flood_risk_score) || 0);
@@ -565,11 +568,17 @@
 					jrc_seasonality: Number(row.jrc_seasonality) || 0,
 					flood_extent_pct: Number(row.flood_extent_pct) || 0,
 				});
+				const [lat, lng] = cellToLatLng(row.h3index);
+				floodLats.push(lat); floodLngs.push(lng);
 			}
 
 			mapStore.setFloodH3Data(h3FullData);
 			mapComponent?.setCatastroFloodChoropleth(h3ScoreMap);
-			mapComponent?.flyToCoords(centroid[1], centroid[0], 11);
+			if (floodLats.length > 0) {
+				mapComponent?.fitBoundsDept([Math.min(...floodLngs), Math.min(...floodLats), Math.max(...floodLngs), Math.max(...floodLats)]);
+			} else {
+				mapComponent?.flyToCoords(centroid[1], centroid[0], 11);
+			}
 		} catch (e) {
 			console.warn('Failed to load flood catastro data:', e);
 		}
@@ -584,6 +593,8 @@
 
 			const h3ScoreMap = new Map<string, number>();
 			const h3FullData = new Map<string, Record<string, number>>();
+			const scoreLats: number[] = [];
+			const scoreLngs: number[] = [];
 			for (let i = 0; i < result.numRows; i++) {
 				const row = result.get(i)!.toJSON() as Record<string, any>;
 				const h3 = row.h3index as string;
@@ -594,11 +605,17 @@
 					if (key !== 'h3index') data[key] = Number(row[key]) || 0;
 				}
 				h3FullData.set(h3, data);
+				const [lat, lng] = cellToLatLng(h3);
+				scoreLats.push(lat); scoreLngs.push(lng);
 			}
 
 			mapStore.setScoresH3Data(h3FullData);
 			mapComponent?.setCatastroScoresChoropleth(h3ScoreMap);
-			mapComponent?.flyToCoords(centroid[1], centroid[0], 11);
+			if (scoreLats.length > 0) {
+				mapComponent?.fitBoundsDept([Math.min(...scoreLngs), Math.min(...scoreLats), Math.max(...scoreLngs), Math.max(...scoreLats)]);
+			} else {
+				mapComponent?.flyToCoords(centroid[1], centroid[0], 11);
+			}
 		} catch (e) {
 			console.warn('Failed to load scores catastro data:', e);
 		}
@@ -700,12 +717,16 @@
 		setTimeout(() => {
 			const entries = hexStore.choroplethEntries;
 			if (entries.length > 0) {
-				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = hexStore.activeLayer?.colorScale ?? 'flood';
+				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = hexStore.activeLayer?.colorScale ?? 'flood';
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 				analysisDataLoaded = true;
+				const hexLats = entries.map(e => cellToLatLng(e.h3index)[0]);
+				const hexLngs = entries.map(e => cellToLatLng(e.h3index)[1]);
+				mapComponent?.fitBoundsDept([Math.min(...hexLngs), Math.min(...hexLats), Math.max(...hexLngs), Math.max(...hexLats)]);
+			} else {
+				mapComponent?.flyToCoords(centroid[1], centroid[0], 10);
 			}
-			mapComponent?.flyToCoords(centroid[1], centroid[0], 10);
 		}, 20);
 	}
 
