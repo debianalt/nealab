@@ -46,6 +46,7 @@ from shapely.ops import clip_by_rect
 from shapely.ops import transform as shapely_transform
 from shapely.strtree import STRtree
 from shapely import wkb as shapely_wkb
+import psycopg2
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
@@ -63,6 +64,9 @@ def _stem(tid: str) -> str:
 
 _ap = argparse.ArgumentParser(description="Build buildings PMTiles w/ census enrichment (any territory)")
 _ap.add_argument("--territory", default="itapua_py", help="Territory ID (default: itapua_py)")
+_ap.add_argument("--source", choices=["overture", "gba"], default="overture",
+                 help="building footprint source: overture (default) or gba "
+                      "(reads gba_buildings_<territory> ingested by ingest_gba.py)")
 _args = _ap.parse_args()
 _TERR = get_territory(_args.territory)
 _TID = _TERR["id"]
@@ -81,6 +85,8 @@ MIN_ZOOM = 8
 MAX_ZOOM = 14
 LAYER_NAME = "buildings"   # must match 'source-layer' in Map.svelte
 EXTENT = 4096
+
+PG_BUILDINGS = "dbname=ndvi_misiones user=postgres"  # GBA source table host
 
 # UTM zone 20S (EPSG:32720) — correct projection for Paraguay area calculations
 _proj = Transformer.from_crs("EPSG:4326", "EPSG:32720", always_xy=True)
@@ -255,6 +261,56 @@ def load_buildings():
 
     print(f"  {total_rows:,} rows -> {len(features):,} valid ({skipped} skipped)")
     print(f"  Residential: {n_residential:,} ({100*n_residential/max(1,len(features)):.1f}%)")
+    print(f"  Time: {time.time()-t0:.1f}s")
+    return features
+
+
+def load_buildings_from_gba():
+    """Load footprints + GBA modeled height from gba_buildings_<territory>
+    (ingested by ingest_gba.py). Same feature shape as load_buildings();
+    GBA has no building type, so classify_residential falls back to the
+    area heuristic (consistent across territories)."""
+    table = f"gba_buildings_{_TID}"
+    print(f"Step 1: Loading footprints from PostGIS {table} (GBA)...")
+    t0 = time.time()
+    features = []
+    n_residential = 0
+    skipped = 0
+    conn = psycopg2.connect(PG_BUILDINGS)
+    try:
+        with conn.cursor(name="gba_src") as cur:
+            cur.itersize = 50000
+            cur.execute(f"SELECT ST_AsBinary(geom), best_height_m "
+                        f"FROM {table} WHERE geom IS NOT NULL")
+            for geom_wkb, height in cur:
+                try:
+                    geom = shapely_wkb.loads(bytes(geom_wkb))
+                except Exception:
+                    skipped += 1
+                    continue
+                if geom is None or geom.is_empty:
+                    skipped += 1
+                    continue
+                a = area_m2(geom)
+                is_res, label = classify_residential(None, None, a)
+                if is_res:
+                    n_residential += 1
+                features.append({
+                    "geometry":      geom,
+                    "best_height_m": round(float(height), 1) if height is not None else 5.0,
+                    "area_m2":       a,
+                    "is_residential": is_res,
+                    "subtype":       label,
+                    "distrito":      "",
+                    "est_personas":  0,
+                    "distrito_pop":  0,
+                    "distrito_hog":  0,
+                })
+    finally:
+        conn.close()
+    print(f"  {len(features):,} valid ({skipped} skipped)")
+    print(f"  Residential: {n_residential:,} "
+          f"({100*n_residential/max(1,len(features)):.1f}%)")
     print(f"  Time: {time.time()-t0:.1f}s")
     return features
 
@@ -445,7 +501,7 @@ def main():
     gdf, dist_geoms, dist_names = load_distritos()
     print(f"  Distritos: {len(dist_names)} polygons")
 
-    features = load_buildings()
+    features = load_buildings_from_gba() if _args.source == "gba" else load_buildings()
     if not features:
         print("ERROR: no features loaded")
         return

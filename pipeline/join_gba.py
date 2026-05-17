@@ -57,9 +57,13 @@ def main() -> int:
 
     if args.territory == "corrientes":
         join_corrientes()
+    elif args.territory in ("itapua_py", "alto_parana_py"):
+        print(f"NOTE: '{args.territory}' does NOT use join_gba — the PY builder "
+              f"build_itapua_buildings.py --source gba does the distrito + DGEEC "
+              f"enrichment itself. Run that directly after ingest_gba.")
+        return 0
     else:
-        print(f"ERROR: territory '{args.territory}' not wired yet "
-              f"(Phase 2: itapua_py/alto_parana_py via DGEEC distrito).", file=sys.stderr)
+        print(f"ERROR: territory '{args.territory}' not supported.", file=sys.stderr)
         return 2
     print("\nDONE. Next: build_corrientes_buildings.py (PMTiles, local) "
           "→ compare vs Misiones before R2/deploy.")

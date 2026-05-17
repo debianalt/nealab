@@ -83,18 +83,27 @@ def main() -> int:
         print("\nFAIL: ingested table missing — run ingest_gba.py.")
         return 1
 
-    # Heuristic verdict: a healthy GBA territory should NOT be mostly stuck at
-    # the 5 m floor (that is exactly the Overture-flat symptom we are fixing),
-    # and its median height should be in a realistic urban/rural range.
-    flat = new["pct_at_floor"] is not None and new["pct_at_floor"] > 60
-    med = float(new["med_h"]) if new["med_h"] is not None else 0
-    realistic = 2.0 <= med <= 30.0
-    print("\nVerdict:")
-    print(f"  height not Overture-flat (%at_5m<=60): {'OK' if not flat else 'CHECK'}")
-    print(f"  median height realistic (2-30m):       {'OK' if realistic else 'CHECK'}")
+    # Verdict is REFERENCE-RELATIVE: the goal is cross-frontier consistency
+    # with Misiones canonical GBA, not an absolute height. (This region is
+    # rural — GBA legitimately assigns ~3.5 m to most buildings; Misiones
+    # itself sits ~75% at the 5 m floor, so an absolute threshold is wrong.)
+    def near(a, b, tol):
+        return a is not None and b is not None and abs(float(a) - float(b)) <= tol
+
+    med_ok = near(new["med_h"], ref["med_h"], 1.5)          # within 1.5 m
+    floor_ok = near(new["pct_at_floor"], ref["pct_at_floor"], 15)  # within 15 pp
+    # est_personas should track population (census-anchored): both are sums of
+    # the territory's census total, so just sanity-check it's non-trivial.
+    pers_ok = bool(new["sum_est_pers"]) and new["sum_est_pers"] > 0
+    print("\nVerdict (vs Misiones canonical):")
+    print(f"  median height consistent (±1.5m):      {'OK' if med_ok else 'CHECK'}")
+    print(f"  %at-floor consistent (±15pp):          {'OK' if floor_ok else 'CHECK'}")
+    print(f"  est_personas census-anchored:          {'OK' if pers_ok else 'CHECK'}")
     print(f"  redcode/est_personas assigned:         "
           f"{'OK' if new['with_redcode'] else 'MISSING — run join_gba.py'}")
-    return 0
+    consistent = med_ok and floor_ok and pers_ok and new["with_redcode"]
+    print(f"\n  => {'CONSISTENT with Misiones — proceed' if consistent else 'INCONSISTENT — investigate'}")
+    return 0 if consistent else 2
 
 
 if __name__ == "__main__":
