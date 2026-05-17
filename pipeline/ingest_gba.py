@@ -34,10 +34,34 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import time
+
+# Windows: `gcloud`/`ogr2ogr` are .cmd/.exe — subprocess without shell=True hits
+# WinError 2 on the bare name. Resolve the real path once (shutil.which honors
+# PATHEXT). Keeps args as a clean list (no shell globbing of gs://...* / DSN).
+import glob as _glob
+
+GCLOUD = shutil.which("gcloud") or "gcloud"
+
+
+def _resolve_ogr2ogr() -> str:
+    p = shutil.which("ogr2ogr")
+    if p:
+        return p
+    # GDAL ships with QGIS here but isn't on PATH (see reference memory).
+    for pat in (r"C:\Program Files\QGIS*\bin\ogr2ogr.exe",
+                r"C:\OSGeo4W*\bin\ogr2ogr.exe"):
+        hits = sorted(_glob.glob(pat))
+        if hits:
+            return hits[-1]  # newest version
+    return "ogr2ogr"
+
+
+OGR2OGR = _resolve_ogr2ogr()
 
 import ee
 import psycopg2
@@ -135,7 +159,7 @@ def export_to_gcs(fc: ee.FeatureCollection, territory: str) -> str:
                 t.cancel()
         except Exception:
             pass
-    subprocess.run(["gcloud", "storage", "rm", f"gs://{GCS_BUCKET}/{prefix}*"], check=False)
+    subprocess.run([GCLOUD, "storage","rm", f"gs://{GCS_BUCKET}/{prefix}*"], check=False)
 
     task = ee.batch.Export.table.toCloudStorage(
         collection=fc,
@@ -164,7 +188,7 @@ def load_postgis(gcs_prefix: str, territory: str, keep_gcs: bool) -> None:
     tmpdir = tempfile.mkdtemp(prefix=f"gba_{territory}_")
     print(f"  Downloading {gcs_prefix}* → {tmpdir}")
     subprocess.run(
-        ["gcloud", "storage", "cp", f"{gcs_prefix}*", tmpdir + "/"],
+        [GCLOUD, "storage", "cp", f"{gcs_prefix}*", tmpdir + "/"],
         check=True,
     )
     files = [os.path.join(tmpdir, f) for f in os.listdir(tmpdir) if f.endswith(".geojson")]
@@ -189,32 +213,45 @@ def load_postgis(gcs_prefix: str, territory: str, keep_gcs: bool) -> None:
         """)
         conn.commit()
 
+    # Load each GeoJSON into a staging table (ogr2ogr derives its own schema —
+    # avoids the brittle hardcoded layer name) then map to the canonical schema
+    # in PostGIS. Handles multi-file exports (append after the first).
+    stage = f"{territory}_gba_stage"
+    with psycopg2.connect(PG_BUILDINGS) as conn, conn.cursor() as cur:
+        cur.execute(f"DROP TABLE IF EXISTS {stage}")
+        conn.commit()
     for i, fp in enumerate(files):
-        print(f"  ogr2ogr load [{i + 1}/{len(files)}] {os.path.basename(fp)}")
+        print(f"  ogr2ogr load [{i + 1}/{len(files)}] {os.path.basename(fp)} -> {stage}")
         subprocess.run([
-            "ogr2ogr", "-f", "PostgreSQL",
+            OGR2OGR, "-f", "PostgreSQL",
             f"PG:{PG_BUILDINGS}", fp,
-            "-nln", table, "-append",
+            "-nln", stage,
+            "-overwrite" if i == 0 else "-append",
             "-nlt", "PROMOTE_TO_MULTI",
             "-lco", "GEOMETRY_NAME=geom",
-            "-sql", 'SELECT height AS best_height_m FROM "OGRGeoJSON"',
         ], check=True)
 
     with psycopg2.connect(PG_BUILDINGS) as conn, conn.cursor() as cur:
-        # area in m² from the geography cast; height floor 1.5 m like the join.
-        cur.execute(f"UPDATE {table} SET area_m2 = ST_Area(geom::geography)")
-        cur.execute(f"UPDATE {table} SET best_height_m = 5.0 "
-                    f"WHERE best_height_m IS NULL OR best_height_m < 1.5")
+        # Map staging → canonical schema. height floor 1.5 m; area from the
+        # geography cast (m²). redcode/est_personas filled later by join_gba.
+        cur.execute(f"""
+            INSERT INTO {table} (geom, area_m2, best_height_m)
+            SELECT ST_Multi(ST_Force2D(ST_SetSRID(geom, 4326))),
+                   ST_Area(ST_SetSRID(geom, 4326)::geography),
+                   GREATEST(COALESCE(height, 5.0), 1.5)
+            FROM {stage}
+        """)
+        cur.execute(f"DROP TABLE IF EXISTS {stage}")
         cur.execute(f"CREATE INDEX {table}_geom_idx ON {table} USING GIST(geom)")
         cur.execute(f"CREATE INDEX {table}_redcode_idx ON {table}(redcode)")
         cur.execute(f"SELECT COUNT(*), ROUND(AVG(best_height_m)::numeric,1), "
                     f"ROUND(AVG(area_m2)::numeric,1) FROM {table}")
         cnt, avg_h, avg_a = cur.fetchone()
         conn.commit()
-    print(f"  {table}: {cnt:,} buildings | avg height {avg_h} m | avg area {avg_a} m²")
+    print(f"  {table}: {cnt:,} buildings | avg height {avg_h} m | avg area {avg_a} m2")
 
     if not keep_gcs:
-        subprocess.run(["gcloud", "storage", "rm", f"{gcs_prefix}*"], check=False)
+        subprocess.run([GCLOUD, "storage","rm", f"{gcs_prefix}*"], check=False)
 
 
 def main() -> int:
@@ -225,6 +262,8 @@ def main() -> int:
                     help="only resolve covering tiles, no export/load")
     ap.add_argument("--keep-gcs", action="store_true",
                     help="don't delete the GCS export after loading")
+    ap.add_argument("--skip-export", action="store_true",
+                    help="reuse an existing GCS export (resume after a load failure)")
     args = ap.parse_args()
 
     cfg = get_territory(args.territory)  # raises with helpful message if unknown
@@ -243,8 +282,12 @@ def main() -> int:
         print("dry-run: stopping before export.")
         return 0
 
-    fc = build_collection(tiles, bbox)
-    gcs_prefix = export_to_gcs(fc, args.territory)
+    if args.skip_export:
+        gcs_prefix = f"gs://{GCS_BUCKET}/gba/{args.territory}/gba_{args.territory}"
+        print(f"  --skip-export: reusing {gcs_prefix}*")
+    else:
+        fc = build_collection(tiles, bbox)
+        gcs_prefix = export_to_gcs(fc, args.territory)
     load_postgis(gcs_prefix, args.territory, args.keep_gcs)
 
     print("\nDONE. Next (unchanged downstream, local validation — NO R2 yet):")
