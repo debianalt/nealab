@@ -44,6 +44,13 @@ import psycopg2
 
 from config import GCS_BUCKET, get_territory
 
+# Windows consoles default to cp1252 and choke on non-ASCII prints; force UTF-8.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 # Same DB the existing builders/joins read (import_gba_corrientes.py:48).
 PG_BUILDINGS = "dbname=ndvi_misiones user=postgres"
 
@@ -115,15 +122,30 @@ def build_collection(tile_ids: list[str], bbox: list[float]) -> ee.FeatureCollec
 def export_to_gcs(fc: ee.FeatureCollection, territory: str) -> str:
     """Start a GCS export task and block until it finishes. Returns the gs prefix."""
     prefix = f"gba/{territory}/gba_{territory}"
+    desc = f"gba_ingest_{territory}"
+
+    # Idempotent re-runs: cancel any prior task with the same description
+    # (e.g. an orphan from a crashed run) so it can't write to the prefix
+    # after we clean it, then wipe the GCS prefix.
+    for t in ee.batch.Task.list():
+        try:
+            st = t.status()
+            if st.get("description") == desc and st.get("state") in ("READY", "RUNNING"):
+                print(f"  Cancelling prior task {t.id} ({st.get('state')})")
+                t.cancel()
+        except Exception:
+            pass
+    subprocess.run(["gcloud", "storage", "rm", f"gs://{GCS_BUCKET}/{prefix}*"], check=False)
+
     task = ee.batch.Export.table.toCloudStorage(
         collection=fc,
-        description=f"gba_ingest_{territory}",
+        description=desc,
         bucket=GCS_BUCKET,
         fileNamePrefix=prefix,
         fileFormat="GeoJSON",
     )
     task.start()
-    print(f"  GEE export task started: {task.id} → gs://{GCS_BUCKET}/{prefix}*")
+    print(f"  GEE export task started: {task.id} -> gs://{GCS_BUCKET}/{prefix}*")
     while True:
         st = task.status()
         state = st.get("state")
