@@ -92,16 +92,24 @@ def main() -> int:
 
     med_ok = near(new["med_h"], ref["med_h"], 1.5)          # within 1.5 m
     floor_ok = near(new["pct_at_floor"], ref["pct_at_floor"], 15)  # within 15 pp
-    # est_personas should track population (census-anchored): both are sums of
-    # the territory's census total, so just sanity-check it's non-trivial.
-    pers_ok = bool(new["sum_est_pers"]) and new["sum_est_pers"] > 0
+    # PY (itapua_py/alto_parana_py): redcode/est_personas are NOT written to
+    # the raw table — the PY builder (build_itapua_buildings.py --source gba)
+    # assigns distrito + DGEEC population during PMTiles generation. So for PY
+    # only the GBA height profile is validated here; population is checked
+    # from the builder output. AR (Corrientes) does fill the table via join_gba.
+    is_py = args.territory.endswith("_py")
     print("\nVerdict (vs Misiones canonical):")
     print(f"  median height consistent (±1.5m):      {'OK' if med_ok else 'CHECK'}")
     print(f"  %at-floor consistent (±15pp):          {'OK' if floor_ok else 'CHECK'}")
-    print(f"  est_personas census-anchored:          {'OK' if pers_ok else 'CHECK'}")
-    print(f"  redcode/est_personas assigned:         "
-          f"{'OK' if new['with_redcode'] else 'MISSING — run join_gba.py'}")
-    consistent = med_ok and floor_ok and pers_ok and new["with_redcode"]
+    if is_py:
+        print(f"  est_personas:                          N/A (PY: enriched in builder/PMTiles)")
+        consistent = med_ok and floor_ok
+    else:
+        pers_ok = bool(new["sum_est_pers"]) and new["sum_est_pers"] > 0
+        print(f"  est_personas census-anchored:          {'OK' if pers_ok else 'CHECK'}")
+        print(f"  redcode/est_personas assigned:         "
+              f"{'OK' if new['with_redcode'] else 'MISSING — run join_gba.py'}")
+        consistent = med_ok and floor_ok and pers_ok and bool(new["with_redcode"])
     print(f"\n  => {'CONSISTENT with Misiones — proceed' if consistent else 'INCONSISTENT — investigate'}")
     return 0 if consistent else 2
 
