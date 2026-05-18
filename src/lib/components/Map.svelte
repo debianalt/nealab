@@ -9,6 +9,7 @@
 	import { formatDept } from '$lib/utils/format';
 	import misionesBoundary from '$lib/data/misiones_boundary.json';
 	import arDeptBoundaries from '$lib/data/ar_dept_boundaries.json';
+	import { pointInPolygon } from '$lib/utils/geometry';
 	import misionesMask from '$lib/data/misiones_mask.json';
 	import itapuaBoundary from '$lib/data/itapua_boundary.json';
 	import itapuaMask from '$lib/data/itapua_mask.json';
@@ -2394,6 +2395,48 @@
 			geometry: { type: 'Polygon', coordinates: coords },
 			properties: {}
 		});
+	}
+
+	// Rough centroid of a (Multi)Polygon feature geometry — good enough for
+	// polygon containment of building footprints.
+	function _featureCentroid(geom: any): [number, number] | null {
+		if (!geom) return null;
+		let ring: any[] | null = null;
+		if (geom.type === 'Polygon') ring = geom.coordinates?.[0];
+		else if (geom.type === 'MultiPolygon') ring = geom.coordinates?.[0]?.[0];
+		if (!ring || ring.length === 0) return null;
+		let sx = 0, sy = 0;
+		for (const [x, y] of ring) { sx += x; sy += y; }
+		return [sx / ring.length, sy / ring.length];
+	}
+
+	// Lasso fallback for the buildings canvas where there are no census radios
+	// (PY, or AR areas without radios): aggregate GBA building footprints whose
+	// centroid falls inside the drawn polygon. Viewport-limited (same as the
+	// building click) — the user lassoes what they see.
+	export function queryBuildingsInPolygon(
+		polygon: [number, number][]
+	): { count: number; est_personas: number; area_m2: number } {
+		const out = { count: 0, est_personas: 0, area_m2: 0 };
+		if (!map) return out;
+		const layers = ['buildings-3d', 'corrientes-buildings-3d',
+			'itapua-buildings-3d', 'alto_parana-buildings-3d'].filter(l => map.getLayer(l));
+		if (layers.length === 0) return out;
+		const cv = map.getCanvas();
+		const feats = map.queryRenderedFeatures([[0, 0], [cv.width, cv.height]], { layers });
+		const seen = new Set<string>();
+		for (const f of feats) {
+			const p: any = f.properties || {};
+			const id = String(f.id ?? `${p.gba_id ?? ''}|${p.area_m2 ?? ''}|${p.est_personas ?? ''}`);
+			if (seen.has(id)) continue;
+			const c = _featureCentroid(f.geometry);
+			if (!c || !pointInPolygon(c, polygon)) continue;
+			seen.add(id);
+			out.count += 1;
+			out.est_personas += Number(p.est_personas) || 0;
+			out.area_m2 += Number(p.area_m2) || 0;
+		}
+		return out;
 	}
 
 	export function clearLassoDraw() {

@@ -402,10 +402,17 @@
 				await hexStore.createHexZone(h3indices, polygon);
 				updateHexZoneHighlights();
 			} else {
-				// Radio mode
+				// Canvas: census radios (AR) if any; otherwise a GBA building
+				// zone (PY / AR areas with no radios) — population aggregate,
+				// no socioeconomic petal (PY has no radio census).
 				const redcodes = lassoStore.findRadiosInPolygon(polygon);
-				if (redcodes.length === 0) return;
-				await lassoStore.createZone(redcodes, polygon);
+				if (redcodes.length > 0) {
+					await lassoStore.createZone(redcodes, polygon);
+				} else {
+					const agg = mapComponent?.queryBuildingsInPolygon(polygon);
+					if (!agg || agg.count === 0) return;
+					lassoStore.createBuildingZone(polygon, agg);
+				}
 				updateZoneHighlights();
 			}
 		}, { capture: true });
