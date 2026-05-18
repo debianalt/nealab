@@ -1236,12 +1236,19 @@
 			if (ds.length === 0) {
 				map.setFilter(fillId, emptyFilter);
 				map.setFilter(lineId, emptyFilter);
+				map.setLayoutProperty(fillId, 'visibility', 'none');
+				map.setLayoutProperty(lineId, 'visibility', 'none');
 				continue;
 			}
 			const names = ds.map(d => d.distrito);
 			const matchExpr: any[] = ['match', ['get', 'district']];
 			for (const d of ds) matchExpr.push(d.distrito, d.color);
 			matchExpr.push('#60a5fa'); // fallback
+			// setDistrictHighlight solely owns -selected- visibility: show the
+			// clicked district's polygon (parallels the AR radio highlight) so
+			// the petal/profile data is visibly tied to its district unit.
+			map.setLayoutProperty(fillId, 'visibility', 'visible');
+			map.setLayoutProperty(lineId, 'visibility', 'visible');
 			map.setPaintProperty(fillId, 'fill-color', matchExpr);
 			map.setPaintProperty(fillId, 'fill-opacity', 0.45);
 			map.setFilter(fillId, ['in', ['get', 'district'], ['literal', names]]);
@@ -1395,12 +1402,10 @@
 		// PY district polygons: show BOTH Itapúa + Alto Paraná whenever any
 		// PY territory is active, so districts of the two can be selected and
 		// compared together on the base map (no territory switch needed).
-		// PY district fill/line are the Phase-2 dept picker (setDeptPickerVisible
-		// controls them). Only the -selected- highlight layers stay retired here.
-		for (const l of ['itapua-district-selected-fill', 'itapua-district-selected-line',
-			'alto_parana-district-selected-fill', 'alto_parana-district-selected-line']) {
-			if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
-		}
+		// PY district fill/line = Phase-2 dept picker (setDeptPickerVisible).
+		// The -selected- highlight layers are owned solely by
+		// setDistrictHighlight (shown on a building→district click) — do NOT
+		// force them here, or the click-highlight never renders.
 
 		// Buildings: show only the active territory's layer, hide the others
 		const activeLayer = isCorrientes ? 'corrientes-buildings-3d'
@@ -1460,12 +1465,10 @@
 			}
 			// Itapúa + Alto Paraná district outlines: visible in regional census/base
 			// mode only — hidden while a hex analysis is active (cold-open clutter).
-			// PY district fill/line are the Phase-2 dept picker (setDeptPickerVisible
-			// controls them). Only the -selected- highlight layers stay retired here.
-			for (const id of ['itapua-district-selected-fill', 'itapua-district-selected-line',
-				'alto_parana-district-selected-fill', 'alto_parana-district-selected-line']) {
-				if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
-			}
+			// PY district fill/line = Phase-2 dept picker (setDeptPickerVisible).
+			// The -selected- highlight layers are owned solely by
+			// setDistrictHighlight (shown on a building→district click) — do NOT
+			// force them here, or the click-highlight never renders.
 			// Census-radio click selection retired (radios no longer shown).
 			map.off('click', 'province-fill', regionalProvinceClickHandler);
 		} else {
