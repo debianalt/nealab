@@ -38,6 +38,7 @@
 		onClearRadios,
 		onRemoveDistrict,
 		onClearDistricts,
+		onDownloadDistrictGeoJson,
 		onSelectAnalysis,
 		onRemoveZone,
 		onClearZones,
@@ -69,6 +70,7 @@
 		onClearRadios: () => void;
 		onRemoveDistrict: (distrito: string) => void;
 		onClearDistricts: () => void;
+		onDownloadDistrictGeoJson?: (distrito: string, territory: string, properties: Record<string, any>) => void;
 		onSelectAnalysis: (analysis: AnalysisConfig) => void;
 		onRemoveZone: (id: string) => void;
 		onClearZones: () => void;
@@ -241,6 +243,7 @@
 				districts={mapStore.selectedDistricts}
 				{onRemoveDistrict}
 				{onClearDistricts}
+				{onDownloadDistrictGeoJson}
 			/>
 		</div>
 	{:else if mapStore.selectedRadios.size > 0}

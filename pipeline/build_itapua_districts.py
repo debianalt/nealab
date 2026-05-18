@@ -17,6 +17,7 @@ R2 upload:
 
 import argparse
 import gzip
+import json
 import math
 import os
 import sys
@@ -35,6 +36,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from config import get_territory
 
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
+STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")
 
 
 def _stem(tid: str) -> str:
@@ -46,6 +48,12 @@ def _stem(tid: str) -> str:
 
 _ap = argparse.ArgumentParser(description="Build district polygon PMTiles (any territory)")
 _ap.add_argument("--territory", default="itapua_py", help="Territory ID (default: itapua_py)")
+_ap.add_argument(
+    "--export-geojson",
+    action="store_true",
+    help="Instead of PMTiles, write the unclipped district polygons as a static "
+         "GeoJSON for the frontend download button (static/data/{stem}_districts.geojson)",
+)
 _args = _ap.parse_args()
 _TERR = get_territory(_args.territory)
 _TID = _TERR["id"]
@@ -244,6 +252,44 @@ def generate_pmtiles(features):
     print(f"Done: {OUTPUT} ({size_mb:.1f} MB, {total_tiles} tiles)")
 
 
+def export_geojson(features):
+    """Write the full unclipped district polygons as a static GeoJSON.
+
+    Uses the exact same ``load_data()`` feature list the PMTiles are built
+    from, so ``properties.district`` matches the keys the frontend uses for
+    selectedDistricts / setDistrictHighlight. Only the ``district`` property
+    is kept (enriched stats come from the panel at download time); geometry
+    is full-precision and unclipped (no tile seams).
+    """
+    os.makedirs(STATIC_DATA_DIR, exist_ok=True)
+    out = os.path.join(STATIC_DATA_DIR, f"{_STEM}_districts.geojson")
+
+    def _round(coords):
+        # 6 decimals ≈ 0.11 m — far below district-boundary accuracy, and
+        # drops the file from megabytes (raw INE has ~14 decimals) to ~kB.
+        if isinstance(coords[0], (int, float)):
+            return [round(coords[0], 6), round(coords[1], 6)]
+        return [_round(c) for c in coords]
+
+    feats = []
+    for f in features:
+        geom = mapping(f["geometry"])
+        geom["coordinates"] = _round(geom["coordinates"])
+        feats.append({
+            "type": "Feature",
+            "geometry": geom,
+            "properties": {"district": f["properties"]["district"]},
+        })
+    fc = {"type": "FeatureCollection", "features": feats}
+    with open(out, "w", encoding="utf-8") as fh:
+        json.dump(fc, fh, ensure_ascii=False, separators=(",", ":"))
+    size_kb = os.path.getsize(out) / 1024
+    print(f"Done: {out} ({size_kb:.0f} KB, {len(fc['features'])} districts)")
+
+
 if __name__ == "__main__":
     features = load_data()
-    generate_pmtiles(features)
+    if _args.export_geojson:
+        export_geojson(features)
+    else:
+        generate_pmtiles(features)

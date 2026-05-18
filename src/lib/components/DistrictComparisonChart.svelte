@@ -8,10 +8,12 @@
 		districts,
 		onRemoveDistrict,
 		onClearDistricts,
+		onDownloadDistrictGeoJson,
 	}: {
 		districts: Map<string, DistrictData>;
 		onRemoveDistrict: (distrito: string) => void;
 		onClearDistricts: () => void;
+		onDownloadDistrictGeoJson?: (distrito: string, territory: string, properties: Record<string, any>) => void;
 	} = $props();
 
 	// 4 NBI components from CNPV 2022 — higher = more deprived (same direction as Misiones pct_nbi)
@@ -136,6 +138,7 @@
 				<span class="rt-col rt-zone">Distrito</span>
 				<span class="rt-col rt-num">Personas</span>
 				<span class="rt-col rt-num">NBI %</span>
+				<span class="rt-col rt-actions"></span>
 			</div>
 			{#each entries as entry}
 				<div class="r-table-row">
@@ -150,6 +153,14 @@
 						{:else}
 							—
 						{/if}
+					</span>
+					<span class="rt-col rt-actions">
+						<button
+							class="r-dl-btn"
+							title="Polígono del distrito (GeoJSON)"
+							onclick={() => onDownloadDistrictGeoJson?.(entry.distrito, districts.get(entry.distrito)?.territory ?? 'itapua_py', districts.get(entry.distrito)?.enriched ?? {})}
+							disabled={!onDownloadDistrictGeoJson}
+						>geo</button>
 					</span>
 				</div>
 			{/each}
@@ -212,6 +223,21 @@
 	.rt-col { flex: 1; }
 	.rt-zone { flex: 1.4; display: flex; align-items: center; gap: 4px; font-size: 10px; color: #d4d4d4; }
 	.rt-num { text-align: right; color: #cbd5e1; font-size: 10px; font-variant-numeric: tabular-nums; }
+	.rt-actions { flex: 0.7; display: flex; gap: 3px; justify-content: flex-end; }
+	.r-dl-btn {
+		background: rgba(255,255,255,0.04);
+		border: 1px solid rgba(255,255,255,0.1);
+		color: #94a3b8; font-size: 8px;
+		padding: 1px 4px; border-radius: 3px;
+		cursor: pointer; font-family: inherit;
+		transition: all 0.15s;
+	}
+	.r-dl-btn:hover:not(:disabled) {
+		background: rgba(96,165,250,0.15);
+		border-color: rgba(96,165,250,0.4);
+		color: #60a5fa;
+	}
+	.r-dl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 	.r-dot-sm {
 		display: inline-block; width: 6px; height: 6px;
 		border-radius: 50%; flex-shrink: 0;
