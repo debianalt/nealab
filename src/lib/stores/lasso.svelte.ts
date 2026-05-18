@@ -26,7 +26,6 @@ export interface Zone {
 	redcodes: string[];
 	polygon: [number, number][];
 	stats: ZoneStats;
-	kind?: 'radio' | 'building';
 }
 
 export class LassoStore {
@@ -135,29 +134,6 @@ export class LassoStore {
 		}
 	}
 
-	/** Building-footprint zone for the canvas where there are no census radios
-	 * (PY, or AR areas without radios). Population = sum of dasymetric
-	 * est_personas; no socioeconomic petal (PY has no radio census). */
-	createBuildingZone(
-		polygon: [number, number][],
-		agg: { count: number; est_personas: number; area_m2: number }
-	): void {
-		if (agg.count === 0) return;
-		const idx = this.zones.length % ZONE_COLORS.length;
-		const id = ZONE_LABELS[idx] || String.fromCharCode(65 + this.zones.length);
-		const color = ZONE_COLORS[idx];
-		this.zones = [...this.zones, {
-			id, color, redcodes: [], polygon, kind: 'building',
-			stats: {
-				population: Math.round(agg.est_personas),
-				area_km2: agg.area_m2 / 1e6,
-				radioCount: agg.count,
-				rawValues: [],
-				normalizedValues: [],
-			},
-		}];
-	}
-
 	removeZone(id: string) {
 		this.zones = this.zones.filter(z => z.id !== id);
 	}
@@ -167,11 +143,10 @@ export class LassoStore {
 	}
 
 	get petalLayers(): Array<{ values: number[]; color: string }> {
-		// Building zones have no socioeconomic petal — exclude them so the
-		// PetalChart only reflects radio (census) zones.
-		return this.zones
-			.filter(z => z.stats.normalizedValues.length > 0)
-			.map(z => ({ values: z.stats.normalizedValues, color: z.color }));
+		return this.zones.map(z => ({
+			values: z.stats.normalizedValues,
+			color: z.color,
+		}));
 	}
 
 	get petalLabels(): string[] {

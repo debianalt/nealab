@@ -2410,31 +2410,36 @@
 		return [sx / ring.length, sy / ring.length];
 	}
 
-	// Lasso fallback for the buildings canvas where there are no census radios
-	// (PY, or AR areas without radios): aggregate GBA building footprints whose
-	// centroid falls inside the drawn polygon. Viewport-limited (same as the
-	// building click) — the user lassoes what they see.
-	export function queryBuildingsInPolygon(
+	// Lasso over the buildings canvas where there are no census radios (PY):
+	// behave like the building click but multi — return the distinct districts
+	// whose GBA buildings fall inside the drawn polygon. The caller then
+	// selects those districts (DGEEC profile), never a fabricated zone.
+	// Viewport-limited (same as the building click) — you select what you see.
+	export function queryDistrictsInPolygon(
 		polygon: [number, number][]
-	): { count: number; est_personas: number; area_m2: number } {
-		const out = { count: 0, est_personas: 0, area_m2: 0 };
-		if (!map) return out;
-		const layers = ['buildings-3d', 'corrientes-buildings-3d',
-			'itapua-buildings-3d', 'alto_parana-buildings-3d'].filter(l => map.getLayer(l));
-		if (layers.length === 0) return out;
+	): Array<{ distrito: string; territory: string }> {
+		if (!map) return [];
+		const LAYER_TERR: Record<string, string> = {
+			'itapua-buildings-3d': 'itapua_py',
+			'alto_parana-buildings-3d': 'alto_parana_py',
+		};
+		const layers = Object.keys(LAYER_TERR).filter(l => map.getLayer(l));
+		if (layers.length === 0) return [];
 		const cv = map.getCanvas();
 		const feats = map.queryRenderedFeatures([[0, 0], [cv.width, cv.height]], { layers });
 		const seen = new Set<string>();
+		const out: Array<{ distrito: string; territory: string }> = [];
 		for (const f of feats) {
 			const p: any = f.properties || {};
-			const id = String(f.id ?? `${p.gba_id ?? ''}|${p.area_m2 ?? ''}|${p.est_personas ?? ''}`);
-			if (seen.has(id)) continue;
+			const distrito = p.distrito;
+			if (!distrito) continue;
+			const territory = LAYER_TERR[f.layer?.id ?? ''] ?? 'itapua_py';
+			const key = `${territory}|${distrito}`;
+			if (seen.has(key)) continue;
 			const c = _featureCentroid(f.geometry);
 			if (!c || !pointInPolygon(c, polygon)) continue;
-			seen.add(id);
-			out.count += 1;
-			out.est_personas += Number(p.est_personas) || 0;
-			out.area_m2 += Number(p.area_m2) || 0;
+			seen.add(key);
+			out.push({ distrito, territory });
 		}
 		return out;
 	}

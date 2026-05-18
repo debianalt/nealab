@@ -402,18 +402,24 @@
 				await hexStore.createHexZone(h3indices, polygon);
 				updateHexZoneHighlights();
 			} else {
-				// Canvas: census radios (AR) if any; otherwise a GBA building
-				// zone (PY / AR areas with no radios) — population aggregate,
-				// no socioeconomic petal (PY has no radio census).
 				const redcodes = lassoStore.findRadiosInPolygon(polygon);
 				if (redcodes.length > 0) {
+					// AR: real census radios → socioeconomic zone (unchanged).
 					await lassoStore.createZone(redcodes, polygon);
+					updateZoneHighlights();
 				} else {
-					const agg = mapComponent?.queryBuildingsInPolygon(polygon);
-					if (!agg || agg.count === 0) return;
-					lassoStore.createBuildingZone(polygon, agg);
+					// PY (no census radios): behave like the building click but
+					// multi — select every district the lasso touches (DGEEC
+					// profile via the district-select handler). No fake zone.
+					const districts = mapComponent?.queryDistrictsInPolygon(polygon) ?? [];
+					for (const d of districts) {
+						if (mapStore.hasDistrict(d.distrito)) continue;
+						mapContainer?.dispatchEvent(new CustomEvent('district-select', {
+							bubbles: true,
+							detail: { distrito: d.distrito, personas: 0, territory: d.territory }
+						}));
+					}
 				}
-				updateZoneHighlights();
 			}
 		}, { capture: true });
 	});
