@@ -2417,7 +2417,7 @@
 	// Viewport-limited (same as the building click) — you select what you see.
 	export function queryDistrictsInPolygon(
 		polygon: [number, number][]
-	): Array<{ distrito: string; territory: string }> {
+	): Array<{ distrito: string; territory: string; personas: number }> {
 		if (!map) return [];
 		const LAYER_TERR: Record<string, string> = {
 			'itapua-buildings-3d': 'itapua_py',
@@ -2428,7 +2428,7 @@
 		const cv = map.getCanvas();
 		const feats = map.queryRenderedFeatures([[0, 0], [cv.width, cv.height]], { layers });
 		const seen = new Set<string>();
-		const out: Array<{ distrito: string; territory: string }> = [];
+		const out: Array<{ distrito: string; territory: string; personas: number }> = [];
 		for (const f of feats) {
 			const p: any = f.properties || {};
 			const distrito = p.distrito;
@@ -2439,7 +2439,9 @@
 			const c = _featureCentroid(f.geometry);
 			if (!c || !pointInPolygon(c, polygon)) continue;
 			seen.add(key);
-			out.push({ distrito, territory });
+			// district DGEEC population (same field the building click passes)
+			const personas = Number(p.distrito_pop) || Number(p.est_personas) || 0;
+			out.push({ distrito, territory, personas });
 		}
 		return out;
 	}

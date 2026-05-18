@@ -2,6 +2,7 @@
 	import type { DistrictData } from '$lib/stores/map.svelte';
 	import PetalChart from './PetalChart.svelte';
 	import { formatDept } from '$lib/utils/format';
+	import { downloadCsvFromRows } from '$lib/utils/data-export';
 
 	let {
 		districts,
@@ -78,6 +79,22 @@
 	const pendingDistricts = $derived(
 		[...districts.keys()].filter(d => !entries.find(e => e.distrito === d))
 	);
+
+	function downloadDistrictsCsv() {
+		if (entries.length === 0) return;
+		const rows = entries.map(e => {
+			const row: Record<string, unknown> = {
+				distrito: e.distrito,
+				territorio: districts.get(e.distrito)?.territory ?? '',
+				personas: e.personas,
+				nbi_pct: e.pct_nbi ?? '',
+				n_hexes: e.n_hexes,
+			};
+			DISTRICT_PETAL_VARS.forEach((v, i) => { row[v.col] = e.rawValues[i]; });
+			return row;
+		});
+		downloadCsvFromRows(rows, Object.keys(rows[0]), 'spatia_distritos_py.csv');
+	}
 </script>
 
 <div class="chart-root">
@@ -139,6 +156,12 @@
 		</div>
 	{/if}
 
+	{#if entries.length > 0}
+		<div class="dl-row">
+			<button class="dl-btn" onclick={downloadDistrictsCsv}>↓ Comparativo distritos (CSV)</button>
+		</div>
+	{/if}
+
 	<div class="sources">
 		<span class="sources-title">Fuentes</span>
 		<span>INE Paraguay — CNPV 2022 (NBI por distrito)</span>
@@ -193,6 +216,15 @@
 		display: inline-block; width: 6px; height: 6px;
 		border-radius: 50%; flex-shrink: 0;
 	}
+	.dl-row { margin-top: 6px; }
+	.dl-btn {
+		display: block; width: 100%; text-align: center;
+		padding: 6px 10px; background: rgba(59,130,246,0.15);
+		border: 1px solid rgba(59,130,246,0.3); border-radius: 4px;
+		color: #60a5fa; font-size: 9px; font-weight: 600;
+		cursor: pointer; font-family: inherit; transition: all 0.15s;
+	}
+	.dl-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
 	.sources {
 		display: flex; flex-direction: column; gap: 1px;
 		margin-top: 12px; padding-top: 8px;

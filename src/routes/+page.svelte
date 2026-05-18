@@ -416,7 +416,7 @@
 						if (mapStore.hasDistrict(d.distrito)) continue;
 						mapContainer?.dispatchEvent(new CustomEvent('district-select', {
 							bubbles: true,
-							detail: { distrito: d.distrito, personas: 0, territory: d.territory }
+							detail: { distrito: d.distrito, personas: d.personas, territory: d.territory }
 						}));
 					}
 				}
