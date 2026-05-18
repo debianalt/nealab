@@ -90,6 +90,18 @@
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
+{:else if !layer}
+	<!-- Cold-open canvas: GBA buildings coloured by estimated population -->
+	<div class="legend">
+		<div class="legend-title">{i18n.t('legend.buildingsCanvas')}</div>
+		<div class="gradient-bar" style:background={'linear-gradient(to right, #0f1e30, #1e4060, #3080c0, #50a0e0, #70c0ff, #a0dfff, #d0f0ff)'}></div>
+		<div class="gradient-labels">
+			<span>−</span>
+			<span>{i18n.t('legend.estPersons')}</span>
+			<span>+</span>
+		</div>
+		<div class="canvas-note">{i18n.t('legend.estPersonsNote')}</div>
+	</div>
 {/if}
 
 <style>
@@ -174,6 +186,13 @@
 	.nodata-label {
 		font-size: 8px;
 		color: rgba(255,255,255,0.4);
+	}
+	.canvas-note {
+		font-size: 7.5px;
+		color: rgba(255,255,255,0.4);
+		font-style: italic;
+		margin-top: 4px;
+		text-align: center;
 	}
 
 	@media (max-width: 768px) {

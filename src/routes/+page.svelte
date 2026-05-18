@@ -175,16 +175,11 @@
 				// (?lens=/?a=) already restored an analysis. Runs post-DuckDB
 				// because isReady() is non-reactive — setLayer→loadVisibleData
 				// no-ops if DuckDB isn't ready yet and nothing re-triggers it.
-				if (!lensStore.activeLens && !params.get('a')) {
-					lensStore.setLens('vivir');
-					const cold = getAnalysisById('deforestation_dynamics');
-					if (cold) {
-						// Cold-open = department-selection view (no auto-dive). The
-						// deforestation analysis is set; the user picks a department
-						// by clicking its polygon on the map (Phase 2 dept picker).
-						lensStore.setAnalysis(cold);
-					}
-				}
+				// Cold-open = the GBA buildings / population canvas (no analysis
+				// pre-set): the only instant, universal, trinational surface.
+				// The lens/analysis selector stays the primary nav on top — the
+				// user picks a question (deforestation et al.) from there.
+				// Deep-links (?lens=/?a=) were already restored above in onMount.
 			})
 			.catch(e => { console.warn('DuckDB init failed:', e); duckdbFailed = true; });
 
