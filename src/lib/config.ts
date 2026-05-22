@@ -1630,7 +1630,7 @@ export const MAP_EUDR = {
 const R2_EUDR_BASE = `${R2_PROD}/data/eudr`;
 
 export function getEudrParquetUrl(name: string): string {
-	return `${R2_EUDR_BASE}/${name}.parquet?v=21`;
+	return `${R2_EUDR_BASE}/${name}.parquet?v=22`;
 }
 
 export function getEudrProvinceParquetUrl(province: string): string {
