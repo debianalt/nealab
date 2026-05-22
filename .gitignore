@@ -31,3 +31,15 @@ pipeline/output/*.json
 # DB seed (auto-generated, 7MB)
 db/seed.sql
 db/parquets/
+
+# Local scratch / debug query exports (repo root)
+/check_*.parquet
+/check_*.geojson
+/deptcheck_*.parquet
+/esq_*.parquet
+/esquina_*.parquet
+/itu_*.parquet
+/global_*.parquet
+/schema_*.parquet
+/mis_*.parquet
+/_ul*
