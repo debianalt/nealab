@@ -191,8 +191,12 @@
 			<HexComparison {hexStore} />
 		</div>
 	{:else if lensStore.activeLens && lensStore.activeAnalysis}
-		<!-- Compare selector sticky above chart scroll; charts always visible below -->
-		<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
+		<!-- Compare selector sticky above chart scroll; charts always visible below.
+		     Only for comparable analyses — EUDR and other non-comparable layers
+		     are global/local and have no cross-territory comparison. -->
+		{#if lensStore.activeAnalysis.comparable}
+			<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
+		{/if}
 		<div class="chart-scroll">
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} />
 			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}

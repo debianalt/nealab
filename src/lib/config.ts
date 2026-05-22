@@ -1337,8 +1337,9 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'producir',
 		titleKey: 'trade.eudr.analysis_title',
 		descKey: 'trade.eudr.analysis_desc',
+		// EUDR is a global dataset over 10 NOA+NEA provinces, NOT a per-territory
+		// comparable analysis. Not comparable; loads its own global parquet.
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
-		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},

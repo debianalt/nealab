@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature } from '$lib/utils/deptBoundaries';
 import { i18n } from '$lib/stores/i18n.svelte';
@@ -336,7 +336,11 @@ export class HexStore {
 		prefix: string,
 		target: 'primary' | 'compare' | 'regional'
 	): Promise<void> {
-		const url = getSatGlobalUrl(layer.id, prefix);
+		// EUDR is a single global dataset (10 provinces) at data/eudr/, not a
+		// per-territory parquet — ignore the territory prefix entirely.
+		const url = layer.id === 'eudr'
+			? getEudrParquetUrl(layer.parquet)
+			: getSatGlobalUrl(layer.id, prefix);
 		const result = await query(`SELECT * FROM '${url}'`);
 		const data = new Map<string, Record<string, any>>();
 		const centroids = new Map<string, [number, number]>();

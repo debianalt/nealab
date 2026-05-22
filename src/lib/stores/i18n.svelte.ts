@@ -338,7 +338,7 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── EUDR in analysis menu ──
 	'trade.eudr.open_checker': { es: 'Abrir verificador EUDR', en: 'Open EUDR checker', gn: 'EUDR checker', pt: 'Abrir verificador EUDR' },
-	'trade.eudr.analysis_title': { es: 'EUDR Compliance Checker (NOA y NEA)', en: 'EUDR Compliance Checker (NOA & NEA)', gn: 'EUDR', pt: 'EUDR Compliance Checker (NOA e NEA)' },
+	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (NOA y NEA)', en: 'EUDR · Deforestation risk (NOA & NEA)', gn: 'EUDR · Deforestación', pt: 'EUDR · Risco de desmatamento (NOA e NEA)' },
 	'trade.eudr.analysis_desc': { es: 'Verificación de deforestación para parcelas de producción (Hansen GFC 30 m + MODIS fire)', en: 'Deforestation verification for production plots (Hansen GFC 30m + MODIS fire)', gn: 'EUDR', pt: 'Verificação de desmatamento para parcelas de produção (Hansen GFC 30 m + MODIS fire)' },
 
 	// ── Temporal toggle ──
@@ -980,7 +980,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'trade.hero.subtitle': { es: 'Pipelines de datos satelitales y geoespaciales para compliance, inteligencia comercial y análisis de riesgo', en: 'Satellite and geospatial data pipelines for compliance, business intelligence, and risk assessment', gn: 'Trade', pt: 'Pipelines de dados satelitais e geoespaciais para compliance, inteligência comercial e análise de risco' },
 	'trade.status.available': { es: 'Disponible', en: 'Available', gn: 'Available', pt: 'Disponível' },
 	'trade.status.coming_soon': { es: 'Próximamente', en: 'Coming soon', gn: 'Coming soon', pt: 'Em breve' },
-	'trade.eudr.card_title': { es: 'EUDR Compliance', en: 'EUDR Compliance', gn: 'EUDR Compliance', pt: 'EUDR Compliance' },
+	'trade.eudr.card_title': { es: 'EUDR · Deforestación', en: 'EUDR · Deforestation', gn: 'EUDR · Deforestación', pt: 'EUDR · Desmatamento' },
 	'trade.eudr.card_desc': { es: 'Verificación de deforestación para exportaciones de commodities argentinos a la UE. Regulación (UE) 2023/1115.', en: 'Deforestation verification for Argentine commodity exports to the EU. Regulation (EU) 2023/1115.', gn: 'EUDR', pt: 'Verificação de desmatamento para exportações de commodities argentinos à UE. Regulamento (UE) 2023/1115.' },
 	'trade.eudr.card_cta': { es: 'Verificar parcela', en: 'Check parcel', gn: 'Check', pt: 'Verificar parcela' },
 	'trade.radar.card_title': { es: 'Radar Empresarial', en: 'Business Radar', gn: 'Radar', pt: 'Radar Empresarial' },
@@ -1009,7 +1009,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.how.step2_title': { es: 'Análisis satelital', en: 'Satellite analysis', gn: 'EUDR', pt: 'Análise satelital' },
 	'eudr.how.step2_desc': { es: 'Cruzamos Hansen GFC (30m) y MODIS fire data contra la línea base 2020.', en: 'We cross-reference Hansen GFC (30m) and MODIS fire data against the 2020 baseline.', gn: 'EUDR', pt: 'Cruzamos Hansen GFC (30m) e dados de fogo MODIS com a linha de base 2020.' },
 	'eudr.how.step3_title': { es: 'Evaluación de riesgo', en: 'Risk assessment', gn: 'EUDR', pt: 'Avaliação de risco' },
-	'eudr.how.step3_desc': { es: 'Score de riesgo 0-100 con evidencia satelital y estado de compliance EUDR.', en: 'Risk score 0-100 with satellite evidence and EUDR compliance status.', gn: 'EUDR', pt: 'Score de risco 0-100 com evidência satelital e status de compliance EUDR.' },
+	'eudr.how.step3_desc': { es: 'Score de riesgo 0-100 con evidencia satelital de pérdida forestal post-2020.', en: 'Risk score 0-100 with satellite evidence of post-2020 forest loss.', gn: 'EUDR', pt: 'Score de risco 0-100 com evidência satelital de perda florestal pós-2020.' },
 	'eudr.data.title': { es: 'Datos y cobertura', en: 'Data and coverage', gn: 'EUDR', pt: 'Dados e cobertura' },
 	'eudr.data.deforestation': { es: 'Deforestación', en: 'Deforestation', gn: 'EUDR', pt: 'Desmatamento' },
 	'eudr.data.coverage': { es: 'Cobertura', en: 'Coverage', gn: 'EUDR', pt: 'Cobertura' },
@@ -1056,6 +1056,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.area_note': { es: 'Área evaluada: hexágono de ~0,1 km² (H3 res-9). Datos satelitales a 100 m: el resultado refleja ese hexágono, no necesariamente la parcela exacta.', en: 'Assessed area: ~0.1 km² hexagon (H3 res-9). 100 m satellite data: the result reflects that hexagon, not necessarily the exact plot.', gn: 'Área ojehecháva: hexágono ~0,1 km² (H3 res-9). Resultado he\'i hexágono rehe, ndaha\'éi parcela exacta.', pt: 'Área avaliada: hexágono de ~0,1 km² (H3 res-9). Dados satelitais a 100 m: o resultado reflete esse hexágono, não necessariamente a parcela exata.' },
 	'eudr.check.vintage': { es: 'Datos satelitales', en: 'Satellite data', gn: 'Datos satelitales', pt: 'Dados satelitais' },
 	'eudr.check.methodology_link': { es: 'Ver metodología completa →', en: 'View full methodology →', gn: 'Ehecha metodología →', pt: 'Ver metodologia completa →' },
+	'eudr.check.cta_from_layer': { es: '🔎 Análisis detallado por punto o polígono (res-9) →', en: '🔎 Detailed point or polygon analysis (res-9) →', gn: '🔎 Análisis detallado →', pt: '🔎 Análise detalhada por ponto ou polígono (res-9) →' },
 	'eudr.check.poly_title': { es: 'Analizar un polígono', en: 'Analyze a polygon', gn: 'Polígono', pt: 'Analisar um polígono' },
 	'eudr.check.poly_upload': { es: 'Subir GeoJSON (parcela / lote)', en: 'Upload GeoJSON (plot / lot)', gn: 'Embohasa GeoJSON', pt: 'Enviar GeoJSON (parcela / lote)' },
 	'eudr.check.poly_draw': { es: '✏️ Dibujar polígono en el mapa', en: '✏️ Draw polygon on the map', gn: 'Embokuatia polígono', pt: '✏️ Desenhar polígono no mapa' },

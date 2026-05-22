@@ -51,6 +51,12 @@
 			</div>
 		</div>
 
+		{#if analysis.id === 'eudr'}
+			<a href="/eudr/check" class="block mb-2 px-3 py-2 rounded border border-accent/30 bg-accent/10 text-[11px] text-white/80 hover:border-accent/60 hover:text-white transition-colors leading-relaxed">
+				{i18n.t('eudr.check.cta_from_layer')}
+			</a>
+		{/if}
+
 		{#if analysis.status === 'coming_soon'}
 			<div class="coming-soon-card">
 				<div class="coming-soon-badge">{i18n.t('analysis.status.comingSoon')}</div>
