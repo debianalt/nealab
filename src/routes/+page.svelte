@@ -11,7 +11,7 @@
 	import { HexStore } from '$lib/stores/hex.svelte';
 	import { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { initDuckDB, query, isReady, getInitError } from '$lib/stores/duckdb';
-	import { cellToLatLng } from 'h3-js';
+	import { cellToLatLng, polygonToCells } from 'h3-js';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
@@ -617,6 +617,42 @@
 		if (layer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 		analysisDataLoaded = true;
+	});
+
+	// ── EUDR: viewport-based hex loading (scalable LOD, multi-country ready) ──
+	// Never loads the whole multi-province dataset. Below the zoom threshold no
+	// hexes load (view too wide); above it, only the cells in view are queried.
+	const EUDR_ZOOM_MIN = 8;
+	const EUDR_MAX_CELLS = 8000;
+	$effect(() => {
+		const isEudr = lensStore.activeAnalysis?.id === 'eudr';
+		const map = mapComponent?.getMap();
+		if (!isEudr || !map) return;
+
+		const loadViewport = () => {
+			const m = mapComponent?.getMap();
+			if (!m) return;
+			if (m.getZoom() < EUDR_ZOOM_MIN) { hexStore.loadEudrViewport([]); return; }
+			const b = m.getBounds();
+			const rect = [[
+				[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
+				[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
+				[b.getWest(), b.getSouth()],
+			]];
+			let cells: string[] = [];
+			try { cells = polygonToCells(rect, 7, true); } catch { cells = []; }
+			if (cells.length === 0 || cells.length > EUDR_MAX_CELLS) { hexStore.loadEudrViewport([]); return; }
+			hexStore.loadEudrViewport(cells);
+		};
+
+		map.on('moveend', loadViewport);
+		// Jump to a covered area on activation so hexes appear immediately
+		if (map.getZoom() < EUDR_ZOOM_MIN) {
+			map.flyTo({ center: [-54.5, -26.8], zoom: 8, duration: 1000 });
+		} else {
+			loadViewport();
+		}
+		return () => { map.off('moveend', loadViewport); };
 	});
 
 	function handleShowLisa(entries: { h3index: string; value: number; boundary?: number[][] }[]) {

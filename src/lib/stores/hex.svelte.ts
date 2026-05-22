@@ -111,6 +111,17 @@ export class HexStore {
 		this.clearCompareDept();
 		this.clearRegionalData();
 
+		// EUDR: global dataset over many provinces — too heavy to load whole.
+		// Load on demand by viewport (see loadEudrViewport). Start empty.
+		if (cfg.id === 'eudr') {
+			this.visibleData = new Map();
+			this.boundaryCache = new Map();
+			this.centroidCache = new Map();
+			this.dataVersion++;
+			this.loading = false;
+			return;
+		}
+
 		// Per-department layers: don't load all data, wait for department selection
 		if (cfg.perDepartment) {
 			this.loading = false;
@@ -563,6 +574,61 @@ export class HexStore {
 
 		// Persist in module-level cache for instant re-activation
 		layerDataCache.set(layer.id, { data, centroids, boundaries, provincialAvg: null });
+	}
+
+	// EUDR: load only the H3 cells in the current viewport (scalable —
+	// never loads the whole multi-province dataset at once).
+	async loadEudrViewport(cells: string[]) {
+		const layer = this.activeLayer;
+		if (!layer || layer.id !== 'eudr' || !isReady()) return;
+		if (cells.length === 0) {
+			this.visibleData = new Map();
+			this.boundaryCache = new Map();
+			this.centroidCache = new Map();
+			this.dataVersion++;
+			return;
+		}
+		this.loading = true;
+		try {
+			const url = getEudrParquetUrl(layer.parquet);
+			const colNames = layer.variables.map(v => v.col);
+			const inList = cells.map(c => `'${c}'`).join(',');
+			const result = await query(
+				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})`
+			);
+			const data = new Map<string, Record<string, any>>();
+			const centroids = new Map<string, [number, number]>();
+			const boundaries = new Map<string, number[][]>();
+			const h3Vec = result.getChild('h3index');
+			const colVecs = Object.fromEntries(colNames.map(c => [c, result.getChild(c)]));
+			for (let i = 0; i < result.numRows; i++) {
+				const h3index = String(h3Vec!.get(i));
+				const values: Record<string, any> = {};
+				for (const c of colNames) {
+					const v = colVecs[c]?.get(i);
+					if (v === null || v === undefined) continue;
+					const n = Number(v);
+					values[c] = Number.isFinite(n) && typeof v !== 'string' ? n : String(v);
+				}
+				data.set(h3index, values);
+				try {
+					const [lat, lng] = cellToLatLng(h3index);
+					centroids.set(h3index, [lng, lat]);
+					const boundary = cellToBoundary(h3index);
+					const coords = boundary.map(([lat, lng]) => [lng, lat]);
+					coords.push(coords[0]);
+					boundaries.set(h3index, coords);
+				} catch { /* skip invalid h3 */ }
+			}
+			this.visibleData = data;
+			this.centroidCache = centroids;
+			this.boundaryCache = boundaries;
+			this.dataVersion++;
+		} catch (e) {
+			console.warn('EUDR viewport load failed:', e);
+		} finally {
+			this.loading = false;
+		}
 	}
 
 	// ── Selection ────────────────────────────────────────────────────────
