@@ -629,6 +629,9 @@
 		const map = mapComponent?.getMap();
 		if (!isEudr || !map) return;
 
+		// EUDR: hide Spatia territory map, show NOA+NEA province outlines (pink)
+		mapComponent?.setEudrMode(true);
+
 		const loadViewport = () => {
 			const m = mapComponent?.getMap();
 			if (!m) return;
@@ -652,7 +655,11 @@
 		} else {
 			loadViewport();
 		}
-		return () => { map.off('moveend', loadViewport); };
+		return () => {
+			map.off('moveend', loadViewport);
+			mapComponent?.setEudrMode(false);
+			hexStore.loadEudrViewport([]); // clear EUDR hexes when leaving the layer
+		};
 	});
 
 	function handleShowLisa(entries: { h3index: string; value: number; boundary?: number[][] }[]) {

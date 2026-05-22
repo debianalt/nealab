@@ -668,6 +668,19 @@
 				filter: ['==', ['get', 'h3index'], '']
 			});
 
+			// EUDR mode: NOA+NEA province outlines (pink). Hidden unless EUDR active.
+			map.addSource('eudr-provinces-main', {
+				type: 'geojson',
+				data: '/data/eudr_provinces_boundary.json'
+			});
+			map.addLayer({
+				id: 'eudr-provinces-line',
+				type: 'line',
+				source: 'eudr-provinces-main',
+				layout: { visibility: 'none' },
+				paint: { 'line-color': '#ec4899', 'line-width': 1.5, 'line-opacity': 0.85 }
+			});
+
 			// ── Compare territory hex choropleth (dept comparison mode) ─────
 			map.addSource('compare-hexagons', {
 				type: 'geojson',
@@ -1428,6 +1441,31 @@
 	export function setActiveTerritory(territoryId: string) {
 		activeTerritoryId = territoryId;
 		applyTerritoryVisibility();
+	}
+
+	// EUDR mode: hide the Spatia territory map (buildings/masks/districts) and
+	// show only the NOA+NEA province outlines. Restore via applyTerritoryVisibility.
+	const EUDR_HIDDEN_LAYERS = [
+		'buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d',
+		'mask-fill', 'itapua-mask-fill', 'corrientes-mask-fill', 'alto_parana-mask-fill',
+		'province-border', 'corrientes-border', 'alto_parana-border',
+		'itapua-district-fill', 'itapua-district-line', 'alto_parana-district-fill', 'alto_parana-district-line',
+		'province-fill', 'province-line',
+	];
+	export function setEudrMode(active: boolean) {
+		if (!map) return;
+		const apply = () => {
+			if (active) {
+				for (const l of EUDR_HIDDEN_LAYERS) {
+					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
+				}
+				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'visible');
+			} else {
+				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'none');
+				applyTerritoryVisibility();
+			}
+		};
+		if (map.isStyleLoaded()) apply(); else map.once('idle', apply);
 	}
 
 	function regionalProvinceClickHandler(e: any) {
