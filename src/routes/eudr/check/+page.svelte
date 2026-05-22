@@ -3,10 +3,12 @@
 	import EudrMap from '$lib/components/EudrMap.svelte';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
 	import { getEudrHiresUrl } from '$lib/config';
-	import { latLngToCell } from 'h3-js';
+	import { latLngToCell, polygonToCells } from 'h3-js';
 
 	const EUDR_RES = 9;
 	const DATA_VINTAGE = '2024-12-31';
+	const HEX_AREA_HA = 10.5; // res-9 hexagon ≈ 0.105 km² = 10.5 ha
+	const MAX_POLY_CELLS = 9500; // ~100k ha cap for interactive analysis
 
 	let mapComponent: EudrMap;
 
@@ -39,6 +41,25 @@
 	}
 
 	let result: EudrResult | null = $state(null);
+
+	// Polygon mode
+	interface PolygonResult {
+		cells_requested: number;
+		cells_in_coverage: number;
+		coverage_pct: number;
+		area_ha: number;
+		deforested_cells: number;
+		deforested_pct: number;
+		mean_risk: number;
+		max_risk: number;
+		mean_loss_pos: number;
+		provinces: string[];
+	}
+	let polygonResult: PolygonResult | null = $state(null);
+	let polygonError = $state('');
+	let polygonLoading = $state(false);
+	let polygonName = $state('');
+	let drawing = $state(false);
 
 	function getRiskColor(level: string): string {
 		switch (level) {
@@ -90,6 +111,8 @@
 		loading = true;
 		error = '';
 		result = null;
+		polygonResult = null;
+		mapComponent?.clearPolygon();
 
 		const cell = latLngToCell(lat, lon, EUDR_RES);
 		mapComponent?.showCell(cell);
@@ -133,6 +156,96 @@
 			error = e?.message || 'Error checking coordinates';
 		} finally {
 			loading = false;
+		}
+	}
+
+	// Extract the first polygon's GeoJSON coordinates ([[ [lng,lat], ... ]]) from
+	// a GeoJSON Feature / FeatureCollection / Geometry. Returns null if none.
+	function extractPolygonCoords(geojson: any): number[][][] | null {
+		let geom = geojson;
+		if (geom?.type === 'FeatureCollection') geom = geom.features?.[0]?.geometry;
+		else if (geom?.type === 'Feature') geom = geom.geometry;
+		if (!geom) return null;
+		if (geom.type === 'Polygon') return geom.coordinates;
+		if (geom.type === 'MultiPolygon') return geom.coordinates?.[0] ?? null; // first polygon only (v1)
+		return null;
+	}
+
+	async function handleGeoJsonUpload(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const file = input.files?.[0];
+		if (!file) return;
+		polygonError = '';
+		if (file.size > 1_000_000) {
+			polygonError = i18n.t('eudr.check.poly_too_big_file');
+			return;
+		}
+		try {
+			const text = await file.text();
+			const gj = JSON.parse(text);
+			const coords = extractPolygonCoords(gj);
+			if (!coords) {
+				polygonError = i18n.t('eudr.check.poly_invalid');
+				return;
+			}
+			polygonName = file.name;
+			await checkPolygon(coords);
+		} catch {
+			polygonError = i18n.t('eudr.check.poly_invalid');
+		} finally {
+			input.value = ''; // allow re-uploading the same file
+		}
+	}
+
+	async function checkPolygon(rings: number[][][]) {
+		polygonLoading = true;
+		polygonError = '';
+		polygonResult = null;
+		result = null; // clear point result when switching to polygon mode
+
+		try {
+			// isGeoJson=true → coords are [lng,lat] loops
+			const cells: string[] = polygonToCells(rings, EUDR_RES, true);
+			if (cells.length === 0) {
+				polygonError = i18n.t('eudr.check.poly_no_cells');
+				return;
+			}
+			if (cells.length > MAX_POLY_CELLS) {
+				polygonError = i18n.t('eudr.check.poly_too_big_area');
+				return;
+			}
+
+			await initDuckDB();
+			const inList = cells.map((c) => `'${c}'`).join(',');
+			const sql = `SELECT h3index, province, risk_score, loss_post_2020_pct, deforestation_post_2020
+				FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index IN (${inList})`;
+			const rows: any[] = (await query(sql)).toArray();
+
+			const inCov = rows.length;
+			const deforested = rows.filter((r) => Number(r.deforestation_post_2020) > 0);
+			const risks = rows.map((r) => Number(r.risk_score));
+			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
+			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
+
+			polygonResult = {
+				cells_requested: cells.length,
+				cells_in_coverage: inCov,
+				coverage_pct: cells.length ? (inCov / cells.length) * 100 : 0,
+				area_ha: inCov * HEX_AREA_HA,
+				deforested_cells: deforested.length,
+				deforested_pct: inCov ? (deforested.length / inCov) * 100 : 0,
+				mean_risk: inCov ? risks.reduce((a, b) => a + b, 0) / inCov : 0,
+				max_risk: inCov ? Math.max(...risks) : 0,
+				mean_loss_pos: lossPos.length ? lossPos.reduce((a, b) => a + b, 0) / lossPos.length : 0,
+				provinces,
+			};
+
+			mapComponent?.showPolygon(rings);
+			mapComponent?.showCells(rows.map((r) => ({ h3index: String(r.h3index), risk: Number(r.risk_score) })));
+		} catch (e: any) {
+			polygonError = e?.message || 'Error procesando el polígono';
+		} finally {
+			polygonLoading = false;
 		}
 	}
 
@@ -244,7 +357,9 @@
 	<div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:h-[calc(100vh-200px)]" style="min-height: 500px;">
 		<!-- Map -->
 		<div class="relative rounded-lg overflow-hidden border border-border min-h-[350px] lg:min-h-0">
-			<EudrMap bind:this={mapComponent} onCellClick={handleMapClick} />
+			<EudrMap bind:this={mapComponent} onCellClick={handleMapClick}
+				onPolygonDrawn={(rings) => checkPolygon(rings)}
+				onDrawModeChange={(active) => drawing = active} />
 			<div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded text-[10px] text-white/50">
 				{i18n.t('eudr.check.click_map')}
 			</div>
@@ -286,6 +401,35 @@
 				{#if error}
 					<p class="mt-2 text-[12px] text-red-400">{error}</p>
 				{/if}
+
+				<!-- Polygon upload -->
+				<div class="mt-3 pt-3 border-t border-border">
+					<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.poly_title')}</div>
+					{#if drawing}
+						<div class="px-3 py-2 rounded bg-accent/10 border border-accent/30 text-[11px] text-white/80 leading-relaxed mb-2">
+							{i18n.t('eudr.check.poly_draw_hint')}
+							<button onclick={() => mapComponent?.cancelDraw()} class="mt-1 block text-accent hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[11px]">
+								{i18n.t('eudr.check.poly_draw_cancel')}
+							</button>
+						</div>
+					{:else}
+						<button onclick={() => mapComponent?.startDraw()}
+							class="w-full mb-2 py-2 border border-white/20 rounded-lg text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer bg-transparent">
+							{i18n.t('eudr.check.poly_draw')}
+						</button>
+					{/if}
+					<label class="block w-full text-center py-2 border border-dashed border-white/20 rounded-lg text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer">
+						{polygonLoading ? i18n.t('eudr.check.checking') : i18n.t('eudr.check.poly_upload')}
+						<input type="file" accept=".geojson,.json,application/geo+json,application/json"
+							onchange={handleGeoJsonUpload} disabled={polygonLoading} class="hidden" />
+					</label>
+					{#if polygonName && polygonResult}
+						<p class="mt-1 text-[10px] text-white/30 truncate">{polygonName}</p>
+					{/if}
+					{#if polygonError}
+						<p class="mt-2 text-[12px] text-red-400">{polygonError}</p>
+					{/if}
+				</div>
 			</div>
 
 			<!-- Loading skeleton -->
@@ -307,7 +451,7 @@
 			{/if}
 
 			<!-- Empty state -->
-			{#if !result && !loading}
+			{#if !result && !polygonResult && !loading && !polygonLoading}
 				<div class="border border-border/50 rounded-lg p-6 bg-white/[0.01] flex-1 flex flex-col items-center justify-center text-center gap-3">
 					<svg class="w-10 h-10 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -409,6 +553,68 @@
 					{/if}
 
 					<!-- Disclaimer -->
+					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
+						{i18n.t('eudr.disclaimer_short')}
+					</div>
+					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-accent hover:text-white underline transition-colors">
+						{i18n.t('eudr.check.methodology_link')}
+					</a>
+				</div>
+			{/if}
+
+			<!-- Polygon results -->
+			{#if polygonResult}
+				<div class="border border-border rounded-lg p-4 bg-white/[0.02] flex-1">
+					<div class="flex items-center justify-between mb-4">
+						<h3 class="text-sm font-bold text-white">{i18n.t('eudr.check.poly_result_title')}</h3>
+						<span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+							style="background: {getRiskColor(polygonResult.deforested_pct > 0 ? 'high' : 'low')}20; color: {getRiskColor(polygonResult.deforested_pct > 0 ? 'high' : 'low')};">
+							{polygonResult.deforested_pct > 0 ? i18n.t('eudr.check.deforest_detected') : getAssessmentLabel('LOW_RISK')}
+						</span>
+					</div>
+
+					{#if polygonResult.coverage_pct < 99.5}
+						<div class="mb-3 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-200/80 leading-relaxed">
+							{i18n.t('eudr.check.poly_coverage_warn').replace('{pct}', polygonResult.coverage_pct.toFixed(0))}
+						</div>
+					{/if}
+
+					<div class="grid grid-cols-2 gap-3 mb-4">
+						<div class="bg-white/[0.03] rounded p-3">
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_area')}</div>
+							<div class="text-lg font-bold text-white">{polygonResult.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha</div>
+						</div>
+						<div class="bg-white/[0.03] rounded p-3">
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_deforested')}</div>
+							<div class="text-lg font-bold" style="color: {polygonResult.deforested_pct > 0 ? '#ef4444' : '#22c55e'};">
+								{polygonResult.deforested_pct.toFixed(1)}%
+							</div>
+						</div>
+						<div class="bg-white/[0.03] rounded p-3">
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_max_risk')}</div>
+							<div class="text-lg font-bold text-white">{polygonResult.max_risk.toFixed(0)}</div>
+						</div>
+						<div class="bg-white/[0.03] rounded p-3">
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_mean_risk')}</div>
+							<div class="text-lg font-bold text-white">{polygonResult.mean_risk.toFixed(1)}</div>
+						</div>
+					</div>
+
+					<div class="space-y-2 text-[11px] text-white/50">
+						<div class="flex justify-between">
+							<span>{i18n.t('eudr.check.poly_cells')}</span>
+							<span class="text-white/70">{polygonResult.cells_in_coverage.toLocaleString()} / {polygonResult.cells_requested.toLocaleString()}</span>
+						</div>
+						<div class="flex justify-between">
+							<span>{i18n.t('eudr.check.poly_deforested_cells')}</span>
+							<span class="text-white/70">{polygonResult.deforested_cells.toLocaleString()}</span>
+						</div>
+						<div class="flex justify-between">
+							<span>{i18n.t('eudr.check.province')}</span>
+							<span class="text-white/70">{polygonResult.provinces.join(', ') || '--'}</span>
+						</div>
+					</div>
+
 					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>

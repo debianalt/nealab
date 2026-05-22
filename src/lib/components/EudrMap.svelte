@@ -5,13 +5,64 @@
 
 	interface Props {
 		onCellClick?: (lat: number, lon: number, h3index: string) => void;
+		onPolygonDrawn?: (rings: number[][][]) => void;
+		onDrawModeChange?: (active: boolean) => void;
 	}
 
-	let { onCellClick }: Props = $props();
+	let { onCellClick, onPolygonDrawn, onDrawModeChange }: Props = $props();
 
 	let mapContainer: HTMLDivElement;
 	let map: maplibregl.Map;
 	let marker: maplibregl.Marker | null = null;
+
+	// Hand-rolled polygon draw state
+	let drawMode = false;
+	let drawPts: [number, number][] = [];
+
+	function setDrawState(active: boolean) {
+		drawMode = active;
+		onDrawModeChange?.(active);
+	}
+
+	function updateDrawSource() {
+		const src = map?.getSource('eudr-draw') as maplibregl.GeoJSONSource | undefined;
+		if (!src) return;
+		const features: any[] = drawPts.map((pt) => ({
+			type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: pt },
+		}));
+		if (drawPts.length >= 2) {
+			const line = drawPts.length >= 3 ? [...drawPts, drawPts[0]] : drawPts;
+			features.push({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: line } });
+		}
+		src.setData({ type: 'FeatureCollection', features });
+	}
+
+	export function startDraw() {
+		clearMarker();
+		clearPolygon();
+		drawPts = [];
+		setDrawState(true);
+		map?.doubleClickZoom.disable();
+		updateDrawSource();
+	}
+
+	export function cancelDraw() {
+		drawPts = [];
+		setDrawState(false);
+		map?.doubleClickZoom.enable();
+		updateDrawSource();
+	}
+
+	function finishDraw() {
+		if (drawPts.length >= 3) {
+			const ring = [...drawPts, drawPts[0]];
+			onPolygonDrawn?.([ring]);
+		}
+		setDrawState(false);
+		map?.doubleClickZoom.enable();
+		drawPts = [];
+		updateDrawSource();
+	}
 
 	const MAP_CENTER: [number, number] = [-62.5, -26.5];
 	const MAP_ZOOM = 5.5;
@@ -42,7 +93,43 @@
 		marker = null;
 	}
 
-	// Draw the evaluated H3 res-7 hexagon so the user sees the ~5 km²
+	// Polygon mode: draw the input polygon outline + a risk-colored heatmap of
+	// the res-9 cells it covers, and fit the view to the polygon.
+	export function showPolygon(rings: number[][][]) {
+		if (!map || !map.getSource('eudr-polygon')) return;
+		const src = map.getSource('eudr-polygon') as maplibregl.GeoJSONSource;
+		src.setData({ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: rings } });
+		// Fit bounds
+		const bounds = new maplibregl.LngLatBounds();
+		for (const ring of rings) for (const [lng, lat] of ring) bounds.extend([lng, lat]);
+		if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: 60, duration: 1200, maxZoom: 12 });
+	}
+
+	export function showCells(cells: { h3index: string; risk: number }[]) {
+		if (!map || !map.getSource('eudr-cells')) return;
+		import('h3-js').then(({ cellToBoundary }) => {
+			const features = cells.map((c) => {
+				const b = cellToBoundary(c.h3index);
+				const ring = b.map(([lat, lng]) => [lng, lat]);
+				ring.push(ring[0]);
+				return {
+					type: 'Feature' as const,
+					properties: { risk: c.risk ?? 0 },
+					geometry: { type: 'Polygon' as const, coordinates: [ring] },
+				};
+			});
+			const src = map.getSource('eudr-cells') as maplibregl.GeoJSONSource;
+			src.setData({ type: 'FeatureCollection', features });
+		});
+	}
+
+	export function clearPolygon() {
+		const empty = { type: 'FeatureCollection' as const, features: [] };
+		(map?.getSource('eudr-cells') as maplibregl.GeoJSONSource)?.setData(empty);
+		(map?.getSource('eudr-polygon') as maplibregl.GeoJSONSource)?.setData(empty as any);
+	}
+
+	// Draw the evaluated H3 res-9 hexagon so the user sees the ~0.1 km²
 	// aggregation unit instead of inferring point-level precision from the marker.
 	export function showCell(h3index: string) {
 		if (!map || !map.getSource('eudr-cell')) return;
@@ -75,6 +162,20 @@
 		map.on('load', () => {
 			// Evaluated H3 cell (filled in by showCell)
 			map.addSource('eudr-cell', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			});
+
+			// Polygon-mode sources: covered cells (heatmap) + input polygon outline
+			map.addSource('eudr-cells', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			});
+			map.addSource('eudr-polygon', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			});
+			map.addSource('eudr-draw', {
 				type: 'geojson',
 				data: { type: 'FeatureCollection', features: [] },
 			});
@@ -128,6 +229,54 @@
 				},
 			});
 
+			// Polygon-mode: risk-colored cells (heatmap)
+			map.addLayer({
+				id: 'eudr-cells-fill',
+				type: 'fill',
+				source: 'eudr-cells',
+				paint: {
+					'fill-color': [
+						'interpolate', ['linear'], ['get', 'risk'],
+						0, '#22c55e', 25, '#84cc16', 50, '#f59e0b', 75, '#ef4444', 100, '#991b1b',
+					],
+					'fill-opacity': 0.55,
+				},
+			});
+
+			// Polygon-mode: input polygon outline
+			map.addLayer({
+				id: 'eudr-polygon-line',
+				type: 'line',
+				source: 'eudr-polygon',
+				paint: {
+					'line-color': '#ffffff',
+					'line-width': 2,
+					'line-dasharray': [2, 1],
+					'line-opacity': 0.9,
+				},
+			});
+
+			// Draw-in-progress: line + vertices
+			map.addLayer({
+				id: 'eudr-draw-line',
+				type: 'line',
+				source: 'eudr-draw',
+				filter: ['==', '$type', 'LineString'],
+				paint: { 'line-color': '#60a5fa', 'line-width': 2, 'line-dasharray': [2, 1] },
+			});
+			map.addLayer({
+				id: 'eudr-draw-pts',
+				type: 'circle',
+				source: 'eudr-draw',
+				filter: ['==', '$type', 'Point'],
+				paint: {
+					'circle-radius': 4,
+					'circle-color': '#60a5fa',
+					'circle-stroke-color': '#ffffff',
+					'circle-stroke-width': 1.5,
+				},
+			});
+
 			// Province labels
 			const provinces = [
 				{ name: 'Jujuy', coords: [-65.7, -23.3] },
@@ -157,6 +306,13 @@
 			const lat = e.lngLat.lat;
 			const lon = e.lngLat.lng;
 
+			// Draw mode: accumulate vertices instead of running a point check
+			if (drawMode) {
+				drawPts.push([lon, lat]);
+				updateDrawSource();
+				return;
+			}
+
 			setMarker(lat, lon);
 
 			// Convert to H3 (done in parent via callback)
@@ -167,6 +323,13 @@
 					showCell(h3index);
 					onCellClick(lat, lon, h3index);
 				});
+			}
+		});
+
+		map.on('dblclick', (e) => {
+			if (drawMode) {
+				e.preventDefault();
+				finishDraw();
 			}
 		});
 
