@@ -24,7 +24,6 @@ interface CoordinateInput {
 
 interface CheckRequest {
 	coordinates: CoordinateInput[];
-	commodity?: 'soya' | 'cattle' | 'wood';
 }
 
 interface DeforestationResult {
@@ -56,8 +55,6 @@ interface CheckResponse {
 		h3_resolution: number;
 		spatial_precision_km: number;
 		disclaimer: string;
-		daily_limit: number;
-		remaining_checks: number;
 	};
 }
 
@@ -104,8 +101,11 @@ function getRiskLevel(score: number | null): string {
 	return 'low';
 }
 
+// Descriptive risk tiers — deliberately NOT a compliance verdict.
+// EUDR "compliance" has legal weight in the EU; this tool reports
+// satellite-derived risk indicators only (see DISCLAIMER).
 function getEudrAssessment(deforested: boolean, riskScore: number | null): string {
-	if (deforested) return 'NON_COMPLIANT';
+	if (deforested) return 'DEFOREST_DETECTED';
 	if (riskScore !== null && riskScore >= 50) return 'HIGH_RISK';
 	if (riskScore !== null && riskScore >= 25) return 'MEDIUM_RISK';
 	return 'LOW_RISK';
@@ -244,9 +244,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 		}
 	}
 
-	const ipEntry = rateLimits.get(ip);
-	const remaining = ipEntry ? Math.max(0, RATE_LIMIT_PER_DAY - ipEntry.count) : RATE_LIMIT_PER_DAY;
-
 	const response: CheckResponse = {
 		results,
 		meta: {
@@ -255,8 +252,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 			h3_resolution: H3_RESOLUTION,
 			spatial_precision_km: SPATIAL_PRECISION_KM,
 			disclaimer: DISCLAIMER,
-			daily_limit: RATE_LIMIT_PER_DAY,
-			remaining_checks: remaining,
 		},
 	};
 

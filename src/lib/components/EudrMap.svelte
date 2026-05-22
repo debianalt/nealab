@@ -42,6 +42,23 @@
 		marker = null;
 	}
 
+	// Draw the evaluated H3 res-7 hexagon so the user sees the ~5 km²
+	// aggregation unit instead of inferring point-level precision from the marker.
+	export function showCell(h3index: string) {
+		if (!map || !map.getSource('eudr-cell')) return;
+		import('h3-js').then(({ cellToBoundary }) => {
+			const boundary = cellToBoundary(h3index); // [[lat, lng], ...]
+			const ring = boundary.map(([lat, lng]) => [lng, lat]);
+			ring.push(ring[0]);
+			const source = map.getSource('eudr-cell') as maplibregl.GeoJSONSource;
+			source.setData({
+				type: 'Feature',
+				properties: {},
+				geometry: { type: 'Polygon', coordinates: [ring] },
+			});
+		});
+	}
+
 	onMount(() => {
 		map = new maplibregl.Map({
 			container: mapContainer,
@@ -56,6 +73,12 @@
 		map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
 		map.on('load', () => {
+			// Evaluated H3 cell (filled in by showCell)
+			map.addSource('eudr-cell', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] },
+			});
+
 			// Province boundaries
 			map.addSource('eudr-provinces', {
 				type: 'geojson',
@@ -80,6 +103,28 @@
 					'line-color': '#ffffff',
 					'line-width': 1.5,
 					'line-opacity': 0.4,
+				},
+			});
+
+			// Evaluated hexagon — drawn on top of provinces
+			map.addLayer({
+				id: 'eudr-cell-fill',
+				type: 'fill',
+				source: 'eudr-cell',
+				paint: {
+					'fill-color': '#60a5fa',
+					'fill-opacity': 0.18,
+				},
+			});
+
+			map.addLayer({
+				id: 'eudr-cell-line',
+				type: 'line',
+				source: 'eudr-cell',
+				paint: {
+					'line-color': '#60a5fa',
+					'line-width': 2,
+					'line-opacity': 0.9,
 				},
 			});
 
@@ -118,7 +163,8 @@
 			if (onCellClick) {
 				// Lazy-load h3-js
 				import('h3-js').then(({ latLngToCell }) => {
-					const h3index = latLngToCell(lat, lon, 7);
+					const h3index = latLngToCell(lat, lon, 9);
+					showCell(h3index);
 					onCellClick(lat, lon, h3index);
 				});
 			}

@@ -101,6 +101,12 @@ export function getReportUrl(analysisId: string, parquetKey: string, territoryPr
 	return `${getBase()}/data/${territoryPrefix}reports/sat_${analysisId}_${parquetKey}.pdf`;
 }
 
+// EUDR hi-res (res-9) deforestation grid — single combined parquet, sorted by
+// h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
+export function getEudrHiresUrl(): string {
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?cb=${_sessionBust}`;
+}
+
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
 	const layer = HEX_LAYER_REGISTRY[analysisId];
 	const name = layer?.parquet ?? `sat_${analysisId}`;

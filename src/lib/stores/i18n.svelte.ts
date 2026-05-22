@@ -1052,6 +1052,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.remaining': { es: 'checks restantes hoy', en: 'checks remaining today', gn: 'checks', pt: 'checks restantes hoje' },
 	'eudr.check.limit_reached': { es: 'Límite diario alcanzado', en: 'Daily limit reached', gn: 'Limit', pt: 'Limite diário atingido' },
 	'eudr.check.limit_cta': { es: 'Contactanos para acceso profesional', en: 'Contact us for professional access', gn: 'Contact', pt: 'Contate-nos para acesso profissional' },
+	'eudr.check.deforest_detected': { es: 'PÉRDIDA POST-2020 DETECTADA', en: 'POST-2020 LOSS DETECTED', gn: 'PÉRDIDA POST-2020', pt: 'PERDA PÓS-2020 DETECTADA' },
+	'eudr.check.area_note': { es: 'Área evaluada: hexágono de ~0,1 km² (H3 res-9). Datos satelitales a 100 m: el resultado refleja ese hexágono, no necesariamente la parcela exacta.', en: 'Assessed area: ~0.1 km² hexagon (H3 res-9). 100 m satellite data: the result reflects that hexagon, not necessarily the exact plot.', gn: 'Área ojehecháva: hexágono ~0,1 km² (H3 res-9). Resultado he\'i hexágono rehe, ndaha\'éi parcela exacta.', pt: 'Área avaliada: hexágono de ~0,1 km² (H3 res-9). Dados satelitais a 100 m: o resultado reflete esse hexágono, não necessariamente a parcela exata.' },
+	'eudr.check.vintage': { es: 'Datos satelitales', en: 'Satellite data', gn: 'Datos satelitales', pt: 'Dados satelitais' },
+	'eudr.check.methodology_link': { es: 'Ver metodología completa →', en: 'View full methodology →', gn: 'Ehecha metodología →', pt: 'Ver metodologia completa →' },
 
 	// ── Navigation (shared across pages) ─────────────────────────────────
 	'nav.backToMap': { es: '← Volver al mapa', en: '← Back to map', gn: "← Ejevypa mapa-pe", pt: '← Voltar ao mapa' },

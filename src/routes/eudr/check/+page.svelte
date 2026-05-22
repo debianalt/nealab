@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import EudrMap from '$lib/components/EudrMap.svelte';
+	import { initDuckDB, query } from '$lib/stores/duckdb';
+	import { getEudrHiresUrl } from '$lib/config';
+	import { latLngToCell } from 'h3-js';
+
+	const EUDR_RES = 9;
+	const DATA_VINTAGE = '2024-12-31';
 
 	let mapComponent: EudrMap;
 
@@ -28,10 +34,11 @@
 		risk_level: string;
 		deforestation_post_2020: boolean;
 		eudr_assessment: string;
+		data_vintage?: string;
+		data_sources?: string[];
 	}
 
 	let result: EudrResult | null = $state(null);
-	let remainingChecks: number | null = $state(null);
 
 	function getRiskColor(level: string): string {
 		switch (level) {
@@ -45,7 +52,7 @@
 
 	function getAssessmentColor(assessment: string): string {
 		switch (assessment) {
-			case 'NON_COMPLIANT': return '#ef4444';
+			case 'DEFOREST_DETECTED': return '#ef4444';
 			case 'HIGH_RISK': return '#f59e0b';
 			case 'MEDIUM_RISK': return '#eab308';
 			case 'LOW_RISK': return '#22c55e';
@@ -54,8 +61,8 @@
 	}
 
 	function getAssessmentLabel(assessment: string): string {
+		if (assessment === 'DEFOREST_DETECTED') return i18n.t('eudr.check.deforest_detected');
 		const labels: Record<string, Record<string, string>> = {
-			NON_COMPLIANT: { es: 'NO CUMPLE', en: 'NON-COMPLIANT' },
 			HIGH_RISK: { es: 'RIESGO ALTO', en: 'HIGH RISK' },
 			MEDIUM_RISK: { es: 'RIESGO MEDIO', en: 'MEDIUM RISK' },
 			LOW_RISK: { es: 'RIESGO BAJO', en: 'LOW RISK' },
@@ -64,44 +71,66 @@
 		return labels[assessment]?.[i18n.locale] || assessment;
 	}
 
+	function riskLevel(score: number | null): string {
+		if (score === null) return 'unknown';
+		if (score >= 75) return 'critical';
+		if (score >= 50) return 'high';
+		if (score >= 25) return 'medium';
+		return 'low';
+	}
+
+	function assessment(deforested: boolean, score: number | null): string {
+		if (deforested) return 'DEFOREST_DETECTED';
+		if (score !== null && score >= 50) return 'HIGH_RISK';
+		if (score !== null && score >= 25) return 'MEDIUM_RISK';
+		return 'LOW_RISK';
+	}
+
 	async function checkCoordinates(lat: number, lon: number) {
 		loading = true;
 		error = '';
 		result = null;
 
+		const cell = latLngToCell(lat, lon, EUDR_RES);
+		mapComponent?.showCell(cell);
+
 		try {
-			const res = await fetch('/api/eudr/check', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					coordinates: [{ lat, lon, id: 'manual' }],
-				}),
-			});
+			await initDuckDB();
+			// h3 cells are alphanumeric — safe to interpolate. Range-read prunes to one row group.
+			const sql = `SELECT * FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index = '${cell}' LIMIT 1`;
+			const table = await query(sql);
+			const rows = table.toArray();
 
-			const text = await res.text();
-			if (!text) {
-				throw new Error(`Empty response (HTTP ${res.status})`);
-			}
-
-			let data: any;
-			try {
-				data = JSON.parse(text);
-			} catch {
-				throw new Error(`Invalid response (HTTP ${res.status})`);
+			if (rows.length === 0) {
+				result = {
+					id: 'manual', lat, lon, h3_cell: cell, province: '',
+					forest_cover_2020_pct: null, forest_cover_current_pct: null,
+					loss_post_2020_pct: null, fire_post_2020_pct: null,
+					risk_score: null, risk_level: 'outside_coverage',
+					deforestation_post_2020: false, eudr_assessment: 'OUTSIDE_COVERAGE',
+					data_vintage: DATA_VINTAGE,
+				};
+				return;
 			}
 
-			if (!res.ok) {
-				throw new Error(data.error || `HTTP ${res.status}`);
-			}
-
-			if (data.meta?.remaining_checks !== undefined) {
-				remainingChecks = data.meta.remaining_checks;
-			}
-			if (data.results && data.results.length > 0) {
-				result = data.results[0];
-			}
+			const r: any = rows[0];
+			const score = r.risk_score === null ? null : Number(r.risk_score);
+			const deforested = Number(r.deforestation_post_2020) > 0;
+			result = {
+				id: 'manual', lat, lon, h3_cell: cell,
+				province: String(r.province ?? ''),
+				forest_cover_2020_pct: r.forest_cover_2020 === null ? null : Number(r.forest_cover_2020),
+				forest_cover_current_pct: r.forest_cover_current === null ? null : Number(r.forest_cover_current),
+				loss_post_2020_pct: r.loss_post_2020_pct === null ? null : Number(r.loss_post_2020_pct),
+				fire_post_2020_pct: r.fire_post_2020_pct === null ? null : Number(r.fire_post_2020_pct),
+				risk_score: score,
+				risk_level: riskLevel(score),
+				deforestation_post_2020: deforested,
+				eudr_assessment: assessment(deforested, score),
+				data_vintage: DATA_VINTAGE,
+			};
 		} catch (e: any) {
-			error = e.message || 'Error checking coordinates';
+			error = e?.message || 'Error checking coordinates';
 		} finally {
 			loading = false;
 		}
@@ -257,17 +286,6 @@
 				{#if error}
 					<p class="mt-2 text-[12px] text-red-400">{error}</p>
 				{/if}
-
-				{#if remainingChecks !== null && remainingChecks <= 20}
-					<div class="mt-2 text-[11px] text-center {remainingChecks === 0 ? 'text-red-400' : 'text-white/40'}">
-						{#if remainingChecks === 0}
-							{i18n.t('eudr.check.limit_reached')} &mdash;
-							<button onclick={() => navigator.clipboard.writeText('nealab@spatia.ar')} class="text-accent hover:text-white underline cursor-pointer bg-transparent border-0 p-0 font-inherit text-[11px]">{i18n.t('eudr.check.limit_cta')}</button>
-						{:else}
-							{remainingChecks} {i18n.t('eudr.check.remaining')}
-						{/if}
-					</div>
-				{/if}
 			</div>
 
 			<!-- Loading skeleton -->
@@ -315,6 +333,13 @@
 							{getAssessmentLabel(result.eudr_assessment)}
 						</span>
 					</div>
+
+					<!-- Aggregation-unit honesty note -->
+					{#if result.eudr_assessment !== 'OUTSIDE_COVERAGE'}
+						<div class="mb-4 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-200/70 leading-relaxed">
+							{i18n.t('eudr.check.area_note')}
+						</div>
+					{/if}
 
 					<!-- Risk Score Gauge -->
 					{#if result.risk_score !== null}
@@ -375,10 +400,21 @@
 						</div>
 					</div>
 
+					<!-- Data vintage -->
+					{#if result.data_vintage}
+						<div class="mt-3 flex justify-between text-[11px] text-white/50">
+							<span>{i18n.t('eudr.check.vintage')}</span>
+							<span class="text-white/70">Hansen GFC · {result.data_vintage}</span>
+						</div>
+					{/if}
+
 					<!-- Disclaimer -->
 					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
+					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-accent hover:text-white underline transition-colors">
+						{i18n.t('eudr.check.methodology_link')}
+					</a>
 				</div>
 			{/if}
 		</div>
@@ -388,16 +424,23 @@
 
 <style>
 	.eudr-gate {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: center;
-		min-height: calc(100vh - 80px);
-		padding: 32px 24px;
+		overflow-y: auto;
+		padding: 32px 24px 64px;
+		background: var(--color-bg);
 	}
 
 	.eudr-gate-card {
 		max-width: 560px;
 		width: 100%;
+		max-height: calc(100dvh - 64px);
+		overflow-y: auto;
+		box-sizing: border-box;
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		background: rgba(255, 255, 255, 0.02);
 		padding: 36px 32px 32px;
