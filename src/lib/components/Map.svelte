@@ -681,6 +681,20 @@
 				paint: { 'line-color': '#ec4899', 'line-width': 1.5, 'line-opacity': 0.85 }
 			});
 
+			// EUDR focus: NEA + cross-border (PY/BR) area of interest — yellow,
+			// thicker, drawn above the pink Argentina context.
+			map.addSource('eudr-focus', {
+				type: 'geojson',
+				data: '/data/eudr_focus_boundary.json'
+			});
+			map.addLayer({
+				id: 'eudr-focus-line',
+				type: 'line',
+				source: 'eudr-focus',
+				layout: { visibility: 'none' },
+				paint: { 'line-color': '#facc15', 'line-width': 2.5, 'line-opacity': 0.95 }
+			});
+
 			// ── Compare territory hex choropleth (dept comparison mode) ─────
 			map.addSource('compare-hexagons', {
 				type: 'geojson',
@@ -1460,8 +1474,10 @@
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
 				}
 				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'visible');
+				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'visible');
 			} else {
 				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'none');
+				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'none');
 				applyTerritoryVisibility();
 			}
 		};
