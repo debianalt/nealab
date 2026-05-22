@@ -407,7 +407,7 @@ export class HexStore {
 
 	async loadFullCompare(comparePrefix: string): Promise<void> {
 		const layer = this.activeLayer;
-		if (!layer || layer.id === 'flood_risk' || layer.perDepartment) return;
+		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr' || layer.perDepartment) return;
 
 		try {
 			await this.loadGlobalInto(layer, comparePrefix, 'compare');
@@ -418,7 +418,7 @@ export class HexStore {
 
 	async loadRegionalData(prefix: string): Promise<void> {
 		const layer = this.activeLayer;
-		if (!layer || layer.id === 'flood_risk' || layer.perDepartment) return;
+		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr' || layer.perDepartment) return;
 		try {
 			await this.loadGlobalInto(layer, prefix, 'regional');
 		} catch (e) {
@@ -502,7 +502,8 @@ export class HexStore {
 	async loadVisibleData() {
 		const layer = this.activeLayer;
 		if (!layer || !isReady()) return;
-		if (layer.perDepartment) return;
+		// EUDR never bulk-loads — viewport-only (see loadEudrViewport)
+		if (layer.perDepartment || layer.id === 'eudr') return;
 
 		this.loading = true;
 		this.loadError = null;
