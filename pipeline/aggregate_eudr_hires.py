@@ -120,6 +120,13 @@ def aggregate(raster_paths, province_id, res):
         if name == "fire_post_2020":
             band = np.nan_to_num(band, nan=0.0)
         data[name] = band
+
+    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..24=2024)
+    if "loss_year" in BANDS and BANDS["loss_year"] <= nbands:
+        ly = stack[BANDS["loss_year"] - 1][valid]
+        for y in (21, 22, 23, 24):
+            data[f"loss_y{2000 + y}"] = (ly == y).astype("float32")
+
     df = pd.DataFrame(data)
 
     # Aggregate: mean per band over pixels in each cell
@@ -148,11 +155,21 @@ def post_process(df):
 
     df["deforestation_post_2020"] = (df["loss_post_2020_pct"] > 0).astype(int)
 
+    # Per-year post-2020 loss as percentages (for the temporal curve)
+    year_cols = []
+    for y in (2021, 2022, 2023, 2024):
+        src = f"loss_y{y}"
+        out = f"loss_{y}_pct"
+        if src in df.columns:
+            df[out] = (df[src] * 100).round(2)
+            year_cols.append(out)
+
     cols = [
         "h3index", "province",
         "forest_cover_2020", "forest_cover_current",
         "loss_total_pct", "loss_post_2020_pct", "loss_pre_2020_pct",
         "fire_post_2020_pct", "risk_score", "deforestation_post_2020",
+        *year_cols,
     ]
     return df[cols].dropna(subset=["forest_cover_2020"])
 

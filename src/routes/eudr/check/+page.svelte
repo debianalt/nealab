@@ -38,6 +38,7 @@
 		eudr_assessment: string;
 		data_vintage?: string;
 		data_sources?: string[];
+		loss_by_year?: Record<number, number>; // {2021: 0.3, 2022: 1.2, ...} %
 	}
 
 	let result: EudrResult | null = $state(null);
@@ -54,12 +55,21 @@
 		max_risk: number;
 		mean_loss_pos: number;
 		provinces: string[];
+		loss_by_year: Record<number, number>;
 	}
 	let polygonResult: PolygonResult | null = $state(null);
 	let polygonError = $state('');
 	let polygonLoading = $state(false);
 	let polygonName = $state('');
 	let drawing = $state(false);
+
+	// Batch CSV state
+	let batchLoading = $state(false);
+	let batchError = $state('');
+	let batchResult: { processed: number; outside: number; csvUrl: string } | null = $state(null);
+
+	// Last analyzed polygon (rings) — used to hash the input for the report
+	let lastPolygonRings: number[][][] | null = null;
 
 	// Warm-only risk ramp — no green/blue (matches platform aesthetic on EUDR)
 	function getRiskColor(level: string): string {
@@ -91,6 +101,14 @@
 			OUTSIDE_COVERAGE: { es: 'FUERA DE COBERTURA', en: 'OUTSIDE COVERAGE' },
 		};
 		return labels[assessment]?.[i18n.locale] || assessment;
+	}
+
+	function yearBarColor(v: number): string {
+		if (v <= 0) return '#3f3f46';
+		if (v < 1) return '#fde047';
+		if (v < 5) return '#f59e0b';
+		if (v < 15) return '#f97316';
+		return '#ef4444';
 	}
 
 	function riskLevel(score: number | null): string {
@@ -140,6 +158,11 @@
 			const r: any = rows[0];
 			const score = r.risk_score === null ? null : Number(r.risk_score);
 			const deforested = Number(r.deforestation_post_2020) > 0;
+			const byYear: Record<number, number> = {};
+			for (const y of [2021, 2022, 2023, 2024]) {
+				const v = r[`loss_${y}_pct`];
+				byYear[y] = v == null ? 0 : Number(v);
+			}
 			result = {
 				id: 'manual', lat, lon, h3_cell: cell,
 				province: String(r.province ?? ''),
@@ -152,6 +175,7 @@
 				deforestation_post_2020: deforested,
 				eudr_assessment: assessment(deforested, score),
 				data_vintage: DATA_VINTAGE,
+				loss_by_year: byYear,
 			};
 		} catch (e: any) {
 			error = e?.message || 'Error checking coordinates';
@@ -203,6 +227,7 @@
 		polygonError = '';
 		polygonResult = null;
 		result = null; // clear point result when switching to polygon mode
+		lastPolygonRings = rings;
 
 		try {
 			// isGeoJson=true → coords are [lng,lat] loops
@@ -218,7 +243,8 @@
 
 			await initDuckDB();
 			const inList = cells.map((c) => `'${c}'`).join(',');
-			const sql = `SELECT h3index, province, risk_score, loss_post_2020_pct, deforestation_post_2020
+			const sql = `SELECT h3index, province, risk_score, loss_post_2020_pct, deforestation_post_2020,
+				loss_2021_pct, loss_2022_pct, loss_2023_pct, loss_2024_pct
 				FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index IN (${inList})`;
 			const rows: any[] = (await query(sql)).toArray();
 
@@ -227,6 +253,11 @@
 			const risks = rows.map((r) => Number(r.risk_score));
 			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
 			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
+			const lossByYear: Record<number, number> = {};
+			for (const y of [2021, 2022, 2023, 2024]) {
+				const sum = rows.reduce((s, r) => s + (Number(r[`loss_${y}_pct`]) || 0), 0);
+				lossByYear[y] = inCov ? sum / inCov : 0;
+			}
 
 			polygonResult = {
 				cells_requested: cells.length,
@@ -239,6 +270,7 @@
 				max_risk: inCov ? Math.max(...risks) : 0,
 				mean_loss_pos: lossPos.length ? lossPos.reduce((a, b) => a + b, 0) / lossPos.length : 0,
 				provinces,
+				loss_by_year: lossByYear,
 			};
 
 			mapComponent?.showPolygon(rings);
@@ -248,6 +280,175 @@
 		} finally {
 			polygonLoading = false;
 		}
+	}
+
+	async function handleBatchUpload(event: Event) {
+		const input = event.target as HTMLInputElement;
+		const file = input.files?.[0];
+		if (!file) return;
+		batchError = '';
+		batchResult = null;
+		if (file.size > 5_000_000) {
+			batchError = i18n.t('eudr.check.batch_err_size');
+			input.value = '';
+			return;
+		}
+		batchLoading = true;
+		try {
+			const text = await file.text();
+			const lines = text.split(/\r?\n/).filter((l) => l.trim());
+			if (lines.length < 2) { batchError = i18n.t('eudr.check.batch_err_empty'); return; }
+			const headers = lines[0].toLowerCase().split(/[,;]/).map((h) => h.trim());
+			const idCol = headers.findIndex((h) => h === 'id' || h === 'name' || h === 'plot');
+			const latCol = headers.findIndex((h) => h === 'lat' || h === 'latitude' || h === 'latitud');
+			const lonCol = headers.findIndex((h) => h === 'lon' || h === 'lng' || h === 'longitude' || h === 'longitud');
+			if (latCol < 0 || lonCol < 0) { batchError = i18n.t('eudr.check.batch_err_cols'); return; }
+
+			const rows: { id: string; lat: number; lon: number; cell: string }[] = [];
+			for (let i = 1; i < lines.length; i++) {
+				const cols = lines[i].split(/[,;]/);
+				const lat = parseFloat(cols[latCol]);
+				const lon = parseFloat(cols[lonCol]);
+				if (!isFinite(lat) || !isFinite(lon)) continue;
+				const id = idCol >= 0 ? cols[idCol].trim().replace(/^"|"$/g, '') : `row_${i}`;
+				rows.push({ id, lat, lon, cell: latLngToCell(lat, lon, EUDR_RES) });
+			}
+			if (rows.length === 0) { batchError = i18n.t('eudr.check.batch_err_empty'); return; }
+			if (rows.length > 10000) { batchError = i18n.t('eudr.check.batch_err_too_many'); return; }
+
+			await initDuckDB();
+			const uniqueCells = [...new Set(rows.map((r) => r.cell))];
+			const inList = uniqueCells.map((c) => `'${c}'`).join(',');
+			const sql = `SELECT h3index, province, forest_cover_2020, forest_cover_current,
+				loss_post_2020_pct, fire_post_2020_pct, risk_score, deforestation_post_2020,
+				loss_2021_pct, loss_2022_pct, loss_2023_pct, loss_2024_pct
+				FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index IN (${inList})`;
+			const data = (await query(sql)).toArray();
+			const byCell = new Map<string, any>();
+			for (const d of data) byCell.set(String(d.h3index), d);
+
+			const outHeaders = [
+				'id', 'lat', 'lon', 'h3_cell', 'in_coverage', 'province',
+				'forest_cover_2020', 'forest_cover_current',
+				'loss_post_2020_pct', 'fire_post_2020_pct', 'risk_score',
+				'deforestation_post_2020', 'eudr_assessment',
+				'loss_2021_pct', 'loss_2022_pct', 'loss_2023_pct', 'loss_2024_pct',
+			];
+			const csv = [outHeaders.join(',')];
+			let outside = 0;
+			const esc = (v: any) => {
+				const s = v == null ? '' : String(v);
+				return s.includes(',') || s.includes('"') ? `"${s.replace(/"/g, '""')}"` : s;
+			};
+			for (const r of rows) {
+				const d = byCell.get(r.cell);
+				if (!d) {
+					outside++;
+					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', '', '', '', ''].map(esc).join(','));
+					continue;
+				}
+				const score = d.risk_score === null ? null : Number(d.risk_score);
+				const def = Number(d.deforestation_post_2020) > 0;
+				csv.push([
+					r.id, r.lat, r.lon, r.cell, 'yes',
+					d.province ?? '', d.forest_cover_2020 ?? '', d.forest_cover_current ?? '',
+					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '', score ?? '',
+					def ? 1 : 0, assessment(def, score),
+					d.loss_2021_pct ?? '', d.loss_2022_pct ?? '', d.loss_2023_pct ?? '', d.loss_2024_pct ?? '',
+				].map(esc).join(','));
+			}
+			const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8' });
+			if (batchResult?.csvUrl) URL.revokeObjectURL(batchResult.csvUrl);
+			batchResult = { processed: rows.length, outside, csvUrl: URL.createObjectURL(blob) };
+		} catch (e: any) {
+			batchError = e?.message || 'Error procesando CSV';
+		} finally {
+			batchLoading = false;
+			input.value = '';
+		}
+	}
+
+	async function generateReport() {
+		if (!polygonResult || !lastPolygonRings) return;
+		const r = polygonResult;
+		const ringsText = JSON.stringify(lastPolygonRings);
+		const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ringsText));
+		const hash = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+		const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+		const yr = (y: number) => (r.loss_by_year[y] || 0).toFixed(3);
+		const html = `<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Informe técnico EUDR — ${polygonName || 'polígono'}</title>
+<style>
+@page { margin: 18mm 16mm; }
+body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 28px auto; padding: 0 24px; color: #111; line-height: 1.55; }
+h1 { font-size: 19px; margin: 0; }
+h2 { font-size: 13px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid #999; padding-bottom: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+td { padding: 5px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
+td:first-child { color: #444; width: 42%; }
+.hash { font-family: 'Courier New', monospace; font-size: 9px; word-break: break-all; color: #333; }
+.disclaimer { font-size: 10.5px; color: #333; margin-top: 22px; padding: 12px 14px; border: 1px solid #aaa; background: #f9f7f0; }
+.kicker { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+.header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #111; padding-bottom: 10px; }
+.meta { font-size: 10px; color: #666; text-align: right; }
+.watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-28deg); font-size: 110px; color: rgba(0,0,0,0.045); font-weight: 900; pointer-events: none; z-index: -1; }
+.print-tip { background: #fef9c3; border: 1px solid #fde047; padding: 8px 12px; font-size: 11px; margin-bottom: 18px; }
+@media print { .print-tip { display: none; } }
+</style></head><body>
+<div class="watermark">INFORME TÉCNICO</div>
+<div class="print-tip">📄 Para guardar como PDF: <b>Cmd/Ctrl + P → Guardar como PDF</b>. Recomendado: orientación vertical, márgenes por defecto.</div>
+<div class="header">
+  <div>
+    <div class="kicker">CONICET · FHyCS-UNaM · spatia.ar</div>
+    <h1>Informe técnico — Antecedentes EUDR</h1>
+  </div>
+  <div class="meta">${now} UTC<br>Versión metodología v1.12</div>
+</div>
+
+<h2>Polígono analizado</h2>
+<table>
+  <tr><td>Identificador</td><td>${polygonName || '(sin nombre)'}</td></tr>
+  <tr><td>Hash SHA-256 (geometría de entrada)</td><td class="hash">${hash}</td></tr>
+  <tr><td>Provincias / unidades</td><td>${r.provinces.join(', ') || '—'}</td></tr>
+  <tr><td>Área en cobertura</td><td>${r.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha</td></tr>
+  <tr><td>Cobertura del polígono</td><td>${r.coverage_pct.toFixed(1)}%</td></tr>
+  <tr><td>Celdas evaluadas / solicitadas</td><td>${r.cells_in_coverage.toLocaleString()} / ${r.cells_requested.toLocaleString()}</td></tr>
+</table>
+
+<h2>Resultados</h2>
+<table>
+  <tr><td>Pérdida forestal post-2020 (% del polígono)</td><td><b>${r.deforested_pct.toFixed(2)}%</b></td></tr>
+  <tr><td>Celdas con pérdida post-2020</td><td>${r.deforested_cells.toLocaleString()}</td></tr>
+  <tr><td>Riesgo máximo (0-100)</td><td>${r.max_risk.toFixed(0)}</td></tr>
+  <tr><td>Riesgo medio (0-100)</td><td>${r.mean_risk.toFixed(1)}</td></tr>
+  <tr><td>Pérdida 2021</td><td>${yr(2021)}%</td></tr>
+  <tr><td>Pérdida 2022</td><td>${yr(2022)}%</td></tr>
+  <tr><td>Pérdida 2023</td><td>${yr(2023)}%</td></tr>
+  <tr><td>Pérdida 2024</td><td>${yr(2024)}%</td></tr>
+</table>
+
+<h2>Metodología</h2>
+<p style="font-size:12px;">
+Score compuesto 0-100: <b>70%</b> pérdida forestal post-2020 + <b>20%</b> área quemada post-2020 + <b>10%</b> pérdida de cobertura previa.
+Cutoff EUDR: <b>31 de diciembre de 2020</b> (Art. 2.13 del Reglamento (UE) 2023/1115).
+Resolución espacial: <b>H3 res-9</b> (~0,1 km² por hexágono) sobre dato satelital de 100 m, que constituye el piso de precisión efectivo.</p>
+<p style="font-size:12px;">
+<b>Fuentes:</b> Hansen Global Forest Change v1.12 (UMD/Landsat) + MODIS MCD64A1 área quemada (NASA, 500 m).
+Vintage de datos: <b>2024-12-31</b>. Procesamiento agregado a malla H3 con script <code>aggregate_eudr_region.py</code> (AGPL-3.0, código abierto en <code>github.com/debianalt/nealab</code>).</p>
+
+<h2>Autoría e institución</h2>
+<p style="font-size:12px;">
+Análisis generado por <b>nealab / spatia.ar</b>, plataforma de inteligencia territorial desarrollada en el marco de actividades académicas del Consejo Nacional de Investigaciones Científicas y Técnicas (<b>CONICET</b>) — Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (<b>FHyCS-UNaM</b>).</p>
+
+<div class="disclaimer">
+<b>Disclaimer.</b> Este documento es un <b>informe técnico de antecedentes</b> de cobertura forestal y cambio post-2020 generado a partir de fuentes satelitales públicas. <b>No constituye una certificación formal de cumplimiento</b> bajo el Reglamento (UE) 2023/1115 (EUDR). La certificación regulatoria requiere geometría parcelaria oficial, trazabilidad documental, y due-diligence profesional independiente. nealab, su autor, CONICET y UNaM no asumen responsabilidad por decisiones comerciales o regulatorias basadas exclusivamente en este informe.
+</div>
+
+<p style="font-size:9px;color:#777;margin-top:24px;">Generado ${now} UTC · <a href="https://www.spatia.ar/eudr/check">spatia.ar/eudr/check</a> · Hash geometría: <span class="hash">${hash}</span></p>
+</body></html>`;
+		const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+		const url = URL.createObjectURL(blob);
+		window.open(url, '_blank');
 	}
 
 	function handleSubmit() {
@@ -445,6 +646,26 @@
 						<p class="mt-2 text-[12px] text-red-400">{polygonError}</p>
 					{/if}
 				</div>
+
+				<!-- Batch CSV (id, lat, lon) for operational screening -->
+				<div class="mt-3 pt-3 border-t border-border">
+					<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.batch_title')}</div>
+					<label class="block w-full text-center py-2 border border-dashed border-white/20 rounded-lg text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer">
+						{batchLoading ? i18n.t('eudr.check.checking') : i18n.t('eudr.check.batch_upload')}
+						<input type="file" accept=".csv,text/csv" onchange={handleBatchUpload} disabled={batchLoading} class="hidden" />
+					</label>
+					<p class="mt-1 text-[10px] text-white/30 leading-relaxed">{i18n.t('eudr.check.batch_format')}</p>
+					{#if batchError}
+						<p class="mt-2 text-[12px] text-red-400">{batchError}</p>
+					{/if}
+					{#if batchResult}
+						<a href={batchResult.csvUrl} download={`eudr_batch_${Date.now()}.csv`}
+							class="mt-2 block text-center py-2 rounded border border-yellow-400/50 bg-yellow-400/15 text-[12px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:text-white transition-colors">
+							↓ {batchResult.processed.toLocaleString()} {i18n.t('eudr.check.batch_download')}
+							{#if batchResult.outside > 0} <span class="font-normal text-white/50">({batchResult.outside} {i18n.t('eudr.check.batch_outside')})</span>{/if}
+						</a>
+					{/if}
+				</div>
 			</div>
 
 			<!-- Loading skeleton -->
@@ -543,6 +764,25 @@
 						</div>
 					</div>
 
+					<!-- Loss by year (post-cutoff temporal curve) -->
+					{#if result.loss_by_year && (result.loss_post_2020_pct ?? 0) > 0}
+						<div class="mb-4">
+							<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.loss_by_year')}</div>
+							<svg viewBox="0 0 200 64" class="w-full" preserveAspectRatio="none">
+								{#each [2021, 2022, 2023, 2024] as y, i}
+									{@const v = result.loss_by_year?.[y] || 0}
+									{@const maxV = Math.max(result.loss_by_year?.[2021] || 0, result.loss_by_year?.[2022] || 0, result.loss_by_year?.[2023] || 0, result.loss_by_year?.[2024] || 0, 0.01)}
+									{@const h = (v / maxV) * 38}
+									<rect x={i * 50 + 8} y={50 - h} width="34" height={h} fill={yearBarColor(v)} rx="2"/>
+									<text x={i * 50 + 25} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
+									{#if v > 0.01}
+										<text x={i * 50 + 25} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
+									{/if}
+								{/each}
+							</svg>
+						</div>
+					{/if}
+
 					<!-- Details -->
 					<div class="space-y-2 text-[11px] text-white/50">
 						<div class="flex justify-between">
@@ -615,6 +855,25 @@
 						</div>
 					</div>
 
+					<!-- Loss by year (post-cutoff EUDR temporal curve) -->
+					{#if polygonResult.deforested_cells > 0}
+						<div class="mb-4">
+							<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.loss_by_year')}</div>
+							<svg viewBox="0 0 200 64" class="w-full" preserveAspectRatio="none">
+								{#each [2021, 2022, 2023, 2024] as y, i}
+									{@const v = polygonResult.loss_by_year[y] || 0}
+									{@const maxV = Math.max(polygonResult.loss_by_year[2021] || 0, polygonResult.loss_by_year[2022] || 0, polygonResult.loss_by_year[2023] || 0, polygonResult.loss_by_year[2024] || 0, 0.01)}
+									{@const h = (v / maxV) * 38}
+									<rect x={i * 50 + 8} y={50 - h} width="34" height={h} fill={yearBarColor(v)} rx="2"/>
+									<text x={i * 50 + 25} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
+									{#if v > 0.01}
+										<text x={i * 50 + 25} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
+									{/if}
+								{/each}
+							</svg>
+						</div>
+					{/if}
+
 					<div class="space-y-2 text-[11px] text-white/50">
 						<div class="flex justify-between">
 							<span>{i18n.t('eudr.check.poly_cells')}</span>
@@ -630,7 +889,12 @@
 						</div>
 					</div>
 
-					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
+					<button onclick={generateReport}
+						class="mt-4 w-full py-2 rounded border border-yellow-400/60 bg-yellow-400/15 text-[12px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors cursor-pointer">
+						{i18n.t('eudr.check.poly_report')}
+					</button>
+
+					<div class="mt-3 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
 					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">

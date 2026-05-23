@@ -62,6 +62,13 @@ def aggregate_geom(srcs, geom, province_label, res):
         if name == "fire_post_2020":
             band = np.nan_to_num(band, nan=0.0)
         data[name] = band
+
+    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..24=2024)
+    if "loss_year" in BANDS and BANDS["loss_year"] <= nbands:
+        ly = stack[BANDS["loss_year"] - 1][valid]
+        for y in (21, 22, 23, 24):
+            data[f"loss_y{2000 + y}"] = (ly == y).astype("float32")
+
     df = pd.DataFrame(data)
     agg = df.groupby("h3index").mean()
     agg["province"] = province_label

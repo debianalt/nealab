@@ -62,6 +62,63 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
+      - name: Refresh res-9 hires + lossyear (AR + PY + BR if cached)
+        # Re-aggregates AR & PY from the freshly-downloaded raster shards with
+        # the loss_2021..2024_pct temporal columns. BR is included if a previous
+        # GEE export raster is available in GCS (download attempted; skipped if
+        # absent). Result combined into eudr_res9_combined.parquet (res-9, tool)
+        # and eudr_deforestation.parquet (res-7, main-app layer), then uploaded.
+        run: |
+          set -e
+          mkdir -p pipeline/data
+          # GADM (cached at runner once)
+          [ -f pipeline/data/gadm41_ARG_shp.zip ] || curl -sL -o pipeline/data/gadm41_ARG_shp.zip "https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_ARG_shp.zip"
+          [ -f pipeline/data/gadm41_PRY_shp.zip ] || curl -sL -o pipeline/data/gadm41_PRY_shp.zip "https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_PRY_shp.zip"
+          # Extract PRY level-1 shp components
+          python -c "import zipfile; z=zipfile.ZipFile('pipeline/data/gadm41_PRY_shp.zip'); [z.extract(n,'pipeline/data/') for n in z.namelist() if 'gadm41_PRY_1' in n]"
+          # AR EUDR provinces -> geojson
+          python -c "import geopandas as gpd; ar=['Salta','Jujuy','Tucumán','Catamarca','Santiago del Estero','Formosa','Chaco','Corrientes','Misiones','Entre Ríos']; g=gpd.read_file('zip://pipeline/data/gadm41_ARG_shp.zip!gadm41_ARG_1.shp'); g[g['NAME_1'].isin(ar)][['NAME_1','geometry']].to_file('pipeline/data/ar_eudr_provinces.geojson', driver='GeoJSON')"
+          AR='Salta,Jujuy,Tucumán,Catamarca,Santiago del Estero,Formosa,Chaco,Corrientes,Misiones,Entre Ríos'
+          PY='Alto Paraguay,Alto Paraná,Amambay,Asunción,Boquerón,Caaguazú,Caazapá,Canindeyú,Central,Concepción,Cordillera,Guairá,Itapúa,Misiones,Paraguarí,Presidente Hayes,San Pedro,Ñeembucú'
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 9
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 7
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 9
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 7
+          # BR: re-aggregate from cached GCS raster if present (does not trigger a new GEE export here)
+          python -c "
+          import os, sys
+          try:
+              from google.cloud import storage
+              import json
+              key=os.environ.get('GEE_SERVICE_ACCOUNT_KEY','')
+              if key and not os.path.isfile(key):
+                  d=json.loads(key); from google.oauth2 import service_account
+                  cli=storage.Client(credentials=service_account.Credentials.from_service_account_info(d), project=d.get('project_id'))
+              else:
+                  cli=storage.Client()
+              b=cli.bucket('spatia-satellite').blob('eudr/eudr_deforestation_br.tif')
+              if b.exists():
+                  os.makedirs('pipeline/output/eudr', exist_ok=True)
+                  b.download_to_filename('pipeline/output/eudr/eudr_deforestation_br.tif')
+                  print('BR raster downloaded')
+              else:
+                  print('BR raster not in GCS; skipping BR aggregation')
+          except Exception as e:
+              print(f'BR fetch skipped: {e}')
+          "
+          if [ -f pipeline/output/eudr/eudr_deforestation_br.tif ]; then
+            # br_states.geojson is committed in pipeline/data/
+            BR='Paraná,Santa Catarina,Rio Grande do Sul'
+            python pipeline/aggregate_eudr_region.py --shp pipeline/data/br_states.geojson --name-field NAME_1 --units "$BR" --province-prefix br --out-tag br --res 9 --raster pipeline/output/eudr/eudr_deforestation_br.tif
+            python pipeline/aggregate_eudr_region.py --shp pipeline/data/br_states.geojson --name-field NAME_1 --units "$BR" --province-prefix br --out-tag br --res 7 --raster pipeline/output/eudr/eudr_deforestation_br.tif
+          fi
+          python pipeline/combine_eudr_parquets.py
+          npx wrangler r2 object put neahub/data/eudr/hires/eudr_res9_combined.parquet --file pipeline/output/eudr/hires/eudr_res9_combined.parquet --remote
+          npx wrangler r2 object put neahub/data/eudr/eudr_deforestation.parquet --file pipeline/output/eudr/eudr_deforestation.parquet --remote
+        env:
+          GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
       - name: Upload parquet as artifact
         if: always()
         uses: actions/upload-artifact@v4
