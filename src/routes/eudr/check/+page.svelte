@@ -306,7 +306,7 @@
 		mapComponent?.clearMarker();
 		mapComponent?.clearCell();
 		mapComponent?.clearPolygon();
-		if (drawing) mapComponent?.cancelDraw();
+		if (drawing) mapComponent?.cancelLasso();
 	}
 
 	function fmt(v: number | null, decimals = 1): string {
@@ -402,11 +402,13 @@
 					{/if}
 					{loading ? i18n.t('eudr.check.checking') : i18n.t('eudr.check.check_btn')}
 				</button>
-				<div class="mt-1 flex items-center justify-between text-[11px]">
-					<button onclick={tryExample} class="text-white/30 hover:text-white/70 transition-colors py-1 bg-transparent border-0 cursor-pointer">
+				<div class="mt-2 grid grid-cols-2 gap-2 text-[11px]">
+					<button onclick={tryExample}
+						class="py-1.5 border border-white/15 rounded text-white/60 hover:border-white/35 hover:text-white transition-colors cursor-pointer bg-transparent">
 						{i18n.t('eudr.check.try_example')} →
 					</button>
-					<button onclick={clearAll} class="text-white/30 hover:text-yellow-400 transition-colors py-1 bg-transparent border-0 cursor-pointer">
+					<button onclick={clearAll}
+						class="py-1.5 border border-white/15 rounded text-white/60 hover:border-yellow-400/60 hover:text-yellow-400 transition-colors cursor-pointer bg-transparent">
 						{i18n.t('eudr.check.clear_all')}
 					</button>
 				</div>
