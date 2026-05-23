@@ -619,11 +619,70 @@
 		analysisDataLoaded = true;
 	});
 
-	// ── EUDR: viewport-based hex loading (scalable LOD, multi-country ready) ──
+	// ── EUDR: viewport-based hex loading + click-to-load admin-2 unit ──
 	// Never loads the whole multi-province dataset. Below the zoom threshold no
 	// hexes load (view too wide); above it, only the cells in view are queried.
+	// When an admin-2 unit is selected by clicking, viewport loading is paused
+	// and the unit's cells are loaded — Moran/LISA/Histogram then run over a
+	// statistically meaningful region instead of a random viewport rectangle.
 	const EUDR_ZOOM_MIN = 8;
 	const EUDR_MAX_CELLS = 8000;
+
+	let eudrUnit: { name: string; country: string } | null = $state(null);
+
+	function handleEudrUnitSelect(detail: any) {
+		const { name, country, geometry } = detail ?? {};
+		if (!geometry) return;
+		const polys: number[][][][] = geometry.type === 'MultiPolygon'
+			? geometry.coordinates
+			: [geometry.coordinates];
+		const cellSet = new Set<string>();
+		let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
+		for (const polyCoords of polys) {
+			try {
+				const cells = polygonToCells(polyCoords, 7, true);
+				for (const c of cells) cellSet.add(c);
+			} catch {}
+			for (const ring of polyCoords) for (const [lng, lat] of ring) {
+				if (lng < minLng) minLng = lng;
+				if (lat < minLat) minLat = lat;
+				if (lng > maxLng) maxLng = lng;
+				if (lat > maxLat) maxLat = lat;
+			}
+		}
+		if (cellSet.size === 0) return;
+		hexStore.loadEudrViewport(Array.from(cellSet));
+		eudrUnit = { name, country };
+		const m = mapComponent?.getMap();
+		if (m && isFinite(minLng)) {
+			m.fitBounds([[minLng, minLat], [maxLng, maxLat]] as any, { padding: 80, duration: 1000 });
+		}
+	}
+
+	function clearEudrUnit() {
+		eudrUnit = null;
+		// Resume viewport mode: reload cells for the current view
+		const m = mapComponent?.getMap();
+		if (!m) return;
+		if (m.getZoom() < EUDR_ZOOM_MIN) { hexStore.loadEudrViewport([]); return; }
+		const b = m.getBounds();
+		const rect = [[
+			[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
+			[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
+			[b.getWest(), b.getSouth()],
+		]];
+		let cells: string[] = [];
+		try { cells = polygonToCells(rect, 7, true); } catch { cells = []; }
+		if (cells.length === 0 || cells.length > EUDR_MAX_CELLS) { hexStore.loadEudrViewport([]); return; }
+		hexStore.loadEudrViewport(cells);
+	}
+
+	// Clear unit selection when leaving the EUDR layer
+	$effect(() => {
+		if (lensStore.activeAnalysis?.id !== 'eudr' && eudrUnit) {
+			eudrUnit = null;
+		}
+	});
 	$effect(() => {
 		const isEudr = lensStore.activeAnalysis?.id === 'eudr';
 		const map = mapComponent?.getMap();
@@ -633,6 +692,7 @@
 		mapComponent?.setEudrMode(true);
 
 		const loadViewport = () => {
+			if (eudrUnit) return; // unit mode: keep the unit's hexes, ignore pans
 			const m = mapComponent?.getMap();
 			if (!m) return;
 			if (m.getZoom() < EUDR_ZOOM_MIN) { hexStore.loadEudrViewport([]); return; }
@@ -649,6 +709,12 @@
 		};
 
 		map.on('moveend', loadViewport);
+
+		// Listen for admin-2 unit clicks dispatched from Map.svelte
+		const container = map.getContainer();
+		const unitHandler = (e: Event) => handleEudrUnitSelect((e as CustomEvent).detail);
+		container.addEventListener('eudr-unit-select', unitHandler);
+
 		// Jump to a covered area on activation so hexes appear immediately
 		if (map.getZoom() < EUDR_ZOOM_MIN) {
 			map.flyTo({ center: [-54.5, -26.8], zoom: 8, duration: 1000 });
@@ -657,6 +723,7 @@
 		}
 		return () => {
 			map.off('moveend', loadViewport);
+			container.removeEventListener('eudr-unit-select', unitHandler);
 			mapComponent?.setEudrMode(false);
 			hexStore.loadEudrViewport([]); // clear EUDR hexes when leaving the layer
 		};
@@ -1423,6 +1490,16 @@
 		<div bind:this={mapContainer} class="flex-1 relative min-h-0">
 			<MapComponent bind:this={mapComponent} {mapStore} />
 			<MapLegend {hexStore} />
+
+			<!-- EUDR unit lock indicator + back button -->
+			{#if lensStore.activeAnalysis?.id === 'eudr' && eudrUnit}
+				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-yellow-400/40 text-[12px] shadow-lg">
+					<span class="text-white/90">📍 <b>{eudrUnit.name}</b> <span class="text-white/40">· {eudrUnit.country}</span></span>
+					<button onclick={clearEudrUnit} class="text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[12px]">
+						← Volver al área completa
+					</button>
+				</div>
+			{/if}
 
 			{#if hexStore.loading}
 				<div class="loading-overlay">

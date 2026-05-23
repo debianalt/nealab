@@ -695,6 +695,26 @@
 				paint: { 'line-color': '#ffffff', 'line-width': 0.6, 'line-opacity': 0.32 }
 			});
 
+			// Invisible click target on admin-2 polygons — lets the user pick a
+			// statistically meaningful unit (dept/distrito/municipio) to load.
+			map.addLayer({
+				id: 'eudr-admin2-fill',
+				type: 'fill',
+				source: 'eudr-admin2',
+				layout: { visibility: 'none' },
+				paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.0001 }
+			});
+			map.on('mouseenter', 'eudr-admin2-fill', () => { map.getCanvas().style.cursor = 'pointer'; });
+			map.on('mouseleave', 'eudr-admin2-fill', () => { map.getCanvas().style.cursor = ''; });
+			map.on('click', 'eudr-admin2-fill', (e) => {
+				const feat = e.features?.[0];
+				if (!feat) return;
+				container.dispatchEvent(new CustomEvent('eudr-unit-select', {
+					bubbles: true,
+					detail: { name: feat.properties?.name, country: feat.properties?.country, geometry: feat.geometry }
+				}));
+			});
+
 			// EUDR focus: NEA + cross-border (PY/BR) area of interest — yellow,
 			// thicker, drawn above admin-2 and the pink Argentina context.
 			map.addSource('eudr-focus', {
@@ -1491,7 +1511,7 @@
 			const basemapAdmin = (map.getStyle().layers ?? [])
 				.filter(l => /admin|boundary/i.test(l.id) && (l.type === 'line' || l.type === 'fill'))
 				.map(l => l.id);
-			const eudrLayers = ['eudr-provinces-line', 'eudr-admin2-line', 'eudr-focus-line'];
+			const eudrLayers = ['eudr-provinces-line', 'eudr-admin2-line', 'eudr-admin2-fill', 'eudr-focus-line'];
 			if (active) {
 				for (const l of EUDR_HIDDEN_LAYERS) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
