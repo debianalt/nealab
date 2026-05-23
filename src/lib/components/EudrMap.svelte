@@ -15,54 +15,40 @@
 	let map: maplibregl.Map;
 	let marker: maplibregl.Marker | null = null;
 
-	// Hand-rolled polygon draw state
-	let drawMode = false;
-	let drawPts: [number, number][] = [];
+	// Lasso state — press+drag to outline a region, release to close.
+	// Same UX pattern as the main app's lasso (much friendlier than click-vertex).
+	let lassoActive = false;
+	let lassoDrawing = false;
+	let lassoPoints: [number, number][] = [];
 
-	function setDrawState(active: boolean) {
-		drawMode = active;
+	function updateLassoSource() {
+		if (!map) return;
+		const src = map.getSource('eudr-lasso') as maplibregl.GeoJSONSource | undefined;
+		if (!src) return;
+		if (lassoPoints.length === 0) {
+			src.setData({ type: 'FeatureCollection', features: [] });
+			return;
+		}
+		const coords = lassoPoints.length >= 3
+			? [[...lassoPoints, lassoPoints[0]]]
+			: [lassoPoints];
+		src.setData({ type: 'Feature', geometry: { type: 'Polygon', coordinates: coords }, properties: {} });
+	}
+
+	export function setLassoMode(active: boolean) {
+		if (active) { clearMarker(); clearPolygon(); }
+		lassoActive = active;
+		lassoDrawing = false;
+		lassoPoints = [];
+		updateLassoSource();
+		if (map) {
+			map.getCanvas().style.cursor = active ? 'crosshair' : '';
+			if (active) map.dragPan.disable(); else map.dragPan.enable();
+		}
 		onDrawModeChange?.(active);
 	}
 
-	function updateDrawSource() {
-		const src = map?.getSource('eudr-draw') as maplibregl.GeoJSONSource | undefined;
-		if (!src) return;
-		const features: any[] = drawPts.map((pt) => ({
-			type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: pt },
-		}));
-		if (drawPts.length >= 2) {
-			const line = drawPts.length >= 3 ? [...drawPts, drawPts[0]] : drawPts;
-			features.push({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: line } });
-		}
-		src.setData({ type: 'FeatureCollection', features });
-	}
-
-	export function startDraw() {
-		clearMarker();
-		clearPolygon();
-		drawPts = [];
-		setDrawState(true);
-		map?.doubleClickZoom.disable();
-		updateDrawSource();
-	}
-
-	export function cancelDraw() {
-		drawPts = [];
-		setDrawState(false);
-		map?.doubleClickZoom.enable();
-		updateDrawSource();
-	}
-
-	function finishDraw() {
-		if (drawPts.length >= 3) {
-			const ring = [...drawPts, drawPts[0]];
-			onPolygonDrawn?.([ring]);
-		}
-		setDrawState(false);
-		map?.doubleClickZoom.enable();
-		drawPts = [];
-		updateDrawSource();
-	}
+	export function cancelLasso() { setLassoMode(false); }
 
 	const MAP_CENTER: [number, number] = [-56, -26];
 	const MAP_ZOOM = 5.5;
@@ -187,7 +173,7 @@
 				type: 'geojson',
 				data: { type: 'FeatureCollection', features: [] },
 			});
-			map.addSource('eudr-draw', {
+			map.addSource('eudr-lasso', {
 				type: 'geojson',
 				data: { type: 'FeatureCollection', features: [] },
 			});
@@ -281,48 +267,31 @@
 				},
 			});
 
-			// Draw-in-progress: line + vertices
+			// Lasso outline-in-progress: fill + dashed line
 			map.addLayer({
-				id: 'eudr-draw-line',
-				type: 'line',
-				source: 'eudr-draw',
-				filter: ['==', '$type', 'LineString'],
-				paint: { 'line-color': '#facc15', 'line-width': 2, 'line-dasharray': [2, 1] },
+				id: 'eudr-lasso-fill',
+				type: 'fill',
+				source: 'eudr-lasso',
+				paint: { 'fill-color': '#facc15', 'fill-opacity': 0.15 },
 			});
 			map.addLayer({
-				id: 'eudr-draw-pts',
-				type: 'circle',
-				source: 'eudr-draw',
-				filter: ['==', '$type', 'Point'],
-				paint: {
-					'circle-radius': 4,
-					'circle-color': '#facc15',
-					'circle-stroke-color': '#ffffff',
-					'circle-stroke-width': 1.5,
-				},
+				id: 'eudr-lasso-line',
+				type: 'line',
+				source: 'eudr-lasso',
+				paint: { 'line-color': '#facc15', 'line-width': 2, 'line-dasharray': [3, 2], 'line-opacity': 0.95 },
 			});
 
 			// (Province labels removed — the basemap already shows place labels and
 			// the yellow area-of-interest outline is enough orientation.)
 		});
 
-		// Click handler
+		// Click handler — runs only when NOT in lasso mode (lasso swallows the gesture)
 		map.on('click', (e) => {
+			if (lassoActive) return;
 			const lat = e.lngLat.lat;
 			const lon = e.lngLat.lng;
-
-			// Draw mode: accumulate vertices instead of running a point check
-			if (drawMode) {
-				drawPts.push([lon, lat]);
-				updateDrawSource();
-				return;
-			}
-
 			setMarker(lat, lon);
-
-			// Convert to H3 (done in parent via callback)
 			if (onCellClick) {
-				// Lazy-load h3-js
 				import('h3-js').then(({ latLngToCell }) => {
 					const h3index = latLngToCell(lat, lon, 9);
 					showCell(h3index);
@@ -331,11 +300,27 @@
 			}
 		});
 
-		map.on('dblclick', (e) => {
-			if (drawMode) {
-				e.preventDefault();
-				finishDraw();
+		// Lasso interaction: press-and-drag to outline, release to finish
+		map.on('mousedown', (e) => {
+			if (!lassoActive || e.originalEvent.button !== 0) return;
+			e.preventDefault();
+			lassoDrawing = true;
+			lassoPoints = [[e.lngLat.lng, e.lngLat.lat]];
+			updateLassoSource();
+		});
+		map.on('mousemove', (e) => {
+			if (!lassoDrawing) return;
+			lassoPoints.push([e.lngLat.lng, e.lngLat.lat]);
+			updateLassoSource();
+		});
+		map.on('mouseup', () => {
+			if (!lassoDrawing) return;
+			lassoDrawing = false;
+			if (lassoPoints.length >= 3) {
+				const ring = [...lassoPoints, lassoPoints[0]];
+				onPolygonDrawn?.([ring]);
 			}
+			setLassoMode(false);
 		});
 
 		return () => map?.remove();

@@ -421,12 +421,12 @@
 					{#if drawing}
 						<div class="px-3 py-2 rounded bg-yellow-400/10 border border-yellow-400/30 text-[11px] text-white/80 leading-relaxed mb-2">
 							{i18n.t('eudr.check.poly_draw_hint')}
-							<button onclick={() => mapComponent?.cancelDraw()} class="mt-1 block text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[11px]">
+							<button onclick={() => mapComponent?.cancelLasso()} class="mt-1 block text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[11px]">
 								{i18n.t('eudr.check.poly_draw_cancel')}
 							</button>
 						</div>
 					{:else}
-						<button onclick={() => mapComponent?.startDraw()}
+						<button onclick={() => mapComponent?.setLassoMode(true)}
 							class="w-full mb-2 py-2 border border-white/20 rounded-lg text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer bg-transparent">
 							{i18n.t('eudr.check.poly_draw')}
 						</button>
