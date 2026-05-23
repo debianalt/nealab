@@ -9,8 +9,7 @@
 
 		<p class="platform-intro">
 			Análisis geoespacial sobre el Noreste Argentino — NEA (Misiones, Corrientes, Chaco, Formosa) —
-			y sus regiones transfronterizas en Paraguay (Itapúa, Alto Paraná, Canindeyú, Pte. Hayes y
-			demás departamentos limítrofes) y el sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul):
+			todo Paraguay (18 departamentos) y el sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul):
 			deforestación, carbono, calidad del aire, riesgo hídrico, actividad productiva y más.
 			Cobertura específica por capa. Sin costo, sin registro.
 		</p>
