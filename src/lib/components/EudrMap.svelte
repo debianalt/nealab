@@ -83,7 +83,7 @@
 
 	export function setMarker(lat: number, lon: number) {
 		marker?.remove();
-		marker = new maplibregl.Marker({ color: '#60a5fa' })
+		marker = new maplibregl.Marker({ color: '#ec4899' })
 			.setLngLat([lon, lat])
 			.addTo(map);
 	}
@@ -91,6 +91,10 @@
 	export function clearMarker() {
 		marker?.remove();
 		marker = null;
+	}
+
+	export function clearCell() {
+		(map?.getSource('eudr-cell') as maplibregl.GeoJSONSource)?.setData({ type: 'FeatureCollection', features: [] });
 	}
 
 	// Polygon mode: draw the input polygon outline + a risk-colored heatmap of
@@ -229,8 +233,8 @@
 				type: 'fill',
 				source: 'eudr-cell',
 				paint: {
-					'fill-color': '#60a5fa',
-					'fill-opacity': 0.18,
+					'fill-color': '#facc15',
+					'fill-opacity': 0.22,
 				},
 			});
 
@@ -239,13 +243,13 @@
 				type: 'line',
 				source: 'eudr-cell',
 				paint: {
-					'line-color': '#60a5fa',
-					'line-width': 2,
-					'line-opacity': 0.9,
+					'line-color': '#facc15',
+					'line-width': 2.2,
+					'line-opacity': 0.95,
 				},
 			});
 
-			// Polygon-mode: risk-colored cells (heatmap)
+			// Polygon-mode: risk-colored cells (heatmap, warm ramp only)
 			map.addLayer({
 				id: 'eudr-cells-fill',
 				type: 'fill',
@@ -253,7 +257,7 @@
 				paint: {
 					'fill-color': [
 						'interpolate', ['linear'], ['get', 'risk'],
-						0, '#22c55e', 25, '#84cc16', 50, '#f59e0b', 75, '#ef4444', 100, '#991b1b',
+						0, '#fef3c7', 25, '#fde047', 50, '#f59e0b', 75, '#ef4444', 100, '#991b1b',
 					],
 					'fill-opacity': 0.55,
 				},
@@ -278,7 +282,7 @@
 				type: 'line',
 				source: 'eudr-draw',
 				filter: ['==', '$type', 'LineString'],
-				paint: { 'line-color': '#60a5fa', 'line-width': 2, 'line-dasharray': [2, 1] },
+				paint: { 'line-color': '#facc15', 'line-width': 2, 'line-dasharray': [2, 1] },
 			});
 			map.addLayer({
 				id: 'eudr-draw-pts',
@@ -287,7 +291,7 @@
 				filter: ['==', '$type', 'Point'],
 				paint: {
 					'circle-radius': 4,
-					'circle-color': '#60a5fa',
+					'circle-color': '#facc15',
 					'circle-stroke-color': '#ffffff',
 					'circle-stroke-width': 1.5,
 				},

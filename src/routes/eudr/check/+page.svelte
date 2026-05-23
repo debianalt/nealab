@@ -61,13 +61,14 @@
 	let polygonName = $state('');
 	let drawing = $state(false);
 
+	// Warm-only risk ramp — no green/blue (matches platform aesthetic on EUDR)
 	function getRiskColor(level: string): string {
 		switch (level) {
 			case 'critical': return '#991b1b';
 			case 'high': return '#ef4444';
 			case 'medium': return '#f59e0b';
-			case 'low': return '#22c55e';
-			default: return '#6b7280';
+			case 'low': return '#fde047';
+			default: return '#9ca3af';
 		}
 	}
 
@@ -76,8 +77,8 @@
 			case 'DEFOREST_DETECTED': return '#ef4444';
 			case 'HIGH_RISK': return '#f59e0b';
 			case 'MEDIUM_RISK': return '#eab308';
-			case 'LOW_RISK': return '#22c55e';
-			default: return '#6b7280';
+			case 'LOW_RISK': return '#fde047';
+			default: return '#9ca3af';
 		}
 	}
 
@@ -294,6 +295,20 @@
 		handleSubmit();
 	}
 
+	function clearAll() {
+		latInput = '';
+		lonInput = '';
+		error = '';
+		result = null;
+		polygonResult = null;
+		polygonError = '';
+		polygonName = '';
+		mapComponent?.clearMarker();
+		mapComponent?.clearCell();
+		mapComponent?.clearPolygon();
+		if (drawing) mapComponent?.cancelDraw();
+	}
+
 	function fmt(v: number | null, decimals = 1): string {
 		if (v === null || v === undefined) return '--';
 		return v.toFixed(decimals);
@@ -347,41 +362,38 @@
 	</div>
 </div>
 {:else}
-<div class="py-6">
-	<h1 class="text-xl font-bold text-white mb-6">{i18n.t('eudr.check.title')}</h1>
+<div class="relative h-[calc(100vh-72px)]" style="min-height: 500px;">
+	<!-- Map full-bleed -->
+	<div class="absolute inset-0">
+		<EudrMap bind:this={mapComponent} onCellClick={handleMapClick}
+			onPolygonDrawn={(rings) => checkPolygon(rings)}
+			onDrawModeChange={(active) => drawing = active} />
+	</div>
+	<div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded text-[10px] text-white/50 z-10 pointer-events-none">
+		{i18n.t('eudr.check.click_map')}
+	</div>
 
-	<div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:h-[calc(100vh-200px)]" style="min-height: 500px;">
-		<!-- Map -->
-		<div class="relative rounded-lg overflow-hidden border border-border min-h-[350px] lg:min-h-0">
-			<EudrMap bind:this={mapComponent} onCellClick={handleMapClick}
-				onPolygonDrawn={(rings) => checkPolygon(rings)}
-				onDrawModeChange={(active) => drawing = active} />
-			<div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded text-[10px] text-white/50">
-				{i18n.t('eudr.check.click_map')}
-			</div>
-		</div>
-
-		<!-- Input + Results Panel -->
-		<div class="flex flex-col gap-4 overflow-y-auto">
+	<!-- Floating panel: input + results -->
+	<div class="absolute top-3 right-3 w-[380px] max-w-[calc(100vw-1.5rem)] max-h-[calc(100vh-104px)] flex flex-col gap-3 overflow-y-auto z-20">
 			<!-- Coordinate Input -->
-			<div class="border border-border rounded-lg p-4 bg-white/[0.02]">
+			<div class="border border-border rounded-lg p-4 bg-black/75 backdrop-blur-md">
 				<h3 class="text-sm font-bold text-white mb-3">{i18n.t('eudr.check.input_title')}</h3>
 				<div class="grid grid-cols-2 gap-2 mb-3">
 					<div>
 						<label class="text-[10px] text-white/40 uppercase">Lat</label>
 						<input type="text" inputmode="decimal" bind:value={latInput} onpaste={handlePaste}
 							placeholder="-27.5"
-							class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-accent" />
+							class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-yellow-400/60" />
 					</div>
 					<div>
 						<label class="text-[10px] text-white/40 uppercase">Lon</label>
 						<input type="text" inputmode="decimal" bind:value={lonInput}
 							placeholder="-60.5"
-							class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-accent" />
+							class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-yellow-400/60" />
 					</div>
 				</div>
 				<button onclick={handleSubmit} disabled={loading}
-					class="w-full py-2 bg-accent text-black font-bold text-[13px] rounded-lg hover:bg-accent/80 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2">
+					class="w-full py-2 bg-yellow-400 text-black font-bold text-[13px] rounded-lg hover:bg-yellow-400/85 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2">
 					{#if loading}
 						<svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
 							<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="opacity-25"></circle>
@@ -390,9 +402,14 @@
 					{/if}
 					{loading ? i18n.t('eudr.check.checking') : i18n.t('eudr.check.check_btn')}
 				</button>
-				<button onclick={tryExample} class="mt-1 w-full text-[11px] text-white/30 hover:text-white/60 transition-colors py-1 bg-transparent border-0 cursor-pointer">
-					{i18n.t('eudr.check.try_example')} →
-				</button>
+				<div class="mt-1 flex items-center justify-between text-[11px]">
+					<button onclick={tryExample} class="text-white/30 hover:text-white/70 transition-colors py-1 bg-transparent border-0 cursor-pointer">
+						{i18n.t('eudr.check.try_example')} →
+					</button>
+					<button onclick={clearAll} class="text-white/30 hover:text-yellow-400 transition-colors py-1 bg-transparent border-0 cursor-pointer">
+						{i18n.t('eudr.check.clear_all')}
+					</button>
+				</div>
 
 				{#if error}
 					<p class="mt-2 text-[12px] text-red-400">{error}</p>
@@ -402,9 +419,9 @@
 				<div class="mt-3 pt-3 border-t border-border">
 					<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.poly_title')}</div>
 					{#if drawing}
-						<div class="px-3 py-2 rounded bg-accent/10 border border-accent/30 text-[11px] text-white/80 leading-relaxed mb-2">
+						<div class="px-3 py-2 rounded bg-yellow-400/10 border border-yellow-400/30 text-[11px] text-white/80 leading-relaxed mb-2">
 							{i18n.t('eudr.check.poly_draw_hint')}
-							<button onclick={() => mapComponent?.cancelDraw()} class="mt-1 block text-accent hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[11px]">
+							<button onclick={() => mapComponent?.cancelDraw()} class="mt-1 block text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[11px]">
 								{i18n.t('eudr.check.poly_draw_cancel')}
 							</button>
 						</div>
@@ -430,7 +447,7 @@
 
 			<!-- Loading skeleton -->
 			{#if loading && !result}
-				<div class="border border-border rounded-lg p-4 bg-white/[0.02] flex-1 space-y-3">
+				<div class="border border-border rounded-lg p-4 bg-black/75 backdrop-blur-md flex-1 space-y-3">
 					<div class="h-4 w-24 bg-white/5 rounded animate-pulse"></div>
 					<div class="h-8 w-full bg-white/5 rounded animate-pulse"></div>
 					<div class="grid grid-cols-2 gap-3">
@@ -448,7 +465,7 @@
 
 			<!-- Empty state -->
 			{#if !result && !polygonResult && !loading && !polygonLoading}
-				<div class="border border-border/50 rounded-lg p-6 bg-white/[0.01] flex-1 flex flex-col items-center justify-center text-center gap-3">
+				<div class="border border-border/50 rounded-lg p-6 bg-black/70 backdrop-blur-md flex-1 flex flex-col items-center justify-center text-center gap-3">
 					<svg class="w-10 h-10 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
 						<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -464,7 +481,7 @@
 
 			<!-- Results -->
 			{#if result}
-				<div class="border border-border rounded-lg p-4 bg-white/[0.02] flex-1">
+				<div class="border border-border rounded-lg p-4 bg-black/75 backdrop-blur-md flex-1">
 					<!-- Assessment Badge -->
 					<div class="flex items-center justify-between mb-4">
 						<h3 class="text-sm font-bold text-white">{i18n.t('eudr.check.result_title')}</h3>
@@ -512,13 +529,13 @@
 						</div>
 						<div class="bg-white/[0.03] rounded p-3">
 							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.loss_post_2020')}</div>
-							<div class="text-lg font-bold" style="color: {(result.loss_post_2020_pct ?? 0) > 0 ? '#ef4444' : '#22c55e'};">
+							<div class="text-lg font-bold" style="color: {(result.loss_post_2020_pct ?? 0) > 0 ? '#ef4444' : '#9ca3af'};">
 								{fmt(result.loss_post_2020_pct)}%
 							</div>
 						</div>
 						<div class="bg-white/[0.03] rounded p-3">
 							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.fire_post_2020')}</div>
-							<div class="text-lg font-bold" style="color: {(result.fire_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#22c55e'};">
+							<div class="text-lg font-bold" style="color: {(result.fire_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#9ca3af'};">
 								{fmt(result.fire_post_2020_pct)}%
 							</div>
 						</div>
@@ -552,7 +569,7 @@
 					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
-					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-accent hover:text-white underline transition-colors">
+					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
 						{i18n.t('eudr.check.methodology_link')}
 					</a>
 				</div>
@@ -560,7 +577,7 @@
 
 			<!-- Polygon results -->
 			{#if polygonResult}
-				<div class="border border-border rounded-lg p-4 bg-white/[0.02] flex-1">
+				<div class="border border-border rounded-lg p-4 bg-black/75 backdrop-blur-md flex-1">
 					<div class="flex items-center justify-between mb-4">
 						<h3 class="text-sm font-bold text-white">{i18n.t('eudr.check.poly_result_title')}</h3>
 						<span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
@@ -582,7 +599,7 @@
 						</div>
 						<div class="bg-white/[0.03] rounded p-3">
 							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_deforested')}</div>
-							<div class="text-lg font-bold" style="color: {polygonResult.deforested_pct > 0 ? '#ef4444' : '#22c55e'};">
+							<div class="text-lg font-bold" style="color: {polygonResult.deforested_pct > 0 ? '#ef4444' : '#9ca3af'};">
 								{polygonResult.deforested_pct.toFixed(1)}%
 							</div>
 						</div>
@@ -614,12 +631,11 @@
 					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
-					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-accent hover:text-white underline transition-colors">
+					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
 						{i18n.t('eudr.check.methodology_link')}
 					</a>
 				</div>
 			{/if}
-		</div>
 	</div>
 </div>
 {/if}

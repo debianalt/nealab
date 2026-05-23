@@ -53,7 +53,7 @@
 
 		{#if analysis.id === 'eudr'}
 			<p class="mb-2 text-[10px] text-white/40 leading-relaxed">{i18n.t('eudr.layer_hint')}</p>
-			<a href="/eudr/check" class="block mb-2 px-3 py-2 rounded border border-accent/30 bg-accent/10 text-[11px] text-white/80 hover:border-accent/60 hover:text-white transition-colors leading-relaxed">
+			<a href="/eudr/check" class="block mb-2 px-3 py-2 rounded border border-yellow-400/40 bg-yellow-400/10 text-[11px] text-white/85 hover:border-yellow-400/70 hover:text-white transition-colors leading-relaxed">
 				{i18n.t('eudr.check.cta_from_layer')}
 			</a>
 		{/if}
