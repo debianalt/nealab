@@ -681,8 +681,22 @@
 				paint: { 'line-color': '#ec4899', 'line-width': 1.5, 'line-opacity': 0.85 }
 			});
 
+			// Admin-2 (depts/distritos/municipios) for the EUDR area — thin white,
+			// drawn ABOVE the hexagon choropleth so users can orient inside it.
+			map.addSource('eudr-admin2', {
+				type: 'geojson',
+				data: '/data/eudr_admin2_boundary.json'
+			});
+			map.addLayer({
+				id: 'eudr-admin2-line',
+				type: 'line',
+				source: 'eudr-admin2',
+				layout: { visibility: 'none' },
+				paint: { 'line-color': '#ffffff', 'line-width': 0.6, 'line-opacity': 0.32 }
+			});
+
 			// EUDR focus: NEA + cross-border (PY/BR) area of interest — yellow,
-			// thicker, drawn above the pink Argentina context.
+			// thicker, drawn above admin-2 and the pink Argentina context.
 			map.addSource('eudr-focus', {
 				type: 'geojson',
 				data: '/data/eudr_focus_boundary.json'
@@ -1474,6 +1488,7 @@
 			const basemapAdmin = (map.getStyle().layers ?? [])
 				.filter(l => /admin|boundary/i.test(l.id) && (l.type === 'line' || l.type === 'fill'))
 				.map(l => l.id);
+			const eudrLayers = ['eudr-provinces-line', 'eudr-admin2-line', 'eudr-focus-line'];
 			if (active) {
 				for (const l of EUDR_HIDDEN_LAYERS) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
@@ -1481,11 +1496,13 @@
 				for (const l of basemapAdmin) {
 					try { map.setLayoutProperty(l, 'visibility', 'none'); } catch {}
 				}
-				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'visible');
-				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'visible');
+				for (const l of eudrLayers) {
+					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'visible');
+				}
 			} else {
-				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'none');
-				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'none');
+				for (const l of eudrLayers) {
+					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
+				}
 				for (const l of basemapAdmin) {
 					try { map.setLayoutProperty(l, 'visibility', 'visible'); } catch {}
 				}

@@ -219,20 +219,17 @@
 				},
 			});
 
-			// Area of interest: NEA + cross-border (PY/BR), yellow — matches main app
+			// Area of interest: NEA + cross-border (PY/BR), yellow — matches main app.
+			// Layer added LATER, after heatmap & admin-2, so yellow stays on top.
 			map.addSource('eudr-focus', {
 				type: 'geojson',
 				data: '/data/eudr_focus_boundary.json',
 			});
-			map.addLayer({
-				id: 'eudr-focus-line',
-				type: 'line',
-				source: 'eudr-focus',
-				paint: {
-					'line-color': '#facc15',
-					'line-width': 2.2,
-					'line-opacity': 0.95,
-				},
+			// Admin-2 (depts/distritos/municipios) — thin white line, drawn ABOVE the
+			// hexagon heatmap so users can orient inside the choropleth.
+			map.addSource('eudr-admin2', {
+				type: 'geojson',
+				data: '/data/eudr_admin2_boundary.json',
 			});
 
 			// Evaluated hexagon — drawn on top of provinces
@@ -268,6 +265,30 @@
 						0, '#fef3c7', 25, '#fde047', 50, '#f59e0b', 75, '#ef4444', 100, '#991b1b',
 					],
 					'fill-opacity': 0.55,
+				},
+			});
+
+			// Admin-2 lines (thin, white, subordinate to admin-1)
+			map.addLayer({
+				id: 'eudr-admin2-line',
+				type: 'line',
+				source: 'eudr-admin2',
+				paint: {
+					'line-color': '#ffffff',
+					'line-width': 0.6,
+					'line-opacity': 0.32,
+				},
+			});
+
+			// Yellow admin-1 focus — drawn AFTER admin-2 so it stays on top for orientation
+			map.addLayer({
+				id: 'eudr-focus-line',
+				type: 'line',
+				source: 'eudr-focus',
+				paint: {
+					'line-color': '#facc15',
+					'line-width': 2.2,
+					'line-opacity': 0.95,
 				},
 			});
 
