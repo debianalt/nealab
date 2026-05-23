@@ -1479,6 +1479,9 @@
 		'province-border', 'corrientes-border', 'alto_parana-border',
 		'itapua-district-fill', 'itapua-district-line', 'alto_parana-district-fill', 'alto_parana-district-line',
 		'province-fill', 'province-line',
+		// Argentine dept blue overlays (Misiones/Corrientes radios-derived) — replaced
+		// by our GADM admin-2 layer in EUDR mode
+		'ar-dept-fill', 'ar-dept-line', 'dept-outline-line', 'compare-dept-outline-line',
 	];
 	export function setEudrMode(active: boolean) {
 		if (!map) return;
