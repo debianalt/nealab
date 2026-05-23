@@ -1469,15 +1469,26 @@
 	export function setEudrMode(active: boolean) {
 		if (!map) return;
 		const apply = () => {
+			// Basemap (CartoDB) admin lines come from a different source than GADM
+			// and visibly drift; hide them in EUDR mode so only our lines show.
+			const basemapAdmin = (map.getStyle().layers ?? [])
+				.filter(l => /admin|boundary/i.test(l.id) && (l.type === 'line' || l.type === 'fill'))
+				.map(l => l.id);
 			if (active) {
 				for (const l of EUDR_HIDDEN_LAYERS) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
+				}
+				for (const l of basemapAdmin) {
+					try { map.setLayoutProperty(l, 'visibility', 'none'); } catch {}
 				}
 				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'visible');
 				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'visible');
 			} else {
 				if (map.getLayer('eudr-provinces-line')) map.setLayoutProperty('eudr-provinces-line', 'visibility', 'none');
 				if (map.getLayer('eudr-focus-line')) map.setLayoutProperty('eudr-focus-line', 'visibility', 'none');
+				for (const l of basemapAdmin) {
+					try { map.setLayoutProperty(l, 'visibility', 'visible'); } catch {}
+				}
 				applyTerritoryVisibility();
 			}
 		};

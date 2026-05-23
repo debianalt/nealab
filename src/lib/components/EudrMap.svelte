@@ -164,6 +164,14 @@
 		map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
 		map.on('load', () => {
+			// Hide the basemap's own admin/boundary lines so they don't compete
+			// with our GADM pink (AR) / yellow (focus) outlines — single source of truth.
+			for (const lyr of map.getStyle().layers ?? []) {
+				if (/admin|boundary/i.test(lyr.id) && (lyr.type === 'line' || lyr.type === 'fill')) {
+					try { map.setLayoutProperty(lyr.id, 'visibility', 'none'); } catch {}
+				}
+			}
+
 			// Evaluated H3 cell (filled in by showCell)
 			map.addSource('eudr-cell', {
 				type: 'geojson',
