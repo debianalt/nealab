@@ -783,7 +783,9 @@
 	$effect(() => {
 		const a = lensStore.activeAnalysis;
 		const dpto = hexStore.selectedDpto;
-		const show = !!a && a.spatialUnit !== 'catastro' && !dpto;
+		// EUDR uses viewport-based hex loading (no dept-picker selection),
+		// and the blue AR-dept polygons don't match our GADM lines anyway.
+		const show = !!a && a.spatialUnit !== 'catastro' && a.id !== 'eudr' && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
 	});
 
