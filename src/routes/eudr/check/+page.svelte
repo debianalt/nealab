@@ -313,35 +313,31 @@
 {#if !eudrDisclaimerAccepted}
 <div class="eudr-gate">
 	<div class="eudr-gate-card">
-		<div class="eudr-gate-kicker">EUDR Check · nealab / spatia.ar</div>
+		<div class="eudr-gate-kicker">EUDR Check · nealab</div>
 		<h1 class="eudr-gate-title">Aviso importante antes de usar esta herramienta</h1>
 		<ul class="eudr-gate-points">
 			<li>
-				<span class="eudr-gate-label">Evaluación indicativa, no certificación.</span>
-				Este análisis se basa en percepción remota (Hansen GFC + MODIS). No constituye
-				certificación de cumplimiento bajo el Reglamento (UE) 2023/1115 ni tiene valor
-				jurídico ante ninguna autoridad.
+				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
+				Análisis satelital de pérdida forestal post-2020 (Hansen GFC v1.12 + MODIS de área quemada)
+				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino,
+				departamentos paraguayos y estados del sur de Brasil. Sirve para screening de riesgo
+				EUDR, due-diligence preliminar y soporte técnico de informes.
 			</li>
 			<li>
-				<span class="eudr-gate-label">Sin valor probatorio.</span>
-				El resultado no puede usarse como prueba de due-diligence ante autoridades de la
-				Unión Europea, compradores internacionales ni terceros de ningún tipo.
+				<span class="eudr-gate-label">Alcance regulatorio.</span>
+				El resultado es un análisis técnico, no una certificación formal bajo el Reglamento
+				(UE) 2023/1115. La certificación regulatoria requiere además geometría parcelaria
+				oficial, trazabilidad documental y due-diligence profesional independiente.
 			</li>
 			<li>
-				<span class="eudr-gate-label">Limitaciones de datos.</span>
-				Las geometrías parcelarias pueden contener errores o desactualizaciones. La exactitud
-				temporal de los datos depende de la fecha del último procesamiento disponible en
-				cada fuente satelital.
+				<span class="eudr-gate-label">Resolución del dato.</span>
+				El dato satelital subyacente está a 100 m. El resultado refleja el hexágono evaluado,
+				no la parcela exacta — usalo como señal espacial robusta, no como medición catastral.
 			</li>
 			<li>
-				<span class="eudr-gate-label">Complemento obligatorio.</span>
-				Cualquier decisión de exportación o certificación basada en esta herramienta debe
-				complementarse con due-diligence profesional certificado e independiente.
-			</li>
-			<li>
-				<span class="eudr-gate-label">Sin responsabilidad.</span>
+				<span class="eudr-gate-label">Responsabilidad.</span>
 				Al continuar, aceptás que nealab, su autor, CONICET y UNaM no asumen responsabilidad
-				por consecuencias comerciales, legales o regulatorias derivadas de este análisis.
+				por decisiones comerciales o regulatorias basadas exclusivamente en este análisis.
 			</li>
 		</ul>
 		<button class="eudr-gate-btn" onclick={() => eudrDisclaimerAccepted = true}>

@@ -201,9 +201,25 @@
 				type: 'line',
 				source: 'eudr-provinces',
 				paint: {
-					'line-color': '#ffffff',
-					'line-width': 1.5,
-					'line-opacity': 0.4,
+					'line-color': '#ec4899',
+					'line-width': 1.2,
+					'line-opacity': 0.7,
+				},
+			});
+
+			// Area of interest: NEA + cross-border (PY/BR), yellow — matches main app
+			map.addSource('eudr-focus', {
+				type: 'geojson',
+				data: '/data/eudr_focus_boundary.json',
+			});
+			map.addLayer({
+				id: 'eudr-focus-line',
+				type: 'line',
+				source: 'eudr-focus',
+				paint: {
+					'line-color': '#facc15',
+					'line-width': 2.2,
+					'line-opacity': 0.95,
 				},
 			});
 
