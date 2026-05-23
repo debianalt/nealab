@@ -54,6 +54,22 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 - **Diagnostics**: `--diagnostics` flag on `compute_satellite_scores.py` emits `*_diagnostics.json` per analysis
 - **Legacy comparison**: `--legacy` flag emits `score_legacy` column with old weighted arithmetic mean
 
+## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
+Spatia has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
+
+- **`--mode comparable`**: fixed goalpost P2/P98 normalization → cross-territory comparable. Score 60 in Misiones = 60 in Itapúa. PCA variable selection LOCKED from `goalposts.json:pca_variable_selection`. Used for the 23 comparable satellite layers.
+- **`--mode local`**: percentile rank within territory (default historical). Used for census-based layers whose schemas differ across countries (INDEC vs DGEEC).
+
+UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
+- "↔ Comparables entre territorios" → layers with `comparable: true` in `ANALYSIS_REGISTRY`
+- "Solo <territorio>" → layers with `comparable: false`
+
+**Tier 1 (physical, invariant)**: c_recurrence, c_occurrence, c_extent, c_treecover, c_water_stress, c_ph_optimal. Fractions/percentages/bounded ratios. NEVER recalibrated.
+
+**Tier 2 frozen v1** (commit `58e225f`): P2/P98 over pooled Mis+Ita reference universe. Intra-ecoregion additions DO NOT recompute. Bump v(n+1) only when leaving the ecoregion OR on deliberate methodological revision (recomputes ALL territories + full history + documents the break).
+
+**`pipeline/compute_goalposts.py`**: recalculates Tier 2 bounds from pooled territory data. Run only on a bump. Tier 1 entries never touched. Re-runs PCA variable selection on pooled normalized data.
+
 ## Flood Risk Layer
 - **Data sources**: JRC Global Surface Water v1.4 (Landsat 1984–2021) + Sentinel-1 SAR (current extent)
 - **Parquet columns**: `h3index`, `jrc_occurrence` (0-100%), `jrc_recurrence` (0-100%), `jrc_seasonality` (0-12), `flood_extent_pct` (0-100%), `flood_risk_score` (0-100)

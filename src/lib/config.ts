@@ -246,12 +246,12 @@ export const TERRITORY_REGISTRY: Record<string, TerritoryConfig> = {
 	},
 	chaco: {
 		id: 'chaco', label: 'Chaco', shortLabel: 'CHA', country: 'ar',
-		bbox: [-63.00, -27.50, -59.00, -24.00],
+		bbox: [-63.50, -28.00, -58.40, -24.80],  // synced with pipeline/config.py + config_eudr.py
 		parquetPrefix: 'chaco/', flag: '🇦🇷', available: false,
 	},
 	formosa: {
 		id: 'formosa', label: 'Formosa', shortLabel: 'FOR', country: 'ar',
-		bbox: [-62.50, -26.50, -58.00, -22.00],
+		bbox: [-62.20, -27.00, -57.40, -22.90],  // synced with pipeline/config.py + config_eudr.py
 		parquetPrefix: 'formosa/', flag: '🇦🇷', available: false,
 	},
 	// ── Paraguay — próximamente ──────────────────────────────────────────────

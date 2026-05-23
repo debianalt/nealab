@@ -1,11 +1,19 @@
 """
-Extract census variables from PostGIS for Corrientes (codprov='18').
+Extract census variables from PostGIS for AR provinces.
 
-Output: pipeline/output/corrientes/censo2022_variables_corrientes.parquet
+Supports Corrientes (codprov=18), Chaco (codprov=22), Formosa (codprov=34)
+via --territory flag. codprov resolved from TERRITORY_CONFIGS.
 
-Schema matches censo2022_variables (Misiones) for use by compute_satellite_scores.py.
+Output: pipeline/output/<territory>/censo2022_variables_<territory>.parquet
+Schema matches censo2022_variables (Misiones) for compute_satellite_scores.py.
+
+Usage:
+  python pipeline/build_censo_corrientes.py
+  python pipeline/build_censo_corrientes.py --territory chaco
+  python pipeline/build_censo_corrientes.py --territory formosa
 """
 
+import argparse
 import os
 import sys
 
@@ -14,9 +22,7 @@ import psycopg2
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-from config import OUTPUT_DIR
-
-OUTPATH = os.path.join(OUTPUT_DIR, "corrientes", "censo2022_variables_corrientes.parquet")
+from config import OUTPUT_DIR, get_territory
 
 
 def safe_pct(num, den):
@@ -24,59 +30,86 @@ def safe_pct(num, den):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--territory", default="corrientes",
+                    help="AR territory id (corrientes|chaco|formosa)")
+    args = ap.parse_args()
+
+    t = get_territory(args.territory)
+    if t.get('country') != 'ar':
+        raise SystemExit(f"--territory {args.territory} is not an AR province")
+    codprov = t.get('codprov_indec')
+    if codprov is None:
+        raise SystemExit(f"TERRITORY_CONFIGS[{args.territory}] missing codprov_indec")
+    codprov_str = str(codprov).zfill(2)
+    redcode_prefix = codprov_str + '%%'
+
+    out_path = os.path.join(OUTPUT_DIR, args.territory,
+                            f"censo2022_variables_{args.territory}.parquet")
+
+    print(f"Building censo variables for {t['label']} (codprov={codprov_str})")
     conn = psycopg2.connect(dbname="posadas", user="postgres")
 
-    # Household variables (NBI sub-criteria, h_piso = sin piso adecuado)
     hog = pd.read_sql(
         """
         SELECT redcode,
             h_total, h_nbi, h_cloaca, h_piso,
             h_hacinami, h_hacina_1, h_computad, h_agua_red
         FROM censo_2022.v_censo_nbi_2022
-        WHERE codprov = '18'
+        WHERE codprov = %s
         """,
-        conn,
+        conn, params=(codprov_str,)
     )
 
-    # Person variables — comprehensive view contains education, health, age groups
     per = pd.read_sql(
         """
         SELECT redcode,
             p_total, p_a17, p18a_sin_i, p18a_solos, p18a_terci, p18a_unive,
             p_18a, p_cobertur, p65_total
         FROM censo_2022.v_censo_niveducativo_2022
-        WHERE redcode LIKE '18%%'
+        WHERE redcode LIKE %s
         """,
-        conn,
+        conn, params=(redcode_prefix,)
     )
 
-    # Non-attendance (sexo=0 → both sexes / total)
     inas = pd.read_sql(
         """
         SELECT redcode, nasiste6a1, total_6a12, nasiste_13, total13_18
         FROM censo_2022.v_censo_children_noasisten_2022
-        WHERE redcode LIKE '18%%' AND sexo = 0
+        WHERE redcode LIKE %s AND sexo = 0
         """,
-        conn,
+        conn, params=(redcode_prefix,)
     )
 
-    # Adolescent fecundity
     fec = pd.read_sql(
         """
         SELECT redcode, ma_14a17, m_14a17
         FROM censo_2022.v_censo_fecundidad_2022
-        WHERE redcode LIKE '18%%'
+        WHERE redcode LIKE %s
         """,
-        conn,
+        conn, params=(redcode_prefix,)
     )
 
     conn.close()
 
-    # Radio stats for densidad_hab_km2
-    radio_stats = pd.read_parquet(
-        os.path.join(OUTPUT_DIR, "corrientes", "radio_stats_corrientes.parquet"),
-        columns=["redcode", "densidad_hab_km2"],
-    )
+    print(f"  hogares: {len(hog)} rows")
+    print(f"  personas: {len(per)} rows")
+    print(f"  inasistencia: {len(inas)} rows")
+    print(f"  fecundidad: {len(fec)} rows")
+
+    if len(hog) == 0:
+        raise SystemExit(f"No census data for codprov={codprov_str}. Verify "
+                         f"INDEC views loaded in censo_2022.* schema.")
+
+    radio_stats_path = os.path.join(OUTPUT_DIR, args.territory,
+                                     f"radio_stats_{args.territory}.parquet")
+    if not os.path.exists(radio_stats_path):
+        raise SystemExit(
+            f"Missing {radio_stats_path}. Run build_radio_stats_corrientes.py "
+            f"(or equivalent for {args.territory}) first."
+        )
+    radio_stats = pd.read_parquet(radio_stats_path,
+                                   columns=["redcode", "densidad_hab_km2"])
 
     df = (
         hog.merge(per, on="redcode", how="outer")
@@ -109,13 +142,11 @@ def main():
 
     result = result.dropna(subset=["redcode"]).reset_index(drop=True)
 
-    os.makedirs(os.path.dirname(OUTPATH), exist_ok=True)
-    result.to_parquet(OUTPATH, index=False)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    result.to_parquet(out_path, index=False)
     print(f"Rows: {len(result)}")
     print(f"Columns: {list(result.columns)}")
-    print(f"Saved: {OUTPATH}")
-    print(result[["redcode", "pct_nbi", "pct_cloacas", "pct_sin_piso_adecuado",
-                   "pct_cobertura_salud", "tasa_inasistencia_6a12"]].head(3).to_string())
+    print(f"Saved: {out_path}")
 
 
 if __name__ == "__main__":

@@ -72,6 +72,43 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'output_prefix': 'alto_parana_py/',          # R2: data/alto_parana_py/sat_*.parquet
         'export_scale': 100,
     },
+    # ── NEA argentino — pending v1.1 re-baseline (Gran Chaco biome) ────
+    # These territories are OUTSIDE the Paraná Atlantic-Forest reference universe
+    # frozen in goalposts.json v1. Adding them triggers a deliberate methodological
+    # revision (Opción B, decided 2026-05-23): re-baseline Tier 2 P2/P98 over pool
+    # of Mis+Cor+Ita+AP+Chaco+Formosa (+ ideally Paraná-BR Mata Atlântica). Until
+    # the bump executes, scoring these territories with v1 bounds will saturate
+    # (c_precipitation lo=1444 vs Chaco typical <1300; c_ndvi will clip too).
+    'chaco': {
+        'id': 'chaco',
+        'label': 'Chaco',
+        'country': 'ar',
+        # padded ~0.1deg, matches config_eudr.py:EUDR_PROVINCES['chaco'].
+        'bbox': [-63.50, -28.00, -58.40, -24.80],
+        'admin_level': 'departamento',
+        'admin_col': 'dpto',
+        'admin_collection': None,                    # uses local ARG_adm2.shp
+        'admin_filter': ('NAME_1', 'Chaco'),         # GADM: filter province by NAME_1
+        'output_prefix': 'chaco/',                   # R2: data/chaco/sat_*.parquet
+        'export_scale': 100,
+        'codprov_indec': 22,                         # INDEC province code for radios censales 2022
+        'biome': 'gran_chaco',                       # NOT paraná_atlantic_forest — triggers v1.1 bump
+    },
+    'formosa': {
+        'id': 'formosa',
+        'label': 'Formosa',
+        'country': 'ar',
+        # padded ~0.1deg, matches config_eudr.py:EUDR_PROVINCES['formosa'].
+        'bbox': [-62.20, -27.00, -57.40, -22.90],
+        'admin_level': 'departamento',
+        'admin_col': 'dpto',
+        'admin_collection': None,                    # uses local ARG_adm2.shp
+        'admin_filter': ('NAME_1', 'Formosa'),       # GADM: filter province by NAME_1
+        'output_prefix': 'formosa/',                 # R2: data/formosa/sat_*.parquet
+        'export_scale': 100,
+        'codprov_indec': 34,
+        'biome': 'gran_chaco',                       # NOT paraná_atlantic_forest — triggers v1.1 bump
+    },
 }
 
 def get_territory(territory_id: str) -> dict:
