@@ -338,7 +338,7 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── EUDR in analysis menu ──
 	'trade.eudr.open_checker': { es: 'Abrir verificador EUDR', en: 'Open EUDR checker', gn: 'EUDR checker', pt: 'Abrir verificador EUDR' },
-	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (NOA y NEA)', en: 'EUDR · Deforestation risk (NOA & NEA)', gn: 'EUDR · Deforestación', pt: 'EUDR · Risco de desmatamento (NOA e NEA)' },
+	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (NEA + transfronterizo)', en: 'EUDR · Deforestation risk (NEA + cross-border)', gn: 'EUDR · Deforestación', pt: 'EUDR · Risco de desmatamento (NEA + transfronteiriço)' },
 	'trade.eudr.analysis_desc': { es: 'Verificación de deforestación para parcelas de producción (Hansen GFC 30 m + MODIS fire)', en: 'Deforestation verification for production plots (Hansen GFC 30m + MODIS fire)', gn: 'EUDR', pt: 'Verificação de desmatamento para parcelas de produção (Hansen GFC 30 m + MODIS fire)' },
 
 	// ── Temporal toggle ──
@@ -993,7 +993,7 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── EUDR product page ─────────────────────────────────────────────────
 	'eudr.hero.title': { es: 'EUDR Compliance Check', en: 'EUDR Compliance Check', gn: 'EUDR', pt: 'EUDR Compliance Check' },
-	'eudr.hero.subtitle': { es: 'Verificación satelital de deforestación para due diligence bajo el Reglamento (UE) 2023/1115. Cobertura: NOA y NEA (10 provincias).', en: 'Satellite-based deforestation verification for due diligence under EU Regulation 2023/1115. Coverage: NOA and NEA regions (10 provinces).', gn: 'EUDR', pt: 'Verificação satelital de desmatamento para due diligence sob o Regulamento (UE) 2023/1115. Cobertura: NOA e NEA (10 províncias).' },
+	'eudr.hero.subtitle': { es: 'Análisis satelital de pérdida forestal post-2020 (Hansen GFC + MODIS) sobre el NEA argentino, Paraguay y el sur de Brasil. Soporte para due-diligence bajo el Reglamento (UE) 2023/1115.', en: 'Satellite analysis of post-2020 forest loss (Hansen GFC + MODIS) over NEA Argentina, Paraguay and southern Brazil. Supports due-diligence under EU Regulation 2023/1115.', gn: 'EUDR', pt: 'Análise satelital de perda florestal pós-2020 (Hansen GFC + MODIS) sobre o NEA argentino, Paraguai e sul do Brasil. Suporta due-diligence sob o Regulamento (UE) 2023/1115.' },
 	'eudr.cta.try_demo': { es: 'Probar demo', en: 'Try demo', gn: 'Demo', pt: 'Testar demo' },
 	'eudr.cta.contact': { es: 'Contactar', en: 'Contact us', gn: 'Contact', pt: 'Contatar' },
 	'eudr.what.title': { es: '¿Qué es la EUDR?', en: 'What is the EUDR?', gn: 'EUDR', pt: 'O que é a EUDR?' },
@@ -1019,7 +1019,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.pricing.contact': { es: 'Contactar', en: 'Contact', gn: 'Contact', pt: 'Contatar' },
 	'eudr.pricing.custom': { es: 'A medida', en: 'Custom', gn: 'Custom', pt: 'Personalizado' },
 	'eudr.pricing.demo_1': { es: 'Hasta 10 consultas/día', en: 'Up to 10 checks/day', gn: 'EUDR', pt: 'Até 10 consultas/dia' },
-	'eudr.pricing.demo_2': { es: 'Cobertura: 10 provincias NOA y NEA', en: 'Coverage: 10 NOA and NEA provinces', gn: 'EUDR', pt: 'Cobertura: 10 províncias NOA e NEA' },
+	'eudr.pricing.demo_2': { es: 'Cobertura: NEA argentino + Paraguay + sur de Brasil', en: 'Coverage: NEA Argentina + Paraguay + southern Brazil', gn: 'EUDR', pt: 'Cobertura: NEA argentino + Paraguai + sul do Brasil' },
 	'eudr.pricing.demo_3': { es: 'Resolución H3 res-7 (~5 km²)', en: 'H3 res-7 resolution (~5 km²)', gn: 'EUDR', pt: 'Resolução H3 res-7 (~5 km²)' },
 	'eudr.pricing.pro_1': { es: 'API REST ilimitada', en: 'Unlimited REST API', gn: 'EUDR', pt: 'API REST ilimitada' },
 	'eudr.pricing.pro_2': { es: 'Monitoreo mensual de parcelas', en: 'Monthly parcel monitoring', gn: 'EUDR', pt: 'Monitoramento mensal de parcelas' },

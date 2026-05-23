@@ -8,9 +8,11 @@
 		<h1 class="title">Inteligencia territorial, acceso abierto</h1>
 
 		<p class="platform-intro">
-			Explorá 23+ análisis geoespaciales sobre Misiones, Corrientes, Itapúa y Alto Paraná: deforestación,
-			carbono, calidad del aire, riesgo hídrico, actividad productiva y más.
-			Sin costo, sin registro.
+			Análisis geoespacial sobre el Noreste Argentino — NEA (Misiones, Corrientes, Chaco, Formosa) —
+			y sus regiones transfronterizas en Paraguay (Itapúa, Alto Paraná, Canindeyú, Pte. Hayes y
+			demás departamentos limítrofes) y el sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul):
+			deforestación, carbono, calidad del aire, riesgo hídrico, actividad productiva y más.
+			Cobertura específica por capa. Sin costo, sin registro.
 		</p>
 
 		<div class="platform-stats">
