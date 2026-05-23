@@ -64,7 +64,7 @@
 		updateDrawSource();
 	}
 
-	const MAP_CENTER: [number, number] = [-62.5, -26.5];
+	const MAP_CENTER: [number, number] = [-56, -26];
 	const MAP_ZOOM = 5.5;
 	const BASEMAP = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
@@ -192,32 +192,8 @@
 				data: { type: 'FeatureCollection', features: [] },
 			});
 
-			// Province boundaries
-			map.addSource('eudr-provinces', {
-				type: 'geojson',
-				data: '/data/eudr_provinces_boundary.json',
-			});
-
-			map.addLayer({
-				id: 'eudr-provinces-fill',
-				type: 'fill',
-				source: 'eudr-provinces',
-				paint: {
-					'fill-color': '#ffffff',
-					'fill-opacity': 0.05,
-				},
-			});
-
-			map.addLayer({
-				id: 'eudr-provinces-line',
-				type: 'line',
-				source: 'eudr-provinces',
-				paint: {
-					'line-color': '#ec4899',
-					'line-width': 1.2,
-					'line-opacity': 0.7,
-				},
-			});
+			// (Pink AR provinces removed — only the yellow area-of-interest is shown
+			// here for clarity; users came to this tool to focus on the relevant zone.)
 
 			// Area of interest: NEA + cross-border (PY/BR), yellow — matches main app.
 			// Layer added LATER, after heatmap & admin-2, so yellow stays on top.
@@ -326,28 +302,8 @@
 				},
 			});
 
-			// Province labels
-			const provinces = [
-				{ name: 'Jujuy', coords: [-65.7, -23.3] },
-				{ name: 'Salta', coords: [-65.0, -24.5] },
-				{ name: 'Tucuman', coords: [-65.5, -27.0] },
-				{ name: 'Catamarca', coords: [-66.8, -28.0] },
-				{ name: 'Sgo. del Estero', coords: [-63.5, -28.0] },
-				{ name: 'Formosa', coords: [-59.5, -25.0] },
-				{ name: 'Chaco', coords: [-60.5, -26.5] },
-				{ name: 'Corrientes', coords: [-58.0, -29.0] },
-				{ name: 'Misiones', coords: [-54.8, -27.0] },
-				{ name: 'Entre Rios', coords: [-59.5, -32.0] },
-			];
-
-			for (const p of provinces) {
-				const el = document.createElement('div');
-				el.className = 'eudr-label';
-				el.textContent = p.name;
-				new maplibregl.Marker({ element: el })
-					.setLngLat(p.coords as [number, number])
-					.addTo(map);
-			}
+			// (Province labels removed — the basemap already shows place labels and
+			// the yellow area-of-interest outline is enough orientation.)
 		});
 
 		// Click handler
