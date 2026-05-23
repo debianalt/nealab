@@ -368,87 +368,94 @@
 		}
 	}
 
-	async function generateReport() {
+	// Report request flow (Alternativa A: lead-gen + entrega humana del informe
+	// firmado). No PDF self-service público con branding CONICET hasta que el
+	// STAN esté aprobado. El formulario arma un mailto a nealab@spatia.ar con
+	// los datos del análisis; el usuario lo envía con su cliente de mail y, en
+	// paralelo, se descarga el polígono en GeoJSON para que pueda adjuntarlo.
+	let reportModalOpen = $state(false);
+	let reqName = $state('');
+	let reqEmail = $state('');
+	let reqCompany = $state('');
+	let reqPurpose = $state('');
+	let reqHash = $state('');
+
+	async function openReportRequest() {
 		if (!polygonResult || !lastPolygonRings) return;
-		const r = polygonResult;
 		const ringsText = JSON.stringify(lastPolygonRings);
 		const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ringsText));
-		const hash = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, '0')).join('');
-		const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+		reqHash = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+		reportModalOpen = true;
+	}
+
+	function closeReportModal() {
+		reportModalOpen = false;
+	}
+
+	function submitReportRequest() {
+		if (!polygonResult || !lastPolygonRings) return;
+		if (!reqEmail.trim() || !reqName.trim()) {
+			polygonError = i18n.t('eudr.check.req_err_fields');
+			return;
+		}
+		const r = polygonResult;
 		const yr = (y: number) => (r.loss_by_year[y] || 0).toFixed(3);
-		const html = `<!doctype html><html lang="es"><head><meta charset="utf-8">
-<title>Informe técnico EUDR — ${polygonName || 'polígono'}</title>
-<style>
-@page { margin: 18mm 16mm; }
-body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 28px auto; padding: 0 24px; color: #111; line-height: 1.55; }
-h1 { font-size: 19px; margin: 0; }
-h2 { font-size: 13px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid #999; padding-bottom: 4px; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-td { padding: 5px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
-td:first-child { color: #444; width: 42%; }
-.hash { font-family: 'Courier New', monospace; font-size: 9px; word-break: break-all; color: #333; }
-.disclaimer { font-size: 10.5px; color: #333; margin-top: 22px; padding: 12px 14px; border: 1px solid #aaa; background: #f9f7f0; }
-.kicker { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
-.header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #111; padding-bottom: 10px; }
-.meta { font-size: 10px; color: #666; text-align: right; }
-.watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-28deg); font-size: 110px; color: rgba(0,0,0,0.045); font-weight: 900; pointer-events: none; z-index: -1; }
-.print-tip { background: #fef9c3; border: 1px solid #fde047; padding: 8px 12px; font-size: 11px; margin-bottom: 18px; }
-@media print { .print-tip { display: none; } }
-</style></head><body>
-<div class="watermark">INFORME TÉCNICO</div>
-<div class="print-tip">📄 Para guardar como PDF: <b>Cmd/Ctrl + P → Guardar como PDF</b>. Recomendado: orientación vertical, márgenes por defecto.</div>
-<div class="header">
-  <div>
-    <div class="kicker">CONICET · FHyCS-UNaM · spatia.ar</div>
-    <h1>Informe técnico — Antecedentes EUDR</h1>
-  </div>
-  <div class="meta">${now} UTC<br>Versión metodología v1.12</div>
-</div>
+		const body = [
+			'Hola,',
+			'',
+			'Solicito un informe técnico firmado sobre el siguiente análisis EUDR.',
+			'',
+			'-- SOLICITANTE --',
+			`Nombre: ${reqName}`,
+			`Email: ${reqEmail}`,
+			reqCompany ? `Organización: ${reqCompany}` : '',
+			reqPurpose ? `Propósito del informe: ${reqPurpose}` : '',
+			'',
+			'-- POLÍGONO ANALIZADO --',
+			`Identificador: ${polygonName || '(dibujado en el mapa)'}`,
+			`Hash SHA-256 (geometría): ${reqHash}`,
+			`Provincias/unidades: ${r.provinces.join(', ') || '—'}`,
+			`Área en cobertura: ${r.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha`,
+			`Cobertura del polígono: ${r.coverage_pct.toFixed(1)}%`,
+			`Celdas evaluadas: ${r.cells_in_coverage.toLocaleString()} de ${r.cells_requested.toLocaleString()}`,
+			'',
+			'-- RESULTADOS --',
+			`Pérdida forestal post-2020: ${r.deforested_pct.toFixed(2)}% del polígono`,
+			`Riesgo máximo (0-100): ${r.max_risk.toFixed(0)}`,
+			`Riesgo medio (0-100): ${r.mean_risk.toFixed(1)}`,
+			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
+			`Pérdida 2021/22/23/24: ${yr(2021)}% / ${yr(2022)}% / ${yr(2023)}% / ${yr(2024)}%`,
+			'',
+			'-- METODOLOGÍA --',
+			'Hansen GFC v1.12 + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m.',
+			'Score 0-100 = 70% pérdida post-2020 + 20% fuego post-2020 + 10% pérdida previa.',
+			'',
+			'(Adjunto el GeoJSON del polígono.)',
+			'',
+			'Gracias.',
+		].filter(Boolean).join('\n');
+		const subject = `[Solicitud informe EUDR] ${polygonName || 'polígono'} — ${reqHash.slice(0, 8)}`;
+		const mailto = `mailto:nealab@spatia.ar?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-<h2>Polígono analizado</h2>
-<table>
-  <tr><td>Identificador</td><td>${polygonName || '(sin nombre)'}</td></tr>
-  <tr><td>Hash SHA-256 (geometría de entrada)</td><td class="hash">${hash}</td></tr>
-  <tr><td>Provincias / unidades</td><td>${r.provinces.join(', ') || '—'}</td></tr>
-  <tr><td>Área en cobertura</td><td>${r.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha</td></tr>
-  <tr><td>Cobertura del polígono</td><td>${r.coverage_pct.toFixed(1)}%</td></tr>
-  <tr><td>Celdas evaluadas / solicitadas</td><td>${r.cells_in_coverage.toLocaleString()} / ${r.cells_requested.toLocaleString()}</td></tr>
-</table>
+		// Trigger GeoJSON download so the user can attach it to the email
+		const gj = {
+			type: 'Feature',
+			properties: { name: polygonName || 'polygon', hash: reqHash, requested_by: reqEmail },
+			geometry: { type: 'Polygon', coordinates: lastPolygonRings },
+		};
+		const blob = new Blob([JSON.stringify(gj)], { type: 'application/geo+json' });
+		const blobUrl = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = blobUrl;
+		a.download = `eudr_request_${reqHash.slice(0, 8)}.geojson`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(blobUrl);
 
-<h2>Resultados</h2>
-<table>
-  <tr><td>Pérdida forestal post-2020 (% del polígono)</td><td><b>${r.deforested_pct.toFixed(2)}%</b></td></tr>
-  <tr><td>Celdas con pérdida post-2020</td><td>${r.deforested_cells.toLocaleString()}</td></tr>
-  <tr><td>Riesgo máximo (0-100)</td><td>${r.max_risk.toFixed(0)}</td></tr>
-  <tr><td>Riesgo medio (0-100)</td><td>${r.mean_risk.toFixed(1)}</td></tr>
-  <tr><td>Pérdida 2021</td><td>${yr(2021)}%</td></tr>
-  <tr><td>Pérdida 2022</td><td>${yr(2022)}%</td></tr>
-  <tr><td>Pérdida 2023</td><td>${yr(2023)}%</td></tr>
-  <tr><td>Pérdida 2024</td><td>${yr(2024)}%</td></tr>
-</table>
-
-<h2>Metodología</h2>
-<p style="font-size:12px;">
-Score compuesto 0-100: <b>70%</b> pérdida forestal post-2020 + <b>20%</b> área quemada post-2020 + <b>10%</b> pérdida de cobertura previa.
-Cutoff EUDR: <b>31 de diciembre de 2020</b> (Art. 2.13 del Reglamento (UE) 2023/1115).
-Resolución espacial: <b>H3 res-9</b> (~0,1 km² por hexágono) sobre dato satelital de 100 m, que constituye el piso de precisión efectivo.</p>
-<p style="font-size:12px;">
-<b>Fuentes:</b> Hansen Global Forest Change v1.12 (UMD/Landsat) + MODIS MCD64A1 área quemada (NASA, 500 m).
-Vintage de datos: <b>2024-12-31</b>. Procesamiento agregado a malla H3 con script <code>aggregate_eudr_region.py</code> (AGPL-3.0, código abierto en <code>github.com/debianalt/nealab</code>).</p>
-
-<h2>Autoría e institución</h2>
-<p style="font-size:12px;">
-Análisis generado por <b>nealab / spatia.ar</b>, plataforma de inteligencia territorial desarrollada en el marco de actividades académicas del Consejo Nacional de Investigaciones Científicas y Técnicas (<b>CONICET</b>) — Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (<b>FHyCS-UNaM</b>).</p>
-
-<div class="disclaimer">
-<b>Disclaimer.</b> Este documento es un <b>informe técnico de antecedentes</b> de cobertura forestal y cambio post-2020 generado a partir de fuentes satelitales públicas. <b>No constituye una certificación formal de cumplimiento</b> bajo el Reglamento (UE) 2023/1115 (EUDR). La certificación regulatoria requiere geometría parcelaria oficial, trazabilidad documental, y due-diligence profesional independiente. nealab, su autor, CONICET y UNaM no asumen responsabilidad por decisiones comerciales o regulatorias basadas exclusivamente en este informe.
-</div>
-
-<p style="font-size:9px;color:#777;margin-top:24px;">Generado ${now} UTC · <a href="https://www.spatia.ar/eudr/check">spatia.ar/eudr/check</a> · Hash geometría: <span class="hash">${hash}</span></p>
-</body></html>`;
-		const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-		const url = URL.createObjectURL(blob);
-		window.open(url, '_blank');
+		// Open the mail client with the prefilled body
+		window.location.href = mailto;
+		closeReportModal();
 	}
 
 	function handleSubmit() {
@@ -889,7 +896,7 @@ Análisis generado por <b>nealab / spatia.ar</b>, plataforma de inteligencia ter
 						</div>
 					</div>
 
-					<button onclick={generateReport}
+					<button onclick={openReportRequest}
 						class="mt-4 w-full py-2 rounded border border-yellow-400/60 bg-yellow-400/15 text-[12px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors cursor-pointer">
 						{i18n.t('eudr.check.poly_report')}
 					</button>
@@ -903,6 +910,37 @@ Análisis generado por <b>nealab / spatia.ar</b>, plataforma de inteligencia ter
 				</div>
 			{/if}
 	</div>
+
+	<!-- Report-request modal (lead-gen — STAN-CONICET emite el informe humano) -->
+	{#if reportModalOpen}
+		<div class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onclick={closeReportModal} role="presentation">
+			<div class="border border-yellow-400/40 rounded-lg p-6 max-w-md w-full max-h-[calc(100vh-32px)] overflow-y-auto" style="background: var(--color-bg);" onclick={(e: MouseEvent) => e.stopPropagation()} role="dialog">
+				<h3 class="text-base font-bold text-white mb-2">{i18n.t('eudr.check.req_title')}</h3>
+				<p class="text-[11px] text-white/60 mb-4 leading-relaxed">{i18n.t('eudr.check.req_intro')}</p>
+				<div class="space-y-2">
+					<input type="text" placeholder={i18n.t('eudr.check.req_name')} bind:value={reqName}
+						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
+					<input type="email" placeholder={i18n.t('eudr.check.req_email')} bind:value={reqEmail}
+						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
+					<input type="text" placeholder={i18n.t('eudr.check.req_company')} bind:value={reqCompany}
+						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
+					<textarea placeholder={i18n.t('eudr.check.req_purpose')} bind:value={reqPurpose} rows="3"
+						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60 resize-none"></textarea>
+				</div>
+				<p class="mt-3 text-[10px] text-white/40 leading-relaxed">{i18n.t('eudr.check.req_note')}</p>
+				<div class="mt-4 flex gap-2">
+					<button onclick={closeReportModal}
+						class="flex-1 py-2 border border-white/20 rounded text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer bg-transparent">
+						{i18n.t('eudr.check.req_cancel')}
+					</button>
+					<button onclick={submitReportRequest}
+						class="flex-1 py-2 rounded bg-yellow-400 text-black font-bold text-[12px] hover:bg-yellow-400/85 transition-colors cursor-pointer">
+						{i18n.t('eudr.check.req_send')}
+					</button>
+				</div>
+			</div>
+		</div>
+	{/if}
 </div>
 {/if}
 
