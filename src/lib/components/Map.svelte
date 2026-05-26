@@ -17,6 +17,11 @@
 	import corrientesMask from '$lib/data/corrientes_mask.json';
 	import altoParanaBoundary from '$lib/data/alto_parana_boundary.json';
 	import altoParanaMask from '$lib/data/alto_parana_mask.json';
+	import chacoBoundary from '$lib/data/chaco_boundary.json';
+	import formosaBoundary from '$lib/data/formosa_boundary.json';
+	import paranaBrBoundary from '$lib/data/parana_br_boundary.json';
+	import scBrBoundary from '$lib/data/santa_catarina_br_boundary.json';
+	import rsBrBoundary from '$lib/data/rio_grande_sul_br_boundary.json';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
@@ -202,7 +207,7 @@
 				id: 'corrientes-border',
 				type: 'line',
 				source: 'corrientes-boundary',
-				layout: { visibility: 'none', 'line-join': 'round', 'line-cap': 'round' },
+				layout: { 'line-join': 'round', 'line-cap': 'round' },
 				paint: {
 					'line-color': '#f472b6',
 					'line-width': [
@@ -235,7 +240,7 @@
 				id: 'alto_parana-border',
 				type: 'line',
 				source: 'alto_parana-boundary',
-				layout: { visibility: 'none', 'line-join': 'round', 'line-cap': 'round' },
+				layout: { 'line-join': 'round', 'line-cap': 'round' },
 				paint: {
 					'line-color': '#f472b6',
 					'line-width': [
@@ -253,6 +258,35 @@
 					]
 				}
 			});
+
+			// v1.1 new territories — always-visible borders (same pattern as Mis/Ita/Cor/AP)
+			const v11Borders: Array<[string, any]> = [
+				['chaco', chacoBoundary],
+				['formosa', formosaBoundary],
+				['parana_br', paranaBrBoundary],
+				['santa_catarina_br', scBrBoundary],
+				['rio_grande_sul_br', rsBrBoundary],
+			];
+			for (const [id, data] of v11Borders) {
+				map.addSource(`${id}-boundary`, { type: 'geojson', data });
+				map.addLayer({
+					id: `${id}-border`,
+					type: 'line',
+					source: `${id}-boundary`,
+					layout: { 'line-join': 'round', 'line-cap': 'round' },
+					paint: {
+						'line-color': '#f472b6',
+						'line-width': [
+							'interpolate', ['linear'], ['zoom'],
+							6, 1.2, 9, 1.0, 12, 0.8, 16, 0.5
+						],
+						'line-opacity': [
+							'interpolate', ['linear'], ['zoom'],
+							6, 0.7, 12, 0.5, 16, 0.3
+						]
+					}
+				});
+			}
 
 			// Buildings source (PMTiles)
 			map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
@@ -1447,19 +1481,13 @@
 		if (map.getLayer('itapua-mask-fill')) {
 			map.setLayoutProperty('itapua-mask-fill', 'visibility', isItapua ? 'visible' : 'none');
 		}
-		// Corrientes fog mask + border
+		// Corrientes fog mask (border stays always-visible like Mis/Ita to signal coverage)
 		if (map.getLayer('corrientes-mask-fill')) {
 			map.setLayoutProperty('corrientes-mask-fill', 'visibility', isCorrientes ? 'visible' : 'none');
 		}
-		if (map.getLayer('corrientes-border')) {
-			map.setLayoutProperty('corrientes-border', 'visibility', isCorrientes ? 'visible' : 'none');
-		}
-		// Alto Paraná fog mask + border
+		// Alto Paraná fog mask (border stays always-visible like Mis/Ita to signal coverage)
 		if (map.getLayer('alto_parana-mask-fill')) {
 			map.setLayoutProperty('alto_parana-mask-fill', 'visibility', isAltoParana ? 'visible' : 'none');
-		}
-		if (map.getLayer('alto_parana-border')) {
-			map.setLayoutProperty('alto_parana-border', 'visibility', isAltoParana ? 'visible' : 'none');
 		}
 		// PY district polygons: show BOTH Itapúa + Alto Paraná whenever any
 		// PY territory is active, so districts of the two can be selected and
@@ -1496,7 +1524,8 @@
 	const EUDR_HIDDEN_LAYERS = [
 		'buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d',
 		'mask-fill', 'itapua-mask-fill', 'corrientes-mask-fill', 'alto_parana-mask-fill',
-		'province-border', 'corrientes-border', 'alto_parana-border',
+		'province-border', 'corrientes-border', 'alto_parana-border', 'itapua-border',
+		'chaco-border', 'formosa-border', 'parana_br-border', 'santa_catarina_br-border', 'rio_grande_sul_br-border',
 		'itapua-district-fill', 'itapua-district-line', 'alto_parana-district-fill', 'alto_parana-district-line',
 		'province-fill', 'province-line',
 		// Argentine dept blue overlays (Misiones/Corrientes radios-derived) — replaced
@@ -1558,7 +1587,7 @@
 				if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
 			}
 			// Show all territory borders
-			for (const id of ['province-border', 'itapua-border', 'corrientes-border', 'alto_parana-border']) {
+			for (const id of ['province-border', 'itapua-border', 'corrientes-border', 'alto_parana-border', 'chaco-border', 'formosa-border', 'parana_br-border', 'santa_catarina_br-border', 'rio_grande_sul_br-border']) {
 				if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'visible');
 			}
 			// Census radios are a census/base-mode visual. Keep them hidden while a

@@ -63,7 +63,9 @@
 		groups = [];
 		selectorOpen = false;
 		if (!analysis) return;
-		const territories = Object.values(TERRITORY_REGISTRY).filter(t => t.available);
+		const territories = Object.values(TERRITORY_REGISTRY)
+			.filter(t => t.available)
+			.filter(t => (analysis as any).coverage?.[t.id] !== 'unavailable');
 		Promise.all(
 			territories.map(t =>
 				loadDeptList(analysis.id, t.parquetPrefix).then(depts => ({ territory: t, depts }))
