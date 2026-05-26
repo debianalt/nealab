@@ -339,9 +339,9 @@
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
 				paint: {
-					'line-color': '#d4d4d4',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1.2, 10, 0.6, 14, 0.3],
-					'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.3, 10, 0.25, 14, 0.15]
+					'line-color': '#93c5fd',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.4, 9, 0.9, 13, 0.6],
+					'line-opacity': 0.5
 				}
 			});
 			map.addLayer({
@@ -396,9 +396,9 @@
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
 				paint: {
-					'line-color': '#d4d4d4',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1.2, 10, 0.6, 14, 0.3],
-					'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.3, 10, 0.25, 14, 0.15]
+					'line-color': '#93c5fd',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.4, 9, 0.9, 13, 0.6],
+					'line-opacity': 0.5
 				}
 			});
 			map.addLayer({
