@@ -49,13 +49,13 @@ export const TERRAIN_CONFIG = {
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=28',
-		sat_environmental_risk: '?v=34',
-		sat_climate_comfort: '?v=33',
-		sat_green_capital: '?v=34',
-		sat_change_pressure: '?v=36',
+		sat_environmental_risk: '?v=35',
+		sat_climate_comfort: '?v=34',
+		sat_green_capital: '?v=35',
+		sat_change_pressure: '?v=37',
 		sat_location_value: '?v=26',
-		sat_agri_potential: '?v=33',
-		sat_forest_health: '?v=36',
+		sat_agri_potential: '?v=34',
+		sat_forest_health: '?v=37',
 		sat_forestry_aptitude: '?v=34',
 		sat_service_deprivation: '?v=25',
 		sat_territorial_isolation: '?v=25',
@@ -247,12 +247,12 @@ export const TERRITORY_REGISTRY: Record<string, TerritoryConfig> = {
 	chaco: {
 		id: 'chaco', label: 'Chaco', shortLabel: 'CHA', country: 'ar',
 		bbox: [-63.50, -28.00, -58.40, -24.80],  // synced with pipeline/config.py + config_eudr.py
-		parquetPrefix: 'chaco/', flag: '🇦🇷', available: false,
+		parquetPrefix: 'chaco/', flag: '🇦🇷', available: true,
 	},
 	formosa: {
 		id: 'formosa', label: 'Formosa', shortLabel: 'FOR', country: 'ar',
 		bbox: [-62.20, -27.00, -57.40, -22.90],  // synced with pipeline/config.py + config_eudr.py
-		parquetPrefix: 'formosa/', flag: '🇦🇷', available: false,
+		parquetPrefix: 'formosa/', flag: '🇦🇷', available: true,
 	},
 	// ── Paraguay — próximamente ──────────────────────────────────────────────
 	neembucu_py: {
@@ -284,17 +284,17 @@ export const TERRITORY_REGISTRY: Record<string, TerritoryConfig> = {
 	parana_br: {
 		id: 'parana_br', label: 'Paraná', shortLabel: 'PR', country: 'br',
 		bbox: [-54.60, -26.70, -48.00, -22.50],
-		parquetPrefix: 'parana_br/', flag: '🇧🇷', available: false,
+		parquetPrefix: 'parana_br/', flag: '🇧🇷', available: true,
 	},
 	santa_catarina_br: {
 		id: 'santa_catarina_br', label: 'Santa Catarina', shortLabel: 'SC', country: 'br',
 		bbox: [-53.90, -29.40, -48.30, -25.90],
-		parquetPrefix: 'santa_catarina_br/', flag: '🇧🇷', available: false,
+		parquetPrefix: 'santa_catarina_br/', flag: '🇧🇷', available: true,
 	},
-	rio_grande_do_sul_br: {
-		id: 'rio_grande_do_sul_br', label: 'Rio Grande do Sul', shortLabel: 'RS', country: 'br',
+	rio_grande_sul_br: {
+		id: 'rio_grande_sul_br', label: 'Rio Grande do Sul', shortLabel: 'RS', country: 'br',
 		bbox: [-57.70, -33.80, -49.60, -27.00],
-		parquetPrefix: 'rio_grande_do_sul_br/', flag: '🇧🇷', available: false,
+		parquetPrefix: 'rio_grande_sul_br/', flag: '🇧🇷', available: true,
 	},
 };
 
@@ -1120,7 +1120,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'sat.envRisk.title',
 		descKey: 'sat.envRisk.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1130,7 +1130,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'sat.climate.title',
 		descKey: 'sat.climate.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1140,7 +1140,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'sat.green.title',
 		descKey: 'sat.green.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1150,7 +1150,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'invertir',
 		titleKey: 'sat.change.title',
 		descKey: 'sat.change.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1170,7 +1170,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'producir',
 		titleKey: 'sat.agri.title',
 		descKey: 'sat.agri.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1189,7 +1189,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'producir',
 		titleKey: 'sat.forestH.title',
 		descKey: 'sat.forestH.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',

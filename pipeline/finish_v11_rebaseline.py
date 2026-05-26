@@ -31,7 +31,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR, GCS_BUCKET
 
-NEW_TERRITORIES = ['chaco', 'formosa']
+NEW_TERRITORIES = ['chaco', 'formosa', 'parana_br', 'santa_catarina_br', 'rio_grande_sul_br']
 ALL_TERRITORIES = ['misiones', 'corrientes', 'itapua_py', 'alto_parana_py'] + NEW_TERRITORIES
 
 # Analyses that have raster pipelines (process_raster_to_h3)
@@ -58,16 +58,18 @@ def run(cmd, dry_run=False):
 
 
 def check_gee_status():
-    """List GEE tasks for Chaco/Formosa. Returns (n_done, n_pending, n_failed)."""
+    """List GEE tasks for all new territories. Returns (n_done, n_pending, n_failed)."""
     print("\n" + "=" * 60)
-    print("  STEP 1: GEE task status (Chaco + Formosa)")
+    print(f"  STEP 1: GEE task status ({', '.join(NEW_TERRITORIES)})")
     print("=" * 60)
     result = subprocess.run(
         ['earthengine', 'task', 'list'],
         capture_output=True, text=True, timeout=120
     )
+    # Match any of the new territories (Chaco/Formosa/BR-sur)
+    matchers = [t.lower() for t in NEW_TERRITORIES] + ['parana', 'santa_catarina', 'rio_grande']
     lines = [l for l in result.stdout.splitlines()
-             if 'chaco' in l.lower() or 'formosa' in l.lower()]
+             if any(m in l.lower() for m in matchers)]
 
     n_done = sum(1 for l in lines if 'COMPLETED' in l or 'SUCCEEDED' in l)
     n_pending = sum(1 for l in lines if 'PENDING' in l or 'RUNNING' in l)

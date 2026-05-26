@@ -109,6 +109,56 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'codprov_indec': 34,
         'biome': 'gran_chaco',                       # NOT paraná_atlantic_forest — triggers v1.1 bump
     },
+    # ── Brasil sur — Mata Atlântica interior (compatible biome) ────────
+    # Added to v1.1 pool together with Chaco/Formosa. Biome compatible with
+    # Mis+Ita+AP (Paraná Atlantic Forest), so in principle they could enter
+    # against frozen v1 without bump — but since v1.1 is already happening
+    # (Chaco/Formosa = different biome), pooling BR-sur now produces more
+    # robust Tier 2 P2/P98 and prevents a future puntual bump if any clipping
+    # appears (e.g. c_frost higher in RS).
+    # Admin units = municípios (GADM level 2). Brasil tiene ~399 (PR), 295 (SC),
+    # 497 (RS) municípios — many, but functional. PostGIS census/IBGE setor
+    # censitário load deferred to follow-up; satellite layers only require
+    # H3 grid + bbox.
+    'parana_br': {
+        'id': 'parana_br',
+        'label': 'Paraná',
+        'country': 'br',
+        'bbox': [-54.72, -26.82, -47.92, -22.41],   # GADM admin1 + 0.1deg pad
+        'admin_level': 'municipio',
+        'admin_col': 'municipio',
+        'admin_collection': None,                    # uses local gadm41_BRA_2.shp
+        'admin_filter': ('NAME_1', 'Paraná'),
+        'output_prefix': 'parana_br/',
+        'export_scale': 100,
+        'biome': 'parana_atlantic_forest',           # same as Mis/Ita/AP — compatible
+    },
+    'santa_catarina_br': {
+        'id': 'santa_catarina_br',
+        'label': 'Santa Catarina',
+        'country': 'br',
+        'bbox': [-53.94, -29.46, -48.26, -25.85],
+        'admin_level': 'municipio',
+        'admin_col': 'municipio',
+        'admin_collection': None,
+        'admin_filter': ('NAME_1', 'Santa Catarina'),
+        'output_prefix': 'santa_catarina_br/',
+        'export_scale': 100,
+        'biome': 'parana_atlantic_forest',
+    },
+    'rio_grande_sul_br': {
+        'id': 'rio_grande_sul_br',
+        'label': 'Rio Grande do Sul',
+        'country': 'br',
+        'bbox': [-57.75, -33.85, -49.59, -26.98],
+        'admin_level': 'municipio',
+        'admin_col': 'municipio',
+        'admin_collection': None,
+        'admin_filter': ('NAME_1', 'Rio Grande do Sul'),
+        'output_prefix': 'rio_grande_sul_br/',
+        'export_scale': 100,
+        'biome': 'parana_atlantic_forest',           # RS extends to Pampa in south — minor edge but accepted
+    },
 }
 
 def get_territory(territory_id: str) -> dict:

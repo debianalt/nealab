@@ -1,0 +1,100 @@
+{
+  "territory": "formosa",
+  "province": {
+    "total_hexes": 825760,
+    "avg_score": 10.0,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 11.3,
+      "hex_count": 288652,
+      "centroid": [
+        -60.0089,
+        -24.8951
+      ]
+    },
+    {
+      "dpto": "Ramón Lista",
+      "parquetKey": "ramon_lista",
+      "avg_score": 10.9,
+      "hex_count": 40559,
+      "centroid": [
+        -62.1413,
+        -23.111
+      ]
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 10.1,
+      "hex_count": 150491,
+      "centroid": [
+        -61.2886,
+        -24.027
+      ]
+    },
+    {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 9.8,
+      "hex_count": 95406,
+      "centroid": [
+        -59.1628,
+        -25.7727
+      ]
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "avg_score": 8.9,
+      "hex_count": 37365,
+      "centroid": [
+        -58.6711,
+        -25.1016
+      ]
+    },
+    {
+      "dpto": "Formosa",
+      "parquetKey": "formosa",
+      "avg_score": 8.3,
+      "hex_count": 71783,
+      "centroid": [
+        -58.3872,
+        -25.9345
+      ]
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 8.3,
+      "hex_count": 43310,
+      "centroid": [
+        -62.0811,
+        -23.8673
+      ]
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 8.3,
+      "hex_count": 58522,
+      "centroid": [
+        -58.0456,
+        -25.3808
+      ]
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 8.2,
+      "hex_count": 39672,
+      "centroid": [
+        -58.5513,
+        -26.4647
+      ]
+    }
+  ]
+}

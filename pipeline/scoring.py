@@ -273,7 +273,7 @@ def load_goalposts(path: str = None) -> dict:
     """Load goalposts.json from pipeline/config/."""
     if path is None:
         path = os.path.join(os.path.dirname(__file__), 'config', 'goalposts.json')
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
