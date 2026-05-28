@@ -1,0 +1,108 @@
+{
+  "province": {
+    "total_hexes": 825760,
+    "high_risk_count": 9233,
+    "avg_score": 1.7
+  },
+  "departments": [
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 1.4,
+      "hex_count": 150491,
+      "high_risk_count": 1046,
+      "centroid": [
+        -61.282,
+        -24.0314
+      ]
+    },
+    {
+      "dpto": "Formosa",
+      "parquetKey": "formosa",
+      "avg_score": 2.5,
+      "hex_count": 71783,
+      "high_risk_count": 1869,
+      "centroid": [
+        -58.3773,
+        -25.9403
+      ]
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 3.4,
+      "hex_count": 39672,
+      "high_risk_count": 1937,
+      "centroid": [
+        -58.564,
+        -26.464
+      ]
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 1.2,
+      "hex_count": 43310,
+      "high_risk_count": 164,
+      "centroid": [
+        -62.0788,
+        -23.8556
+      ]
+    },
+    {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 1.4,
+      "hex_count": 288652,
+      "high_risk_count": 1626,
+      "centroid": [
+        -59.96,
+        -24.8796
+      ]
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "avg_score": 2.1,
+      "hex_count": 37365,
+      "high_risk_count": 673,
+      "centroid": [
+        -58.6617,
+        -25.1055
+      ]
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 2.6,
+      "hex_count": 58522,
+      "high_risk_count": 1228,
+      "centroid": [
+        -58.0588,
+        -25.3715
+      ]
+    },
+    {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 1.5,
+      "hex_count": 95406,
+      "high_risk_count": 639,
+      "centroid": [
+        -59.1602,
+        -25.7667
+      ]
+    },
+    {
+      "dpto": "Ramón Lista",
+      "parquetKey": "ramon_lista",
+      "avg_score": 1.1,
+      "hex_count": 40559,
+      "high_risk_count": 51,
+      "centroid": [
+        -62.1402,
+        -23.121
+      ]
+    }
+  ]
+}

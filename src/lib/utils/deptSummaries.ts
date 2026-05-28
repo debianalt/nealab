@@ -125,6 +125,7 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/formosa_sat_deforestation_dynamics_summary.json'),
 	soil_water              : () => import('$lib/data/formosa_sat_soil_water_summary.json'),
 	territorial_scores      : () => import('$lib/data/formosa_scores_dept_summary.json'),
+	flood_risk              : () => import('$lib/data/formosa_flood_dept_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/parana_br_sat_environmental_risk_summary.json'),
