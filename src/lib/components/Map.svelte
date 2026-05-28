@@ -338,9 +338,14 @@
 				source: 'itapua-districts',
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
+				// Hide at low zoom: the underlying GAUL districts don't perfectly
+				// align with the GeoJSON province border (different sources), and
+				// at continent view this shows as a duplicated/blurry outline.
+				// Above zoom 8 the user is intentionally looking inside Itapúa.
+				minzoom: 8,
 				paint: {
 					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.4, 9, 0.9, 13, 0.6],
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
 					'line-opacity': 0.5
 				}
 			});
@@ -395,9 +400,12 @@
 				source: 'alto_parana-districts',
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
+				// See itapua-district-line: tile/boundary source drift creates a
+				// double outline at continent view. Show only when user zooms in.
+				minzoom: 8,
 				paint: {
 					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.4, 9, 0.9, 13, 0.6],
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
 					'line-opacity': 0.5
 				}
 			});
@@ -610,9 +618,12 @@
 				type: 'line',
 				source: 'ar-depts',
 				layout: { visibility: 'none' },
+				// Same low-zoom overlap mitigation as itapua/AP — keeps the pink
+				// province border clean at continent view.
+				minzoom: 8,
 				paint: {
 					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.4, 9, 0.9, 13, 0.6],
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
 					'line-opacity': 0.5
 				}
 			});
@@ -622,7 +633,11 @@
 				if (lassoActive) return;
 				const p = e.features![0].properties!;
 				const rc = String(p.redcode ?? '');
-				const territory = rc.startsWith('54') ? 'misiones' : rc.startsWith('18') ? 'corrientes' : '';
+				// codprov INDEC → territory id (matches AR_PROVINCE_PREFIX in deptBoundaries.ts)
+				const territoryByCodprov: Record<string, string> = {
+					'54': 'misiones', '18': 'corrientes', '22': 'chaco', '34': 'formosa',
+				};
+				const territory = territoryByCodprov[rc.slice(0, 2)] ?? '';
 				if (!p.nombre || !territory) return;
 				container.dispatchEvent(new CustomEvent('dept-map-select', {
 					bubbles: true,
