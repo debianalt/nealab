@@ -829,6 +829,7 @@
 			// Re-apply territory visibility in case territory was set before map loaded
 			// (e.g., territory restored from URL state before onMount completed)
 			applyTerritoryVisibility();
+			hideBasemapAdminLines();
 			if (regionalModeActive) setRegionalMapMode(true);
 		});
 
@@ -1532,31 +1533,36 @@
 		// by our GADM admin-2 layer in EUDR mode
 		'ar-dept-fill', 'ar-dept-line', 'dept-outline-line', 'compare-dept-outline-line',
 	];
+
+	// Basemap (CartoDB) admin lines come from a different source than our GADM
+	// boundaries and visibly drift, producing a duplicate/blurry outline next to
+	// our pink province borders. Hide them once after load — same effect EUDR mode
+	// applied locally, now applied to regular mode too.
+	function hideBasemapAdminLines() {
+		if (!map) return;
+		const ids = (map.getStyle().layers ?? [])
+			.filter(l => /admin|boundary/i.test(l.id) && (l.type === 'line' || l.type === 'fill'))
+			.map(l => l.id);
+		for (const id of ids) {
+			try { map.setLayoutProperty(id, 'visibility', 'none'); } catch {}
+		}
+	}
+
 	export function setEudrMode(active: boolean) {
 		if (!map) return;
 		const apply = () => {
-			// Basemap (CartoDB) admin lines come from a different source than GADM
-			// and visibly drift; hide them in EUDR mode so only our lines show.
-			const basemapAdmin = (map.getStyle().layers ?? [])
-				.filter(l => /admin|boundary/i.test(l.id) && (l.type === 'line' || l.type === 'fill'))
-				.map(l => l.id);
 			const eudrLayers = ['eudr-provinces-line', 'eudr-admin2-line', 'eudr-admin2-fill', 'eudr-focus-line'];
 			if (active) {
 				for (const l of EUDR_HIDDEN_LAYERS) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
 				}
-				for (const l of basemapAdmin) {
-					try { map.setLayoutProperty(l, 'visibility', 'none'); } catch {}
-				}
+				hideBasemapAdminLines();
 				for (const l of eudrLayers) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'visible');
 				}
 			} else {
 				for (const l of eudrLayers) {
 					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
-				}
-				for (const l of basemapAdmin) {
-					try { map.setLayoutProperty(l, 'visibility', 'visible'); } catch {}
 				}
 				applyTerritoryVisibility();
 			}
