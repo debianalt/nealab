@@ -112,6 +112,7 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	carbon_stock            : () => import('$lib/data/chaco_sat_carbon_stock_summary.json'),
 	deforestation_dynamics  : () => import('$lib/data/chaco_sat_deforestation_dynamics_summary.json'),
 	territorial_scores      : () => import('$lib/data/chaco_scores_dept_summary.json'),
+	soil_water              : () => import('$lib/data/chaco_sat_soil_water_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/formosa_sat_environmental_risk_summary.json'),
