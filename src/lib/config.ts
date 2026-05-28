@@ -122,6 +122,12 @@ export function getDeptSummaryUrl(analysisId: string, territoryPrefix = ''): str
 	return `${getBase()}/data/${territoryPrefix}${name}.json`;
 }
 
+// BR municipality boundaries: GADM_BRA_2 simplified per state. Fetched on demand
+// (Option B) instead of bundled — see pipeline/build_br_districts.py.
+export function getBrDistrictsUrl(territoryId: string): string {
+	return `${getBase()}/data/br_districts/${territoryId}_districts.geojson`;
+}
+
 export const PARQUETS = {
 	get censo_radios() { return getParquetUrl('censo_radios'); },
 	get censo_departamentos() { return getParquetUrl('censo_departamentos'); },

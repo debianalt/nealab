@@ -16,7 +16,7 @@
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
 	import { isInsideAltoParana } from '$lib/utils/alto_parana-pip';
-	import { findDeptFeature } from '$lib/utils/deptBoundaries';
+	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
@@ -80,6 +80,10 @@
 		const t = territoryStore.activeTerritory;
 		const isRegional = untrack(() => territoryStore.regionalMode);
 		hexStore.setTerritoryPrefix(t.parquetPrefix);
+		// BR territories: pre-fetch municipality boundaries (fire-and-forget).
+		// First dept click after switch may render polygon outline with a brief lag
+		// (typical 200-500ms on broadband); subsequent clicks are instant.
+		if (t.id.endsWith('_br')) ensureBrBoundaries(t.id);
 		// Toggle territory-specific layers (mask, province boundary, buildings)
 		mapComponent?.setActiveTerritory(t.id); // applyTerritoryVisibility() respects regionalModeActive
 		// Reload hex choropleth for the new territory
