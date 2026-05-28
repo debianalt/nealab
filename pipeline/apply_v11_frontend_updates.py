@@ -109,7 +109,7 @@ def patch_dept_summaries(present: dict[str, list[str]], dry_run: bool) -> int:
 
 
 def patch_coverage(present: dict[str, list[str]], dry_run: bool) -> int:
-    """Flip coverage entries in config.ts ANALYSIS_REGISTRY: 'unavailable' → 'available'
+    """Flip coverage entries in config.ts ANALYSIS_REGISTRY: 'unavailable' -> 'available'
     for each (layer, territory) pair present on disk."""
     src = CONFIG_TS.read_text(encoding='utf-8')
     original = src
@@ -136,7 +136,7 @@ def patch_coverage(present: dict[str, list[str]], dry_run: bool) -> int:
         for t in NEW_TERRITORIES:
             if layer not in present[t]:
                 continue
-            # Replace `t: 'unavailable'` → `t: 'available'` (only inside this entry)
+            # Replace `t: 'unavailable'` -> `t: 'available'` (only inside this entry)
             new_entry = re.sub(
                 rf"\b{t}\s*:\s*'unavailable'",
                 f"{t}: 'available'",
@@ -146,7 +146,7 @@ def patch_coverage(present: dict[str, list[str]], dry_run: bool) -> int:
             new_block = new_block.replace(entry, new_entry)
             flipped = sum(1 for t in NEW_TERRITORIES if layer in present[t])
             flips += flipped
-            print(f"  flip {layer}: {flipped} territories → available")
+            print(f"  flip {layer}: {flipped} territories -> available")
 
     if new_block == block:
         return 0
@@ -188,7 +188,7 @@ def bump_cache_busters(present: dict[str, list[str]], dry_run: bool) -> int:
         new_str = f"{m.group(1)}{new_n}{m.group(3)}"
         src = src.replace(m.group(0), new_str)
         bumped += 1
-        print(f"  cb {parquet_key}: v{m.group(2)} → v{new_n}")
+        print(f"  cb {parquet_key}: v{m.group(2)} -> v{new_n}")
 
     if dry_run:
         return bumped
