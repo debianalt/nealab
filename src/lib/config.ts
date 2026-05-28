@@ -48,7 +48,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=30',
+		hex_flood_risk: '?v=31',
 		sat_environmental_risk: '?v=35',
 		sat_climate_comfort: '?v=34',
 		sat_green_capital: '?v=35',
@@ -67,13 +67,13 @@ export function getParquetUrl(name: string): string {
 		sat_economic_activity: '?v=23',
 		sat_accessibility: '?v=26',
 		sat_climate_vulnerability: '?v=7',
-		sat_carbon_stock: '?v=12',
-		sat_pm25_drivers: '?v=9',
-		sat_deforestation_dynamics: '?v=9',
-		sat_productive_activity: '?v=13',
+		sat_carbon_stock: '?v=13',
+		sat_pm25_drivers: '?v=10',
+		sat_deforestation_dynamics: '?v=10',
+		sat_productive_activity: '?v=14',
 		sat_land_use: '?v=2',
-		sat_soil_water: '?v=5',
-		overture_scores: '?v=30',
+		sat_soil_water: '?v=6',
+		overture_scores: '?v=31',
 		emsa_powerlines: '?v=20',
 	};
 	const bust = busts[name] || '';
@@ -1076,7 +1076,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'analysis.floodRisk.title',
 		descKey: 'analysis.floodRisk.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'unavailable', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
