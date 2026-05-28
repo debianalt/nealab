@@ -1,0 +1,3254 @@
+{
+  "province": {
+    "total_hexes": 992395,
+    "high_risk_count": 21308,
+    "avg_score": 2.8
+  },
+  "departments": [
+    {
+      "dpto": "Abdon Batista",
+      "parquetKey": "abdon_batista",
+      "avg_score": 6.2,
+      "hex_count": 2491,
+      "high_risk_count": 217,
+      "centroid": [
+        -51.0564,
+        -27.5838
+      ]
+    },
+    {
+      "dpto": "Abelardo Luz",
+      "parquetKey": "abelardo_luz",
+      "avg_score": 1.7,
+      "hex_count": 9884,
+      "high_risk_count": 118,
+      "centroid": [
+        -52.256,
+        -26.5624
+      ]
+    },
+    {
+      "dpto": "Agrolândia",
+      "parquetKey": "agrolândia",
+      "avg_score": 1.5,
+      "hex_count": 2151,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.8251,
+        -27.455
+      ]
+    },
+    {
+      "dpto": "Agronômica",
+      "parquetKey": "agronômica",
+      "avg_score": 1.3,
+      "hex_count": 1333,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7208,
+        -27.3276
+      ]
+    },
+    {
+      "dpto": "Alfredo Wagner",
+      "parquetKey": "alfredo_wagner",
+      "avg_score": 1.4,
+      "hex_count": 7606,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.3309,
+        -27.706
+      ]
+    },
+    {
+      "dpto": "Alto Bela Vista",
+      "parquetKey": "alto_bela_vista",
+      "avg_score": 14.1,
+      "hex_count": 1087,
+      "high_risk_count": 243,
+      "centroid": [
+        -51.9258,
+        -27.4219
+      ]
+    },
+    {
+      "dpto": "Anchieta",
+      "parquetKey": "anchieta",
+      "avg_score": 1.5,
+      "hex_count": 2432,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.3332,
+        -26.5327
+      ]
+    },
+    {
+      "dpto": "Angelina",
+      "parquetKey": "angelina",
+      "avg_score": 1.5,
+      "hex_count": 5173,
+      "high_risk_count": 16,
+      "centroid": [
+        -49.0673,
+        -27.543
+      ]
+    },
+    {
+      "dpto": "Anita Garibaldi",
+      "parquetKey": "anita_garibaldi",
+      "avg_score": 5.2,
+      "hex_count": 6209,
+      "high_risk_count": 396,
+      "centroid": [
+        -51.0795,
+        -27.7303
+      ]
+    },
+    {
+      "dpto": "Anitápolis",
+      "parquetKey": "anitapolis",
+      "avg_score": 1.4,
+      "hex_count": 5621,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.1387,
+        -27.8797
+      ]
+    },
+    {
+      "dpto": "Antônio Carlos",
+      "parquetKey": "antônio_carlos",
+      "avg_score": 1.2,
+      "hex_count": 2410,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.8309,
+        -27.4973
+      ]
+    },
+    {
+      "dpto": "Apiúna",
+      "parquetKey": "apiuna",
+      "avg_score": 1.6,
+      "hex_count": 5064,
+      "high_risk_count": 72,
+      "centroid": [
+        -49.3642,
+        -27.1246
+      ]
+    },
+    {
+      "dpto": "Arabutã",
+      "parquetKey": "arabutã",
+      "avg_score": 1.5,
+      "hex_count": 1393,
+      "high_risk_count": 9,
+      "centroid": [
+        -52.1814,
+        -27.1409
+      ]
+    },
+    {
+      "dpto": "Araquari",
+      "parquetKey": "araquari",
+      "avg_score": 4.5,
+      "hex_count": 3891,
+      "high_risk_count": 242,
+      "centroid": [
+        -48.7578,
+        -26.462
+      ]
+    },
+    {
+      "dpto": "Araranguá",
+      "parquetKey": "ararangua",
+      "avg_score": 4.5,
+      "hex_count": 3228,
+      "high_risk_count": 212,
+      "centroid": [
+        -49.4714,
+        -28.9423
+      ]
+    },
+    {
+      "dpto": "Armazém",
+      "parquetKey": "armazem",
+      "avg_score": 1.3,
+      "hex_count": 1823,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.0148,
+        -28.2378
+      ]
+    },
+    {
+      "dpto": "Arroio Trinta",
+      "parquetKey": "arroio_trinta",
+      "avg_score": 1.6,
+      "hex_count": 972,
+      "high_risk_count": 1,
+      "centroid": [
+        -51.3365,
+        -26.9214
+      ]
+    },
+    {
+      "dpto": "Arvoredo",
+      "parquetKey": "arvoredo",
+      "avg_score": 2.2,
+      "hex_count": 951,
+      "high_risk_count": 20,
+      "centroid": [
+        -52.4423,
+        -27.0709
+      ]
+    },
+    {
+      "dpto": "Ascurra",
+      "parquetKey": "ascurra",
+      "avg_score": 1.2,
+      "hex_count": 1155,
+      "high_risk_count": 29,
+      "centroid": [
+        -49.3963,
+        -26.9735
+      ]
+    },
+    {
+      "dpto": "Atalanta",
+      "parquetKey": "atalanta",
+      "avg_score": 1.3,
+      "hex_count": 980,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7426,
+        -27.4372
+      ]
+    },
+    {
+      "dpto": "Aurora",
+      "parquetKey": "aurora",
+      "avg_score": 1.4,
+      "hex_count": 2132,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.5904,
+        -27.3298
+      ]
+    },
+    {
+      "dpto": "Balneário Arroio do Silva",
+      "parquetKey": "balneario_arroio_do_silva",
+      "avg_score": 4.5,
+      "hex_count": 1014,
+      "high_risk_count": 64,
+      "centroid": [
+        -49.4752,
+        -29.0196
+      ]
+    },
+    {
+      "dpto": "Balneário Barra do Sul",
+      "parquetKey": "balneario_barra_do_sul",
+      "avg_score": 5.2,
+      "hex_count": 1103,
+      "high_risk_count": 114,
+      "centroid": [
+        -48.6522,
+        -26.4466
+      ]
+    },
+    {
+      "dpto": "Balneário Camboriú",
+      "parquetKey": "balneario_camboriu",
+      "avg_score": 1.7,
+      "hex_count": 465,
+      "high_risk_count": 33,
+      "centroid": [
+        -48.6221,
+        -27.0044
+      ]
+    },
+    {
+      "dpto": "Balneário Gaivota",
+      "parquetKey": "balneario_gaivota",
+      "avg_score": 11.1,
+      "hex_count": 1578,
+      "high_risk_count": 219,
+      "centroid": [
+        -49.6155,
+        -29.1537
+      ]
+    },
+    {
+      "dpto": "Balneário Piçarras",
+      "parquetKey": "balneario_piçarras",
+      "avg_score": 1.1,
+      "hex_count": 1010,
+      "high_risk_count": 7,
+      "centroid": [
+        -48.7333,
+        -26.7596
+      ]
+    },
+    {
+      "dpto": "Balneário Rincão",
+      "parquetKey": "balneario_rincão",
+      "avg_score": 13.3,
+      "hex_count": 674,
+      "high_risk_count": 126,
+      "centroid": [
+        -49.2544,
+        -28.8269
+      ]
+    },
+    {
+      "dpto": "Bandeirante",
+      "parquetKey": "bandeirante",
+      "avg_score": 1.5,
+      "hex_count": 1541,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.6472,
+        -26.7681
+      ]
+    },
+    {
+      "dpto": "Barra Bonita",
+      "parquetKey": "barra_bonita",
+      "avg_score": 1.7,
+      "hex_count": 975,
+      "high_risk_count": 7,
+      "centroid": [
+        -53.4252,
+        -26.6682
+      ]
+    },
+    {
+      "dpto": "Barra Velha",
+      "parquetKey": "barra_velha",
+      "avg_score": 1.4,
+      "hex_count": 1405,
+      "high_risk_count": 48,
+      "centroid": [
+        -48.7277,
+        -26.6625
+      ]
+    },
+    {
+      "dpto": "Bela Vista do Toldo",
+      "parquetKey": "bela_vista_do_toldo",
+      "avg_score": 1.3,
+      "hex_count": 5447,
+      "high_risk_count": 1,
+      "centroid": [
+        -50.4868,
+        -26.4182
+      ]
+    },
+    {
+      "dpto": "Belmonte",
+      "parquetKey": "belmonte",
+      "avg_score": 1.5,
+      "hex_count": 978,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.6169,
+        -26.8568
+      ]
+    },
+    {
+      "dpto": "Benedito Novo",
+      "parquetKey": "benedito_novo",
+      "avg_score": 1.0,
+      "hex_count": 3956,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.4355,
+        -26.801
+      ]
+    },
+    {
+      "dpto": "Biguaçu",
+      "parquetKey": "biguaçu",
+      "avg_score": 14.5,
+      "hex_count": 3761,
+      "high_risk_count": 531,
+      "centroid": [
+        -48.694,
+        -27.4335
+      ]
+    },
+    {
+      "dpto": "Blumenau",
+      "parquetKey": "blumenau",
+      "avg_score": 1.2,
+      "hex_count": 5278,
+      "high_risk_count": 91,
+      "centroid": [
+        -49.0973,
+        -26.8862
+      ]
+    },
+    {
+      "dpto": "Bocaina do Sul",
+      "parquetKey": "bocaina_do_sul",
+      "avg_score": 1.6,
+      "hex_count": 5325,
+      "high_risk_count": 5,
+      "centroid": [
+        -49.9091,
+        -27.7633
+      ]
+    },
+    {
+      "dpto": "Bom Jardim da Serra",
+      "parquetKey": "bom_jardim_da_serra",
+      "avg_score": 2.2,
+      "hex_count": 9923,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.6525,
+        -28.3611
+      ]
+    },
+    {
+      "dpto": "Bom Jesus",
+      "parquetKey": "bom_jesus",
+      "avg_score": 1.5,
+      "hex_count": 669,
+      "high_risk_count": 2,
+      "centroid": [
+        -52.3901,
+        -26.7388
+      ]
+    },
+    {
+      "dpto": "Bom Jesus do Oeste",
+      "parquetKey": "bom_jesus_do_oeste",
+      "avg_score": 1.2,
+      "hex_count": 709,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.0953,
+        -26.6839
+      ]
+    },
+    {
+      "dpto": "Bom Retiro",
+      "parquetKey": "bom_retiro",
+      "avg_score": 1.5,
+      "hex_count": 11018,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.5631,
+        -27.7854
+      ]
+    },
+    {
+      "dpto": "Bombinhas",
+      "parquetKey": "bombinhas",
+      "avg_score": 2.4,
+      "hex_count": 357,
+      "high_risk_count": 52,
+      "centroid": [
+        -48.5176,
+        -27.1729
+      ]
+    },
+    {
+      "dpto": "Botuverá",
+      "parquetKey": "botuvera",
+      "avg_score": 1.4,
+      "hex_count": 3040,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.1237,
+        -27.2187
+      ]
+    },
+    {
+      "dpto": "Braço do Norte",
+      "parquetKey": "braço_do_norte",
+      "avg_score": 1.4,
+      "hex_count": 2230,
+      "high_risk_count": 2,
+      "centroid": [
+        -49.1424,
+        -28.2409
+      ]
+    },
+    {
+      "dpto": "Braço do Trombudo",
+      "parquetKey": "braço_do_trombudo",
+      "avg_score": 1.3,
+      "hex_count": 926,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.9037,
+        -27.3685
+      ]
+    },
+    {
+      "dpto": "Brunópolis",
+      "parquetKey": "brunopolis",
+      "avg_score": 2.6,
+      "hex_count": 3496,
+      "high_risk_count": 69,
+      "centroid": [
+        -50.845,
+        -27.3471
+      ]
+    },
+    {
+      "dpto": "Brusque",
+      "parquetKey": "brusque",
+      "avg_score": 1.1,
+      "hex_count": 2916,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.9098,
+        -27.1252
+      ]
+    },
+    {
+      "dpto": "Caibi",
+      "parquetKey": "caibi",
+      "avg_score": 2.3,
+      "hex_count": 1828,
+      "high_risk_count": 30,
+      "centroid": [
+        -53.2633,
+        -27.0255
+      ]
+    },
+    {
+      "dpto": "Calmon",
+      "parquetKey": "calmon",
+      "avg_score": 1.7,
+      "hex_count": 6533,
+      "high_risk_count": 21,
+      "centroid": [
+        -51.0068,
+        -26.6223
+      ]
+    },
+    {
+      "dpto": "Camboriú",
+      "parquetKey": "camboriu",
+      "avg_score": 1.1,
+      "hex_count": 2146,
+      "high_risk_count": 1,
+      "centroid": [
+        -48.709,
+        -27.0709
+      ]
+    },
+    {
+      "dpto": "Campo Alegre",
+      "parquetKey": "campo_alegre",
+      "avg_score": 1.6,
+      "hex_count": 4999,
+      "high_risk_count": 2,
+      "centroid": [
+        -49.2177,
+        -26.1205
+      ]
+    },
+    {
+      "dpto": "Campo Belo do Sul",
+      "parquetKey": "campo_belo_do_sul",
+      "avg_score": 2.5,
+      "hex_count": 10798,
+      "high_risk_count": 150,
+      "centroid": [
+        -50.7711,
+        -27.8471
+      ]
+    },
+    {
+      "dpto": "Campo Erê",
+      "parquetKey": "campo_erê",
+      "avg_score": 1.3,
+      "hex_count": 5000,
+      "high_risk_count": 4,
+      "centroid": [
+        -53.1302,
+        -26.4505
+      ]
+    },
+    {
+      "dpto": "Campos Novos",
+      "parquetKey": "campos_novos",
+      "avg_score": 2.7,
+      "hex_count": 17974,
+      "high_risk_count": 310,
+      "centroid": [
+        -51.245,
+        -27.4132
+      ]
+    },
+    {
+      "dpto": "Canelinha",
+      "parquetKey": "canelinha",
+      "avg_score": 1.7,
+      "hex_count": 1545,
+      "high_risk_count": 14,
+      "centroid": [
+        -48.8023,
+        -27.2346
+      ]
+    },
+    {
+      "dpto": "Canoinhas",
+      "parquetKey": "canoinhas",
+      "avg_score": 1.9,
+      "hex_count": 11661,
+      "high_risk_count": 199,
+      "centroid": [
+        -50.5333,
+        -26.2502
+      ]
+    },
+    {
+      "dpto": "Capinzal",
+      "parquetKey": "capinzal",
+      "avg_score": 4.1,
+      "hex_count": 2555,
+      "high_risk_count": 110,
+      "centroid": [
+        -51.6308,
+        -27.412
+      ]
+    },
+    {
+      "dpto": "Capivari de Baixo",
+      "parquetKey": "capivari_de_baixo",
+      "avg_score": 3.7,
+      "hex_count": 558,
+      "high_risk_count": 33,
+      "centroid": [
+        -48.9438,
+        -28.4554
+      ]
+    },
+    {
+      "dpto": "Capão Alto",
+      "parquetKey": "capão_alto",
+      "avg_score": 2.4,
+      "hex_count": 14075,
+      "high_risk_count": 178,
+      "centroid": [
+        -50.6071,
+        -28.0624
+      ]
+    },
+    {
+      "dpto": "Catanduvas",
+      "parquetKey": "catanduvas",
+      "avg_score": 1.7,
+      "hex_count": 2074,
+      "high_risk_count": 3,
+      "centroid": [
+        -51.6967,
+        -27.0452
+      ]
+    },
+    {
+      "dpto": "Caxambu do Sul",
+      "parquetKey": "caxambu_do_sul",
+      "avg_score": 8.6,
+      "hex_count": 1493,
+      "high_risk_count": 175,
+      "centroid": [
+        -52.9204,
+        -27.1468
+      ]
+    },
+    {
+      "dpto": "Caçador",
+      "parquetKey": "caçador",
+      "avg_score": 1.8,
+      "hex_count": 10130,
+      "high_risk_count": 35,
+      "centroid": [
+        -51.085,
+        -26.7629
+      ]
+    },
+    {
+      "dpto": "Celso Ramos",
+      "parquetKey": "celso_ramos",
+      "avg_score": 6.3,
+      "hex_count": 2194,
+      "high_risk_count": 222,
+      "centroid": [
+        -51.3082,
+        -27.652
+      ]
+    },
+    {
+      "dpto": "Cerro Negro",
+      "parquetKey": "cerro_negro",
+      "avg_score": 4.4,
+      "hex_count": 4399,
+      "high_risk_count": 218,
+      "centroid": [
+        -50.9319,
+        -27.7764
+      ]
+    },
+    {
+      "dpto": "Chapadão do Lageado",
+      "parquetKey": "chapadão_do_lageado",
+      "avg_score": 1.4,
+      "hex_count": 1296,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.556,
+        -27.5825
+      ]
+    },
+    {
+      "dpto": "Chapecó",
+      "parquetKey": "chapeco",
+      "avg_score": 2.4,
+      "hex_count": 6568,
+      "high_risk_count": 151,
+      "centroid": [
+        -52.6503,
+        -27.1252
+      ]
+    },
+    {
+      "dpto": "Cocal do Sul",
+      "parquetKey": "cocal_do_sul",
+      "avg_score": 1.1,
+      "hex_count": 754,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.3337,
+        -28.5987
+      ]
+    },
+    {
+      "dpto": "Concórdia",
+      "parquetKey": "concordia",
+      "avg_score": 4.9,
+      "hex_count": 8382,
+      "high_risk_count": 483,
+      "centroid": [
+        -52.0075,
+        -27.2392
+      ]
+    },
+    {
+      "dpto": "Cordilheira Alta",
+      "parquetKey": "cordilheira_alta",
+      "avg_score": 1.3,
+      "hex_count": 879,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.6415,
+        -26.9757
+      ]
+    },
+    {
+      "dpto": "Coronel Freitas",
+      "parquetKey": "coronel_freitas",
+      "avg_score": 2.4,
+      "hex_count": 2449,
+      "high_risk_count": 97,
+      "centroid": [
+        -52.7249,
+        -26.8832
+      ]
+    },
+    {
+      "dpto": "Coronel Martins",
+      "parquetKey": "coronel_martins",
+      "avg_score": 1.2,
+      "hex_count": 1115,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.6718,
+        -26.5349
+      ]
+    },
+    {
+      "dpto": "Correia Pinto",
+      "parquetKey": "correia_pinto",
+      "avg_score": 1.8,
+      "hex_count": 6752,
+      "high_risk_count": 48,
+      "centroid": [
+        -50.3779,
+        -27.5969
+      ]
+    },
+    {
+      "dpto": "Corupá",
+      "parquetKey": "corupa",
+      "avg_score": 1.0,
+      "hex_count": 4114,
+      "high_risk_count": 4,
+      "centroid": [
+        -49.3268,
+        -26.4399
+      ]
+    },
+    {
+      "dpto": "Criciúma",
+      "parquetKey": "criciuma",
+      "avg_score": 1.2,
+      "hex_count": 2500,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.3798,
+        -28.7156
+      ]
+    },
+    {
+      "dpto": "Cunha Porã",
+      "parquetKey": "cunha_porã",
+      "avg_score": 1.2,
+      "hex_count": 2323,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.1908,
+        -26.8793
+      ]
+    },
+    {
+      "dpto": "Cunhataí",
+      "parquetKey": "cunhatai",
+      "avg_score": 1.1,
+      "hex_count": 579,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.1006,
+        -26.9753
+      ]
+    },
+    {
+      "dpto": "Curitibanos",
+      "parquetKey": "curitibanos",
+      "avg_score": 2.3,
+      "hex_count": 9869,
+      "high_risk_count": 185,
+      "centroid": [
+        -50.6175,
+        -27.2931
+      ]
+    },
+    {
+      "dpto": "Descanso",
+      "parquetKey": "descanso",
+      "avg_score": 1.4,
+      "hex_count": 3021,
+      "high_risk_count": 6,
+      "centroid": [
+        -53.4794,
+        -26.8585
+      ]
+    },
+    {
+      "dpto": "Dionísio Cerqueira",
+      "parquetKey": "dionisio_cerqueira",
+      "avg_score": 1.4,
+      "hex_count": 3529,
+      "high_risk_count": 3,
+      "centroid": [
+        -53.5209,
+        -26.3335
+      ]
+    },
+    {
+      "dpto": "Dona Emma",
+      "parquetKey": "dona_emma",
+      "avg_score": 1.3,
+      "hex_count": 1824,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7782,
+        -26.9886
+      ]
+    },
+    {
+      "dpto": "Doutor Pedrinho",
+      "parquetKey": "doutor_pedrinho",
+      "avg_score": 1.1,
+      "hex_count": 3804,
+      "high_risk_count": 5,
+      "centroid": [
+        -49.554,
+        -26.7056
+      ]
+    },
+    {
+      "dpto": "Entre Rios",
+      "parquetKey": "entre_rios",
+      "avg_score": 1.9,
+      "hex_count": 1086,
+      "high_risk_count": 28,
+      "centroid": [
+        -52.5784,
+        -26.74
+      ]
+    },
+    {
+      "dpto": "Ermo",
+      "parquetKey": "ermo",
+      "avg_score": 2.2,
+      "hex_count": 699,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.6529,
+        -28.9904
+      ]
+    },
+    {
+      "dpto": "Erval Velho",
+      "parquetKey": "erval_velho",
+      "avg_score": 2.4,
+      "hex_count": 2176,
+      "high_risk_count": 35,
+      "centroid": [
+        -51.4219,
+        -27.2843
+      ]
+    },
+    {
+      "dpto": "Faxinal dos Guedes",
+      "parquetKey": "faxinal_dos_guedes",
+      "avg_score": 2.0,
+      "hex_count": 3547,
+      "high_risk_count": 38,
+      "centroid": [
+        -52.2444,
+        -26.8469
+      ]
+    },
+    {
+      "dpto": "Flor do Sertão",
+      "parquetKey": "flor_do_sertão",
+      "avg_score": 2.1,
+      "hex_count": 616,
+      "high_risk_count": 13,
+      "centroid": [
+        -53.3373,
+        -26.7639
+      ]
+    },
+    {
+      "dpto": "Florianópolis",
+      "parquetKey": "florianopolis",
+      "avg_score": 39.2,
+      "hex_count": 6958,
+      "high_risk_count": 3006,
+      "centroid": [
+        -48.5083,
+        -27.5783
+      ]
+    },
+    {
+      "dpto": "Formosa do Sul",
+      "parquetKey": "formosa_do_sul",
+      "avg_score": 1.2,
+      "hex_count": 1050,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.7939,
+        -26.6342
+      ]
+    },
+    {
+      "dpto": "Forquilhinha",
+      "parquetKey": "forquilhinha",
+      "avg_score": 1.7,
+      "hex_count": 1952,
+      "high_risk_count": 3,
+      "centroid": [
+        -49.4931,
+        -28.7817
+      ]
+    },
+    {
+      "dpto": "Fraiburgo",
+      "parquetKey": "fraiburgo",
+      "avg_score": 1.8,
+      "hex_count": 5676,
+      "high_risk_count": 28,
+      "centroid": [
+        -50.8724,
+        -27.0377
+      ]
+    },
+    {
+      "dpto": "Frei Rogério",
+      "parquetKey": "frei_rogerio",
+      "avg_score": 2.6,
+      "hex_count": 1657,
+      "high_risk_count": 59,
+      "centroid": [
+        -50.7658,
+        -27.192
+      ]
+    },
+    {
+      "dpto": "Galvão",
+      "parquetKey": "galvão",
+      "avg_score": 1.2,
+      "hex_count": 1454,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.6592,
+        -26.4496
+      ]
+    },
+    {
+      "dpto": "Garopaba",
+      "parquetKey": "garopaba",
+      "avg_score": 7.3,
+      "hex_count": 1200,
+      "high_risk_count": 127,
+      "centroid": [
+        -48.659,
+        -28.0471
+      ]
+    },
+    {
+      "dpto": "Garuva",
+      "parquetKey": "garuva",
+      "avg_score": 2.2,
+      "hex_count": 5038,
+      "high_risk_count": 93,
+      "centroid": [
+        -48.8673,
+        -26.0571
+      ]
+    },
+    {
+      "dpto": "Gaspar",
+      "parquetKey": "gaspar",
+      "avg_score": 1.3,
+      "hex_count": 3949,
+      "high_risk_count": 84,
+      "centroid": [
+        -48.966,
+        -26.9317
+      ]
+    },
+    {
+      "dpto": "Governador Celso Ramos",
+      "parquetKey": "governador_celso_ramos",
+      "avg_score": 27.9,
+      "hex_count": 1316,
+      "high_risk_count": 401,
+      "centroid": [
+        -48.5772,
+        -27.3765
+      ]
+    },
+    {
+      "dpto": "Gravatal",
+      "parquetKey": "gravatal",
+      "avg_score": 1.3,
+      "hex_count": 1741,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.0197,
+        -28.354
+      ]
+    },
+    {
+      "dpto": "Grão-Pará",
+      "parquetKey": "grão-para",
+      "avg_score": 1.2,
+      "hex_count": 3511,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.314,
+        -28.1549
+      ]
+    },
+    {
+      "dpto": "Guabiruba",
+      "parquetKey": "guabiruba",
+      "avg_score": 1.1,
+      "hex_count": 1755,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.0208,
+        -27.1036
+      ]
+    },
+    {
+      "dpto": "Guaraciaba",
+      "parquetKey": "guaraciaba",
+      "avg_score": 1.3,
+      "hex_count": 3436,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.5696,
+        -26.5802
+      ]
+    },
+    {
+      "dpto": "Guaramirim",
+      "parquetKey": "guaramirim",
+      "avg_score": 1.2,
+      "hex_count": 2689,
+      "high_risk_count": 13,
+      "centroid": [
+        -48.9448,
+        -26.4768
+      ]
+    },
+    {
+      "dpto": "Guarujá do Sul",
+      "parquetKey": "guaruja_do_sul",
+      "avg_score": 1.4,
+      "hex_count": 1049,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.4842,
+        -26.3983
+      ]
+    },
+    {
+      "dpto": "Guatambú",
+      "parquetKey": "guatambu",
+      "avg_score": 2.8,
+      "hex_count": 2177,
+      "high_risk_count": 66,
+      "centroid": [
+        -52.7834,
+        -27.1165
+      ]
+    },
+    {
+      "dpto": "Herval d'Oeste",
+      "parquetKey": "herval_doeste",
+      "avg_score": 2.0,
+      "hex_count": 2261,
+      "high_risk_count": 27,
+      "centroid": [
+        -51.4107,
+        -27.1954
+      ]
+    },
+    {
+      "dpto": "Ibiam",
+      "parquetKey": "ibiam",
+      "avg_score": 1.7,
+      "hex_count": 1514,
+      "high_risk_count": 0,
+      "centroid": [
+        -51.2154,
+        -27.2085
+      ]
+    },
+    {
+      "dpto": "Ibicaré",
+      "parquetKey": "ibicare",
+      "avg_score": 1.9,
+      "hex_count": 1633,
+      "high_risk_count": 3,
+      "centroid": [
+        -51.3699,
+        -27.0923
+      ]
+    },
+    {
+      "dpto": "Ibirama",
+      "parquetKey": "ibirama",
+      "avg_score": 1.7,
+      "hex_count": 2522,
+      "high_risk_count": 64,
+      "centroid": [
+        -49.5286,
+        -27.0181
+      ]
+    },
+    {
+      "dpto": "Ilhota",
+      "parquetKey": "ilhota",
+      "avg_score": 1.4,
+      "hex_count": 2568,
+      "high_risk_count": 57,
+      "centroid": [
+        -48.8573,
+        -26.859
+      ]
+    },
+    {
+      "dpto": "Imaruí",
+      "parquetKey": "imarui",
+      "avg_score": 10.9,
+      "hex_count": 5686,
+      "high_risk_count": 618,
+      "centroid": [
+        -48.8344,
+        -28.2314
+      ]
+    },
+    {
+      "dpto": "Imbituba",
+      "parquetKey": "imbituba",
+      "avg_score": 18.7,
+      "hex_count": 1890,
+      "high_risk_count": 414,
+      "centroid": [
+        -48.7026,
+        -28.1948
+      ]
+    },
+    {
+      "dpto": "Imbuia",
+      "parquetKey": "imbuia",
+      "avg_score": 1.2,
+      "hex_count": 1226,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.4066,
+        -27.5029
+      ]
+    },
+    {
+      "dpto": "Indaial",
+      "parquetKey": "indaial",
+      "avg_score": 1.2,
+      "hex_count": 4410,
+      "high_risk_count": 85,
+      "centroid": [
+        -49.2242,
+        -26.9949
+      ]
+    },
+    {
+      "dpto": "Iomerê",
+      "parquetKey": "iomerê",
+      "avg_score": 1.6,
+      "hex_count": 1182,
+      "high_risk_count": 2,
+      "centroid": [
+        -51.2754,
+        -26.9877
+      ]
+    },
+    {
+      "dpto": "Ipira",
+      "parquetKey": "ipira",
+      "avg_score": 2.3,
+      "hex_count": 1642,
+      "high_risk_count": 61,
+      "centroid": [
+        -51.7984,
+        -27.3708
+      ]
+    },
+    {
+      "dpto": "Iporã do Oeste",
+      "parquetKey": "iporã_do_oeste",
+      "avg_score": 1.3,
+      "hex_count": 2127,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.4896,
+        -27.0005
+      ]
+    },
+    {
+      "dpto": "Ipuaçu",
+      "parquetKey": "ipuaçu",
+      "avg_score": 3.9,
+      "hex_count": 2722,
+      "high_risk_count": 142,
+      "centroid": [
+        -52.4763,
+        -26.6784
+      ]
+    },
+    {
+      "dpto": "Ipumirim",
+      "parquetKey": "ipumirim",
+      "avg_score": 1.5,
+      "hex_count": 2571,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.1529,
+        -27.0402
+      ]
+    },
+    {
+      "dpto": "Iraceminha",
+      "parquetKey": "iraceminha",
+      "avg_score": 1.3,
+      "hex_count": 1738,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.3247,
+        -26.8453
+      ]
+    },
+    {
+      "dpto": "Irani",
+      "parquetKey": "irani",
+      "avg_score": 1.7,
+      "hex_count": 3405,
+      "high_risk_count": 22,
+      "centroid": [
+        -51.9181,
+        -27.0254
+      ]
+    },
+    {
+      "dpto": "Irati",
+      "parquetKey": "irati",
+      "avg_score": 1.2,
+      "hex_count": 811,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.8902,
+        -26.6276
+      ]
+    },
+    {
+      "dpto": "Irineópolis",
+      "parquetKey": "irineopolis",
+      "avg_score": 2.0,
+      "hex_count": 6023,
+      "high_risk_count": 116,
+      "centroid": [
+        -50.7607,
+        -26.3571
+      ]
+    },
+    {
+      "dpto": "Itaiópolis",
+      "parquetKey": "itaiopolis",
+      "avg_score": 1.2,
+      "hex_count": 13175,
+      "high_risk_count": 2,
+      "centroid": [
+        -49.8913,
+        -26.4723
+      ]
+    },
+    {
+      "dpto": "Itajaí",
+      "parquetKey": "itajai",
+      "avg_score": 1.5,
+      "hex_count": 2941,
+      "high_risk_count": 86,
+      "centroid": [
+        -48.7535,
+        -26.9688
+      ]
+    },
+    {
+      "dpto": "Itapema",
+      "parquetKey": "itapema",
+      "avg_score": 1.3,
+      "hex_count": 597,
+      "high_risk_count": 11,
+      "centroid": [
+        -48.6344,
+        -27.1084
+      ]
+    },
+    {
+      "dpto": "Itapiranga",
+      "parquetKey": "itapiranga",
+      "avg_score": 5.1,
+      "hex_count": 2848,
+      "high_risk_count": 158,
+      "centroid": [
+        -53.7081,
+        -27.1144
+      ]
+    },
+    {
+      "dpto": "Itapoá",
+      "parquetKey": "itapoa",
+      "avg_score": 4.8,
+      "hex_count": 2450,
+      "high_risk_count": 123,
+      "centroid": [
+        -48.6525,
+        -26.0827
+      ]
+    },
+    {
+      "dpto": "Ituporanga",
+      "parquetKey": "ituporanga",
+      "avg_score": 1.4,
+      "hex_count": 3483,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.5388,
+        -27.4534
+      ]
+    },
+    {
+      "dpto": "Itá",
+      "parquetKey": "ita",
+      "avg_score": 10.8,
+      "hex_count": 1752,
+      "high_risk_count": 254,
+      "centroid": [
+        -52.3322,
+        -27.244
+      ]
+    },
+    {
+      "dpto": "Içara",
+      "parquetKey": "içara",
+      "avg_score": 1.4,
+      "hex_count": 2449,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.2774,
+        -28.7518
+      ]
+    },
+    {
+      "dpto": "Jaborá",
+      "parquetKey": "jabora",
+      "avg_score": 1.6,
+      "hex_count": 1898,
+      "high_risk_count": 1,
+      "centroid": [
+        -51.7725,
+        -27.1415
+      ]
+    },
+    {
+      "dpto": "Jacinto Machado",
+      "parquetKey": "jacinto_machado",
+      "avg_score": 1.7,
+      "hex_count": 4623,
+      "high_risk_count": 25,
+      "centroid": [
+        -49.8482,
+        -28.9949
+      ]
+    },
+    {
+      "dpto": "Jaguaruna",
+      "parquetKey": "jaguaruna",
+      "avg_score": 7.5,
+      "hex_count": 3455,
+      "high_risk_count": 282,
+      "centroid": [
+        -49.0451,
+        -28.6582
+      ]
+    },
+    {
+      "dpto": "Jaraguá do Sul",
+      "parquetKey": "jaragua_do_sul",
+      "avg_score": 1.0,
+      "hex_count": 5363,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.1601,
+        -26.482
+      ]
+    },
+    {
+      "dpto": "Jardinópolis",
+      "parquetKey": "jardinopolis",
+      "avg_score": 1.5,
+      "hex_count": 717,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.8715,
+        -26.7171
+      ]
+    },
+    {
+      "dpto": "Joaçaba",
+      "parquetKey": "joaçaba",
+      "avg_score": 1.7,
+      "hex_count": 2520,
+      "high_risk_count": 11,
+      "centroid": [
+        -51.5931,
+        -27.1516
+      ]
+    },
+    {
+      "dpto": "Joinville",
+      "parquetKey": "joinville",
+      "avg_score": 3.6,
+      "hex_count": 11341,
+      "high_risk_count": 365,
+      "centroid": [
+        -48.9516,
+        -26.2444
+      ]
+    },
+    {
+      "dpto": "José Boiteux",
+      "parquetKey": "jose_boiteux",
+      "avg_score": 1.2,
+      "hex_count": 4145,
+      "high_risk_count": 34,
+      "centroid": [
+        -49.6462,
+        -26.8595
+      ]
+    },
+    {
+      "dpto": "Jupiá",
+      "parquetKey": "jupia",
+      "avg_score": 1.2,
+      "hex_count": 946,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.7207,
+        -26.3941
+      ]
+    },
+    {
+      "dpto": "Lacerdópolis",
+      "parquetKey": "lacerdopolis",
+      "avg_score": 2.4,
+      "hex_count": 722,
+      "high_risk_count": 27,
+      "centroid": [
+        -51.5903,
+        -27.2508
+      ]
+    },
+    {
+      "dpto": "Lages",
+      "parquetKey": "lages",
+      "avg_score": 2.3,
+      "hex_count": 27772,
+      "high_risk_count": 265,
+      "centroid": [
+        -50.3409,
+        -28.0214
+      ]
+    },
+    {
+      "dpto": "Laguna",
+      "parquetKey": "laguna",
+      "avg_score": 32.8,
+      "hex_count": 3512,
+      "high_risk_count": 1404,
+      "centroid": [
+        -48.8261,
+        -28.4866
+      ]
+    },
+    {
+      "dpto": "Lajeado Grande",
+      "parquetKey": "lajeado_grande",
+      "avg_score": 1.3,
+      "hex_count": 678,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.5521,
+        -26.855
+      ]
+    },
+    {
+      "dpto": "Laurentino",
+      "parquetKey": "laurentino",
+      "avg_score": 1.4,
+      "hex_count": 822,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7337,
+        -27.2081
+      ]
+    },
+    {
+      "dpto": "Lauro Müller",
+      "parquetKey": "lauro_muller",
+      "avg_score": 1.3,
+      "hex_count": 2869,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.4517,
+        -28.3846
+      ]
+    },
+    {
+      "dpto": "Lebon Régis",
+      "parquetKey": "lebon_regis",
+      "avg_score": 1.6,
+      "hex_count": 9690,
+      "high_risk_count": 18,
+      "centroid": [
+        -50.7025,
+        -26.8585
+      ]
+    },
+    {
+      "dpto": "Leoberto Leal",
+      "parquetKey": "leoberto_leal",
+      "avg_score": 1.3,
+      "hex_count": 3029,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.2571,
+        -27.4723
+      ]
+    },
+    {
+      "dpto": "Lindóia do Sul",
+      "parquetKey": "lindoia_do_sul",
+      "avg_score": 1.5,
+      "hex_count": 1985,
+      "high_risk_count": 1,
+      "centroid": [
+        -52.0526,
+        -27.0316
+      ]
+    },
+    {
+      "dpto": "Lontras",
+      "parquetKey": "lontras",
+      "avg_score": 1.9,
+      "hex_count": 2039,
+      "high_risk_count": 46,
+      "centroid": [
+        -49.5075,
+        -27.1893
+      ]
+    },
+    {
+      "dpto": "Luiz Alves",
+      "parquetKey": "luiz_alves",
+      "avg_score": 1.0,
+      "hex_count": 2634,
+      "high_risk_count": 1,
+      "centroid": [
+        -48.8912,
+        -26.7275
+      ]
+    },
+    {
+      "dpto": "Luzerna",
+      "parquetKey": "luzerna",
+      "avg_score": 1.7,
+      "hex_count": 1221,
+      "high_risk_count": 9,
+      "centroid": [
+        -51.5057,
+        -27.0904
+      ]
+    },
+    {
+      "dpto": "Macieira",
+      "parquetKey": "macieira",
+      "avg_score": 1.7,
+      "hex_count": 2703,
+      "high_risk_count": 0,
+      "centroid": [
+        -51.3531,
+        -26.8035
+      ]
+    },
+    {
+      "dpto": "Mafra",
+      "parquetKey": "mafra",
+      "avg_score": 1.4,
+      "hex_count": 14180,
+      "high_risk_count": 103,
+      "centroid": [
+        -49.8897,
+        -26.2006
+      ]
+    },
+    {
+      "dpto": "Major Gercino",
+      "parquetKey": "major_gercino",
+      "avg_score": 1.3,
+      "hex_count": 3153,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.0529,
+        -27.4279
+      ]
+    },
+    {
+      "dpto": "Major Vieira",
+      "parquetKey": "major_vieira",
+      "avg_score": 1.3,
+      "hex_count": 5300,
+      "high_risk_count": 5,
+      "centroid": [
+        -50.3617,
+        -26.4815
+      ]
+    },
+    {
+      "dpto": "Maracajá",
+      "parquetKey": "maracaja",
+      "avg_score": 1.6,
+      "hex_count": 672,
+      "high_risk_count": 5,
+      "centroid": [
+        -49.4554,
+        -28.8639
+      ]
+    },
+    {
+      "dpto": "Maravilha",
+      "parquetKey": "maravilha",
+      "avg_score": 1.2,
+      "hex_count": 1789,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.1983,
+        -26.76
+      ]
+    },
+    {
+      "dpto": "Marema",
+      "parquetKey": "marema",
+      "avg_score": 2.1,
+      "hex_count": 1089,
+      "high_risk_count": 35,
+      "centroid": [
+        -52.6299,
+        -26.8125
+      ]
+    },
+    {
+      "dpto": "Massaranduba",
+      "parquetKey": "massaranduba",
+      "avg_score": 1.1,
+      "hex_count": 3790,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.9885,
+        -26.627
+      ]
+    },
+    {
+      "dpto": "Matos Costa",
+      "parquetKey": "matos_costa",
+      "avg_score": 1.7,
+      "hex_count": 4463,
+      "high_risk_count": 23,
+      "centroid": [
+        -51.1417,
+        -26.4812
+      ]
+    },
+    {
+      "dpto": "Meleiro",
+      "parquetKey": "meleiro",
+      "avg_score": 2.0,
+      "hex_count": 1994,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.6019,
+        -28.8416
+      ]
+    },
+    {
+      "dpto": "Mirim Doce",
+      "parquetKey": "mirim_doce",
+      "avg_score": 1.4,
+      "hex_count": 3493,
+      "high_risk_count": 0,
+      "centroid": [
+        -50.1752,
+        -27.1855
+      ]
+    },
+    {
+      "dpto": "Modelo",
+      "parquetKey": "modelo",
+      "avg_score": 1.2,
+      "hex_count": 966,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.051,
+        -26.7748
+      ]
+    },
+    {
+      "dpto": "Mondaí",
+      "parquetKey": "mondai",
+      "avg_score": 5.9,
+      "hex_count": 2116,
+      "high_risk_count": 157,
+      "centroid": [
+        -53.4468,
+        -27.0994
+      ]
+    },
+    {
+      "dpto": "Monte Carlo",
+      "parquetKey": "monte_carlo",
+      "avg_score": 2.0,
+      "hex_count": 1997,
+      "high_risk_count": 16,
+      "centroid": [
+        -50.9276,
+        -27.1937
+      ]
+    },
+    {
+      "dpto": "Monte Castelo",
+      "parquetKey": "monte_castelo",
+      "avg_score": 1.3,
+      "hex_count": 5733,
+      "high_risk_count": 0,
+      "centroid": [
+        -50.2915,
+        -26.6607
+      ]
+    },
+    {
+      "dpto": "Morro Grande",
+      "parquetKey": "morro_grande",
+      "avg_score": 1.5,
+      "hex_count": 2778,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7405,
+        -28.7219
+      ]
+    },
+    {
+      "dpto": "Morro da Fumaça",
+      "parquetKey": "morro_da_fumaça",
+      "avg_score": 2.5,
+      "hex_count": 879,
+      "high_risk_count": 14,
+      "centroid": [
+        -49.2429,
+        -28.6377
+      ]
+    },
+    {
+      "dpto": "Navegantes",
+      "parquetKey": "navegantes",
+      "avg_score": 1.7,
+      "hex_count": 1125,
+      "high_risk_count": 62,
+      "centroid": [
+        -48.7273,
+        -26.8287
+      ]
+    },
+    {
+      "dpto": "Nova Erechim",
+      "parquetKey": "nova_erechim",
+      "avg_score": 4.0,
+      "hex_count": 682,
+      "high_risk_count": 62,
+      "centroid": [
+        -52.9068,
+        -26.9085
+      ]
+    },
+    {
+      "dpto": "Nova Itaberaba",
+      "parquetKey": "nova_itaberaba",
+      "avg_score": 2.2,
+      "hex_count": 1444,
+      "high_risk_count": 43,
+      "centroid": [
+        -52.8331,
+        -26.961
+      ]
+    },
+    {
+      "dpto": "Nova Trento",
+      "parquetKey": "nova_trento",
+      "avg_score": 1.3,
+      "hex_count": 4133,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.0415,
+        -27.3133
+      ]
+    },
+    {
+      "dpto": "Nova Veneza",
+      "parquetKey": "nova_veneza",
+      "avg_score": 1.7,
+      "hex_count": 3132,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.5849,
+        -28.6847
+      ]
+    },
+    {
+      "dpto": "Novo Horizonte",
+      "parquetKey": "novo_horizonte",
+      "avg_score": 1.2,
+      "hex_count": 1582,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.7965,
+        -26.4949
+      ]
+    },
+    {
+      "dpto": "Orleans",
+      "parquetKey": "orleans",
+      "avg_score": 1.3,
+      "hex_count": 5776,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.372,
+        -28.2797
+      ]
+    },
+    {
+      "dpto": "Otacílio Costa",
+      "parquetKey": "otacilio_costa",
+      "avg_score": 1.5,
+      "hex_count": 8797,
+      "high_risk_count": 12,
+      "centroid": [
+        -49.9716,
+        -27.5173
+      ]
+    },
+    {
+      "dpto": "Ouro",
+      "parquetKey": "ouro",
+      "avg_score": 1.9,
+      "hex_count": 2233,
+      "high_risk_count": 36,
+      "centroid": [
+        -51.6819,
+        -27.2835
+      ]
+    },
+    {
+      "dpto": "Ouro Verde",
+      "parquetKey": "ouro_verde",
+      "avg_score": 2.1,
+      "hex_count": 1966,
+      "high_risk_count": 32,
+      "centroid": [
+        -52.2787,
+        -26.7117
+      ]
+    },
+    {
+      "dpto": "Paial",
+      "parquetKey": "paial",
+      "avg_score": 3.7,
+      "hex_count": 905,
+      "high_risk_count": 46,
+      "centroid": [
+        -52.4877,
+        -27.213
+      ]
+    },
+    {
+      "dpto": "Painel",
+      "parquetKey": "painel",
+      "avg_score": 2.1,
+      "hex_count": 7752,
+      "high_risk_count": 7,
+      "centroid": [
+        -50.0724,
+        -27.9636
+      ]
+    },
+    {
+      "dpto": "Palhoça",
+      "parquetKey": "palhoça",
+      "avg_score": 17.1,
+      "hex_count": 4084,
+      "high_risk_count": 780,
+      "centroid": [
+        -48.6617,
+        -27.7719
+      ]
+    },
+    {
+      "dpto": "Palma Sola",
+      "parquetKey": "palma_sola",
+      "avg_score": 1.5,
+      "hex_count": 3444,
+      "high_risk_count": 7,
+      "centroid": [
+        -53.3146,
+        -26.3736
+      ]
+    },
+    {
+      "dpto": "Palmeira",
+      "parquetKey": "palmeira",
+      "avg_score": 1.7,
+      "hex_count": 3010,
+      "high_risk_count": 3,
+      "centroid": [
+        -50.1615,
+        -27.5626
+      ]
+    },
+    {
+      "dpto": "Palmitos",
+      "parquetKey": "palmitos",
+      "avg_score": 4.4,
+      "hex_count": 3713,
+      "high_risk_count": 192,
+      "centroid": [
+        -53.18,
+        -27.0925
+      ]
+    },
+    {
+      "dpto": "Papanduva",
+      "parquetKey": "papanduva",
+      "avg_score": 1.2,
+      "hex_count": 7786,
+      "high_risk_count": 1,
+      "centroid": [
+        -50.1723,
+        -26.5027
+      ]
+    },
+    {
+      "dpto": "Paraíso",
+      "parquetKey": "paraiso",
+      "avg_score": 1.5,
+      "hex_count": 1844,
+      "high_risk_count": 6,
+      "centroid": [
+        -53.6766,
+        -26.6626
+      ]
+    },
+    {
+      "dpto": "Passo de Torres",
+      "parquetKey": "passo_de_torres",
+      "avg_score": 9.6,
+      "hex_count": 1005,
+      "high_risk_count": 118,
+      "centroid": [
+        -49.722,
+        -29.2674
+      ]
+    },
+    {
+      "dpto": "Passos Maia",
+      "parquetKey": "passos_maia",
+      "avg_score": 1.9,
+      "hex_count": 6403,
+      "high_risk_count": 59,
+      "centroid": [
+        -51.9611,
+        -26.7062
+      ]
+    },
+    {
+      "dpto": "Paulo Lopes",
+      "parquetKey": "paulo_lopes",
+      "avg_score": 1.8,
+      "hex_count": 4647,
+      "high_risk_count": 62,
+      "centroid": [
+        -48.7603,
+        -27.9647
+      ]
+    },
+    {
+      "dpto": "Pedras Grandes",
+      "parquetKey": "pedras_grandes",
+      "avg_score": 1.3,
+      "hex_count": 1690,
+      "high_risk_count": 2,
+      "centroid": [
+        -49.2044,
+        -28.4792
+      ]
+    },
+    {
+      "dpto": "Penha",
+      "parquetKey": "penha",
+      "avg_score": 1.5,
+      "hex_count": 582,
+      "high_risk_count": 27,
+      "centroid": [
+        -48.6508,
+        -26.8078
+      ]
+    },
+    {
+      "dpto": "Peritiba",
+      "parquetKey": "peritiba",
+      "avg_score": 1.5,
+      "hex_count": 1015,
+      "high_risk_count": 0,
+      "centroid": [
+        -51.8753,
+        -27.3515
+      ]
+    },
+    {
+      "dpto": "Pescaria Brava",
+      "parquetKey": "pescaria_brava",
+      "avg_score": 34.5,
+      "hex_count": 1133,
+      "high_risk_count": 403,
+      "centroid": [
+        -48.8838,
+        -28.4018
+      ]
+    },
+    {
+      "dpto": "Petrolândia",
+      "parquetKey": "petrolândia",
+      "avg_score": 1.6,
+      "hex_count": 3186,
+      "high_risk_count": 17,
+      "centroid": [
+        -49.6827,
+        -27.5458
+      ]
+    },
+    {
+      "dpto": "Pinhalzinho",
+      "parquetKey": "pinhalzinho",
+      "avg_score": 1.2,
+      "hex_count": 1348,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.9766,
+        -26.8294
+      ]
+    },
+    {
+      "dpto": "Pinheiro Preto",
+      "parquetKey": "pinheiro_preto",
+      "avg_score": 2.3,
+      "hex_count": 628,
+      "high_risk_count": 11,
+      "centroid": [
+        -51.2359,
+        -27.0495
+      ]
+    },
+    {
+      "dpto": "Piratuba",
+      "parquetKey": "piratuba",
+      "avg_score": 9.1,
+      "hex_count": 1530,
+      "high_risk_count": 204,
+      "centroid": [
+        -51.7727,
+        -27.4612
+      ]
+    },
+    {
+      "dpto": "Planalto Alegre",
+      "parquetKey": "planalto_alegre",
+      "avg_score": 1.2,
+      "hex_count": 666,
+      "high_risk_count": 1,
+      "centroid": [
+        -52.8688,
+        -27.0521
+      ]
+    },
+    {
+      "dpto": "Pomerode",
+      "parquetKey": "pomerode",
+      "avg_score": 1.0,
+      "hex_count": 2174,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.1731,
+        -26.7279
+      ]
+    },
+    {
+      "dpto": "Ponte Alta",
+      "parquetKey": "ponte_alta",
+      "avg_score": 1.7,
+      "hex_count": 5972,
+      "high_risk_count": 25,
+      "centroid": [
+        -50.299,
+        -27.4103
+      ]
+    },
+    {
+      "dpto": "Ponte Alta do Norte",
+      "parquetKey": "ponte_alta_do_norte",
+      "avg_score": 1.5,
+      "hex_count": 4103,
+      "high_risk_count": 7,
+      "centroid": [
+        -50.4187,
+        -27.1804
+      ]
+    },
+    {
+      "dpto": "Ponte Serrada",
+      "parquetKey": "ponte_serrada",
+      "avg_score": 2.6,
+      "hex_count": 5834,
+      "high_risk_count": 112,
+      "centroid": [
+        -51.9283,
+        -26.8619
+      ]
+    },
+    {
+      "dpto": "Porto Belo",
+      "parquetKey": "porto_belo",
+      "avg_score": 1.2,
+      "hex_count": 956,
+      "high_risk_count": 22,
+      "centroid": [
+        -48.6166,
+        -27.1748
+      ]
+    },
+    {
+      "dpto": "Porto União",
+      "parquetKey": "porto_união",
+      "avg_score": 1.9,
+      "hex_count": 8664,
+      "high_risk_count": 93,
+      "centroid": [
+        -51.008,
+        -26.3837
+      ]
+    },
+    {
+      "dpto": "Pouso Redondo",
+      "parquetKey": "pouso_redondo",
+      "avg_score": 1.2,
+      "hex_count": 3682,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.9773,
+        -27.2862
+      ]
+    },
+    {
+      "dpto": "Praia Grande",
+      "parquetKey": "praia_grande",
+      "avg_score": 1.7,
+      "hex_count": 3063,
+      "high_risk_count": 8,
+      "centroid": [
+        -49.9896,
+        -29.1818
+      ]
+    },
+    {
+      "dpto": "Presidente Castello Branco",
+      "parquetKey": "presidente_castello_branco",
+      "avg_score": 1.5,
+      "hex_count": 689,
+      "high_risk_count": 0,
+      "centroid": [
+        -51.7809,
+        -27.2331
+      ]
+    },
+    {
+      "dpto": "Presidente Getúlio",
+      "parquetKey": "presidente_getulio",
+      "avg_score": 1.3,
+      "hex_count": 3053,
+      "high_risk_count": 4,
+      "centroid": [
+        -49.7146,
+        -27.0626
+      ]
+    },
+    {
+      "dpto": "Presidente Nereu",
+      "parquetKey": "presidente_nereu",
+      "avg_score": 1.2,
+      "hex_count": 2309,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.3555,
+        -27.2685
+      ]
+    },
+    {
+      "dpto": "Princesa",
+      "parquetKey": "princesa",
+      "avg_score": 1.3,
+      "hex_count": 895,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.6113,
+        -26.433
+      ]
+    },
+    {
+      "dpto": "Quilombo",
+      "parquetKey": "quilombo",
+      "avg_score": 1.8,
+      "hex_count": 2920,
+      "high_risk_count": 72,
+      "centroid": [
+        -52.7183,
+        -26.7293
+      ]
+    },
+    {
+      "dpto": "Rancho Queimado",
+      "parquetKey": "rancho_queimado",
+      "avg_score": 1.3,
+      "hex_count": 2973,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.0899,
+        -27.6742
+      ]
+    },
+    {
+      "dpto": "Rio Fortuna",
+      "parquetKey": "rio_fortuna",
+      "avg_score": 1.4,
+      "hex_count": 3163,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.1907,
+        -28.0933
+      ]
+    },
+    {
+      "dpto": "Rio Negrinho",
+      "parquetKey": "rio_negrinho",
+      "avg_score": 1.3,
+      "hex_count": 9184,
+      "high_risk_count": 95,
+      "centroid": [
+        -49.5963,
+        -26.4427
+      ]
+    },
+    {
+      "dpto": "Rio Rufino",
+      "parquetKey": "rio_rufino",
+      "avg_score": 1.4,
+      "hex_count": 2954,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.7533,
+        -27.9144
+      ]
+    },
+    {
+      "dpto": "Rio das Antas",
+      "parquetKey": "rio_das_antas",
+      "avg_score": 1.9,
+      "hex_count": 3255,
+      "high_risk_count": 17,
+      "centroid": [
+        -51.0632,
+        -26.9091
+      ]
+    },
+    {
+      "dpto": "Rio do Campo",
+      "parquetKey": "rio_do_campo",
+      "avg_score": 1.3,
+      "hex_count": 5149,
+      "high_risk_count": 1,
+      "centroid": [
+        -50.1315,
+        -26.8924
+      ]
+    },
+    {
+      "dpto": "Rio do Oeste",
+      "parquetKey": "rio_do_oeste",
+      "avg_score": 1.4,
+      "hex_count": 2522,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.8417,
+        -27.1589
+      ]
+    },
+    {
+      "dpto": "Rio do Sul",
+      "parquetKey": "rio_do_sul",
+      "avg_score": 1.6,
+      "hex_count": 2685,
+      "high_risk_count": 10,
+      "centroid": [
+        -49.6301,
+        -27.1962
+      ]
+    },
+    {
+      "dpto": "Rio dos Cedros",
+      "parquetKey": "rio_dos_cedros",
+      "avg_score": 1.2,
+      "hex_count": 5646,
+      "high_risk_count": 100,
+      "centroid": [
+        -49.3686,
+        -26.6179
+      ]
+    },
+    {
+      "dpto": "Riqueza",
+      "parquetKey": "riqueza",
+      "avg_score": 1.4,
+      "hex_count": 2024,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.3445,
+        -26.9786
+      ]
+    },
+    {
+      "dpto": "Rodeio",
+      "parquetKey": "rodeio",
+      "avg_score": 1.2,
+      "hex_count": 1317,
+      "high_risk_count": 23,
+      "centroid": [
+        -49.3509,
+        -26.8949
+      ]
+    },
+    {
+      "dpto": "Romelândia",
+      "parquetKey": "romelândia",
+      "avg_score": 1.4,
+      "hex_count": 2350,
+      "high_risk_count": 3,
+      "centroid": [
+        -53.3171,
+        -26.6483
+      ]
+    },
+    {
+      "dpto": "Salete",
+      "parquetKey": "salete",
+      "avg_score": 1.2,
+      "hex_count": 1831,
+      "high_risk_count": 0,
+      "centroid": [
+        -50.0106,
+        -26.9698
+      ]
+    },
+    {
+      "dpto": "Saltinho",
+      "parquetKey": "saltinho",
+      "avg_score": 1.2,
+      "hex_count": 1624,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.0221,
+        -26.5905
+      ]
+    },
+    {
+      "dpto": "Salto Veloso",
+      "parquetKey": "salto_veloso",
+      "avg_score": 1.6,
+      "hex_count": 1079,
+      "high_risk_count": 0,
+      "centroid": [
+        -51.4279,
+        -26.8958
+      ]
+    },
+    {
+      "dpto": "Sangão",
+      "parquetKey": "sangão",
+      "avg_score": 1.9,
+      "hex_count": 877,
+      "high_risk_count": 9,
+      "centroid": [
+        -49.126,
+        -28.6513
+      ]
+    },
+    {
+      "dpto": "Santa Cecília",
+      "parquetKey": "santa_cecilia",
+      "avg_score": 2.1,
+      "hex_count": 11789,
+      "high_risk_count": 140,
+      "centroid": [
+        -50.4462,
+        -26.9262
+      ]
+    },
+    {
+      "dpto": "Santa Helena",
+      "parquetKey": "santa_helena",
+      "avg_score": 1.4,
+      "hex_count": 838,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.618,
+        -26.9222
+      ]
+    },
+    {
+      "dpto": "Santa Rosa de Lima",
+      "parquetKey": "santa_rosa_de_lima",
+      "avg_score": 1.3,
+      "hex_count": 2116,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.1817,
+        -28.0118
+      ]
+    },
+    {
+      "dpto": "Santa Rosa do Sul",
+      "parquetKey": "santa_rosa_do_sul",
+      "avg_score": 10.3,
+      "hex_count": 1616,
+      "high_risk_count": 164,
+      "centroid": [
+        -49.7439,
+        -29.1215
+      ]
+    },
+    {
+      "dpto": "Santa Terezinha",
+      "parquetKey": "santa_terezinha",
+      "avg_score": 1.1,
+      "hex_count": 7291,
+      "high_risk_count": 0,
+      "centroid": [
+        -50.0053,
+        -26.6677
+      ]
+    },
+    {
+      "dpto": "Santa Terezinha do Progresso",
+      "parquetKey": "santa_terezinha_do_progresso",
+      "avg_score": 1.2,
+      "hex_count": 1254,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.1696,
+        -26.5925
+      ]
+    },
+    {
+      "dpto": "Santiago do Sul",
+      "parquetKey": "santiago_do_sul",
+      "avg_score": 1.2,
+      "hex_count": 761,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.697,
+        -26.6309
+      ]
+    },
+    {
+      "dpto": "Santo Amaro da Imperatriz",
+      "parquetKey": "santo_amaro_da_imperatriz",
+      "avg_score": 1.3,
+      "hex_count": 3562,
+      "high_risk_count": 1,
+      "centroid": [
+        -48.7966,
+        -27.7417
+      ]
+    },
+    {
+      "dpto": "Saudades",
+      "parquetKey": "saudades",
+      "avg_score": 1.3,
+      "hex_count": 2167,
+      "high_risk_count": 6,
+      "centroid": [
+        -53.0399,
+        -26.8972
+      ]
+    },
+    {
+      "dpto": "Schroeder",
+      "parquetKey": "schroeder",
+      "avg_score": 1.2,
+      "hex_count": 1670,
+      "high_risk_count": 5,
+      "centroid": [
+        -49.0605,
+        -26.3681
+      ]
+    },
+    {
+      "dpto": "Seara",
+      "parquetKey": "seara",
+      "avg_score": 1.4,
+      "hex_count": 3248,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.3408,
+        -27.1478
+      ]
+    },
+    {
+      "dpto": "Serra Alta",
+      "parquetKey": "serra_alta",
+      "avg_score": 1.2,
+      "hex_count": 951,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.0254,
+        -26.6928
+      ]
+    },
+    {
+      "dpto": "Siderópolis",
+      "parquetKey": "sideropolis",
+      "avg_score": 2.7,
+      "hex_count": 2772,
+      "high_risk_count": 61,
+      "centroid": [
+        -49.527,
+        -28.5834
+      ]
+    },
+    {
+      "dpto": "Sombrio",
+      "parquetKey": "sombrio",
+      "avg_score": 4.0,
+      "hex_count": 1543,
+      "high_risk_count": 70,
+      "centroid": [
+        -49.6558,
+        -29.0702
+      ]
+    },
+    {
+      "dpto": "Sul Brasil",
+      "parquetKey": "sul_brasil",
+      "avg_score": 1.4,
+      "hex_count": 1188,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.9469,
+        -26.6951
+      ]
+    },
+    {
+      "dpto": "São Bento do Sul",
+      "parquetKey": "são_bento_do_sul",
+      "avg_score": 1.3,
+      "hex_count": 4980,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.3501,
+        -26.2947
+      ]
+    },
+    {
+      "dpto": "São Bernardino",
+      "parquetKey": "são_bernardino",
+      "avg_score": 1.2,
+      "hex_count": 1561,
+      "high_risk_count": 1,
+      "centroid": [
+        -52.9877,
+        -26.4877
+      ]
+    },
+    {
+      "dpto": "São Bonifácio",
+      "parquetKey": "são_bonifacio",
+      "avg_score": 1.4,
+      "hex_count": 4797,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.9391,
+        -27.9564
+      ]
+    },
+    {
+      "dpto": "São Carlos",
+      "parquetKey": "são_carlos",
+      "avg_score": 3.4,
+      "hex_count": 1705,
+      "high_risk_count": 90,
+      "centroid": [
+        -53.0313,
+        -27.0302
+      ]
+    },
+    {
+      "dpto": "São Cristóvão do Sul",
+      "parquetKey": "são_cristovão_do_sul",
+      "avg_score": 1.6,
+      "hex_count": 3591,
+      "high_risk_count": 0,
+      "centroid": [
+        -50.3497,
+        -27.2952
+      ]
+    },
+    {
+      "dpto": "São Domingos",
+      "parquetKey": "são_domingos",
+      "avg_score": 2.7,
+      "hex_count": 3809,
+      "high_risk_count": 130,
+      "centroid": [
+        -52.5547,
+        -26.5393
+      ]
+    },
+    {
+      "dpto": "São Francisco do Sul",
+      "parquetKey": "são_francisco_do_sul",
+      "avg_score": 23.5,
+      "hex_count": 4941,
+      "high_risk_count": 1345,
+      "centroid": [
+        -48.6405,
+        -26.2616
+      ]
+    },
+    {
+      "dpto": "São Joaquim",
+      "parquetKey": "são_joaquim",
+      "avg_score": 2.1,
+      "hex_count": 19965,
+      "high_risk_count": 130,
+      "centroid": [
+        -50.0142,
+        -28.2986
+      ]
+    },
+    {
+      "dpto": "São José",
+      "parquetKey": "são_jose",
+      "avg_score": 24.9,
+      "hex_count": 1550,
+      "high_risk_count": 398,
+      "centroid": [
+        -48.6562,
+        -27.5784
+      ]
+    },
+    {
+      "dpto": "São José do Cedro",
+      "parquetKey": "são_jose_do_cedro",
+      "avg_score": 1.3,
+      "hex_count": 2895,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.5306,
+        -26.4806
+      ]
+    },
+    {
+      "dpto": "São José do Cerrito",
+      "parquetKey": "são_jose_do_cerrito",
+      "avg_score": 2.8,
+      "hex_count": 9917,
+      "high_risk_count": 264,
+      "centroid": [
+        -50.6503,
+        -27.5983
+      ]
+    },
+    {
+      "dpto": "São João Batista",
+      "parquetKey": "são_joão_batista",
+      "avg_score": 1.4,
+      "hex_count": 2063,
+      "high_risk_count": 1,
+      "centroid": [
+        -48.859,
+        -27.329
+      ]
+    },
+    {
+      "dpto": "São João do Itaperiú",
+      "parquetKey": "são_joão_do_itaperiu",
+      "avg_score": 1.1,
+      "hex_count": 1539,
+      "high_risk_count": 13,
+      "centroid": [
+        -48.7979,
+        -26.591
+      ]
+    },
+    {
+      "dpto": "São João do Oeste",
+      "parquetKey": "são_joão_do_oeste",
+      "avg_score": 1.3,
+      "hex_count": 1739,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.5918,
+        -27.0918
+      ]
+    },
+    {
+      "dpto": "São João do Sul",
+      "parquetKey": "são_joão_do_sul",
+      "avg_score": 6.0,
+      "hex_count": 1986,
+      "high_risk_count": 109,
+      "centroid": [
+        -49.8135,
+        -29.2056
+      ]
+    },
+    {
+      "dpto": "São Lourenço do Oeste",
+      "parquetKey": "são_lourenço_do_oeste",
+      "avg_score": 1.2,
+      "hex_count": 3703,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.8596,
+        -26.4656
+      ]
+    },
+    {
+      "dpto": "São Ludgero",
+      "parquetKey": "são_ludgero",
+      "avg_score": 1.6,
+      "hex_count": 1125,
+      "high_risk_count": 4,
+      "centroid": [
+        -49.1683,
+        -28.3531
+      ]
+    },
+    {
+      "dpto": "São Martinho",
+      "parquetKey": "são_martinho",
+      "avg_score": 1.4,
+      "hex_count": 2362,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.9719,
+        -28.1243
+      ]
+    },
+    {
+      "dpto": "São Miguel da Boa Vista",
+      "parquetKey": "são_miguel_da_boa_vista",
+      "avg_score": 1.2,
+      "hex_count": 760,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.2399,
+        -26.6897
+      ]
+    },
+    {
+      "dpto": "São Miguel do Oeste",
+      "parquetKey": "são_miguel_do_oeste",
+      "avg_score": 1.4,
+      "hex_count": 2470,
+      "high_risk_count": 0,
+      "centroid": [
+        -53.5121,
+        -26.7273
+      ]
+    },
+    {
+      "dpto": "São Pedro de Alcântara",
+      "parquetKey": "são_pedro_de_alcântara",
+      "avg_score": 1.2,
+      "hex_count": 1446,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.837,
+        -27.5915
+      ]
+    },
+    {
+      "dpto": "Taió",
+      "parquetKey": "taio",
+      "avg_score": 2.1,
+      "hex_count": 7139,
+      "high_risk_count": 107,
+      "centroid": [
+        -50.0925,
+        -27.0785
+      ]
+    },
+    {
+      "dpto": "Tangará",
+      "parquetKey": "tangara",
+      "avg_score": 1.9,
+      "hex_count": 4051,
+      "high_risk_count": 16,
+      "centroid": [
+        -51.1473,
+        -27.147
+      ]
+    },
+    {
+      "dpto": "Tigrinhos",
+      "parquetKey": "tigrinhos",
+      "avg_score": 1.2,
+      "hex_count": 603,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.1565,
+        -26.6761
+      ]
+    },
+    {
+      "dpto": "Tijucas",
+      "parquetKey": "tijucas",
+      "avg_score": 1.9,
+      "hex_count": 2855,
+      "high_risk_count": 44,
+      "centroid": [
+        -48.701,
+        -27.2474
+      ]
+    },
+    {
+      "dpto": "Timbé do Sul",
+      "parquetKey": "timbe_do_sul",
+      "avg_score": 1.5,
+      "hex_count": 3508,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.8685,
+        -28.8074
+      ]
+    },
+    {
+      "dpto": "Timbó",
+      "parquetKey": "timbo",
+      "avg_score": 1.1,
+      "hex_count": 1308,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.2687,
+        -26.808
+      ]
+    },
+    {
+      "dpto": "Timbó Grande",
+      "parquetKey": "timbo_grande",
+      "avg_score": 1.6,
+      "hex_count": 6112,
+      "high_risk_count": 34,
+      "centroid": [
+        -50.6656,
+        -26.6244
+      ]
+    },
+    {
+      "dpto": "Treviso",
+      "parquetKey": "treviso",
+      "avg_score": 1.3,
+      "hex_count": 1659,
+      "high_risk_count": 4,
+      "centroid": [
+        -49.49,
+        -28.4992
+      ]
+    },
+    {
+      "dpto": "Treze Tílias",
+      "parquetKey": "treze_tilias",
+      "avg_score": 1.8,
+      "hex_count": 1927,
+      "high_risk_count": 2,
+      "centroid": [
+        -51.4492,
+        -26.9647
+      ]
+    },
+    {
+      "dpto": "Treze de Maio",
+      "parquetKey": "treze_de_maio",
+      "avg_score": 1.4,
+      "hex_count": 1690,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.1542,
+        -28.5663
+      ]
+    },
+    {
+      "dpto": "Trombudo Central",
+      "parquetKey": "trombudo_central",
+      "avg_score": 1.3,
+      "hex_count": 1127,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.8113,
+        -27.3121
+      ]
+    },
+    {
+      "dpto": "Três Barras",
+      "parquetKey": "três_barras",
+      "avg_score": 1.6,
+      "hex_count": 4410,
+      "high_risk_count": 58,
+      "centroid": [
+        -50.2553,
+        -26.17
+      ]
+    },
+    {
+      "dpto": "Tubarão",
+      "parquetKey": "tubarão",
+      "avg_score": 2.4,
+      "hex_count": 3179,
+      "high_risk_count": 79,
+      "centroid": [
+        -49.0372,
+        -28.4818
+      ]
+    },
+    {
+      "dpto": "Tunápolis",
+      "parquetKey": "tunapolis",
+      "avg_score": 1.4,
+      "hex_count": 1365,
+      "high_risk_count": 1,
+      "centroid": [
+        -53.6478,
+        -26.9891
+      ]
+    },
+    {
+      "dpto": "Turvo",
+      "parquetKey": "turvo",
+      "avg_score": 2.1,
+      "hex_count": 2517,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.7035,
+        -28.9031
+      ]
+    },
+    {
+      "dpto": "União do Oeste",
+      "parquetKey": "união_do_oeste",
+      "avg_score": 1.2,
+      "hex_count": 972,
+      "high_risk_count": 0,
+      "centroid": [
+        -52.8559,
+        -26.7867
+      ]
+    },
+    {
+      "dpto": "Urubici",
+      "parquetKey": "urubici",
+      "avg_score": 1.7,
+      "hex_count": 10710,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.5776,
+        -28.0389
+      ]
+    },
+    {
+      "dpto": "Urupema",
+      "parquetKey": "urupema",
+      "avg_score": 1.9,
+      "hex_count": 3682,
+      "high_risk_count": 7,
+      "centroid": [
+        -49.9013,
+        -28.0237
+      ]
+    },
+    {
+      "dpto": "Urussanga",
+      "parquetKey": "urussanga",
+      "avg_score": 1.1,
+      "hex_count": 2704,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.3284,
+        -28.4927
+      ]
+    },
+    {
+      "dpto": "Vargem",
+      "parquetKey": "vargem",
+      "avg_score": 3.0,
+      "hex_count": 3668,
+      "high_risk_count": 99,
+      "centroid": [
+        -50.9505,
+        -27.4668
+      ]
+    },
+    {
+      "dpto": "Vargem Bonita",
+      "parquetKey": "vargem_bonita",
+      "avg_score": 2.0,
+      "hex_count": 3116,
+      "high_risk_count": 10,
+      "centroid": [
+        -51.7565,
+        -26.9453
+      ]
+    },
+    {
+      "dpto": "Vargeão",
+      "parquetKey": "vargeão",
+      "avg_score": 1.7,
+      "hex_count": 1733,
+      "high_risk_count": 1,
+      "centroid": [
+        -52.1241,
+        -26.7784
+      ]
+    },
+    {
+      "dpto": "Vidal Ramos",
+      "parquetKey": "vidal_ramos",
+      "avg_score": 1.3,
+      "hex_count": 3583,
+      "high_risk_count": 1,
+      "centroid": [
+        -49.3476,
+        -27.3881
+      ]
+    },
+    {
+      "dpto": "Videira",
+      "parquetKey": "videira",
+      "avg_score": 1.7,
+      "hex_count": 3988,
+      "high_risk_count": 7,
+      "centroid": [
+        -51.1267,
+        -27.0067
+      ]
+    },
+    {
+      "dpto": "Vitor Meireles",
+      "parquetKey": "vitor_meireles",
+      "avg_score": 1.2,
+      "hex_count": 3793,
+      "high_risk_count": 6,
+      "centroid": [
+        -49.8451,
+        -26.8265
+      ]
+    },
+    {
+      "dpto": "Witmarsum",
+      "parquetKey": "witmarsum",
+      "avg_score": 1.2,
+      "hex_count": 1575,
+      "high_risk_count": 0,
+      "centroid": [
+        -49.8417,
+        -26.9372
+      ]
+    },
+    {
+      "dpto": "Xanxerê",
+      "parquetKey": "xanxerê",
+      "avg_score": 1.4,
+      "hex_count": 3942,
+      "high_risk_count": 11,
+      "centroid": [
+        -52.41,
+        -26.8723
+      ]
+    },
+    {
+      "dpto": "Xavantina",
+      "parquetKey": "xavantina",
+      "avg_score": 1.8,
+      "hex_count": 2286,
+      "high_risk_count": 7,
+      "centroid": [
+        -52.3219,
+        -27.0213
+      ]
+    },
+    {
+      "dpto": "Xaxim",
+      "parquetKey": "xaxim",
+      "avg_score": 1.5,
+      "hex_count": 3073,
+      "high_risk_count": 15,
+      "centroid": [
+        -52.529,
+        -26.9704
+      ]
+    },
+    {
+      "dpto": "Zortéa",
+      "parquetKey": "zortea",
+      "avg_score": 4.8,
+      "hex_count": 2003,
+      "high_risk_count": 101,
+      "centroid": [
+        -51.5355,
+        -27.4767
+      ]
+    },
+    {
+      "dpto": "Água Doce",
+      "parquetKey": "agua_doce",
+      "avg_score": 2.3,
+      "hex_count": 13665,
+      "high_risk_count": 60,
+      "centroid": [
+        -51.6125,
+        -26.7646
+      ]
+    },
+    {
+      "dpto": "Águas Frias",
+      "parquetKey": "aguas_frias",
+      "avg_score": 2.2,
+      "hex_count": 805,
+      "high_risk_count": 26,
+      "centroid": [
+        -52.8524,
+        -26.8517
+      ]
+    },
+    {
+      "dpto": "Águas Mornas",
+      "parquetKey": "aguas_mornas",
+      "avg_score": 1.3,
+      "hex_count": 3387,
+      "high_risk_count": 0,
+      "centroid": [
+        -48.936,
+        -27.7337
+      ]
+    },
+    {
+      "dpto": "Águas de Chapecó",
+      "parquetKey": "aguas_de_chapeco",
+      "avg_score": 6.4,
+      "hex_count": 1468,
+      "high_risk_count": 148,
+      "centroid": [
+        -52.9569,
+        -27.0545
+      ]
+    }
+  ]
+}
