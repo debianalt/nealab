@@ -48,7 +48,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=32',
+		hex_flood_risk: '?v=33',
 		sat_environmental_risk: '?v=35',
 		sat_climate_comfort: '?v=34',
 		sat_green_capital: '?v=35',
@@ -66,14 +66,14 @@ export function getParquetUrl(name: string): string {
 		sat_sociodemographic: '?v=23',
 		sat_economic_activity: '?v=23',
 		sat_accessibility: '?v=26',
-		sat_climate_vulnerability: '?v=8',
-		sat_carbon_stock: '?v=14',
-		sat_pm25_drivers: '?v=11',
-		sat_deforestation_dynamics: '?v=11',
-		sat_productive_activity: '?v=15',
+		sat_climate_vulnerability: '?v=9',
+		sat_carbon_stock: '?v=15',
+		sat_pm25_drivers: '?v=12',
+		sat_deforestation_dynamics: '?v=12',
+		sat_productive_activity: '?v=16',
 		sat_land_use: '?v=2',
-		sat_soil_water: '?v=7',
-		overture_scores: '?v=32',
+		sat_soil_water: '?v=8',
+		overture_scores: '?v=33',
 		emsa_powerlines: '?v=20',
 	};
 	const bust = busts[name] || '';
@@ -1076,7 +1076,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'analysis.floodRisk.title',
 		descKey: 'analysis.floodRisk.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1288,7 +1288,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'servir',
 		titleKey: 'sat.climVuln.title',
 		descKey: 'sat.climVuln.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
