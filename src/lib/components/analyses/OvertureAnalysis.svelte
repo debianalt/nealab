@@ -165,7 +165,7 @@
 	function handleDptoClick(dept: any) {
 		if (onSelectDpto) {
 			// Support both 'dpto' (Misiones) and 'distrito' (Itapúa) admin column names
-			const name = dept.dpto ?? dept.distrito ?? '';
+			const name = dept.dpto ?? dept.distrito ?? dept.municipio ?? '';
 			onSelectDpto(name, dept.parquetKey, dept.centroid as [number, number]);
 		}
 	}
@@ -262,7 +262,7 @@
 		const dpto = selectedDpto;
 		if (!hex || !dpto || !deptList.length) { crossProfile = []; return; }
 
-		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito) === dpto);
+		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === dpto);
 		if (!dept) { crossProfile = []; return; }
 
 		const h3 = hex.h3index;
@@ -322,7 +322,7 @@
 
 	async function loadDiagnostic() {
 		if (!selectedDpto || !deptList.length) return;
-		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito) === selectedDpto);
+		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
 		if (!dept) return;
 
 		showDiagnostic = true;
@@ -351,7 +351,7 @@
 	// PDF report URL for selected department
 	const reportUrl = $derived.by(() => {
 		if (!selectedDpto || !layerCfg || !deptList.length) return null;
-		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito) === selectedDpto);
+		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
 		if (!dept) return null;
 		return getReportUrl(layerCfg.id, dept.parquetKey);
 	});
@@ -774,7 +774,7 @@
 				{/if}
 				{#each deptList as dept}
 					<button class="dept-row dept-clickable" onclick={() => handleDptoClick(dept)}>
-						<div class="dept-name">{formatDept(dept.dpto ?? dept.distrito)}</div>
+						<div class="dept-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 						<div class="dept-score">
 							{dept.hex_count?.toLocaleString() ?? ''} hex
 						</div>

@@ -68,7 +68,7 @@
 							? a.avg_score - b.avg_score   // ascending: lowest risk = rank 1 = best
 							: b.avg_score - a.avg_score)  // descending: highest potential = rank 1 = best
 						.map((dept: any, i: number) => ({
-							name: (dept.dpto ?? dept.distrito ?? '') as string,
+							name: (dept.dpto ?? dept.distrito ?? dept.municipio ?? '') as string,
 							score: Number(dept.avg_score ?? 0),
 							rank: i + 1,
 						})),

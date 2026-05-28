@@ -265,9 +265,9 @@
 			if (!depts?.length) return;
 			const norm = (s: string) => (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
 			const key = norm(name);
-			const entry = depts.find(d => norm(d.dpto ?? d.distrito ?? '') === key);
+			const entry = depts.find(d => norm(d.dpto ?? d.distrito ?? d.municipio ?? '') === key);
 			if (!entry?.parquetKey || !entry?.centroid) return;
-			handleSelectFloodDpto(entry.dpto ?? entry.distrito, entry.parquetKey, entry.centroid as [number, number]);
+			handleSelectFloodDpto(entry.dpto ?? entry.distrito ?? entry.municipio, entry.parquetKey, entry.centroid as [number, number]);
 		}) as EventListener);
 
 		mapContainer?.addEventListener('compare-hex-select', ((e: CustomEvent) => {

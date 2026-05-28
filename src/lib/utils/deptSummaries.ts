@@ -172,7 +172,7 @@ export async function loadDeptList(analysisId: string, territoryPrefix: string):
 	const summary = await loadDeptSummary(analysisId, territoryPrefix);
 	if (!summary?.departments) return [];
 	return (summary.departments as any[])
-		.map(d => ({ name: (d.dpto ?? d.distrito ?? '') as string, parquetKey: d.parquetKey as string }))
+		.map(d => ({ name: (d.dpto ?? d.distrito ?? d.municipio ?? '') as string, parquetKey: d.parquetKey as string }))
 		.filter(d => d.name && d.parquetKey)
 		.sort((a, b) => a.name.localeCompare(b.name));
 }
