@@ -109,6 +109,9 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	green_capital:      () => import('$lib/data/chaco_sat_green_capital_summary.json'),
 	change_pressure:    () => import('$lib/data/chaco_sat_change_pressure_summary.json'),
 	forest_health:      () => import('$lib/data/chaco_sat_forest_health_summary.json'),
+	carbon_stock            : () => import('$lib/data/chaco_sat_carbon_stock_summary.json'),
+	deforestation_dynamics  : () => import('$lib/data/chaco_sat_deforestation_dynamics_summary.json'),
+	territorial_scores      : () => import('$lib/data/chaco_scores_dept_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/formosa_sat_environmental_risk_summary.json'),
@@ -116,6 +119,12 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	green_capital:      () => import('$lib/data/formosa_sat_green_capital_summary.json'),
 	change_pressure:    () => import('$lib/data/formosa_sat_change_pressure_summary.json'),
 	forest_health:      () => import('$lib/data/formosa_sat_forest_health_summary.json'),
+	carbon_stock            : () => import('$lib/data/formosa_sat_carbon_stock_summary.json'),
+	pm25_drivers            : () => import('$lib/data/formosa_sat_pm25_drivers_summary.json'),
+	productive_activity     : () => import('$lib/data/formosa_sat_productive_activity_summary.json'),
+	deforestation_dynamics  : () => import('$lib/data/formosa_sat_deforestation_dynamics_summary.json'),
+	soil_water              : () => import('$lib/data/formosa_sat_soil_water_summary.json'),
+	territorial_scores      : () => import('$lib/data/formosa_scores_dept_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/parana_br_sat_environmental_risk_summary.json'),
@@ -123,6 +132,8 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	green_capital:      () => import('$lib/data/parana_br_sat_green_capital_summary.json'),
 	change_pressure:    () => import('$lib/data/parana_br_sat_change_pressure_summary.json'),
 	forest_health:      () => import('$lib/data/parana_br_sat_forest_health_summary.json'),
+	deforestation_dynamics  : () => import('$lib/data/parana_br_sat_deforestation_dynamics_summary.json'),
+	territorial_scores      : () => import('$lib/data/parana_br_scores_dept_summary.json'),
 };
 const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/santa_catarina_br_sat_environmental_risk_summary.json'),
@@ -130,6 +141,8 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	green_capital:      () => import('$lib/data/santa_catarina_br_sat_green_capital_summary.json'),
 	change_pressure:    () => import('$lib/data/santa_catarina_br_sat_change_pressure_summary.json'),
 	forest_health:      () => import('$lib/data/santa_catarina_br_sat_forest_health_summary.json'),
+	deforestation_dynamics  : () => import('$lib/data/santa_catarina_br_sat_deforestation_dynamics_summary.json'),
+	territorial_scores      : () => import('$lib/data/santa_catarina_br_scores_dept_summary.json'),
 };
 const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/rio_grande_sul_br_sat_environmental_risk_summary.json'),
@@ -137,6 +150,8 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	green_capital:      () => import('$lib/data/rio_grande_sul_br_sat_green_capital_summary.json'),
 	change_pressure:    () => import('$lib/data/rio_grande_sul_br_sat_change_pressure_summary.json'),
 	forest_health:      () => import('$lib/data/rio_grande_sul_br_sat_forest_health_summary.json'),
+	deforestation_dynamics  : () => import('$lib/data/rio_grande_sul_br_sat_deforestation_dynamics_summary.json'),
+	territorial_scores      : () => import('$lib/data/rio_grande_sul_br_scores_dept_summary.json'),
 };
 
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
