@@ -16,6 +16,11 @@
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
 	import { isInsideAltoParana } from '$lib/utils/alto_parana-pip';
+	import { isInsideChaco } from '$lib/utils/chaco-pip';
+	import { isInsideFormosa } from '$lib/utils/formosa-pip';
+	import { isInsideParanaBr } from '$lib/utils/parana_br-pip';
+	import { isInsideSantaCatarinaBr } from '$lib/utils/santa_catarina_br-pip';
+	import { isInsideRioGrandeSulBr } from '$lib/utils/rio_grande_sul_br-pip';
 	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
@@ -953,7 +958,28 @@
 		if (isInsideItapua(lat, lng)) return 'itapua_py';
 		if (isInsideAltoParana(lat, lng)) return 'alto_parana_py';
 		if (isInsideCorrientes(lat, lng)) return 'corrientes';
+		if (isInsideChaco(lat, lng)) return 'chaco';
+		if (isInsideFormosa(lat, lng)) return 'formosa';
+		if (isInsideParanaBr(lat, lng)) return 'parana_br';
+		if (isInsideSantaCatarinaBr(lat, lng)) return 'santa_catarina_br';
+		if (isInsideRioGrandeSulBr(lat, lng)) return 'rio_grande_sul_br';
 		return null;
+	}
+
+	// territoryPrefix → PIP. Used by per-territory hex filtering so we don't
+	// silently fall back to isInsideMisiones() and drop every BR/CHA/FOR hex.
+	function isInsideActiveTerritory(lat: number, lng: number, territoryPrefix: string): boolean {
+		switch (territoryPrefix) {
+			case 'itapua_py/':         return isInsideItapua(lat, lng);
+			case 'alto_parana_py/':    return isInsideAltoParana(lat, lng);
+			case 'corrientes/':        return isInsideCorrientes(lat, lng);
+			case 'chaco/':             return isInsideChaco(lat, lng);
+			case 'formosa/':           return isInsideFormosa(lat, lng);
+			case 'parana_br/':         return isInsideParanaBr(lat, lng);
+			case 'santa_catarina_br/': return isInsideSantaCatarinaBr(lat, lng);
+			case 'rio_grande_sul_br/': return isInsideRioGrandeSulBr(lat, lng);
+			default:                   return isInsideMisiones(lat, lng); // '' = Misiones
+		}
 	}
 
 	async function fetchHexData(h3index: string): Promise<void> {
@@ -1247,7 +1273,7 @@
 			for (let i = 0; i < result.numRows; i++) {
 				const row = result.get(i)!.toJSON() as Record<string, any>;
 				const [lat, lng] = cellToLatLng(row.h3index);
-				if (!isInsideMisiones(lat, lng)) continue;
+				if (!isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix)) continue;
 				h3ScoreMap.set(row.h3index, Number(row.flood_risk_score) || 0);
 				h3FullData.set(row.h3index, {
 					flood_risk_score: Number(row.flood_risk_score) || 0,
@@ -1286,7 +1312,7 @@
 				const row = result.get(i)!.toJSON() as Record<string, any>;
 				const h3 = row.h3index as string;
 				const [lat, lng] = cellToLatLng(h3);
-				if (!isInsideMisiones(lat, lng)) continue;
+				if (!isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix)) continue;
 				// Use urban_consolidation as default choropleth indicator
 				h3ScoreMap.set(h3, Number(row.urban_consolidation) || 0);
 				const data: Record<string, number> = {};
@@ -1406,13 +1432,7 @@
 			const allEntries = hexStore.choroplethEntries;
 			const entries = allEntries.filter(e => {
 				const [lat, lng] = cellToLatLng(e.h3index);
-				return hexStore.territoryPrefix === 'itapua_py/'
-					? isInsideItapua(lat, lng)
-					: hexStore.territoryPrefix === 'alto_parana_py/'
-					? isInsideAltoParana(lat, lng)
-					: hexStore.territoryPrefix === 'corrientes/'
-					? isInsideCorrientes(lat, lng)
-					: isInsideMisiones(lat, lng);
+				return isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix);
 			});
 			if (entries.length > 0) {
 				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = hexStore.activeLayer?.colorScale ?? 'flood';
