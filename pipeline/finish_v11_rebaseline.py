@@ -96,16 +96,15 @@ def download_rasters(territories=NEW_TERRITORIES, dry_run=False):
     for t in territories:
         out_dir = os.path.join(OUTPUT_DIR, t)
         os.makedirs(out_dir, exist_ok=True)
-        # generic satellite/<territory>/ rasters (env_risk, climate, etc.)
+        # All v1.1 exports land in `satellite/<territory>/` — including the
+        # specialized rasters (carbon_stock, pm25_*, soil_water, hansen_*, act_*)
+        # that earlier versions of this script tried to fetch from dedicated
+        # prefixes. Those prefixes never existed; one wildcard does the job.
         cmd = f"gcloud storage cp gs://{GCS_BUCKET}/satellite/{t}/*.tif {out_dir}/"
         rc = run(cmd, dry_run)
         if rc != 0:
             print(f"  WARNING: download from satellite/{t}/ partial or empty")
             rc_all = rc
-        # Specialized prefixes
-        for prefix in ('carbon', 'pm25_annual', 'soil_water', 'hansen'):
-            sub_cmd = f"gcloud storage cp gs://{GCS_BUCKET}/{prefix}/{t}/*.tif {out_dir}/"
-            run(sub_cmd, dry_run)
     return rc_all
 
 

@@ -83,6 +83,7 @@ def run(args):
             territory_id=args.territory,
             historical=args.historical,
             current=True,
+            jrc=args.jrc,
             drive=False,
             days=args.days,
         )
@@ -98,8 +99,9 @@ def run(args):
 
         # ── Step 4: Download from GCS ──────────────────────────────
         step(4, "Download GeoTIFFs from GCS")
+        os.makedirs(t_dir, exist_ok=True)
         from download_gcs import download_latest_flood
-        downloaded = download_latest_flood(OUTPUT_DIR)
+        downloaded = download_latest_flood(t_dir)
 
         if not downloaded:
             print("  ERROR: No GeoTIFFs downloaded from GCS.")
@@ -305,6 +307,9 @@ Examples:
                         help="Show planned steps without executing")
     parser.add_argument("--days", type=int, default=12,
                         help="Days to look back for current extent (default: 12)")
+    parser.add_argument("--jrc", action="store_true",
+                        help="Also export JRC Global Surface Water (occurrence/recurrence/seasonality). "
+                             "Run once per territory; the assets are static so subsequent runs can skip.")
     args = parser.parse_args()
 
     if args.dry_run:
