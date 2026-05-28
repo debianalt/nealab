@@ -174,6 +174,9 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/rio_grande_sul_br_flood_dept_summary.json'),
 	carbon_stock            : () => import('$lib/data/rio_grande_sul_br_sat_carbon_stock_summary.json'),
 	soil_water              : () => import('$lib/data/rio_grande_sul_br_sat_soil_water_summary.json'),
+	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),
+	productive_activity     : () => import('$lib/data/rio_grande_sul_br_sat_productive_activity_summary.json'),
+	climate_vulnerability   : () => import('$lib/data/rio_grande_sul_br_sat_climate_vulnerability_summary.json'),
 };
 
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
