@@ -143,6 +143,7 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	forest_health:      () => import('$lib/data/santa_catarina_br_sat_forest_health_summary.json'),
 	deforestation_dynamics  : () => import('$lib/data/santa_catarina_br_sat_deforestation_dynamics_summary.json'),
 	territorial_scores      : () => import('$lib/data/santa_catarina_br_scores_dept_summary.json'),
+	carbon_stock            : () => import('$lib/data/santa_catarina_br_sat_carbon_stock_summary.json'),
 };
 const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/rio_grande_sul_br_sat_environmental_risk_summary.json'),
