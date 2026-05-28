@@ -16,28 +16,40 @@ LOG="pipeline/output/$T/finalize_v11.log"
 exec > >(tee -a "$LOG") 2>&1
 echo "=== $(date) | $T | finalize start ==="
 
-# Capas que deberíamos haber generado en process_v11_remaining + overture
-LAYERS="carbon_stock,pm25_drivers,productive_activity,deforestation_dynamics,climate_vulnerability,territorial_scores"
+# Capas satélite que se splittean vía split_by_admin (lee sat_<id>.parquet)
+SAT_LAYERS="carbon_stock,pm25_drivers,productive_activity,deforestation_dynamics,climate_vulnerability,soil_water"
 
-# 1) Split by admin — also writes bundled summary JSONs to src/lib/data/<t>_sat_<id>_summary.json
-echo "--- split_by_admin ---"
-python pipeline/split_by_admin.py --territory $T --only $LAYERS || echo "  WARN split partial"
+# 0) soil_water (process_raster_to_h3 — si v11_remaining no lo cubrió)
+echo "--- soil_water via process_raster_to_h3 ---"
+if [ ! -f "pipeline/output/$T/sat_soil_water.parquet" ]; then
+  python pipeline/process_raster_to_h3.py --territory $T --analysis soil_water --mode local || echo "  WARN soil_water failed"
+fi
 
-# 2) R2 upload
+# 1) Split satellite parquets — writes bundled summary JSONs to src/lib/data/<t>_sat_<id>_summary.json
+echo "--- split_by_admin (sat layers) ---"
+python pipeline/split_by_admin.py --territory $T --only $SAT_LAYERS || echo "  WARN sat split partial"
+
+# 2) Split Overture territorial scores (different parquet name + summary path)
+echo "--- split_scores_by_dpto (territorial_scores) ---"
+python pipeline/split_scores_by_dpto.py --territory $T || echo "  WARN scores split failed"
+
+# 3) R2 upload — global parquets
 echo "--- R2 upload globals ---"
 OUT="pipeline/output/$T"
-for id in $(echo $LAYERS | tr ',' ' '); do
-  case $id in
-    territorial_scores) local_file="$OUT/overture_scores.parquet"; r2_name="overture_scores.parquet" ;;
-    *) local_file="$OUT/sat_${id}.parquet"; r2_name="sat_${id}.parquet" ;;
-  esac
+ALL_LAYERS="carbon_stock pm25_drivers productive_activity deforestation_dynamics climate_vulnerability soil_water"
+for id in $ALL_LAYERS; do
+  local_file="$OUT/sat_${id}.parquet"
   if [ -f "$local_file" ]; then
-    echo "  -> $r2_name"
-    npx wrangler r2 object put "neahub/data/${T}/${r2_name}" --file "$local_file" --remote 2>&1 | tail -2
+    echo "  -> sat_${id}.parquet"
+    npx wrangler r2 object put "neahub/data/${T}/sat_${id}.parquet" --file "$local_file" --remote 2>&1 | tail -1
   else
-    echo "  SKIP $id (no $local_file)"
+    echo "  SKIP $id"
   fi
 done
+if [ -f "$OUT/overture_scores.parquet" ]; then
+  echo "  -> overture_scores.parquet"
+  npx wrangler r2 object put "neahub/data/${T}/overture_scores.parquet" --file "$OUT/overture_scores.parquet" --remote 2>&1 | tail -1
+fi
 
 echo "--- R2 upload per-dept ---"
 DPTO_DIR="$OUT/sat_dpto"
