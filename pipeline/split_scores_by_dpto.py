@@ -151,10 +151,16 @@ def safe_filename(dpto: str) -> str:
 
 def assign_hexes_itapua(scores: pd.DataFrame, crosswalk_path: str) -> tuple[pd.DataFrame, str]:
     """Assign each hex to an admin unit using the prebuilt crosswalk parquet.
-    Returns (merged_df, admin_col_name) — col is 'distrito' or 'dpto' depending on crosswalk."""
+    Returns (merged_df, admin_col_name) — col is 'distrito' (PY), 'municipio' (BR)
+    or 'dpto' (AR) depending on which column the crosswalk carries."""
     import pyarrow.parquet as pq
     schema_cols = pq.read_schema(crosswalk_path).names
-    admin_col = "distrito" if "distrito" in schema_cols else "dpto"
+    if "distrito" in schema_cols:
+        admin_col = "distrito"
+    elif "municipio" in schema_cols:
+        admin_col = "municipio"
+    else:
+        admin_col = "dpto"
     print(f"Assigning hexes to {admin_col}s via crosswalk...")
     crosswalk = pd.read_parquet(crosswalk_path, columns=["h3index", admin_col])
     scores = scores.merge(crosswalk, on="h3index", how="left")
