@@ -51,7 +51,7 @@ export function getParquetUrl(name: string): string {
 		hex_flood_risk: '?v=36',
 		sat_environmental_risk: '?v=36',
 		sat_climate_comfort: '?v=35',
-		sat_green_capital: '?v=35',
+		sat_green_capital: '?v=36',
 		sat_change_pressure: '?v=38',
 		sat_location_value: '?v=27',
 		sat_agri_potential: '?v=35',
