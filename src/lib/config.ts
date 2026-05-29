@@ -1355,7 +1355,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'vivir',
 		titleKey: 'sat.types.title',
 		descKey: 'sat.types.desc',
-		coverage: { chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		coverage: { itapua_py: 'available', alto_parana_py: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
