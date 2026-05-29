@@ -183,6 +183,7 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/santa_catarina_br_flood_dept_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/santa_catarina_br_sat_climate_vulnerability_summary.json'),
 	soil_water              : () => import('$lib/data/santa_catarina_br_sat_soil_water_summary.json'),
+	forestry_aptitude       : () => import('$lib/data/santa_catarina_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/santa_catarina_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/santa_catarina_br_sat_land_use_summary.json'),
 };
