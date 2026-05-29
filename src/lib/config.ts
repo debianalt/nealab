@@ -49,7 +49,7 @@ export const TERRAIN_CONFIG = {
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=36',
-		sat_environmental_risk: '?v=35',
+		sat_environmental_risk: '?v=36',
 		sat_climate_comfort: '?v=34',
 		sat_green_capital: '?v=35',
 		sat_change_pressure: '?v=37',
@@ -70,7 +70,7 @@ export function getParquetUrl(name: string): string {
 		sat_carbon_stock: '?v=19',
 		sat_pm25_drivers: '?v=16',
 		sat_deforestation_dynamics: '?v=15',
-		sat_productive_activity: '?v=21',
+		sat_productive_activity: '?v=22',
 		sat_land_use: '?v=3',
 		sat_soil_water: '?v=11',
 		overture_scores: '?v=36',
