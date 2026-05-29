@@ -33,7 +33,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR, get_territory
 
-ASSET = 'projects/mapbiomas-public/assets/argentina/collection1/mapbiomas_argentina_collection1_integration_v1'
+COUNTRY_ASSETS = {
+    'ar': 'projects/mapbiomas-public/assets/argentina/collection1/mapbiomas_argentina_collection1_integration_v1',
+    'br': 'projects/mapbiomas-workspace/public/collection9/mapbiomas_collection90_integration_v1',
+    'py': 'projects/mapbiomas-public/assets/paraguay/collection1/mapbiomas_paraguay_collection1_integration_v1',
+}
+ASSET = COUNTRY_ASSETS['ar']  # legacy default
 
 # Remap to simplified classes
 CLASS_MAP = {
@@ -77,19 +82,37 @@ def export_mapbiomas(territory_id='misiones', year=2023, to_drive=False, no_wait
     territory = get_territory(territory_id)
     bbox = ee.Geometry.Rectangle(territory['bbox'])
 
-    # Load MapBiomas
-    mb = ee.Image(ASSET)
+    # Load classification raster — MapBiomas for AR/PY, ESA WorldCover for BR
+    # (MapBiomas Brazil workspace is not publicly accessible via GEE service accounts)
+    country = territory.get('country', 'ar')
 
-    # Select band for the year
-    band_name = f'classification_{year}'
-    available = mb.bandNames().getInfo()
+    if country == 'br':
+        # ESA WorldCover v200 (2021, 10m) — remap classes to MapBiomas codes so
+        # process_mapbiomas_to_h3.py works unchanged.
+        # ESA→MapBiomas: 10=tree→3=native_forest, 20=shrub→12=grassland,
+        # 30=grass→15=pasture, 40=crop→18=agriculture, 50=built→24=urban,
+        # 60=bare→25=bare, 80=water→26=water, 90=wetland→11=wetland,
+        # 95=mangrove→5=native_forest(mangrove), others→0
+        print(f"  BR territory: using ESA WorldCover v200 (remapped to MapBiomas codes)")
+        esa = ee.ImageCollection('ESA/WorldCover/v200').first().select('Map')
+        classification = esa.remap(
+            [10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 100],
+            [ 3, 12, 15, 18, 24, 25,  0, 26, 11,  5,   0],
+            defaultValue=0
+        ).rename('classification').clip(bbox)
+        year = 2021  # ESA WorldCover vintage
+    else:
+        asset = COUNTRY_ASSETS.get(country, COUNTRY_ASSETS['ar'])
+        print(f"  MapBiomas asset ({country}): {asset}")
+        mb = ee.Image(asset)
 
-    if band_name not in available:
-        print(f"Band {band_name} not found. Available: {available[-5:]}")
-        band_name = sorted([b for b in available if b.startswith('classification_')])[-1]
-        print(f"Using: {band_name}")
-
-    classification = mb.select(band_name).clip(bbox)
+        band_name = f'classification_{year}'
+        available = mb.bandNames().getInfo()
+        if band_name not in available:
+            print(f"Band {band_name} not found. Available: {available[-5:]}")
+            band_name = sorted([b for b in available if b.startswith('classification_')])[-1]
+            print(f"Using: {band_name}")
+        classification = mb.select(band_name).clip(bbox)
 
     # GCS path: misiones uses legacy flat path, others use territory subdir
     if territory_id == 'misiones':
