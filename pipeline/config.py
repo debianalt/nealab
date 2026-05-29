@@ -45,7 +45,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'corrientes',
         'label': 'Corrientes',
         'country': 'ar',
-        'bbox': [-59.50, -30.00, -56.00, -27.00],
+        'bbox': [-59.85, -30.90, -55.45, -27.10],  # fixed: was [-59.50,-30.00,-56.00,-27.00], missed eastern strip (Santo Tome) and south
         'admin_level': 'departamento',
         'admin_col': 'dpto',
         'admin_collection': None,                    # uses local ARG_adm2.shp (same as Misiones)
