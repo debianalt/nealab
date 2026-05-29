@@ -72,7 +72,7 @@ export function getParquetUrl(name: string): string {
 		sat_deforestation_dynamics: '?v=16',
 		sat_productive_activity: '?v=22',
 		sat_land_use: '?v=3',
-		sat_soil_water: '?v=11',
+		sat_soil_water: '?v=12',
 		overture_scores: '?v=36',
 		emsa_powerlines: '?v=20',
 	};
