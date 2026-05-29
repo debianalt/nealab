@@ -117,6 +117,8 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/chaco_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/chaco_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/chaco_sat_climate_vulnerability_summary.json'),
+	agri_potential          : () => import('$lib/data/chaco_sat_agri_potential_summary.json'),
+	land_use                : () => import('$lib/data/chaco_sat_land_use_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/formosa_sat_environmental_risk_summary.json'),
@@ -132,6 +134,8 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	territorial_scores      : () => import('$lib/data/formosa_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/formosa_flood_dept_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/formosa_sat_climate_vulnerability_summary.json'),
+	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
+	land_use                : () => import('$lib/data/formosa_sat_land_use_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/parana_br_sat_environmental_risk_summary.json'),
@@ -147,6 +151,8 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/parana_br_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/parana_br_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/parana_br_sat_climate_vulnerability_summary.json'),
+	agri_potential          : () => import('$lib/data/parana_br_sat_agri_potential_summary.json'),
+	land_use                : () => import('$lib/data/parana_br_sat_land_use_summary.json'),
 };
 const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/santa_catarina_br_sat_environmental_risk_summary.json'),
@@ -162,6 +168,8 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/santa_catarina_br_flood_dept_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/santa_catarina_br_sat_climate_vulnerability_summary.json'),
 	soil_water              : () => import('$lib/data/santa_catarina_br_sat_soil_water_summary.json'),
+	agri_potential          : () => import('$lib/data/santa_catarina_br_sat_agri_potential_summary.json'),
+	land_use                : () => import('$lib/data/santa_catarina_br_sat_land_use_summary.json'),
 };
 const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/rio_grande_sul_br_sat_environmental_risk_summary.json'),
@@ -177,6 +185,8 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/rio_grande_sul_br_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/rio_grande_sul_br_sat_climate_vulnerability_summary.json'),
+	agri_potential          : () => import('$lib/data/rio_grande_sul_br_sat_agri_potential_summary.json'),
+	land_use                : () => import('$lib/data/rio_grande_sul_br_sat_land_use_summary.json'),
 };
 
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
