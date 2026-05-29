@@ -76,11 +76,17 @@
 			map.addSource('radios', { type: 'vector', url: getTilesUrl('radios') });
 
 			// Mask: fog outside Misiones (light overlay on dark basemap)
+			// Visibility starts 'none' to match itapua/corrientes/AP masks — otherwise
+			// the cold-open (regional view) briefly darkens everything outside Misiones
+			// before setRegionalMapMode(true) hides it, producing a flash that read as
+			// "NEA-AR looks selected". applyTerritoryVisibility() flips it on only when
+			// Misiones becomes the active territory outside regional mode.
 			map.addSource('mask', { type: 'geojson', data: misionesMask as any });
 			map.addLayer({
 				id: 'mask-fill',
 				type: 'fill',
 				source: 'mask',
+				layout: { visibility: 'none' },
 				paint: { 'fill-color': '#1a1a2e', 'fill-opacity': 0.75 }
 			});
 
