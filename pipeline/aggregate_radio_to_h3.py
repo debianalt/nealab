@@ -166,10 +166,12 @@ def main():
         best_sil = -1
         best_k = 3
         best_labels = None
+        # silhouette_score is O(n²) — use sample for large hex sets
+        sil_sample = min(10_000, len(X_pca))
         for k in [3, 4, 5]:
-            km = KMeans(n_clusters=k, random_state=42, n_init=20)
+            km = KMeans(n_clusters=k, random_state=42, n_init=10)
             labels = km.fit_predict(X_pca[:, :n_comp])
-            sil = silhouette_score(X_pca[:, :n_comp], labels)
+            sil = silhouette_score(X_pca[:, :n_comp], labels, sample_size=sil_sample, random_state=42)
             print(f"    k={k}: sil={sil:.4f}")
             if sil > best_sil:
                 best_sil = sil
