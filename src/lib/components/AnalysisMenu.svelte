@@ -19,6 +19,32 @@
 	const comparableGroup = $derived(analyses.filter(a => a.comparable && getCoverage(a) !== 'unavailable'));
 	const localGroup = $derived(analyses.filter(a => !a.comparable && getCoverage(a) !== 'unavailable'));
 
+	// Sub-theme grouping: keeps the menu navigable as the catalog grows past
+	// ~6 layers per lens. Map analysis id → sub-theme label. Anything missing
+	// falls under 'Otros'.
+	const SUBGROUPS: Record<string, string> = {
+		// Vivir
+		environmental_risk: 'Salud ambiental', pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
+		climate_comfort: 'Clima',
+		green_capital: 'Cobertura natural', deforestation_dynamics: 'Cobertura natural',
+		sociodemographic: 'Población', territorial_types: 'Población',
+		catastro: 'Catastro',
+		// Invertir
+		territorial_scores: 'Valor territorial', location_value: 'Valor territorial',
+		change_pressure: 'Dinámica del cambio', productive_activity: 'Dinámica del cambio',
+		// Producir
+		forest_health: 'Bosques', forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
+		soil_water: 'Suelos y agua', agri_potential: 'Suelos y agua',
+		land_use: 'Uso del suelo',
+		powerline_density: 'Infraestructura',
+		eudr: 'Comercio (EUDR)',
+		// Servir
+		accessibility: 'Accesibilidad', territorial_isolation: 'Accesibilidad',
+		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
+		education_capital: 'Educación', education_flow: 'Educación',
+		climate_vulnerability: 'Vulnerabilidad climática',
+	};
+
 	function getCoverage(analysis: AnalysisConfig): 'available' | 'pending' | 'unavailable' {
 		if (!activeTerritory) return 'available';
 		if (!analysis.coverage) {
@@ -27,6 +53,22 @@
 		}
 		return analysis.coverage[activeTerritory.id] ?? (activeTerritory.id === 'misiones' ? 'available' : 'pending');
 	}
+
+	// Group a list of analyses by sub-theme while preserving original order
+	// of first appearance per sub-theme (more predictable than alphabetical).
+	function groupBySubtheme(list: AnalysisConfig[]): Array<{ label: string; items: AnalysisConfig[] }> {
+		const order: string[] = [];
+		const buckets: Record<string, AnalysisConfig[]> = {};
+		for (const a of list) {
+			const label = SUBGROUPS[a.id] ?? 'Otros';
+			if (!(label in buckets)) { buckets[label] = []; order.push(label); }
+			buckets[label].push(a);
+		}
+		return order.map(label => ({ label, items: buckets[label] }));
+	}
+
+	const comparableBuckets = $derived(groupBySubtheme(comparableGroup));
+	const localBuckets = $derived(groupBySubtheme(localGroup));
 </script>
 
 {#if cfg && lens}
@@ -38,23 +80,26 @@
 		<div class="analysis-list">
 			{#if comparableGroup.length > 0}
 				<div class="group-label">↔ Comparables entre territorios</div>
-				{#each comparableGroup as analysis}
-					{@const coverage = getCoverage(analysis)}
-					<button
-						class="analysis-item"
-						class:available={analysis.status === 'available' && coverage === 'available'}
-						class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
-						disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
-						onclick={() => onSelectAnalysis(analysis)}
-					>
-						<div class="item-title">{i18n.t(analysis.titleKey)}</div>
-						<div class="item-desc">{i18n.t(analysis.descKey)}</div>
-						{#if analysis.status === 'coming_soon'}
-							<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
-						{:else if coverage === 'pending'}
-							<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
-						{/if}
-					</button>
+				{#each comparableBuckets as bucket}
+					<div class="subgroup-label">{bucket.label}</div>
+					{#each bucket.items as analysis}
+						{@const coverage = getCoverage(analysis)}
+						<button
+							class="analysis-item"
+							class:available={analysis.status === 'available' && coverage === 'available'}
+							class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
+							disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
+							onclick={() => onSelectAnalysis(analysis)}
+						>
+							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
+							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
+							{#if analysis.status === 'coming_soon'}
+								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
+							{:else if coverage === 'pending'}
+								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
+							{/if}
+						</button>
+					{/each}
 				{/each}
 			{/if}
 
@@ -62,23 +107,26 @@
 				<div class="group-label local">
 					{activeTerritory?.flag ?? ''} Solo {activeTerritory?.label ?? 'este territorio'}
 				</div>
-				{#each localGroup as analysis}
-					{@const coverage = getCoverage(analysis)}
-					<button
-						class="analysis-item"
-						class:available={analysis.status === 'available' && coverage === 'available'}
-						class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
-						disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
-						onclick={() => onSelectAnalysis(analysis)}
-					>
-						<div class="item-title">{i18n.t(analysis.titleKey)}</div>
-						<div class="item-desc">{i18n.t(analysis.descKey)}</div>
-						{#if analysis.status === 'coming_soon'}
-							<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
-						{:else if coverage === 'pending'}
-							<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
-						{/if}
-					</button>
+				{#each localBuckets as bucket}
+					<div class="subgroup-label">{bucket.label}</div>
+					{#each bucket.items as analysis}
+						{@const coverage = getCoverage(analysis)}
+						<button
+							class="analysis-item"
+							class:available={analysis.status === 'available' && coverage === 'available'}
+							class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
+							disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
+							onclick={() => onSelectAnalysis(analysis)}
+						>
+							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
+							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
+							{#if analysis.status === 'coming_soon'}
+								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
+							{:else if coverage === 'pending'}
+								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
+							{/if}
+						</button>
+					{/each}
 				{/each}
 			{/if}
 		</div>
@@ -128,6 +176,16 @@
 		margin-top: 0;
 	}
 	.group-label.local { color: rgba(255,255,255,0.22); }
+	.subgroup-label {
+		font-size: 9px;
+		font-weight: 600;
+		color: rgba(255,255,255,0.42);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		padding: 8px 10px 2px;
+		margin-top: 2px;
+	}
+	.subgroup-label:first-of-type { padding-top: 4px; }
 
 	.analysis-item {
 		display: flex;
