@@ -203,6 +203,7 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/rio_grande_sul_br_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/rio_grande_sul_br_sat_climate_vulnerability_summary.json'),
+	forestry_aptitude       : () => import('$lib/data/rio_grande_sul_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/rio_grande_sul_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/rio_grande_sul_br_sat_land_use_summary.json'),
 };

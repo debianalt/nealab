@@ -1205,7 +1205,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'producir',
 		titleKey: 'sat.forestry.title',
 		descKey: 'sat.forestry.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
