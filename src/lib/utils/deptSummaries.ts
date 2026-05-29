@@ -119,6 +119,12 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	climate_vulnerability   : () => import('$lib/data/chaco_sat_climate_vulnerability_summary.json'),
 	agri_potential          : () => import('$lib/data/chaco_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/chaco_sat_land_use_summary.json'),
+	service_deprivation     : () => import('$lib/data/chaco_sat_service_deprivation_summary.json'),
+	territorial_isolation   : () => import('$lib/data/chaco_sat_territorial_isolation_summary.json'),
+	health_access           : () => import('$lib/data/chaco_sat_health_access_summary.json'),
+	education_capital       : () => import('$lib/data/chaco_sat_education_capital_summary.json'),
+	education_flow          : () => import('$lib/data/chaco_sat_education_flow_summary.json'),
+	location_value          : () => import('$lib/data/chaco_sat_location_value_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/formosa_sat_environmental_risk_summary.json'),
@@ -136,6 +142,12 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	climate_vulnerability   : () => import('$lib/data/formosa_sat_climate_vulnerability_summary.json'),
 	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/formosa_sat_land_use_summary.json'),
+	service_deprivation     : () => import('$lib/data/formosa_sat_service_deprivation_summary.json'),
+	territorial_isolation   : () => import('$lib/data/formosa_sat_territorial_isolation_summary.json'),
+	health_access           : () => import('$lib/data/formosa_sat_health_access_summary.json'),
+	education_capital       : () => import('$lib/data/formosa_sat_education_capital_summary.json'),
+	education_flow          : () => import('$lib/data/formosa_sat_education_flow_summary.json'),
+	location_value          : () => import('$lib/data/formosa_sat_location_value_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	environmental_risk: () => import('$lib/data/parana_br_sat_environmental_risk_summary.json'),

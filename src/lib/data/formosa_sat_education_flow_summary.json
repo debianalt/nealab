@@ -1,0 +1,100 @@
+{
+  "territory": "formosa",
+  "province": {
+    "total_hexes": 824583,
+    "avg_score": 46.5,
+    "unassigned": 1178
+  },
+  "departments": [
+    {
+      "dpto": "Ramón Lista",
+      "parquetKey": "ramon_lista",
+      "avg_score": 74.6,
+      "hex_count": 42638,
+      "centroid": [
+        -62.3201,
+        -23.2386
+      ]
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 67.4,
+      "hex_count": 46803,
+      "centroid": [
+        -62.3206,
+        -23.8234
+      ]
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 59.8,
+      "hex_count": 140377,
+      "centroid": [
+        -60.4234,
+        -24.0066
+      ]
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 46.0,
+      "hex_count": 57640,
+      "centroid": [
+        -58.4481,
+        -25.6049
+      ]
+    },
+    {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 44.1,
+      "hex_count": 97438,
+      "centroid": [
+        -59.0695,
+        -25.2018
+      ]
+    },
+    {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 41.9,
+      "hex_count": 288093,
+      "centroid": [
+        -58.9478,
+        -24.7099
+      ]
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "avg_score": 37.5,
+      "hex_count": 39078,
+      "centroid": [
+        -58.879,
+        -24.7842
+      ]
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 32.8,
+      "hex_count": 40837,
+      "centroid": [
+        -58.2239,
+        -26.5884
+      ]
+    },
+    {
+      "dpto": "Formosa",
+      "parquetKey": "formosa",
+      "avg_score": 25.2,
+      "hex_count": 70501,
+      "centroid": [
+        -58.1637,
+        -26.1725
+      ]
+    }
+  ]
+}

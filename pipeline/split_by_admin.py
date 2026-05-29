@@ -67,6 +67,32 @@ def h3_to_latlng(h3index: str) -> tuple[float, float]:
         raise ImportError("h3 library required: pip install h3")
 
 
+def build_crosswalk_ar_census(t_dir: str, t_id: str) -> dict[str, str]:
+    """Build h3→dpto lookup for any AR province with a radio areal crosswalk."""
+    crosswalk_path = os.path.join(t_dir, f"h3_radio_crosswalk_{t_id}.parquet")
+    stats_path = os.path.join(t_dir, f"radio_stats_{t_id}.parquet")
+
+    if not os.path.exists(crosswalk_path):
+        raise FileNotFoundError(
+            f"Radio crosswalk not found: {crosswalk_path}\n"
+            "Run: python pipeline/build_census_crosswalk_ar.py --territory " + t_id
+        )
+
+    xwalk = pd.read_parquet(crosswalk_path)
+    stats = pd.read_parquet(stats_path, columns=["redcode", "dpto"])
+    merged = xwalk.merge(stats, on="redcode", how="inner")
+
+    hex_dpto = (merged.groupby(["h3index", "dpto"])["weight"].sum()
+                      .reset_index()
+                      .sort_values(["h3index", "weight"], ascending=[True, False])
+                      .drop_duplicates("h3index", keep="first")
+                      .set_index("h3index")["dpto"]
+                      .to_dict())
+
+    print(f"  {t_id}: {len(hex_dpto):,} hexes -> {len(set(hex_dpto.values()))} dptos (areal crosswalk)")
+    return hex_dpto
+
+
 def build_crosswalk_corrientes(t_dir: str) -> dict[str, str]:
     """Build h3→dpto lookup for Corrientes from radio areal crosswalk."""
     crosswalk_path = os.path.join(t_dir, "h3_radio_crosswalk_corrientes.parquet")
@@ -176,7 +202,7 @@ def main():
         all_analyses = SAT_ANALYSES  # polygon crosswalk mode: comparable layers only
     elif t_id == 'misiones':
         all_analyses = SAT_ANALYSES + list(AR_CENSUS_ANALYSES)
-    elif t_id == 'corrientes':
+    elif t_id in ('corrientes', 'chaco', 'formosa'):
         all_analyses = SAT_ANALYSES + list(AR_CENSUS_ANALYSES)
     else:
         all_analyses = SAT_ANALYSES  # GEE-only for non-AR territories
@@ -201,14 +227,15 @@ def main():
     # - Corrientes census analyses: radio areal crosswalk (h3_radio_crosswalk_corrientes.parquet)
     # - Other territories: polygon crosswalk always
     crosswalk_path = os.path.join(t_dir, 'h3_admin_crosswalk.parquet')
-    use_corrientes_census = (t_id == 'corrientes') and any(a in AR_CENSUS_ANALYSES for a in analyses)
-    # Corrientes SAT analyses use polygon crosswalk (h3_admin_crosswalk.parquet)
-    use_polygon = (t_id not in ('misiones', 'corrientes')) or \
-                  (t_id == 'corrientes' and not use_corrientes_census) or \
+    AR_CENSUS_TERRITORIES = {'corrientes', 'chaco', 'formosa'}
+    use_ar_census = (t_id in AR_CENSUS_TERRITORIES) and any(a in AR_CENSUS_ANALYSES for a in analyses)
+    # AR SAT analyses use polygon crosswalk (h3_admin_crosswalk.parquet)
+    use_polygon = (t_id not in ('misiones', 'corrientes', 'chaco', 'formosa')) or \
+                  (t_id in AR_CENSUS_TERRITORIES and not use_ar_census) or \
                   (t_id == 'misiones' and args.sat_only and os.path.exists(crosswalk_path))
 
-    if use_corrientes_census:
-        h3_admin = build_crosswalk_corrientes(t_dir)
+    if use_ar_census:
+        h3_admin = build_crosswalk_ar_census(t_dir, t_id)
     elif use_polygon:
         h3_admin = build_crosswalk_territory(territory)
         if t_id == 'misiones':
