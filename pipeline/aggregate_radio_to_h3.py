@@ -78,15 +78,17 @@ def auto_label(cluster_means, global_means, var_names, used_labels=None):
 
 
 def main():
+    AR_CENSUS_TERRITORIES = ["corrientes", "chaco", "formosa"]
     parser = argparse.ArgumentParser(description="Aggregate radio stats to H3 via crosswalk + PCA/k-means")
-    parser.add_argument("--territory", default="misiones", choices=["misiones", "corrientes"],
+    parser.add_argument("--territory", default="misiones",
+                        choices=["misiones"] + AR_CENSUS_TERRITORIES,
                         help="Territory to process (default: misiones)")
     args = parser.parse_args()
 
-    if args.territory == "corrientes":
-        t_dir = os.path.join(OUTPUT_DIR, "corrientes")
-        crosswalk_path = os.path.join(t_dir, "h3_radio_crosswalk_corrientes.parquet")
-        stats_path = os.path.join(t_dir, "radio_stats_corrientes.parquet")
+    if args.territory in AR_CENSUS_TERRITORIES:
+        t_dir = os.path.join(OUTPUT_DIR, args.territory)
+        crosswalk_path = os.path.join(t_dir, f"h3_radio_crosswalk_{args.territory}.parquet")
+        stats_path = os.path.join(t_dir, f"radio_stats_{args.territory}.parquet")
         analyses = ANALYSES_CORRIENTES
         out_dir = t_dir
     else:

@@ -117,6 +117,7 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/chaco_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/chaco_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/chaco_sat_climate_vulnerability_summary.json'),
+	forestry_aptitude       : () => import('$lib/data/chaco_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/chaco_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/chaco_sat_land_use_summary.json'),
 	service_deprivation     : () => import('$lib/data/chaco_sat_service_deprivation_summary.json'),
@@ -140,6 +141,7 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	territorial_scores      : () => import('$lib/data/formosa_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/formosa_flood_dept_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/formosa_sat_climate_vulnerability_summary.json'),
+	forestry_aptitude       : () => import('$lib/data/formosa_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/formosa_sat_land_use_summary.json'),
 	service_deprivation     : () => import('$lib/data/formosa_sat_service_deprivation_summary.json'),
@@ -163,6 +165,7 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/parana_br_sat_pm25_drivers_summary.json'),
 	productive_activity     : () => import('$lib/data/parana_br_sat_productive_activity_summary.json'),
 	climate_vulnerability   : () => import('$lib/data/parana_br_sat_climate_vulnerability_summary.json'),
+	forestry_aptitude       : () => import('$lib/data/parana_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/parana_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/parana_br_sat_land_use_summary.json'),
 };
