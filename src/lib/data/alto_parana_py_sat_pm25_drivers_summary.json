@@ -7,7 +7,7 @@
   },
   "departments": [
     {
-      "distrito": "Yguazú",
+      "distrito": "YGUAZÚ",
       "parquetKey": "yguazu",
       "avg_score": 36.0,
       "hex_count": 8295,
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "distrito": "Minga Guazú",
+      "distrito": "MINGA GUAZÚ",
       "parquetKey": "minga_guazu",
       "avg_score": 35.9,
       "hex_count": 5048,
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "distrito": "Hernandarias",
+      "distrito": "HERNANDARIAS",
       "parquetKey": "hernandarias",
       "avg_score": 35.7,
       "hex_count": 8051,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "distrito": "Santa Fe Del Paraná",
+      "distrito": "SANTA FE DEL PARANÁ",
       "parquetKey": "santa_fe_del_parana",
       "avg_score": 35.6,
       "hex_count": 8382,
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "distrito": "Tavapy",
+      "distrito": "TAVAPY",
       "parquetKey": "tavapy",
       "avg_score": 35.2,
       "hex_count": 4566,
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "distrito": "Los Cedrales",
+      "distrito": "LOS CEDRALES",
       "parquetKey": "los_cedrales",
       "avg_score": 35.0,
       "hex_count": 4204,
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "distrito": "Ciudad Del Este",
+      "distrito": "CIUDAD DEL ESTE",
       "parquetKey": "ciudad_del_este",
       "avg_score": 34.9,
       "hex_count": 1573,
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "distrito": "Santa Rosa Del Monday",
+      "distrito": "SANTA ROSA DEL MONDAY",
       "parquetKey": "santa_rosa_del_monday",
       "avg_score": 34.8,
       "hex_count": 6533,
@@ -87,7 +87,7 @@
       ]
     },
     {
-      "distrito": "Juan E. O'Leary",
+      "distrito": "JUAN E. O'LEARY",
       "parquetKey": "juan_e_oleary",
       "avg_score": 34.6,
       "hex_count": 2364,
@@ -97,7 +97,7 @@
       ]
     },
     {
-      "distrito": "Santa Rita",
+      "distrito": "SANTA RITA",
       "parquetKey": "santa_rita",
       "avg_score": 34.4,
       "hex_count": 6228,
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "distrito": "Dr. Juan León Mallorquín",
+      "distrito": "DR. JUAN LEÓN MALLORQUÍN",
       "parquetKey": "dr_juan_leon_mallorquin",
       "avg_score": 34.2,
       "hex_count": 2799,
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "distrito": "Mbaracayú",
+      "distrito": "MBARACAYÚ",
       "parquetKey": "mbaracayu",
       "avg_score": 34.2,
       "hex_count": 11587,
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "distrito": "San Cristóbal",
+      "distrito": "SAN CRISTÓBAL",
       "parquetKey": "san_cristobal",
       "avg_score": 34.0,
       "hex_count": 9768,
@@ -137,7 +137,7 @@
       ]
     },
     {
-      "distrito": "Presidente Franco",
+      "distrito": "PRESIDENTE FRANCO",
       "parquetKey": "presidente_franco",
       "avg_score": 33.6,
       "hex_count": 1267,
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "distrito": "Domingo Martínez De Irala",
+      "distrito": "DOMINGO MARTÍNEZ DE IRALA",
       "parquetKey": "domingo_martinez_de_irala",
       "avg_score": 33.3,
       "hex_count": 3552,
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "distrito": "Naranjal",
+      "distrito": "NARANJAL",
       "parquetKey": "naranjal",
       "avg_score": 32.9,
       "hex_count": 6626,
@@ -167,7 +167,7 @@
       ]
     },
     {
-      "distrito": "Itakyry",
+      "distrito": "ITAKYRY",
       "parquetKey": "itakyry",
       "avg_score": 32.7,
       "hex_count": 20221,
@@ -177,7 +177,7 @@
       ]
     },
     {
-      "distrito": "San Alberto",
+      "distrito": "SAN ALBERTO",
       "parquetKey": "san_alberto",
       "avg_score": 31.9,
       "hex_count": 10527,
@@ -187,7 +187,7 @@
       ]
     },
     {
-      "distrito": "Dr. Raúl Peña",
+      "distrito": "DR. RAÚL PEÑA",
       "parquetKey": "dr_raul_pena",
       "avg_score": 31.8,
       "hex_count": 2569,
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "distrito": "Iruña",
+      "distrito": "IRUÑA",
       "parquetKey": "iruna",
       "avg_score": 31.5,
       "hex_count": 5643,
@@ -207,7 +207,7 @@
       ]
     },
     {
-      "distrito": "Ñacunday",
+      "distrito": "ÑACUNDAY",
       "parquetKey": "nacunday",
       "avg_score": 31.5,
       "hex_count": 9053,
@@ -217,7 +217,7 @@
       ]
     },
     {
-      "distrito": "Minga Porá",
+      "distrito": "MINGA PORÁ",
       "parquetKey": "minga_pora",
       "avg_score": 31.1,
       "hex_count": 9057,

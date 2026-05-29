@@ -325,6 +325,24 @@
       "hi": 12,
       "tier": 2,
       "unit": "count"
+    },
+    "c_soil_moisture": {
+      "lo": 0.17653214931488037,
+      "hi": 0.45649006962776184,
+      "tier": 2,
+      "unit": "m3/m3"
+    },
+    "c_dry_season": {
+      "lo": 0.17276537418365479,
+      "hi": 0.45775294303894043,
+      "tier": 2,
+      "unit": "m3/m3"
+    },
+    "c_actual_et": {
+      "lo": 7.505434989929199,
+      "hi": 30.40436363220215,
+      "tier": 2,
+      "unit": "mm/8d"
     }
   },
   "pca_variable_selection": {
@@ -417,6 +435,12 @@
       "road_connectivity",
       "building_mix",
       "water_exposure"
+    ],
+    "soil_water": [
+      "c_soil_moisture",
+      "c_dry_season",
+      "c_precipitation",
+      "c_actual_et"
     ]
   },
   "territories_included_v1_1": [
@@ -435,6 +459,11 @@
       "version": "1.1",
       "date": "2026-05-24",
       "changes": "Fase A re-baseline: pool of 9 territories for 6 core raster analyses (21 Tier 2 indicators updated, 6 PCA selections updated). Specialized analyses unchanged."
+    },
+    {
+      "version": "1.1b-soil_water",
+      "date": "2026-05-29",
+      "note": "Add c_soil_moisture / c_dry_season / c_actual_et goalposts pooled across 9 territories. c_precipitation preserved from v1.1. soil_water added to pca_variable_selection."
     }
   ]
 }

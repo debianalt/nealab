@@ -2,264 +2,14 @@
   "territory": "rio_grande_sul_br",
   "province": {
     "total_hexes": 3178961,
-    "avg_score": 47.4,
+    "avg_score": 11.9,
     "unassigned": 0
   },
   "departments": [
     {
-      "municipio": "Cachoeirinha",
-      "parquetKey": "cachoeirinha",
-      "avg_score": 94.5,
-      "hex_count": 485,
-      "centroid": [
-        -51.0952,
-        -29.9208
-      ]
-    },
-    {
-      "municipio": "Lajeado",
-      "parquetKey": "lajeado",
-      "avg_score": 90.6,
-      "hex_count": 1008,
-      "centroid": [
-        -52.0082,
-        -29.4433
-      ]
-    },
-    {
-      "municipio": "Canoas",
-      "parquetKey": "canoas",
-      "avg_score": 89.5,
-      "hex_count": 1450,
-      "centroid": [
-        -51.1805,
-        -29.9121
-      ]
-    },
-    {
-      "municipio": "Sapucaia do Sul",
-      "parquetKey": "sapucaia_do_sul",
-      "avg_score": 89.4,
-      "hex_count": 644,
-      "centroid": [
-        -51.1336,
-        -29.8226
-      ]
-    },
-    {
-      "municipio": "Esteio",
-      "parquetKey": "esteio",
-      "avg_score": 88.8,
-      "hex_count": 312,
-      "centroid": [
-        -51.1764,
-        -29.8518
-      ]
-    },
-    {
-      "municipio": "São Leopoldo",
-      "parquetKey": "são_leopoldo",
-      "avg_score": 88.5,
-      "hex_count": 1139,
-      "centroid": [
-        -51.1461,
-        -29.7544
-      ]
-    },
-    {
-      "municipio": "Porto Alegre",
-      "parquetKey": "porto_alegre",
-      "avg_score": 88.3,
-      "hex_count": 5503,
-      "centroid": [
-        -51.1653,
-        -30.0916
-      ]
-    },
-    {
-      "municipio": "Estância Velha",
-      "parquetKey": "estância_velha",
-      "avg_score": 87.1,
-      "hex_count": 570,
-      "centroid": [
-        -51.1884,
-        -29.648
-      ]
-    },
-    {
-      "municipio": "Alvorada",
-      "parquetKey": "alvorada",
-      "avg_score": 86.9,
-      "hex_count": 791,
-      "centroid": [
-        -51.0397,
-        -29.9955
-      ]
-    },
-    {
-      "municipio": "Campo Bom",
-      "parquetKey": "campo_bom",
-      "avg_score": 86.8,
-      "hex_count": 668,
-      "centroid": [
-        -51.0486,
-        -29.6732
-      ]
-    },
-    {
-      "municipio": "Imbé",
-      "parquetKey": "imbe",
-      "avg_score": 86.2,
-      "hex_count": 433,
-      "centroid": [
-        -50.1174,
-        -29.9305
-      ]
-    },
-    {
-      "municipio": "Araricá",
-      "parquetKey": "ararica",
-      "avg_score": 85.7,
-      "hex_count": 393,
-      "centroid": [
-        -50.9344,
-        -29.6345
-      ]
-    },
-    {
-      "municipio": "Novo Hamburgo",
-      "parquetKey": "novo_hamburgo",
-      "avg_score": 84.4,
-      "hex_count": 2452,
-      "centroid": [
-        -51.0496,
-        -29.7361
-      ]
-    },
-    {
-      "municipio": "Nova Hartz",
-      "parquetKey": "nova_hartz",
-      "avg_score": 82.6,
-      "hex_count": 681,
-      "centroid": [
-        -50.8986,
-        -29.5846
-      ]
-    },
-    {
-      "municipio": "Parobé",
-      "parquetKey": "parobe",
-      "avg_score": 82.1,
-      "hex_count": 1198,
-      "centroid": [
-        -50.8564,
-        -29.6605
-      ]
-    },
-    {
-      "municipio": "São Sebastião do Caí",
-      "parquetKey": "são_sebastião_do_cai",
-      "avg_score": 82.1,
-      "hex_count": 1263,
-      "centroid": [
-        -51.3374,
-        -29.5874
-      ]
-    },
-    {
-      "municipio": "Dois Irmãos",
-      "parquetKey": "dois_irmãos",
-      "avg_score": 81.7,
-      "hex_count": 724,
-      "centroid": [
-        -51.0907,
-        -29.5994
-      ]
-    },
-    {
-      "municipio": "Harmonia",
-      "parquetKey": "harmonia",
-      "avg_score": 81.6,
-      "hex_count": 531,
-      "centroid": [
-        -51.4263,
-        -29.5455
-      ]
-    },
-    {
-      "municipio": "Estrela",
-      "parquetKey": "estrela",
-      "avg_score": 81.1,
-      "hex_count": 2042,
-      "centroid": [
-        -51.9195,
-        -29.5075
-      ]
-    },
-    {
-      "municipio": "Mato Leitão",
-      "parquetKey": "mato_leitão",
-      "avg_score": 81.1,
-      "hex_count": 514,
-      "centroid": [
-        -52.1361,
-        -29.5252
-      ]
-    },
-    {
-      "municipio": "Gravataí",
-      "parquetKey": "gravatai",
-      "avg_score": 81.0,
-      "hex_count": 5183,
-      "centroid": [
-        -50.9439,
-        -29.889
-      ]
-    },
-    {
-      "municipio": "Xangri-lá",
-      "parquetKey": "xangri-la",
-      "avg_score": 81.0,
-      "hex_count": 664,
-      "centroid": [
-        -50.0694,
-        -29.8073
-      ]
-    },
-    {
-      "municipio": "Bom Princípio",
-      "parquetKey": "bom_principio",
-      "avg_score": 80.9,
-      "hex_count": 977,
-      "centroid": [
-        -51.3632,
-        -29.4683
-      ]
-    },
-    {
-      "municipio": "Ivoti",
-      "parquetKey": "ivoti",
-      "avg_score": 80.6,
-      "hex_count": 698,
-      "centroid": [
-        -51.1575,
-        -29.5808
-      ]
-    },
-    {
-      "municipio": "Garibaldi",
-      "parquetKey": "garibaldi",
-      "avg_score": 80.3,
-      "hex_count": 1840,
-      "centroid": [
-        -51.582,
-        -29.2428
-      ]
-    },
-    {
       "municipio": "São Pedro da Serra",
       "parquetKey": "são_pedro_da_serra",
-      "avg_score": 80.3,
+      "avg_score": 42.1,
       "hex_count": 385,
       "centroid": [
         -51.5068,
@@ -267,9 +17,119 @@
       ]
     },
     {
+      "municipio": "Estância Velha",
+      "parquetKey": "estância_velha",
+      "avg_score": 39.6,
+      "hex_count": 570,
+      "centroid": [
+        -51.1884,
+        -29.648
+      ]
+    },
+    {
+      "municipio": "Maratá",
+      "parquetKey": "marata",
+      "avg_score": 39.6,
+      "hex_count": 907,
+      "centroid": [
+        -51.5506,
+        -29.5491
+      ]
+    },
+    {
+      "municipio": "Lindolfo Collor",
+      "parquetKey": "lindolfo_collor",
+      "avg_score": 39.2,
+      "hex_count": 363,
+      "centroid": [
+        -51.2199,
+        -29.5822
+      ]
+    },
+    {
+      "municipio": "Paverama",
+      "parquetKey": "paverama",
+      "avg_score": 39.0,
+      "hex_count": 1903,
+      "centroid": [
+        -51.7295,
+        -29.5698
+      ]
+    },
+    {
+      "municipio": "Morro Reuter",
+      "parquetKey": "morro_reuter",
+      "avg_score": 38.6,
+      "hex_count": 976,
+      "centroid": [
+        -51.0514,
+        -29.5221
+      ]
+    },
+    {
+      "municipio": "Brochier",
+      "parquetKey": "brochier",
+      "avg_score": 38.5,
+      "hex_count": 1156,
+      "centroid": [
+        -51.6215,
+        -29.5368
+      ]
+    },
+    {
+      "municipio": "Tabaí",
+      "parquetKey": "tabai",
+      "avg_score": 38.4,
+      "hex_count": 1049,
+      "centroid": [
+        -51.732,
+        -29.6686
+      ]
+    },
+    {
+      "municipio": "Salvador do Sul",
+      "parquetKey": "salvador_do_sul",
+      "avg_score": 38.3,
+      "hex_count": 1081,
+      "centroid": [
+        -51.5349,
+        -29.4584
+      ]
+    },
+    {
+      "municipio": "Barão",
+      "parquetKey": "barão",
+      "avg_score": 38.2,
+      "hex_count": 1359,
+      "centroid": [
+        -51.4906,
+        -29.3853
+      ]
+    },
+    {
+      "municipio": "Ivoti",
+      "parquetKey": "ivoti",
+      "avg_score": 38.0,
+      "hex_count": 698,
+      "centroid": [
+        -51.1575,
+        -29.5808
+      ]
+    },
+    {
+      "municipio": "Dois Irmãos",
+      "parquetKey": "dois_irmãos",
+      "avg_score": 37.9,
+      "hex_count": 724,
+      "centroid": [
+        -51.0907,
+        -29.5994
+      ]
+    },
+    {
       "municipio": "Tupandi",
       "parquetKey": "tupandi",
-      "avg_score": 79.9,
+      "avg_score": 37.8,
       "hex_count": 652,
       "centroid": [
         -51.4264,
@@ -277,9 +137,259 @@
       ]
     },
     {
+      "municipio": "Presidente Lucena",
+      "parquetKey": "presidente_lucena",
+      "avg_score": 37.0,
+      "hex_count": 545,
+      "centroid": [
+        -51.1747,
+        -29.5242
+      ]
+    },
+    {
+      "municipio": "São José do Sul",
+      "parquetKey": "são_jose_do_sul",
+      "avg_score": 36.3,
+      "hex_count": 611,
+      "centroid": [
+        -51.4858,
+        -29.5482
+      ]
+    },
+    {
+      "municipio": "Santa Maria do Herval",
+      "parquetKey": "santa_maria_do_herval",
+      "avg_score": 36.1,
+      "hex_count": 1542,
+      "centroid": [
+        -50.9678,
+        -29.477
+      ]
+    },
+    {
+      "municipio": "Poço das Antas",
+      "parquetKey": "poço_das_antas",
+      "avg_score": 35.9,
+      "hex_count": 743,
+      "centroid": [
+        -51.6408,
+        -29.4459
+      ]
+    },
+    {
+      "municipio": "Linha Nova",
+      "parquetKey": "linha_nova",
+      "avg_score": 35.5,
+      "hex_count": 693,
+      "centroid": [
+        -51.2159,
+        -29.4597
+      ]
+    },
+    {
+      "municipio": "Sapiranga",
+      "parquetKey": "sapiranga",
+      "avg_score": 35.5,
+      "hex_count": 1501,
+      "centroid": [
+        -50.9936,
+        -29.6164
+      ]
+    },
+    {
+      "municipio": "Montenegro",
+      "parquetKey": "montenegro",
+      "avg_score": 35.1,
+      "hex_count": 4691,
+      "centroid": [
+        -51.5035,
+        -29.7124
+      ]
+    },
+    {
+      "municipio": "Portão",
+      "parquetKey": "portão",
+      "avg_score": 34.5,
+      "hex_count": 1758,
+      "centroid": [
+        -51.2487,
+        -29.7007
+      ]
+    },
+    {
+      "municipio": "Harmonia",
+      "parquetKey": "harmonia",
+      "avg_score": 34.2,
+      "hex_count": 531,
+      "centroid": [
+        -51.4263,
+        -29.5455
+      ]
+    },
+    {
+      "municipio": "São Sebastião do Caí",
+      "parquetKey": "são_sebastião_do_cai",
+      "avg_score": 33.9,
+      "hex_count": 1263,
+      "centroid": [
+        -51.3374,
+        -29.5874
+      ]
+    },
+    {
+      "municipio": "Capitão",
+      "parquetKey": "capitão",
+      "avg_score": 33.5,
+      "hex_count": 809,
+      "centroid": [
+        -51.9844,
+        -29.2844
+      ]
+    },
+    {
+      "municipio": "São Vendelino",
+      "parquetKey": "são_vendelino",
+      "avg_score": 33.4,
+      "hex_count": 358,
+      "centroid": [
+        -51.3728,
+        -29.3826
+      ]
+    },
+    {
+      "municipio": "Picada Café",
+      "parquetKey": "picada_cafe",
+      "avg_score": 33.3,
+      "hex_count": 927,
+      "centroid": [
+        -51.1094,
+        -29.4611
+      ]
+    },
+    {
+      "municipio": "Nova Hartz",
+      "parquetKey": "nova_hartz",
+      "avg_score": 33.2,
+      "hex_count": 681,
+      "centroid": [
+        -50.8986,
+        -29.5846
+      ]
+    },
+    {
+      "municipio": "São José do Hortêncio",
+      "parquetKey": "são_jose_do_hortêncio",
+      "avg_score": 32.9,
+      "hex_count": 693,
+      "centroid": [
+        -51.2571,
+        -29.5349
+      ]
+    },
+    {
+      "municipio": "Boa Vista do Sul",
+      "parquetKey": "boa_vista_do_sul",
+      "avg_score": 32.6,
+      "hex_count": 1014,
+      "centroid": [
+        -51.6726,
+        -29.3505
+      ]
+    },
+    {
+      "municipio": "Pareci Novo",
+      "parquetKey": "pareci_novo",
+      "avg_score": 32.2,
+      "hex_count": 636,
+      "centroid": [
+        -51.423,
+        -29.6101
+      ]
+    },
+    {
+      "municipio": "Araricá",
+      "parquetKey": "ararica",
+      "avg_score": 32.0,
+      "hex_count": 393,
+      "centroid": [
+        -50.9344,
+        -29.6345
+      ]
+    },
+    {
+      "municipio": "Alto Feliz",
+      "parquetKey": "alto_feliz",
+      "avg_score": 31.7,
+      "hex_count": 864,
+      "centroid": [
+        -51.3052,
+        -29.3626
+      ]
+    },
+    {
+      "municipio": "Fazenda Vilanova",
+      "parquetKey": "fazenda_vilanova",
+      "avg_score": 31.2,
+      "hex_count": 938,
+      "centroid": [
+        -51.8394,
+        -29.5893
+      ]
+    },
+    {
+      "municipio": "Bom Princípio",
+      "parquetKey": "bom_principio",
+      "avg_score": 31.0,
+      "hex_count": 977,
+      "centroid": [
+        -51.3632,
+        -29.4683
+      ]
+    },
+    {
+      "municipio": "Carlos Barbosa",
+      "parquetKey": "carlos_barbosa",
+      "avg_score": 29.7,
+      "hex_count": 2526,
+      "centroid": [
+        -51.5018,
+        -29.3211
+      ]
+    },
+    {
+      "municipio": "Gramado",
+      "parquetKey": "gramado",
+      "avg_score": 29.7,
+      "hex_count": 2608,
+      "centroid": [
+        -50.8949,
+        -29.3871
+      ]
+    },
+    {
+      "municipio": "Nova Bréscia",
+      "parquetKey": "nova_brescia",
+      "avg_score": 29.4,
+      "hex_count": 1133,
+      "centroid": [
+        -52.0343,
+        -29.2219
+      ]
+    },
+    {
+      "municipio": "Taquari",
+      "parquetKey": "taquari",
+      "avg_score": 28.8,
+      "hex_count": 3879,
+      "centroid": [
+        -51.8321,
+        -29.7472
+      ]
+    },
+    {
       "municipio": "Feliz",
       "parquetKey": "feliz",
-      "avg_score": 79.8,
+      "avg_score": 28.5,
       "hex_count": 1040,
       "centroid": [
         -51.2855,
@@ -289,7 +399,7 @@
     {
       "municipio": "Farroupilha",
       "parquetKey": "farroupilha",
-      "avg_score": 79.6,
+      "avg_score": 28.1,
       "hex_count": 3956,
       "centroid": [
         -51.3671,
@@ -297,289 +407,9 @@
       ]
     },
     {
-      "municipio": "Bento Gonçalves",
-      "parquetKey": "bento_gonçalves",
-      "avg_score": 79.0,
-      "hex_count": 2980,
-      "centroid": [
-        -51.5534,
-        -29.1256
-      ]
-    },
-    {
-      "municipio": "Arroio do Meio",
-      "parquetKey": "arroio_do_meio",
-      "avg_score": 78.8,
-      "hex_count": 1734,
-      "centroid": [
-        -51.966,
-        -29.3609
-      ]
-    },
-    {
-      "municipio": "Sapiranga",
-      "parquetKey": "sapiranga",
-      "avg_score": 78.6,
-      "hex_count": 1501,
-      "centroid": [
-        -50.9936,
-        -29.6164
-      ]
-    },
-    {
-      "municipio": "Pareci Novo",
-      "parquetKey": "pareci_novo",
-      "avg_score": 78.5,
-      "hex_count": 636,
-      "centroid": [
-        -51.423,
-        -29.6101
-      ]
-    },
-    {
-      "municipio": "Capão da Canoa",
-      "parquetKey": "capão_da_canoa",
-      "avg_score": 78.2,
-      "hex_count": 1074,
-      "centroid": [
-        -50.0003,
-        -29.6791
-      ]
-    },
-    {
-      "municipio": "Flores da Cunha",
-      "parquetKey": "flores_da_cunha",
-      "avg_score": 78.2,
-      "hex_count": 2997,
-      "centroid": [
-        -51.2219,
-        -29.0308
-      ]
-    },
-    {
-      "municipio": "Cruzeiro do Sul",
-      "parquetKey": "cruzeiro_do_sul",
-      "avg_score": 78.0,
-      "hex_count": 1709,
-      "centroid": [
-        -52.0336,
-        -29.539
-      ]
-    },
-    {
-      "municipio": "Teutônia",
-      "parquetKey": "teutônia",
-      "avg_score": 77.8,
-      "hex_count": 1959,
-      "centroid": [
-        -51.7771,
-        -29.4707
-      ]
-    },
-    {
-      "municipio": "São Vendelino",
-      "parquetKey": "são_vendelino",
-      "avg_score": 77.7,
-      "hex_count": 358,
-      "centroid": [
-        -51.3728,
-        -29.3826
-      ]
-    },
-    {
-      "municipio": "Carlos Barbosa",
-      "parquetKey": "carlos_barbosa",
-      "avg_score": 77.3,
-      "hex_count": 2526,
-      "centroid": [
-        -51.5018,
-        -29.3211
-      ]
-    },
-    {
-      "municipio": "Portão",
-      "parquetKey": "portão",
-      "avg_score": 77.2,
-      "hex_count": 1758,
-      "centroid": [
-        -51.2487,
-        -29.7007
-      ]
-    },
-    {
-      "municipio": "Igrejinha",
-      "parquetKey": "igrejinha",
-      "avg_score": 77.0,
-      "hex_count": 1507,
-      "centroid": [
-        -50.7984,
-        -29.5593
-      ]
-    },
-    {
-      "municipio": "Paraí",
-      "parquetKey": "parai",
-      "avg_score": 77.0,
-      "hex_count": 1315,
-      "centroid": [
-        -51.7863,
-        -28.6005
-      ]
-    },
-    {
-      "municipio": "São José do Sul",
-      "parquetKey": "são_jose_do_sul",
-      "avg_score": 77.0,
-      "hex_count": 611,
-      "centroid": [
-        -51.4858,
-        -29.5482
-      ]
-    },
-    {
-      "municipio": "Westfália",
-      "parquetKey": "westfalia",
-      "avg_score": 76.6,
-      "hex_count": 702,
-      "centroid": [
-        -51.7415,
-        -29.406
-      ]
-    },
-    {
-      "municipio": "Torres",
-      "parquetKey": "torres",
-      "avg_score": 76.5,
-      "hex_count": 1742,
-      "centroid": [
-        -49.8084,
-        -29.3282
-      ]
-    },
-    {
-      "municipio": "Lindolfo Collor",
-      "parquetKey": "lindolfo_collor",
-      "avg_score": 76.4,
-      "hex_count": 363,
-      "centroid": [
-        -51.2199,
-        -29.5822
-      ]
-    },
-    {
-      "municipio": "Vale Real",
-      "parquetKey": "vale_real",
-      "avg_score": 76.2,
-      "hex_count": 495,
-      "centroid": [
-        -51.2482,
-        -29.3625
-      ]
-    },
-    {
-      "municipio": "Barão",
-      "parquetKey": "barão",
-      "avg_score": 76.1,
-      "hex_count": 1359,
-      "centroid": [
-        -51.4906,
-        -29.3853
-      ]
-    },
-    {
-      "municipio": "Gramado",
-      "parquetKey": "gramado",
-      "avg_score": 76.0,
-      "hex_count": 2608,
-      "centroid": [
-        -50.8949,
-        -29.3871
-      ]
-    },
-    {
-      "municipio": "Boa Vista do Sul",
-      "parquetKey": "boa_vista_do_sul",
-      "avg_score": 75.9,
-      "hex_count": 1014,
-      "centroid": [
-        -51.6726,
-        -29.3505
-      ]
-    },
-    {
-      "municipio": "Nova Santa Rita",
-      "parquetKey": "nova_santa_rita",
-      "avg_score": 75.8,
-      "hex_count": 2417,
-      "centroid": [
-        -51.2894,
-        -29.8439
-      ]
-    },
-    {
-      "municipio": "São José do Hortêncio",
-      "parquetKey": "são_jose_do_hortêncio",
-      "avg_score": 75.8,
-      "hex_count": 693,
-      "centroid": [
-        -51.2571,
-        -29.5349
-      ]
-    },
-    {
-      "municipio": "Colinas",
-      "parquetKey": "colinas",
-      "avg_score": 75.6,
-      "hex_count": 672,
-      "centroid": [
-        -51.8652,
-        -29.3925
-      ]
-    },
-    {
-      "municipio": "Salvador do Sul",
-      "parquetKey": "salvador_do_sul",
-      "avg_score": 75.6,
-      "hex_count": 1081,
-      "centroid": [
-        -51.5349,
-        -29.4584
-      ]
-    },
-    {
-      "municipio": "Presidente Lucena",
-      "parquetKey": "presidente_lucena",
-      "avg_score": 75.5,
-      "hex_count": 545,
-      "centroid": [
-        -51.1747,
-        -29.5242
-      ]
-    },
-    {
-      "municipio": "Taquara",
-      "parquetKey": "taquara",
-      "avg_score": 75.5,
-      "hex_count": 4969,
-      "centroid": [
-        -50.7582,
-        -29.668
-      ]
-    },
-    {
-      "municipio": "Santa Clara do Sul",
-      "parquetKey": "santa_clara_do_sul",
-      "avg_score": 75.1,
-      "hex_count": 957,
-      "centroid": [
-        -52.1328,
-        -29.4529
-      ]
-    },
-    {
       "municipio": "Bom Retiro do Sul",
       "parquetKey": "bom_retiro_do_sul",
-      "avg_score": 75.0,
+      "avg_score": 27.8,
       "hex_count": 1139,
       "centroid": [
         -51.9228,
@@ -587,1209 +417,9 @@
       ]
     },
     {
-      "municipio": "Encantado",
-      "parquetKey": "encantado",
-      "avg_score": 74.3,
-      "hex_count": 1533,
-      "centroid": [
-        -51.9218,
-        -29.2141
-      ]
-    },
-    {
-      "municipio": "Frederico Westphalen",
-      "parquetKey": "frederico_westphalen",
-      "avg_score": 74.2,
-      "hex_count": 2825,
-      "centroid": [
-        -53.356,
-        -27.342
-      ]
-    },
-    {
-      "municipio": "Arroio do Sal",
-      "parquetKey": "arroio_do_sal",
-      "avg_score": 74.0,
-      "hex_count": 1296,
-      "centroid": [
-        -49.8944,
-        -29.5211
-      ]
-    },
-    {
-      "municipio": "Imigrante",
-      "parquetKey": "imigrante",
-      "avg_score": 74.0,
-      "hex_count": 787,
-      "centroid": [
-        -51.7744,
-        -29.3441
-      ]
-    },
-    {
-      "municipio": "Santa Maria do Herval",
-      "parquetKey": "santa_maria_do_herval",
-      "avg_score": 74.0,
-      "hex_count": 1542,
-      "centroid": [
-        -50.9678,
-        -29.477
-      ]
-    },
-    {
-      "municipio": "Venâncio Aires",
-      "parquetKey": "venâncio_aires",
-      "avg_score": 74.0,
-      "hex_count": 8555,
-      "centroid": [
-        -52.1965,
-        -29.5741
-      ]
-    },
-    {
-      "municipio": "Morro Reuter",
-      "parquetKey": "morro_reuter",
-      "avg_score": 73.9,
-      "hex_count": 976,
-      "centroid": [
-        -51.0514,
-        -29.5221
-      ]
-    },
-    {
-      "municipio": "Fazenda Vilanova",
-      "parquetKey": "fazenda_vilanova",
-      "avg_score": 73.7,
-      "hex_count": 938,
-      "centroid": [
-        -51.8394,
-        -29.5893
-      ]
-    },
-    {
-      "municipio": "Picada Café",
-      "parquetKey": "picada_cafe",
-      "avg_score": 73.6,
-      "hex_count": 927,
-      "centroid": [
-        -51.1094,
-        -29.4611
-      ]
-    },
-    {
-      "municipio": "Alto Feliz",
-      "parquetKey": "alto_feliz",
-      "avg_score": 73.5,
-      "hex_count": 864,
-      "centroid": [
-        -51.3052,
-        -29.3626
-      ]
-    },
-    {
-      "municipio": "Santa Cruz do Sul",
-      "parquetKey": "santa_cruz_do_sul",
-      "avg_score": 73.5,
-      "hex_count": 8173,
-      "centroid": [
-        -52.409,
-        -29.6473
-      ]
-    },
-    {
-      "municipio": "Nova Petrópolis",
-      "parquetKey": "nova_petropolis",
-      "avg_score": 73.4,
-      "hex_count": 3175,
-      "centroid": [
-        -51.0859,
-        -29.3746
-      ]
-    },
-    {
-      "municipio": "Capitão",
-      "parquetKey": "capitão",
-      "avg_score": 73.1,
-      "hex_count": 809,
-      "centroid": [
-        -51.9844,
-        -29.2844
-      ]
-    },
-    {
-      "municipio": "Maratá",
-      "parquetKey": "marata",
-      "avg_score": 73.1,
-      "hex_count": 907,
-      "centroid": [
-        -51.5506,
-        -29.5491
-      ]
-    },
-    {
-      "municipio": "Pinto Bandeira",
-      "parquetKey": "pinto_bandeira",
-      "avg_score": 73.1,
-      "hex_count": 1141,
-      "centroid": [
-        -51.4631,
-        -29.0927
-      ]
-    },
-    {
-      "municipio": "Montenegro",
-      "parquetKey": "montenegro",
-      "avg_score": 73.0,
-      "hex_count": 4691,
-      "centroid": [
-        -51.5035,
-        -29.7124
-      ]
-    },
-    {
-      "municipio": "Nova Prata",
-      "parquetKey": "nova_prata",
-      "avg_score": 72.8,
-      "hex_count": 2811,
-      "centroid": [
-        -51.6074,
-        -28.7595
-      ]
-    },
-    {
-      "municipio": "Pinheirinho do Vale",
-      "parquetKey": "pinheirinho_do_vale",
-      "avg_score": 72.8,
-      "hex_count": 1120,
-      "centroid": [
-        -53.6336,
-        -27.2218
-      ]
-    },
-    {
-      "municipio": "Três Coroas",
-      "parquetKey": "três_coroas",
-      "avg_score": 72.8,
-      "hex_count": 1805,
-      "centroid": [
-        -50.7761,
-        -29.4831
-      ]
-    },
-    {
-      "municipio": "Tramandaí",
-      "parquetKey": "tramandai",
-      "avg_score": 72.7,
-      "hex_count": 1571,
-      "centroid": [
-        -50.2236,
-        -30.0269
-      ]
-    },
-    {
-      "municipio": "Monte Belo do Sul",
-      "parquetKey": "monte_belo_do_sul",
-      "avg_score": 72.6,
-      "hex_count": 761,
-      "centroid": [
-        -51.6508,
-        -29.1399
-      ]
-    },
-    {
-      "municipio": "Palmitinho",
-      "parquetKey": "palmitinho",
-      "avg_score": 72.6,
-      "hex_count": 1539,
-      "centroid": [
-        -53.5873,
-        -27.3267
-      ]
-    },
-    {
-      "municipio": "Nova Pádua",
-      "parquetKey": "nova_padua",
-      "avg_score": 72.4,
-      "hex_count": 1116,
-      "centroid": [
-        -51.3158,
-        -29.0022
-      ]
-    },
-    {
-      "municipio": "São Marcos",
-      "parquetKey": "são_marcos",
-      "avg_score": 72.4,
-      "hex_count": 2768,
-      "centroid": [
-        -51.067,
-        -28.9618
-      ]
-    },
-    {
-      "municipio": "Nova Araçá",
-      "parquetKey": "nova_araça",
-      "avg_score": 72.3,
-      "hex_count": 818,
-      "centroid": [
-        -51.7473,
-        -28.6518
-      ]
-    },
-    {
-      "municipio": "São Valentim do Sul",
-      "parquetKey": "são_valentim_do_sul",
-      "avg_score": 72.3,
-      "hex_count": 1005,
-      "centroid": [
-        -51.7624,
-        -29.0568
-      ]
-    },
-    {
-      "municipio": "Brochier",
-      "parquetKey": "brochier",
-      "avg_score": 72.2,
-      "hex_count": 1156,
-      "centroid": [
-        -51.6215,
-        -29.5368
-      ]
-    },
-    {
-      "municipio": "Serafina Corrêa",
-      "parquetKey": "serafina_corrêa",
-      "avg_score": 72.2,
-      "hex_count": 1774,
-      "centroid": [
-        -51.9352,
-        -28.7004
-      ]
-    },
-    {
-      "municipio": "Linha Nova",
-      "parquetKey": "linha_nova",
-      "avg_score": 72.1,
-      "hex_count": 693,
-      "centroid": [
-        -51.2159,
-        -29.4597
-      ]
-    },
-    {
-      "municipio": "Forquetinha",
-      "parquetKey": "forquetinha",
-      "avg_score": 72.0,
-      "hex_count": 1031,
-      "centroid": [
-        -52.126,
-        -29.388
-      ]
-    },
-    {
-      "municipio": "Rodeio Bonito",
-      "parquetKey": "rodeio_bonito",
-      "avg_score": 72.0,
-      "hex_count": 886,
-      "centroid": [
-        -53.172,
-        -27.463
-      ]
-    },
-    {
-      "municipio": "Sobradinho",
-      "parquetKey": "sobradinho",
-      "avg_score": 71.9,
-      "hex_count": 1422,
-      "centroid": [
-        -53.0268,
-        -29.4054
-      ]
-    },
-    {
-      "municipio": "Vila Flores",
-      "parquetKey": "vila_flores",
-      "avg_score": 71.8,
-      "hex_count": 1164,
-      "centroid": [
-        -51.5509,
-        -28.8583
-      ]
-    },
-    {
-      "municipio": "Taquaruçu do Sul",
-      "parquetKey": "taquaruçu_do_sul",
-      "avg_score": 71.6,
-      "hex_count": 820,
-      "centroid": [
-        -53.4882,
-        -27.4083
-      ]
-    },
-    {
-      "municipio": "Capela de Santana",
-      "parquetKey": "capela_de_santana",
-      "avg_score": 71.5,
-      "hex_count": 2016,
-      "centroid": [
-        -51.3577,
-        -29.7077
-      ]
-    },
-    {
-      "municipio": "Paverama",
-      "parquetKey": "paverama",
-      "avg_score": 71.4,
-      "hex_count": 1903,
-      "centroid": [
-        -51.7295,
-        -29.5698
-      ]
-    },
-    {
-      "municipio": "Erechim",
-      "parquetKey": "erechim",
-      "avg_score": 71.2,
-      "hex_count": 4564,
-      "centroid": [
-        -52.2574,
-        -27.64
-      ]
-    },
-    {
-      "municipio": "Terra de Areia",
-      "parquetKey": "terra_de_areia",
-      "avg_score": 71.0,
-      "hex_count": 1551,
-      "centroid": [
-        -50.0677,
-        -29.6036
-      ]
-    },
-    {
-      "municipio": "Ametista do Sul",
-      "parquetKey": "ametista_do_sul",
-      "avg_score": 70.9,
-      "hex_count": 997,
-      "centroid": [
-        -53.1937,
-        -27.3649
-      ]
-    },
-    {
-      "municipio": "Roca Sales",
-      "parquetKey": "roca_sales",
-      "avg_score": 70.9,
-      "hex_count": 2282,
-      "centroid": [
-        -51.8307,
-        -29.2565
-      ]
-    },
-    {
-      "municipio": "Vista Alegre",
-      "parquetKey": "vista_alegre",
-      "avg_score": 70.9,
-      "hex_count": 827,
-      "centroid": [
-        -53.5095,
-        -27.3256
-      ]
-    },
-    {
-      "municipio": "Vera Cruz",
-      "parquetKey": "vera_cruz",
-      "avg_score": 70.8,
-      "hex_count": 3466,
-      "centroid": [
-        -52.5382,
-        -29.7147
-      ]
-    },
-    {
-      "municipio": "Nova Roma do Sul",
-      "parquetKey": "nova_roma_do_sul",
-      "avg_score": 70.7,
-      "hex_count": 1621,
-      "centroid": [
-        -51.408,
-        -28.9896
-      ]
-    },
-    {
-      "municipio": "Pinhal",
-      "parquetKey": "pinhal",
-      "avg_score": 70.7,
-      "hex_count": 725,
-      "centroid": [
-        -53.2349,
-        -27.529
-      ]
-    },
-    {
-      "municipio": "Barra Funda",
-      "parquetKey": "barra_funda",
-      "avg_score": 70.6,
-      "hex_count": 646,
-      "centroid": [
-        -53.0161,
-        -27.9212
-      ]
-    },
-    {
-      "municipio": "Boa Vista do Buricá",
-      "parquetKey": "boa_vista_do_burica",
-      "avg_score": 70.5,
-      "hex_count": 1180,
-      "centroid": [
-        -54.0996,
-        -27.6755
-      ]
-    },
-    {
-      "municipio": "Glorinha",
-      "parquetKey": "glorinha",
-      "avg_score": 70.4,
-      "hex_count": 3576,
-      "centroid": [
-        -50.7715,
-        -29.8853
-      ]
-    },
-    {
-      "municipio": "Caxias do Sul",
-      "parquetKey": "caxias_do_sul",
-      "avg_score": 70.3,
-      "hex_count": 17933,
-      "centroid": [
-        -51.0233,
-        -29.1116
-      ]
-    },
-    {
-      "municipio": "Rolante",
-      "parquetKey": "rolante",
-      "avg_score": 70.3,
-      "hex_count": 3248,
-      "centroid": [
-        -50.5474,
-        -29.63
-      ]
-    },
-    {
-      "municipio": "Nova Bassano",
-      "parquetKey": "nova_bassano",
-      "avg_score": 70.2,
-      "hex_count": 2289,
-      "centroid": [
-        -51.7525,
-        -28.7284
-      ]
-    },
-    {
-      "municipio": "Tabaí",
-      "parquetKey": "tabai",
-      "avg_score": 70.2,
-      "hex_count": 1049,
-      "centroid": [
-        -51.732,
-        -29.6686
-      ]
-    },
-    {
-      "municipio": "Veranópolis",
-      "parquetKey": "veranopolis",
-      "avg_score": 70.2,
-      "hex_count": 3136,
-      "centroid": [
-        -51.5551,
-        -28.964
-      ]
-    },
-    {
-      "municipio": "Arroio do Tigre",
-      "parquetKey": "arroio_do_tigre",
-      "avg_score": 70.1,
-      "hex_count": 3497,
-      "centroid": [
-        -53.0537,
-        -29.2591
-      ]
-    },
-    {
-      "municipio": "Travesseiro",
-      "parquetKey": "travesseiro",
-      "avg_score": 70.0,
-      "hex_count": 887,
-      "centroid": [
-        -52.087,
-        -29.2841
-      ]
-    },
-    {
-      "municipio": "Poço das Antas",
-      "parquetKey": "poço_das_antas",
-      "avg_score": 69.9,
-      "hex_count": 743,
-      "centroid": [
-        -51.6408,
-        -29.4459
-      ]
-    },
-    {
-      "municipio": "São Domingos do Sul",
-      "parquetKey": "são_domingos_do_sul",
-      "avg_score": 69.9,
-      "hex_count": 846,
-      "centroid": [
-        -51.867,
-        -28.5381
-      ]
-    },
-    {
-      "municipio": "Coronel Pilar",
-      "parquetKey": "coronel_pilar",
-      "avg_score": 69.7,
-      "hex_count": 1154,
-      "centroid": [
-        -51.7237,
-        -29.263
-      ]
-    },
-    {
-      "municipio": "Antônio Prado",
-      "parquetKey": "antônio_prado",
-      "avg_score": 69.6,
-      "hex_count": 3766,
-      "centroid": [
-        -51.3174,
-        -28.8832
-      ]
-    },
-    {
-      "municipio": "Canela",
-      "parquetKey": "canela",
-      "avg_score": 69.6,
-      "hex_count": 2760,
-      "centroid": [
-        -50.773,
-        -29.3507
-      ]
-    },
-    {
-      "municipio": "Vista Gaúcha",
-      "parquetKey": "vista_gaucha",
-      "avg_score": 69.4,
-      "hex_count": 965,
-      "centroid": [
-        -53.7009,
-        -27.2664
-      ]
-    },
-    {
-      "municipio": "Guaíba",
-      "parquetKey": "guaiba",
-      "avg_score": 69.2,
-      "hex_count": 4199,
-      "centroid": [
-        -51.4311,
-        -30.1745
-      ]
-    },
-    {
-      "municipio": "Balneário Pinhal",
-      "parquetKey": "balneario_pinhal",
-      "avg_score": 69.1,
-      "hex_count": 1126,
-      "centroid": [
-        -50.2942,
-        -30.2106
-      ]
-    },
-    {
-      "municipio": "Canudos do Vale",
-      "parquetKey": "canudos_do_vale",
-      "avg_score": 69.1,
-      "hex_count": 916,
-      "centroid": [
-        -52.2345,
-        -29.3264
-      ]
-    },
-    {
-      "municipio": "Arroio do Padre",
-      "parquetKey": "arroio_do_padre",
-      "avg_score": 68.9,
-      "hex_count": 1455,
-      "centroid": [
-        -52.3985,
-        -31.4417
-      ]
-    },
-    {
-      "municipio": "Casca",
-      "parquetKey": "casca",
-      "avg_score": 68.9,
-      "hex_count": 2943,
-      "centroid": [
-        -51.969,
-        -28.5941
-      ]
-    },
-    {
-      "municipio": "São João do Polêsine",
-      "parquetKey": "são_joão_do_polêsine",
-      "avg_score": 68.9,
-      "hex_count": 884,
-      "centroid": [
-        -53.4723,
-        -29.6428
-      ]
-    },
-    {
-      "municipio": "Vespasiano Corrêa",
-      "parquetKey": "vespasiano_corrêa",
-      "avg_score": 68.9,
-      "hex_count": 1237,
-      "centroid": [
-        -51.8592,
-        -29.0676
-      ]
-    },
-    {
-      "municipio": "Osório",
-      "parquetKey": "osorio",
-      "avg_score": 68.7,
-      "hex_count": 7307,
-      "centroid": [
-        -50.2618,
-        -29.9125
-      ]
-    },
-    {
-      "municipio": "Três Passos",
-      "parquetKey": "três_passos",
-      "avg_score": 68.6,
-      "hex_count": 2891,
-      "centroid": [
-        -53.9314,
-        -27.4386
-      ]
-    },
-    {
-      "municipio": "Charqueadas",
-      "parquetKey": "charqueadas",
-      "avg_score": 68.4,
-      "hex_count": 2420,
-      "centroid": [
-        -51.5537,
-        -29.9891
-      ]
-    },
-    {
-      "municipio": "Cristal do Sul",
-      "parquetKey": "cristal_do_sul",
-      "avg_score": 68.4,
-      "hex_count": 1043,
-      "centroid": [
-        -53.2488,
-        -27.4319
-      ]
-    },
-    {
-      "municipio": "Santa Tereza",
-      "parquetKey": "santa_tereza",
-      "avg_score": 68.4,
-      "hex_count": 810,
-      "centroid": [
-        -51.7109,
-        -29.1643
-      ]
-    },
-    {
-      "municipio": "Cerro Largo",
-      "parquetKey": "cerro_largo",
-      "avg_score": 68.3,
-      "hex_count": 1945,
-      "centroid": [
-        -54.7392,
-        -28.1344
-      ]
-    },
-    {
-      "municipio": "Seberi",
-      "parquetKey": "seberi",
-      "avg_score": 68.3,
-      "hex_count": 3215,
-      "centroid": [
-        -53.3619,
-        -27.4993
-      ]
-    },
-    {
-      "municipio": "Santa Rosa",
-      "parquetKey": "santa_rosa",
-      "avg_score": 68.2,
-      "hex_count": 5349,
-      "centroid": [
-        -54.4979,
-        -27.8649
-      ]
-    },
-    {
-      "municipio": "Tapejara",
-      "parquetKey": "tapejara",
-      "avg_score": 68.2,
-      "hex_count": 2550,
-      "centroid": [
-        -52.0138,
-        -28.0604
-      ]
-    },
-    {
-      "municipio": "Triunfo",
-      "parquetKey": "triunfo",
-      "avg_score": 68.0,
-      "hex_count": 9074,
-      "centroid": [
-        -51.5789,
-        -29.8422
-      ]
-    },
-    {
-      "municipio": "Caraá",
-      "parquetKey": "caraa",
-      "avg_score": 67.9,
-      "hex_count": 3234,
-      "centroid": [
-        -50.3441,
-        -29.7696
-      ]
-    },
-    {
-      "municipio": "Eldorado do Sul",
-      "parquetKey": "eldorado_do_sul",
-      "avg_score": 67.9,
-      "hex_count": 5687,
-      "centroid": [
-        -51.4868,
-        -30.075
-      ]
-    },
-    {
-      "municipio": "Gaurama",
-      "parquetKey": "gaurama",
-      "avg_score": 67.9,
-      "hex_count": 2167,
-      "centroid": [
-        -52.1144,
-        -27.5988
-      ]
-    },
-    {
-      "municipio": "Marques de Souza",
-      "parquetKey": "marques_de_souza",
-      "avg_score": 67.8,
-      "hex_count": 1374,
-      "centroid": [
-        -52.147,
-        -29.2919
-      ]
-    },
-    {
-      "municipio": "Nova Bréscia",
-      "parquetKey": "nova_brescia",
-      "avg_score": 67.8,
-      "hex_count": 1133,
-      "centroid": [
-        -52.0343,
-        -29.2219
-      ]
-    },
-    {
-      "municipio": "Fagundes Varela",
-      "parquetKey": "fagundes_varela",
-      "avg_score": 67.7,
-      "hex_count": 1459,
-      "centroid": [
-        -51.7169,
-        -28.8861
-      ]
-    },
-    {
-      "municipio": "Itaara",
-      "parquetKey": "itaara",
-      "avg_score": 67.7,
-      "hex_count": 1949,
-      "centroid": [
-        -53.7624,
-        -29.5798
-      ]
-    },
-    {
-      "municipio": "Passo do Sobrado",
-      "parquetKey": "passo_do_sobrado",
-      "avg_score": 67.7,
-      "hex_count": 2957,
-      "centroid": [
-        -52.2442,
-        -29.7567
-      ]
-    },
-    {
-      "municipio": "Severiano de Almeida",
-      "parquetKey": "severiano_de_almeida",
-      "avg_score": 67.7,
-      "hex_count": 1768,
-      "centroid": [
-        -52.1128,
-        -27.4164
-      ]
-    },
-    {
-      "municipio": "Viamão",
-      "parquetKey": "viamão",
-      "avg_score": 67.7,
-      "hex_count": 16644,
-      "centroid": [
-        -50.8647,
-        -30.1679
-      ]
-    },
-    {
-      "municipio": "Santo Antônio da Patrulha",
-      "parquetKey": "santo_antônio_da_patrulha",
-      "avg_score": 67.6,
-      "hex_count": 11568,
-      "centroid": [
-        -50.5655,
-        -29.873
-      ]
-    },
-    {
-      "municipio": "Cotiporã",
-      "parquetKey": "cotiporã",
-      "avg_score": 67.4,
-      "hex_count": 1893,
-      "centroid": [
-        -51.6868,
-        -28.9948
-      ]
-    },
-    {
-      "municipio": "Horizontina",
-      "parquetKey": "horizontina",
-      "avg_score": 67.4,
-      "hex_count": 2481,
-      "centroid": [
-        -54.2992,
-        -27.5891
-      ]
-    },
-    {
-      "municipio": "Dom Pedro de Alcântara",
-      "parquetKey": "dom_pedro_de_alcântara",
-      "avg_score": 67.1,
-      "hex_count": 849,
-      "centroid": [
-        -49.8565,
-        -29.3674
-      ]
-    },
-    {
-      "municipio": "Vila Maria",
-      "parquetKey": "vila_maria",
-      "avg_score": 67.1,
-      "hex_count": 1966,
-      "centroid": [
-        -52.1493,
-        -28.5593
-      ]
-    },
-    {
-      "municipio": "Jaboticaba",
-      "parquetKey": "jaboticaba",
-      "avg_score": 67.0,
-      "hex_count": 1365,
-      "centroid": [
-        -53.2624,
-        -27.6304
-      ]
-    },
-    {
-      "municipio": "Sério",
-      "parquetKey": "serio",
-      "avg_score": 67.0,
-      "hex_count": 1084,
-      "centroid": [
-        -52.2422,
-        -29.3952
-      ]
-    },
-    {
-      "municipio": "Coqueiro Baixo",
-      "parquetKey": "coqueiro_baixo",
-      "avg_score": 66.9,
-      "hex_count": 1229,
-      "centroid": [
-        -52.1266,
-        -29.167
-      ]
-    },
-    {
-      "municipio": "Barra do Guarita",
-      "parquetKey": "barra_do_guarita",
-      "avg_score": 66.7,
-      "hex_count": 667,
-      "centroid": [
-        -53.7636,
-        -27.2049
-      ]
-    },
-    {
-      "municipio": "Estação",
-      "parquetKey": "estação",
-      "avg_score": 66.7,
-      "hex_count": 1063,
-      "centroid": [
-        -52.2915,
-        -27.9299
-      ]
-    },
-    {
-      "municipio": "Passo Fundo",
-      "parquetKey": "passo_fundo",
-      "avg_score": 66.6,
-      "hex_count": 8455,
-      "centroid": [
-        -52.4597,
-        -28.2624
-      ]
-    },
-    {
-      "municipio": "Sagrada Família",
-      "parquetKey": "sagrada_familia",
-      "avg_score": 66.6,
-      "hex_count": 837,
-      "centroid": [
-        -53.131,
-        -27.7071
-      ]
-    },
-    {
-      "municipio": "Morro Redondo",
-      "parquetKey": "morro_redondo",
-      "avg_score": 66.5,
-      "hex_count": 2865,
-      "centroid": [
-        -52.6349,
-        -31.63
-      ]
-    },
-    {
-      "municipio": "Três Cachoeiras",
-      "parquetKey": "três_cachoeiras",
-      "avg_score": 66.5,
-      "hex_count": 2728,
-      "centroid": [
-        -49.9623,
-        -29.4746
-      ]
-    },
-    {
-      "municipio": "Dois Lajeados",
-      "parquetKey": "dois_lajeados",
-      "avg_score": 66.3,
-      "hex_count": 1459,
-      "centroid": [
-        -51.8434,
-        -28.9768
-      ]
-    },
-    {
-      "municipio": "Nova Boa Vista",
-      "parquetKey": "nova_boa_vista",
-      "avg_score": 66.2,
-      "hex_count": 1010,
-      "centroid": [
-        -52.9795,
-        -27.9975
-      ]
-    },
-    {
-      "municipio": "Salvador das Missões",
-      "parquetKey": "salvador_das_missões",
-      "avg_score": 66.2,
-      "hex_count": 1039,
-      "centroid": [
-        -54.8318,
-        -28.1004
-      ]
-    },
-    {
-      "municipio": "Tapera",
-      "parquetKey": "tapera",
-      "avg_score": 66.2,
-      "hex_count": 1962,
-      "centroid": [
-        -52.8585,
-        -28.6616
-      ]
-    },
-    {
-      "municipio": "Vista Alegre do Prata",
-      "parquetKey": "vista_alegre_do_prata",
-      "avg_score": 66.2,
-      "hex_count": 1306,
-      "centroid": [
-        -51.7805,
-        -28.8211
-      ]
-    },
-    {
-      "municipio": "Cerro Grande",
-      "parquetKey": "cerro_grande",
-      "avg_score": 66.1,
-      "hex_count": 786,
-      "centroid": [
-        -53.1628,
-        -27.6297
-      ]
-    },
-    {
-      "municipio": "Guaporé",
-      "parquetKey": "guapore",
-      "avg_score": 66.1,
-      "hex_count": 3226,
-      "centroid": [
-        -51.9057,
-        -28.8523
-      ]
-    },
-    {
-      "municipio": "Muçum",
-      "parquetKey": "muçum",
-      "avg_score": 66.1,
-      "hex_count": 1214,
-      "centroid": [
-        -51.8162,
-        -29.1401
-      ]
-    },
-    {
-      "municipio": "Sertão Santana",
-      "parquetKey": "sertão_santana",
-      "avg_score": 66.0,
-      "hex_count": 2843,
-      "centroid": [
-        -51.6302,
-        -30.4691
-      ]
-    },
-    {
-      "municipio": "Novo Xingu",
-      "parquetKey": "novo_xingu",
-      "avg_score": 65.9,
-      "hex_count": 858,
-      "centroid": [
-        -53.059,
-        -27.743
-      ]
-    },
-    {
-      "municipio": "Pouso Novo",
-      "parquetKey": "pouso_novo",
-      "avg_score": 65.9,
-      "hex_count": 1162,
-      "centroid": [
-        -52.2298,
-        -29.1575
-      ]
-    },
-    {
-      "municipio": "Taquari",
-      "parquetKey": "taquari",
-      "avg_score": 65.9,
-      "hex_count": 3879,
-      "centroid": [
-        -51.8321,
-        -29.7472
-      ]
-    },
-    {
-      "municipio": "Barão de Cotegipe",
-      "parquetKey": "barão_de_cotegipe",
-      "avg_score": 65.8,
-      "hex_count": 2759,
-      "centroid": [
-        -52.4171,
-        -27.5682
-      ]
-    },
-    {
-      "municipio": "Novo Barreiro",
-      "parquetKey": "novo_barreiro",
-      "avg_score": 65.8,
-      "hex_count": 1326,
-      "centroid": [
-        -53.1155,
-        -27.8977
-      ]
-    },
-    {
-      "municipio": "Novo Tiradentes",
-      "parquetKey": "novo_tiradentes",
-      "avg_score": 65.8,
-      "hex_count": 813,
-      "centroid": [
-        -53.168,
-        -27.5625
-      ]
-    },
-    {
-      "municipio": "Silveira Martins",
-      "parquetKey": "silveira_martins",
-      "avg_score": 65.8,
-      "hex_count": 1338,
-      "centroid": [
-        -53.5726,
-        -29.634
-      ]
-    },
-    {
-      "municipio": "São Pedro do Butiá",
-      "parquetKey": "são_pedro_do_butia",
-      "avg_score": 65.8,
-      "hex_count": 1185,
-      "centroid": [
-        -54.8966,
-        -28.1254
-      ]
-    },
-    {
-      "municipio": "Nova Candelária",
-      "parquetKey": "nova_candelaria",
-      "avg_score": 65.7,
-      "hex_count": 1055,
-      "centroid": [
-        -54.1247,
-        -27.5953
-      ]
-    },
-    {
-      "municipio": "Caiçara",
-      "parquetKey": "caiçara",
-      "avg_score": 65.6,
-      "hex_count": 2008,
-      "centroid": [
-        -53.4674,
-        -27.2459
-      ]
-    },
-    {
       "municipio": "Doutor Ricardo",
       "parquetKey": "doutor_ricardo",
-      "avg_score": 65.6,
+      "avg_score": 27.4,
       "hex_count": 1186,
       "centroid": [
         -51.9755,
@@ -1797,59 +427,179 @@
       ]
     },
     {
-      "municipio": "Santo Antônio do Palma",
-      "parquetKey": "santo_antônio_do_palma",
-      "avg_score": 65.6,
-      "hex_count": 1355,
+      "municipio": "Garibaldi",
+      "parquetKey": "garibaldi",
+      "avg_score": 27.3,
+      "hex_count": 1840,
       "centroid": [
-        -52.0096,
-        -28.4953
+        -51.582,
+        -29.2428
       ]
     },
     {
-      "municipio": "São José do Inhacorá",
-      "parquetKey": "são_jose_do_inhacora",
-      "avg_score": 65.6,
-      "hex_count": 847,
+      "municipio": "Nova Petrópolis",
+      "parquetKey": "nova_petropolis",
+      "avg_score": 27.3,
+      "hex_count": 3175,
       "centroid": [
-        -54.1228,
-        -27.7377
+        -51.0859,
+        -29.3746
       ]
     },
     {
-      "municipio": "Vanini",
-      "parquetKey": "vanini",
-      "avg_score": 65.6,
-      "hex_count": 700,
+      "municipio": "Igrejinha",
+      "parquetKey": "igrejinha",
+      "avg_score": 27.2,
+      "hex_count": 1507,
       "centroid": [
-        -51.835,
-        -28.4895
+        -50.7984,
+        -29.5593
       ]
     },
     {
-      "municipio": "Paulo Bento",
-      "parquetKey": "paulo_bento",
-      "avg_score": 65.5,
-      "hex_count": 1593,
+      "municipio": "Três Coroas",
+      "parquetKey": "três_coroas",
+      "avg_score": 27.1,
+      "hex_count": 1805,
       "centroid": [
-        -52.3975,
-        -27.7116
+        -50.7761,
+        -29.4831
       ]
     },
     {
-      "municipio": "Áurea",
-      "parquetKey": "aurea",
-      "avg_score": 65.5,
-      "hex_count": 1660,
+      "municipio": "Teutônia",
+      "parquetKey": "teutônia",
+      "avg_score": 27.0,
+      "hex_count": 1959,
       "centroid": [
-        -52.0776,
-        -27.7092
+        -51.7771,
+        -29.4707
+      ]
+    },
+    {
+      "municipio": "São Valentim do Sul",
+      "parquetKey": "são_valentim_do_sul",
+      "avg_score": 26.9,
+      "hex_count": 1005,
+      "centroid": [
+        -51.7624,
+        -29.0568
+      ]
+    },
+    {
+      "municipio": "Vila Flores",
+      "parquetKey": "vila_flores",
+      "avg_score": 26.5,
+      "hex_count": 1164,
+      "centroid": [
+        -51.5509,
+        -28.8583
+      ]
+    },
+    {
+      "municipio": "Westfália",
+      "parquetKey": "westfalia",
+      "avg_score": 26.4,
+      "hex_count": 702,
+      "centroid": [
+        -51.7415,
+        -29.406
+      ]
+    },
+    {
+      "municipio": "Coronel Pilar",
+      "parquetKey": "coronel_pilar",
+      "avg_score": 26.1,
+      "hex_count": 1154,
+      "centroid": [
+        -51.7237,
+        -29.263
+      ]
+    },
+    {
+      "municipio": "Capela de Santana",
+      "parquetKey": "capela_de_santana",
+      "avg_score": 26.0,
+      "hex_count": 2016,
+      "centroid": [
+        -51.3577,
+        -29.7077
+      ]
+    },
+    {
+      "municipio": "Estrela",
+      "parquetKey": "estrela",
+      "avg_score": 26.0,
+      "hex_count": 2042,
+      "centroid": [
+        -51.9195,
+        -29.5075
+      ]
+    },
+    {
+      "municipio": "Triunfo",
+      "parquetKey": "triunfo",
+      "avg_score": 26.0,
+      "hex_count": 9074,
+      "centroid": [
+        -51.5789,
+        -29.8422
+      ]
+    },
+    {
+      "municipio": "São Leopoldo",
+      "parquetKey": "são_leopoldo",
+      "avg_score": 25.9,
+      "hex_count": 1139,
+      "centroid": [
+        -51.1461,
+        -29.7544
+      ]
+    },
+    {
+      "municipio": "Paraí",
+      "parquetKey": "parai",
+      "avg_score": 25.8,
+      "hex_count": 1315,
+      "centroid": [
+        -51.7863,
+        -28.6005
+      ]
+    },
+    {
+      "municipio": "Sério",
+      "parquetKey": "serio",
+      "avg_score": 25.2,
+      "hex_count": 1084,
+      "centroid": [
+        -52.2422,
+        -29.3952
+      ]
+    },
+    {
+      "municipio": "Bento Gonçalves",
+      "parquetKey": "bento_gonçalves",
+      "avg_score": 25.1,
+      "hex_count": 2980,
+      "centroid": [
+        -51.5534,
+        -29.1256
+      ]
+    },
+    {
+      "municipio": "Encantado",
+      "parquetKey": "encantado",
+      "avg_score": 25.1,
+      "hex_count": 1533,
+      "centroid": [
+        -51.9218,
+        -29.2141
       ]
     },
     {
       "municipio": "Ilópolis",
       "parquetKey": "ilopolis",
-      "avg_score": 65.3,
+      "avg_score": 25.1,
       "hex_count": 1293,
       "centroid": [
         -52.1307,
@@ -1857,499 +607,29 @@
       ]
     },
     {
-      "municipio": "Tio Hugo",
-      "parquetKey": "tio_hugo",
-      "avg_score": 65.3,
-      "hex_count": 1238,
+      "municipio": "Rolante",
+      "parquetKey": "rolante",
+      "avg_score": 25.1,
+      "hex_count": 3248,
       "centroid": [
-        -52.5982,
-        -28.5803
+        -50.5474,
+        -29.63
       ]
     },
     {
-      "municipio": "Cidreira",
-      "parquetKey": "cidreira",
-      "avg_score": 65.2,
-      "hex_count": 2704,
+      "municipio": "Pinto Bandeira",
+      "parquetKey": "pinto_bandeira",
+      "avg_score": 24.8,
+      "hex_count": 1141,
       "centroid": [
-        -50.274,
-        -30.1183
-      ]
-    },
-    {
-      "municipio": "Entre Rios do Sul",
-      "parquetKey": "entre_rios_do_sul",
-      "avg_score": 65.1,
-      "hex_count": 1270,
-      "centroid": [
-        -52.7265,
-        -27.5189
-      ]
-    },
-    {
-      "municipio": "Lajeado do Bugre",
-      "parquetKey": "lajeado_do_bugre",
-      "avg_score": 65.1,
-      "hex_count": 722,
-      "centroid": [
-        -53.2059,
-        -27.7036
-      ]
-    },
-    {
-      "municipio": "Pelotas",
-      "parquetKey": "pelotas",
-      "avg_score": 65.1,
-      "hex_count": 18789,
-      "centroid": [
-        -52.3451,
-        -31.5775
-      ]
-    },
-    {
-      "municipio": "Ponte Preta",
-      "parquetKey": "ponte_preta",
-      "avg_score": 65.1,
-      "hex_count": 1058,
-      "centroid": [
-        -52.5065,
-        -27.6539
-      ]
-    },
-    {
-      "municipio": "Protásio Alves",
-      "parquetKey": "protasio_alves",
-      "avg_score": 65.1,
-      "hex_count": 1857,
-      "centroid": [
-        -51.4874,
-        -28.7346
-      ]
-    },
-    {
-      "municipio": "Trindade do Sul",
-      "parquetKey": "trindade_do_sul",
-      "avg_score": 64.9,
-      "hex_count": 2857,
-      "centroid": [
-        -52.8978,
-        -27.5277
-      ]
-    },
-    {
-      "municipio": "Três Palmeiras",
-      "parquetKey": "três_palmeiras",
-      "avg_score": 64.9,
-      "hex_count": 1920,
-      "centroid": [
-        -52.8405,
-        -27.6145
-      ]
-    },
-    {
-      "municipio": "Sarandi",
-      "parquetKey": "sarandi",
-      "avg_score": 64.6,
-      "hex_count": 3783,
-      "centroid": [
-        -52.8926,
-        -27.9419
-      ]
-    },
-    {
-      "municipio": "Mariano Moro",
-      "parquetKey": "mariano_moro",
-      "avg_score": 64.5,
-      "hex_count": 1042,
-      "centroid": [
-        -52.1668,
-        -27.3424
-      ]
-    },
-    {
-      "municipio": "Panambi",
-      "parquetKey": "panambi",
-      "avg_score": 64.5,
-      "hex_count": 5362,
-      "centroid": [
-        -53.5104,
-        -28.332
-      ]
-    },
-    {
-      "municipio": "Rondinha",
-      "parquetKey": "rondinha",
-      "avg_score": 64.5,
-      "hex_count": 2706,
-      "centroid": [
-        -52.8954,
-        -27.8306
-      ]
-    },
-    {
-      "municipio": "Aratiba",
-      "parquetKey": "aratiba",
-      "avg_score": 64.4,
-      "hex_count": 3605,
-      "centroid": [
-        -52.3003,
-        -27.387
-      ]
-    },
-    {
-      "municipio": "São Martinho",
-      "parquetKey": "são_martinho",
-      "avg_score": 64.3,
-      "hex_count": 1855,
-      "centroid": [
-        -53.9521,
-        -27.728
-      ]
-    },
-    {
-      "municipio": "Barra do Rio Azul",
-      "parquetKey": "barra_do_rio_azul",
-      "avg_score": 64.2,
-      "hex_count": 1562,
-      "centroid": [
-        -52.4072,
-        -27.402
-      ]
-    },
-    {
-      "municipio": "Iraí",
-      "parquetKey": "irai",
-      "avg_score": 64.2,
-      "hex_count": 1927,
-      "centroid": [
-        -53.2417,
-        -27.2508
-      ]
-    },
-    {
-      "municipio": "Três Arroios",
-      "parquetKey": "três_arroios",
-      "avg_score": 64.2,
-      "hex_count": 1563,
-      "centroid": [
-        -52.1809,
-        -27.4922
-      ]
-    },
-    {
-      "municipio": "Três de Maio",
-      "parquetKey": "três_de_maio",
-      "avg_score": 64.2,
-      "hex_count": 4577,
-      "centroid": [
-        -54.2695,
-        -27.7333
-      ]
-    },
-    {
-      "municipio": "Vale do Sol",
-      "parquetKey": "vale_do_sol",
-      "avg_score": 64.2,
-      "hex_count": 3653,
-      "centroid": [
-        -52.6885,
-        -29.5824
-      ]
-    },
-    {
-      "municipio": "Santo Ângelo",
-      "parquetKey": "santo_ângelo",
-      "avg_score": 63.9,
-      "hex_count": 7469,
-      "centroid": [
-        -54.2984,
-        -28.2554
-      ]
-    },
-    {
-      "municipio": "Mato Castelhano",
-      "parquetKey": "mato_castelhano",
-      "avg_score": 63.8,
-      "hex_count": 2562,
-      "centroid": [
-        -52.1986,
-        -28.2783
-      ]
-    },
-    {
-      "municipio": "Montauri",
-      "parquetKey": "montauri",
-      "avg_score": 63.8,
-      "hex_count": 885,
-      "centroid": [
-        -52.0506,
-        -28.668
-      ]
-    },
-    {
-      "municipio": "São José do Herval",
-      "parquetKey": "são_jose_do_herval",
-      "avg_score": 63.8,
-      "hex_count": 1121,
-      "centroid": [
-        -52.2724,
-        -29.0657
-      ]
-    },
-    {
-      "municipio": "Anta Gorda",
-      "parquetKey": "anta_gorda",
-      "avg_score": 63.7,
-      "hex_count": 2648,
-      "centroid": [
-        -51.9938,
-        -28.9693
-      ]
-    },
-    {
-      "municipio": "Faxinal do Soturno",
-      "parquetKey": "faxinal_do_soturno",
-      "avg_score": 63.7,
-      "hex_count": 1905,
-      "centroid": [
-        -53.4638,
-        -29.5596
-      ]
-    },
-    {
-      "municipio": "Marcelino Ramos",
-      "parquetKey": "marcelino_ramos",
-      "avg_score": 63.7,
-      "hex_count": 2427,
-      "centroid": [
-        -51.9469,
-        -27.4805
-      ]
-    },
-    {
-      "municipio": "Constantina",
-      "parquetKey": "constantina",
-      "avg_score": 63.6,
-      "hex_count": 2177,
-      "centroid": [
-        -52.9931,
-        -27.6902
-      ]
-    },
-    {
-      "municipio": "Humaitá",
-      "parquetKey": "humaita",
-      "avg_score": 63.5,
-      "hex_count": 1453,
-      "centroid": [
-        -53.9806,
-        -27.5746
-      ]
-    },
-    {
-      "municipio": "Vicente Dutra",
-      "parquetKey": "vicente_dutra",
-      "avg_score": 63.5,
-      "hex_count": 2051,
-      "centroid": [
-        -53.3851,
-        -27.1712
-      ]
-    },
-    {
-      "municipio": "Paim Filho",
-      "parquetKey": "paim_filho",
-      "avg_score": 63.4,
-      "hex_count": 1929,
-      "centroid": [
-        -51.7804,
-        -27.7228
-      ]
-    },
-    {
-      "municipio": "São Jorge",
-      "parquetKey": "são_jorge",
-      "avg_score": 63.4,
-      "hex_count": 1347,
-      "centroid": [
-        -51.7157,
-        -28.4981
-      ]
-    },
-    {
-      "municipio": "Faxinalzinho",
-      "parquetKey": "faxinalzinho",
-      "avg_score": 63.3,
-      "hex_count": 1516,
-      "centroid": [
-        -52.677,
-        -27.3733
-      ]
-    },
-    {
-      "municipio": "Não-Me-Toque",
-      "parquetKey": "não-me-toque",
-      "avg_score": 63.3,
-      "hex_count": 3946,
-      "centroid": [
-        -52.825,
-        -28.4614
-      ]
-    },
-    {
-      "municipio": "Rio dos Índios",
-      "parquetKey": "rio_dos_indios",
-      "avg_score": 63.3,
-      "hex_count": 2491,
-      "centroid": [
-        -52.8788,
-        -27.2529
-      ]
-    },
-    {
-      "municipio": "Alegria",
-      "parquetKey": "alegria",
-      "avg_score": 63.2,
-      "hex_count": 1877,
-      "centroid": [
-        -54.0557,
-        -27.8134
-      ]
-    },
-    {
-      "municipio": "Liberato Salzano",
-      "parquetKey": "liberato_salzano",
-      "avg_score": 63.2,
-      "hex_count": 2617,
-      "centroid": [
-        -53.0653,
-        -27.5512
-      ]
-    },
-    {
-      "municipio": "Selbach",
-      "parquetKey": "selbach",
-      "avg_score": 63.0,
-      "hex_count": 1922,
-      "centroid": [
-        -52.976,
-        -28.6673
-      ]
-    },
-    {
-      "municipio": "São José das Missões",
-      "parquetKey": "são_jose_das_missões",
-      "avg_score": 63.0,
-      "hex_count": 1047,
-      "centroid": [
-        -53.1321,
-        -27.795
-      ]
-    },
-    {
-      "municipio": "Viadutos",
-      "parquetKey": "viadutos",
-      "avg_score": 63.0,
-      "hex_count": 2822,
-      "centroid": [
-        -51.9963,
-        -27.5713
-      ]
-    },
-    {
-      "municipio": "Ijuí",
-      "parquetKey": "ijui",
-      "avg_score": 62.9,
-      "hex_count": 7538,
-      "centroid": [
-        -53.8959,
-        -28.3181
-      ]
-    },
-    {
-      "municipio": "Vila Lângaro",
-      "parquetKey": "vila_lângaro",
-      "avg_score": 62.9,
-      "hex_count": 1623,
-      "centroid": [
-        -52.1413,
-        -28.129
-      ]
-    },
-    {
-      "municipio": "Guabiju",
-      "parquetKey": "guabiju",
-      "avg_score": 62.7,
-      "hex_count": 1581,
-      "centroid": [
-        -51.6595,
-        -28.5743
-      ]
-    },
-    {
-      "municipio": "Porto Xavier",
-      "parquetKey": "porto_xavier",
-      "avg_score": 62.7,
-      "hex_count": 3059,
-      "centroid": [
-        -55.1458,
-        -27.9328
-      ]
-    },
-    {
-      "municipio": "Crissiumal",
-      "parquetKey": "crissiumal",
-      "avg_score": 62.6,
-      "hex_count": 3899,
-      "centroid": [
-        -54.1377,
-        -27.4897
-      ]
-    },
-    {
-      "municipio": "Segredo",
-      "parquetKey": "segredo",
-      "avg_score": 62.6,
-      "hex_count": 2733,
-      "centroid": [
-        -52.9275,
-        -29.3144
-      ]
-    },
-    {
-      "municipio": "Ibiraiaras",
-      "parquetKey": "ibiraiaras",
-      "avg_score": 62.5,
-      "hex_count": 3132,
-      "centroid": [
-        -51.6321,
-        -28.3782
-      ]
-    },
-    {
-      "municipio": "Camargo",
-      "parquetKey": "camargo",
-      "avg_score": 62.4,
-      "hex_count": 1488,
-      "centroid": [
-        -52.2218,
-        -28.6166
-      ]
-    },
-    {
-      "municipio": "Marau",
-      "parquetKey": "marau",
-      "avg_score": 62.3,
-      "hex_count": 7022,
-      "centroid": [
-        -52.2694,
-        -28.4541
+        -51.4631,
+        -29.0927
       ]
     },
     {
       "municipio": "Relvado",
       "parquetKey": "relvado",
-      "avg_score": 62.3,
+      "avg_score": 24.7,
       "hex_count": 1351,
       "centroid": [
         -52.0669,
@@ -2357,479 +637,9 @@
       ]
     },
     {
-      "municipio": "Campina das Missões",
-      "parquetKey": "campina_das_missões",
-      "avg_score": 62.2,
-      "hex_count": 2460,
-      "centroid": [
-        -54.8343,
-        -27.9641
-      ]
-    },
-    {
-      "municipio": "David Canabarro",
-      "parquetKey": "david_canabarro",
-      "avg_score": 62.2,
-      "hex_count": 1883,
-      "centroid": [
-        -51.8087,
-        -28.4152
-      ]
-    },
-    {
-      "municipio": "Coronel Barros",
-      "parquetKey": "coronel_barros",
-      "avg_score": 62.1,
-      "hex_count": 1800,
-      "centroid": [
-        -54.0598,
-        -28.4041
-      ]
-    },
-    {
-      "municipio": "Getúlio Vargas",
-      "parquetKey": "getulio_vargas",
-      "avg_score": 62.1,
-      "hex_count": 3066,
-      "centroid": [
-        -52.1795,
-        -27.849
-      ]
-    },
-    {
-      "municipio": "Planalto",
-      "parquetKey": "planalto",
-      "avg_score": 62.1,
-      "hex_count": 2422,
-      "centroid": [
-        -53.0753,
-        -27.3371
-      ]
-    },
-    {
-      "municipio": "Boqueirão do Leão",
-      "parquetKey": "boqueirão_do_leão",
-      "avg_score": 62.0,
-      "hex_count": 2931,
-      "centroid": [
-        -52.4192,
-        -29.3042
-      ]
-    },
-    {
-      "municipio": "Cacique Doble",
-      "parquetKey": "cacique_doble",
-      "avg_score": 62.0,
-      "hex_count": 2164,
-      "centroid": [
-        -51.6759,
-        -27.8137
-      ]
-    },
-    {
-      "municipio": "Miraguaí",
-      "parquetKey": "miraguai",
-      "avg_score": 62.0,
-      "hex_count": 1408,
-      "centroid": [
-        -53.7426,
-        -27.491
-      ]
-    },
-    {
-      "municipio": "Santo Antônio do Planalto",
-      "parquetKey": "santo_antônio_do_planalto",
-      "avg_score": 62.0,
-      "hex_count": 2204,
-      "centroid": [
-        -52.6809,
-        -28.365
-      ]
-    },
-    {
-      "municipio": "Benjamin Constant do Sul",
-      "parquetKey": "benjamin_constant_do_sul",
-      "avg_score": 61.9,
-      "hex_count": 1402,
-      "centroid": [
-        -52.6428,
-        -27.4855
-      ]
-    },
-    {
-      "municipio": "São Valentim",
-      "parquetKey": "são_valentim",
-      "avg_score": 61.9,
-      "hex_count": 1635,
-      "centroid": [
-        -52.5612,
-        -27.5537
-      ]
-    },
-    {
-      "municipio": "Alpestre",
-      "parquetKey": "alpestre",
-      "avg_score": 61.8,
-      "hex_count": 3461,
-      "centroid": [
-        -53.0604,
-        -27.2158
-      ]
-    },
-    {
-      "municipio": "Esperança do Sul",
-      "parquetKey": "esperança_do_sul",
-      "avg_score": 61.8,
-      "hex_count": 1580,
-      "centroid": [
-        -54.0095,
-        -27.3292
-      ]
-    },
-    {
-      "municipio": "Centenário",
-      "parquetKey": "centenario",
-      "avg_score": 61.7,
-      "hex_count": 1421,
-      "centroid": [
-        -52.0017,
-        -27.7746
-      ]
-    },
-    {
-      "municipio": "Morrinhos do Sul",
-      "parquetKey": "morrinhos_do_sul",
-      "avg_score": 61.6,
-      "hex_count": 1798,
-      "centroid": [
-        -49.9562,
-        -29.3366
-      ]
-    },
-    {
-      "municipio": "União da Serra",
-      "parquetKey": "união_da_serra",
-      "avg_score": 61.5,
-      "hex_count": 1422,
-      "centroid": [
-        -52.0211,
-        -28.7716
-      ]
-    },
-    {
-      "municipio": "Dona Francisca",
-      "parquetKey": "dona_francisca",
-      "avg_score": 61.4,
-      "hex_count": 1278,
-      "centroid": [
-        -53.3459,
-        -29.5608
-      ]
-    },
-    {
-      "municipio": "Ivorá",
-      "parquetKey": "ivora",
-      "avg_score": 61.4,
-      "hex_count": 1374,
-      "centroid": [
-        -53.5859,
-        -29.513
-      ]
-    },
-    {
-      "municipio": "Santa Maria",
-      "parquetKey": "santa_maria",
-      "avg_score": 61.4,
-      "hex_count": 20162,
-      "centroid": [
-        -53.8233,
-        -29.7858
-      ]
-    },
-    {
-      "municipio": "São Paulo das Missões",
-      "parquetKey": "são_paulo_das_missões",
-      "avg_score": 61.3,
-      "hex_count": 2462,
-      "centroid": [
-        -54.9743,
-        -27.9905
-      ]
-    },
-    {
-      "municipio": "Chuvisca",
-      "parquetKey": "chuvisca",
-      "avg_score": 61.2,
-      "hex_count": 2522,
-      "centroid": [
-        -52.0033,
-        -30.7809
-      ]
-    },
-    {
-      "municipio": "Lagoa dos Três Cantos",
-      "parquetKey": "lagoa_dos_três_cantos",
-      "avg_score": 61.1,
-      "hex_count": 1508,
-      "centroid": [
-        -52.8361,
-        -28.5707
-      ]
-    },
-    {
-      "municipio": "Sentinela do Sul",
-      "parquetKey": "sentinela_do_sul",
-      "avg_score": 61.1,
-      "hex_count": 3195,
-      "centroid": [
-        -51.6045,
-        -30.6254
-      ]
-    },
-    {
-      "municipio": "São Pedro das Missões",
-      "parquetKey": "são_pedro_das_missões",
-      "avg_score": 61.1,
-      "hex_count": 859,
-      "centroid": [
-        -53.2382,
-        -27.7801
-      ]
-    },
-    {
-      "municipio": "Tenente Portela",
-      "parquetKey": "tenente_portela",
-      "avg_score": 61.1,
-      "hex_count": 3613,
-      "centroid": [
-        -53.7619,
-        -27.3719
-      ]
-    },
-    {
-      "municipio": "Tiradentes do Sul",
-      "parquetKey": "tiradentes_do_sul",
-      "avg_score": 61.0,
-      "hex_count": 2507,
-      "centroid": [
-        -54.1197,
-        -27.3711
-      ]
-    },
-    {
-      "municipio": "Maximiliano de Almeida",
-      "parquetKey": "maximiliano_de_almeida",
-      "avg_score": 60.9,
-      "hex_count": 2202,
-      "centroid": [
-        -51.8159,
-        -27.6009
-      ]
-    },
-    {
-      "municipio": "Engenho Velho",
-      "parquetKey": "engenho_velho",
-      "avg_score": 60.8,
-      "hex_count": 762,
-      "centroid": [
-        -52.9094,
-        -27.6861
-      ]
-    },
-    {
-      "municipio": "Bozano",
-      "parquetKey": "bozano",
-      "avg_score": 60.7,
-      "hex_count": 2195,
-      "centroid": [
-        -53.7475,
-        -28.3538
-      ]
-    },
-    {
-      "municipio": "Erval Grande",
-      "parquetKey": "erval_grande",
-      "avg_score": 60.5,
-      "hex_count": 3029,
-      "centroid": [
-        -52.5798,
-        -27.3519
-      ]
-    },
-    {
-      "municipio": "Erval Seco",
-      "parquetKey": "erval_seco",
-      "avg_score": 60.4,
-      "hex_count": 3833,
-      "centroid": [
-        -53.5212,
-        -27.5152
-      ]
-    },
-    {
-      "municipio": "Progresso",
-      "parquetKey": "progresso",
-      "avg_score": 60.4,
-      "hex_count": 2828,
-      "centroid": [
-        -52.3215,
-        -29.2226
-      ]
-    },
-    {
-      "municipio": "Santo Cristo",
-      "parquetKey": "santo_cristo",
-      "avg_score": 60.4,
-      "hex_count": 4015,
-      "centroid": [
-        -54.7136,
-        -27.798
-      ]
-    },
-    {
-      "municipio": "Sede Nova",
-      "parquetKey": "sede_nova",
-      "avg_score": 60.4,
-      "hex_count": 1290,
-      "centroid": [
-        -53.9514,
-        -27.641
-      ]
-    },
-    {
-      "municipio": "Jacutinga",
-      "parquetKey": "jacutinga",
-      "avg_score": 60.3,
-      "hex_count": 1904,
-      "centroid": [
-        -52.547,
-        -27.7871
-      ]
-    },
-    {
-      "municipio": "Mariana Pimentel",
-      "parquetKey": "mariana_pimentel",
-      "avg_score": 60.3,
-      "hex_count": 3803,
-      "centroid": [
-        -51.5866,
-        -30.3161
-      ]
-    },
-    {
-      "municipio": "Mormaço",
-      "parquetKey": "mormaço",
-      "avg_score": 60.3,
-      "hex_count": 1590,
-      "centroid": [
-        -52.6618,
-        -28.6933
-      ]
-    },
-    {
-      "municipio": "Victor Graeff",
-      "parquetKey": "victor_graeff",
-      "avg_score": 60.3,
-      "hex_count": 2577,
-      "centroid": [
-        -52.6856,
-        -28.5498
-      ]
-    },
-    {
-      "municipio": "Machadinho",
-      "parquetKey": "machadinho",
-      "avg_score": 60.2,
-      "hex_count": 3532,
-      "centroid": [
-        -51.6728,
-        -27.586
-      ]
-    },
-    {
-      "municipio": "Maquiné",
-      "parquetKey": "maquine",
-      "avg_score": 60.2,
-      "hex_count": 6703,
-      "centroid": [
-        -50.2109,
-        -29.6339
-      ]
-    },
-    {
-      "municipio": "São João da Urtiga",
-      "parquetKey": "são_joão_da_urtiga",
-      "avg_score": 60.2,
-      "hex_count": 1808,
-      "centroid": [
-        -51.8341,
-        -27.7992
-      ]
-    },
-    {
-      "municipio": "Guarani das Missões",
-      "parquetKey": "guarani_das_missões",
-      "avg_score": 60.1,
-      "hex_count": 3196,
-      "centroid": [
-        -54.587,
-        -28.1633
-      ]
-    },
-    {
-      "municipio": "Cerro Grande do Sul",
-      "parquetKey": "cerro_grande_do_sul",
-      "avg_score": 60.0,
-      "hex_count": 3682,
-      "centroid": [
-        -51.7598,
-        -30.5847
-      ]
-    },
-    {
-      "municipio": "General Câmara",
-      "parquetKey": "general_câmara",
-      "avg_score": 60.0,
-      "hex_count": 5684,
-      "centroid": [
-        -51.918,
-        -29.8657
-      ]
-    },
-    {
-      "municipio": "Tucunduva",
-      "parquetKey": "tucunduva",
-      "avg_score": 59.9,
-      "hex_count": 1961,
-      "centroid": [
-        -54.4325,
-        -27.6388
-      ]
-    },
-    {
-      "municipio": "Água Santa",
-      "parquetKey": "agua_santa",
-      "avg_score": 59.9,
-      "hex_count": 3129,
-      "centroid": [
-        -52.0534,
-        -28.2158
-      ]
-    },
-    {
-      "municipio": "Muliterno",
-      "parquetKey": "muliterno",
-      "avg_score": 59.8,
-      "hex_count": 1196,
-      "centroid": [
-        -51.778,
-        -28.3266
-      ]
-    },
-    {
       "municipio": "Arvorezinha",
       "parquetKey": "arvorezinha",
-      "avg_score": 59.6,
+      "avg_score": 24.6,
       "hex_count": 2939,
       "centroid": [
         -52.1869,
@@ -2837,219 +647,269 @@
       ]
     },
     {
-      "municipio": "Bom Progresso",
-      "parquetKey": "bom_progresso",
-      "avg_score": 59.6,
-      "hex_count": 956,
+      "municipio": "Campo Bom",
+      "parquetKey": "campo_bom",
+      "avg_score": 24.6,
+      "hex_count": 668,
       "centroid": [
-        -53.849,
-        -27.5445
+        -51.0486,
+        -29.6732
       ]
     },
     {
-      "municipio": "Nova Alvorada",
-      "parquetKey": "nova_alvorada",
-      "avg_score": 59.6,
-      "hex_count": 1619,
+      "municipio": "Flores da Cunha",
+      "parquetKey": "flores_da_cunha",
+      "avg_score": 24.5,
+      "hex_count": 2997,
       "centroid": [
-        -52.1704,
-        -28.7086
+        -51.2219,
+        -29.0308
       ]
     },
     {
-      "municipio": "São José do Ouro",
-      "parquetKey": "são_jose_do_ouro",
-      "avg_score": 59.6,
-      "hex_count": 3539,
+      "municipio": "Imigrante",
+      "parquetKey": "imigrante",
+      "avg_score": 24.3,
+      "hex_count": 787,
       "centroid": [
-        -51.5612,
-        -27.7699
+        -51.7744,
+        -29.3441
       ]
     },
     {
-      "municipio": "Augusto Pestana",
-      "parquetKey": "augusto_pestana",
-      "avg_score": 59.5,
-      "hex_count": 3836,
+      "municipio": "Pouso Novo",
+      "parquetKey": "pouso_novo",
+      "avg_score": 24.3,
+      "hex_count": 1162,
       "centroid": [
-        -54.0047,
-        -28.5327
+        -52.2298,
+        -29.1575
       ]
     },
     {
-      "municipio": "Gentil",
-      "parquetKey": "gentil",
-      "avg_score": 59.5,
-      "hex_count": 1996,
+      "municipio": "Nova Prata",
+      "parquetKey": "nova_prata",
+      "avg_score": 24.2,
+      "hex_count": 2811,
       "centroid": [
-        -52.0376,
-        -28.3855
+        -51.6074,
+        -28.7595
       ]
     },
     {
-      "municipio": "Gramado dos Loureiros",
-      "parquetKey": "gramado_dos_loureiros",
-      "avg_score": 59.5,
-      "hex_count": 1394,
+      "municipio": "Roca Sales",
+      "parquetKey": "roca_sales",
+      "avg_score": 24.1,
+      "hex_count": 2282,
       "centroid": [
-        -52.915,
-        -27.4455
+        -51.8307,
+        -29.2565
       ]
     },
     {
-      "municipio": "Nicolau Vergueiro",
-      "parquetKey": "nicolau_vergueiro",
-      "avg_score": 59.5,
-      "hex_count": 1682,
+      "municipio": "Canela",
+      "parquetKey": "canela",
+      "avg_score": 24.0,
+      "hex_count": 2760,
       "centroid": [
-        -52.4461,
-        -28.5195
+        -50.773,
+        -29.3507
       ]
     },
     {
-      "municipio": "Porto Mauá",
-      "parquetKey": "porto_maua",
-      "avg_score": 59.5,
-      "hex_count": 1104,
+      "municipio": "Cachoeirinha",
+      "parquetKey": "cachoeirinha",
+      "avg_score": 23.9,
+      "hex_count": 485,
       "centroid": [
-        -54.6568,
-        -27.5963
+        -51.0952,
+        -29.9208
       ]
     },
     {
-      "municipio": "Cândido Godói",
-      "parquetKey": "cândido_godoi",
-      "avg_score": 59.4,
-      "hex_count": 2707,
+      "municipio": "Parobé",
+      "parquetKey": "parobe",
+      "avg_score": 23.9,
+      "hex_count": 1198,
       "centroid": [
-        -54.7188,
-        -27.9356
+        -50.8564,
+        -29.6605
       ]
     },
     {
-      "municipio": "Itatiba do Sul",
-      "parquetKey": "itatiba_do_sul",
-      "avg_score": 59.4,
-      "hex_count": 2242,
+      "municipio": "São José do Herval",
+      "parquetKey": "são_jose_do_herval",
+      "avg_score": 23.9,
+      "hex_count": 1121,
       "centroid": [
-        -52.4774,
-        -27.3606
+        -52.2724,
+        -29.0657
       ]
     },
     {
-      "municipio": "Barra do Ribeiro",
-      "parquetKey": "barra_do_ribeiro",
-      "avg_score": 59.3,
-      "hex_count": 8188,
+      "municipio": "Cerro Grande do Sul",
+      "parquetKey": "cerro_grande_do_sul",
+      "avg_score": 23.8,
+      "hex_count": 3682,
       "centroid": [
-        -51.3556,
-        -30.3753
+        -51.7598,
+        -30.5847
       ]
     },
     {
-      "municipio": "Chuí",
-      "parquetKey": "chui",
-      "avg_score": 59.3,
-      "hex_count": 2463,
+      "municipio": "Taquara",
+      "parquetKey": "taquara",
+      "avg_score": 23.8,
+      "hex_count": 4969,
       "centroid": [
-        -53.4143,
-        -33.6491
+        -50.7582,
+        -29.668
       ]
     },
     {
-      "municipio": "Ernestina",
-      "parquetKey": "ernestina",
-      "avg_score": 59.3,
-      "hex_count": 2576,
+      "municipio": "Coqueiro Baixo",
+      "parquetKey": "coqueiro_baixo",
+      "avg_score": 23.7,
+      "hex_count": 1229,
       "centroid": [
-        -52.5572,
-        -28.4201
+        -52.1266,
+        -29.167
       ]
     },
     {
-      "municipio": "Capivari do Sul",
-      "parquetKey": "capivari_do_sul",
-      "avg_score": 59.2,
-      "hex_count": 4587,
+      "municipio": "Veranópolis",
+      "parquetKey": "veranopolis",
+      "avg_score": 23.7,
+      "hex_count": 3136,
       "centroid": [
-        -50.5072,
-        -30.1389
+        -51.5551,
+        -28.964
       ]
     },
     {
-      "municipio": "Carazinho",
-      "parquetKey": "carazinho",
-      "avg_score": 59.2,
-      "hex_count": 7214,
+      "municipio": "Barão do Triunfo",
+      "parquetKey": "barão_do_triunfo",
+      "avg_score": 23.6,
+      "hex_count": 4915,
       "centroid": [
-        -52.8689,
-        -28.2781
+        -51.7987,
+        -30.4176
       ]
     },
     {
-      "municipio": "Erebango",
-      "parquetKey": "erebango",
-      "avg_score": 59.2,
-      "hex_count": 1623,
+      "municipio": "Arroio dos Ratos",
+      "parquetKey": "arroio_dos_ratos",
+      "avg_score": 23.4,
+      "hex_count": 4782,
       "centroid": [
-        -52.3189,
-        -27.8298
+        -51.7502,
+        -30.1908
       ]
     },
     {
-      "municipio": "Ubiretama",
-      "parquetKey": "ubiretama",
-      "avg_score": 59.2,
-      "hex_count": 1379,
+      "municipio": "Gravataí",
+      "parquetKey": "gravatai",
+      "avg_score": 23.4,
+      "hex_count": 5183,
       "centroid": [
-        -54.6463,
-        -28.0402
+        -50.9439,
+        -29.889
       ]
     },
     {
-      "municipio": "Mampituba",
-      "parquetKey": "mampituba",
-      "avg_score": 59.0,
-      "hex_count": 1700,
+      "municipio": "Sapucaia do Sul",
+      "parquetKey": "sapucaia_do_sul",
+      "avg_score": 23.3,
+      "hex_count": 644,
       "centroid": [
-        -50.0024,
-        -29.2618
+        -51.1336,
+        -29.8226
       ]
     },
     {
-      "municipio": "Quinze de Novembro",
-      "parquetKey": "quinze_de_novembro",
-      "avg_score": 59.0,
-      "hex_count": 2449,
+      "municipio": "Vale Real",
+      "parquetKey": "vale_real",
+      "avg_score": 23.3,
+      "hex_count": 495,
       "centroid": [
-        -53.1112,
-        -28.7587
+        -51.2482,
+        -29.3625
       ]
     },
     {
-      "municipio": "Candelária",
-      "parquetKey": "candelaria",
-      "avg_score": 58.9,
-      "hex_count": 10560,
+      "municipio": "Dois Lajeados",
+      "parquetKey": "dois_lajeados",
+      "avg_score": 23.1,
+      "hex_count": 1459,
       "centroid": [
-        -52.8173,
-        -29.698
+        -51.8434,
+        -28.9768
       ]
     },
     {
-      "municipio": "Carlos Gomes",
-      "parquetKey": "carlos_gomes",
-      "avg_score": 58.9,
-      "hex_count": 888,
+      "municipio": "Lajeado",
+      "parquetKey": "lajeado",
+      "avg_score": 22.9,
+      "hex_count": 1008,
       "centroid": [
-        -51.9301,
-        -27.7031
+        -52.0082,
+        -29.4433
+      ]
+    },
+    {
+      "municipio": "Cotiporã",
+      "parquetKey": "cotiporã",
+      "avg_score": 22.8,
+      "hex_count": 1893,
+      "centroid": [
+        -51.6868,
+        -28.9948
+      ]
+    },
+    {
+      "municipio": "Sertão Santana",
+      "parquetKey": "sertão_santana",
+      "avg_score": 22.6,
+      "hex_count": 2843,
+      "centroid": [
+        -51.6302,
+        -30.4691
+      ]
+    },
+    {
+      "municipio": "Travesseiro",
+      "parquetKey": "travesseiro",
+      "avg_score": 22.6,
+      "hex_count": 887,
+      "centroid": [
+        -52.087,
+        -29.2841
+      ]
+    },
+    {
+      "municipio": "Fontoura Xavier",
+      "parquetKey": "fontoura_xavier",
+      "avg_score": 22.2,
+      "hex_count": 6393,
+      "centroid": [
+        -52.3774,
+        -29.0104
+      ]
+    },
+    {
+      "municipio": "Nova Santa Rita",
+      "parquetKey": "nova_santa_rita",
+      "avg_score": 22.1,
+      "hex_count": 2417,
+      "centroid": [
+        -51.2894,
+        -29.8439
       ]
     },
     {
       "municipio": "Putinga",
       "parquetKey": "putinga",
-      "avg_score": 58.9,
+      "avg_score": 22.0,
       "hex_count": 2244,
       "centroid": [
         -52.1436,
@@ -3057,19 +917,39 @@
       ]
     },
     {
-      "municipio": "Capão do Leão",
-      "parquetKey": "capão_do_leão",
-      "avg_score": 58.8,
-      "hex_count": 9235,
+      "municipio": "Vista Alegre do Prata",
+      "parquetKey": "vista_alegre_do_prata",
+      "avg_score": 22.0,
+      "hex_count": 1306,
       "centroid": [
-        -52.5375,
-        -31.8308
+        -51.7805,
+        -28.8211
+      ]
+    },
+    {
+      "municipio": "Novo Hamburgo",
+      "parquetKey": "novo_hamburgo",
+      "avg_score": 21.8,
+      "hex_count": 2452,
+      "centroid": [
+        -51.0496,
+        -29.7361
+      ]
+    },
+    {
+      "municipio": "Canudos do Vale",
+      "parquetKey": "canudos_do_vale",
+      "avg_score": 21.7,
+      "hex_count": 916,
+      "centroid": [
+        -52.2345,
+        -29.3264
       ]
     },
     {
       "municipio": "Riozinho",
       "parquetKey": "riozinho",
-      "avg_score": 58.8,
+      "avg_score": 21.6,
       "hex_count": 2614,
       "centroid": [
         -50.3973,
@@ -3077,209 +957,759 @@
       ]
     },
     {
-      "municipio": "Caseiros",
-      "parquetKey": "caseiros",
-      "avg_score": 58.6,
-      "hex_count": 2520,
+      "municipio": "Guaporé",
+      "parquetKey": "guapore",
+      "avg_score": 21.5,
+      "hex_count": 3226,
       "centroid": [
-        -51.7365,
-        -28.2466
+        -51.9057,
+        -28.8523
       ]
     },
     {
-      "municipio": "Nonoai",
-      "parquetKey": "nonoai",
-      "avg_score": 58.6,
-      "hex_count": 4985,
+      "municipio": "Caraá",
+      "parquetKey": "caraa",
+      "avg_score": 21.4,
+      "hex_count": 3234,
       "centroid": [
-        -52.8497,
-        -27.3692
+        -50.3441,
+        -29.7696
       ]
     },
     {
-      "municipio": "Ciríaco",
-      "parquetKey": "ciriaco",
-      "avg_score": 58.5,
-      "hex_count": 2944,
+      "municipio": "Fagundes Varela",
+      "parquetKey": "fagundes_varela",
+      "avg_score": 21.4,
+      "hex_count": 1459,
       "centroid": [
-        -51.9148,
-        -28.3422
+        -51.7169,
+        -28.8861
       ]
     },
     {
-      "municipio": "Cruzaltense",
-      "parquetKey": "cruzaltense",
-      "avg_score": 58.5,
+      "municipio": "Muçum",
+      "parquetKey": "muçum",
+      "avg_score": 21.4,
+      "hex_count": 1214,
+      "centroid": [
+        -51.8162,
+        -29.1401
+      ]
+    },
+    {
+      "municipio": "Protásio Alves",
+      "parquetKey": "protasio_alves",
+      "avg_score": 21.4,
+      "hex_count": 1857,
+      "centroid": [
+        -51.4874,
+        -28.7346
+      ]
+    },
+    {
+      "municipio": "São Domingos do Sul",
+      "parquetKey": "são_domingos_do_sul",
+      "avg_score": 21.4,
+      "hex_count": 846,
+      "centroid": [
+        -51.867,
+        -28.5381
+      ]
+    },
+    {
+      "municipio": "Itapuca",
+      "parquetKey": "itapuca",
+      "avg_score": 21.3,
+      "hex_count": 2008,
+      "centroid": [
+        -52.1973,
+        -28.776
+      ]
+    },
+    {
+      "municipio": "São Marcos",
+      "parquetKey": "são_marcos",
+      "avg_score": 21.2,
+      "hex_count": 2768,
+      "centroid": [
+        -51.067,
+        -28.9618
+      ]
+    },
+    {
+      "municipio": "Boqueirão do Leão",
+      "parquetKey": "boqueirão_do_leão",
+      "avg_score": 21.1,
+      "hex_count": 2931,
+      "centroid": [
+        -52.4192,
+        -29.3042
+      ]
+    },
+    {
+      "municipio": "Sobradinho",
+      "parquetKey": "sobradinho",
+      "avg_score": 21.0,
+      "hex_count": 1422,
+      "centroid": [
+        -53.0268,
+        -29.4054
+      ]
+    },
+    {
+      "municipio": "Nova Araçá",
+      "parquetKey": "nova_araça",
+      "avg_score": 20.9,
+      "hex_count": 818,
+      "centroid": [
+        -51.7473,
+        -28.6518
+      ]
+    },
+    {
+      "municipio": "Lagoa Bonita do Sul",
+      "parquetKey": "lagoa_bonita_do_sul",
+      "avg_score": 20.8,
+      "hex_count": 1224,
+      "centroid": [
+        -53.0415,
+        -29.5023
+      ]
+    },
+    {
+      "municipio": "Vespasiano Corrêa",
+      "parquetKey": "vespasiano_corrêa",
+      "avg_score": 20.8,
+      "hex_count": 1237,
+      "centroid": [
+        -51.8592,
+        -29.0676
+      ]
+    },
+    {
+      "municipio": "Antônio Prado",
+      "parquetKey": "antônio_prado",
+      "avg_score": 20.7,
+      "hex_count": 3766,
+      "centroid": [
+        -51.3174,
+        -28.8832
+      ]
+    },
+    {
+      "municipio": "Arroio do Padre",
+      "parquetKey": "arroio_do_padre",
+      "avg_score": 20.7,
+      "hex_count": 1455,
+      "centroid": [
+        -52.3985,
+        -31.4417
+      ]
+    },
+    {
+      "municipio": "Arroio do Meio",
+      "parquetKey": "arroio_do_meio",
+      "avg_score": 20.6,
+      "hex_count": 1734,
+      "centroid": [
+        -51.966,
+        -29.3609
+      ]
+    },
+    {
+      "municipio": "Nova Alvorada",
+      "parquetKey": "nova_alvorada",
+      "avg_score": 20.6,
+      "hex_count": 1619,
+      "centroid": [
+        -52.1704,
+        -28.7086
+      ]
+    },
+    {
+      "municipio": "Caxias do Sul",
+      "parquetKey": "caxias_do_sul",
+      "avg_score": 20.5,
+      "hex_count": 17933,
+      "centroid": [
+        -51.0233,
+        -29.1116
+      ]
+    },
+    {
+      "municipio": "Mariana Pimentel",
+      "parquetKey": "mariana_pimentel",
+      "avg_score": 20.4,
+      "hex_count": 3803,
+      "centroid": [
+        -51.5866,
+        -30.3161
+      ]
+    },
+    {
+      "municipio": "Gramado Xavier",
+      "parquetKey": "gramado_xavier",
+      "avg_score": 20.3,
+      "hex_count": 2407,
+      "centroid": [
+        -52.598,
+        -29.2895
+      ]
+    },
+    {
+      "municipio": "Butiá",
+      "parquetKey": "butia",
+      "avg_score": 20.2,
+      "hex_count": 8449,
+      "centroid": [
+        -52.0066,
+        -30.1875
+      ]
+    },
+    {
+      "municipio": "Colinas",
+      "parquetKey": "colinas",
+      "avg_score": 20.2,
+      "hex_count": 672,
+      "centroid": [
+        -51.8652,
+        -29.3925
+      ]
+    },
+    {
+      "municipio": "Encruzilhada do Sul",
+      "parquetKey": "encruzilhada_do_sul",
+      "avg_score": 20.2,
+      "hex_count": 38268,
+      "centroid": [
+        -52.672,
+        -30.6246
+      ]
+    },
+    {
+      "municipio": "Herveiras",
+      "parquetKey": "herveiras",
+      "avg_score": 20.2,
+      "hex_count": 1309,
+      "centroid": [
+        -52.6702,
+        -29.44
+      ]
+    },
+    {
+      "municipio": "Nova Bassano",
+      "parquetKey": "nova_bassano",
+      "avg_score": 20.2,
+      "hex_count": 2289,
+      "centroid": [
+        -51.7525,
+        -28.7284
+      ]
+    },
+    {
+      "municipio": "Segredo",
+      "parquetKey": "segredo",
+      "avg_score": 20.2,
+      "hex_count": 2733,
+      "centroid": [
+        -52.9275,
+        -29.3144
+      ]
+    },
+    {
+      "municipio": "Anta Gorda",
+      "parquetKey": "anta_gorda",
+      "avg_score": 20.1,
+      "hex_count": 2648,
+      "centroid": [
+        -51.9938,
+        -28.9693
+      ]
+    },
+    {
+      "municipio": "Serafina Corrêa",
+      "parquetKey": "serafina_corrêa",
+      "avg_score": 20.0,
       "hex_count": 1774,
       "centroid": [
-        -52.6452,
-        -27.6272
+        -51.9352,
+        -28.7004
       ]
     },
     {
-      "municipio": "Novo Cabrais",
-      "parquetKey": "novo_cabrais",
-      "avg_score": 58.4,
-      "hex_count": 2159,
+      "municipio": "Alvorada",
+      "parquetKey": "alvorada",
+      "avg_score": 19.9,
+      "hex_count": 791,
       "centroid": [
-        -52.9936,
-        -29.7614
+        -51.0397,
+        -29.9955
       ]
     },
     {
-      "municipio": "Vitória das Missões",
-      "parquetKey": "vitoria_das_missões",
-      "avg_score": 58.3,
-      "hex_count": 2848,
+      "municipio": "Passa Sete",
+      "parquetKey": "passa_sete",
+      "avg_score": 19.9,
+      "hex_count": 3391,
       "centroid": [
-        -54.4678,
-        -28.3793
+        -52.8662,
+        -29.4375
       ]
     },
     {
-      "municipio": "Ibirubá",
-      "parquetKey": "ibiruba",
-      "avg_score": 58.2,
-      "hex_count": 6647,
+      "municipio": "União da Serra",
+      "parquetKey": "união_da_serra",
+      "avg_score": 19.9,
+      "hex_count": 1422,
       "centroid": [
-        -53.1713,
-        -28.5947
+        -52.0211,
+        -28.7716
       ]
     },
     {
-      "municipio": "Ronda Alta",
-      "parquetKey": "ronda_alta",
-      "avg_score": 58.1,
-      "hex_count": 4479,
+      "municipio": "Santo Antônio do Palma",
+      "parquetKey": "santo_antônio_do_palma",
+      "avg_score": 19.7,
+      "hex_count": 1355,
       "centroid": [
-        -52.7471,
-        -27.8097
+        -52.0096,
+        -28.4953
       ]
     },
     {
-      "municipio": "São Valério do Sul",
-      "parquetKey": "são_valerio_do_sul",
-      "avg_score": 58.1,
-      "hex_count": 1164,
+      "municipio": "Canoas",
+      "parquetKey": "canoas",
+      "avg_score": 19.6,
+      "hex_count": 1450,
       "centroid": [
-        -53.9102,
-        -27.8199
+        -51.1805,
+        -29.9121
       ]
     },
     {
-      "municipio": "Campo Novo",
-      "parquetKey": "campo_novo",
-      "avg_score": 58.0,
-      "hex_count": 2370,
+      "municipio": "Três Arroios",
+      "parquetKey": "três_arroios",
+      "avg_score": 19.5,
+      "hex_count": 1563,
       "centroid": [
-        -53.8233,
-        -27.6648
+        -52.1809,
+        -27.4922
       ]
     },
     {
-      "municipio": "Coxilha",
-      "parquetKey": "coxilha",
-      "avg_score": 57.9,
-      "hex_count": 4535,
+      "municipio": "Guaíba",
+      "parquetKey": "guaiba",
+      "avg_score": 19.4,
+      "hex_count": 4199,
       "centroid": [
-        -52.3342,
-        -28.1186
+        -51.4311,
+        -30.1745
       ]
     },
     {
-      "municipio": "Ipiranga do Sul",
-      "parquetKey": "ipiranga_do_sul",
-      "avg_score": 57.9,
-      "hex_count": 1694,
+      "municipio": "Monte Belo do Sul",
+      "parquetKey": "monte_belo_do_sul",
+      "avg_score": 19.4,
+      "hex_count": 761,
       "centroid": [
-        -52.4182,
-        -27.9304
+        -51.6508,
+        -29.1399
       ]
     },
     {
-      "municipio": "Mato Queimado",
-      "parquetKey": "mato_queimado",
-      "avg_score": 57.9,
-      "hex_count": 1264,
+      "municipio": "São Jerônimo",
+      "parquetKey": "são_jerônimo",
+      "avg_score": 19.3,
+      "hex_count": 10534,
       "centroid": [
-        -54.6583,
-        -28.242
+        -51.9083,
+        -30.2867
       ]
     },
     {
-      "municipio": "Pejuçara",
-      "parquetKey": "pejuçara",
-      "avg_score": 57.9,
-      "hex_count": 4536,
+      "municipio": "Eldorado do Sul",
+      "parquetKey": "eldorado_do_sul",
+      "avg_score": 19.2,
+      "hex_count": 5687,
       "centroid": [
-        -53.5948,
-        -28.4556
+        -51.4868,
+        -30.075
       ]
     },
     {
-      "municipio": "Sananduva",
-      "parquetKey": "sananduva",
-      "avg_score": 57.9,
-      "hex_count": 5375,
+      "municipio": "Progresso",
+      "parquetKey": "progresso",
+      "avg_score": 19.2,
+      "hex_count": 2828,
       "centroid": [
-        -51.8017,
-        -27.9562
+        -52.3215,
+        -29.2226
       ]
     },
     {
-      "municipio": "Redentora",
-      "parquetKey": "redentora",
-      "avg_score": 57.8,
-      "hex_count": 3253,
+      "municipio": "Dom Feliciano",
+      "parquetKey": "dom_feliciano",
+      "avg_score": 19.0,
+      "hex_count": 15410,
       "centroid": [
-        -53.6322,
-        -27.567
+        -52.2004,
+        -30.6114
       ]
     },
     {
-      "municipio": "Santo Expedito do Sul",
-      "parquetKey": "santo_expedito_do_sul",
-      "avg_score": 57.8,
-      "hex_count": 1335,
+      "municipio": "Nova Roma do Sul",
+      "parquetKey": "nova_roma_do_sul",
+      "avg_score": 19.0,
+      "hex_count": 1621,
       "centroid": [
-        -51.6602,
-        -27.9246
+        -51.408,
+        -28.9896
       ]
     },
     {
-      "municipio": "Vale Verde",
-      "parquetKey": "vale_verde",
-      "avg_score": 57.8,
-      "hex_count": 3675,
+      "municipio": "Marques de Souza",
+      "parquetKey": "marques_de_souza",
+      "avg_score": 18.9,
+      "hex_count": 1374,
       "centroid": [
-        -52.1122,
-        -29.8284
+        -52.147,
+        -29.2919
       ]
     },
     {
-      "municipio": "Formigueiro",
-      "parquetKey": "formigueiro",
-      "avg_score": 57.7,
-      "hex_count": 6558,
+      "municipio": "Vanini",
+      "parquetKey": "vanini",
+      "avg_score": 18.9,
+      "hex_count": 700,
       "centroid": [
-        -53.5075,
-        -29.9769
+        -51.835,
+        -28.4895
       ]
     },
     {
-      "municipio": "Campinas do Sul",
-      "parquetKey": "campinas_do_sul",
-      "avg_score": 57.5,
-      "hex_count": 2942,
+      "municipio": "Ibarama",
+      "parquetKey": "ibarama",
+      "avg_score": 18.8,
+      "hex_count": 2183,
       "centroid": [
-        -52.6585,
-        -27.7343
+        -53.1663,
+        -29.4192
+      ]
+    },
+    {
+      "municipio": "Balneário Pinhal",
+      "parquetKey": "balneario_pinhal",
+      "avg_score": 18.6,
+      "hex_count": 1126,
+      "centroid": [
+        -50.2942,
+        -30.2106
+      ]
+    },
+    {
+      "municipio": "Porto Alegre",
+      "parquetKey": "porto_alegre",
+      "avg_score": 18.6,
+      "hex_count": 5503,
+      "centroid": [
+        -51.1653,
+        -30.0916
+      ]
+    },
+    {
+      "municipio": "Chuvisca",
+      "parquetKey": "chuvisca",
+      "avg_score": 18.5,
+      "hex_count": 2522,
+      "centroid": [
+        -52.0033,
+        -30.7809
+      ]
+    },
+    {
+      "municipio": "General Câmara",
+      "parquetKey": "general_câmara",
+      "avg_score": 18.4,
+      "hex_count": 5684,
+      "centroid": [
+        -51.918,
+        -29.8657
+      ]
+    },
+    {
+      "municipio": "Santa Cruz do Sul",
+      "parquetKey": "santa_cruz_do_sul",
+      "avg_score": 18.4,
+      "hex_count": 8173,
+      "centroid": [
+        -52.409,
+        -29.6473
+      ]
+    },
+    {
+      "municipio": "Lagoão",
+      "parquetKey": "lagoão",
+      "avg_score": 18.3,
+      "hex_count": 4290,
+      "centroid": [
+        -52.7882,
+        -29.2395
+      ]
+    },
+    {
+      "municipio": "Nova Pádua",
+      "parquetKey": "nova_padua",
+      "avg_score": 18.2,
+      "hex_count": 1116,
+      "centroid": [
+        -51.3158,
+        -29.0022
+      ]
+    },
+    {
+      "municipio": "Santa Tereza",
+      "parquetKey": "santa_tereza",
+      "avg_score": 18.2,
+      "hex_count": 810,
+      "centroid": [
+        -51.7109,
+        -29.1643
+      ]
+    },
+    {
+      "municipio": "Sentinela do Sul",
+      "parquetKey": "sentinela_do_sul",
+      "avg_score": 18.2,
+      "hex_count": 3195,
+      "centroid": [
+        -51.6045,
+        -30.6254
+      ]
+    },
+    {
+      "municipio": "Erechim",
+      "parquetKey": "erechim",
+      "avg_score": 18.1,
+      "hex_count": 4564,
+      "centroid": [
+        -52.2574,
+        -27.64
+      ]
+    },
+    {
+      "municipio": "David Canabarro",
+      "parquetKey": "david_canabarro",
+      "avg_score": 18.0,
+      "hex_count": 1883,
+      "centroid": [
+        -51.8087,
+        -28.4152
+      ]
+    },
+    {
+      "municipio": "Forquetinha",
+      "parquetKey": "forquetinha",
+      "avg_score": 18.0,
+      "hex_count": 1031,
+      "centroid": [
+        -52.126,
+        -29.388
+      ]
+    },
+    {
+      "municipio": "Severiano de Almeida",
+      "parquetKey": "severiano_de_almeida",
+      "avg_score": 18.0,
+      "hex_count": 1768,
+      "centroid": [
+        -52.1128,
+        -27.4164
+      ]
+    },
+    {
+      "municipio": "São Valentim",
+      "parquetKey": "são_valentim",
+      "avg_score": 18.0,
+      "hex_count": 1635,
+      "centroid": [
+        -52.5612,
+        -27.5537
+      ]
+    },
+    {
+      "municipio": "Morro Redondo",
+      "parquetKey": "morro_redondo",
+      "avg_score": 17.8,
+      "hex_count": 2865,
+      "centroid": [
+        -52.6349,
+        -31.63
+      ]
+    },
+    {
+      "municipio": "São Jorge",
+      "parquetKey": "são_jorge",
+      "avg_score": 17.7,
+      "hex_count": 1347,
+      "centroid": [
+        -51.7157,
+        -28.4981
+      ]
+    },
+    {
+      "municipio": "Amaral Ferrador",
+      "parquetKey": "amaral_ferrador",
+      "avg_score": 17.6,
+      "hex_count": 5801,
+      "centroid": [
+        -52.3208,
+        -30.8045
+      ]
+    },
+    {
+      "municipio": "Ametista do Sul",
+      "parquetKey": "ametista_do_sul",
+      "avg_score": 17.6,
+      "hex_count": 997,
+      "centroid": [
+        -53.1937,
+        -27.3649
+      ]
+    },
+    {
+      "municipio": "Santa Clara do Sul",
+      "parquetKey": "santa_clara_do_sul",
+      "avg_score": 17.6,
+      "hex_count": 957,
+      "centroid": [
+        -52.1328,
+        -29.4529
+      ]
+    },
+    {
+      "municipio": "Três Forquilhas",
+      "parquetKey": "três_forquilhas",
+      "avg_score": 17.6,
+      "hex_count": 2367,
+      "centroid": [
+        -50.0866,
+        -29.4263
+      ]
+    },
+    {
+      "municipio": "Vale do Sol",
+      "parquetKey": "vale_do_sol",
+      "avg_score": 17.6,
+      "hex_count": 3653,
+      "centroid": [
+        -52.6885,
+        -29.5824
+      ]
+    },
+    {
+      "municipio": "Barão de Cotegipe",
+      "parquetKey": "barão_de_cotegipe",
+      "avg_score": 17.5,
+      "hex_count": 2759,
+      "centroid": [
+        -52.4171,
+        -27.5682
+      ]
+    },
+    {
+      "municipio": "Casca",
+      "parquetKey": "casca",
+      "avg_score": 17.5,
+      "hex_count": 2943,
+      "centroid": [
+        -51.969,
+        -28.5941
+      ]
+    },
+    {
+      "municipio": "Itaara",
+      "parquetKey": "itaara",
+      "avg_score": 17.5,
+      "hex_count": 1949,
+      "centroid": [
+        -53.7624,
+        -29.5798
+      ]
+    },
+    {
+      "municipio": "Tunas",
+      "parquetKey": "tunas",
+      "avg_score": 17.5,
+      "hex_count": 2400,
+      "centroid": [
+        -52.8925,
+        -29.1141
+      ]
+    },
+    {
+      "municipio": "Viadutos",
+      "parquetKey": "viadutos",
+      "avg_score": 17.4,
+      "hex_count": 2822,
+      "centroid": [
+        -51.9963,
+        -27.5713
+      ]
+    },
+    {
+      "municipio": "Itati",
+      "parquetKey": "itati",
+      "avg_score": 17.2,
+      "hex_count": 2234,
+      "centroid": [
+        -50.1641,
+        -29.4618
+      ]
+    },
+    {
+      "municipio": "Arroio do Tigre",
+      "parquetKey": "arroio_do_tigre",
+      "avg_score": 17.1,
+      "hex_count": 3497,
+      "centroid": [
+        -53.0537,
+        -29.2591
+      ]
+    },
+    {
+      "municipio": "Capão da Canoa",
+      "parquetKey": "capão_da_canoa",
+      "avg_score": 17.0,
+      "hex_count": 1074,
+      "centroid": [
+        -50.0003,
+        -29.6791
+      ]
+    },
+    {
+      "municipio": "Cambará do Sul",
+      "parquetKey": "cambara_do_sul",
+      "avg_score": 16.9,
+      "hex_count": 12732,
+      "centroid": [
+        -50.1356,
+        -29.0618
+      ]
+    },
+    {
+      "municipio": "Frederico Westphalen",
+      "parquetKey": "frederico_westphalen",
+      "avg_score": 16.9,
+      "hex_count": 2825,
+      "centroid": [
+        -53.356,
+        -27.342
       ]
     },
     {
       "municipio": "Ipê",
       "parquetKey": "ipê",
-      "avg_score": 57.4,
+      "avg_score": 16.9,
       "hex_count": 6462,
       "centroid": [
         -51.3029,
@@ -3287,39 +1717,1989 @@
       ]
     },
     {
-      "municipio": "Entre-Ijuís",
-      "parquetKey": "entre-ijuis",
-      "avg_score": 57.2,
-      "hex_count": 6095,
+      "municipio": "Pantano Grande",
+      "parquetKey": "pantano_grande",
+      "avg_score": 16.8,
+      "hex_count": 9497,
       "centroid": [
-        -54.2972,
-        -28.4554
+        -52.367,
+        -30.2574
       ]
     },
     {
-      "municipio": "Ibiaçá",
-      "parquetKey": "ibiaça",
-      "avg_score": 57.2,
-      "hex_count": 3727,
+      "municipio": "Silveira Martins",
+      "parquetKey": "silveira_martins",
+      "avg_score": 16.8,
+      "hex_count": 1338,
       "centroid": [
-        -51.7871,
-        -28.1041
+        -53.5726,
+        -29.634
       ]
     },
     {
-      "municipio": "Porto Lucena",
-      "parquetKey": "porto_lucena",
-      "avg_score": 57.2,
-      "hex_count": 2693,
+      "municipio": "Mampituba",
+      "parquetKey": "mampituba",
+      "avg_score": 16.7,
+      "hex_count": 1700,
       "centroid": [
-        -54.956,
-        -27.8508
+        -50.0024,
+        -29.2618
+      ]
+    },
+    {
+      "municipio": "Pinheirinho do Vale",
+      "parquetKey": "pinheirinho_do_vale",
+      "avg_score": 16.7,
+      "hex_count": 1120,
+      "centroid": [
+        -53.6336,
+        -27.2218
+      ]
+    },
+    {
+      "municipio": "Sinimbu",
+      "parquetKey": "sinimbu",
+      "avg_score": 16.7,
+      "hex_count": 5659,
+      "centroid": [
+        -52.5727,
+        -29.4427
+      ]
+    },
+    {
+      "municipio": "Xangri-lá",
+      "parquetKey": "xangri-la",
+      "avg_score": 16.7,
+      "hex_count": 664,
+      "centroid": [
+        -50.0694,
+        -29.8073
+      ]
+    },
+    {
+      "municipio": "Barra do Rio Azul",
+      "parquetKey": "barra_do_rio_azul",
+      "avg_score": 16.6,
+      "hex_count": 1562,
+      "centroid": [
+        -52.4072,
+        -27.402
+      ]
+    },
+    {
+      "municipio": "Cerro Branco",
+      "parquetKey": "cerro_branco",
+      "avg_score": 16.6,
+      "hex_count": 1772,
+      "centroid": [
+        -52.9949,
+        -29.6309
+      ]
+    },
+    {
+      "municipio": "Palmitinho",
+      "parquetKey": "palmitinho",
+      "avg_score": 16.6,
+      "hex_count": 1539,
+      "centroid": [
+        -53.5873,
+        -27.3267
+      ]
+    },
+    {
+      "municipio": "Venâncio Aires",
+      "parquetKey": "venâncio_aires",
+      "avg_score": 16.6,
+      "hex_count": 8555,
+      "centroid": [
+        -52.1965,
+        -29.5741
+      ]
+    },
+    {
+      "municipio": "Aratiba",
+      "parquetKey": "aratiba",
+      "avg_score": 16.5,
+      "hex_count": 3605,
+      "centroid": [
+        -52.3003,
+        -27.387
+      ]
+    },
+    {
+      "municipio": "Esteio",
+      "parquetKey": "esteio",
+      "avg_score": 16.5,
+      "hex_count": 312,
+      "centroid": [
+        -51.1764,
+        -29.8518
+      ]
+    },
+    {
+      "municipio": "Ivorá",
+      "parquetKey": "ivora",
+      "avg_score": 16.5,
+      "hex_count": 1374,
+      "centroid": [
+        -53.5859,
+        -29.513
+      ]
+    },
+    {
+      "municipio": "Terra de Areia",
+      "parquetKey": "terra_de_areia",
+      "avg_score": 16.4,
+      "hex_count": 1551,
+      "centroid": [
+        -50.0677,
+        -29.6036
+      ]
+    },
+    {
+      "municipio": "Cruzeiro do Sul",
+      "parquetKey": "cruzeiro_do_sul",
+      "avg_score": 16.3,
+      "hex_count": 1709,
+      "centroid": [
+        -52.0336,
+        -29.539
+      ]
+    },
+    {
+      "municipio": "Torres",
+      "parquetKey": "torres",
+      "avg_score": 16.3,
+      "hex_count": 1742,
+      "centroid": [
+        -49.8084,
+        -29.3282
+      ]
+    },
+    {
+      "municipio": "Vista Alegre",
+      "parquetKey": "vista_alegre",
+      "avg_score": 16.3,
+      "hex_count": 827,
+      "centroid": [
+        -53.5095,
+        -27.3256
+      ]
+    },
+    {
+      "municipio": "Vista Gaúcha",
+      "parquetKey": "vista_gaucha",
+      "avg_score": 16.3,
+      "hex_count": 965,
+      "centroid": [
+        -53.7009,
+        -27.2664
+      ]
+    },
+    {
+      "municipio": "Camargo",
+      "parquetKey": "camargo",
+      "avg_score": 16.2,
+      "hex_count": 1488,
+      "centroid": [
+        -52.2218,
+        -28.6166
+      ]
+    },
+    {
+      "municipio": "Floriano Peixoto",
+      "parquetKey": "floriano_peixoto",
+      "avg_score": 16.2,
+      "hex_count": 1797,
+      "centroid": [
+        -52.0477,
+        -27.8581
+      ]
+    },
+    {
+      "municipio": "Barros Cassal",
+      "parquetKey": "barros_cassal",
+      "avg_score": 16.1,
+      "hex_count": 7126,
+      "centroid": [
+        -52.5907,
+        -29.1112
+      ]
+    },
+    {
+      "municipio": "Marcelino Ramos",
+      "parquetKey": "marcelino_ramos",
+      "avg_score": 16.0,
+      "hex_count": 2427,
+      "centroid": [
+        -51.9469,
+        -27.4805
+      ]
+    },
+    {
+      "municipio": "Planalto",
+      "parquetKey": "planalto",
+      "avg_score": 16.0,
+      "hex_count": 2422,
+      "centroid": [
+        -53.0753,
+        -27.3371
+      ]
+    },
+    {
+      "municipio": "Vera Cruz",
+      "parquetKey": "vera_cruz",
+      "avg_score": 16.0,
+      "hex_count": 3466,
+      "centroid": [
+        -52.5382,
+        -29.7147
+      ]
+    },
+    {
+      "municipio": "Benjamin Constant do Sul",
+      "parquetKey": "benjamin_constant_do_sul",
+      "avg_score": 15.9,
+      "hex_count": 1402,
+      "centroid": [
+        -52.6428,
+        -27.4855
+      ]
+    },
+    {
+      "municipio": "Carlos Gomes",
+      "parquetKey": "carlos_gomes",
+      "avg_score": 15.9,
+      "hex_count": 888,
+      "centroid": [
+        -51.9301,
+        -27.7031
+      ]
+    },
+    {
+      "municipio": "Ciríaco",
+      "parquetKey": "ciriaco",
+      "avg_score": 15.9,
+      "hex_count": 2944,
+      "centroid": [
+        -51.9148,
+        -28.3422
+      ]
+    },
+    {
+      "municipio": "Piratini",
+      "parquetKey": "piratini",
+      "avg_score": 15.9,
+      "hex_count": 41471,
+      "centroid": [
+        -53.1024,
+        -31.4464
+      ]
+    },
+    {
+      "municipio": "São Francisco de Paula",
+      "parquetKey": "são_francisco_de_paula",
+      "avg_score": 15.9,
+      "hex_count": 35966,
+      "centroid": [
+        -50.5464,
+        -29.1992
+      ]
+    },
+    {
+      "municipio": "Itatiba do Sul",
+      "parquetKey": "itatiba_do_sul",
+      "avg_score": 15.8,
+      "hex_count": 2242,
+      "centroid": [
+        -52.4774,
+        -27.3606
+      ]
+    },
+    {
+      "municipio": "Canguçu",
+      "parquetKey": "canguçu",
+      "avg_score": 15.7,
+      "hex_count": 40911,
+      "centroid": [
+        -52.6733,
+        -31.226
+      ]
+    },
+    {
+      "municipio": "Faxinal do Soturno",
+      "parquetKey": "faxinal_do_soturno",
+      "avg_score": 15.7,
+      "hex_count": 1905,
+      "centroid": [
+        -53.4638,
+        -29.5596
+      ]
+    },
+    {
+      "municipio": "Erval Grande",
+      "parquetKey": "erval_grande",
+      "avg_score": 15.6,
+      "hex_count": 3029,
+      "centroid": [
+        -52.5798,
+        -27.3519
+      ]
+    },
+    {
+      "municipio": "Maximiliano de Almeida",
+      "parquetKey": "maximiliano_de_almeida",
+      "avg_score": 15.6,
+      "hex_count": 2202,
+      "centroid": [
+        -51.8159,
+        -27.6009
+      ]
+    },
+    {
+      "municipio": "Monte Alegre dos Campos",
+      "parquetKey": "monte_alegre_dos_campos",
+      "avg_score": 15.6,
+      "hex_count": 5892,
+      "centroid": [
+        -50.8013,
+        -28.6955
+      ]
+    },
+    {
+      "municipio": "Tramandaí",
+      "parquetKey": "tramandai",
+      "avg_score": 15.6,
+      "hex_count": 1571,
+      "centroid": [
+        -50.2236,
+        -30.0269
+      ]
+    },
+    {
+      "municipio": "Pelotas",
+      "parquetKey": "pelotas",
+      "avg_score": 15.5,
+      "hex_count": 18789,
+      "centroid": [
+        -52.3451,
+        -31.5775
+      ]
+    },
+    {
+      "municipio": "São João do Polêsine",
+      "parquetKey": "são_joão_do_polêsine",
+      "avg_score": 15.5,
+      "hex_count": 884,
+      "centroid": [
+        -53.4723,
+        -29.6428
+      ]
+    },
+    {
+      "municipio": "Guabiju",
+      "parquetKey": "guabiju",
+      "avg_score": 15.4,
+      "hex_count": 1581,
+      "centroid": [
+        -51.6595,
+        -28.5743
+      ]
+    },
+    {
+      "municipio": "Montauri",
+      "parquetKey": "montauri",
+      "avg_score": 15.4,
+      "hex_count": 885,
+      "centroid": [
+        -52.0506,
+        -28.668
+      ]
+    },
+    {
+      "municipio": "Charqueadas",
+      "parquetKey": "charqueadas",
+      "avg_score": 15.3,
+      "hex_count": 2420,
+      "centroid": [
+        -51.5537,
+        -29.9891
+      ]
+    },
+    {
+      "municipio": "Pinhal",
+      "parquetKey": "pinhal",
+      "avg_score": 15.3,
+      "hex_count": 725,
+      "centroid": [
+        -53.2349,
+        -27.529
+      ]
+    },
+    {
+      "municipio": "Taquaruçu do Sul",
+      "parquetKey": "taquaruçu_do_sul",
+      "avg_score": 15.3,
+      "hex_count": 820,
+      "centroid": [
+        -53.4882,
+        -27.4083
+      ]
+    },
+    {
+      "municipio": "Rodeio Bonito",
+      "parquetKey": "rodeio_bonito",
+      "avg_score": 15.2,
+      "hex_count": 886,
+      "centroid": [
+        -53.172,
+        -27.463
+      ]
+    },
+    {
+      "municipio": "Gaurama",
+      "parquetKey": "gaurama",
+      "avg_score": 15.1,
+      "hex_count": 2167,
+      "centroid": [
+        -52.1144,
+        -27.5988
+      ]
+    },
+    {
+      "municipio": "Caiçara",
+      "parquetKey": "caiçara",
+      "avg_score": 15.0,
+      "hex_count": 2008,
+      "centroid": [
+        -53.4674,
+        -27.2459
+      ]
+    },
+    {
+      "municipio": "Campestre da Serra",
+      "parquetKey": "campestre_da_serra",
+      "avg_score": 15.0,
+      "hex_count": 5788,
+      "centroid": [
+        -51.1017,
+        -28.7187
+      ]
+    },
+    {
+      "municipio": "Jaquirana",
+      "parquetKey": "jaquirana",
+      "avg_score": 15.0,
+      "hex_count": 9772,
+      "centroid": [
+        -50.3585,
+        -28.9447
+      ]
+    },
+    {
+      "municipio": "Muliterno",
+      "parquetKey": "muliterno",
+      "avg_score": 14.9,
+      "hex_count": 1196,
+      "centroid": [
+        -51.778,
+        -28.3266
+      ]
+    },
+    {
+      "municipio": "Pinhal da Serra",
+      "parquetKey": "pinhal_da_serra",
+      "avg_score": 14.9,
+      "hex_count": 4635,
+      "centroid": [
+        -51.2152,
+        -27.8562
+      ]
+    },
+    {
+      "municipio": "Paim Filho",
+      "parquetKey": "paim_filho",
+      "avg_score": 14.8,
+      "hex_count": 1929,
+      "centroid": [
+        -51.7804,
+        -27.7228
+      ]
+    },
+    {
+      "municipio": "Cristal do Sul",
+      "parquetKey": "cristal_do_sul",
+      "avg_score": 14.7,
+      "hex_count": 1043,
+      "centroid": [
+        -53.2488,
+        -27.4319
+      ]
+    },
+    {
+      "municipio": "Iraí",
+      "parquetKey": "irai",
+      "avg_score": 14.7,
+      "hex_count": 1927,
+      "centroid": [
+        -53.2417,
+        -27.2508
+      ]
+    },
+    {
+      "municipio": "Mariano Moro",
+      "parquetKey": "mariano_moro",
+      "avg_score": 14.7,
+      "hex_count": 1042,
+      "centroid": [
+        -52.1668,
+        -27.3424
+      ]
+    },
+    {
+      "municipio": "Três Passos",
+      "parquetKey": "três_passos",
+      "avg_score": 14.7,
+      "hex_count": 2891,
+      "centroid": [
+        -53.9314,
+        -27.4386
+      ]
+    },
+    {
+      "municipio": "Esperança do Sul",
+      "parquetKey": "esperança_do_sul",
+      "avg_score": 14.6,
+      "hex_count": 1580,
+      "centroid": [
+        -54.0095,
+        -27.3292
+      ]
+    },
+    {
+      "municipio": "Paraíso do Sul",
+      "parquetKey": "paraiso_do_sul",
+      "avg_score": 14.6,
+      "hex_count": 3795,
+      "centroid": [
+        -53.1203,
+        -29.7033
+      ]
+    },
+    {
+      "municipio": "Tiradentes do Sul",
+      "parquetKey": "tiradentes_do_sul",
+      "avg_score": 14.6,
+      "hex_count": 2507,
+      "centroid": [
+        -54.1197,
+        -27.3711
+      ]
+    },
+    {
+      "municipio": "Glorinha",
+      "parquetKey": "glorinha",
+      "avg_score": 14.5,
+      "hex_count": 3576,
+      "centroid": [
+        -50.7715,
+        -29.8853
+      ]
+    },
+    {
+      "municipio": "Ibiraiaras",
+      "parquetKey": "ibiraiaras",
+      "avg_score": 14.5,
+      "hex_count": 3132,
+      "centroid": [
+        -51.6321,
+        -28.3782
+      ]
+    },
+    {
+      "municipio": "Paulo Bento",
+      "parquetKey": "paulo_bento",
+      "avg_score": 14.5,
+      "hex_count": 1593,
+      "centroid": [
+        -52.3975,
+        -27.7116
+      ]
+    },
+    {
+      "municipio": "Tenente Portela",
+      "parquetKey": "tenente_portela",
+      "avg_score": 14.5,
+      "hex_count": 3613,
+      "centroid": [
+        -53.7619,
+        -27.3719
+      ]
+    },
+    {
+      "municipio": "Áurea",
+      "parquetKey": "aurea",
+      "avg_score": 14.5,
+      "hex_count": 1660,
+      "centroid": [
+        -52.0776,
+        -27.7092
+      ]
+    },
+    {
+      "municipio": "Agudo",
+      "parquetKey": "agudo",
+      "avg_score": 14.4,
+      "hex_count": 5975,
+      "centroid": [
+        -53.2263,
+        -29.6098
+      ]
+    },
+    {
+      "municipio": "André da Rocha",
+      "parquetKey": "andre_da_rocha",
+      "avg_score": 14.4,
+      "hex_count": 3570,
+      "centroid": [
+        -51.5001,
+        -28.5926
+      ]
+    },
+    {
+      "municipio": "Barra do Guarita",
+      "parquetKey": "barra_do_guarita",
+      "avg_score": 14.4,
+      "hex_count": 667,
+      "centroid": [
+        -53.7636,
+        -27.2049
+      ]
+    },
+    {
+      "municipio": "Liberato Salzano",
+      "parquetKey": "liberato_salzano",
+      "avg_score": 14.4,
+      "hex_count": 2617,
+      "centroid": [
+        -53.0653,
+        -27.5512
+      ]
+    },
+    {
+      "municipio": "Morrinhos do Sul",
+      "parquetKey": "morrinhos_do_sul",
+      "avg_score": 14.4,
+      "hex_count": 1798,
+      "centroid": [
+        -49.9562,
+        -29.3366
+      ]
+    },
+    {
+      "municipio": "Vila Maria",
+      "parquetKey": "vila_maria",
+      "avg_score": 14.4,
+      "hex_count": 1966,
+      "centroid": [
+        -52.1493,
+        -28.5593
+      ]
+    },
+    {
+      "municipio": "Mato Leitão",
+      "parquetKey": "mato_leitão",
+      "avg_score": 14.3,
+      "hex_count": 514,
+      "centroid": [
+        -52.1361,
+        -29.5252
+      ]
+    },
+    {
+      "municipio": "Minas do Leão",
+      "parquetKey": "minas_do_leão",
+      "avg_score": 14.3,
+      "hex_count": 4758,
+      "centroid": [
+        -52.0768,
+        -30.0784
+      ]
+    },
+    {
+      "municipio": "São José dos Ausentes",
+      "parquetKey": "são_jose_dos_ausentes",
+      "avg_score": 14.3,
+      "hex_count": 12502,
+      "centroid": [
+        -49.9586,
+        -28.643
+      ]
+    },
+    {
+      "municipio": "Centenário",
+      "parquetKey": "centenario",
+      "avg_score": 14.2,
+      "hex_count": 1421,
+      "centroid": [
+        -52.0017,
+        -27.7746
+      ]
+    },
+    {
+      "municipio": "Santo Antônio da Patrulha",
+      "parquetKey": "santo_antônio_da_patrulha",
+      "avg_score": 14.2,
+      "hex_count": 11568,
+      "centroid": [
+        -50.5655,
+        -29.873
+      ]
+    },
+    {
+      "municipio": "Viamão",
+      "parquetKey": "viamão",
+      "avg_score": 14.2,
+      "hex_count": 16644,
+      "centroid": [
+        -50.8647,
+        -30.1679
+      ]
+    },
+    {
+      "municipio": "Barra do Ribeiro",
+      "parquetKey": "barra_do_ribeiro",
+      "avg_score": 14.1,
+      "hex_count": 8188,
+      "centroid": [
+        -51.3556,
+        -30.3753
+      ]
+    },
+    {
+      "municipio": "Cacique Doble",
+      "parquetKey": "cacique_doble",
+      "avg_score": 14.1,
+      "hex_count": 2164,
+      "centroid": [
+        -51.6759,
+        -27.8137
+      ]
+    },
+    {
+      "municipio": "Candiota",
+      "parquetKey": "candiota",
+      "avg_score": 14.1,
+      "hex_count": 11048,
+      "centroid": [
+        -53.7439,
+        -31.5532
+      ]
+    },
+    {
+      "municipio": "Dom Pedro de Alcântara",
+      "parquetKey": "dom_pedro_de_alcântara",
+      "avg_score": 14.1,
+      "hex_count": 849,
+      "centroid": [
+        -49.8565,
+        -29.3674
+      ]
+    },
+    {
+      "municipio": "Dona Francisca",
+      "parquetKey": "dona_francisca",
+      "avg_score": 14.0,
+      "hex_count": 1278,
+      "centroid": [
+        -53.3459,
+        -29.5608
+      ]
+    },
+    {
+      "municipio": "Gentil",
+      "parquetKey": "gentil",
+      "avg_score": 14.0,
+      "hex_count": 1996,
+      "centroid": [
+        -52.0376,
+        -28.3855
+      ]
+    },
+    {
+      "municipio": "Osório",
+      "parquetKey": "osorio",
+      "avg_score": 14.0,
+      "hex_count": 7307,
+      "centroid": [
+        -50.2618,
+        -29.9125
+      ]
+    },
+    {
+      "municipio": "São João da Urtiga",
+      "parquetKey": "são_joão_da_urtiga",
+      "avg_score": 14.0,
+      "hex_count": 1808,
+      "centroid": [
+        -51.8341,
+        -27.7992
+      ]
+    },
+    {
+      "municipio": "Toropi",
+      "parquetKey": "toropi",
+      "avg_score": 14.0,
+      "hex_count": 2241,
+      "centroid": [
+        -54.2978,
+        -29.4691
+      ]
+    },
+    {
+      "municipio": "Alpestre",
+      "parquetKey": "alpestre",
+      "avg_score": 13.9,
+      "hex_count": 3461,
+      "centroid": [
+        -53.0604,
+        -27.2158
+      ]
+    },
+    {
+      "municipio": "Arroio do Sal",
+      "parquetKey": "arroio_do_sal",
+      "avg_score": 13.9,
+      "hex_count": 1296,
+      "centroid": [
+        -49.8944,
+        -29.5211
+      ]
+    },
+    {
+      "municipio": "Candelária",
+      "parquetKey": "candelaria",
+      "avg_score": 13.8,
+      "hex_count": 10560,
+      "centroid": [
+        -52.8173,
+        -29.698
+      ]
+    },
+    {
+      "municipio": "Mormaço",
+      "parquetKey": "mormaço",
+      "avg_score": 13.8,
+      "hex_count": 1590,
+      "centroid": [
+        -52.6618,
+        -28.6933
+      ]
+    },
+    {
+      "municipio": "Vale Verde",
+      "parquetKey": "vale_verde",
+      "avg_score": 13.7,
+      "hex_count": 3675,
+      "centroid": [
+        -52.1122,
+        -29.8284
+      ]
+    },
+    {
+      "municipio": "Boa Vista do Buricá",
+      "parquetKey": "boa_vista_do_burica",
+      "avg_score": 13.6,
+      "hex_count": 1180,
+      "centroid": [
+        -54.0996,
+        -27.6755
+      ]
+    },
+    {
+      "municipio": "Novo Tiradentes",
+      "parquetKey": "novo_tiradentes",
+      "avg_score": 13.6,
+      "hex_count": 813,
+      "centroid": [
+        -53.168,
+        -27.5625
+      ]
+    },
+    {
+      "municipio": "Seberi",
+      "parquetKey": "seberi",
+      "avg_score": 13.6,
+      "hex_count": 3215,
+      "centroid": [
+        -53.3619,
+        -27.4993
+      ]
+    },
+    {
+      "municipio": "São Lourenço do Sul",
+      "parquetKey": "são_lourenço_do_sul",
+      "avg_score": 13.6,
+      "hex_count": 23525,
+      "centroid": [
+        -52.1303,
+        -31.2362
+      ]
+    },
+    {
+      "municipio": "Crissiumal",
+      "parquetKey": "crissiumal",
+      "avg_score": 13.5,
+      "hex_count": 3899,
+      "centroid": [
+        -54.1377,
+        -27.4897
+      ]
+    },
+    {
+      "municipio": "Nova Palma",
+      "parquetKey": "nova_palma",
+      "avg_score": 13.4,
+      "hex_count": 3523,
+      "centroid": [
+        -53.415,
+        -29.4361
+      ]
+    },
+    {
+      "municipio": "Passo do Sobrado",
+      "parquetKey": "passo_do_sobrado",
+      "avg_score": 13.4,
+      "hex_count": 2957,
+      "centroid": [
+        -52.2442,
+        -29.7567
+      ]
+    },
+    {
+      "municipio": "Estação",
+      "parquetKey": "estação",
+      "avg_score": 13.3,
+      "hex_count": 1063,
+      "centroid": [
+        -52.2915,
+        -27.9299
+      ]
+    },
+    {
+      "municipio": "Vacaria",
+      "parquetKey": "vacaria",
+      "avg_score": 13.3,
+      "hex_count": 22651,
+      "centroid": [
+        -50.9247,
+        -28.3787
+      ]
+    },
+    {
+      "municipio": "Charrua",
+      "parquetKey": "charrua",
+      "avg_score": 13.2,
+      "hex_count": 2113,
+      "centroid": [
+        -51.9981,
+        -27.9456
+      ]
+    },
+    {
+      "municipio": "Faxinalzinho",
+      "parquetKey": "faxinalzinho",
+      "avg_score": 13.2,
+      "hex_count": 1516,
+      "centroid": [
+        -52.677,
+        -27.3733
+      ]
+    },
+    {
+      "municipio": "Ponte Preta",
+      "parquetKey": "ponte_preta",
+      "avg_score": 13.2,
+      "hex_count": 1058,
+      "centroid": [
+        -52.5065,
+        -27.6539
+      ]
+    },
+    {
+      "municipio": "São José do Inhacorá",
+      "parquetKey": "são_jose_do_inhacora",
+      "avg_score": 13.2,
+      "hex_count": 847,
+      "centroid": [
+        -54.1228,
+        -27.7377
+      ]
+    },
+    {
+      "municipio": "Tapejara",
+      "parquetKey": "tapejara",
+      "avg_score": 13.2,
+      "hex_count": 2550,
+      "centroid": [
+        -52.0138,
+        -28.0604
+      ]
+    },
+    {
+      "municipio": "Barracão",
+      "parquetKey": "barracão",
+      "avg_score": 13.1,
+      "hex_count": 5432,
+      "centroid": [
+        -51.4357,
+        -27.7295
+      ]
+    },
+    {
+      "municipio": "Bom Jesus",
+      "parquetKey": "bom_jesus",
+      "avg_score": 13.1,
+      "hex_count": 28006,
+      "centroid": [
+        -50.4279,
+        -28.5893
+      ]
+    },
+    {
+      "municipio": "Camaquã",
+      "parquetKey": "camaquã",
+      "avg_score": 13.1,
+      "hex_count": 19199,
+      "centroid": [
+        -51.7754,
+        -30.928
+      ]
+    },
+    {
+      "municipio": "Caseiros",
+      "parquetKey": "caseiros",
+      "avg_score": 13.1,
+      "hex_count": 2520,
+      "centroid": [
+        -51.7365,
+        -28.2466
+      ]
+    },
+    {
+      "municipio": "Passo Fundo",
+      "parquetKey": "passo_fundo",
+      "avg_score": 13.1,
+      "hex_count": 8455,
+      "centroid": [
+        -52.4597,
+        -28.2624
+      ]
+    },
+    {
+      "municipio": "Tio Hugo",
+      "parquetKey": "tio_hugo",
+      "avg_score": 13.0,
+      "hex_count": 1238,
+      "centroid": [
+        -52.5982,
+        -28.5803
+      ]
+    },
+    {
+      "municipio": "Jaguari",
+      "parquetKey": "jaguari",
+      "avg_score": 12.9,
+      "hex_count": 7653,
+      "centroid": [
+        -54.6506,
+        -29.4611
+      ]
+    },
+    {
+      "municipio": "Mata",
+      "parquetKey": "mata",
+      "avg_score": 12.9,
+      "hex_count": 3584,
+      "centroid": [
+        -54.4695,
+        -29.5373
+      ]
+    },
+    {
+      "municipio": "Nova Esperança do Sul",
+      "parquetKey": "nova_esperança_do_sul",
+      "avg_score": 12.9,
+      "hex_count": 2167,
+      "centroid": [
+        -54.8216,
+        -29.4036
+      ]
+    },
+    {
+      "municipio": "Vicente Dutra",
+      "parquetKey": "vicente_dutra",
+      "avg_score": 12.9,
+      "hex_count": 2051,
+      "centroid": [
+        -53.3851,
+        -27.1712
+      ]
+    },
+    {
+      "municipio": "Erval Seco",
+      "parquetKey": "erval_seco",
+      "avg_score": 12.8,
+      "hex_count": 3833,
+      "centroid": [
+        -53.5212,
+        -27.5152
+      ]
+    },
+    {
+      "municipio": "Marau",
+      "parquetKey": "marau",
+      "avg_score": 12.8,
+      "hex_count": 7022,
+      "centroid": [
+        -52.2694,
+        -28.4541
+      ]
+    },
+    {
+      "municipio": "Pinheiro Machado",
+      "parquetKey": "pinheiro_machado",
+      "avg_score": 12.8,
+      "hex_count": 26405,
+      "centroid": [
+        -53.4178,
+        -31.4082
+      ]
+    },
+    {
+      "municipio": "Soledade",
+      "parquetKey": "soledade",
+      "avg_score": 12.8,
+      "hex_count": 13275,
+      "centroid": [
+        -52.5395,
+        -28.8308
+      ]
+    },
+    {
+      "municipio": "Trindade do Sul",
+      "parquetKey": "trindade_do_sul",
+      "avg_score": 12.8,
+      "hex_count": 2857,
+      "centroid": [
+        -52.8978,
+        -27.5277
+      ]
+    },
+    {
+      "municipio": "Água Santa",
+      "parquetKey": "agua_santa",
+      "avg_score": 12.8,
+      "hex_count": 3129,
+      "centroid": [
+        -52.0534,
+        -28.2158
+      ]
+    },
+    {
+      "municipio": "Cristal",
+      "parquetKey": "cristal",
+      "avg_score": 12.7,
+      "hex_count": 7819,
+      "centroid": [
+        -52.0409,
+        -31.0078
+      ]
+    },
+    {
+      "municipio": "Entre Rios do Sul",
+      "parquetKey": "entre_rios_do_sul",
+      "avg_score": 12.7,
+      "hex_count": 1270,
+      "centroid": [
+        -52.7265,
+        -27.5189
+      ]
+    },
+    {
+      "municipio": "Lagoa Vermelha",
+      "parquetKey": "lagoa_vermelha",
+      "avg_score": 12.7,
+      "hex_count": 13472,
+      "centroid": [
+        -51.4995,
+        -28.2165
+      ]
+    },
+    {
+      "municipio": "Nova Candelária",
+      "parquetKey": "nova_candelaria",
+      "avg_score": 12.7,
+      "hex_count": 1055,
+      "centroid": [
+        -54.1247,
+        -27.5953
+      ]
+    },
+    {
+      "municipio": "Erebango",
+      "parquetKey": "erebango",
+      "avg_score": 12.6,
+      "hex_count": 1623,
+      "centroid": [
+        -52.3189,
+        -27.8298
+      ]
+    },
+    {
+      "municipio": "Getúlio Vargas",
+      "parquetKey": "getulio_vargas",
+      "avg_score": 12.6,
+      "hex_count": 3066,
+      "centroid": [
+        -52.1795,
+        -27.849
+      ]
+    },
+    {
+      "municipio": "Maquiné",
+      "parquetKey": "maquine",
+      "avg_score": 12.6,
+      "hex_count": 6703,
+      "centroid": [
+        -50.2109,
+        -29.6339
+      ]
+    },
+    {
+      "municipio": "São José do Ouro",
+      "parquetKey": "são_jose_do_ouro",
+      "avg_score": 12.6,
+      "hex_count": 3539,
+      "centroid": [
+        -51.5612,
+        -27.7699
+      ]
+    },
+    {
+      "municipio": "Cerrito",
+      "parquetKey": "cerrito",
+      "avg_score": 12.5,
+      "hex_count": 5326,
+      "centroid": [
+        -52.7981,
+        -31.7239
+      ]
+    },
+    {
+      "municipio": "Jaboticaba",
+      "parquetKey": "jaboticaba",
+      "avg_score": 12.5,
+      "hex_count": 1365,
+      "centroid": [
+        -53.2624,
+        -27.6304
+      ]
+    },
+    {
+      "municipio": "Machadinho",
+      "parquetKey": "machadinho",
+      "avg_score": 12.5,
+      "hex_count": 3532,
+      "centroid": [
+        -51.6728,
+        -27.586
+      ]
+    },
+    {
+      "municipio": "Rio Pardo",
+      "parquetKey": "rio_pardo",
+      "avg_score": 12.5,
+      "hex_count": 23054,
+      "centroid": [
+        -52.4437,
+        -30.0154
+      ]
+    },
+    {
+      "municipio": "Santo Expedito do Sul",
+      "parquetKey": "santo_expedito_do_sul",
+      "avg_score": 12.5,
+      "hex_count": 1335,
+      "centroid": [
+        -51.6602,
+        -27.9246
+      ]
+    },
+    {
+      "municipio": "Tupanci do Sul",
+      "parquetKey": "tupanci_do_sul",
+      "avg_score": 12.5,
+      "hex_count": 1435,
+      "centroid": [
+        -51.538,
+        -27.9302
+      ]
+    },
+    {
+      "municipio": "Vila Nova do Sul",
+      "parquetKey": "vila_nova_do_sul",
+      "avg_score": 12.5,
+      "hex_count": 5833,
+      "centroid": [
+        -53.8799,
+        -30.3432
+      ]
+    },
+    {
+      "municipio": "Cerro Grande",
+      "parquetKey": "cerro_grande",
+      "avg_score": 12.4,
+      "hex_count": 786,
+      "centroid": [
+        -53.1628,
+        -27.6297
+      ]
+    },
+    {
+      "municipio": "Cidreira",
+      "parquetKey": "cidreira",
+      "avg_score": 12.4,
+      "hex_count": 2704,
+      "centroid": [
+        -50.274,
+        -30.1183
+      ]
+    },
+    {
+      "municipio": "Herval",
+      "parquetKey": "herval",
+      "avg_score": 12.4,
+      "hex_count": 21005,
+      "centroid": [
+        -53.3994,
+        -32.0209
+      ]
+    },
+    {
+      "municipio": "Sananduva",
+      "parquetKey": "sananduva",
+      "avg_score": 12.4,
+      "hex_count": 5375,
+      "centroid": [
+        -51.8017,
+        -27.9562
+      ]
+    },
+    {
+      "municipio": "Estrela Velha",
+      "parquetKey": "estrela_velha",
+      "avg_score": 12.3,
+      "hex_count": 3129,
+      "centroid": [
+        -53.1773,
+        -29.2226
+      ]
+    },
+    {
+      "municipio": "Miraguaí",
+      "parquetKey": "miraguai",
+      "avg_score": 12.3,
+      "hex_count": 1408,
+      "centroid": [
+        -53.7426,
+        -27.491
+      ]
+    },
+    {
+      "municipio": "Ibirapuitã",
+      "parquetKey": "ibirapuitã",
+      "avg_score": 12.2,
+      "hex_count": 3337,
+      "centroid": [
+        -52.4441,
+        -28.6248
+      ]
+    },
+    {
+      "municipio": "Novo Cabrais",
+      "parquetKey": "novo_cabrais",
+      "avg_score": 12.2,
+      "hex_count": 2159,
+      "centroid": [
+        -52.9936,
+        -29.7614
+      ]
+    },
+    {
+      "municipio": "Santa Rosa",
+      "parquetKey": "santa_rosa",
+      "avg_score": 12.2,
+      "hex_count": 5349,
+      "centroid": [
+        -54.4979,
+        -27.8649
+      ]
+    },
+    {
+      "municipio": "Jacuizinho",
+      "parquetKey": "jacuizinho",
+      "avg_score": 12.1,
+      "hex_count": 3740,
+      "centroid": [
+        -53.0148,
+        -29.0357
+      ]
+    },
+    {
+      "municipio": "Santana da Boa Vista",
+      "parquetKey": "santana_da_boa_vista",
+      "avg_score": 12.1,
+      "hex_count": 16394,
+      "centroid": [
+        -53.1801,
+        -30.8128
+      ]
+    },
+    {
+      "municipio": "Sarandi",
+      "parquetKey": "sarandi",
+      "avg_score": 12.1,
+      "hex_count": 3783,
+      "centroid": [
+        -52.8926,
+        -27.9419
+      ]
+    },
+    {
+      "municipio": "Turuçu",
+      "parquetKey": "turuçu",
+      "avg_score": 12.1,
+      "hex_count": 2951,
+      "centroid": [
+        -52.1578,
+        -31.4733
+      ]
+    },
+    {
+      "municipio": "Horizontina",
+      "parquetKey": "horizontina",
+      "avg_score": 12.0,
+      "hex_count": 2481,
+      "centroid": [
+        -54.2992,
+        -27.5891
+      ]
+    },
+    {
+      "municipio": "Mato Castelhano",
+      "parquetKey": "mato_castelhano",
+      "avg_score": 12.0,
+      "hex_count": 2562,
+      "centroid": [
+        -52.1986,
+        -28.2783
+      ]
+    },
+    {
+      "municipio": "Nonoai",
+      "parquetKey": "nonoai",
+      "avg_score": 12.0,
+      "hex_count": 4985,
+      "centroid": [
+        -52.8497,
+        -27.3692
+      ]
+    },
+    {
+      "municipio": "Capão Bonito do Sul",
+      "parquetKey": "capão_bonito_do_sul",
+      "avg_score": 11.8,
+      "hex_count": 5613,
+      "centroid": [
+        -51.3858,
+        -28.1533
+      ]
+    },
+    {
+      "municipio": "Imbé",
+      "parquetKey": "imbe",
+      "avg_score": 11.8,
+      "hex_count": 433,
+      "centroid": [
+        -50.1174,
+        -29.9305
+      ]
+    },
+    {
+      "municipio": "Tapera",
+      "parquetKey": "tapera",
+      "avg_score": 11.8,
+      "hex_count": 1962,
+      "centroid": [
+        -52.8585,
+        -28.6616
+      ]
+    },
+    {
+      "municipio": "Alegria",
+      "parquetKey": "alegria",
+      "avg_score": 11.7,
+      "hex_count": 1877,
+      "centroid": [
+        -54.0557,
+        -27.8134
+      ]
+    },
+    {
+      "municipio": "Derrubadas",
+      "parquetKey": "derrubadas",
+      "avg_score": 11.7,
+      "hex_count": 3793,
+      "centroid": [
+        -53.8968,
+        -27.2398
+      ]
+    },
+    {
+      "municipio": "Gramado dos Loureiros",
+      "parquetKey": "gramado_dos_loureiros",
+      "avg_score": 11.7,
+      "hex_count": 1394,
+      "centroid": [
+        -52.915,
+        -27.4455
+      ]
+    },
+    {
+      "municipio": "Rio dos Índios",
+      "parquetKey": "rio_dos_indios",
+      "avg_score": 11.7,
+      "hex_count": 2491,
+      "centroid": [
+        -52.8788,
+        -27.2529
+      ]
+    },
+    {
+      "municipio": "Santa Maria",
+      "parquetKey": "santa_maria",
+      "avg_score": 11.7,
+      "hex_count": 20162,
+      "centroid": [
+        -53.8233,
+        -29.7858
+      ]
+    },
+    {
+      "municipio": "Três Cachoeiras",
+      "parquetKey": "três_cachoeiras",
+      "avg_score": 11.7,
+      "hex_count": 2728,
+      "centroid": [
+        -49.9623,
+        -29.4746
+      ]
+    },
+    {
+      "municipio": "Cachoeira do Sul",
+      "parquetKey": "cachoeira_do_sul",
+      "avg_score": 11.6,
+      "hex_count": 42381,
+      "centroid": [
+        -52.9875,
+        -30.2071
+      ]
+    },
+    {
+      "municipio": "Muitos Capões",
+      "parquetKey": "muitos_capões",
+      "avg_score": 11.6,
+      "hex_count": 12754,
+      "centroid": [
+        -51.235,
+        -28.3763
+      ]
+    },
+    {
+      "municipio": "Panambi",
+      "parquetKey": "panambi",
+      "avg_score": 11.6,
+      "hex_count": 5362,
+      "centroid": [
+        -53.5104,
+        -28.332
+      ]
+    },
+    {
+      "municipio": "Pedro Osório",
+      "parquetKey": "pedro_osorio",
+      "avg_score": 11.6,
+      "hex_count": 7150,
+      "centroid": [
+        -52.865,
+        -31.9587
+      ]
+    },
+    {
+      "municipio": "Quatro Irmãos",
+      "parquetKey": "quatro_irmãos",
+      "avg_score": 11.6,
+      "hex_count": 2881,
+      "centroid": [
+        -52.4693,
+        -27.8405
+      ]
+    },
+    {
+      "municipio": "Redentora",
+      "parquetKey": "redentora",
+      "avg_score": 11.6,
+      "hex_count": 3253,
+      "centroid": [
+        -53.6322,
+        -27.567
+      ]
+    },
+    {
+      "municipio": "Sagrada Família",
+      "parquetKey": "sagrada_familia",
+      "avg_score": 11.6,
+      "hex_count": 837,
+      "centroid": [
+        -53.131,
+        -27.7071
+      ]
+    },
+    {
+      "municipio": "Santa Cecília do Sul",
+      "parquetKey": "santa_cecilia_do_sul",
+      "avg_score": 11.6,
+      "hex_count": 2136,
+      "centroid": [
+        -51.8968,
+        -28.1809
+      ]
+    },
+    {
+      "municipio": "São Pedro do Sul",
+      "parquetKey": "são_pedro_do_sul",
+      "avg_score": 11.6,
+      "hex_count": 9895,
+      "centroid": [
+        -54.2415,
+        -29.6139
+      ]
+    },
+    {
+      "municipio": "Caçapava do Sul",
+      "parquetKey": "caçapava_do_sul",
+      "avg_score": 11.5,
+      "hex_count": 35068,
+      "centroid": [
+        -53.4809,
+        -30.6024
+      ]
+    },
+    {
+      "municipio": "Constantina",
+      "parquetKey": "constantina",
+      "avg_score": 11.5,
+      "hex_count": 2177,
+      "centroid": [
+        -52.9931,
+        -27.6902
+      ]
+    },
+    {
+      "municipio": "Cruzaltense",
+      "parquetKey": "cruzaltense",
+      "avg_score": 11.5,
+      "hex_count": 1774,
+      "centroid": [
+        -52.6452,
+        -27.6272
+      ]
+    },
+    {
+      "municipio": "Quevedos",
+      "parquetKey": "quevedos",
+      "avg_score": 11.5,
+      "hex_count": 6079,
+      "centroid": [
+        -54.0619,
+        -29.3075
+      ]
+    },
+    {
+      "municipio": "Tapes",
+      "parquetKey": "tapes",
+      "avg_score": 11.5,
+      "hex_count": 9106,
+      "centroid": [
+        -51.4415,
+        -30.6587
+      ]
+    },
+    {
+      "municipio": "Alto Alegre",
+      "parquetKey": "alto_alegre",
+      "avg_score": 11.4,
+      "hex_count": 1262,
+      "centroid": [
+        -52.9895,
+        -28.8015
+      ]
+    },
+    {
+      "municipio": "Barra Funda",
+      "parquetKey": "barra_funda",
+      "avg_score": 11.4,
+      "hex_count": 646,
+      "centroid": [
+        -53.0161,
+        -27.9212
+      ]
+    },
+    {
+      "municipio": "Santo Cristo",
+      "parquetKey": "santo_cristo",
+      "avg_score": 11.4,
+      "hex_count": 4015,
+      "centroid": [
+        -54.7136,
+        -27.798
+      ]
+    },
+    {
+      "municipio": "Cerro Largo",
+      "parquetKey": "cerro_largo",
+      "avg_score": 11.3,
+      "hex_count": 1945,
+      "centroid": [
+        -54.7392,
+        -28.1344
+      ]
+    },
+    {
+      "municipio": "Pinhal Grande",
+      "parquetKey": "pinhal_grande",
+      "avg_score": 11.3,
+      "hex_count": 5313,
+      "centroid": [
+        -53.3381,
+        -29.2901
+      ]
+    },
+    {
+      "municipio": "São Martinho",
+      "parquetKey": "são_martinho",
+      "avg_score": 11.3,
+      "hex_count": 1855,
+      "centroid": [
+        -53.9521,
+        -27.728
+      ]
+    },
+    {
+      "municipio": "São Martinho da Serra",
+      "parquetKey": "são_martinho_da_serra",
+      "avg_score": 11.3,
+      "hex_count": 7526,
+      "centroid": [
+        -53.8855,
+        -29.4761
+      ]
+    },
+    {
+      "municipio": "Alecrim",
+      "parquetKey": "alecrim",
+      "avg_score": 11.2,
+      "hex_count": 3335,
+      "centroid": [
+        -54.783,
+        -27.655
+      ]
+    },
+    {
+      "municipio": "Guarani das Missões",
+      "parquetKey": "guarani_das_missões",
+      "avg_score": 11.2,
+      "hex_count": 3196,
+      "centroid": [
+        -54.587,
+        -28.1633
+      ]
+    },
+    {
+      "municipio": "Jacutinga",
+      "parquetKey": "jacutinga",
+      "avg_score": 11.2,
+      "hex_count": 1904,
+      "centroid": [
+        -52.547,
+        -27.7871
+      ]
+    },
+    {
+      "municipio": "Novo Xingu",
+      "parquetKey": "novo_xingu",
+      "avg_score": 11.2,
+      "hex_count": 858,
+      "centroid": [
+        -53.059,
+        -27.743
+      ]
+    },
+    {
+      "municipio": "Não-Me-Toque",
+      "parquetKey": "não-me-toque",
+      "avg_score": 11.2,
+      "hex_count": 3946,
+      "centroid": [
+        -52.825,
+        -28.4614
+      ]
+    },
+    {
+      "municipio": "Santa Margarida do Sul",
+      "parquetKey": "santa_margarida_do_sul",
+      "avg_score": 11.2,
+      "hex_count": 11012,
+      "centroid": [
+        -54.1009,
+        -30.362
+      ]
+    },
+    {
+      "municipio": "Santo Ângelo",
+      "parquetKey": "santo_ângelo",
+      "avg_score": 11.2,
+      "hex_count": 7469,
+      "centroid": [
+        -54.2984,
+        -28.2554
+      ]
+    },
+    {
+      "municipio": "São Paulo das Missões",
+      "parquetKey": "são_paulo_das_missões",
+      "avg_score": 11.2,
+      "hex_count": 2462,
+      "centroid": [
+        -54.9743,
+        -27.9905
+      ]
+    },
+    {
+      "municipio": "Três Palmeiras",
+      "parquetKey": "três_palmeiras",
+      "avg_score": 11.2,
+      "hex_count": 1920,
+      "centroid": [
+        -52.8405,
+        -27.6145
+      ]
+    },
+    {
+      "municipio": "Bagé",
+      "parquetKey": "bage",
+      "avg_score": 11.1,
+      "hex_count": 48130,
+      "centroid": [
+        -54.0142,
+        -31.2383
+      ]
+    },
+    {
+      "municipio": "Campina das Missões",
+      "parquetKey": "campina_das_missões",
+      "avg_score": 11.1,
+      "hex_count": 2460,
+      "centroid": [
+        -54.8343,
+        -27.9641
+      ]
+    },
+    {
+      "municipio": "Capão do Leão",
+      "parquetKey": "capão_do_leão",
+      "avg_score": 11.1,
+      "hex_count": 9235,
+      "centroid": [
+        -52.5375,
+        -31.8308
+      ]
+    },
+    {
+      "municipio": "Esmeralda",
+      "parquetKey": "esmeralda",
+      "avg_score": 11.1,
+      "hex_count": 8795,
+      "centroid": [
+        -51.1741,
+        -28.0365
+      ]
+    },
+    {
+      "municipio": "Hulha Negra",
+      "parquetKey": "hulha_negra",
+      "avg_score": 11.1,
+      "hex_count": 9717,
+      "centroid": [
+        -53.89,
+        -31.4466
+      ]
+    },
+    {
+      "municipio": "Rondinha",
+      "parquetKey": "rondinha",
+      "avg_score": 11.1,
+      "hex_count": 2706,
+      "centroid": [
+        -52.8954,
+        -27.8306
+      ]
+    },
+    {
+      "municipio": "Vila Lângaro",
+      "parquetKey": "vila_lângaro",
+      "avg_score": 11.1,
+      "hex_count": 1623,
+      "centroid": [
+        -52.1413,
+        -28.129
+      ]
+    },
+    {
+      "municipio": "Pedras Altas",
+      "parquetKey": "pedras_altas",
+      "avg_score": 11.0,
+      "hex_count": 16355,
+      "centroid": [
+        -53.6876,
+        -31.8391
+      ]
+    },
+    {
+      "municipio": "Santo Antônio do Planalto",
+      "parquetKey": "santo_antônio_do_planalto",
+      "avg_score": 11.0,
+      "hex_count": 2204,
+      "centroid": [
+        -52.6809,
+        -28.365
       ]
     },
     {
       "municipio": "Sertão",
       "parquetKey": "sertão",
-      "avg_score": 57.2,
+      "avg_score": 11.0,
       "hex_count": 4715,
       "centroid": [
         -52.3174,
@@ -3327,9 +3707,119 @@
       ]
     },
     {
+      "municipio": "Cândido Godói",
+      "parquetKey": "cândido_godoi",
+      "avg_score": 10.9,
+      "hex_count": 2707,
+      "centroid": [
+        -54.7188,
+        -27.9356
+      ]
+    },
+    {
+      "municipio": "Espumoso",
+      "parquetKey": "espumoso",
+      "avg_score": 10.9,
+      "hex_count": 8612,
+      "centroid": [
+        -52.825,
+        -28.8712
+      ]
+    },
+    {
+      "municipio": "Ijuí",
+      "parquetKey": "ijui",
+      "avg_score": 10.9,
+      "hex_count": 7538,
+      "centroid": [
+        -53.8959,
+        -28.3181
+      ]
+    },
+    {
+      "municipio": "Lavras do Sul",
+      "parquetKey": "lavras_do_sul",
+      "avg_score": 10.9,
+      "hex_count": 30305,
+      "centroid": [
+        -54.1447,
+        -30.7779
+      ]
+    },
+    {
+      "municipio": "Nova Boa Vista",
+      "parquetKey": "nova_boa_vista",
+      "avg_score": 10.9,
+      "hex_count": 1010,
+      "centroid": [
+        -52.9795,
+        -27.9975
+      ]
+    },
+    {
+      "municipio": "Coqueiros do Sul",
+      "parquetKey": "coqueiros_do_sul",
+      "avg_score": 10.8,
+      "hex_count": 2983,
+      "centroid": [
+        -52.7603,
+        -28.1335
+      ]
+    },
+    {
+      "municipio": "Humaitá",
+      "parquetKey": "humaita",
+      "avg_score": 10.8,
+      "hex_count": 1453,
+      "centroid": [
+        -53.9806,
+        -27.5746
+      ]
+    },
+    {
+      "municipio": "Porto Mauá",
+      "parquetKey": "porto_maua",
+      "avg_score": 10.8,
+      "hex_count": 1104,
+      "centroid": [
+        -54.6568,
+        -27.5963
+      ]
+    },
+    {
+      "municipio": "São José das Missões",
+      "parquetKey": "são_jose_das_missões",
+      "avg_score": 10.8,
+      "hex_count": 1047,
+      "centroid": [
+        -53.1321,
+        -27.795
+      ]
+    },
+    {
+      "municipio": "São Valério do Sul",
+      "parquetKey": "são_valerio_do_sul",
+      "avg_score": 10.8,
+      "hex_count": 1164,
+      "centroid": [
+        -53.9102,
+        -27.8199
+      ]
+    },
+    {
+      "municipio": "Jari",
+      "parquetKey": "jari",
+      "avg_score": 10.7,
+      "hex_count": 9608,
+      "centroid": [
+        -54.2972,
+        -29.2881
+      ]
+    },
+    {
       "municipio": "Sete de Setembro",
       "parquetKey": "sete_de_setembro",
-      "avg_score": 57.2,
+      "avg_score": 10.7,
       "hex_count": 1412,
       "centroid": [
         -54.4595,
@@ -3337,9 +3827,19 @@
       ]
     },
     {
+      "municipio": "Três de Maio",
+      "parquetKey": "três_de_maio",
+      "avg_score": 10.7,
+      "hex_count": 4577,
+      "centroid": [
+        -54.2695,
+        -27.7333
+      ]
+    },
+    {
       "municipio": "Almirante Tamandaré do Sul",
       "parquetKey": "almirante_tamandare_do_sul",
-      "avg_score": 57.1,
+      "avg_score": 10.6,
       "hex_count": 2858,
       "centroid": [
         -52.9062,
@@ -3349,7 +3849,7 @@
     {
       "municipio": "Braga",
       "parquetKey": "braga",
-      "avg_score": 57.1,
+      "avg_score": 10.6,
       "hex_count": 1428,
       "centroid": [
         -53.7445,
@@ -3357,519 +3857,139 @@
       ]
     },
     {
-      "municipio": "Colorado",
-      "parquetKey": "colorado",
-      "avg_score": 57.1,
-      "hex_count": 3106,
+      "municipio": "Carazinho",
+      "parquetKey": "carazinho",
+      "avg_score": 10.6,
+      "hex_count": 7214,
       "centroid": [
-        -52.9907,
-        -28.4677
+        -52.8689,
+        -28.2781
       ]
     },
     {
-      "municipio": "Ajuricaba",
-      "parquetKey": "ajuricaba",
-      "avg_score": 57.0,
-      "hex_count": 3516,
+      "municipio": "Ibiaçá",
+      "parquetKey": "ibiaça",
+      "avg_score": 10.6,
+      "hex_count": 3727,
       "centroid": [
-        -53.7428,
-        -28.2126
+        -51.7871,
+        -28.1041
       ]
     },
     {
-      "municipio": "Boa Vista das Missões",
-      "parquetKey": "boa_vista_das_missões",
-      "avg_score": 56.8,
-      "hex_count": 2100,
+      "municipio": "Ipiranga do Sul",
+      "parquetKey": "ipiranga_do_sul",
+      "avg_score": 10.6,
+      "hex_count": 1694,
       "centroid": [
-        -53.3427,
-        -27.7001
+        -52.4182,
+        -27.9304
       ]
     },
     {
-      "municipio": "Santa Cecília do Sul",
-      "parquetKey": "santa_cecilia_do_sul",
-      "avg_score": 56.8,
-      "hex_count": 2136,
+      "municipio": "Lajeado do Bugre",
+      "parquetKey": "lajeado_do_bugre",
+      "avg_score": 10.6,
+      "hex_count": 722,
       "centroid": [
-        -51.8968,
-        -28.1809
+        -53.2059,
+        -27.7036
       ]
     },
     {
-      "municipio": "Turuçu",
-      "parquetKey": "turuçu",
-      "avg_score": 56.8,
-      "hex_count": 2951,
+      "municipio": "Novo Barreiro",
+      "parquetKey": "novo_barreiro",
+      "avg_score": 10.6,
+      "hex_count": 1326,
       "centroid": [
-        -52.1578,
-        -31.4733
+        -53.1155,
+        -27.8977
       ]
     },
     {
-      "municipio": "Coqueiros do Sul",
-      "parquetKey": "coqueiros_do_sul",
-      "avg_score": 56.7,
-      "hex_count": 2983,
+      "municipio": "São Pedro das Missões",
+      "parquetKey": "são_pedro_das_missões",
+      "avg_score": 10.6,
+      "hex_count": 859,
       "centroid": [
-        -52.7603,
-        -28.1335
+        -53.2382,
+        -27.7801
       ]
     },
     {
-      "municipio": "Cruz Alta",
-      "parquetKey": "cruz_alta",
-      "avg_score": 56.7,
-      "hex_count": 14965,
+      "municipio": "Bom Progresso",
+      "parquetKey": "bom_progresso",
+      "avg_score": 10.5,
+      "hex_count": 956,
       "centroid": [
-        -53.5695,
-        -28.7039
+        -53.849,
+        -27.5445
       ]
     },
     {
-      "municipio": "Gramado Xavier",
-      "parquetKey": "gramado_xavier",
-      "avg_score": 56.6,
-      "hex_count": 2407,
+      "municipio": "São José do Norte",
+      "parquetKey": "são_jose_do_norte",
+      "avg_score": 10.5,
+      "hex_count": 12512,
       "centroid": [
-        -52.598,
-        -29.2895
+        -51.6767,
+        -31.7727
       ]
     },
     {
-      "municipio": "Alto Alegre",
-      "parquetKey": "alto_alegre",
-      "avg_score": 56.5,
-      "hex_count": 1262,
+      "municipio": "Ubiretama",
+      "parquetKey": "ubiretama",
+      "avg_score": 10.5,
+      "hex_count": 1379,
       "centroid": [
-        -52.9895,
-        -28.8015
+        -54.6463,
+        -28.0402
       ]
     },
     {
-      "municipio": "Independência",
-      "parquetKey": "independência",
-      "avg_score": 56.4,
-      "hex_count": 3891,
+      "municipio": "Lagoa dos Três Cantos",
+      "parquetKey": "lagoa_dos_três_cantos",
+      "avg_score": 10.4,
+      "hex_count": 1508,
       "centroid": [
-        -54.1852,
-        -27.8981
+        -52.8361,
+        -28.5707
       ]
     },
     {
-      "municipio": "Inhacorá",
-      "parquetKey": "inhacora",
-      "avg_score": 56.4,
-      "hex_count": 1232,
+      "municipio": "Selbach",
+      "parquetKey": "selbach",
+      "avg_score": 10.4,
+      "hex_count": 1922,
       "centroid": [
-        -54.0294,
-        -27.8994
+        -52.976,
+        -28.6673
       ]
     },
     {
-      "municipio": "Doutor Maurício Cardoso",
-      "parquetKey": "doutor_mauricio_cardoso",
-      "avg_score": 56.3,
-      "hex_count": 2719,
+      "municipio": "Campo Novo",
+      "parquetKey": "campo_novo",
+      "avg_score": 10.3,
+      "hex_count": 2370,
       "centroid": [
-        -54.3641,
-        -27.4871
+        -53.8233,
+        -27.6648
       ]
     },
     {
-      "municipio": "Saldanha Marinho",
-      "parquetKey": "saldanha_marinho",
-      "avg_score": 56.3,
-      "hex_count": 2408,
+      "municipio": "Chuí",
+      "parquetKey": "chui",
+      "avg_score": 10.3,
+      "hex_count": 2463,
       "centroid": [
-        -53.0958,
-        -28.3875
-      ]
-    },
-    {
-      "municipio": "Senador Salgado Filho",
-      "parquetKey": "senador_salgado_filho",
-      "avg_score": 56.2,
-      "hex_count": 1607,
-      "centroid": [
-        -54.5348,
-        -28.0303
-      ]
-    },
-    {
-      "municipio": "Charrua",
-      "parquetKey": "charrua",
-      "avg_score": 56.1,
-      "hex_count": 2113,
-      "centroid": [
-        -51.9981,
-        -27.9456
-      ]
-    },
-    {
-      "municipio": "Três Forquilhas",
-      "parquetKey": "três_forquilhas",
-      "avg_score": 56.1,
-      "hex_count": 2367,
-      "centroid": [
-        -50.0866,
-        -29.4263
-      ]
-    },
-    {
-      "municipio": "Restinga Sêca",
-      "parquetKey": "restinga_sêca",
-      "avg_score": 55.9,
-      "hex_count": 10913,
-      "centroid": [
-        -53.3418,
-        -29.8172
-      ]
-    },
-    {
-      "municipio": "Itati",
-      "parquetKey": "itati",
-      "avg_score": 55.8,
-      "hex_count": 2234,
-      "centroid": [
-        -50.1641,
-        -29.4618
-      ]
-    },
-    {
-      "municipio": "Rolador",
-      "parquetKey": "rolador",
-      "avg_score": 55.8,
-      "hex_count": 3263,
-      "centroid": [
-        -54.8326,
-        -28.2568
-      ]
-    },
-    {
-      "municipio": "Quatro Irmãos",
-      "parquetKey": "quatro_irmãos",
-      "avg_score": 55.7,
-      "hex_count": 2881,
-      "centroid": [
-        -52.4693,
-        -27.8405
-      ]
-    },
-    {
-      "municipio": "Chapada",
-      "parquetKey": "chapada",
-      "avg_score": 55.6,
-      "hex_count": 7397,
-      "centroid": [
-        -53.1131,
-        -28.0895
-      ]
-    },
-    {
-      "municipio": "Condor",
-      "parquetKey": "condor",
-      "avg_score": 55.5,
-      "hex_count": 5030,
-      "centroid": [
-        -53.4938,
-        -28.165
-      ]
-    },
-    {
-      "municipio": "Santo Augusto",
-      "parquetKey": "santo_augusto",
-      "avg_score": 55.3,
-      "hex_count": 5067,
-      "centroid": [
-        -53.7559,
-        -27.9009
-      ]
-    },
-    {
-      "municipio": "Cerrito",
-      "parquetKey": "cerrito",
-      "avg_score": 55.2,
-      "hex_count": 5326,
-      "centroid": [
-        -52.7981,
-        -31.7239
-      ]
-    },
-    {
-      "municipio": "Herveiras",
-      "parquetKey": "herveiras",
-      "avg_score": 55.2,
-      "hex_count": 1309,
-      "centroid": [
-        -52.6702,
-        -29.44
-      ]
-    },
-    {
-      "municipio": "Tupanci do Sul",
-      "parquetKey": "tupanci_do_sul",
-      "avg_score": 55.2,
-      "hex_count": 1435,
-      "centroid": [
-        -51.538,
-        -27.9302
-      ]
-    },
-    {
-      "municipio": "Cerro Branco",
-      "parquetKey": "cerro_branco",
-      "avg_score": 55.1,
-      "hex_count": 1772,
-      "centroid": [
-        -52.9949,
-        -29.6309
-      ]
-    },
-    {
-      "municipio": "Porto Vera Cruz",
-      "parquetKey": "porto_vera_cruz",
-      "avg_score": 55.0,
-      "hex_count": 1221,
-      "centroid": [
-        -54.8894,
-        -27.7551
-      ]
-    },
-    {
-      "municipio": "Barão do Triunfo",
-      "parquetKey": "barão_do_triunfo",
-      "avg_score": 54.9,
-      "hex_count": 4915,
-      "centroid": [
-        -51.7987,
-        -30.4176
-      ]
-    },
-    {
-      "municipio": "Nova Esperança do Sul",
-      "parquetKey": "nova_esperança_do_sul",
-      "avg_score": 54.8,
-      "hex_count": 2167,
-      "centroid": [
-        -54.8216,
-        -29.4036
-      ]
-    },
-    {
-      "municipio": "Palmeira das Missões",
-      "parquetKey": "palmeira_das_missões",
-      "avg_score": 54.8,
-      "hex_count": 15349,
-      "centroid": [
-        -53.3894,
-        -27.9367
-      ]
-    },
-    {
-      "municipio": "Camaquã",
-      "parquetKey": "camaquã",
-      "avg_score": 54.7,
-      "hex_count": 19199,
-      "centroid": [
-        -51.7754,
-        -30.928
-      ]
-    },
-    {
-      "municipio": "Coronel Bicaco",
-      "parquetKey": "coronel_bicaco",
-      "avg_score": 54.7,
-      "hex_count": 5301,
-      "centroid": [
-        -53.6481,
-        -27.7986
-      ]
-    },
-    {
-      "municipio": "Rio Pardo",
-      "parquetKey": "rio_pardo",
-      "avg_score": 54.7,
-      "hex_count": 23054,
-      "centroid": [
-        -52.4437,
-        -30.0154
-      ]
-    },
-    {
-      "municipio": "Paraíso do Sul",
-      "parquetKey": "paraiso_do_sul",
-      "avg_score": 54.6,
-      "hex_count": 3795,
-      "centroid": [
-        -53.1203,
-        -29.7033
-      ]
-    },
-    {
-      "municipio": "São Pedro do Sul",
-      "parquetKey": "são_pedro_do_sul",
-      "avg_score": 54.6,
-      "hex_count": 9895,
-      "centroid": [
-        -54.2415,
-        -29.6139
-      ]
-    },
-    {
-      "municipio": "Barracão",
-      "parquetKey": "barracão",
-      "avg_score": 54.5,
-      "hex_count": 5432,
-      "centroid": [
-        -51.4357,
-        -27.7295
-      ]
-    },
-    {
-      "municipio": "Santa Bárbara do Sul",
-      "parquetKey": "santa_barbara_do_sul",
-      "avg_score": 54.4,
-      "hex_count": 10623,
-      "centroid": [
-        -53.2849,
-        -28.3794
-      ]
-    },
-    {
-      "municipio": "Roque Gonzales",
-      "parquetKey": "roque_gonzales",
-      "avg_score": 54.3,
-      "hex_count": 3846,
-      "centroid": [
-        -55.0798,
-        -28.0645
-      ]
-    },
-    {
-      "municipio": "Tuparendi",
-      "parquetKey": "tuparendi",
-      "avg_score": 54.1,
-      "hex_count": 3340,
-      "centroid": [
-        -54.5554,
-        -27.7026
-      ]
-    },
-    {
-      "municipio": "Itapuca",
-      "parquetKey": "itapuca",
-      "avg_score": 54.0,
-      "hex_count": 2008,
-      "centroid": [
-        -52.1973,
-        -28.776
-      ]
-    },
-    {
-      "municipio": "Nova Palma",
-      "parquetKey": "nova_palma",
-      "avg_score": 54.0,
-      "hex_count": 3523,
-      "centroid": [
-        -53.415,
-        -29.4361
-      ]
-    },
-    {
-      "municipio": "Arroio dos Ratos",
-      "parquetKey": "arroio_dos_ratos",
-      "avg_score": 53.9,
-      "hex_count": 4782,
-      "centroid": [
-        -51.7502,
-        -30.1908
-      ]
-    },
-    {
-      "municipio": "Sinimbu",
-      "parquetKey": "sinimbu",
-      "avg_score": 53.8,
-      "hex_count": 5659,
-      "centroid": [
-        -52.5727,
-        -29.4427
-      ]
-    },
-    {
-      "municipio": "Agudo",
-      "parquetKey": "agudo",
-      "avg_score": 53.7,
-      "hex_count": 5975,
-      "centroid": [
-        -53.2263,
-        -29.6098
-      ]
-    },
-    {
-      "municipio": "Alecrim",
-      "parquetKey": "alecrim",
-      "avg_score": 53.7,
-      "hex_count": 3335,
-      "centroid": [
-        -54.783,
-        -27.655
-      ]
-    },
-    {
-      "municipio": "Cristal",
-      "parquetKey": "cristal",
-      "avg_score": 53.7,
-      "hex_count": 7819,
-      "centroid": [
-        -52.0409,
-        -31.0078
-      ]
-    },
-    {
-      "municipio": "Ibirapuitã",
-      "parquetKey": "ibirapuitã",
-      "avg_score": 53.7,
-      "hex_count": 3337,
-      "centroid": [
-        -52.4441,
-        -28.6248
-      ]
-    },
-    {
-      "municipio": "Palmares do Sul",
-      "parquetKey": "palmares_do_sul",
-      "avg_score": 53.7,
-      "hex_count": 10565,
-      "centroid": [
-        -50.4574,
-        -30.3656
-      ]
-    },
-    {
-      "municipio": "Novo Machado",
-      "parquetKey": "novo_machado",
-      "avg_score": 53.6,
-      "hex_count": 2281,
-      "centroid": [
-        -54.5347,
-        -27.5463
-      ]
-    },
-    {
-      "municipio": "Tapes",
-      "parquetKey": "tapes",
-      "avg_score": 53.5,
-      "hex_count": 9106,
-      "centroid": [
-        -51.4415,
-        -30.6587
+        -53.4143,
+        -33.6491
       ]
     },
     {
       "municipio": "Dois Irmãos das Missões",
       "parquetKey": "dois_irmãos_das_missões",
-      "avg_score": 53.4,
+      "avg_score": 10.3,
       "hex_count": 2435,
       "centroid": [
         -53.4961,
@@ -3877,189 +3997,159 @@
       ]
     },
     {
-      "municipio": "Nova Ramada",
-      "parquetKey": "nova_ramada",
-      "avg_score": 53.4,
-      "hex_count": 2777,
+      "municipio": "Engenho Velho",
+      "parquetKey": "engenho_velho",
+      "avg_score": 10.3,
+      "hex_count": 762,
       "centroid": [
-        -53.7014,
-        -28.0764
+        -52.9094,
+        -27.6861
       ]
     },
     {
-      "municipio": "Floriano Peixoto",
-      "parquetKey": "floriano_peixoto",
-      "avg_score": 53.3,
-      "hex_count": 1797,
+      "municipio": "Nicolau Vergueiro",
+      "parquetKey": "nicolau_vergueiro",
+      "avg_score": 10.3,
+      "hex_count": 1682,
       "centroid": [
-        -52.0477,
-        -27.8581
+        -52.4461,
+        -28.5195
       ]
     },
     {
-      "municipio": "Arambaré",
-      "parquetKey": "arambare",
-      "avg_score": 53.2,
-      "hex_count": 5907,
+      "municipio": "Porto Lucena",
+      "parquetKey": "porto_lucena",
+      "avg_score": 10.3,
+      "hex_count": 2693,
       "centroid": [
-        -51.5805,
-        -30.9095
+        -54.956,
+        -27.8508
       ]
     },
     {
-      "municipio": "Pontão",
-      "parquetKey": "pontão",
-      "avg_score": 53.2,
-      "hex_count": 5402,
+      "municipio": "Porto Xavier",
+      "parquetKey": "porto_xavier",
+      "avg_score": 10.3,
+      "hex_count": 3059,
       "centroid": [
-        -52.6387,
-        -28.038
+        -55.1458,
+        -27.9328
       ]
     },
     {
-      "municipio": "Lagoa Bonita do Sul",
-      "parquetKey": "lagoa_bonita_do_sul",
-      "avg_score": 53.0,
-      "hex_count": 1224,
+      "municipio": "Victor Graeff",
+      "parquetKey": "victor_graeff",
+      "avg_score": 10.3,
+      "hex_count": 2577,
       "centroid": [
-        -53.0415,
-        -29.5023
+        -52.6856,
+        -28.5498
       ]
     },
     {
-      "municipio": "Minas do Leão",
-      "parquetKey": "minas_do_leão",
-      "avg_score": 53.0,
-      "hex_count": 4758,
+      "municipio": "Vitória das Missões",
+      "parquetKey": "vitoria_das_missões",
+      "avg_score": 10.3,
+      "hex_count": 2848,
       "centroid": [
-        -52.0768,
-        -30.0784
+        -54.4678,
+        -28.3793
       ]
     },
     {
-      "municipio": "André da Rocha",
-      "parquetKey": "andre_da_rocha",
-      "avg_score": 52.9,
-      "hex_count": 3570,
+      "municipio": "Boa Vista das Missões",
+      "parquetKey": "boa_vista_das_missões",
+      "avg_score": 10.2,
+      "hex_count": 2100,
       "centroid": [
-        -51.5001,
-        -28.5926
+        -53.3427,
+        -27.7001
       ]
     },
     {
-      "municipio": "Campestre da Serra",
-      "parquetKey": "campestre_da_serra",
-      "avg_score": 52.9,
-      "hex_count": 5788,
+      "municipio": "Capivari do Sul",
+      "parquetKey": "capivari_do_sul",
+      "avg_score": 10.2,
+      "hex_count": 4587,
       "centroid": [
-        -51.1017,
-        -28.7187
+        -50.5072,
+        -30.1389
       ]
     },
     {
-      "municipio": "Passa Sete",
-      "parquetKey": "passa_sete",
-      "avg_score": 52.9,
-      "hex_count": 3391,
+      "municipio": "Coxilha",
+      "parquetKey": "coxilha",
+      "avg_score": 10.2,
+      "hex_count": 4535,
       "centroid": [
-        -52.8662,
-        -29.4375
+        -52.3342,
+        -28.1186
       ]
     },
     {
-      "municipio": "Soledade",
-      "parquetKey": "soledade",
-      "avg_score": 52.8,
-      "hex_count": 13275,
+      "municipio": "Palmares do Sul",
+      "parquetKey": "palmares_do_sul",
+      "avg_score": 10.2,
+      "hex_count": 10565,
       "centroid": [
-        -52.5395,
-        -28.8308
+        -50.4574,
+        -30.3656
       ]
     },
     {
-      "municipio": "São Lourenço do Sul",
-      "parquetKey": "são_lourenço_do_sul",
-      "avg_score": 52.8,
-      "hex_count": 23525,
+      "municipio": "Porto Vera Cruz",
+      "parquetKey": "porto_vera_cruz",
+      "avg_score": 10.2,
+      "hex_count": 1221,
       "centroid": [
-        -52.1303,
-        -31.2362
+        -54.8894,
+        -27.7551
       ]
     },
     {
-      "municipio": "Estrela Velha",
-      "parquetKey": "estrela_velha",
-      "avg_score": 52.7,
-      "hex_count": 3129,
+      "municipio": "Salvador das Missões",
+      "parquetKey": "salvador_das_missões",
+      "avg_score": 10.2,
+      "hex_count": 1039,
       "centroid": [
-        -53.1773,
-        -29.2226
+        -54.8318,
+        -28.1004
       ]
     },
     {
-      "municipio": "Fontoura Xavier",
-      "parquetKey": "fontoura_xavier",
-      "avg_score": 52.6,
-      "hex_count": 6393,
+      "municipio": "São Pedro do Butiá",
+      "parquetKey": "são_pedro_do_butia",
+      "avg_score": 10.2,
+      "hex_count": 1185,
       "centroid": [
-        -52.3774,
-        -29.0104
+        -54.8966,
+        -28.1254
       ]
     },
     {
-      "municipio": "Giruá",
-      "parquetKey": "girua",
-      "avg_score": 52.6,
-      "hex_count": 9361,
+      "municipio": "Doutor Maurício Cardoso",
+      "parquetKey": "doutor_mauricio_cardoso",
+      "avg_score": 10.1,
+      "hex_count": 2719,
       "centroid": [
-        -54.2963,
-        -28.0338
+        -54.3641,
+        -27.4871
       ]
     },
     {
-      "municipio": "Ibarama",
-      "parquetKey": "ibarama",
-      "avg_score": 52.5,
-      "hex_count": 2183,
+      "municipio": "Entre-Ijuís",
+      "parquetKey": "entre-ijuis",
+      "avg_score": 10.1,
+      "hex_count": 6095,
       "centroid": [
-        -53.1663,
-        -29.4192
-      ]
-    },
-    {
-      "municipio": "Vacaria",
-      "parquetKey": "vacaria",
-      "avg_score": 52.5,
-      "hex_count": 22651,
-      "centroid": [
-        -50.9247,
-        -28.3787
-      ]
-    },
-    {
-      "municipio": "Caibaté",
-      "parquetKey": "caibate",
-      "avg_score": 52.0,
-      "hex_count": 2887,
-      "centroid": [
-        -54.6565,
-        -28.3353
-      ]
-    },
-    {
-      "municipio": "Pantano Grande",
-      "parquetKey": "pantano_grande",
-      "avg_score": 51.7,
-      "hex_count": 9497,
-      "centroid": [
-        -52.367,
-        -30.2574
+        -54.2972,
+        -28.4554
       ]
     },
     {
       "municipio": "Júlio de Castilhos",
       "parquetKey": "julio_de_castilhos",
-      "avg_score": 51.4,
+      "avg_score": 10.1,
       "hex_count": 21540,
       "centroid": [
         -53.6591,
@@ -4067,29 +4157,19 @@
       ]
     },
     {
-      "municipio": "Lagoa Vermelha",
-      "parquetKey": "lagoa_vermelha",
-      "avg_score": 51.3,
-      "hex_count": 13472,
+      "municipio": "Restinga Sêca",
+      "parquetKey": "restinga_sêca",
+      "avg_score": 10.1,
+      "hex_count": 10913,
       "centroid": [
-        -51.4995,
-        -28.2165
-      ]
-    },
-    {
-      "municipio": "São Francisco de Paula",
-      "parquetKey": "são_francisco_de_paula",
-      "avg_score": 51.3,
-      "hex_count": 35966,
-      "centroid": [
-        -50.5464,
-        -29.1992
+        -53.3418,
+        -29.8172
       ]
     },
     {
       "municipio": "Salto do Jacuí",
       "parquetKey": "salto_do_jacui",
-      "avg_score": 51.1,
+      "avg_score": 10.1,
       "hex_count": 5607,
       "centroid": [
         -53.2498,
@@ -4097,19 +4177,29 @@
       ]
     },
     {
-      "municipio": "Catuípe",
-      "parquetKey": "catuipe",
-      "avg_score": 51.0,
-      "hex_count": 6365,
+      "municipio": "Condor",
+      "parquetKey": "condor",
+      "avg_score": 10.0,
+      "hex_count": 5030,
       "centroid": [
-        -54.0321,
-        -28.1693
+        -53.4938,
+        -28.165
+      ]
+    },
+    {
+      "municipio": "Coronel Barros",
+      "parquetKey": "coronel_barros",
+      "avg_score": 10.0,
+      "hex_count": 1800,
+      "centroid": [
+        -54.0598,
+        -28.4041
       ]
     },
     {
       "municipio": "Dilermando de Aguiar",
       "parquetKey": "dilermando_de_aguiar",
-      "avg_score": 51.0,
+      "avg_score": 10.0,
       "hex_count": 6823,
       "centroid": [
         -54.1619,
@@ -4117,89 +4207,139 @@
       ]
     },
     {
-      "municipio": "São Luiz Gonzaga",
-      "parquetKey": "são_luiz_gonzaga",
-      "avg_score": 51.0,
-      "hex_count": 14361,
+      "municipio": "Independência",
+      "parquetKey": "independência",
+      "avg_score": 10.0,
+      "hex_count": 3891,
       "centroid": [
-        -54.8892,
-        -28.416
+        -54.1852,
+        -27.8981
       ]
     },
     {
-      "municipio": "Capão Bonito do Sul",
-      "parquetKey": "capão_bonito_do_sul",
-      "avg_score": 50.8,
-      "hex_count": 5613,
+      "municipio": "Pontão",
+      "parquetKey": "pontão",
+      "avg_score": 10.0,
+      "hex_count": 5402,
       "centroid": [
-        -51.3858,
-        -28.1533
+        -52.6387,
+        -28.038
       ]
     },
     {
-      "municipio": "Pinhal da Serra",
-      "parquetKey": "pinhal_da_serra",
-      "avg_score": 50.7,
-      "hex_count": 4635,
+      "municipio": "Santiago",
+      "parquetKey": "santiago",
+      "avg_score": 10.0,
+      "hex_count": 27191,
       "centroid": [
-        -51.2152,
-        -27.8562
+        -54.7924,
+        -29.1249
       ]
     },
     {
-      "municipio": "Pinhal Grande",
-      "parquetKey": "pinhal_grande",
-      "avg_score": 50.3,
-      "hex_count": 5313,
+      "municipio": "São Sepé",
+      "parquetKey": "são_sepe",
+      "avg_score": 10.0,
+      "hex_count": 25157,
       "centroid": [
-        -53.3381,
-        -29.2901
+        -53.6208,
+        -30.1657
       ]
     },
     {
-      "municipio": "Quevedos",
-      "parquetKey": "quevedos",
-      "avg_score": 50.1,
-      "hex_count": 6079,
+      "municipio": "Cruz Alta",
+      "parquetKey": "cruz_alta",
+      "avg_score": 9.9,
+      "hex_count": 14965,
       "centroid": [
-        -54.0619,
-        -29.3075
+        -53.5695,
+        -28.7039
       ]
     },
     {
-      "municipio": "São Martinho da Serra",
-      "parquetKey": "são_martinho_da_serra",
-      "avg_score": 50.1,
-      "hex_count": 7526,
+      "municipio": "Formigueiro",
+      "parquetKey": "formigueiro",
+      "avg_score": 9.9,
+      "hex_count": 6558,
       "centroid": [
-        -53.8855,
-        -29.4761
+        -53.5075,
+        -29.9769
       ]
     },
     {
-      "municipio": "Monte Alegre dos Campos",
-      "parquetKey": "monte_alegre_dos_campos",
-      "avg_score": 49.7,
-      "hex_count": 5892,
+      "municipio": "Ibirubá",
+      "parquetKey": "ibiruba",
+      "avg_score": 9.9,
+      "hex_count": 6647,
       "centroid": [
-        -50.8013,
-        -28.6955
+        -53.1713,
+        -28.5947
       ]
     },
     {
-      "municipio": "Butiá",
-      "parquetKey": "butia",
-      "avg_score": 49.6,
-      "hex_count": 8449,
+      "municipio": "Palmeira das Missões",
+      "parquetKey": "palmeira_das_missões",
+      "avg_score": 9.9,
+      "hex_count": 15349,
       "centroid": [
-        -52.0066,
-        -30.1875
+        -53.3894,
+        -27.9367
+      ]
+    },
+    {
+      "municipio": "Santo Augusto",
+      "parquetKey": "santo_augusto",
+      "avg_score": 9.9,
+      "hex_count": 5067,
+      "centroid": [
+        -53.7559,
+        -27.9009
+      ]
+    },
+    {
+      "municipio": "Sede Nova",
+      "parquetKey": "sede_nova",
+      "avg_score": 9.9,
+      "hex_count": 1290,
+      "centroid": [
+        -53.9514,
+        -27.641
+      ]
+    },
+    {
+      "municipio": "Tuparendi",
+      "parquetKey": "tuparendi",
+      "avg_score": 9.9,
+      "hex_count": 3340,
+      "centroid": [
+        -54.5554,
+        -27.7026
+      ]
+    },
+    {
+      "municipio": "Bozano",
+      "parquetKey": "bozano",
+      "avg_score": 9.8,
+      "hex_count": 2195,
+      "centroid": [
+        -53.7475,
+        -28.3538
+      ]
+    },
+    {
+      "municipio": "Chapada",
+      "parquetKey": "chapada",
+      "avg_score": 9.8,
+      "hex_count": 7397,
+      "centroid": [
+        -53.1131,
+        -28.0895
       ]
     },
     {
       "municipio": "Dezesseis de Novembro",
       "parquetKey": "dezesseis_de_novembro",
-      "avg_score": 49.6,
+      "avg_score": 9.8,
       "hex_count": 2407,
       "centroid": [
         -55.0773,
@@ -4207,39 +4347,229 @@
       ]
     },
     {
-      "municipio": "Eugênio de Castro",
-      "parquetKey": "eugênio_de_castro",
-      "avg_score": 49.6,
-      "hex_count": 4612,
+      "municipio": "Pejuçara",
+      "parquetKey": "pejuçara",
+      "avg_score": 9.8,
+      "hex_count": 4536,
       "centroid": [
-        -54.2458,
-        -28.5685
+        -53.5948,
+        -28.4556
       ]
     },
     {
-      "municipio": "São Jerônimo",
-      "parquetKey": "são_jerônimo",
-      "avg_score": 49.4,
-      "hex_count": 10534,
+      "municipio": "Saldanha Marinho",
+      "parquetKey": "saldanha_marinho",
+      "avg_score": 9.8,
+      "hex_count": 2408,
       "centroid": [
-        -51.9083,
-        -30.2867
+        -53.0958,
+        -28.3875
       ]
     },
     {
-      "municipio": "Barra do Quaraí",
-      "parquetKey": "barra_do_quarai",
-      "avg_score": 49.1,
-      "hex_count": 12438,
+      "municipio": "Tucunduva",
+      "parquetKey": "tucunduva",
+      "avg_score": 9.8,
+      "hex_count": 1961,
       "centroid": [
-        -57.3341,
-        -30.1467
+        -54.4325,
+        -27.6388
+      ]
+    },
+    {
+      "municipio": "Ajuricaba",
+      "parquetKey": "ajuricaba",
+      "avg_score": 9.7,
+      "hex_count": 3516,
+      "centroid": [
+        -53.7428,
+        -28.2126
+      ]
+    },
+    {
+      "municipio": "Caibaté",
+      "parquetKey": "caibate",
+      "avg_score": 9.6,
+      "hex_count": 2887,
+      "centroid": [
+        -54.6565,
+        -28.3353
+      ]
+    },
+    {
+      "municipio": "Campos Borges",
+      "parquetKey": "campos_borges",
+      "avg_score": 9.6,
+      "hex_count": 2488,
+      "centroid": [
+        -53.0617,
+        -28.9062
+      ]
+    },
+    {
+      "municipio": "Colorado",
+      "parquetKey": "colorado",
+      "avg_score": 9.6,
+      "hex_count": 3106,
+      "centroid": [
+        -52.9907,
+        -28.4677
+      ]
+    },
+    {
+      "municipio": "Ernestina",
+      "parquetKey": "ernestina",
+      "avg_score": 9.6,
+      "hex_count": 2576,
+      "centroid": [
+        -52.5572,
+        -28.4201
+      ]
+    },
+    {
+      "municipio": "Inhacorá",
+      "parquetKey": "inhacora",
+      "avg_score": 9.6,
+      "hex_count": 1232,
+      "centroid": [
+        -54.0294,
+        -27.8994
+      ]
+    },
+    {
+      "municipio": "Jaguarão",
+      "parquetKey": "jaguarão",
+      "avg_score": 9.6,
+      "hex_count": 24759,
+      "centroid": [
+        -53.3336,
+        -32.4107
+      ]
+    },
+    {
+      "municipio": "Mato Queimado",
+      "parquetKey": "mato_queimado",
+      "avg_score": 9.6,
+      "hex_count": 1264,
+      "centroid": [
+        -54.6583,
+        -28.242
+      ]
+    },
+    {
+      "municipio": "Roque Gonzales",
+      "parquetKey": "roque_gonzales",
+      "avg_score": 9.6,
+      "hex_count": 3846,
+      "centroid": [
+        -55.0798,
+        -28.0645
+      ]
+    },
+    {
+      "municipio": "Santa Bárbara do Sul",
+      "parquetKey": "santa_barbara_do_sul",
+      "avg_score": 9.6,
+      "hex_count": 10623,
+      "centroid": [
+        -53.2849,
+        -28.3794
+      ]
+    },
+    {
+      "municipio": "São Francisco de Assis",
+      "parquetKey": "são_francisco_de_assis",
+      "avg_score": 9.6,
+      "hex_count": 28554,
+      "centroid": [
+        -55.1369,
+        -29.4441
+      ]
+    },
+    {
+      "municipio": "Arroio Grande",
+      "parquetKey": "arroio_grande",
+      "avg_score": 9.5,
+      "hex_count": 29936,
+      "centroid": [
+        -52.9212,
+        -32.1875
+      ]
+    },
+    {
+      "municipio": "Augusto Pestana",
+      "parquetKey": "augusto_pestana",
+      "avg_score": 9.5,
+      "hex_count": 3836,
+      "centroid": [
+        -54.0047,
+        -28.5327
+      ]
+    },
+    {
+      "municipio": "Coronel Bicaco",
+      "parquetKey": "coronel_bicaco",
+      "avg_score": 9.5,
+      "hex_count": 5301,
+      "centroid": [
+        -53.6481,
+        -27.7986
+      ]
+    },
+    {
+      "municipio": "Nova Ramada",
+      "parquetKey": "nova_ramada",
+      "avg_score": 9.5,
+      "hex_count": 2777,
+      "centroid": [
+        -53.7014,
+        -28.0764
+      ]
+    },
+    {
+      "municipio": "Novo Machado",
+      "parquetKey": "novo_machado",
+      "avg_score": 9.5,
+      "hex_count": 2281,
+      "centroid": [
+        -54.5347,
+        -27.5463
+      ]
+    },
+    {
+      "municipio": "Senador Salgado Filho",
+      "parquetKey": "senador_salgado_filho",
+      "avg_score": 9.5,
+      "hex_count": 1607,
+      "centroid": [
+        -54.5348,
+        -28.0303
+      ]
+    },
+    {
+      "municipio": "Chiapetta",
+      "parquetKey": "chiapetta",
+      "avg_score": 9.4,
+      "hex_count": 4317,
+      "centroid": [
+        -53.9046,
+        -27.9878
+      ]
+    },
+    {
+      "municipio": "Giruá",
+      "parquetKey": "girua",
+      "avg_score": 9.4,
+      "hex_count": 9361,
+      "centroid": [
+        -54.2963,
+        -28.0338
       ]
     },
     {
       "municipio": "Rio Grande",
       "parquetKey": "rio_grande",
-      "avg_score": 49.1,
+      "avg_score": 9.4,
       "hex_count": 32075,
       "centroid": [
         -52.4076,
@@ -4247,39 +4577,79 @@
       ]
     },
     {
-      "municipio": "Espumoso",
-      "parquetKey": "espumoso",
-      "avg_score": 49.0,
-      "hex_count": 8612,
+      "municipio": "Catuípe",
+      "parquetKey": "catuipe",
+      "avg_score": 9.3,
+      "hex_count": 6365,
       "centroid": [
-        -52.825,
-        -28.8712
+        -54.0321,
+        -28.1693
       ]
     },
     {
-      "municipio": "Hulha Negra",
-      "parquetKey": "hulha_negra",
-      "avg_score": 48.9,
-      "hex_count": 9717,
+      "municipio": "Quinze de Novembro",
+      "parquetKey": "quinze_de_novembro",
+      "avg_score": 9.3,
+      "hex_count": 2449,
       "centroid": [
-        -53.89,
-        -31.4466
+        -53.1112,
+        -28.7587
       ]
     },
     {
-      "municipio": "Candiota",
-      "parquetKey": "candiota",
-      "avg_score": 48.8,
-      "hex_count": 11048,
+      "municipio": "Rolador",
+      "parquetKey": "rolador",
+      "avg_score": 9.3,
+      "hex_count": 3263,
       "centroid": [
-        -53.7439,
-        -31.5532
+        -54.8326,
+        -28.2568
+      ]
+    },
+    {
+      "municipio": "São Gabriel",
+      "parquetKey": "são_gabriel",
+      "avg_score": 9.3,
+      "hex_count": 58282,
+      "centroid": [
+        -54.3602,
+        -30.3084
+      ]
+    },
+    {
+      "municipio": "São Luiz Gonzaga",
+      "parquetKey": "são_luiz_gonzaga",
+      "avg_score": 9.3,
+      "hex_count": 14361,
+      "centroid": [
+        -54.8892,
+        -28.416
+      ]
+    },
+    {
+      "municipio": "São Miguel das Missões",
+      "parquetKey": "são_miguel_das_missões",
+      "avg_score": 9.3,
+      "hex_count": 13639,
+      "centroid": [
+        -54.5204,
+        -28.6711
+      ]
+    },
+    {
+      "municipio": "Ronda Alta",
+      "parquetKey": "ronda_alta",
+      "avg_score": 9.2,
+      "hex_count": 4479,
+      "centroid": [
+        -52.7471,
+        -27.8097
       ]
     },
     {
       "municipio": "Boa Vista do Cadeado",
       "parquetKey": "boa_vista_do_cadeado",
-      "avg_score": 48.5,
+      "avg_score": 9.1,
       "hex_count": 7738,
       "centroid": [
         -53.8345,
@@ -4289,7 +4659,7 @@
     {
       "municipio": "Boa Vista do Incra",
       "parquetKey": "boa_vista_do_incra",
-      "avg_score": 48.1,
+      "avg_score": 9.1,
       "hex_count": 5558,
       "centroid": [
         -53.4648,
@@ -4297,279 +4667,29 @@
       ]
     },
     {
-      "municipio": "Chiapetta",
-      "parquetKey": "chiapetta",
-      "avg_score": 48.0,
-      "hex_count": 4317,
+      "municipio": "Unistalda",
+      "parquetKey": "unistalda",
+      "avg_score": 9.1,
+      "hex_count": 6805,
       "centroid": [
-        -53.9046,
-        -27.9878
+        -55.154,
+        -29.0697
       ]
     },
     {
-      "municipio": "Lagoão",
-      "parquetKey": "lagoão",
-      "avg_score": 47.4,
-      "hex_count": 4290,
+      "municipio": "Eugênio de Castro",
+      "parquetKey": "eugênio_de_castro",
+      "avg_score": 9.0,
+      "hex_count": 4612,
       "centroid": [
-        -52.7882,
-        -29.2395
-      ]
-    },
-    {
-      "municipio": "Cambará do Sul",
-      "parquetKey": "cambara_do_sul",
-      "avg_score": 47.1,
-      "hex_count": 12732,
-      "centroid": [
-        -50.1356,
-        -29.0618
-      ]
-    },
-    {
-      "municipio": "São Sepé",
-      "parquetKey": "são_sepe",
-      "avg_score": 47.1,
-      "hex_count": 25157,
-      "centroid": [
-        -53.6208,
-        -30.1657
-      ]
-    },
-    {
-      "municipio": "Jaguari",
-      "parquetKey": "jaguari",
-      "avg_score": 46.5,
-      "hex_count": 7653,
-      "centroid": [
-        -54.6506,
-        -29.4611
-      ]
-    },
-    {
-      "municipio": "Barros Cassal",
-      "parquetKey": "barros_cassal",
-      "avg_score": 46.4,
-      "hex_count": 7126,
-      "centroid": [
-        -52.5907,
-        -29.1112
-      ]
-    },
-    {
-      "municipio": "Canguçu",
-      "parquetKey": "canguçu",
-      "avg_score": 46.4,
-      "hex_count": 40911,
-      "centroid": [
-        -52.6733,
-        -31.226
-      ]
-    },
-    {
-      "municipio": "Jacuizinho",
-      "parquetKey": "jacuizinho",
-      "avg_score": 46.3,
-      "hex_count": 3740,
-      "centroid": [
-        -53.0148,
-        -29.0357
-      ]
-    },
-    {
-      "municipio": "Muitos Capões",
-      "parquetKey": "muitos_capões",
-      "avg_score": 46.2,
-      "hex_count": 12754,
-      "centroid": [
-        -51.235,
-        -28.3763
-      ]
-    },
-    {
-      "municipio": "Santa Margarida do Sul",
-      "parquetKey": "santa_margarida_do_sul",
-      "avg_score": 46.2,
-      "hex_count": 11012,
-      "centroid": [
-        -54.1009,
-        -30.362
-      ]
-    },
-    {
-      "municipio": "São Nicolau",
-      "parquetKey": "são_nicolau",
-      "avg_score": 46.1,
-      "hex_count": 5350,
-      "centroid": [
-        -55.2497,
-        -28.2011
-      ]
-    },
-    {
-      "municipio": "Jaquirana",
-      "parquetKey": "jaquirana",
-      "avg_score": 46.0,
-      "hex_count": 9772,
-      "centroid": [
-        -50.3585,
-        -28.9447
-      ]
-    },
-    {
-      "municipio": "Tunas",
-      "parquetKey": "tunas",
-      "avg_score": 46.0,
-      "hex_count": 2400,
-      "centroid": [
-        -52.8925,
-        -29.1141
-      ]
-    },
-    {
-      "municipio": "Fortaleza dos Valos",
-      "parquetKey": "fortaleza_dos_valos",
-      "avg_score": 45.9,
-      "hex_count": 7171,
-      "centroid": [
-        -53.2772,
-        -28.8947
-      ]
-    },
-    {
-      "municipio": "São José dos Ausentes",
-      "parquetKey": "são_jose_dos_ausentes",
-      "avg_score": 45.9,
-      "hex_count": 12502,
-      "centroid": [
-        -49.9586,
-        -28.643
-      ]
-    },
-    {
-      "municipio": "Toropi",
-      "parquetKey": "toropi",
-      "avg_score": 45.9,
-      "hex_count": 2241,
-      "centroid": [
-        -54.2978,
-        -29.4691
-      ]
-    },
-    {
-      "municipio": "Campos Borges",
-      "parquetKey": "campos_borges",
-      "avg_score": 45.8,
-      "hex_count": 2488,
-      "centroid": [
-        -53.0617,
-        -28.9062
-      ]
-    },
-    {
-      "municipio": "Vila Nova do Sul",
-      "parquetKey": "vila_nova_do_sul",
-      "avg_score": 45.7,
-      "hex_count": 5833,
-      "centroid": [
-        -53.8799,
-        -30.3432
-      ]
-    },
-    {
-      "municipio": "Esmeralda",
-      "parquetKey": "esmeralda",
-      "avg_score": 45.5,
-      "hex_count": 8795,
-      "centroid": [
-        -51.1741,
-        -28.0365
-      ]
-    },
-    {
-      "municipio": "Mata",
-      "parquetKey": "mata",
-      "avg_score": 45.1,
-      "hex_count": 3584,
-      "centroid": [
-        -54.4695,
-        -29.5373
-      ]
-    },
-    {
-      "municipio": "Uruguaiana",
-      "parquetKey": "uruguaiana",
-      "avg_score": 44.6,
-      "hex_count": 67125,
-      "centroid": [
-        -56.7365,
-        -29.8269
-      ]
-    },
-    {
-      "municipio": "Pedro Osório",
-      "parquetKey": "pedro_osorio",
-      "avg_score": 44.3,
-      "hex_count": 7150,
-      "centroid": [
-        -52.865,
-        -31.9587
-      ]
-    },
-    {
-      "municipio": "Mostardas",
-      "parquetKey": "mostardas",
-      "avg_score": 44.1,
-      "hex_count": 22363,
-      "centroid": [
-        -50.7375,
-        -30.8652
-      ]
-    },
-    {
-      "municipio": "Cachoeira do Sul",
-      "parquetKey": "cachoeira_do_sul",
-      "avg_score": 43.5,
-      "hex_count": 42381,
-      "centroid": [
-        -52.9875,
-        -30.2071
-      ]
-    },
-    {
-      "municipio": "Derrubadas",
-      "parquetKey": "derrubadas",
-      "avg_score": 43.5,
-      "hex_count": 3793,
-      "centroid": [
-        -53.8968,
-        -27.2398
-      ]
-    },
-    {
-      "municipio": "Jóia",
-      "parquetKey": "joia",
-      "avg_score": 43.5,
-      "hex_count": 13749,
-      "centroid": [
-        -54.1583,
-        -28.7624
-      ]
-    },
-    {
-      "municipio": "Pirapó",
-      "parquetKey": "pirapo",
-      "avg_score": 43.4,
-      "hex_count": 3236,
-      "centroid": [
-        -55.2451,
-        -28.0632
+        -54.2458,
+        -28.5685
       ]
     },
     {
       "municipio": "Tupanciretã",
       "parquetKey": "tupanciretã",
-      "avg_score": 43.4,
+      "avg_score": 8.9,
       "hex_count": 25101,
       "centroid": [
         -53.999,
@@ -4577,159 +4697,39 @@
       ]
     },
     {
-      "municipio": "Amaral Ferrador",
-      "parquetKey": "amaral_ferrador",
-      "avg_score": 43.2,
-      "hex_count": 5801,
+      "municipio": "Campinas do Sul",
+      "parquetKey": "campinas_do_sul",
+      "avg_score": 8.8,
+      "hex_count": 2942,
       "centroid": [
-        -52.3208,
-        -30.8045
+        -52.6585,
+        -27.7343
       ]
     },
     {
-      "municipio": "Dom Feliciano",
-      "parquetKey": "dom_feliciano",
-      "avg_score": 42.5,
-      "hex_count": 15410,
+      "municipio": "Pirapó",
+      "parquetKey": "pirapo",
+      "avg_score": 8.8,
+      "hex_count": 3236,
       "centroid": [
-        -52.2004,
-        -30.6114
+        -55.2451,
+        -28.0632
       ]
     },
     {
-      "municipio": "Garruchos",
-      "parquetKey": "garruchos",
-      "avg_score": 42.3,
-      "hex_count": 8856,
+      "municipio": "São Nicolau",
+      "parquetKey": "são_nicolau",
+      "avg_score": 8.8,
+      "hex_count": 5350,
       "centroid": [
-        -55.5337,
-        -28.2371
-      ]
-    },
-    {
-      "municipio": "São José do Norte",
-      "parquetKey": "são_jose_do_norte",
-      "avg_score": 42.2,
-      "hex_count": 12512,
-      "centroid": [
-        -51.6767,
-        -31.7727
-      ]
-    },
-    {
-      "municipio": "Arroio Grande",
-      "parquetKey": "arroio_grande",
-      "avg_score": 42.0,
-      "hex_count": 29936,
-      "centroid": [
-        -52.9212,
-        -32.1875
-      ]
-    },
-    {
-      "municipio": "São Vicente do Sul",
-      "parquetKey": "são_vicente_do_sul",
-      "avg_score": 42.0,
-      "hex_count": 13416,
-      "centroid": [
-        -54.7749,
-        -29.7153
-      ]
-    },
-    {
-      "municipio": "Bom Jesus",
-      "parquetKey": "bom_jesus",
-      "avg_score": 41.6,
-      "hex_count": 28006,
-      "centroid": [
-        -50.4279,
-        -28.5893
-      ]
-    },
-    {
-      "municipio": "Santiago",
-      "parquetKey": "santiago",
-      "avg_score": 41.5,
-      "hex_count": 27191,
-      "centroid": [
-        -54.7924,
-        -29.1249
-      ]
-    },
-    {
-      "municipio": "Santo Antônio das Missões",
-      "parquetKey": "santo_antônio_das_missões",
-      "avg_score": 41.1,
-      "hex_count": 19126,
-      "centroid": [
-        -55.4289,
-        -28.4941
-      ]
-    },
-    {
-      "municipio": "São Miguel das Missões",
-      "parquetKey": "são_miguel_das_missões",
-      "avg_score": 40.4,
-      "hex_count": 13639,
-      "centroid": [
-        -54.5204,
-        -28.6711
-      ]
-    },
-    {
-      "municipio": "São Borja",
-      "parquetKey": "são_borja",
-      "avg_score": 40.3,
-      "hex_count": 40961,
-      "centroid": [
-        -55.8111,
-        -28.7456
-      ]
-    },
-    {
-      "municipio": "Tavares",
-      "parquetKey": "tavares",
-      "avg_score": 40.0,
-      "hex_count": 7005,
-      "centroid": [
-        -51.0776,
-        -31.289
-      ]
-    },
-    {
-      "municipio": "Bagé",
-      "parquetKey": "bage",
-      "avg_score": 39.9,
-      "hex_count": 48130,
-      "centroid": [
-        -54.0142,
-        -31.2383
-      ]
-    },
-    {
-      "municipio": "Itaqui",
-      "parquetKey": "itaqui",
-      "avg_score": 39.3,
-      "hex_count": 39091,
-      "centroid": [
-        -56.1643,
-        -29.2129
-      ]
-    },
-    {
-      "municipio": "Jaguarão",
-      "parquetKey": "jaguarão",
-      "avg_score": 39.3,
-      "hex_count": 24759,
-      "centroid": [
-        -53.3336,
-        -32.4107
+        -55.2497,
+        -28.2011
       ]
     },
     {
       "municipio": "Aceguá",
       "parquetKey": "acegua",
-      "avg_score": 38.4,
+      "avg_score": 8.7,
       "hex_count": 18494,
       "centroid": [
         -54.1364,
@@ -4737,19 +4737,49 @@
       ]
     },
     {
-      "municipio": "São Gabriel",
-      "parquetKey": "são_gabriel",
-      "avg_score": 38.3,
-      "hex_count": 58282,
+      "municipio": "Jóia",
+      "parquetKey": "joia",
+      "avg_score": 8.7,
+      "hex_count": 13749,
       "centroid": [
-        -54.3602,
-        -30.3084
+        -54.1583,
+        -28.7624
+      ]
+    },
+    {
+      "municipio": "São Vicente do Sul",
+      "parquetKey": "são_vicente_do_sul",
+      "avg_score": 8.7,
+      "hex_count": 13416,
+      "centroid": [
+        -54.7749,
+        -29.7153
+      ]
+    },
+    {
+      "municipio": "Tavares",
+      "parquetKey": "tavares",
+      "avg_score": 8.7,
+      "hex_count": 7005,
+      "centroid": [
+        -51.0776,
+        -31.289
+      ]
+    },
+    {
+      "municipio": "Capão do Cipó",
+      "parquetKey": "capão_do_cipo",
+      "avg_score": 8.6,
+      "hex_count": 11274,
+      "centroid": [
+        -54.5798,
+        -28.9594
       ]
     },
     {
       "municipio": "Cacequi",
       "parquetKey": "cacequi",
-      "avg_score": 37.3,
+      "avg_score": 8.5,
       "hex_count": 27249,
       "centroid": [
         -54.8016,
@@ -4759,7 +4789,7 @@
     {
       "municipio": "Dom Pedrito",
       "parquetKey": "dom_pedrito",
-      "avg_score": 36.9,
+      "avg_score": 8.5,
       "hex_count": 61263,
       "centroid": [
         -54.6633,
@@ -4767,129 +4797,29 @@
       ]
     },
     {
-      "municipio": "Caçapava do Sul",
-      "parquetKey": "caçapava_do_sul",
-      "avg_score": 36.8,
-      "hex_count": 35068,
+      "municipio": "Mostardas",
+      "parquetKey": "mostardas",
+      "avg_score": 8.5,
+      "hex_count": 22363,
       "centroid": [
-        -53.4809,
-        -30.6024
+        -50.7375,
+        -30.8652
       ]
     },
     {
-      "municipio": "Piratini",
-      "parquetKey": "piratini",
-      "avg_score": 36.1,
-      "hex_count": 41471,
+      "municipio": "Arambaré",
+      "parquetKey": "arambare",
+      "avg_score": 8.4,
+      "hex_count": 5907,
       "centroid": [
-        -53.1024,
-        -31.4464
-      ]
-    },
-    {
-      "municipio": "Sant'Ana do Livramento",
-      "parquetKey": "santana_do_livramento",
-      "avg_score": 34.8,
-      "hex_count": 82138,
-      "centroid": [
-        -55.5714,
-        -30.7374
-      ]
-    },
-    {
-      "municipio": "Capão do Cipó",
-      "parquetKey": "capão_do_cipo",
-      "avg_score": 34.1,
-      "hex_count": 11274,
-      "centroid": [
-        -54.5798,
-        -28.9594
-      ]
-    },
-    {
-      "municipio": "Lavras do Sul",
-      "parquetKey": "lavras_do_sul",
-      "avg_score": 34.1,
-      "hex_count": 30305,
-      "centroid": [
-        -54.1447,
-        -30.7779
-      ]
-    },
-    {
-      "municipio": "Encruzilhada do Sul",
-      "parquetKey": "encruzilhada_do_sul",
-      "avg_score": 34.0,
-      "hex_count": 38268,
-      "centroid": [
-        -52.672,
-        -30.6246
-      ]
-    },
-    {
-      "municipio": "Maçambará",
-      "parquetKey": "maçambara",
-      "avg_score": 33.9,
-      "hex_count": 19158,
-      "centroid": [
-        -55.7879,
-        -29.0681
-      ]
-    },
-    {
-      "municipio": "Jari",
-      "parquetKey": "jari",
-      "avg_score": 33.7,
-      "hex_count": 9608,
-      "centroid": [
-        -54.2972,
-        -29.2881
-      ]
-    },
-    {
-      "municipio": "Pedras Altas",
-      "parquetKey": "pedras_altas",
-      "avg_score": 33.7,
-      "hex_count": 16355,
-      "centroid": [
-        -53.6876,
-        -31.8391
-      ]
-    },
-    {
-      "municipio": "Pinheiro Machado",
-      "parquetKey": "pinheiro_machado",
-      "avg_score": 33.4,
-      "hex_count": 26405,
-      "centroid": [
-        -53.4178,
-        -31.4082
-      ]
-    },
-    {
-      "municipio": "São Francisco de Assis",
-      "parquetKey": "são_francisco_de_assis",
-      "avg_score": 33.3,
-      "hex_count": 28554,
-      "centroid": [
-        -55.1369,
-        -29.4441
-      ]
-    },
-    {
-      "municipio": "Herval",
-      "parquetKey": "herval",
-      "avg_score": 33.2,
-      "hex_count": 21005,
-      "centroid": [
-        -53.3994,
-        -32.0209
+        -51.5805,
+        -30.9095
       ]
     },
     {
       "municipio": "Bossoroca",
       "parquetKey": "bossoroca",
-      "avg_score": 32.8,
+      "avg_score": 8.4,
       "hex_count": 17978,
       "centroid": [
         -54.98,
@@ -4897,39 +4827,9 @@
       ]
     },
     {
-      "municipio": "Santa Vitória do Palmar",
-      "parquetKey": "santa_vitoria_do_palmar",
-      "avg_score": 32.3,
-      "hex_count": 63793,
-      "centroid": [
-        -53.0197,
-        -33.1763
-      ]
-    },
-    {
-      "municipio": "Unistalda",
-      "parquetKey": "unistalda",
-      "avg_score": 31.6,
-      "hex_count": 6805,
-      "centroid": [
-        -55.154,
-        -29.0697
-      ]
-    },
-    {
-      "municipio": "Manoel Viana",
-      "parquetKey": "manoel_viana",
-      "avg_score": 31.1,
-      "hex_count": 15918,
-      "centroid": [
-        -55.5546,
-        -29.4285
-      ]
-    },
-    {
       "municipio": "Rosário do Sul",
       "parquetKey": "rosario_do_sul",
-      "avg_score": 31.1,
+      "avg_score": 8.3,
       "hex_count": 50552,
       "centroid": [
         -55.1218,
@@ -4937,39 +4837,29 @@
       ]
     },
     {
-      "municipio": "Alegrete",
-      "parquetKey": "alegrete",
-      "avg_score": 30.4,
-      "hex_count": 90312,
+      "municipio": "Sant'Ana do Livramento",
+      "parquetKey": "santana_do_livramento",
+      "avg_score": 8.3,
+      "hex_count": 82138,
       "centroid": [
-        -55.8337,
-        -29.7639
+        -55.5714,
+        -30.7374
       ]
     },
     {
-      "municipio": "Santana da Boa Vista",
-      "parquetKey": "santana_da_boa_vista",
-      "avg_score": 30.3,
-      "hex_count": 16394,
+      "municipio": "Garruchos",
+      "parquetKey": "garruchos",
+      "avg_score": 8.2,
+      "hex_count": 8856,
       "centroid": [
-        -53.1801,
-        -30.8128
-      ]
-    },
-    {
-      "municipio": "Quaraí",
-      "parquetKey": "quarai",
-      "avg_score": 29.8,
-      "hex_count": 36933,
-      "centroid": [
-        -56.1586,
-        -30.2839
+        -55.5337,
+        -28.2371
       ]
     },
     {
       "municipio": "Itacurubi",
       "parquetKey": "itacurubi",
-      "avg_score": 27.9,
+      "avg_score": 8.2,
       "hex_count": 12592,
       "centroid": [
         -55.2629,
@@ -4977,23 +4867,133 @@
       ]
     },
     {
-      "municipio": "Lagoa dos Patos",
-      "parquetKey": "lagoa_dos_patos",
-      "avg_score": 22.0,
-      "hex_count": 116549,
+      "municipio": "Santo Antônio das Missões",
+      "parquetKey": "santo_antônio_das_missões",
+      "avg_score": 8.2,
+      "hex_count": 19126,
       "centroid": [
-        -51.3765,
-        -31.0802
+        -55.4289,
+        -28.4941
+      ]
+    },
+    {
+      "municipio": "Fortaleza dos Valos",
+      "parquetKey": "fortaleza_dos_valos",
+      "avg_score": 8.1,
+      "hex_count": 7171,
+      "centroid": [
+        -53.2772,
+        -28.8947
+      ]
+    },
+    {
+      "municipio": "Quaraí",
+      "parquetKey": "quarai",
+      "avg_score": 7.7,
+      "hex_count": 36933,
+      "centroid": [
+        -56.1586,
+        -30.2839
+      ]
+    },
+    {
+      "municipio": "São Borja",
+      "parquetKey": "são_borja",
+      "avg_score": 7.4,
+      "hex_count": 40961,
+      "centroid": [
+        -55.8111,
+        -28.7456
+      ]
+    },
+    {
+      "municipio": "Alegrete",
+      "parquetKey": "alegrete",
+      "avg_score": 7.3,
+      "hex_count": 90312,
+      "centroid": [
+        -55.8337,
+        -29.7639
+      ]
+    },
+    {
+      "municipio": "Manoel Viana",
+      "parquetKey": "manoel_viana",
+      "avg_score": 7.3,
+      "hex_count": 15918,
+      "centroid": [
+        -55.5546,
+        -29.4285
+      ]
+    },
+    {
+      "municipio": "Santa Vitória do Palmar",
+      "parquetKey": "santa_vitoria_do_palmar",
+      "avg_score": 7.0,
+      "hex_count": 63793,
+      "centroid": [
+        -53.0197,
+        -33.1763
+      ]
+    },
+    {
+      "municipio": "Maçambará",
+      "parquetKey": "maçambara",
+      "avg_score": 6.9,
+      "hex_count": 19158,
+      "centroid": [
+        -55.7879,
+        -29.0681
+      ]
+    },
+    {
+      "municipio": "Uruguaiana",
+      "parquetKey": "uruguaiana",
+      "avg_score": 6.9,
+      "hex_count": 67125,
+      "centroid": [
+        -56.7365,
+        -29.8269
+      ]
+    },
+    {
+      "municipio": "Barra do Quaraí",
+      "parquetKey": "barra_do_quarai",
+      "avg_score": 6.8,
+      "hex_count": 12438,
+      "centroid": [
+        -57.3341,
+        -30.1467
+      ]
+    },
+    {
+      "municipio": "Itaqui",
+      "parquetKey": "itaqui",
+      "avg_score": 6.6,
+      "hex_count": 39091,
+      "centroid": [
+        -56.1643,
+        -29.2129
       ]
     },
     {
       "municipio": "Lagoa Mirim",
       "parquetKey": "lagoa_mirim",
-      "avg_score": 11.0,
+      "avg_score": 1.3,
       "hex_count": 35810,
       "centroid": [
         -52.9953,
         -32.7697
+      ]
+    },
+    {
+      "municipio": "Lagoa dos Patos",
+      "parquetKey": "lagoa_dos_patos",
+      "avg_score": 1.3,
+      "hex_count": 116549,
+      "centroid": [
+        -51.3765,
+        -31.0802
       ]
     }
   ]

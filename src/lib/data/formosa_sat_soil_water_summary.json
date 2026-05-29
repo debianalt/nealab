@@ -2,24 +2,14 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 49.1,
+    "avg_score": 24.2,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "Laishi",
-      "parquetKey": "laishi",
-      "avg_score": 85.6,
-      "hex_count": 39672,
-      "centroid": [
-        -58.5513,
-        -26.4647
-      ]
-    },
-    {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 82.4,
+      "avg_score": 50.4,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
@@ -27,9 +17,19 @@
       ]
     },
     {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 50.3,
+      "hex_count": 39672,
+      "centroid": [
+        -58.5513,
+        -26.4647
+      ]
+    },
+    {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 81.4,
+      "avg_score": 48.3,
       "hex_count": 58522,
       "centroid": [
         -58.0456,
@@ -37,19 +37,9 @@
       ]
     },
     {
-      "dpto": "Pirané",
-      "parquetKey": "pirane",
-      "avg_score": 74.7,
-      "hex_count": 95406,
-      "centroid": [
-        -59.1628,
-        -25.7727
-      ]
-    },
-    {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 69.2,
+      "avg_score": 44.5,
       "hex_count": 37365,
       "centroid": [
         -58.6711,
@@ -57,9 +47,19 @@
       ]
     },
     {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 40.9,
+      "hex_count": 95406,
+      "centroid": [
+        -59.1628,
+        -25.7727
+      ]
+    },
+    {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 43.6,
+      "avg_score": 15.4,
       "hex_count": 288652,
       "centroid": [
         -60.0089,
@@ -69,7 +69,7 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 15.1,
+      "avg_score": 4.5,
       "hex_count": 150491,
       "centroid": [
         -61.2886,
@@ -79,7 +79,7 @@
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 9.8,
+      "avg_score": 3.3,
       "hex_count": 43310,
       "centroid": [
         -62.0811,
@@ -89,7 +89,7 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 4.6,
+      "avg_score": 2.3,
       "hex_count": 40559,
       "centroid": [
         -62.1413,
