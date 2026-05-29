@@ -1266,12 +1266,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'producir',
 		titleKey: 'sat.carbon.title',
 		descKey: 'sat.carbon.desc',
-		// parana_br + rio_grande_sul_br global parquets exceed wrangler's
-		// Windows libuv 100MB upload limit (141MB and 195MB respectively).
-		// Per-dpto parquets uploaded fine, so dept-level views work, but the
-		// territory-wide choropleth would 404 — hide until we can ship the
-		// global via a non-wrangler path (or split it server-side).
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1304,9 +1299,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'invertir',
 		titleKey: 'sat.prodAct.title',
 		descKey: 'sat.prodAct.desc',
-		// rio_grande_sul_br global parquet (118MB) blocked by wrangler/libuv
-		// upload bug — same workaround as carbon_stock above.
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
