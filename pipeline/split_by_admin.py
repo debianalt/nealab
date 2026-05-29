@@ -271,8 +271,11 @@ def main():
             for col in df.columns:
                 if col in ('h3index', admin_col):
                     continue
-                if col in score_like or col.startswith('c_'):
-                    continue  # NaN = no raster coverage
+                if col.startswith('c_'):
+                    continue  # keep component NaN (no raster coverage)
+                if col in score_like:
+                    df[col] = df[col].fillna(0)  # water/masked → score=0 (renders at low end, not gray)
+                    continue
                 if df[col].dtype == object:
                     df[col] = df[col].fillna('')
                 else:
