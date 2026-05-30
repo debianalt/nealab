@@ -43,10 +43,15 @@ from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, 
 _GCLOUD = 'gcloud.cmd' if platform.system() == 'Windows' else 'gcloud'
 
 CAPITAL_COORDS = {
-    'misiones':       (-27.367,  -55.896),   # Posadas (lat, lng)
-    'itapua_py':      (-27.336,  -55.869),   # Encarnación (lat, lng)
-    'corrientes':     (-27.4676, -58.8341),  # Corrientes capital (lat, lng)
-    'alto_parana_py': (-25.5097, -54.6111),  # Ciudad del Este (lat, lng)
+    'misiones':            (-27.367,  -55.896),   # Posadas (lat, lng)
+    'itapua_py':           (-27.336,  -55.869),   # Encarnación (lat, lng)
+    'corrientes':          (-27.4676, -58.8341),  # Corrientes capital (lat, lng)
+    'alto_parana_py':      (-25.5097, -54.6111),  # Ciudad del Este (lat, lng)
+    'chaco':               (-27.4513, -58.9920),  # Resistencia (lat, lng)
+    'formosa':             (-26.1817, -58.1730),  # Formosa capital (lat, lng)
+    'parana_br':           (-25.4290, -49.2671),  # Curitiba (lat, lng)
+    'santa_catarina_br':   (-27.5954, -48.5480),  # Florianópolis (lat, lng)
+    'rio_grande_sul_br':   (-30.0346, -51.2177),  # Porto Alegre (lat, lng)
 }
 
 TYPE_LABELS = {

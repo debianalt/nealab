@@ -88,7 +88,6 @@
 	async function loadStats(territory: TerritoryConfig, cols: string[]): Promise<TerritoryStats> {
 		if (cols.length === 0) return { territory, values: {}, rawValues: {} };
 		const analysisId = lensStore.activeAnalysis?.id ?? '';
-		if (analysisId === 'flood_risk') return { territory, values: {}, rawValues: {}, error: 'Sin datos globales' };
 		const url = getSatGlobalUrl(analysisId, territory.parquetPrefix);
 
 		const rawColMap = new Map<string, string>();

@@ -431,7 +431,7 @@ export class HexStore {
 
 	async loadFullCompare(comparePrefix: string): Promise<void> {
 		const layer = this.activeLayer;
-		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr' || layer.perDepartment) return;
+		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr') return;
 
 		try {
 			await this.loadGlobalInto(layer, comparePrefix, 'compare');
@@ -442,7 +442,7 @@ export class HexStore {
 
 	async loadRegionalData(prefix: string): Promise<void> {
 		const layer = this.activeLayer;
-		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr' || layer.perDepartment) return;
+		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr') return;
 		try {
 			await this.loadGlobalInto(layer, prefix, 'regional');
 		} catch (e) {

@@ -2,7 +2,7 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 1033548,
-    "avg_score": 50.0,
+    "avg_score": 49.9,
     "unassigned": 0
   },
   "departments": [
@@ -89,7 +89,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 52.8,
+      "avg_score": 53.3,
       "hex_count": 103935,
       "centroid": [
         -56.8203,
@@ -99,7 +99,7 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 52.1,
+      "avg_score": 52.8,
       "hex_count": 82588,
       "centroid": [
         -56.248,
@@ -127,13 +127,13 @@
       ]
     },
     {
-      "dpto": "Monte Caseros",
-      "parquetKey": "monte_caseros",
-      "avg_score": 50.9,
-      "hex_count": 31149,
+      "dpto": "Goya",
+      "parquetKey": "goya",
+      "avg_score": 51.1,
+      "hex_count": 58352,
       "centroid": [
-        -57.871,
-        -30.2487
+        -59.2704,
+        -29.4647
       ]
     },
     {
@@ -147,16 +147,6 @@
       ]
     },
     {
-      "dpto": "Goya",
-      "parquetKey": "goya",
-      "avg_score": 49.3,
-      "hex_count": 58352,
-      "centroid": [
-        -59.2704,
-        -29.4647
-      ]
-    },
-    {
       "dpto": "San Roque",
       "parquetKey": "san_roque",
       "avg_score": 48.2,
@@ -167,16 +157,6 @@
       ]
     },
     {
-      "dpto": "Curuzú Cuatiá",
-      "parquetKey": "curuzu_cuatia",
-      "avg_score": 48.1,
-      "hex_count": 98250,
-      "centroid": [
-        -58.3336,
-        -29.7068
-      ]
-    },
-    {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
       "avg_score": 48.1,
@@ -184,6 +164,26 @@
       "centroid": [
         -57.8356,
         -29.0512
+      ]
+    },
+    {
+      "dpto": "Curuzú Cuatiá",
+      "parquetKey": "curuzu_cuatia",
+      "avg_score": 47.8,
+      "hex_count": 98250,
+      "centroid": [
+        -58.3336,
+        -29.7068
+      ]
+    },
+    {
+      "dpto": "Monte Caseros",
+      "parquetKey": "monte_caseros",
+      "avg_score": 47.7,
+      "hex_count": 31149,
+      "centroid": [
+        -57.871,
+        -30.2487
       ]
     },
     {
@@ -237,23 +237,23 @@
       ]
     },
     {
-      "dpto": "Sauce",
-      "parquetKey": "sauce",
-      "avg_score": 44.2,
-      "hex_count": 29344,
-      "centroid": [
-        -58.8097,
-        -30.0011
-      ]
-    },
-    {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "avg_score": 44.1,
+      "avg_score": 45.5,
       "hex_count": 46922,
       "centroid": [
         -59.2457,
         -29.9916
+      ]
+    },
+    {
+      "dpto": "Sauce",
+      "parquetKey": "sauce",
+      "avg_score": 43.9,
+      "hex_count": 29344,
+      "centroid": [
+        -58.8097,
+        -30.0011
       ]
     }
   ]

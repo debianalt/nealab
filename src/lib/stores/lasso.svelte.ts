@@ -2,7 +2,7 @@ import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS } from '$lib/config';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { pointInPolygon } from '$lib/utils/geometry';
-import { PETAL_VARS, normalizeValues, getProvincialAvg } from '$lib/utils/petal';
+import { PETAL_VARS, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
 import centroids from '$lib/data/centroids.json';
 
 export { PETAL_VARS };
@@ -83,41 +83,59 @@ export class LassoStore {
 		const id = ZONE_LABELS[idx] || String.fromCharCode(65 + this.zones.length);
 		const color = ZONE_COLORS[idx];
 
-		const misionesRc = redcodes.filter(r => r.startsWith('54'));
-		const corrientesRc = redcodes.filter(r => r.startsWith('18'));
+		// A lasso zone is normally within one territory, but in regional view it
+		// can mix (e.g. Misiones + Corrientes). Group redcodes by territory and
+		// query each province's radio_stats. Only Misiones carries pct_agua_red;
+		// the rest substitute 0 so the petal var count stays consistent.
+		const PARQUET_BY_TERRITORY: Record<string, string> = {
+			misiones:   PARQUETS.radio_stats_master,
+			corrientes: PARQUETS.radio_stats_corrientes,
+			chaco:      PARQUETS.radio_stats_chaco,
+			formosa:    PARQUETS.radio_stats_formosa,
+		};
+		const byTerritory = new Map<string, string[]>();
+		for (const rc of redcodes) {
+			const t = territoryFromRedcode(rc);
+			(byTerritory.get(t) ?? byTerritory.set(t, []).get(t)!).push(rc);
+		}
 
 		try {
-			const provAvg = await getProvincialAvg();
-
 			let totalPop = 0;
 			let totalArea = 0;
 			const weighted = new Array(PETAL_VARS.length).fill(0);
+			const popByTerritory = new Map<string, number>();
 
-			const accumulate = (result: any) => {
+			const accumulate = (result: any, terr: string) => {
 				for (let i = 0; i < result.numRows; i++) {
 					const row = result.get(i)!.toJSON() as Record<string, any>;
 					const pop = Number(row.total_personas) || 0;
 					const area = Number(row.area_km2) || 0;
 					totalPop += pop;
 					totalArea += area;
+					popByTerritory.set(terr, (popByTerritory.get(terr) || 0) + pop);
 					for (let v = 0; v < PETAL_VARS.length; v++) {
 						weighted[v] += (Number(row[PETAL_VARS[v].col]) || 0) * pop;
 					}
 				}
 			};
 
-			if (misionesRc.length > 0) {
-				const cols = PETAL_VARS.map(v => v.col).join(', ');
-				const sql = `SELECT redcode, total_personas, ${cols}, area_km2 FROM '${PARQUETS.radio_stats_master}' WHERE redcode IN (${misionesRc.map(r => `'${r}'`).join(',')})`;
-				accumulate(await query(sql));
+			for (const [terr, rcs] of byTerritory) {
+				const parquet = PARQUET_BY_TERRITORY[terr];
+				if (!parquet || rcs.length === 0) continue;
+				const cols = PETAL_VARS.map(v =>
+					(terr !== 'misiones' && v.col === 'pct_agua_red') ? '0 as pct_agua_red' : v.col
+				).join(', ');
+				const sql = `SELECT redcode, total_personas, ${cols}, area_km2 FROM '${parquet}' WHERE redcode IN (${rcs.map(r => `'${r}'`).join(',')})`;
+				accumulate(await query(sql), terr);
 			}
 
-			if (corrientesRc.length > 0) {
-				// Corrientes lacks pct_agua_red — substitute 0 so petal var count stays consistent
-				const cols = PETAL_VARS.map(v => v.col === 'pct_agua_red' ? '0 as pct_agua_red' : v.col).join(', ');
-				const sql = `SELECT redcode, total_personas, ${cols}, area_km2 FROM '${PARQUETS.radio_stats_corrientes}' WHERE redcode IN (${corrientesRc.map(r => `'${r}'`).join(',')})`;
-				accumulate(await query(sql));
+			// Normalize against the province contributing most population to the zone
+			// (for a single-territory zone, that's simply its province).
+			let dominant = 'misiones', maxPop = -1;
+			for (const [terr, pop] of popByTerritory) {
+				if (pop > maxPop) { maxPop = pop; dominant = terr; }
 			}
+			const provAvg = await getProvincialAvg(dominant);
 
 			const rawValues = totalPop > 0
 				? weighted.map(w => w / totalPop)

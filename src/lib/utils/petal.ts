@@ -19,23 +19,42 @@ export function normalizeValues(rawValues: number[], provAvg: number[]): number[
 	});
 }
 
-let _cachedProvAvg: number[] | null = null;
+const _cachedProvAvg = new Map<string, number[]>();
 
-/** Weighted provincial averages for PETAL_VARS (cached after first call). */
-export async function getProvincialAvg(): Promise<number[]> {
-	if (_cachedProvAvg) return _cachedProvAvg;
+/** Map an AR radio redcode (INDEC) to its Spatia territory id via codprov prefix. */
+export function territoryFromRedcode(rc: string): string {
+	const p = String(rc).slice(0, 2);
+	return p === '18' ? 'corrientes'
+	     : p === '22' ? 'chaco'
+	     : p === '34' ? 'formosa'
+	     :              'misiones';  // '54' and fallback
+}
+
+/**
+ * Population-weighted provincial averages aligned to PETAL_VARS, for the given
+ * territory (default Misiones). Vars absent from a territory's census (e.g.
+ * pct_agua_red in Corrientes/Chaco/Formosa) get 1.0 — their raw value is 0 there
+ * too, so the petal axis reads ~0. Cached per territory. Anchoring each zone to
+ * its OWN province makes cross-territory zone petals comparable.
+ */
+export async function getProvincialAvg(territory: string = 'misiones'): Promise<number[]> {
+	const cached = _cachedProvAvg.get(territory);
+	if (cached) return cached;
 	if (!isReady()) throw new Error('DuckDB not ready');
 
-	const cols = PETAL_VARS.map(v =>
-		`SUM(${v.col} * total_personas) / NULLIF(SUM(total_personas), 0) as avg_${v.col}`
-	).join(', ');
+	const src = CENSUS_SRC[territory] ?? CENSUS_SRC.misiones;
+	const present = new Set(src.vars.map(v => v.col));
+	const cols = PETAL_VARS.filter(v => present.has(v.col))
+		.map(v => `SUM(${v.col} * total_personas) / NULLIF(SUM(total_personas), 0) as avg_${v.col}`)
+		.join(', ');
 
-	const sql = `SELECT ${cols} FROM '${PARQUETS.radio_stats_master}' WHERE total_personas > 0`;
+	const sql = `SELECT ${cols} FROM '${src.parquet}' WHERE total_personas > 0`;
 	const result = await query(sql);
 	const row = result.get(0)!.toJSON() as Record<string, any>;
 
-	_cachedProvAvg = PETAL_VARS.map(v => Number(row[`avg_${v.col}`]) || 1);
-	return _cachedProvAvg;
+	const avg = PETAL_VARS.map(v => present.has(v.col) ? (Number(row[`avg_${v.col}`]) || 1) : 1);
+	_cachedProvAvg.set(territory, avg);
+	return avg;
 }
 
 type RadioVars = typeof PETAL_VARS;
@@ -45,6 +64,9 @@ type RadioPop = { data: Map<string, Record<string, any>>; vars: RadioVars };
 const CENSUS_SRC: Record<string, { parquet: string; vars: RadioVars }> = {
 	misiones:   { parquet: PARQUETS.radio_stats_master,     vars: PETAL_VARS },
 	corrientes: { parquet: PARQUETS.radio_stats_corrientes, vars: PETAL_VARS.filter(v => v.col !== 'pct_agua_red') },
+	// Chaco/Formosa INDEC radio_stats lack pct_agua_red (same as Corrientes).
+	chaco:      { parquet: PARQUETS.radio_stats_chaco,      vars: PETAL_VARS.filter(v => v.col !== 'pct_agua_red') },
+	formosa:    { parquet: PARQUETS.radio_stats_formosa,    vars: PETAL_VARS.filter(v => v.col !== 'pct_agua_red') },
 };
 
 const _radioPopCache = new Map<string, RadioPop>();

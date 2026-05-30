@@ -187,16 +187,17 @@ def create_indexes(conn):
 
 # ── Step 3: Spatial join (Python-side using geopandas) ───────────────────────
 
-def load_corrientes_radios() -> gpd.GeoDataFrame:
-    """Load Corrientes census radios from posadas DB."""
+def load_radios(codprov: str = '18') -> gpd.GeoDataFrame:
+    """Load census radios for a province (INDEC codprov) from posadas DB.
+    Generic over AR provinces; Corrientes=18, Chaco=22, Formosa=34."""
     conn = psycopg2.connect(PG_CENSUS)
     with conn.cursor() as cur:
         cur.execute("""
             SELECT redcode, ST_AsBinary(geom) AS geom_wkb,
                    COALESCE(radios_pob, 0) AS personas
             FROM censo_2022.radios_geom
-            WHERE codprov = '18' AND redcode IS NOT NULL AND geom IS NOT NULL
-        """)
+            WHERE codprov = %s AND redcode IS NOT NULL AND geom IS NOT NULL
+        """, (str(codprov),))
         rows = cur.fetchall()
     conn.close()
 
@@ -208,9 +209,15 @@ def load_corrientes_radios() -> gpd.GeoDataFrame:
     )
 
 
-def spatial_join_and_est_personas(conn_bldg, radios: gpd.GeoDataFrame):
-    """Assign redcode and compute est_personas in Python then batch-update PostGIS."""
-    print("  Loading building centroids from PostGIS...")
+def load_corrientes_radios() -> gpd.GeoDataFrame:
+    """Backwards-compat alias: Corrientes radios (codprov 18)."""
+    return load_radios('18')
+
+
+def spatial_join_and_est_personas(conn_bldg, radios: gpd.GeoDataFrame, table: str = TABLE):
+    """Assign redcode and compute est_personas in Python then batch-update PostGIS.
+    `table` = gba_buildings_<territory> (defaults to Corrientes for backwards compat)."""
+    print(f"  Loading building centroids from PostGIS ({table})...")
     with conn_bldg.cursor() as cur:
         cur.execute(f"""
             SELECT gid,
@@ -218,7 +225,7 @@ def spatial_join_and_est_personas(conn_bldg, radios: gpd.GeoDataFrame):
                    ST_Y(ST_Centroid(geom)) AS lat,
                    area_m2,
                    best_height_m
-            FROM {TABLE}
+            FROM {table}
             WHERE geom IS NOT NULL
         """)
         rows = cur.fetchall()
@@ -266,13 +273,13 @@ def spatial_join_and_est_personas(conn_bldg, radios: gpd.GeoDataFrame):
     with conn_bldg.cursor() as cur:
         psycopg2.extras.execute_values(
             cur,
-            f"UPDATE {TABLE} t SET redcode = d.redcode "
+            f"UPDATE {table} t SET redcode = d.redcode "
             f"FROM (VALUES %s) AS d(gid, redcode) WHERE t.gid = d.gid::int",
             redcode_rows, page_size=5000,
         )
         psycopg2.extras.execute_values(
             cur,
-            f"UPDATE {TABLE} t SET est_personas = d.ep "
+            f"UPDATE {table} t SET est_personas = d.ep "
             f"FROM (VALUES %s) AS d(gid, ep) WHERE t.gid = d.gid::int",
             pers_rows, template="(%s, %s::float)", page_size=5000,
         )
@@ -280,13 +287,13 @@ def spatial_join_and_est_personas(conn_bldg, radios: gpd.GeoDataFrame):
     print(f"  Done")
 
 
-def print_stats(conn):
+def print_stats(conn, table: str = TABLE):
     with conn.cursor() as cur:
         cur.execute(f"""
             SELECT COUNT(*), COUNT(redcode),
                    COUNT(*) - COUNT(redcode) AS unmatched,
                    SUM(est_personas)::bigint
-            FROM {TABLE}
+            FROM {table}
         """)
         r = cur.fetchone()
     print(f"\n  Summary:")

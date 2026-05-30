@@ -450,6 +450,86 @@
 				}
 			});
 
+			// Chaco buildings (AR census, mirrors Corrientes; hidden until territory switch)
+			map.addSource('chaco-buildings', { type: 'vector', url: getTilesUrl('chaco_buildings') });
+			map.addLayer({
+				id: 'chaco-buildings-3d',
+				type: 'fill-extrusion',
+				source: 'chaco-buildings',
+				'source-layer': 'buildings',
+				layout: { visibility: 'none' },
+				paint: {
+					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-base': 0,
+					'fill-extrusion-color': mapStore.getColorExpr() as any,
+					'fill-extrusion-opacity': 0.85
+				}
+			});
+
+			// Formosa buildings (AR census, mirrors Corrientes; hidden until territory switch)
+			map.addSource('formosa-buildings', { type: 'vector', url: getTilesUrl('formosa_buildings') });
+			map.addLayer({
+				id: 'formosa-buildings-3d',
+				type: 'fill-extrusion',
+				source: 'formosa-buildings',
+				'source-layer': 'buildings',
+				layout: { visibility: 'none' },
+				paint: {
+					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-base': 0,
+					'fill-extrusion-color': mapStore.getColorExpr() as any,
+					'fill-extrusion-opacity': 0.85
+				}
+			});
+
+			// Paraná (BR) buildings — footprints only, no census (hidden until territory switch)
+			map.addSource('parana_br-buildings', { type: 'vector', url: getTilesUrl('parana_br_buildings') });
+			map.addLayer({
+				id: 'parana_br-buildings-3d',
+				type: 'fill-extrusion',
+				source: 'parana_br-buildings',
+				'source-layer': 'buildings',
+				layout: { visibility: 'none' },
+				paint: {
+					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-base': 0,
+					'fill-extrusion-color': mapStore.getColorExpr() as any,
+					'fill-extrusion-opacity': 0.85
+				}
+			});
+
+			// Santa Catarina (BR) buildings — footprints only, no census (hidden until territory switch)
+			map.addSource('santa_catarina_br-buildings', { type: 'vector', url: getTilesUrl('santa_catarina_br_buildings') });
+			map.addLayer({
+				id: 'santa_catarina_br-buildings-3d',
+				type: 'fill-extrusion',
+				source: 'santa_catarina_br-buildings',
+				'source-layer': 'buildings',
+				layout: { visibility: 'none' },
+				paint: {
+					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-base': 0,
+					'fill-extrusion-color': mapStore.getColorExpr() as any,
+					'fill-extrusion-opacity': 0.85
+				}
+			});
+
+			// Rio Grande do Sul (BR) buildings — footprints only, no census (hidden until territory switch)
+			map.addSource('rio_grande_sul_br-buildings', { type: 'vector', url: getTilesUrl('rio_grande_sul_br_buildings') });
+			map.addLayer({
+				id: 'rio_grande_sul_br-buildings-3d',
+				type: 'fill-extrusion',
+				source: 'rio_grande_sul_br-buildings',
+				'source-layer': 'buildings',
+				layout: { visibility: 'none' },
+				paint: {
+					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-base': 0,
+					'fill-extrusion-color': mapStore.getColorExpr() as any,
+					'fill-extrusion-opacity': 0.85
+				}
+			});
+
 			// Lighting (adjusted for terrain + buildings interaction)
 			map.setLight({
 				anchor: 'viewport',
@@ -508,6 +588,22 @@
 				id: 'radio-highlight-corrientes',
 				type: 'line',
 				source: 'corrientes-buildings',
+				'source-layer': 'buildings',
+				paint: { 'line-color': '#60a5fa', 'line-width': 4.5, 'line-opacity': 0.8 },
+				filter: emptyFilter
+			});
+			map.addLayer({
+				id: 'radio-highlight-chaco',
+				type: 'line',
+				source: 'chaco-buildings',
+				'source-layer': 'buildings',
+				paint: { 'line-color': '#60a5fa', 'line-width': 4.5, 'line-opacity': 0.8 },
+				filter: emptyFilter
+			});
+			map.addLayer({
+				id: 'radio-highlight-formosa',
+				type: 'line',
+				source: 'formosa-buildings',
 				'source-layer': 'buildings',
 				paint: { 'line-color': '#60a5fa', 'line-width': 4.5, 'line-opacity': 0.8 },
 				filter: emptyFilter
@@ -578,6 +674,22 @@
 				id: 'zone-buildings-corrientes',
 				type: 'line',
 				source: 'corrientes-buildings',
+				'source-layer': 'buildings',
+				paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 0.85 },
+				filter: emptyFilter
+			});
+			map.addLayer({
+				id: 'zone-buildings-chaco',
+				type: 'line',
+				source: 'chaco-buildings',
+				'source-layer': 'buildings',
+				paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 0.85 },
+				filter: emptyFilter
+			});
+			map.addLayer({
+				id: 'zone-buildings-formosa',
+				type: 'line',
+				source: 'formosa-buildings',
 				'source-layer': 'buildings',
 				paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 0.85 },
 				filter: emptyFilter
@@ -948,6 +1060,50 @@
 			}, 80);
 		});
 
+		// Chaco / Formosa / BR buildings tooltip. Chaco+Formosa carry census
+		// (redcode → radio block); the BR territories are footprints only, so
+		// the redcode block simply doesn't render (no redcode prop on the tile).
+		for (const blayer of [
+			'chaco-buildings-3d', 'formosa-buildings-3d',
+			'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d'
+		]) {
+			map.on('mousemove', blayer, (e) => {
+				if (lassoActive) return;
+				if (leaveTimeout) { clearTimeout(leaveTimeout); leaveTimeout = null; }
+				map.getCanvas().style.cursor = 'pointer';
+				const p = e.features![0].properties!;
+
+				const pers = parseInt(p.est_personas) || 0;
+				const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
+				const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
+				const redcode = p.redcode || null;
+				const radioPop = parseInt(p.radio_personas) || 0;
+				const radioDens = p.densidad_hab_km2 != null ? Math.round(p.densidad_hab_km2).toLocaleString() : '?';
+				const radioViv = parseInt(p.radio_viviendas) || 0;
+				const radioHog = parseInt(p.radio_hogares) || 0;
+				const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
+
+				let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
+					`<b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
+				if (redcode) {
+					html += `<br><span style="color:#a3a3a3">───</span><br>` +
+						`<b style="color:#d4d4d4">${i18n.t('tip.radio')}</b> <span style="color:#d4d4d4">${redcode}</span><br>` +
+						`<b style="color:#d4d4d4">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('tip.density')}</b> ${radioDens} hab/km²<br>` +
+						`<b style="color:#d4d4d4">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.area')}:</b> ${radioAreaKm2} km²`;
+				}
+				tooltip.innerHTML = html;
+				tooltip.style.display = 'block';
+				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
+				tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
+			});
+			map.on('mouseleave', blayer, () => {
+				leaveTimeout = setTimeout(() => {
+					if (!lassoActive) map.getCanvas().style.cursor = '';
+					tooltip.style.display = 'none';
+				}, 80);
+			});
+		}
+
 		// Itapúa buildings tooltip (height + area only, no census data)
 		map.on('mousemove', 'itapua-buildings-3d', (e) => {
 			if (lassoActive) return;
@@ -1074,6 +1230,40 @@
 				}));
 			}
 		});
+
+		// Chaco / Formosa buildings: click-to-select radio (mirror Corrientes).
+		// BR territories are intentionally excluded (no radio census).
+		for (const blayer of ['chaco-buildings-3d', 'formosa-buildings-3d']) {
+			map.on('click', blayer, (e) => {
+				if (lassoActive) return;
+				if (mapStore.activeHexLayer) return;
+				if (catastroClickMode !== 'none') return;
+				const redcode = e.features![0].properties!.redcode;
+				if (!redcode) return;
+
+				if (mapStore.hasRadio(redcode)) {
+					container.dispatchEvent(new CustomEvent('radio-deselect', { bubbles: true, detail: { redcode } }));
+				} else {
+					const canvas = map.getCanvas();
+					const allFeatures = map.queryRenderedFeatures(
+						[[0, 0], [canvas.width, canvas.height]],
+						{ layers: [blayer] }
+					);
+					const selected: Record<string, any>[] = [];
+					const seen = new Set<string | number>();
+					for (const f of allFeatures) {
+						const id = f.id ?? `${f.properties?.area_m2}_${f.properties?.est_personas}`;
+						if (f.properties?.redcode !== redcode || seen.has(id)) continue;
+						seen.add(id as string | number);
+						selected.push(f.properties!);
+					}
+					container.dispatchEvent(new CustomEvent('radio-select', {
+						bubbles: true,
+						detail: { redcode, selected, census: e.features![0].properties! }
+					}));
+				}
+			});
+		}
 
 		// Itapúa buildings: click → district profile. PY has no radio census, so
 		// the district is the finest census unit available — this mirrors the AR
@@ -1212,6 +1402,8 @@
 		// General click: switch territory scope when clicking blank area inside a territory
 		const TERRITORY_LAYERS = ['hex-fill', 'compare-hex-fill', 'regional-hex-fill',
 			'buildings-3d', 'corrientes-buildings-3d', 'itapua-buildings-3d', 'alto_parana-buildings-3d',
+			'chaco-buildings-3d', 'formosa-buildings-3d',
+			'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d',
 			'buildings-flat', 'province-fill', 'itapua-district-fill', 'alto_parana-district-fill'];
 		map.on('click', (e) => {
 			if (lassoActive) return;
@@ -1258,14 +1450,24 @@
 
 
 
+	// activeTerritoryId → its 3D buildings layer id. Territories not listed
+	// (misiones) fall back to the base 'buildings-3d'.
+	const TERRITORY_BUILDINGS_LAYER: Record<string, string> = {
+		corrientes: 'corrientes-buildings-3d',
+		itapua_py: 'itapua-buildings-3d',
+		alto_parana_py: 'alto_parana-buildings-3d',
+		chaco: 'chaco-buildings-3d',
+		formosa: 'formosa-buildings-3d',
+		parana_br: 'parana_br-buildings-3d',
+		santa_catarina_br: 'santa_catarina_br-buildings-3d',
+		rio_grande_sul_br: 'rio_grande_sul_br-buildings-3d',
+	};
+	const ALL_BUILDINGS_LAYERS = ['buildings-3d', ...Object.values(TERRITORY_BUILDINGS_LAYER)];
+
 	function showBuildingsForActiveTerritory() {
-		const isCorrientes = activeTerritoryId === 'corrientes';
 		const isItapua = activeTerritoryId === 'itapua_py';
 		const isAltoParana = activeTerritoryId === 'alto_parana_py';
-		const layer = isCorrientes ? 'corrientes-buildings-3d'
-		            : isItapua    ? 'itapua-buildings-3d'
-		            : isAltoParana ? 'alto_parana-buildings-3d'
-		            :               'buildings-3d';
+		const layer = TERRITORY_BUILDINGS_LAYER[activeTerritoryId] ?? 'buildings-3d';
 		const heightColored = isItapua || isAltoParana;
 		const opacity = heightColored ? 0.92 : 0.85;
 		const colorExpr = heightColored ? mapStore.getHeightColorExpr() : mapStore.getColorExpr();
@@ -1278,20 +1480,37 @@
 
 	export function updateColorExpr() {
 		const colorExpr = mapStore.getColorExpr() as any;
-		if (map?.getLayer('buildings-3d')) {
-			map.setPaintProperty('buildings-3d', 'fill-extrusion-color', colorExpr);
-		}
-		if (map?.getLayer('corrientes-buildings-3d')) {
-			map.setPaintProperty('corrientes-buildings-3d', 'fill-extrusion-color', colorExpr);
+		// Default (AR-style, est_personas) color expr — applies to Misiones,
+		// Corrientes, Chaco, Formosa and the BR footprint layers. Itapúa / Alto
+		// Paraná use the height-colored variant and are handled separately.
+		for (const l of [
+			'buildings-3d', 'corrientes-buildings-3d',
+			'chaco-buildings-3d', 'formosa-buildings-3d',
+			'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d'
+		]) {
+			if (map?.getLayer(l)) {
+				map.setPaintProperty(l, 'fill-extrusion-color', colorExpr);
+			}
 		}
 	}
 
+	// activeTerritoryId → its radio-highlight building-outline layer. Census
+	// territories only (AR). Misiones uses the base 'radio-highlight'.
+	const TERRITORY_RADIO_HIGHLIGHT: Record<string, string> = {
+		corrientes: 'radio-highlight-corrientes',
+		chaco: 'radio-highlight-chaco',
+		formosa: 'radio-highlight-formosa',
+	};
+	const ALL_RADIO_HIGHLIGHT = ['radio-highlight', ...Object.values(TERRITORY_RADIO_HIGHLIGHT)];
+
 	export function setRadioHighlight(radios: Array<{redcode: string, color: string}>) {
-		const isCorrientes = activeTerritoryId === 'corrientes';
-		const activeLayer  = isCorrientes ? 'radio-highlight-corrientes' : 'radio-highlight';
-		const inactiveLayer = isCorrientes ? 'radio-highlight' : 'radio-highlight-corrientes';
+		const activeLayer = TERRITORY_RADIO_HIGHLIGHT[activeTerritoryId] ?? 'radio-highlight';
 		const emptyFilter: any = ['==', ['get', 'redcode'], ''];
-		if (map?.getLayer(inactiveLayer)) map.setFilter(inactiveLayer, emptyFilter);
+		// Clear every other radio-highlight layer so a stale outline never lingers
+		// when switching between AR census territories.
+		for (const l of ALL_RADIO_HIGHLIGHT) {
+			if (l !== activeLayer && map?.getLayer(l)) map.setFilter(l, emptyFilter);
+		}
 		if (!map?.getLayer(activeLayer)) return;
 		if (radios.length === 0) {
 			map.setFilter(activeLayer, emptyFilter);
@@ -1330,8 +1549,9 @@
 	export function clearRadioHighlight() {
 		if (!map) return;
 		const emptyFilter: any = ['==', ['get', 'redcode'], ''];
-		map.setFilter('radio-highlight', emptyFilter);
-		if (map.getLayer('radio-highlight-corrientes')) map.setFilter('radio-highlight-corrientes', emptyFilter);
+		for (const l of ALL_RADIO_HIGHLIGHT) {
+			if (map.getLayer(l)) map.setFilter(l, emptyFilter);
+		}
 		map.setFilter('selected-fill', emptyFilter);
 		map.setFilter('selected-line', emptyFilter);
 	}
@@ -1467,7 +1687,7 @@
 			// population) — consistent meaning across the frontier, not height.
 			const colorExprDefault = mapStore.getColorExpr();
 			const colorExprItapua = colorExprDefault;
-			for (const l of ['buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d']) {
+			for (const l of ALL_BUILDINGS_LAYERS) {
 				if (map.getLayer(l)) {
 					map.setLayoutProperty(l, 'visibility', 'visible');
 					const expr = (l === 'itapua-buildings-3d' || l === 'alto_parana-buildings-3d') ? colorExprItapua : colorExprDefault;
@@ -1520,12 +1740,8 @@
 		// force them here, or the click-highlight never renders.
 
 		// Buildings: show only the active territory's layer, hide the others
-		const activeLayer = isCorrientes ? 'corrientes-buildings-3d'
-		                  : isItapua     ? 'itapua-buildings-3d'
-		                  : isAltoParana ? 'alto_parana-buildings-3d'
-		                  :               'buildings-3d';
-		const otherLayers = ['buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d']
-			.filter(l => l !== activeLayer);
+		const activeLayer = TERRITORY_BUILDINGS_LAYER[activeTerritoryId] ?? 'buildings-3d';
+		const otherLayers = ALL_BUILDINGS_LAYERS.filter(l => l !== activeLayer);
 		for (const l of otherLayers) {
 			if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
 		}
@@ -1545,6 +1761,8 @@
 	// show only the NOA+NEA province outlines. Restore via applyTerritoryVisibility.
 	const EUDR_HIDDEN_LAYERS = [
 		'buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d',
+		'chaco-buildings-3d', 'formosa-buildings-3d',
+		'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d',
 		'mask-fill', 'itapua-mask-fill', 'corrientes-mask-fill', 'alto_parana-mask-fill',
 		'province-border', 'corrientes-border', 'alto_parana-border', 'itapua-border',
 		'chaco-border', 'formosa-border', 'parana_br-border', 'santa_catarina_br-border', 'rio_grande_sul_br-border',
@@ -1712,7 +1930,7 @@
 		}
 
 		// Hide 3D buildings — add flat 2D fill BELOW catastro
-		for (const layer of ['buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d']) {
+		for (const layer of ALL_BUILDINGS_LAYERS) {
 			if (map.getLayer(layer)) map.setLayoutProperty(layer, 'visibility', 'none');
 		}
 		if (!map.getLayer('buildings-flat') && map.getSource('buildings')) {
@@ -2627,6 +2845,8 @@
 			if (map.getLayer('zone-line')) map.setFilter('zone-line', emptyFilter);
 			if (map.getLayer('zone-buildings')) map.setFilter('zone-buildings', emptyFilter);
 			if (map.getLayer('zone-buildings-corrientes')) map.setFilter('zone-buildings-corrientes', emptyFilter);
+			if (map.getLayer('zone-buildings-chaco')) map.setFilter('zone-buildings-chaco', emptyFilter);
+			if (map.getLayer('zone-buildings-formosa')) map.setFilter('zone-buildings-formosa', emptyFilter);
 			return;
 		}
 
@@ -2660,6 +2880,14 @@
 			map.setPaintProperty('zone-buildings-corrientes', 'line-color', matchExpr);
 			map.setFilter('zone-buildings-corrientes', filter);
 		}
+		if (map.getLayer('zone-buildings-chaco')) {
+			map.setPaintProperty('zone-buildings-chaco', 'line-color', matchExpr);
+			map.setFilter('zone-buildings-chaco', filter);
+		}
+		if (map.getLayer('zone-buildings-formosa')) {
+			map.setPaintProperty('zone-buildings-formosa', 'line-color', matchExpr);
+			map.setFilter('zone-buildings-formosa', filter);
+		}
 	}
 
 	export function clearZoneHighlight() {
@@ -2669,6 +2897,8 @@
 		if (map.getLayer('zone-line')) map.setFilter('zone-line', emptyFilter);
 		if (map.getLayer('zone-buildings')) map.setFilter('zone-buildings', emptyFilter);
 		if (map.getLayer('zone-buildings-corrientes')) map.setFilter('zone-buildings-corrientes', emptyFilter);
+		if (map.getLayer('zone-buildings-chaco')) map.setFilter('zone-buildings-chaco', emptyFilter);
+		if (map.getLayer('zone-buildings-formosa')) map.setFilter('zone-buildings-formosa', emptyFilter);
 	}
 
 	export function getLassoActive(): boolean {

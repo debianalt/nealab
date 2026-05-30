@@ -4,7 +4,7 @@ function getBase(): string {
 	return R2_PROD;
 }
 
-export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'radios' | 'terrain' | 'hexagons' | 'catastro'): string {
+export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro'): string {
 	if (name === 'terrain') {
 		return '/api/terrain/{z}/{x}/{y}.png';
 	}
@@ -15,6 +15,11 @@ export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_dis
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v2.pmtiles',
 		alto_parana_buildings: 'data/tiles/alto_parana_buildings-v2.pmtiles',
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
+		chaco_buildings: 'data/tiles/chaco_buildings.pmtiles',
+		formosa_buildings: 'data/tiles/formosa_buildings.pmtiles',
+		parana_br_buildings: 'data/tiles/parana_br_buildings.pmtiles',
+		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings.pmtiles',
+		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings.pmtiles',
 		radios: 'data/tiles/radios-v3.pmtiles',
 		hexagons: 'tiles/hexagons-v2.pmtiles',
 		catastro: 'tiles/catastro.pmtiles?v=3'
@@ -57,15 +62,15 @@ export function getParquetUrl(name: string): string {
 		sat_agri_potential: '?v=35',
 		sat_forest_health: '?v=38',
 		sat_forestry_aptitude: '?v=35',
-		sat_service_deprivation: '?v=26',
-		sat_territorial_isolation: '?v=26',
-		sat_health_access: '?v=26',
-		sat_education_capital: '?v=26',
-		sat_education_flow: '?v=26',
+		sat_service_deprivation: '?v=27',
+		sat_territorial_isolation: '?v=27',
+		sat_health_access: '?v=27',
+		sat_education_capital: '?v=27',
+		sat_education_flow: '?v=27',
 		sat_territorial_types: '?v=26',
-		sat_sociodemographic: '?v=23',
-		sat_economic_activity: '?v=23',
-		sat_accessibility: '?v=26',
+		sat_sociodemographic: '?v=24',
+		sat_economic_activity: '?v=24',
+		sat_accessibility: '?v=27',
 		sat_climate_vulnerability: '?v=12',
 		sat_carbon_stock: '?v=20',
 		sat_pm25_drivers: '?v=17',
@@ -136,6 +141,8 @@ export const PARQUETS = {
 	get buildings_stats() { return getParquetUrl('buildings_stats'); },
 	get radio_stats_master() { return getParquetUrl('radio_stats_master'); },
 	get radio_stats_corrientes() { return `${getBase()}/data/corrientes/radio_stats_corrientes.parquet`; },
+	get radio_stats_chaco() { return `${getBase()}/data/chaco/radio_stats_chaco.parquet`; },
+	get radio_stats_formosa() { return `${getBase()}/data/formosa/radio_stats_formosa.parquet`; },
 	get hex_flood_risk() { return getParquetUrl('hex_flood_risk'); },
 	get h3_radio_crosswalk() { return getParquetUrl('h3_radio_crosswalk'); },
 	get h3_parent_crosswalk() { return getParquetUrl('h3_parent_crosswalk'); },
@@ -394,7 +401,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.flood.low',
 		legendHighKey: 'legend.flood.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── EMSA: Infraestructura eléctrica ──
 	powerline_density: {
@@ -437,7 +444,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.envRisk.low',
 		legendHighKey: 'legend.envRisk.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	climate_comfort: {
 		id: 'climate_comfort',
@@ -456,7 +463,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.comfort.low',
 		legendHighKey: 'legend.comfort.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	green_capital: {
 		id: 'green_capital',
@@ -478,7 +485,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.green.low',
 		legendHighKey: 'legend.green.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	change_pressure: {
 		id: 'change_pressure',
@@ -499,7 +506,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.change.low',
 		legendHighKey: 'legend.change.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	location_value: {
 		id: 'location_value',
@@ -520,7 +527,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.locValue.low',
 		legendHighKey: 'legend.locValue.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	agri_potential: {
 		id: 'agri_potential',
@@ -542,7 +549,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.agri.low',
 		legendHighKey: 'legend.agri.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	forest_health: {
 		id: 'forest_health',
@@ -561,7 +568,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.forestH.low',
 		legendHighKey: 'legend.forestH.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	soil_water: {
 		id: 'soil_water',
@@ -579,7 +586,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.soilW.low',
 		legendHighKey: 'legend.soilW.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
@@ -600,7 +607,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.forestry.low',
 		legendHighKey: 'legend.forestry.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	service_deprivation: {
 		id: 'service_deprivation',
@@ -622,7 +629,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.deprivation.low',
 		legendHighKey: 'legend.deprivation.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	territorial_isolation: {
 		id: 'territorial_isolation',
@@ -644,7 +651,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.isolation.low',
 		legendHighKey: 'legend.isolation.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	health_access: {
 		id: 'health_access',
@@ -666,7 +673,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.health.low',
 		legendHighKey: 'legend.health.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	education_capital: {
 		id: 'education_capital',
@@ -686,7 +693,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.eduCap.low',
 		legendHighKey: 'legend.eduCap.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	education_flow: {
 		id: 'education_flow',
@@ -705,7 +712,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.eduFlow.low',
 		legendHighKey: 'legend.eduFlow.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	// ── Land use / MapBiomas ──
 	land_use: {
@@ -733,7 +740,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.landUse.low',
 		legendHighKey: 'legend.landUse.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Territorial classification (PCA + metabolic clustering) ──
 	territorial_types: {
@@ -759,7 +766,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		aggregation: 'mean',
 		titleKey: 'sat.types.title',
 		perDepartment: true,
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		legendLowKey: 'legend.types.low',
 		legendHighKey: 'legend.types.high',
 	},
@@ -786,7 +793,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		titleKey: 'analysis.scores.title',
 		perDepartment: true,
 		comparable: true,
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		legendLowKey: 'legend.scores.low',
 		legendHighKey: 'legend.scores.high',
 	},
@@ -809,7 +816,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		aggregation: 'mean',
 		titleKey: 'analysis.socio.title',
 		perDepartment: true,
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	economic_activity: {
 		id: 'economic_activity',
@@ -829,7 +836,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		aggregation: 'mean',
 		titleKey: 'analysis.economic.title',
 		perDepartment: true,
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available'},
 	},
 	accessibility: {
 		id: 'accessibility',
@@ -850,7 +857,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		titleKey: 'analysis.accessibility.title',
 		perDepartment: true,
 		comparable: true,
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Carbon Stock & Balance ──
 	carbon_stock: {
@@ -887,7 +894,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		temporalPeriods: { current: '2022–2024', baseline: '2018–2020', source: 'ESA CCI · MODIS · Hansen' },
 		legendLowKey: 'legend.carbon.low',
 		legendHighKey: 'legend.carbon.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Climate Vulnerability (IPCC AR5 meta-analysis) ──
 	climate_vulnerability: {
@@ -925,7 +932,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.climVuln.low',
 		legendHighKey: 'legend.climVuln.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── PM2.5 Drivers (25-year ML decomposition) ──
 	pm25_drivers: {
@@ -955,7 +962,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		temporalPeriods: { current: '2013–2022', baseline: '2001–2010', source: 'ACAG V6' },
 		legendLowKey: 'legend.pm25.low',
 		legendHighKey: 'legend.pm25.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Productive Activity (raw values, VIIRS + NPP + NDVI + GHSL + Hansen + LST) ──
 	productive_activity: {
@@ -988,7 +995,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		temporalPeriods: { current: '2022–2025', baseline: '2014–2017', source: 'VIIRS · MODIS · Hansen · GHSL' },
 		legendLowKey: 'legend.prodAct.low',
 		legendHighKey: 'legend.prodAct.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Deforestation Dynamics (Hansen 2001-2024, observed) ──
 	// No petalVars: only 2 numeric indicators (loss_rate + cumulative) — radar with 2 vars is not meaningful.
@@ -1010,7 +1017,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		temporalPeriods: { current: '2015–2024', baseline: '2001–2010', source: 'Hansen GFC v1.12' },
 		legendLowKey: 'legend.deforest.low',
 		legendHighKey: 'legend.deforest.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── EUDR deforestation risk (H3 res-7, 10 provinces) ──
 	eudr: {
@@ -1117,7 +1124,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		status: 'available',
 		spatialUnit: 'hexagon',
 		comparable: true,
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// natural_risks hidden — covered by environmental_risk (H3)
 	// ── Satellite H3 analyses ──
@@ -1166,7 +1173,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'invertir',
 		titleKey: 'sat.locValue.title',
 		descKey: 'sat.locValue.desc',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1618,7 +1625,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_territorial_types: { dataDate: 'PCA + k-means sobre 13 análisis satelitales 2019-2024', processedDate: '28/03/2026', sourceKey: 'data.source.satellite' },
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '29/03/2026', sourceKey: 'data.source.censo' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
-	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '02/04/2026', sourceKey: 'data.source.satellite' },
+	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
 	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
 	sat_soil_water: { dataDate: 'ERA5-Land / CHIRPS / MODIS MOD16A2GF 2019-2024', processedDate: '28/04/2026', sourceKey: 'data.source.satellite' },
 	sat_climate_vulnerability: { dataDate: 'IPCC AR5: MODIS/CHIRPS/Hansen/Censo 2022', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },

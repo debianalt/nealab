@@ -1,35 +1,15 @@
 {
   "territory": "formosa",
   "province": {
-    "total_hexes": 39178,
-    "avg_score": 44.6,
-    "unassigned": 63
+    "total_hexes": 39115,
+    "avg_score": 50.0,
+    "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "Laishi",
-      "parquetKey": "laishi",
-      "avg_score": 50.1,
-      "hex_count": 3789,
-      "centroid": [
-        -58.414,
-        -26.4014
-      ]
-    },
-    {
-      "dpto": "Pirané",
-      "parquetKey": "pirane",
-      "avg_score": 47.8,
-      "hex_count": 5802,
-      "centroid": [
-        -59.0324,
-        -25.6655
-      ]
-    },
-    {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 47.4,
+      "avg_score": 72.4,
       "hex_count": 5112,
       "centroid": [
         -58.174,
@@ -37,19 +17,9 @@
       ]
     },
     {
-      "dpto": "Pilagás",
-      "parquetKey": "pilagas",
-      "avg_score": 46.6,
-      "hex_count": 2170,
-      "centroid": [
-        -58.7089,
-        -24.9733
-      ]
-    },
-    {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 45.7,
+      "avg_score": 60.1,
       "hex_count": 1032,
       "centroid": [
         -61.9734,
@@ -59,7 +29,7 @@
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 45.2,
+      "avg_score": 53.6,
       "hex_count": 8728,
       "centroid": [
         -59.0809,
@@ -67,19 +37,29 @@
       ]
     },
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 45.0,
-      "hex_count": 2758,
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 52.3,
+      "hex_count": 5802,
       "centroid": [
-        -61.4778,
-        -24.2184
+        -59.0324,
+        -25.6655
+      ]
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "avg_score": 51.6,
+      "hex_count": 2170,
+      "centroid": [
+        -58.7089,
+        -24.9733
       ]
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 43.5,
+      "avg_score": 50.2,
       "hex_count": 5197,
       "centroid": [
         -58.1397,
@@ -87,9 +67,29 @@
       ]
     },
     {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 49.3,
+      "hex_count": 2758,
+      "centroid": [
+        -61.4778,
+        -24.2184
+      ]
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 47.7,
+      "hex_count": 3789,
+      "centroid": [
+        -58.414,
+        -26.4014
+      ]
+    },
+    {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 31.2,
+      "avg_score": 13.8,
       "hex_count": 4527,
       "centroid": [
         -62.2609,

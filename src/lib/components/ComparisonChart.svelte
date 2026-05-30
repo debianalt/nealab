@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { RadioData } from '$lib/stores/map.svelte';
-	import { PETAL_VARS, normalizeValues, getProvincialAvg } from '$lib/utils/petal';
+	import { PETAL_VARS, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
 	import PetalChart from './PetalChart.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 
@@ -25,11 +25,16 @@
 
 	let provAvg: number[] | null = $state(null);
 
-	// Load provincial averages once enriched data arrives
+	// Load provincial averages once enriched data arrives, anchored to the
+	// radios' own territory (derived from INDEC redcode prefix) so petals are
+	// comparable across territories. Recomputes if the selection's territory
+	// changes; getProvincialAvg caches per territory.
 	$effect(() => {
+		const rcs = [...radios.keys()];
 		const hasEnriched = [...radios.values()].some(d => d.enriched != null);
-		if (hasEnriched && !provAvg) {
-			getProvincialAvg().then(avg => { provAvg = avg; }).catch(() => {});
+		if (hasEnriched && rcs.length) {
+			const terr = territoryFromRedcode(rcs[0]);
+			getProvincialAvg(terr).then(avg => { provAvg = avg; }).catch(() => {});
 		}
 	});
 

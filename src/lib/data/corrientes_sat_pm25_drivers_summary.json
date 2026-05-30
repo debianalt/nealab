@@ -2,7 +2,7 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 1033548,
-    "avg_score": 22.8,
+    "avg_score": 22.2,
     "unassigned": 0
   },
   "departments": [
@@ -99,7 +99,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 27.6,
+      "avg_score": 27.4,
       "hex_count": 103935,
       "centroid": [
         -56.8203,
@@ -159,7 +159,7 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 21.9,
+      "avg_score": 21.7,
       "hex_count": 82588,
       "centroid": [
         -56.248,
@@ -179,7 +179,7 @@
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 20.3,
+      "avg_score": 21.0,
       "hex_count": 58352,
       "centroid": [
         -59.2704,
@@ -219,7 +219,7 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 16.9,
+      "avg_score": 16.8,
       "hex_count": 58737,
       "centroid": [
         -57.3264,
@@ -229,7 +229,7 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 15.9,
+      "avg_score": 15.4,
       "hex_count": 29344,
       "centroid": [
         -58.8097,
@@ -239,7 +239,7 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 15.6,
+      "avg_score": 15.3,
       "hex_count": 98250,
       "centroid": [
         -58.3336,
@@ -249,7 +249,7 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 13.1,
+      "avg_score": 14.3,
       "hex_count": 31149,
       "centroid": [
         -57.871,

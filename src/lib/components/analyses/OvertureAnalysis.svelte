@@ -6,7 +6,7 @@
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
-	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getReportUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, type AnalysisConfig, type TemporalMode } from '$lib/config';
+	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getReportUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
@@ -550,6 +550,41 @@
 		reportCopied = true;
 		setTimeout(() => { reportCopied = false; }, 2000);
 	}
+
+	// ── Calibration distribution ──
+	interface CalibRow { territory: TerritoryConfig; p25: number; p50: number; p75: number; avg: number }
+	let calibrationData = $state<CalibRow[]>([]);
+	let calibrationLoading = $state(false);
+	let calibrationLoaded = $state(false);
+
+	$effect(() => {
+		// Reset calibration when analysis changes
+		analysis.id;
+		calibrationLoaded = false;
+		calibrationLoading = false;
+		calibrationData = [];
+	});
+
+	async function loadCalibration() {
+		if (calibrationLoaded || calibrationLoading || !layerCfg) return;
+		calibrationLoading = true;
+		const col = layerCfg.primaryVariable ?? 'score';
+		const available = Object.values(TERRITORY_REGISTRY).filter((t: TerritoryConfig) =>
+			t.available && (layerCfg.coverage?.[t.id] ?? 'available') === 'available'
+		);
+		const results = await Promise.all(available.map(async (t: TerritoryConfig) => {
+			const url = getSatGlobalUrl(layerCfg!.id, t.parquetPrefix);
+			try {
+				const r = await query(`SELECT quantile_disc("${col}", 0.25) as p25, quantile_disc("${col}", 0.5) as p50, quantile_disc("${col}", 0.75) as p75, avg("${col}") as avg_score FROM '${url}' WHERE "${col}" IS NOT NULL AND "${col}" > 0`);
+				if (r.numRows === 0) return null;
+				const row = r.get(0)!.toJSON() as Record<string, any>;
+				return { territory: t, p25: Number(row.p25), p50: Number(row.p50), p75: Number(row.p75), avg: Number(row.avg_score) } as CalibRow;
+			} catch { return null; }
+		}));
+		calibrationData = results.filter(Boolean) as CalibRow[];
+		calibrationLoaded = true;
+		calibrationLoading = false;
+	}
 </script>
 
 {#if selectedHex && selectedDpto && isPerDept}
@@ -783,6 +818,33 @@
 			{/if}
 		</div>
 
+		{#if analysis.comparable}
+			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
+				<summary class="method-summary">Distribución por territorio /100</summary>
+				<div class="method-body">
+					{#if calibrationLoading}
+						<p class="explain-text">Cargando…</p>
+					{:else if calibrationData.length > 0}
+						<table class="calib-table">
+							<thead><tr><th>Territorio</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
+							<tbody>
+							{#each calibrationData as d}
+								<tr>
+									<td>{d.territory.flag} {d.territory.shortLabel}</td>
+									<td>{d.p25.toFixed(0)}</td>
+									<td>{d.p50.toFixed(0)}</td>
+									<td>{d.p75.toFixed(0)}</td>
+									<td>{d.avg.toFixed(1)}</td>
+								</tr>
+							{/each}
+							</tbody>
+						</table>
+						<p class="explain-text" style="margin-top:4px">Distribuciones similares entre territorios confirman que los goalposts están bien calibrados.</p>
+					{/if}
+				</div>
+			</details>
+		{/if}
+
 		{#if content}
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>
@@ -1011,4 +1073,11 @@
 	.temporal-toggle button:not(:last-child) { border-right: 1px solid rgba(100,116,139,0.15); }
 	.temporal-toggle button.active { background: rgba(59,130,246,0.15); color: #60a5fa; font-weight: 700; }
 	.temporal-toggle button:hover:not(.active) { background: rgba(255,255,255,0.06); }
+
+	/* ── Calibration table ── */
+	.calib-table { width: 100%; border-collapse: collapse; font-size: 9px; margin-top: 4px; }
+	.calib-table th { color: #737373; font-weight: 600; text-align: right; padding: 2px 4px; }
+	.calib-table th:first-child { text-align: left; }
+	.calib-table td { color: #d4d4d4; text-align: right; padding: 2px 4px; border-top: 1px solid rgba(255,255,255,0.04); font-variant-numeric: tabular-nums; }
+	.calib-table td:first-child { text-align: left; color: #a3a3a3; }
 </style>

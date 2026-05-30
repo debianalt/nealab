@@ -2,14 +2,14 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 1033548,
-    "avg_score": 46.0,
+    "avg_score": 46.5,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 58.3,
+      "avg_score": 62.2,
       "hex_count": 82588,
       "centroid": [
         -56.248,
@@ -37,16 +37,6 @@
       ]
     },
     {
-      "dpto": "Monte Caseros",
-      "parquetKey": "monte_caseros",
-      "avg_score": 55.4,
-      "hex_count": 31149,
-      "centroid": [
-        -57.871,
-        -30.2487
-      ]
-    },
-    {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
       "avg_score": 53.1,
@@ -69,7 +59,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 51.0,
+      "avg_score": 52.4,
       "hex_count": 103935,
       "centroid": [
         -56.8203,
@@ -79,7 +69,7 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 49.5,
+      "avg_score": 50.2,
       "hex_count": 98250,
       "centroid": [
         -58.3336,
@@ -87,13 +77,13 @@
       ]
     },
     {
-      "dpto": "Paso de los Libres",
-      "parquetKey": "paso_de_los_libres",
-      "avg_score": 49.2,
-      "hex_count": 58737,
+      "dpto": "Monte Caseros",
+      "parquetKey": "monte_caseros",
+      "avg_score": 48.9,
+      "hex_count": 31149,
       "centroid": [
-        -57.3264,
-        -29.599
+        -57.871,
+        -30.2487
       ]
     },
     {
@@ -107,9 +97,19 @@
       ]
     },
     {
+      "dpto": "Paso de los Libres",
+      "parquetKey": "paso_de_los_libres",
+      "avg_score": 48.5,
+      "hex_count": 58737,
+      "centroid": [
+        -57.3264,
+        -29.599
+      ]
+    },
+    {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 48.4,
+      "avg_score": 48.5,
       "hex_count": 29344,
       "centroid": [
         -58.8097,
@@ -177,6 +177,16 @@
       ]
     },
     {
+      "dpto": "Esquina",
+      "parquetKey": "esquina",
+      "avg_score": 37.4,
+      "hex_count": 46922,
+      "centroid": [
+        -59.2457,
+        -29.9916
+      ]
+    },
+    {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
       "avg_score": 36.8,
@@ -194,16 +204,6 @@
       "centroid": [
         -58.603,
         -28.7144
-      ]
-    },
-    {
-      "dpto": "Esquina",
-      "parquetKey": "esquina",
-      "avg_score": 35.8,
-      "hex_count": 46922,
-      "centroid": [
-        -59.2457,
-        -29.9916
       ]
     },
     {
@@ -237,16 +237,6 @@
       ]
     },
     {
-      "dpto": "Goya",
-      "parquetKey": "goya",
-      "avg_score": 31.2,
-      "hex_count": 58352,
-      "centroid": [
-        -59.2704,
-        -29.4647
-      ]
-    },
-    {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
       "avg_score": 31.1,
@@ -254,6 +244,16 @@
       "centroid": [
         -58.9292,
         -28.4852
+      ]
+    },
+    {
+      "dpto": "Goya",
+      "parquetKey": "goya",
+      "avg_score": 31.0,
+      "hex_count": 58352,
+      "centroid": [
+        -59.2704,
+        -29.4647
       ]
     }
   ]
