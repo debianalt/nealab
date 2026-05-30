@@ -56,7 +56,8 @@ def win_to_wsl(path: str) -> str:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--territory", required=True)
-    ap.add_argument("--keep-geojson", action="store_true")
+    ap.add_argument("--clean-geojson", action="store_true",
+                    help="delete the GeoJSONSeq temp after tiling (default: keep for re-tiling)")
     args = ap.parse_args()
     t = args.territory
     cfg = get_territory(t)
@@ -69,30 +70,37 @@ def main():
     print(f"BUILD BR BUILDINGS TILES (tippecanoe) — {cfg['label']} ({t})")
     print("=" * 60)
 
-    # Step 1: PostGIS -> GeoJSONSeq (streaming, low memory)
+    # Step 1: PostGIS -> GeoJSONSeq (streaming, low memory). Reuse an existing
+    # export so re-tiling (iterating tippecanoe flags) doesn't re-run the slow
+    # multi-GB ogr2ogr dump.
     print(f"\nStep 1: ogr2ogr {table} -> {os.path.basename(geojsonl)}")
     t0 = time.time()
-    if os.path.exists(geojsonl):
-        os.remove(geojsonl)
-    r = subprocess.run([
-        ogr, "-f", "GeoJSONSeq", geojsonl, f"PG:{PG}",
-        "-sql", f"SELECT geom, best_height_m, area_m2 FROM {table} WHERE geom IS NOT NULL",
-        "-nln", "buildings",
-    ], capture_output=True, text=True)
-    if r.returncode != 0:
-        sys.exit(f"ogr2ogr failed: {r.stderr[-500:]}")
-    size_gb = os.path.getsize(geojsonl) / 1e9
-    print(f"  -> {size_gb:.2f} GB GeoJSONSeq ({time.time()-t0:.0f}s)")
+    if os.path.exists(geojsonl) and os.path.getsize(geojsonl) > 0:
+        print(f"  reuse existing {os.path.basename(geojsonl)} ({os.path.getsize(geojsonl)/1e9:.2f} GB)")
+    else:
+        r = subprocess.run([
+            ogr, "-f", "GeoJSONSeq", geojsonl, f"PG:{PG}",
+            "-sql", f"SELECT geom, best_height_m, area_m2 FROM {table} WHERE geom IS NOT NULL",
+            "-nln", "buildings",
+        ], capture_output=True, text=True)
+        if r.returncode != 0:
+            sys.exit(f"ogr2ogr failed: {r.stderr[-500:]}")
+        size_gb = os.path.getsize(geojsonl) / 1e9
+        print(f"  -> {size_gb:.2f} GB GeoJSONSeq ({time.time()-t0:.0f}s)")
 
-    # Step 2: tippecanoe (WSL) -> PMTiles
+    # Step 2: tippecanoe (WSL) -> PMTiles. z8-13 (no z14) + strong simplification
+    # + a tighter per-tile byte cap → footprints-only backdrop that fits under
+    # wrangler's ~100MB upload limit (the >100MB libuv crash / REST-API cap make
+    # 600MB+ archives unuploadable with current tooling). Buildings still appear
+    # as you zoom; only the deepest individual-footprint detail is coarser.
     print(f"\nStep 2: tippecanoe -> {os.path.basename(pmtiles)}")
     t1 = time.time()
     wsl_geo = win_to_wsl(geojsonl)
     wsl_pmt = win_to_wsl(pmtiles)
     tip = (
         f"tippecanoe -o '{wsl_pmt}' -l buildings -n '{t} buildings' "
-        f"-Z8 -z14 --drop-densest-as-needed --simplification=4 --force "
-        f"'{wsl_geo}'"
+        f"-Z8 -z13 --drop-densest-as-needed --maximum-tile-bytes=350000 "
+        f"--force '{wsl_geo}'"
     )
     r = subprocess.run(["wsl", "bash", "-lc", tip], text=True)
     if r.returncode != 0 or not os.path.exists(pmtiles):
@@ -100,7 +108,9 @@ def main():
     size_mb = os.path.getsize(pmtiles) / (1024 * 1024)
     print(f"  -> {pmtiles} ({size_mb:.1f} MB, {time.time()-t1:.0f}s)")
 
-    if not args.keep_geojson:
+    # Keep the GeoJSONSeq by default so re-tiling is cheap; pass --clean-geojson
+    # once the tile size is confirmed to reclaim the multi-GB temp file.
+    if args.clean_geojson and os.path.exists(geojsonl):
         os.remove(geojsonl)
         print(f"  cleaned {os.path.basename(geojsonl)}")
 

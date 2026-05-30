@@ -17,9 +17,9 @@ export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_dis
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
 		chaco_buildings: 'data/tiles/chaco_buildings.pmtiles',
 		formosa_buildings: 'data/tiles/formosa_buildings.pmtiles',
-		parana_br_buildings: 'data/tiles/parana_br_buildings.pmtiles',
-		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings.pmtiles',
-		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings.pmtiles',
+		parana_br_buildings: 'data/tiles/parana_br_buildings-v2.pmtiles',
+		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings-v2.pmtiles',
+		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v2.pmtiles',
 		radios: 'data/tiles/radios-v3.pmtiles',
 		hexagons: 'tiles/hexagons-v2.pmtiles',
 		catastro: 'tiles/catastro.pmtiles?v=3'
