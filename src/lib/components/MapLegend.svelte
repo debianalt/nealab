@@ -180,7 +180,7 @@
 		width: 10px;
 		height: 10px;
 		border-radius: 2px;
-		background: #4b6584;
+		background: #6b7280;
 		flex-shrink: 0;
 	}
 	.nodata-label {

@@ -1666,6 +1666,10 @@
 			type: 'FeatureCollection',
 			features: feature ? [feature] : []
 		});
+		// dept-outline-line is created before the hex layers, so the choropleth
+		// (fill-opacity 0.78) renders on top and hides the boundary. Lift it above
+		// the hexes whenever a dept is selected so the border stays visible.
+		if (feature && map?.getLayer('dept-outline-line')) map.moveLayer('dept-outline-line');
 	}
 
 	export function setCompareDeptOutline(feature: any | null) {
@@ -1675,6 +1679,7 @@
 			type: 'FeatureCollection',
 			features: feature ? [feature] : []
 		});
+		if (feature && map?.getLayer('compare-dept-outline-line')) map.moveLayer('compare-dept-outline-line');
 	}
 
 	function applyTerritoryVisibility() {
@@ -2385,9 +2390,11 @@
 	// ── Hexagon H3 choropleth functions ──────────────────────────────────
 
 	const CATEGORICAL_PALETTE = ['#1565c0', '#7e57c2', '#4db6ac', '#66bb6a', '#c0ca33', '#ffb74d', '#e65100', '#78909c'];
-	// "Sin cobertura" — azul-gris claro, distinguible del territory-bg (#374151).
-	// Usado para hex sobre cuerpos de agua o zonas sin medición raster/censal.
-	const NODATA_COLOR = '#4b6584';
+	// "Sin cobertura" — gris neutro. Debe ser distinguible del fondo (#374151) Y
+	// no confundirse con NINGÚN extremo de las rampas de datos (el violeta bajo
+	// #5b21b6 = "buen acceso" en capas censales se confundía con el azul-gris
+	// anterior #4b6584). Gris neutro = convención cartográfica de "sin dato".
+	const NODATA_COLOR = '#6b7280';
 
 	function computeHexColor(value: number, colorScale: string, minVal: number, maxVal: number, range: number): string {
 		if (typeof value !== 'number' || !Number.isFinite(value)) return NODATA_COLOR;
