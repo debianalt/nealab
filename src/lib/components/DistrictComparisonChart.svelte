@@ -24,6 +24,15 @@
 		{ col: 'pct_subsistencia', label: 'Cap. subsistencia' },
 	];
 
+	// Department-wide NBI reference (INE Paraguay CNPV 2022, fila "Departamento" en
+	// pipeline/data/py_nbi_2022.csv). Orden = DISTRICT_PETAL_VARS: vivienda, sanitario,
+	// educación, subsistencia. Cada distrito se ancla a los totales de SU departamento
+	// (50 = promedio departamental), ancla estable que no depende de la selección.
+	const DEPT_NBI_REF: Record<string, number[]> = {
+		itapua_py:      [4.4, 9.8, 12.7, 9.0],
+		alto_parana_py: [5.5, 12.5, 10.8, 7.9],
+	};
+
 	const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 0 });
 
 	type DistrictEntry = {
@@ -48,27 +57,20 @@
 		const enriched = [...districts.entries()].filter(([, d]) => d.enriched != null);
 		if (enriched.length === 0) return [];
 
-		// Compute means across selected districts for normalization
-		const means = DISTRICT_PETAL_VARS.map((v, _) => {
-			const vals = enriched.map(([, d]) => {
-				const val = d.enriched![v.col];
-				return val != null && !isNaN(Number(val)) ? Number(val) : null;
-			}).filter(x => x !== null) as number[];
-			return vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 1;
-		});
-
 		return enriched.map(([distrito, d]) => {
 			const rawValues = DISTRICT_PETAL_VARS.map(v => {
 				const val = d.enriched![v.col];
 				return val != null && !isNaN(Number(val)) ? Number(val) : 0;
 			});
+			// Ancla = totales NBI del departamento padre del distrito (no la selección).
+			const ref = DEPT_NBI_REF[d.territory] ?? DEPT_NBI_REF.itapua_py;
 			const pct_nbi_raw = d.enriched!.pct_nbi;
 			return {
 				distrito,
 				color: d.color,
 				personas: d.personas,
 				rawValues,
-				normalizedValues: normalizeValues(rawValues, means),
+				normalizedValues: normalizeValues(rawValues, ref),
 				n_hexes: Number(d.enriched!.n_hexes ?? 0),
 				pct_nbi: pct_nbi_raw != null && !isNaN(Number(pct_nbi_raw)) ? Number(pct_nbi_raw) : null,
 			};
@@ -127,7 +129,7 @@
 
 	<!-- Petal chart -->
 	{#if petalLayers.length > 0}
-		<p class="ref-note">NBI 2022 — 50 = promedio seleccionado · mayor = más privación</p>
+		<p class="ref-note">NBI 2022 — 50 = promedio del departamento · mayor = más privación</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={300} />
 	{/if}
 
