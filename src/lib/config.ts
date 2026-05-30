@@ -10,10 +10,10 @@ export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_dis
 	}
 	const files = {
 		buildings: 'tiles/buildings-v5.pmtiles',
-		itapua_buildings: 'tiles/itapua_buildings-v2.pmtiles',
+		itapua_buildings: 'tiles/itapua_buildings-v3.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v3.pmtiles',
-		alto_parana_buildings: 'data/tiles/alto_parana_buildings-v2.pmtiles',
+		alto_parana_buildings: 'data/tiles/alto_parana_buildings-v3.pmtiles',
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
 		chaco_buildings: 'data/tiles/chaco_buildings-v2.pmtiles',
 		formosa_buildings: 'data/tiles/formosa_buildings-v2.pmtiles',

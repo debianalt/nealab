@@ -267,9 +267,10 @@ def load_buildings():
 
 def load_buildings_from_gba():
     """Load footprints + GBA modeled height from gba_buildings_<territory>
-    (ingested by ingest_gba.py). Same feature shape as load_buildings();
-    GBA has no building type, so classify_residential falls back to the
-    area heuristic (consistent across territories)."""
+    (ingested by ingest_gba.py). Uses the precomputed is_residential column
+    (rule: default-residential + OSM-type/area exclusion, set by
+    classify_allocate_territory / the SQL rule) when present; falls back to the
+    area heuristic only if the column is NULL (legacy)."""
     table = f"gba_buildings_{_TID}"
     print(f"Step 1: Loading footprints from PostGIS {table} (GBA)...")
     t0 = time.time()
@@ -277,12 +278,19 @@ def load_buildings_from_gba():
     n_residential = 0
     skipped = 0
     conn = psycopg2.connect(PG_BUILDINGS)
+    # Does this table carry the residential-rule columns?
+    with conn.cursor() as c0:
+        c0.execute("SELECT column_name FROM information_schema.columns "
+                   f"WHERE table_name='{table}' AND column_name IN ('is_residential','osm_building_type')")
+        have = {r[0] for r in c0.fetchall()}
+    sel_res = "COALESCE(is_residential, TRUE)" if "is_residential" in have else "TRUE"
+    sel_osm = "osm_building_type" if "osm_building_type" in have else "NULL"
     try:
         with conn.cursor(name="gba_src") as cur:
             cur.itersize = 50000
-            cur.execute(f"SELECT ST_AsBinary(geom), best_height_m "
+            cur.execute(f"SELECT ST_AsBinary(geom), best_height_m, {sel_res}, {sel_osm} "
                         f"FROM {table} WHERE geom IS NOT NULL")
-            for geom_wkb, height in cur:
+            for geom_wkb, height, is_res_db, osm_type in cur:
                 try:
                     geom = shapely_wkb.loads(bytes(geom_wkb))
                 except Exception:
@@ -292,7 +300,11 @@ def load_buildings_from_gba():
                     skipped += 1
                     continue
                 a = area_m2(geom)
-                is_res, label = classify_residential(None, None, a)
+                if "is_residential" in have:
+                    is_res = bool(is_res_db)
+                    label = osm_type or ("residential" if is_res else "non_residential")
+                else:
+                    is_res, label = classify_residential(None, None, a)
                 if is_res:
                     n_residential += 1
                 features.append({
