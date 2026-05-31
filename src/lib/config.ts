@@ -719,7 +719,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_loss_rate', unit: '%/yr', labelKey: 'sat.deforest.lossRate', aggregation: 'mean' },
 			{ col: 'c_cumulative', unit: '%', labelKey: 'sat.deforest.cumulative', aggregation: 'mean' },
 		],
-		primaryVariable: 'score',
+		primaryVariable: 'c_loss_rate',
 		colorScale: 'sequential',
 		aggregation: 'mean',
 		titleKey: 'sat.deforest.title',
