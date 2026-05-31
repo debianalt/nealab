@@ -35,42 +35,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: 'Composite index 0–100: geometric mean of historical water presence (JRC Global Surface Water, Landsat 1984–2021), inter-annual recurrence (JRC) and current extent (Sentinel-1 SAR, last processed image). Goalpost normalisation with fixed thresholds: occurrence [0, 100]%, recurrence [0, 100]%, extent [0, 100]%. Sources: JRC v1.4 + Copernicus Sentinel-1. Resolution: H3 resolution 9.',
 		},
 	},
-	territorial_scores: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de consolidación urbana según 8 indicadores derivados de Overture Maps: pavimentación, consolidación, acceso a servicios, vitalidad comercial, conectividad vial, mezcla edilicia, urbanización y exposición hídrica. Cada color representa un perfil urbano distinto.',
-			en: 'The map classifies each hexagon into urban consolidation types based on 8 indicators derived from Overture Maps: paving, consolidation, service access, commercial vitality, road connectivity, building mix, urbanisation and water exposure. Each colour represents a distinct urban profile.',
-			gn: "Mapa oipurúva oñemomba'e hexágono tëtã mba'e rehegua 8 indicadores Overture Maps ndive: pavimentación, consolidación, servicios, vitalidad comercial, tape, óga, urbanización ha y-riesgo. Peteĩ-peteĩ pytã ohechauka peteĩ perfil tëtã.",
-			pt: 'O mapa classifica cada hexágono em tipos de consolidação urbana com base em 8 indicadores derivados do Overture Maps: pavimentação, consolidação, acesso a serviços, vitalidade comercial, conectividade viária, mescla edilícia, urbanização e exposição hídrica. Cada cor representa um perfil urbano distinto.',
-		},
-		implications: {
-			es: 'Los tipos permiten distinguir núcleos urbanos consolidados, periferias en expansión con servicios incompletos, y zonas rurales sin infraestructura urbana. La clasificación multivariada evita reducir la complejidad urbana a un único indicador de "desarrollo".',
-			en: 'Types allow the identification of consolidated urban cores, expanding peripheries with incomplete services, and rural zones without urban infrastructure. The multivariate classification avoids reducing urban complexity to a single "development" indicator.',
-			gn: "Laja ohechauka tëtã consolidado, jeike mba'aporã ỹ, ha yvoty yvy kuéra. Ojeporavo variables hetaháicha jeheja oñemboikuaa peteĩháicha.",
-			pt: 'Os tipos permitem distinguir núcleos urbanos consolidados, periferias em expansão com serviços incompletos e zonas rurais sem infraestrutura urbana. A classificação multivariada evita reduzir a complexidade urbana a um único indicador de "desenvolvimento".',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 8 variables: paving_index, urban_consolidation, service_access, commercial_vitality, road_connectivity, building_mix, urbanization, water_exposure. Fuente: Overture Maps Foundation (CC BY 4.0, release 2026-03-18) vía walkthru.earth. k=5 tipos.`,
-			en: `${METHOD_COMPARABLE.en} 8 variables: paving_index, urban_consolidation, service_access, commercial_vitality, road_connectivity, building_mix, urbanization, water_exposure. Source: Overture Maps Foundation (CC BY 4.0, release 2026-03-18) via walkthru.earth. k=5 types.`,
-		},
-	},
-	location_value: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de valor posicional según la co-ocurrencia de accesibilidad, conectividad a salud, actividad económica, topografía y distancia a rutas.',
-			en: 'The map classifies each hexagon into positional value types based on the co-occurrence of accessibility, health connectivity, economic activity, topography and road distance.',
-			gn: "Mapa oñemomba'e hexágono kuéra valor posicional rehegua: jeike, tesãi-rape, tembiapo, yvy ha tape-guará.",
-			pt: 'O mapa classifica cada hexágono em tipos de valor posicional conforme a co-ocorrência de acessibilidade, conectividade à saúde, atividade econômica, topografia e distância às vias.',
-		},
-		implications: {
-			es: 'Los tipos distinguen núcleos urbanos bien conectados, periferias accesibles pero poco activas, y zonas rurales aisladas. El valor posicional emergente de la clasificación es más informativo que un ranking lineal.',
-			en: 'Types distinguish well-connected urban cores, accessible but less active peripheries, and isolated rural zones. The positional value emerging from the classification is more informative than a linear ranking.',
-			gn: "Laja oñemboikuaa tëtã jeike porãva, jeike ayvúva ha yvy rembe'ýva. Valor posicional kuéra iporãvéva peteĩ ranking oñepyrũha.",
-			pt: 'Os tipos distinguem núcleos urbanos bem conectados, periferias acessíveis mas pouco ativas e zonas rurais isoladas. O valor posicional emergente da classificação é mais informativo do que um ranking linear.',
-		},
-		method: {
-			es: `${METHOD_COMMON.es} Variables: tiempo a ciudad 20k Nelson, acceso a salud Oxford, radiancia VIIRS, pendiente FABDEM, distancia a ruta OSM. k=4 tipos, silueta=0.43.`,
-			en: `${METHOD_COMMON.en} Variables: travel time to 20k city (Nelson), health access (Oxford), VIIRS radiance, FABDEM slope, distance to OSM road. k=4 types, silhouette=0.43.`,
-		},
-	},
 	agri_potential: {
 		howToRead: {
 			es: 'El mapa clasifica cada hexágono en tipos de aptitud agrícola según la co-ocurrencia de calidad del suelo, régimen hídrico, acumulación térmica y topografía. Comparable entre los territorios disponibles.',

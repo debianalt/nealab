@@ -148,7 +148,9 @@
 			? 'linear-gradient(to right, #3b82f6, #eab308, #dc2626)'
 			: colorScale === 'green'
 			? 'linear-gradient(to right, #1e293b, #166534, #22c55e, #bbf7d0)'
-			: 'linear-gradient(to right, #2166ac, #f7f7f7, #b2182b)'
+			: colorScale === 'warm'
+			? 'linear-gradient(to right, #0f172a, #f59e0b, #fde725)'
+			: 'linear-gradient(to right, #440154, #21918c, #fde725)'
 	);
 
 	const legendLabels = $derived(
@@ -364,16 +366,6 @@
 			howToRead: 'Los colores representan el riesgo hídrico de cada hexágono, combinando la presencia histórica de agua (JRC, 1984–2021) y la detección actual de inundación (Sentinel-1 SAR). Azul oscuro = riesgo bajo; amarillo = riesgo medio; rojo = riesgo alto. Selecciona un departamento para ver el detalle.',
 			implications: 'Las zonas de riesgo alto pueden enfrentar anegamientos recurrentes, afectando el valor inmobiliario, la habitabilidad y la infraestructura de servicios básicos (agua, cloacas). La recurrencia interanual distingue inundaciones estacionales predecibles de eventos extremos esporádicos.',
 			method: 'Índice compuesto 0–100 (donde 0 = sin riesgo y 100 = máximo riesgo provincial): 50% presencia histórica de agua (JRC Global Surface Water, Landsat 1984–2021) + 20% recurrencia interanual (JRC) + 30% extensión actual (Sentinel-1 SAR, última imagen procesada). Fuentes: JRC v1.4 + Copernicus Sentinel-1. Resolución: H3 resolución 9.',
-		},
-		territorial_scores: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de consolidación urbana según 8 indicadores derivados de Overture Maps: pavimentación, consolidación, acceso a servicios, vitalidad comercial, conectividad vial, mezcla edilicia, urbanización y exposición hídrica. Cada color representa un perfil urbano distinto.',
-			implications: 'Los tipos permiten distinguir núcleos urbanos consolidados, periferias en expansión con servicios incompletos, y zonas rurales sin infraestructura urbana. La clasificación multivariada evita reducir la complejidad urbana a un único indicador de "desarrollo".',
-			method: `${METHOD_COMMON} 8 variables: paving_index, urban_consolidation, service_access, commercial_vitality, road_connectivity, building_mix, urbanization, water_exposure. Fuente: Overture Maps Foundation (CC BY 4.0, release 2026-03-18) vía walkthru.earth. k=5 tipos.`,
-		},
-		location_value: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de valor posicional según la co-ocurrencia de accesibilidad, conectividad a salud, actividad económica, topografía y distancia a rutas.',
-			implications: 'Los tipos distinguen núcleos urbanos bien conectados, periferias accesibles pero poco activas, y zonas rurales aisladas. El valor posicional emergente de la clasificación es más informativo que un ranking lineal.',
-			method: `${METHOD_COMMON} Variables: tiempo a ciudad 20k Nelson, acceso a salud Oxford, radiancia VIIRS, pendiente FABDEM, distancia a ruta OSM. k=4 tipos, silueta=0.43.`,
 		},
 		agri_potential: {
 			howToRead: 'El mapa clasifica cada hexágono en tipos de aptitud agrícola según la co-ocurrencia de calidad del suelo, régimen hídrico, acumulación térmica y topografía.',

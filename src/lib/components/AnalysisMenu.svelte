@@ -27,8 +27,6 @@
 		pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
 		deforestation_dynamics: 'Cobertura natural',
 		sociodemographic: 'Población',
-		// Invertir
-		territorial_scores: 'Valor territorial', location_value: 'Valor territorial',
 		// Producir
 		forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
 		agri_potential: 'Suelos y agua',

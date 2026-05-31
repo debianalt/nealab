@@ -2,7 +2,6 @@
 // Each loader returns the bundled JSON for a given analysis × territory.
 
 const SAT_SUMMARIES: Record<string, () => Promise<any>> = {
-	location_value:       () => import('$lib/data/sat_location_value_dept_summary.json'),
 	agri_potential:       () => import('$lib/data/sat_agri_potential_dept_summary.json'),
 	forestry_aptitude:    () => import('$lib/data/sat_forestry_aptitude_dept_summary.json'),
 	service_deprivation:  () => import('$lib/data/sat_service_deprivation_dept_summary.json'),
@@ -11,7 +10,6 @@ const SAT_SUMMARIES: Record<string, () => Promise<any>> = {
 	education_flow:       () => import('$lib/data/sat_education_flow_dept_summary.json'),
 	land_use:             () => import('$lib/data/sat_land_use_dept_summary.json'),
 	flood_risk:           () => import('$lib/data/flood_dept_summary.json'),
-	territorial_scores:   () => import('$lib/data/scores_dept_summary.json'),
 	sociodemographic:     () => import('$lib/data/sat_sociodemographic_dept_summary.json'),
 	economic_activity:    () => import('$lib/data/sat_economic_activity_dept_summary.json'),
 	accessibility:        () => import('$lib/data/sat_accessibility_dept_summary.json'),
@@ -29,7 +27,6 @@ const ITAPUA_SUMMARIES: Record<string, () => Promise<any>> = {
 	land_use:               () => import('$lib/data/itapua_py_sat_land_use_summary.json'),
 	accessibility:          () => import('$lib/data/itapua_py_sat_accessibility_summary.json'),
 	flood_risk:             () => import('$lib/data/itapua_py_flood_dept_summary.json'),
-	territorial_scores:     () => import('$lib/data/itapua_py_scores_dept_summary.json'),
 };
 
 const CORRIENTES_SUMMARIES: Record<string, () => Promise<any>> = {
@@ -41,14 +38,12 @@ const CORRIENTES_SUMMARIES: Record<string, () => Promise<any>> = {
 	sociodemographic:       () => import('$lib/data/corrientes_sat_sociodemographic_summary.json'),
 	economic_activity:      () => import('$lib/data/corrientes_sat_economic_activity_summary.json'),
 	flood_risk:             () => import('$lib/data/corrientes_flood_dept_summary.json'),
-	territorial_scores:     () => import('$lib/data/corrientes_scores_dept_summary.json'),
 	service_deprivation:    () => import('$lib/data/corrientes_sat_service_deprivation_summary.json'),
 	health_access:          () => import('$lib/data/corrientes_sat_health_access_summary.json'),
 	education_capital:      () => import('$lib/data/corrientes_sat_education_capital_summary.json'),
 	education_flow:         () => import('$lib/data/corrientes_sat_education_flow_summary.json'),
 	deforestation_dynamics: () => import('$lib/data/corrientes_sat_deforestation_dynamics_summary.json'),
 	forestry_aptitude:      () => import('$lib/data/corrientes_sat_forestry_aptitude_summary.json'),
-	location_value:         () => import('$lib/data/corrientes_sat_location_value_summary.json'),
 };
 
 // Alto Paraná (PY) — Phase 1: 6 core satellite analyses. More added per phase.
@@ -60,14 +55,12 @@ const ALTO_PARANA_SUMMARIES: Record<string, () => Promise<any>> = {
 	land_use:               () => import('$lib/data/alto_parana_py_sat_land_use_summary.json'),
 	pm25_drivers:           () => import('$lib/data/alto_parana_py_sat_pm25_drivers_summary.json'),
 	flood_risk:             () => import('$lib/data/alto_parana_py_flood_dept_summary.json'),
-	territorial_scores:     () => import('$lib/data/alto_parana_py_scores_dept_summary.json'),
 	accessibility:          () => import('$lib/data/alto_parana_py_sat_accessibility_summary.json'),
 };
 
 const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	carbon_stock            : () => import('$lib/data/chaco_sat_carbon_stock_summary.json'),
 	deforestation_dynamics  : () => import('$lib/data/chaco_sat_deforestation_dynamics_summary.json'),
-	territorial_scores      : () => import('$lib/data/chaco_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/chaco_flood_dept_summary.json'),
 	pm25_drivers            : () => import('$lib/data/chaco_sat_pm25_drivers_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/chaco_sat_forestry_aptitude_summary.json'),
@@ -80,13 +73,11 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	health_access           : () => import('$lib/data/chaco_sat_health_access_summary.json'),
 	education_capital       : () => import('$lib/data/chaco_sat_education_capital_summary.json'),
 	education_flow          : () => import('$lib/data/chaco_sat_education_flow_summary.json'),
-	location_value          : () => import('$lib/data/chaco_sat_location_value_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	carbon_stock            : () => import('$lib/data/formosa_sat_carbon_stock_summary.json'),
 	pm25_drivers            : () => import('$lib/data/formosa_sat_pm25_drivers_summary.json'),
 	deforestation_dynamics  : () => import('$lib/data/formosa_sat_deforestation_dynamics_summary.json'),
-	territorial_scores      : () => import('$lib/data/formosa_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/formosa_flood_dept_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/formosa_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
@@ -98,11 +89,9 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	health_access           : () => import('$lib/data/formosa_sat_health_access_summary.json'),
 	education_capital       : () => import('$lib/data/formosa_sat_education_capital_summary.json'),
 	education_flow          : () => import('$lib/data/formosa_sat_education_flow_summary.json'),
-	location_value          : () => import('$lib/data/formosa_sat_location_value_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/parana_br_sat_deforestation_dynamics_summary.json'),
-	territorial_scores      : () => import('$lib/data/parana_br_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/parana_br_flood_dept_summary.json'),
 	carbon_stock            : () => import('$lib/data/parana_br_sat_carbon_stock_summary.json'),
 	pm25_drivers            : () => import('$lib/data/parana_br_sat_pm25_drivers_summary.json'),
@@ -113,7 +102,6 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 };
 const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/santa_catarina_br_sat_deforestation_dynamics_summary.json'),
-	territorial_scores      : () => import('$lib/data/santa_catarina_br_scores_dept_summary.json'),
 	carbon_stock            : () => import('$lib/data/santa_catarina_br_sat_carbon_stock_summary.json'),
 	pm25_drivers            : () => import('$lib/data/santa_catarina_br_sat_pm25_drivers_summary.json'),
 	flood_risk              : () => import('$lib/data/santa_catarina_br_flood_dept_summary.json'),
@@ -124,7 +112,6 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 };
 const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/rio_grande_sul_br_sat_deforestation_dynamics_summary.json'),
-	territorial_scores      : () => import('$lib/data/rio_grande_sul_br_scores_dept_summary.json'),
 	flood_risk              : () => import('$lib/data/rio_grande_sul_br_flood_dept_summary.json'),
 	carbon_stock            : () => import('$lib/data/rio_grande_sul_br_sat_carbon_stock_summary.json'),
 	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),

@@ -14,7 +14,7 @@
 	} = $props();
 
 	const REFERENCE = [
-		'flood_risk', 'agri_potential', 'accessibility', 'territorial_scores',
+		'flood_risk', 'agri_potential', 'accessibility',
 	];
 
 	// Analyses where higher score = worse outcome → rank ascending (lowest score = rank #1 = best)
@@ -25,7 +25,7 @@
 
 	const SHORT_LABEL: Record<string, string> = {
 		flood_risk: 'Inund.',
-		agri_potential: 'Agri.',        accessibility: 'Acceso', territorial_scores: 'Comp.',
+		agri_potential: 'Agri.',        accessibility: 'Acceso',
 		service_deprivation: 'Serv.',   health_access: 'Salud',
 		education_capital: 'Educ.',     education_flow: 'E.Flow', land_use: 'Suelo',
 		carbon_stock: 'Carbono',        deforestation_dynamics: 'Defor.',

@@ -444,27 +444,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable'},
 	},
 	// ── Satellite composite scores ──
-	location_value: {
-		id: 'location_value',
-		parquet: 'sat_location_value',
-		variables: [
-			{ col: 'type', labelKey: 'sat.locValue.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.locValue.typeLabel', aggregation: 'mean' },
-			{ col: 'c_access_20k', labelKey: 'sat.locValue.access20k', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_healthcare', labelKey: 'sat.locValue.healthcare', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_nightlights', labelKey: 'sat.locValue.nightlights', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_slope', labelKey: 'sat.locValue.slope', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_road_dist', labelKey: 'sat.locValue.roadDist', aggregation: 'mean', unit: '/100' },
-		],
-		primaryVariable: 'score',
-		colorScale: 'warm',
-		aggregation: 'mean',
-		titleKey: 'sat.locValue.title',
-		perDepartment: true,
-		legendLowKey: 'legend.locValue.low',
-		legendHighKey: 'legend.locValue.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available'},
-	},
 	agri_potential: {
 		id: 'agri_potential',
 		parquet: 'sat_agri_potential',
@@ -620,32 +599,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
 	// ── Migrated from radio/catastro to H3 ──
-	territorial_scores: {
-		id: 'territorial_scores',
-		parquet: 'overture_scores',
-		variables: [
-			{ col: 'score', labelKey: 'analysis.scores.score', aggregation: 'mean' },
-			{ col: 'type', labelKey: 'analysis.scores.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'analysis.scores.typeLabel', aggregation: 'mean' },
-			{ col: 'urban_consolidation', labelKey: 'scores.urbanConsolidation', aggregation: 'mean' },
-			{ col: 'paving_index', labelKey: 'scores.paving', aggregation: 'mean' },
-			{ col: 'service_access', labelKey: 'scores.serviceAccess', aggregation: 'mean' },
-			{ col: 'commercial_vitality', labelKey: 'scores.commercial', aggregation: 'mean' },
-			{ col: 'road_connectivity', labelKey: 'scores.roadConnectivity', aggregation: 'mean' },
-			{ col: 'building_mix', labelKey: 'scores.buildingMix', aggregation: 'mean' },
-			{ col: 'urbanization', labelKey: 'scores.urbanization', aggregation: 'mean' },
-			{ col: 'water_exposure', labelKey: 'scores.waterExposure', aggregation: 'mean' },
-		],
-		primaryVariable: 'score',
-		colorScale: 'warm',
-		aggregation: 'mean',
-		titleKey: 'analysis.scores.title',
-		perDepartment: true,
-		comparable: true,
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		legendLowKey: 'legend.scores.low',
-		legendHighKey: 'legend.scores.high',
-	},
 	sociodemographic: {
 		id: 'sociodemographic',
 		parquet: 'sat_sociodemographic',
@@ -858,17 +811,6 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		spatialUnit: 'hexagon',
 	},
 	// ── Perfil Territorial (cross-lens, catastro-integrated) ──
-	{
-		id: 'territorial_scores',
-		lensId: 'invertir',
-		titleKey: 'analysis.scores.title',
-		descKey: 'analysis.scores.desc',
-
-		status: 'available',
-		spatialUnit: 'hexagon',
-		comparable: true,
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-	},
 	// ── Radio-based analyses (radio_stats_master via crosswalk) ──
 	// investment_value removed — re_median_usd_m2 only covers 26% of radios
 	{
@@ -897,16 +839,6 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 	},
 	// natural_risks hidden — covered by environmental_risk (H3)
 	// ── Satellite H3 analyses ──
-	{
-		id: 'location_value',
-		lensId: 'invertir',
-		titleKey: 'sat.locValue.title',
-		descKey: 'sat.locValue.desc',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
-		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
 	{
 		id: 'agri_potential',
 		lensId: 'producir',
@@ -1274,7 +1206,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 		processedDate: '25/03/2026',
 		sourceKey: 'data.source.overture',
 	},
-	sat_location_value: { dataDate: 'Baseline Nelson 2019 / Oxford 2019 / VIIRS 2022-2024', processedDate: '26/03/2026', sourceKey: 'data.source.satellite' },
 	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
 	sat_forestry_aptitude: { dataDate: 'ERA5/CHIRPS/SoilGrids/SRTM 2019-2023', processedDate: '21/04/2026', sourceKey: 'data.source.satellite' },
 	sat_service_deprivation: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
