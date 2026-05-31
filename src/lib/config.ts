@@ -206,9 +206,15 @@ export const MAP_PROVINCE = {
 export const COLOR_RAMPS = {
 	population: {
 		property: 'est_personas',
-		stops: [0, '#0f1e30', 1, '#1e4060', 3, '#3080c0', 5, '#50a0e0', 10, '#70c0ff', 20, '#a0dfff', 50, '#d0f0ff'],
+		// Stops expanded across the low-mid residential range (1-12 ppl/building),
+		// where the bulk of the urban fabric sits across ALL territories. The old
+		// ramp reserved brightness for 10-50, only reached by coarse district-level
+		// allocation spikes (PY), leaving finely-allocated cities (BR setores, AR
+		// radios) reading near-black despite being densely populated. Still absolute
+		// → cross-territory comparable.
+		stops: [0, '#0f1e30', 1, '#26527a', 2, '#3a7bb0', 4, '#509cd6', 7, '#74bef5', 12, '#a3d8ff', 25, '#d6f1ff'],
 		legendTitleKey: 'legend.estPersons',
-		legendLabels: ['0', '1', '3', '5', '10', '50+']
+		legendLabels: ['0', '1', '4', '7', '12', '25+']
 	},
 	height: {
 		property: 'best_height_m',
