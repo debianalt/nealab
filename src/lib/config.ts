@@ -17,9 +17,9 @@ export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_dis
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
 		chaco_buildings: 'data/tiles/chaco_buildings-v3.pmtiles',
 		formosa_buildings: 'data/tiles/formosa_buildings-v3.pmtiles',
-		parana_br_buildings: 'data/tiles/parana_br_buildings-v6.pmtiles',
-		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings-v6.pmtiles',
-		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v6.pmtiles',
+		parana_br_buildings: 'data/tiles/parana_br_buildings-v7.pmtiles',
+		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings-v7.pmtiles',
+		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v7.pmtiles',
 		radios: 'data/tiles/radios-v3.pmtiles',
 		hexagons: 'tiles/hexagons-v2.pmtiles',
 		catastro: 'tiles/catastro.pmtiles?v=3'
@@ -215,6 +215,17 @@ export const COLOR_RAMPS = {
 		stops: [0, '#0f1e30', 1, '#26527a', 2, '#3a7bb0', 4, '#509cd6', 7, '#74bef5', 12, '#a3d8ff', 25, '#d6f1ff'],
 		legendTitleKey: 'legend.estPersons',
 		legendLabels: ['0', '1', '4', '7', '12', '25+']
+	},
+	volume: {
+		// Built volume = footprint area × height (m³). Direct GBA measurement with the
+		// SAME method in all 9 territories — no census-allocation granularity artifact,
+		// so brightness is objectively comparable (big/tall buildings glow everywhere,
+		// matching real built intensity). est_personas stays as click-through data.
+		// Log-spaced because volume is long-tailed (houses ~500 m³, towers ~60k m³).
+		property: 'volume_m3',
+		stops: [150, '#0f1e30', 500, '#26527a', 1500, '#3a7bb0', 4000, '#509cd6', 10000, '#74bef5', 25000, '#a3d8ff', 60000, '#d6f1ff'],
+		legendTitleKey: 'legend.buildingVolume',
+		legendLabels: ['<0.5k', '1.5k', '4k', '10k', '25k', '60k+ m³']
 	},
 	height: {
 		property: 'best_height_m',

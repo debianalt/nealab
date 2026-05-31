@@ -54,6 +54,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	// Legend
 	'legend.estPersons': { es: 'Población estimada por edificación', en: 'Est. population per building', gn: "Yvypóra óga pegua", pt: 'População estimada por edificação' },
 	'legend.estPersonsNote': { es: 'estimación dasimétrica (no medición)', en: 'dasymetric estimate (not measured)', gn: 'estimación dasimétrica', pt: 'estimativa dasimétrica (não medição)' },
+	'legend.buildingVolume': { es: 'Volumen construido (área × altura)', en: 'Built volume (area × height)', gn: 'Óga tuichakue', pt: 'Volume construído (área × altura)' },
+	'legend.buildingVolumeNote': { es: 'medición GBA — comparable entre países', en: 'GBA measurement — cross-country comparable', gn: 'GBA — tetã joja', pt: 'medição GBA — comparável entre países' },
 	'legend.buildingsCanvas': { es: 'Edificios — Global Building Atlas', en: 'Buildings — Global Building Atlas', gn: 'Óga — Global Building Atlas', pt: 'Edifícios — Global Building Atlas' },
 	'analysis.scores.score': { es: 'Score de consolidación', en: 'Consolidation score', gn: 'Score consolidación', pt: 'Score de consolidação' },
 	'analysis.socio.score': { es: 'Score sociodemográfico', en: 'Sociodemographic score', gn: 'Score sociodemográfico', pt: 'Score sociodemográfico' },

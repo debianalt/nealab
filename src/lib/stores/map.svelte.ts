@@ -66,14 +66,19 @@ export class MapStore {
 	private districtColorIndex = 0;
 
 	get currentRamp() {
-		return COLOR_RAMPS.population;
+		return COLOR_RAMPS.volume;
 	}
 
 	getColorExpr(): unknown[] {
 		const ramp = this.currentRamp;
+		// Color buildings by built volume = footprint area × height (m³). Direct GBA
+		// measurement, identical method across all territories → objectively comparable,
+		// no census-allocation artifact. Coalesced low-zoom BR blobs carry summed area +
+		// mean height, so volume stays ~correct at every zoom. est_personas → click only.
+		const value = ['*', ['coalesce', ['get', 'area_m2'], 0], ['coalesce', ['get', 'best_height_m'], 3]];
 		return [
 			'interpolate', ['linear'],
-			['coalesce', ['get', ramp.property], 0],
+			value,
 			...ramp.stops
 		];
 	}

@@ -97,10 +97,10 @@
 		<div class="gradient-bar" style:background={'linear-gradient(to right, #0f1e30, #1e4060, #3080c0, #50a0e0, #70c0ff, #a0dfff, #d0f0ff)'}></div>
 		<div class="gradient-labels">
 			<span>−</span>
-			<span>{i18n.t('legend.estPersons')}</span>
+			<span>{i18n.t('legend.buildingVolume')}</span>
 			<span>+</span>
 		</div>
-		<div class="canvas-note">{i18n.t('legend.estPersonsNote')}</div>
+		<div class="canvas-note">{i18n.t('legend.buildingVolumeNote')}</div>
 	</div>
 {/if}
 
