@@ -245,7 +245,7 @@
 	});
 
 	// ── Cross-analysis profile for selected hex ──
-	const CROSS_ANALYSIS_IDS = ['environmental_risk', 'climate_comfort', 'green_capital', 'change_pressure', 'agri_potential', 'forest_health'];
+	const CROSS_ANALYSIS_IDS = ['carbon_stock', 'agri_potential', 'accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
 	const CROSS_TITLE_KEYS: Record<string, string> = { land_use: 'sat.landUse.title' };
 	const CROSS_ANALYSES = $derived(
 		CROSS_ANALYSIS_IDS.map(id => {
@@ -370,26 +370,6 @@
 			implications: 'Los tipos permiten distinguir núcleos urbanos consolidados, periferias en expansión con servicios incompletos, y zonas rurales sin infraestructura urbana. La clasificación multivariada evita reducir la complejidad urbana a un único indicador de "desarrollo".',
 			method: `${METHOD_COMMON} 8 variables: paving_index, urban_consolidation, service_access, commercial_vitality, road_connectivity, building_mix, urbanization, water_exposure. Fuente: Overture Maps Foundation (CC BY 4.0, release 2026-03-18) vía walkthru.earth. k=5 tipos.`,
 		},
-		environmental_risk: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de riesgo ambiental según la co-ocurrencia de deforestación, amplitud térmica, pendiente y altura sobre drenaje. Cada color representa un tipo distinto de configuración de riesgo.',
-			implications: 'Los tipos permiten identificar configuraciones de riesgo cualitativamente distintas: zonas de alta pendiente con baja deforestación difieren estructuralmente de zonas planas con alta pérdida forestal, aunque ambas puedan tener "riesgo" similar en un índice único.',
-			method: `${METHOD_COMMON} Variables: deforestación Hansen GFC, amplitud térmica LST MODIS, pendiente FABDEM 30m, HAND MERIT Hydro. k=5 tipos, silueta=0.33.`,
-		},
-		climate_comfort: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos climáticos según la co-ocurrencia de temperatura diurna, nocturna, precipitación, heladas y estrés hídrico. Cada color representa un régimen climático distinto.',
-			implications: 'Los tipos climáticos revelan gradientes geoespaciales que un índice único no captura: zonas cálidas y húmedas difieren estructuralmente de zonas frescas y secas, con implicancias distintas para habitabilidad y producción.',
-			method: `${METHOD_COMMON} Variables: LST diurno/nocturno MODIS, precipitación CHIRPS, heladas ERA5, ratio ET/PET MODIS. k=4 tipos, silueta=0.40.`,
-		},
-		green_capital: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de capital verde según la co-ocurrencia de verdor, cobertura arbórea, productividad primaria, área foliar y fracción de vegetación. Cada color representa un estado ecosistémico distinto.',
-			implications: 'Los tipos distinguen selva densa de alta productividad, bosque secundario con cobertura residual, y zonas deforestadas con baja vegetación. Esta distinción cualitativa informa mejor las políticas de conservación que un gradiente continuo.',
-			method: `${METHOD_COMMON} Variables: NDVI MODIS 250m, cobertura arbórea Hansen 2000, NPP MODIS, LAI MODIS, VCF MODIS. k=3 tipos, silueta=0.46.`,
-		},
-		change_pressure: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de presión de cambio según la co-ocurrencia de tendencia de urbanización, expansión construida, pérdida forestal y cambio de vegetación.',
-			implications: 'Los tipos separan urbanización activa de deforestación agrícola y de zonas estables. Un municipio con "alta presión" por urbanización requiere políticas distintas a uno con "alta presión" por avance de frontera agraria.',
-			method: `${METHOD_COMMON} Variables: tendencia VIIRS 2016-2025, cambio GHSL 2000-2020, pérdida Hansen, tendencia NDVI. k=5 tipos, silueta=0.34.`,
-		},
 		location_value: {
 			howToRead: 'El mapa clasifica cada hexágono en tipos de valor posicional según la co-ocurrencia de accesibilidad, conectividad a salud, actividad económica, topografía y distancia a rutas.',
 			implications: 'Los tipos distinguen núcleos urbanos bien conectados, periferias accesibles pero poco activas, y zonas rurales aisladas. El valor posicional emergente de la clasificación es más informativo que un ranking lineal.',
@@ -399,11 +379,6 @@
 			howToRead: 'El mapa clasifica cada hexágono en tipos de aptitud agrícola según la co-ocurrencia de calidad del suelo, régimen hídrico, acumulación térmica y topografía.',
 			implications: 'Los tipos reflejan configuraciones edafoclimáticas distintas: suelos ácidos con alta lluvia (aptitud para yerba mate), suelos neutros con calor acumulado (aptitud para tabaco/cítricos), y zonas con limitaciones múltiples.',
 			method: `${METHOD_COMMON} Variables: carbono orgánico SoilGrids, pH óptimo, arcilla, precipitación CHIRPS, GDD ERA5, pendiente FABDEM. k=3 tipos, silueta=0.32.`,
-		},
-		forest_health: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de integridad forestal según la co-ocurrencia de tendencia de verdor, pérdida arbórea, productividad fotosintética y evapotranspiración.',
-			implications: 'Los tipos separan bosque sano y productivo, bosque en degradación con pérdida activa, y zonas sin cobertura forestal significativa. Esta clasificación permite priorizar intervenciones de restauración donde la degradación es incipiente.',
-			method: `${METHOD_COMMON} Variables: tendencia NDVI 5 años, ratio pérdida/cobertura Hansen, GPP MODIS, ET MODIS. k=4 tipos, silueta=0.38.`,
 		},
 		forestry_aptitude: {
 			howToRead: 'El mapa clasifica cada hexágono en tipos de aptitud forestal comercial según la co-ocurrencia de acidez del suelo, precipitación, pendiente, y accesibilidad logística.',
@@ -445,11 +420,6 @@
 			implications: 'La cobertura eléctrica condiciona toda actividad productiva y residencial. Zonas con baja densidad de líneas requieren extensión de red para habilitar nuevos emprendimientos. La distancia a líneas existentes es el principal factor de costo de electrificación rural.',
 			method: 'Fuente: EMSA (Secretaría de Energía, datos.energia.gob.ar, abril 2024). Líneas de media y alta tensión georreferenciadas, intersectadas con grilla H3 resolución 9. Score = longitud total de líneas / área del hexágono, normalizado 0-100.',
 		},
-		territorial_types: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos geoespaciales según su metabolismo ecosistémico: productividad, apropiación humana y dinámica de cambio. Cada color representa un tipo cualitativamente distinto de territorio.',
-			implications: 'Los tipos geoespaciales sintetizan 13 variables satelitales en una clasificación interpretable. Permiten identificar selva productiva intacta, mosaicos agro-forestales en transición, zonas agrícolas consolidadas, periurbanos en expansión y núcleos urbanos — cada uno con necesidades de gestión distintas.',
-			method: `${METHOD_COMMON} 13 variables: NPP, NDVI, cobertura arbórea, fracción arboles/cultivos/construido, deforestación, luces nocturnas, tendencia VIIRS, expansión GHSL, precipitación. k=8 tipos. Fuentes: MODIS, Hansen GFC, VIIRS, GHSL, CHIRPS.`,
-		},
 		sociodemographic: {
 			howToRead: 'El mapa clasifica cada hexágono en tipos sociodemográficos según la co-ocurrencia de densidad poblacional, pobreza (NBI), hacinamiento, tenencia de vivienda, tamaño de hogar y acceso digital. Cada color representa un perfil censal distinto.',
 			implications: 'Los tipos distinguen zonas urbanas densas con bajo NBI, periferias con hacinamiento y pobreza, y zonas rurales dispersas con alta propiedad pero baja conectividad. Esta clasificación multivariada evita reducir la complejidad social a un solo indicador.',
@@ -475,20 +445,10 @@
 			implications: 'Las zonas de alto stock con balance neto negativo (sumidero) son candidatas para créditos de carbono por conservación. Las zonas de alto stock con balance positivo (emisor) son prioridad para intervención REDD+. Las zonas de bajo stock con alta productividad (NPP) tienen potencial de restauración y secuestro futuro. *Valor teórico del carbono: estimación de referencia calculada como stock total x 3.67 (conversión C a CO2) x USD 10/tCO2e (mediana del mercado voluntario 2024, Ecosystem Marketplace 2024). No representa un precio de venta ni el valor realizable de un predio. La monetización efectiva requiere un proyecto certificado (VCS, Gold Standard) con línea base, adicionalidad demostrada y costos de transacción que reducen significativamente el valor neto.',
 			method: `${METHOD_COMMON} 10 variables: biomasa aérea ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validación). Biomasa subterránea vía Cairns et al. (1997): BGB = 0.489 x AGB^0.89. Carbono orgánico del suelo: SoilGrids v2 (ISRIC, 0-30cm extrapolado). Flujo de carbono: Harris et al. (2021) Nature Climate Change / Global Forest Watch (emisiones brutas + remociones + balance neto, 30m, 2001-2024). Productividad: MODIS MOD17A3HGF NPP (500m, 2019-2024). Total carbon = AGB x 0.47 + BGB x 0.47 + SOC. Precio de referencia: Ecosystem Marketplace (2024) State of the Voluntary Carbon Markets.`,
 		},
-		climate_vulnerability: {
-			howToRead: 'El mapa clasifica cada hexágono según su vulnerabilidad climática integrada (framework IPCC AR5). Colores cálidos indican mayor vulnerabilidad: alta exposición a eventos extremos, alta sensibilidad ambiental, o baja capacidad adaptativa de la población. Cada tipo representa una configuración distinta de estos tres factores.',
-			implications: 'Las zonas de alta vulnerabilidad integral requieren atención prioritaria en planes de adaptación climática. Las zonas con alta exposición pero buena capacidad adaptativa pueden absorber shocks; las zonas con baja capacidad adaptativa son vulnerables incluso ante exposición moderada. Este índice es el insumo estándar para fondos climáticos (GCF, GEF, Banco Mundial).',
-			method: `${METHOD_COMMON} 8 variables agrupadas en 3 dimensiones IPCC: Exposición (estrés térmico MODIS LST, riesgo inundación JRC/S1, estrés hídrico ET/PET, frecuencia fuego MODIS MCD64A1), Sensibilidad (pérdida forestal Hansen GFC, desprotección vegetal Hansen treecover), Capacidad Adaptativa (aislamiento geoespacial Oxford MAP, privación de servicios INDEC 2022). Sub-índices: media geométrica por dimensión. Score final: media geométrica de las 3 dimensiones. PCA + k-means para tipología.`,
-		},
 		pm25_drivers: {
 			howToRead: 'El mapa muestra la calidad del aire en cada hexágono, medida como concentración media de PM2.5 (partículas finas < 2.5 µm) y descompuesta en cuatro drivers: fuego regional, clima, terreno y vegetación. Score alto (colores fríos) = mejor calidad del aire; score bajo (colores cálidos) = mayor concentración de PM2.5. Selecciona un departamento para ver la contribución relativa de cada driver.',
 			implications: 'La intensidad de fuego regional es el driver dominante de PM2.5 en Misiones: las quemas agrícolas y forestales en provincias vecinas y países limítrofes elevan la concentración de partículas finas incluso en zonas sin deforestación local. Las zonas con alta contribución climática son sensibles a eventos de inversión térmica que atrapan contaminantes. La vegetación actúa como filtro natural — la pérdida de cobertura arbórea reduce la capacidad de depuración del aire.',
 			method: 'Descomposición por machine learning (LightGBM, SHAP feature attribution) de la concentración media anual de PM2.5. Fuente primaria: Atmospheric Composition Analysis Group (ACAG) V6.GL.02 (Dalhousie University, van Donkelaar et al. 2021), panel 1998-2022, resolución 0.01 deg (~1 km). Modelo entrenado con 31 covariables ambientales (R2 = 0.93 en validación cruzada espacial leave-one-department-out). Drivers agrupados por SHAP: fuego regional (contribución dominante, dR2 = 0.195), clima (precipitación, temperatura), terreno (elevación, pendiente) y vegetación (NDVI, NPP). El toggle temporal compara periodo 2001-2010 vs 2013-2022. Resolución espacial: H3 resolución 9.',
-		},
-		productive_activity: {
-			howToRead: 'El mapa muestra la intensidad de actividad productiva medida por luces nocturnas satelitales (VIIRS). Colores cálidos = mayor radiancia nocturna = mayor actividad económica. Al hacer click se ven 6 indicadores en valores reales: luces, productividad vegetal, verdor, superficie construida, conversión forestal y temperatura. El toggle temporal compara con el periodo base (2014-2017 para VIIRS, 2005-2012 para otros indicadores).',
-			implications: 'Las zonas con alta radiancia nocturna y crecimiento positivo (delta > 0) son polos económicos en expansión. Zonas con alta productividad vegetal (NPP) pero baja radiancia son áreas rurales productivas pero no urbanizadas. Un aumento de temperatura superficial (LST) junto con aumento de superficie construida indica urbanización activa. La conversión forestal alta combinada con baja actividad económica puede indicar deforestación sin desarrollo productivo asociado.',
-			method: 'Seis indicadores satelitales en valores físicos reales (sin scores compuestos ni índices artificiales). VIIRS nightlights (NOAA, 500m, 2014-2025): radiancia media nocturna en nW/cm²/sr. NPP (MODIS, 1km, 2005-2024): productividad primaria neta en gC/m²/año. NDVI (MODIS, 250m, 2005-2024): índice de vegetación normalizado. GHSL built surface (JRC, 10m, epochs 2000/2020): fracción de superficie construida. Hansen forest loss (UMD/Landsat, 30m, 2001-2024): pérdida acumulada. LST (MODIS, 1km, 2005-2024): temperatura superficial diurna en grados Celsius. Cada hexágono H3 res-9 recibe el valor ponderado por la fracción de área del radio censal que lo cubre (crosswalk dasimétrico areal). El color del mapa representa el percentil provincial de la radiancia nocturna.',
 		},
 		deforestation_dynamics: {
 			howToRead: 'Cada hexágono muestra la tasa de pérdida forestal observada en ese punto exacto (pixel Landsat 30m). Colores cálidos = mayor pérdida forestal reciente (2015-2024). El toggle temporal permite comparar con la línea base (2001-2010): el modo "Cambio" muestra si la deforestación aceleró (rojo) o frenó (verde) respecto al periodo base.',

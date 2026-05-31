@@ -14,24 +14,22 @@
 	} = $props();
 
 	const REFERENCE = [
-		'environmental_risk', 'flood_risk', 'forest_health',
-		'agri_potential', 'accessibility', 'territorial_scores',
+		'flood_risk', 'agri_potential', 'accessibility', 'territorial_scores',
 	];
 
 	// Analyses where higher score = worse outcome → rank ascending (lowest score = rank #1 = best)
 	const RANK_ASCENDING = new Set([
-		'environmental_risk', 'flood_risk', 'accessibility',
-		'change_pressure', 'climate_vulnerability', 'service_deprivation', 'deforestation_dynamics',
+		'flood_risk', 'accessibility',
+		'service_deprivation', 'deforestation_dynamics',
 	]);
 
 	const SHORT_LABEL: Record<string, string> = {
-		environmental_risk: 'Amb.',     flood_risk: 'Inund.',   forest_health: 'Forest.',
+		flood_risk: 'Inund.',
 		agri_potential: 'Agri.',        accessibility: 'Acceso', territorial_scores: 'Comp.',
-		climate_comfort: 'Clima',       change_pressure: 'Cambio', green_capital: 'Verde',
 		service_deprivation: 'Serv.',   territorial_isolation: 'Aisla.', health_access: 'Salud',
 		education_capital: 'Educ.',     education_flow: 'E.Flow', land_use: 'Suelo',
-		carbon_stock: 'Carbono',        deforestation_dynamics: 'Defor.', productive_activity: 'Prod.',
-		climate_vulnerability: 'C.Vul.', sociodemographic: 'Socio.',
+		carbon_stock: 'Carbono',        deforestation_dynamics: 'Defor.',
+		sociodemographic: 'Socio.',
 	};
 
 	const SVG_W = 260, SVG_H = 200;

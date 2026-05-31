@@ -53,78 +53,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: `${METHOD_COMPARABLE.en} 8 variables: paving_index, urban_consolidation, service_access, commercial_vitality, road_connectivity, building_mix, urbanization, water_exposure. Source: Overture Maps Foundation (CC BY 4.0, release 2026-03-18) via walkthru.earth. k=5 types.`,
 		},
 	},
-	environmental_risk: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de riesgo ambiental según la co-ocurrencia de frecuencia de fuego, deforestación, amplitud térmica, pendiente y altura sobre drenaje. Cada color representa un tipo distinto de configuración de riesgo. Comparable entre los territorios disponibles.',
-			en: 'The map classifies each hexagon into environmental risk types based on the co-occurrence of fire frequency, deforestation, thermal amplitude, slope and height above drainage. Each colour represents a distinct risk configuration type. Comparable across available territories.',
-			gn: "Mapa oñemomba'e hexágono kuéra tata-ayvu, ka'aguy reiguáva, ñembohasa riesgo rehegua. Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa classifica cada hexágono em tipos de risco ambiental conforme a co-ocorrência de frequência de fogo, desmatamento, amplitude térmica, declividade e altura acima da drenagem. Cada cor representa um tipo distinto de configuração de risco. Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: 'Los tipos permiten identificar configuraciones de riesgo cualitativamente distintas: zonas de alta pendiente con baja deforestación difieren estructuralmente de zonas planas con alta pérdida forestal, aunque ambas puedan tener "riesgo" similar en un índice único. El índice integra factores acumulados (deforestación histórica 2001–2024) con factores actuales (régimen de fuego, amplitud térmica): territorios con frontera de deforestación reciente y concentrada pueden mostrar medianas bajas con hotspots locales destacados, mientras que territorios con pérdida histórica generalizada concentran los valores más altos.',
-			en: 'Types enable the identification of qualitatively distinct risk configurations: high-slope zones with low deforestation differ structurally from flat zones with high forest loss, even if both score similarly on a composite index. The index combines cumulative factors (historical deforestation 2001–2024) with current factors (fire regime, thermal amplitude): territories with recent, concentrated deforestation frontiers may show low medians with locally salient hotspots, while territories with widespread historical loss concentrate the highest values.',
-			gn: "Laja ohechauka riesgo kuéra ndojeguaa: yvate yvy ha michĩ ka'aguy reiguáva ojejuhu ambue rupa-pe, mba'etépa peteĩ índice rehegua.",
-			pt: 'Os tipos permitem identificar configurações de risco qualitativamente distintas: zonas de alta declividade com baixo desmatamento diferem estruturalmente de zonas planas com alta perda florestal, mesmo que ambas possam apresentar "risco" similar em um índice único. O índice combina fatores acumulados (desmatamento histórico 2001–2024) com fatores atuais (regime de fogo, amplitude térmica): territórios com fronteira de desmatamento recente e concentrada podem mostrar medianas baixas com hotspots locais destacados, enquanto territórios com perda histórica generalizada concentram os valores mais altos.',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: frecuencia de fuego [0, 8] eventos/año, deforestación total [0, 15]%, amplitud térmica LST [2, 25]°C, pendiente [0, 30]°, HAND [0, 200] m. Fuentes: MODIS MCD64A1 (fuego), Hansen GFC v1.12 (deforestación), ERA5 (LST), FABDEM 30m (pendiente), MERIT Hydro (HAND). Período: 2019–2024.`,
-			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: fire frequency [0, 8] events/year, total deforestation [0, 15]%, LST thermal amplitude [2, 25]°C, slope [0, 30]°, HAND [0, 200] m. Sources: MODIS MCD64A1 (fire), Hansen GFC v1.12 (deforestation), ERA5 (LST), FABDEM 30m (slope), MERIT Hydro (HAND). Period: 2019–2024.`,
-		},
-	},
-	climate_comfort: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos climáticos según la co-ocurrencia de temperatura diurna, precipitación, heladas y estrés hídrico. Cada color representa un régimen climático distinto. Comparable entre los territorios disponibles.',
-			en: 'The map classifies each hexagon into climate types based on the co-occurrence of daytime temperature, precipitation, frost and water stress. Each colour represents a distinct climate regime. Comparable across available territories.',
-			gn: "Mapa oñemomba'e hexágono kuéra ára porã rehegua, temperatura, ama, ro ha y-mandu'a. Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa classifica cada hexágono em tipos climáticos conforme a co-ocorrência de temperatura diurna, precipitação, geadas e estresse hídrico. Cada cor representa um regime climático distinto. Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: 'Los tipos climáticos revelan gradientes geoespaciales que un índice único no captura: zonas cálidas y húmedas difieren estructuralmente de zonas frescas y secas, con implicancias distintas para habitabilidad y producción.',
-			en: 'Climate types reveal geospatial gradients that a single index cannot capture: warm, humid zones differ structurally from cool, dry zones, with distinct implications for habitability and production.',
-			gn: "Laja ára ohechauka gradiente rehegua ndohecháiva peteĩ índice: yvate ha ama oguejy ha tuja ha toro ojejuhu ambue rupa-pe.",
-			pt: 'Os tipos climáticos revelam gradientes geoespaciais que um índice único não captura: zonas quentes e úmidas diferem estruturalmente de zonas frescas e secas, com implicações distintas para habitabilidade e produção.',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 4 variables con goalposts fijos: temperatura diurna LST [15, 50]°C, precipitación anual [1444, 1961] mm/año, días de helada [0, 60] días/año, ratio ET/PET [0, 1]. Fuentes: ERA5 (temperatura, heladas), CHIRPS (precipitación), MODIS (ET/PET). Período: 2019–2024.`,
-			en: `${METHOD_COMPARABLE.en} 4 variables with fixed goalposts: daytime LST [15, 50]°C, annual precipitation [1444, 1961] mm/year, frost days [0, 60] days/year, ET/PET ratio [0, 1]. Sources: ERA5 (temperature, frost), CHIRPS (precipitation), MODIS (ET/PET). Period: 2019–2024.`,
-		},
-	},
-	green_capital: {
-		howToRead: {
-			es: "El mapa clasifica cada hexágono en tipos de productividad vegetal según la co-ocurrencia de verdor estacional (NDVI), cobertura arbórea, productividad primaria (NPP) y área foliar (LAI). Los valores altos no distinguen bosque nativo de cultivos: la soja en plena temporada puntúa igual o más que el monte secundario. Comparable entre los territorios disponibles.",
-			en: 'The map classifies each hexagon into vegetation productivity types based on the co-occurrence of seasonal greenness (NDVI), tree cover, primary productivity (NPP) and leaf area (LAI). High values do not distinguish native forest from crops: soybean at peak season scores as high or higher than secondary woodland. Comparable across available territories.',
-			gn: "Mapa oñemomba'e hexágono kuéra ka'aguy produktividad rehegua: NDVI, yvyra hendápe, NPP ha LAI. Yvate score ndohecháiha ka'aguy porã soja rehegua. Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa classifica cada hexágono em tipos de produtividade vegetal conforme a co-ocorrência de verdor sazonal (NDVI), cobertura arbórea, produtividade primária (NPP) e área foliar (LAI). Valores altos não distinguem floresta nativa de cultivos: a soja em plena temporada pontua tanto quanto ou mais do que o bosque secundário. Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: "La capa mide biomasa activa y productividad fotosintética, no calidad ecológica ni servicios ecosistémicos. Un distrito con alta productividad vegetal puede ser un cinturón sojero; uno con baja productividad puede tener suelo desnudo por estacionalidad. Usar junto con deforestation_dynamics para contextualizar.",
-			en: "This layer measures active biomass and photosynthetic productivity, not ecological quality or ecosystem services. A district with high vegetation productivity may be a soybean belt; one with low productivity may have bare soil due to seasonality. Use alongside deforestation_dynamics for context.",
-			gn: "Capa oñemoĩva oipuru biomasa mba'ehekápe, ndaha'éi calidad ecológica. Umi tetã yvate NDVIháva ikuai soja cinturón; michĩháva suelo desnudo. Ojeporavo ha deforestation_dynamics.",
-			pt: 'A camada mede biomassa ativa e produtividade fotossintética, não qualidade ecológica nem serviços ecossistêmicos. Um distrito com alta produtividade vegetal pode ser um cinturão sojeiro; um com baixa produtividade pode ter solo exposto por sazonalidade. Usar em conjunto com deforestation_dynamics para contextualizar.',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 4 variables con goalposts fijos: NDVI [0.05, 0.90], cobertura arbórea [0, 100]%, NPP [0.52, 1.51] kgC/m²/8d, LAI [0, 7] m²/m². Fuentes: MODIS 250m (NDVI), Hansen GFC 2000 (treecover), MODIS MOD17A3 (NPP), MODIS MOD15A2H (LAI). Período: 2019–2024.`,
-			en: `${METHOD_COMPARABLE.en} 4 variables with fixed goalposts: NDVI [0.05, 0.90], tree cover [0, 100]%, NPP [0.52, 1.51] kgC/m²/8d, LAI [0, 7] m²/m². Sources: MODIS 250m (NDVI), Hansen GFC 2000 (treecover), MODIS MOD17A3 (NPP), MODIS MOD15A2H (LAI). Period: 2019–2024.`,
-		},
-	},
-	change_pressure: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de presión de cambio según la co-ocurrencia de tendencia de urbanización, expansión construida, pérdida forestal y cambio de vegetación. Comparable entre los territorios disponibles.',
-			en: 'The map classifies each hexagon into change pressure types based on the co-occurrence of urbanisation trend, built-up expansion, forest loss and vegetation change. Comparable across available territories.',
-			gn: "Mapa oñemomba'e hexágono kuéra tendencia-pe: oĩvove tëtã, óga pyahu, ka'aguy oguejy ha yvoty jepota. Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa classifica cada hexágono em tipos de pressão de mudança conforme a co-ocorrência de tendência de urbanização, expansão construída, perda florestal e mudança de vegetação. Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: 'Los tipos separan urbanización activa de deforestación agrícola y de zonas estables. Un municipio con "alta presión" por urbanización requiere políticas distintas a uno con "alta presión" por avance de frontera agraria. La capa mide cambio ACUMULADO 2001–2024 (Hansen 24 años, GHSL 2000→2020), no la tasa instantánea actual: territorios con frontera reciente concentrada (Chaco, Formosa, Alto Paraná) muestran medianas más bajas que territorios con presión histórica generalizada (Misiones), aunque los hotspots locales sí destacan en el ranking departamental.',
-			en: 'Types separate active urbanisation from agricultural deforestation and stable zones. A municipality under "high pressure" due to urbanisation requires different policies from one under "high pressure" due to advancing agricultural frontier. The layer measures CUMULATIVE change 2001–2024 (Hansen 24 years, GHSL 2000→2020), not the current instantaneous rate: territories with concentrated recent frontiers (Chaco, Formosa, Alto Paraná) show lower medians than territories with widespread historical pressure (Misiones), although local hotspots do stand out in the departmental ranking.',
-			gn: "Laja oñemboikuaa tëtã ojehúva, ka'aguy oguejy, ha tetã ikatupyryvéva. Tëtã yvate presión urbanización rupive oguereko política ambue.",
-			pt: 'Os tipos separam urbanização ativa de desmatamento agrícola e de zonas estáveis. Um município com "alta pressão" por urbanização requer políticas distintas de um com "alta pressão" por avanço de fronteira agrária. A camada mede mudança ACUMULADA 2001–2024 (Hansen 24 anos, GHSL 2000→2020), não a taxa instantânea atual: territórios com fronteira recente concentrada (Chaco, Formosa, Alto Paraná) mostram medianas mais baixas que territórios com pressão histórica generalizada (Misiones), embora os hotspots locais se destaquem no ranking departamental.',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 4 variables con goalposts fijos: tendencia VIIRS [−2, 5] nW/cm²/año, cambio GHSL [0, 42]%, pérdida forestal Hansen [0, 20]%, tendencia NDVI [−0.070, 0.090] /año. Fuentes: NOAA VIIRS 500m (2016–2025), JRC GHSL (2000 vs 2020), Hansen GFC v1.12 (2001–2024), MODIS NDVI (2019–2024).`,
-			en: `${METHOD_COMPARABLE.en} 4 variables with fixed goalposts: VIIRS trend [−2, 5] nW/cm²/year, GHSL change [0, 42]%, Hansen forest loss [0, 20]%, NDVI trend [−0.070, 0.090] /year. Sources: NOAA VIIRS 500m (2016–2025), JRC GHSL (2000 vs 2020), Hansen GFC v1.12 (2001–2024), MODIS NDVI (2019–2024).`,
-		},
-	},
 	location_value: {
 		howToRead: {
 			es: 'El mapa clasifica cada hexágono en tipos de valor posicional según la co-ocurrencia de accesibilidad, conectividad a salud, actividad económica, topografía y distancia a rutas.',
@@ -159,24 +87,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 		method: {
 			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: carbono orgánico del suelo [0, 472] g/dm³, distancia a pH óptimo [0, 1.0], arcilla [0, 590] g/kg, precipitación anual [1444, 1961] mm/año, GDD base 10°C [3589, 4587] °C·día. Fuentes: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitación), ERA5 (GDD), FABDEM (pendiente). Período: 2019–2024.`,
 			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: soil organic carbon [0, 472] g/dm³, distance to optimal pH [0, 1.0], clay [0, 590] g/kg, annual precipitation [1444, 1961] mm/year, GDD base 10°C [3589, 4587] °C·day. Sources: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitation), ERA5 (GDD), FABDEM (slope). Period: 2019–2024.`,
-		},
-	},
-	forest_health: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de integridad forestal según la co-ocurrencia de tendencia de verdor, ratio de pérdida arbórea, productividad fotosintética y evapotranspiración. Comparable entre los territorios disponibles.',
-			en: 'The map classifies each hexagon into forest integrity types based on the co-occurrence of greenness trend, tree loss ratio, photosynthetic productivity and evapotranspiration. Comparable across available territories.',
-			gn: "Mapa oñemomba'e hexágono kuéra ka'aguy porãve rehegua: tendencia NDVI, pérdida yvyra, GPP ha ET. Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa classifica cada hexágono em tipos de integridade florestal conforme a co-ocorrência de tendência de verdor, razão de perda arbórea, produtividade fotossintética e evapotranspiração. Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: 'Los tipos separan bosque sano y productivo, bosque en degradación con pérdida activa, y zonas sin cobertura forestal significativa. Esta clasificación permite priorizar intervenciones de restauración donde la degradación es incipiente.',
-			en: 'Types separate healthy and productive forest, degrading forest with active loss, and zones without significant tree cover. This classification allows prioritising restoration interventions where degradation is incipient.',
-			gn: "Laja oñemboikuaa ka'aguy porã, ka'aguy degradáva ha yvy ka'aguy ỹre. Ohechauka mávape oñemboguata restauración.",
-			pt: 'Os tipos separam floresta saudável e produtiva, floresta em degradação com perda ativa e zonas sem cobertura florestal significativa. Esta classificação permite priorizar intervenções de restauração onde a degradação é incipiente.',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 4 variables con goalposts fijos: tendencia NDVI [−0.070, 0.090] /año, ratio pérdida/cobertura [0, 50]%, GPP [0.026, 0.065] kgC/m²/8d, ET [14.05, 30.79] mm/8d. Fuentes: MODIS NDVI 250m (tendencia 5 años), Hansen GFC v1.12 (loss/treecover2000), MODIS MOD17A2 (GPP), TerraClimate (ET). Período: 2019–2024.`,
-			en: `${METHOD_COMPARABLE.en} 4 variables with fixed goalposts: NDVI trend [−0.070, 0.090] /year, loss/cover ratio [0, 50]%, GPP [0.026, 0.065] kgC/m²/8d, ET [14.05, 30.79] mm/8d. Sources: MODIS NDVI 250m (5-year trend), Hansen GFC v1.12 (loss/treecover2000), MODIS MOD17A2 (GPP), TerraClimate (ET). Period: 2019–2024.`,
 		},
 	},
 	forestry_aptitude: {
@@ -323,24 +233,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: `Source: EMSA (Secretaría de Energía, datos.energia.gob.ar, April 2024). Medium and high-voltage transmission lines georeferenced, intersected with H3 resolution 9 grid. Score = total line length / hexagon area, normalised 0–100.`,
 		},
 	},
-	territorial_types: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos geoespaciales según su metabolismo ecosistémico: productividad, apropiación humana y dinámica de cambio. Cada color representa un tipo cualitativamente distinto de territorio.',
-			en: 'The map classifies each hexagon into geospatial types based on its ecosystem metabolism: productivity, human appropriation and change dynamics. Each colour represents a qualitatively distinct territory type.',
-			gn: "Mapa oñemomba'e hexágono kuéra ecosistema metabolismo rehegua: produktividad, yvypóra rehegua ha kambio. Peteĩ-peteĩ pytã ohechauka tipo territorio ambue.",
-			pt: 'O mapa classifica cada hexágono em tipos geoespaciais conforme seu metabolismo ecossistêmico: produtividade, apropriação humana e dinâmica de mudança. Cada cor representa um tipo qualitativamente distinto de território.',
-		},
-		implications: {
-			es: 'Los tipos geoespaciales sintetizan 13 variables satelitales en una clasificación interpretable. Permiten identificar selva productiva intacta, mosaicos agro-forestales en transición, zonas agrícolas consolidadas, periurbanos en expansión y núcleos urbanos — cada uno con necesidades de gestión distintas.',
-			en: 'Geospatial types synthesise 13 satellite variables into an interpretable classification. They identify intact productive forest, transitional agro-forestry mosaics, consolidated agricultural zones, expanding peri-urban areas and urban cores — each with distinct management needs.',
-			gn: "Tipos geoespaciales oñemomba'e 13 variables satelitales peteĩ clasificación-pe. Ohechauka ka'aguy, mosaico agro-forestal, temity, periurbano ha tëtã — peteĩ-peteĩ oguereko necesidades ambue.",
-			pt: 'Os tipos geoespaciais sintetizam 13 variáveis satelitais em uma classificação interpretável. Permitem identificar floresta produtiva intacta, mosaicos agroflorestais em transição, zonas agrícolas consolidadas, periurbanos em expansão e núcleos urbanos — cada um com necessidades de gestão distintas.',
-		},
-		method: {
-			es: `${METHOD_COMMON.es} 13 variables: NPP, NDVI, cobertura arbórea, fracción arboles/cultivos/construido, deforestación, luces nocturnas, tendencia VIIRS, expansión GHSL, precipitación. k=8 tipos. Fuentes: MODIS, Hansen GFC, VIIRS, GHSL, CHIRPS.`,
-			en: `${METHOD_COMMON.en} 13 variables: NPP, NDVI, tree cover, fraction trees/crops/built, deforestation, night lights, VIIRS trend, GHSL expansion, precipitation. k=8 types. Sources: MODIS, Hansen GFC, VIIRS, GHSL, CHIRPS.`,
-		},
-	},
 	sociodemographic: {
 		howToRead: {
 			es: 'El mapa clasifica cada hexágono en tipos sociodemográficos según la co-ocurrencia de densidad poblacional, pobreza (NBI), hacinamiento, tenencia de vivienda, tamaño de hogar y acceso digital. Cada color representa un perfil censal distinto.',
@@ -431,24 +323,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: `${METHOD_COMPARABLE.en} Composite score: geometric mean of above-ground biomass [0, 300] Mg/ha, total carbon [0, 400] tC/ha, soil organic carbon [0, 472] g/dm³ and net flux [−100, 100] MgCO₂/ha. Above-ground biomass: ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validation). Below-ground biomass: Cairns et al. (1997): BGB = 0.489 × AGB^0.89. SOC: SoilGrids v2 (ISRIC, 0–30cm). Carbon flux: Harris et al. (2021) / Global Forest Watch (emissions + removals + net balance, 30m, 2001–2024). Productivity: MODIS MOD17A3HGF NPP (500m, 2019–2024). Total carbon = AGB × 0.47 + BGB × 0.47 + SOC. Reference price: Ecosystem Marketplace (2024).`,
 		},
 	},
-	climate_vulnerability: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono según su vulnerabilidad climática integrada (framework IPCC AR5). Colores cálidos indican mayor vulnerabilidad: alta exposición a eventos extremos, alta sensibilidad ambiental, o baja capacidad adaptativa de la población. Comparable entre los territorios disponibles para las dimensiones de exposición y sensibilidad (fuentes satelitales). Nota: para territorios sin datos censales (ej. Itapúa), la capacidad adaptativa usa un valor neutral (50/100) — los componentes de aislamiento y privación de servicios requieren censos nacionales no disponibles para Paraguay.',
-			en: 'The map classifies each hexagon according to its integrated climate vulnerability (IPCC AR5 framework). Warm colours indicate higher vulnerability: high exposure to extreme events, high environmental sensitivity, or low adaptive capacity of the population. Comparable across available territories for the exposure and sensitivity dimensions (satellite sources). Note: for territories without census data (e.g. Itapúa), adaptive capacity uses a neutral value (50/100) — the isolation and service deprivation components require national censuses not available for Paraguay.',
-			gn: "Mapa oñemomba'e hexágono kuéra vulnerabilidad climática IPCC AR5 rehegua. Pytã yvate = yvate vulnerabilidad: exposición, sensibilidad ha capacidad adaptativa. Ojoguáva tetã kuéra ojoguávape exposición ha sensibilidad rehegua.",
-			pt: 'O mapa classifica cada hexágono conforme sua vulnerabilidade climática integrada (framework IPCC AR5). Cores quentes indicam maior vulnerabilidade: alta exposição a eventos extremos, alta sensibilidade ambiental ou baixa capacidade adaptativa da população. Comparável entre os territórios disponíveis para as dimensões de exposição e sensibilidade (fontes satelitais). Nota: para territórios sem dados censitários (ex. Itapúa), a capacidade adaptativa usa um valor neutro (50/100) — os componentes de isolamento e privação de serviços requerem censos nacionais não disponíveis para o Paraguai.',
-		},
-		implications: {
-			es: 'Las zonas de alta vulnerabilidad integral requieren atención prioritaria en planes de adaptación climática. Las zonas con alta exposición pero buena capacidad adaptativa pueden absorber shocks; las zonas con baja capacidad adaptativa son vulnerables incluso ante exposición moderada. Este índice es el insumo estándar para fondos climáticos (GCF, GEF, Banco Mundial).',
-			en: 'Zones of high integrated vulnerability require priority attention in climate adaptation plans. Zones with high exposure but good adaptive capacity can absorb shocks; zones with low adaptive capacity are vulnerable even to moderate exposure. This index is the standard input for climate funds (GCF, GEF, World Bank).',
-			gn: "Yvy yvate vulnerabilidad oguereko prioridad planes adaptación climática-pe. Alta exposición, buena capacidad = oñembyatypa shock; michĩ capacidad = vulnerable mba'eichagua exposición. Ko índice ojeporúva GCF, GEF, Banco Mundial-pe.",
-			pt: 'Zonas de alta vulnerabilidade integrada requerem atenção prioritária em planos de adaptação climática. Zonas com alta exposição mas boa capacidade adaptativa podem absorver choques; zonas com baixa capacidade adaptativa são vulneráveis mesmo ante exposição moderada. Este índice é o insumo padrão para fundos climáticos (GCF, GEF, Banco Mundial).',
-		},
-		method: {
-			es: `${METHOD_COMPARABLE.es} 8 variables agrupadas en 3 dimensiones IPCC: Exposición (estrés térmico MODIS LST, riesgo inundación JRC/S1, estrés hídrico ET/PET, frecuencia fuego MODIS MCD64A1), Sensibilidad (pérdida forestal Hansen GFC, desprotección vegetal Hansen treecover), Capacidad Adaptativa (aislamiento geoespacial Oxford MAP, privación de servicios INDEC 2022 — solo Argentina; para otros territorios se asigna valor neutral 50/100). Sub-índices: media geométrica por dimensión. Score final: media geométrica de las 3 dimensiones. PCA + k-means para tipología.`,
-			en: `${METHOD_COMPARABLE.en} 8 variables grouped in 3 IPCC dimensions: Exposure (thermal stress MODIS LST, flood risk JRC/S1, water stress ET/PET, fire frequency MODIS MCD64A1), Sensitivity (Hansen GFC forest loss, Hansen treecover vegetation exposure), Adaptive Capacity (geospatial isolation Oxford MAP, service deprivation INDEC 2022 — Argentina only; neutral value 50/100 for other territories). Sub-indices: geometric mean per dimension. Final score: geometric mean of 3 dimensions. PCA + k-means for typology.`,
-		},
-	},
 	pm25_drivers: {
 		howToRead: {
 			es: 'El mapa muestra la calidad del aire en cada hexágono, medida como concentración media de PM2.5 (partículas finas < 2.5 µm) y descompuesta en cuatro drivers: fuego regional, clima, terreno y vegetación. Score alto (colores fríos) = mejor calidad del aire; score bajo (colores cálidos) = mayor concentración de PM2.5. Comparable entre los territorios disponibles. Selecciona un departamento para ver la contribución relativa de cada driver.',
@@ -465,24 +339,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 		method: {
 			es: `Score de exposición normalizado con goalpost fijo: concentración media PM2.5 [5, 30] µg/m³ (0 = aire limpio, 100 = alta exposición). Descomposición por machine learning (LightGBM, SHAP feature attribution). Fuente primaria: Atmospheric Composition Analysis Group (ACAG) V6.GL.02 (Dalhousie University, van Donkelaar et al. 2021), panel 1998–2022, resolución 0.01° (~1 km). Modelo entrenado con 31 covariables ambientales (R² = 0.93 en validación cruzada espacial leave-one-department-out). Drivers agrupados por SHAP: fuego regional (contribución dominante, ΔR² = 0.195), clima (precipitación, temperatura), terreno (elevación, pendiente) y vegetación (NDVI, NPP). El toggle temporal compara periodo 2001–2010 vs 2013–2022. Resolución espacial: H3 resolución 9.`,
 			en: `Normalised exposure score with fixed goalpost: mean PM2.5 concentration [5, 30] µg/m³ (0 = clean air, 100 = high exposure). Machine-learning decomposition (LightGBM, SHAP feature attribution). Primary source: Atmospheric Composition Analysis Group (ACAG) V6.GL.02 (Dalhousie University, van Donkelaar et al. 2021), panel 1998–2022, resolution 0.01° (~1 km). Model trained with 31 environmental covariates (R² = 0.93 in spatial leave-one-department-out cross-validation). Drivers grouped by SHAP: regional fire (dominant contribution, ΔR² = 0.195), climate (precipitation, temperature), terrain (elevation, slope) and vegetation (NDVI, NPP). Temporal toggle compares period 2001–2010 vs 2013–2022. Spatial resolution: H3 resolution 9.`,
-		},
-	},
-	productive_activity: {
-		howToRead: {
-			es: 'El mapa muestra la intensidad de actividad productiva medida por luces nocturnas satelitales (VIIRS). Colores cálidos = mayor radiancia nocturna = mayor actividad económica. Al hacer click se ven 6 indicadores en valores reales: luces, productividad vegetal, verdor, superficie construida, conversión forestal y temperatura. El toggle temporal compara con el periodo base (2014–2017 para VIIRS, 2005–2012 para otros indicadores). Comparable entre los territorios disponibles.',
-			en: 'The map shows the intensity of productive activity measured by satellite night lights (VIIRS). Warm colours = greater night-time radiance = higher economic activity. Clicking reveals 6 indicators in real values: lights, vegetation productivity, greenness, built surface, forest conversion and temperature. The temporal toggle compares with the baseline period (2014–2017 for VIIRS, 2005–2012 for other indicators). Comparable across available territories.',
-			gn: "Mapa ohechauka tembiapo intensidad luces nocturnas (VIIRS). Pytã = yvate radiancia = yvate actividad económica. Click reheve ohecháva 6 indicadores. Toggle temporal oñembojoaju base (2014–2017 VIIRS). Ojoguáva tetã kuéra ojoguávape.",
-			pt: 'O mapa mostra a intensidade de atividade produtiva medida por luzes noturnas satelitais (VIIRS). Cores quentes = maior radiância noturna = maior atividade econômica. Ao clicar, veem-se 6 indicadores em valores reais: luzes, produtividade vegetal, verdor, superfície construída, conversão florestal e temperatura. O toggle temporal compara com o período base (2014–2017 para VIIRS, 2005–2012 para outros indicadores). Comparável entre os territórios disponíveis.',
-		},
-		implications: {
-			es: 'Las zonas con alta radiancia nocturna y crecimiento positivo (delta > 0) son polos económicos en expansión. Zonas con alta productividad vegetal (NPP) pero baja radiancia son áreas rurales productivas pero no urbanizadas. Un aumento de temperatura superficial (LST) junto con aumento de superficie construida indica urbanización activa. La conversión forestal alta combinada con baja actividad económica puede indicar deforestación sin desarrollo productivo asociado.',
-			en: 'Zones with high night-time radiance and positive growth (delta > 0) are expanding economic poles. Zones with high vegetation productivity (NPP) but low radiance are productive but non-urbanised rural areas. An increase in surface temperature (LST) together with an increase in built surface indicates active urbanisation. High forest conversion combined with low economic activity may indicate deforestation without associated productive development.',
-			gn: "Yvate radiancia ha crecimiento positivo = polo económico ojehúva. Yvate NPP ha michĩ radiancia = yvy produktivo ndatëtãvéima. LST yvate + superficie construida = urbanización activa. Yvate conversión forestal + michĩ actividad = deforestación sin desarrollo.",
-			pt: 'Zonas com alta radiância noturna e crescimento positivo (delta > 0) são polos econômicos em expansão. Zonas com alta produtividade vegetal (NPP) mas baixa radiância são áreas rurais produtivas, mas não urbanizadas. Um aumento de temperatura superficial (LST) junto com aumento de superfície construída indica urbanização ativa. Alta conversão florestal combinada com baixa atividade econômica pode indicar desmatamento sem desenvolvimento produtivo associado.',
-		},
-		method: {
-			es: `Score de actividad normalizado con goalpost fijo: radiancia nocturna VIIRS [0, 15] nW/cm²/sr (0 = sin actividad, 100 = alta actividad). Seis indicadores satelitales en valores físicos reales: VIIRS nightlights (NOAA, 500m, 2014–2025): radiancia media nocturna. NPP (MODIS, 1km, 2005–2024): productividad primaria neta en gC/m²/año. NDVI (MODIS, 250m, 2005–2024): índice de vegetación. GHSL built surface (JRC, 10m, epochs 2000/2020): fracción construida. Hansen forest loss (UMD/Landsat, 30m, 2001–2024): pérdida acumulada. LST (MODIS, 1km, 2005–2024): temperatura superficial diurna °C. Muestreo bilineal al centroide de cada hexágono H3 resolución 9 (~0.1 km²).`,
-			en: `Normalised activity score with fixed goalpost: VIIRS night-time radiance [0, 15] nW/cm²/sr (0 = no activity, 100 = high activity). Six satellite indicators in real physical values: VIIRS nightlights (NOAA, 500m, 2014–2025): mean night-time radiance. NPP (MODIS, 1km, 2005–2024): net primary productivity in gC/m²/year. NDVI (MODIS, 250m, 2005–2024): vegetation index. GHSL built surface (JRC, 10m, epochs 2000/2020): built fraction. Hansen forest loss (UMD/Landsat, 30m, 2001–2024): cumulative loss. LST (MODIS, 1km, 2005–2024): daytime surface temperature °C. Bilinear sampling to H3 resolution 9 centroid (~0.1 km²).`,
 		},
 	},
 	deforestation_dynamics: {

@@ -10,7 +10,7 @@
 		hexStore: HexStore;
 	} = $props();
 
-	const CENSUS_ANALYSES = new Set(['service_deprivation', 'health_access', 'education_capital', 'education_flow', 'economic_activity', 'accessibility', 'carbon_stock', 'productive_activity']);
+	const CENSUS_ANALYSES = new Set(['service_deprivation', 'health_access', 'education_capital', 'education_flow', 'economic_activity', 'accessibility', 'carbon_stock']);
 	const selected = $derived([...hexStore.selectedHexes.entries()]);
 	const layer = $derived(hexStore.activeLayer);
 	const isCensus = $derived(layer ? CENSUS_ANALYSES.has(layer.id) : false);

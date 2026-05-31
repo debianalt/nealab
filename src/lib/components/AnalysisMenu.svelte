@@ -24,16 +24,14 @@
 	// falls under 'Otros'.
 	const SUBGROUPS: Record<string, string> = {
 		// Vivir
-		environmental_risk: 'Salud ambiental', pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
-		climate_comfort: 'Clima',
-		green_capital: 'Cobertura natural', deforestation_dynamics: 'Cobertura natural',
-		sociodemographic: 'Población', territorial_types: 'Población',
+		pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
+		deforestation_dynamics: 'Cobertura natural',
+		sociodemographic: 'Población',
 		catastro: 'Catastro',
 		// Invertir
 		territorial_scores: 'Valor territorial', location_value: 'Valor territorial',
-		change_pressure: 'Dinámica del cambio', productive_activity: 'Dinámica del cambio',
 		// Producir
-		forest_health: 'Bosques', forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
+		forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
 		soil_water: 'Suelos y agua', agri_potential: 'Suelos y agua',
 		land_use: 'Uso del suelo',
 		powerline_density: 'Infraestructura',
@@ -42,7 +40,6 @@
 		accessibility: 'Accesibilidad', territorial_isolation: 'Accesibilidad',
 		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
 		education_capital: 'Educación', education_flow: 'Educación',
-		climate_vulnerability: 'Vulnerabilidad climática',
 	};
 
 	function getCoverage(analysis: AnalysisConfig): 'available' | 'pending' | 'unavailable' {
