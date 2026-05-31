@@ -103,7 +103,7 @@ def main():
     wsl_pmt = win_to_wsl(pmtiles)
     tip = (
         f"tippecanoe -o '{wsl_pmt}' -l buildings -n '{t} buildings' "
-        f"-Z8 -z14 -d12 --drop-densest-as-needed --maximum-tile-bytes=2000000 "
+        f"-Z8 -z14 -d12 --drop-densest-as-needed --maximum-tile-bytes=4000000 "
         f"--force '{wsl_geo}'"
     )
     r = subprocess.run(["wsl", "bash", "-lc", tip], text=True)
