@@ -446,7 +446,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
@@ -462,7 +462,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
@@ -478,7 +478,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
@@ -494,7 +494,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
@@ -510,7 +510,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
@@ -526,7 +526,7 @@
 					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
-					'fill-extrusion-opacity': 0.85
+					'fill-extrusion-opacity': 0.92
 				}
 			});
 
