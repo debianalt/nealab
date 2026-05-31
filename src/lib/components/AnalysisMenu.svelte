@@ -27,7 +27,6 @@
 		pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
 		deforestation_dynamics: 'Cobertura natural',
 		sociodemographic: 'Población',
-		catastro: 'Catastro',
 		// Invertir
 		territorial_scores: 'Valor territorial', location_value: 'Valor territorial',
 		// Producir
@@ -37,7 +36,7 @@
 		powerline_density: 'Infraestructura',
 		eudr: 'Comercio (EUDR)',
 		// Servir
-		accessibility: 'Accesibilidad', territorial_isolation: 'Accesibilidad',
+		accessibility: 'Accesibilidad',
 		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
 		education_capital: 'Educación', education_flow: 'Educación',
 	};

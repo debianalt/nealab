@@ -26,7 +26,7 @@
 	const SHORT_LABEL: Record<string, string> = {
 		flood_risk: 'Inund.',
 		agri_potential: 'Agri.',        accessibility: 'Acceso', territorial_scores: 'Comp.',
-		service_deprivation: 'Serv.',   territorial_isolation: 'Aisla.', health_access: 'Salud',
+		service_deprivation: 'Serv.',   health_access: 'Salud',
 		education_capital: 'Educ.',     education_flow: 'E.Flow', land_use: 'Suelo',
 		carbon_stock: 'Carbono',        deforestation_dynamics: 'Defor.',
 		sociodemographic: 'Socio.',

@@ -125,24 +125,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: `${METHOD_COMMON.en} 6 variables from the National Census 2022 (INDEC): UBN, no sewerage (100 − pct_sewerage), inadequate floor, overcrowding, critical overcrowding, no computer (100 − pct_computer). Dasymetric crosswalk weighted by buildings (2.8M footprints). KMO=0.73.`,
 		},
 	},
-	territorial_isolation: {
-		howToRead: {
-			es: 'El mapa clasifica cada hexágono en tipos de aislamiento geoespacial según tiempo de viaje a ciudades y centros de salud, distancia a rutas, densidad vial, luces nocturnas y densidad poblacional. Cobertura completa de la provincia (crosswalk híbrido).',
-			en: 'The map classifies each hexagon into geospatial isolation types based on travel time to cities and health centres, road distance, road density, night lights and population density. Full provincial coverage (hybrid crosswalk).',
-			gn: "Mapa oñemomba'e hexágono kuéra aislamiento rehegua: tape, tëtã ha tesãi-renda ojehúvo, luces nocturnas ha yvypóra. Cobertura opytáva provincia-pe.",
-			pt: 'O mapa classifica cada hexágono em tipos de isolamento geoespacial conforme o tempo de viagem a cidades e centros de saúde, distância às vias, densidade viária, luzes noturnas e densidade populacional. Cobertura completa da província (crosswalk híbrido).',
-		},
-		implications: {
-			es: 'Los tipos distinguen aislamiento por distancia (lejos de rutas y ciudades), aislamiento funcional (cerca de ruta pero sin servicios), y conectividad plena. Las zonas aisladas enfrentan costos de transporte, acceso limitado a salud y educación, y menor oportunidad económica.',
-			en: 'Types distinguish distance-based isolation (far from roads and cities), functional isolation (near a road but lacking services), and full connectivity. Isolated zones face transport costs, limited health and education access, and fewer economic opportunities.',
-			gn: "Laja oñemboikuaa mombyry (tape ka'aguy-pe), funcional (tape ípe nda'iha servicios), ha jeike opytáva. Yvy rembe'ýva oguereko costo transporte, tesãi ha mbo'e.",
-			pt: 'Os tipos distinguem isolamento por distância (longe de vias e cidades), isolamento funcional (próximo a uma via, mas sem serviços) e conectividade plena. As zonas isoladas enfrentam custos de transporte, acesso limitado à saúde e à educação e menores oportunidades econômicas.',
-		},
-		method: {
-			es: `${METHOD_COMMON.es} 6 variables: acceso a ciudades y salud (Oxford MAP 2019, fricción motorizada), distancia a ruta primaria y densidad vial (OSM), radiancia VIIRS 2022-2024, densidad poblacional Censo 2022. Crosswalk híbrido (dasimétrico + areal). KMO=0.87.`,
-			en: `${METHOD_COMMON.en} 6 variables: city and health access (Oxford MAP 2019, motorised friction), distance to primary road and road density (OSM), VIIRS radiance 2022–2024, population density Census 2022. Hybrid crosswalk (dasymetric + areal). KMO=0.87.`,
-		},
-	},
 	health_access: {
 		howToRead: {
 			es: 'El mapa clasifica cada hexágono en tipos de acceso a salud según tiempo al centro de salud, cobertura sanitaria, vulnerabilidad social (NBI), presión demográfica (ancianos y menores) y densidad poblacional. Solo hexágonos con edificaciones.',
