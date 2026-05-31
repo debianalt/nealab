@@ -205,12 +205,20 @@
 			if (lensStore.activeAnalysis?.spatialUnit === 'catastro') return; // flood mode uses parcel clicks
 			const { redcode, selected, census } = e.detail;
 
-			// Auto-switch territory based on codprov (54=Misiones, 18=Corrientes)
+			// Auto-switch territory based on codprov (AR) or UF prefix (BR)
 			const codprov = census?.codprov;
-			if (codprov === '54' && territoryStore.activeTerritory.id !== 'misiones') {
+			const uf = String(redcode ?? '').slice(0, 2);
+			const tid = territoryStore.activeTerritory.id;
+			if (codprov === '54' && tid !== 'misiones') {
 				territoryStore.setTerritory('misiones');
-			} else if (codprov === '18' && territoryStore.activeTerritory.id !== 'corrientes') {
+			} else if (codprov === '18' && tid !== 'corrientes') {
 				territoryStore.setTerritory('corrientes');
+			} else if (uf === '41' && tid !== 'parana_br') {
+				territoryStore.setTerritory('parana_br');
+			} else if (uf === '42' && tid !== 'santa_catarina_br') {
+				territoryStore.setTerritory('santa_catarina_br');
+			} else if (uf === '43' && tid !== 'rio_grande_sul_br') {
+				territoryStore.setTerritory('rio_grande_sul_br');
 			}
 
 			// Dismiss welcome panel so ComparisonChart (petals) can render
@@ -1030,13 +1038,41 @@
 
 	async function fetchRadioEnrichment(redcode: string): Promise<void> {
 		await initDuckDB();
-		if (!/^\d{9}$/.test(redcode)) return;
+		if (!/^\d{9,15}$/.test(redcode)) return;
 		try {
-			const isCorrientes = redcode.startsWith('18');
+			const uf = redcode.slice(0, 2);
+			// Brazil: IBGE setor code (15 digits, UF prefix 41/42/43)
+			if (uf === '41' || uf === '42' || uf === '43') {
+				const parquet = uf === '41' ? PARQUETS.radio_stats_parana_br
+				              : uf === '42' ? PARQUETS.radio_stats_santa_catarina_br
+				              :               PARQUETS.radio_stats_rio_grande_sul_br;
+				const result = await query(
+					`SELECT * FROM '${parquet}' WHERE redcode = '${redcode}' LIMIT 1`
+				);
+				if (result.numRows === 0) return;
+				mapStore.updateEnriched(redcode, result.get(0)!.toJSON());
+				return;
+			}
+			// Argentina: INDEC radio code (9 digits)
+			const isCorrientes = uf === '18';
+			const isChaco      = uf === '22';
+			const isFormosa    = uf === '34';
 			if (isCorrientes) {
 				const CORRIENTES_COLS = 'redcode, total_personas, area_km2, tasa_actividad, tasa_empleo, pct_universitario, pct_nbi, pct_hacinamiento';
 				const result = await query(
 					`SELECT ${CORRIENTES_COLS} FROM '${PARQUETS.radio_stats_corrientes}' WHERE redcode = '${redcode}' LIMIT 1`
+				);
+				if (result.numRows === 0) return;
+				mapStore.updateEnriched(redcode, result.get(0)!.toJSON());
+			} else if (isChaco) {
+				const result = await query(
+					`SELECT * FROM '${PARQUETS.radio_stats_chaco}' WHERE redcode = '${redcode}' LIMIT 1`
+				);
+				if (result.numRows === 0) return;
+				mapStore.updateEnriched(redcode, result.get(0)!.toJSON());
+			} else if (isFormosa) {
+				const result = await query(
+					`SELECT * FROM '${PARQUETS.radio_stats_formosa}' WHERE redcode = '${redcode}' LIMIT 1`
 				);
 				if (result.numRows === 0) return;
 				mapStore.updateEnriched(redcode, result.get(0)!.toJSON());

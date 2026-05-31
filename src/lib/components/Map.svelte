@@ -608,6 +608,21 @@
 				paint: { 'line-color': '#60a5fa', 'line-width': 4.5, 'line-opacity': 0.8 },
 				filter: emptyFilter
 			});
+			// Brazil: highlight layers on building tiles (setor outline via redcode filter)
+			for (const [tid, src] of [
+				['parana_br', 'parana_br-buildings'],
+				['santa_catarina_br', 'santa_catarina_br-buildings'],
+				['rio_grande_sul_br', 'rio_grande_sul_br-buildings'],
+			] as [string, string][]) {
+				map.addLayer({
+					id: `radio-highlight-${tid}`,
+					type: 'line',
+					source: src,
+					'source-layer': 'buildings',
+					paint: { 'line-color': '#60a5fa', 'line-width': 4.5, 'line-opacity': 0.8 },
+					filter: emptyFilter,
+				});
+			}
 
 			// ── Lasso draw layers ──────────────────────────────────────────
 			map.addSource('lasso-draw', {
@@ -1231,9 +1246,9 @@
 			}
 		});
 
-		// Chaco / Formosa buildings: click-to-select radio (mirror Corrientes).
-		// BR territories are intentionally excluded (no radio census).
-		for (const blayer of ['chaco-buildings-3d', 'formosa-buildings-3d']) {
+		// Chaco / Formosa / Brazil buildings: click-to-select radio/setor (mirror Corrientes).
+		for (const blayer of ['chaco-buildings-3d', 'formosa-buildings-3d',
+		                      'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d']) {
 			map.on('click', blayer, (e) => {
 				if (lassoActive) return;
 				if (mapStore.activeHexLayer) return;
@@ -1497,9 +1512,12 @@
 	// activeTerritoryId → its radio-highlight building-outline layer. Census
 	// territories only (AR). Misiones uses the base 'radio-highlight'.
 	const TERRITORY_RADIO_HIGHLIGHT: Record<string, string> = {
-		corrientes: 'radio-highlight-corrientes',
-		chaco: 'radio-highlight-chaco',
-		formosa: 'radio-highlight-formosa',
+		corrientes:        'radio-highlight-corrientes',
+		chaco:             'radio-highlight-chaco',
+		formosa:           'radio-highlight-formosa',
+		parana_br:         'radio-highlight-parana_br',
+		santa_catarina_br: 'radio-highlight-santa_catarina_br',
+		rio_grande_sul_br: 'radio-highlight-rio_grande_sul_br',
 	};
 	const ALL_RADIO_HIGHLIGHT = ['radio-highlight', ...Object.values(TERRITORY_RADIO_HIGHLIGHT)];
 

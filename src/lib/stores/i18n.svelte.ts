@@ -133,6 +133,12 @@ const dict: Record<string, Record<Locale, string>> = {
 	'error.engineFailed': { es: 'Error al iniciar el motor de datos', en: 'Data engine failed to start', gn: "Mba'ekuaa ndoikói", pt: 'Erro ao iniciar o motor de dados' },
 
 	'label.waterNetwork': { es: 'Sin red de agua (%)', en: 'No water network (%)', gn: 'Y juru ỹre (%)', pt: 'Sem rede de água (%)' },
+	// Brazil IBGE setor vars
+	'label.br.waterNetwork':     { es: 'Agua de red (%)',      en: 'Piped water (%)',       gn: 'Y ñemopyrũ (%)',  pt: 'Água de rede (%)' },
+	'label.br.sewerNetwork':     { es: 'Esgoto adecuado (%)',  en: 'Adequate sewage (%)',   gn: 'Ykua porã (%)',   pt: 'Esgoto adequado (%)' },
+	'label.br.garbageCollected': { es: 'Basura recolectada (%)', en: 'Garbage collected (%)', gn: 'Taky jeheja (%)', pt: 'Lixo coletado (%)' },
+	'label.br.literacy':         { es: 'Alfabetismo (%)',      en: 'Literacy (%)',          gn: 'Moñe\'ẽ porã (%)', pt: 'Alfabetismo (%)' },
+	'label.br.noBathroom':       { es: 'Sin baño exclusivo (%)', en: 'No private bathroom (%)', gn: 'Ysyryrogue ỹre (%)', pt: 'Sem banheiro exclusivo (%)' },
 	'label.sewerage': { es: 'Cloacas (%)', en: 'Sewerage (%)', gn: 'Ykuaa (%)', pt: 'Esgoto (%)' },
 	'label.dependencyIndex': { es: 'Índ. dependencia', en: 'Dependency index', gn: "Ñemomba'e", pt: 'Índ. dependência' },
 	'label.university': { es: 'Universitario (%)', en: 'University (%)', gn: "Mbo'ehára (%)", pt: 'Universitário (%)' },

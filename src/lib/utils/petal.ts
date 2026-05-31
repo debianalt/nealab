@@ -10,6 +10,16 @@ export const PETAL_VARS = [
 	{ col: 'pct_agua_red', labelKey: 'label.waterNetwork' },
 ];
 
+// IBGE Censo 2022 setor-level variables (Brazil). Mode = local, not comparable to AR/PY.
+export const PETAL_VARS_BR = [
+	{ col: 'pct_agua_rede',       labelKey: 'label.br.waterNetwork' },
+	{ col: 'pct_esgoto_adequado', labelKey: 'label.br.sewerNetwork' },
+	{ col: 'pct_lixo_coletado',   labelKey: 'label.br.garbageCollected' },
+	{ col: 'pct_alfabetizado',    labelKey: 'label.br.literacy' },
+	{ col: 'pct_sem_banheiro',    labelKey: 'label.br.noBathroom' },
+	{ col: 'densidad_hab_km2',    labelKey: 'radio.densidad' },
+];
+
 /** (value / provincialAvg) * 50, clamped [0, 100]. 50 = provincial average. */
 export function normalizeValues(rawValues: number[], provAvg: number[]): number[] {
 	return rawValues.map((v, i) => {
@@ -21,9 +31,14 @@ export function normalizeValues(rawValues: number[], provAvg: number[]): number[
 
 const _cachedProvAvg = new Map<string, number[]>();
 
-/** Map an AR radio redcode (INDEC) to its Spatia territory id via codprov prefix. */
+/** Map a radio/setor code to its Spatia territory id via UF/codprov prefix. */
 export function territoryFromRedcode(rc: string): string {
 	const p = String(rc).slice(0, 2);
+	// Brazil (IBGE UF codes, 15-digit cd_setor)
+	if (p === '41') return 'parana_br';
+	if (p === '42') return 'santa_catarina_br';
+	if (p === '43') return 'rio_grande_sul_br';
+	// Argentina (INDEC codprov, 9-digit redcode)
 	return p === '18' ? 'corrientes'
 	     : p === '22' ? 'chaco'
 	     : p === '34' ? 'formosa'
@@ -67,6 +82,10 @@ const CENSUS_SRC: Record<string, { parquet: string; vars: RadioVars }> = {
 	// Chaco/Formosa INDEC radio_stats lack pct_agua_red (same as Corrientes).
 	chaco:      { parquet: PARQUETS.radio_stats_chaco,      vars: PETAL_VARS.filter(v => v.col !== 'pct_agua_red') },
 	formosa:    { parquet: PARQUETS.radio_stats_formosa,    vars: PETAL_VARS.filter(v => v.col !== 'pct_agua_red') },
+	// Brazil (IBGE Censo 2022 setor-level, mode=local)
+	parana_br:         { parquet: PARQUETS.radio_stats_parana_br,         vars: PETAL_VARS_BR },
+	santa_catarina_br: { parquet: PARQUETS.radio_stats_santa_catarina_br, vars: PETAL_VARS_BR },
+	rio_grande_sul_br: { parquet: PARQUETS.radio_stats_rio_grande_sul_br, vars: PETAL_VARS_BR },
 };
 
 const _radioPopCache = new Map<string, RadioPop>();

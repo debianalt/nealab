@@ -151,6 +151,10 @@ export const PARQUETS = {
 	get sat_economic_activity() { return getParquetUrl('sat_economic_activity'); },
 	get sat_accessibility() { return getParquetUrl('sat_accessibility'); },
 	get sat_carbon_stock() { return getParquetUrl('sat_carbon_stock'); },
+	// Brazil IBGE Censo 2022 setor-level stats
+	get radio_stats_parana_br()         { return `${getBase()}/data/setores_stats_parana_br.parquet`; },
+	get radio_stats_santa_catarina_br() { return `${getBase()}/data/setores_stats_santa_catarina_br.parquet`; },
+	get radio_stats_rio_grande_sul_br() { return `${getBase()}/data/setores_stats_rio_grande_sul_br.parquet`; },
 	// Public infrastructure (datos.gob.ar)
 	get emsa_powerlines() { return getParquetUrl('emsa_powerlines'); },
 	// EUDR deforestation (H3 res-7, 10 provinces)

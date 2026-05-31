@@ -83,7 +83,8 @@ def main():
         # state's census area (GBA bbox overflows into neighbouring states).
         r = subprocess.run([
             ogr, "-f", "GeoJSONSeq", geojsonl, f"PG:{PG}",
-            "-sql", (f"SELECT geom, best_height_m, area_m2, COALESCE(est_personas,0) AS est_personas "
+            "-sql", (f"SELECT geom, best_height_m, area_m2, COALESCE(est_personas,0) AS est_personas, "
+                     f"redcode "
                      f"FROM {table} WHERE geom IS NOT NULL AND redcode IS NOT NULL"),
             "-nln", "buildings",
         ], capture_output=True, text=True)
@@ -105,7 +106,7 @@ def main():
         f"tippecanoe -o '{wsl_pmt}' -l buildings -n '{t} buildings' "
         f"-Z8 -z14 -d12 --coalesce-densest-as-needed --maximum-tile-bytes=3000000 "
         f"--accumulate-attribute=area_m2:sum --accumulate-attribute=best_height_m:mean "
-        f"--accumulate-attribute=est_personas:mean "
+        f"--accumulate-attribute=est_personas:mean --accumulate-attribute=redcode:first "
         f"--force '{wsl_geo}'"
     )
     r = subprocess.run(["wsl", "bash", "-lc", tip], text=True)
