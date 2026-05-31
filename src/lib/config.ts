@@ -470,24 +470,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendHighKey: 'legend.agri.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 	},
-	soil_water: {
-		id: 'soil_water',
-		parquet: 'sat_soil_water',
-		variables: [
-			{ col: 'c_soil_moisture', labelKey: 'sat.soilW.soilMoisture', aggregation: 'mean', unit: 'm³/m³' },
-			{ col: 'c_dry_season',    labelKey: 'sat.soilW.drySeason',    aggregation: 'mean', unit: 'm³/m³' },
-			{ col: 'c_precipitation', labelKey: 'sat.soilW.precipitation', aggregation: 'mean', unit: 'mm/yr' },
-			{ col: 'c_actual_et',     labelKey: 'sat.soilW.actualEt',     aggregation: 'mean', unit: 'mm/8d' },
-		],
-		primaryVariable: 'score',
-		colorScale: 'flood',
-		aggregation: 'mean',
-		titleKey: 'sat.soilW.title',
-		perDepartment: true,
-		legendLowKey: 'legend.soilW.low',
-		legendHighKey: 'legend.soilW.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
 		parquet: 'sat_forestry_aptitude',
@@ -1029,17 +1011,6 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	// ── Soil Water ──
-	{
-		id: 'soil_water',
-		lensId: 'producir',
-		titleKey: 'sat.soilW.title',
-		descKey: 'sat.soilW.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
 	// ── Deforestation Dynamics ──
 	{
 		id: 'deforestation_dynamics',
@@ -1340,7 +1311,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
 	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
-	sat_soil_water: { dataDate: 'ERA5-Land / CHIRPS / MODIS MOD16A2GF 2019-2024', processedDate: '28/04/2026', sourceKey: 'data.source.satellite' },
 	eudr_deforestation: { dataDate: 'Hansen GFC v1.12 + MODIS MCD64A1 (cutoff 31/12/2020)', processedDate: '27/03/2026', sourceKey: 'data.source.satellite' },
 };
 

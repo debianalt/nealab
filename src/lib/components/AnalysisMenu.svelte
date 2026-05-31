@@ -32,7 +32,7 @@
 		territorial_scores: 'Valor territorial', location_value: 'Valor territorial',
 		// Producir
 		forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
-		soil_water: 'Suelos y agua', agri_potential: 'Suelos y agua',
+		agri_potential: 'Suelos y agua',
 		land_use: 'Uso del suelo',
 		powerline_density: 'Infraestructura',
 		eudr: 'Comercio (EUDR)',
