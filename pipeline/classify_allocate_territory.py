@@ -148,7 +148,8 @@ def allocate(territory):
     census["redcode"] = census["redcode"].astype(str)
     census = census.set_index("redcode")
     print(f"  census radios={len(census):,}  personas={int(census['total_personas'].sum()):,}")
-    b = pd.read_sql(f"""SELECT gid, redcode, area_m2, COALESCE(is_residential,TRUE) is_residential
+    b = pd.read_sql(f"""SELECT gid, redcode, area_m2, COALESCE(best_height_m,5) bh,
+                        COALESCE(is_residential,TRUE) is_residential
                         FROM {table} WHERE area_m2>0 AND redcode IS NOT NULL""", eng)
     b["redcode"] = b["redcode"].astype(str)
     cur.execute(f"UPDATE {table} SET est_personas=0, est_hogares=0, est_viviendas=0"); conn.commit()
@@ -159,11 +160,12 @@ def allocate(territory):
         row = census.loc[rc]
         per = int(row.get("total_personas", 0) or 0); hog = int(row.get("total_hogares", 0) or 0)
         area = g["area_m2"].values.astype(np.float64)
+        bh = np.maximum(g["bh"].values.astype(np.float64), 1.0)
         isr = g["is_residential"].values.astype(bool)
-        w = isr * area
+        w = isr * area * bh   # volume-weighted (concentrates population in taller buildings)
         if w.sum() == 0 and (per > 0 or hog > 0):
             n_edge += 1
-            w = (area > 15).astype(float) * area
+            w = (area > 15).astype(float) * area * bh
             if w.sum() == 0:
                 w = np.ones(len(g))
         ap = _lr(per, w); ah = _lr(hog, w)

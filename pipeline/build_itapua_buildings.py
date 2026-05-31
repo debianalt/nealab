@@ -356,10 +356,15 @@ def distribute_population(features, censo):
     print("\nStep 3: Distributing population...")
     t0 = time.time()
 
+    # Volume-weighted (area × height): concentrates population in taller buildings,
+    # consistent with the AR/BR allocators and Misiones (area × floors).
+    def _vol(f):
+        return f["area_m2"] * max(f.get("best_height_m") or 1, 1)
+
     dist_res_area = defaultdict(float)
     for feat in features:
         if feat["is_residential"] and feat["distrito"]:
-            dist_res_area[feat["distrito"]] += feat["area_m2"]
+            dist_res_area[feat["distrito"]] += _vol(feat)
 
     total_est = 0
     for feat in features:
@@ -369,7 +374,7 @@ def distribute_population(features, censo):
         feat["distrito_hog"] = dist_data["hogares"]
 
         if feat["is_residential"] and d and dist_res_area[d] > 0 and dist_data["personas"] > 0:
-            est = max(0, round(dist_data["personas"] * feat["area_m2"] / dist_res_area[d]))
+            est = max(0, round(dist_data["personas"] * _vol(feat) / dist_res_area[d]))
             feat["est_personas"] = est
             total_est += est
 

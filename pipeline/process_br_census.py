@@ -47,47 +47,51 @@ def _lr(total, w):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--territory", required=True)
+    ap.add_argument("--allocate-only", action="store_true",
+                    help="skip centroid/join/classify (already done); re-run allocation only")
     args = ap.parse_args()
+    allocate_only = args.allocate_only
     t = args.territory
     get_territory(t)
     uf = UF[t]
     table = f"gba_buildings_{t}"
     con = psycopg2.connect(PG); con.autocommit = True; cur = con.cursor()
 
-    print(f"=== {t} (UF {uf}) ===")
-    for c, d in [("osm_building_type", "TEXT"), ("is_residential", "BOOLEAN"),
-                 ("in_renabap", "BOOLEAN DEFAULT FALSE"), ("est_hogares", "INTEGER DEFAULT 0"),
-                 ("est_viviendas", "INTEGER DEFAULT 0"), ("centroid", "geometry(Point,4326)")]:
-        cur.execute(f"ALTER TABLE {table} ADD COLUMN IF NOT EXISTS {c} {d}")
-    t0 = time.time()
-    cur.execute(f"UPDATE {table} SET centroid=ST_Centroid(geom) WHERE centroid IS NULL")
-    cur.execute(f"CREATE INDEX IF NOT EXISTS {table}_centroid_idx ON {table} USING GIST(centroid)")
-    print(f"  centroid ({time.time()-t0:.0f}s)")
+    print(f"=== {t} (UF {uf}){' [allocate-only]' if allocate_only else ''} ===")
+    if not allocate_only:
+        for c, d in [("osm_building_type", "TEXT"), ("is_residential", "BOOLEAN"),
+                     ("in_renabap", "BOOLEAN DEFAULT FALSE"), ("est_hogares", "INTEGER DEFAULT 0"),
+                     ("est_viviendas", "INTEGER DEFAULT 0"), ("centroid", "geometry(Point,4326)")]:
+            cur.execute(f"ALTER TABLE {table} ADD COLUMN IF NOT EXISTS {c} {d}")
+        t0 = time.time()
+        cur.execute(f"UPDATE {table} SET centroid=ST_Centroid(geom) WHERE centroid IS NULL")
+        cur.execute(f"CREATE INDEX IF NOT EXISTS {table}_centroid_idx ON {table} USING GIST(centroid)")
+        print(f"  centroid ({time.time()-t0:.0f}s)")
 
-    # Spatial join: building centroid -> setor (only this UF's setores)
-    print("  spatial join building -> setor...")
-    t0 = time.time()
-    cur.execute(f"""
-        UPDATE {table} b SET redcode = s.cd_setor
-        FROM setores_br s
-        WHERE s.uf = %s AND ST_Contains(s.geom, b.centroid)
-    """, (uf,))
-    cur.execute(f"SELECT COUNT(*) FILTER (WHERE redcode IS NOT NULL), COUNT(*) FROM {table}")
-    m, tot = cur.fetchone()
-    print(f"  matched {m:,}/{tot:,} ({100*m/tot:.1f}%) to setores ({time.time()-t0:.0f}s)")
+        # Spatial join: building centroid -> setor (only this UF's setores)
+        print("  spatial join building -> setor...")
+        t0 = time.time()
+        cur.execute(f"""
+            UPDATE {table} b SET redcode = s.cd_setor
+            FROM setores_br s
+            WHERE s.uf = %s AND ST_Contains(s.geom, b.centroid)
+        """, (uf,))
+        cur.execute(f"SELECT COUNT(*) FILTER (WHERE redcode IS NOT NULL), COUNT(*) FROM {table}")
+        m, tot = cur.fetchone()
+        print(f"  matched {m:,}/{tot:,} ({100*m/tot:.1f}%) to setores ({time.time()-t0:.0f}s)")
 
-    # Classify (rule)
-    cur.execute(f"""
-        UPDATE {table} SET is_residential = CASE
-            WHEN osm_building_type IN ('apartments','mixed_use') THEN TRUE
-            WHEN osm_building_type = 'non_residential' THEN FALSE
-            WHEN area_m2 > 700 OR area_m2 < 15 THEN FALSE
-            ELSE TRUE END
-        WHERE area_m2 IS NOT NULL
-    """)
-    cur.execute(f"SELECT COUNT(*) FILTER (WHERE is_residential), COUNT(*) FROM {table} WHERE area_m2 IS NOT NULL")
-    r, tot2 = cur.fetchone()
-    print(f"  residential={r:,}/{tot2:,} ({100*r/tot2:.1f}%)")
+        # Classify (rule)
+        cur.execute(f"""
+            UPDATE {table} SET is_residential = CASE
+                WHEN osm_building_type IN ('apartments','mixed_use') THEN TRUE
+                WHEN osm_building_type = 'non_residential' THEN FALSE
+                WHEN area_m2 > 700 OR area_m2 < 15 THEN FALSE
+                ELSE TRUE END
+            WHERE area_m2 IS NOT NULL
+        """)
+        cur.execute(f"SELECT COUNT(*) FILTER (WHERE is_residential), COUNT(*) FROM {table} WHERE area_m2 IS NOT NULL")
+        r, tot2 = cur.fetchone()
+        print(f"  residential={r:,}/{tot2:,} ({100*r/tot2:.1f}%)")
 
     # Allocate from setores_br
     print("  allocate...")
@@ -95,7 +99,8 @@ def main():
     census = pd.read_sql(f"SELECT cd_setor, total_personas, total_domicilios "
                          f"FROM setores_br WHERE uf='{uf}'", eng).set_index("cd_setor")
     print(f"  setores={len(census):,}  personas={int(census['total_personas'].sum()):,}")
-    b = pd.read_sql(f"SELECT gid, redcode, area_m2, COALESCE(is_residential,TRUE) is_residential "
+    b = pd.read_sql(f"SELECT gid, redcode, area_m2, COALESCE(best_height_m,5) bh, "
+                    f"COALESCE(is_residential,TRUE) is_residential "
                     f"FROM {table} WHERE area_m2>0 AND redcode IS NOT NULL", eng)
     cur.execute(f"UPDATE {table} SET est_personas=0, est_hogares=0, est_viviendas=0")
     updates = []; n_edge = 0; t0 = time.time()
@@ -105,11 +110,12 @@ def main():
         row = census.loc[rc]
         per = int(row["total_personas"] or 0); dom = int(row["total_domicilios"] or 0)
         area = g["area_m2"].values.astype(np.float64)
+        bh = np.maximum(g["bh"].values.astype(np.float64), 1.0)
         isr = g["is_residential"].values.astype(bool)
-        w = isr * area
+        w = isr * area * bh   # volume-weighted: concentrates population in taller buildings
         if w.sum() == 0 and (per > 0 or dom > 0):
             n_edge += 1
-            w = (area > 15).astype(float) * area
+            w = (area > 15).astype(float) * area * bh
             if w.sum() == 0:
                 w = np.ones(len(g))
         ap_ = _lr(per, w); ah = _lr(dom, w); ids = g["gid"].values
