@@ -27,6 +27,17 @@
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 
+	// X-axis label for the distribution panels: physical unit when the primary
+	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
+	function primaryXLabel(layer: AnalysisConfig | null | undefined): string {
+		if (!layer) return 'score /100';
+		const pv = layer.primaryVariable;
+		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
+		if (layer.variables?.some((x: any) => x.unit === 'percentil')) return 'percentil prov.';
+		return 'score /100';
+	}
+
 	let {
 		mapStore,
 		lensStore,
@@ -210,13 +221,13 @@
 				<HistogramPanel
 					data={hexStore.visibleData}
 					variable={hexStore.activeLayer.primaryVariable}
-					xLabel={hexStore.activeLayer.variables.some(v => v.unit === 'percentil') ? 'percentil prov.' : 'score /100'}
+					xLabel={primaryXLabel(hexStore.activeLayer)}
 					onBrushSelect={onHistogramBrush ?? (() => {})}
 				/>
 				<BivariatePlot
 					data={hexStore.visibleData}
 					variable={hexStore.activeLayer.primaryVariable}
-					xLabel={hexStore.activeLayer.variables.some(v => v.unit === 'percentil') ? 'percentil prov.' : 'score /100'}
+					xLabel={primaryXLabel(hexStore.activeLayer)}
 					analysisId={hexStore.activeLayer.id}
 					territoryPrefix={hexStore.territoryPrefix}
 					onBrushSelect={onBivariateBrush ?? (() => {})}

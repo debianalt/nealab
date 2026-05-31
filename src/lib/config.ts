@@ -723,7 +723,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'dist_nearest_secundaria_km', rawCol: 'dist_nearest_secundaria_km_raw', unit: 'km', labelKey: 'radio.distSecundaria', aggregation: 'mean' },
 			{ col: 'dist_primary_m', rawCol: 'dist_primary_m_raw', unit: 'km', labelKey: 'radio.distPrimaria', aggregation: 'mean' },
 		],
-		primaryVariable: 'score',
+		primaryVariable: 'travel_min_capital_raw',
 		colorScale: 'flood',
 		aggregation: 'mean',
 		titleKey: 'analysis.accessibility.title',
@@ -748,7 +748,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_npp', rawCol: 'c_npp_raw', unit: 'gC/m²/yr', labelKey: 'sat.carbon.npp', aggregation: 'mean' },
 			{ col: 'c_economic_value', labelKey: 'sat.carbon.economicValue', aggregation: 'mean' },
 		],
-		primaryVariable: 'score',
+		primaryVariable: 'c_total_carbon_raw',
 		colorScale: 'sequential',
 		aggregation: 'mean',
 		petalVars: [
@@ -781,7 +781,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_terrain', labelKey: 'sat.pm25.terrain', aggregation: 'mean', unit: '%' },
 			{ col: 'c_vegetation', labelKey: 'sat.pm25.vegetation', aggregation: 'mean', unit: '%' },
 		],
-		primaryVariable: 'score',
+		primaryVariable: 'c_pm25_mean',
 		colorScale: 'sequential',
 		aggregation: 'mean',
 		petalVars: [
