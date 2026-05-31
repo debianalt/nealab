@@ -75,6 +75,8 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	forestry_aptitude       : () => import('$lib/data/chaco_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/chaco_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/chaco_sat_land_use_summary.json'),
+	accessibility           : () => import('$lib/data/chaco_sat_accessibility_summary.json'),
+	economic_activity       : () => import('$lib/data/chaco_sat_economic_activity_summary.json'),
 	sociodemographic        : () => import('$lib/data/chaco_sat_sociodemographic_summary.json'),
 	service_deprivation     : () => import('$lib/data/chaco_sat_service_deprivation_summary.json'),
 	territorial_isolation   : () => import('$lib/data/chaco_sat_territorial_isolation_summary.json'),
@@ -92,6 +94,8 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	forestry_aptitude       : () => import('$lib/data/formosa_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/formosa_sat_land_use_summary.json'),
+	accessibility           : () => import('$lib/data/formosa_sat_accessibility_summary.json'),
+	economic_activity       : () => import('$lib/data/formosa_sat_economic_activity_summary.json'),
 	sociodemographic        : () => import('$lib/data/formosa_sat_sociodemographic_summary.json'),
 	service_deprivation     : () => import('$lib/data/formosa_sat_service_deprivation_summary.json'),
 	territorial_isolation   : () => import('$lib/data/formosa_sat_territorial_isolation_summary.json'),
@@ -109,6 +113,7 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	forestry_aptitude       : () => import('$lib/data/parana_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/parana_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/parana_br_sat_land_use_summary.json'),
+	accessibility           : () => import('$lib/data/parana_br_sat_accessibility_summary.json'),
 };
 const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/santa_catarina_br_sat_deforestation_dynamics_summary.json'),
@@ -119,6 +124,7 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	forestry_aptitude       : () => import('$lib/data/santa_catarina_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/santa_catarina_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/santa_catarina_br_sat_land_use_summary.json'),
+	accessibility           : () => import('$lib/data/santa_catarina_br_sat_accessibility_summary.json'),
 };
 const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/rio_grande_sul_br_sat_deforestation_dynamics_summary.json'),
@@ -129,6 +135,7 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	forestry_aptitude       : () => import('$lib/data/rio_grande_sul_br_sat_forestry_aptitude_summary.json'),
 	agri_potential          : () => import('$lib/data/rio_grande_sul_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/rio_grande_sul_br_sat_land_use_summary.json'),
+	accessibility           : () => import('$lib/data/rio_grande_sul_br_sat_accessibility_summary.json'),
 };
 
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
