@@ -78,9 +78,13 @@ def main():
     if os.path.exists(geojsonl) and os.path.getsize(geojsonl) > 0:
         print(f"  reuse existing {os.path.basename(geojsonl)} ({os.path.getsize(geojsonl)/1e9:.2f} GB)")
     else:
+        # Include est_personas (IBGE dasymetric) for population coloring; restrict
+        # to buildings matched to a setor (redcode) so the layer covers only the
+        # state's census area (GBA bbox overflows into neighbouring states).
         r = subprocess.run([
             ogr, "-f", "GeoJSONSeq", geojsonl, f"PG:{PG}",
-            "-sql", f"SELECT geom, best_height_m, area_m2 FROM {table} WHERE geom IS NOT NULL",
+            "-sql", (f"SELECT geom, best_height_m, area_m2, COALESCE(est_personas,0) AS est_personas "
+                     f"FROM {table} WHERE geom IS NOT NULL AND redcode IS NOT NULL"),
             "-nln", "buildings",
         ], capture_output=True, text=True)
         if r.returncode != 0:
