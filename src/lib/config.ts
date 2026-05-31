@@ -54,31 +54,19 @@ export const TERRAIN_CONFIG = {
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=36',
-		sat_environmental_risk: '?v=36',
-		sat_climate_comfort: '?v=35',
-		sat_green_capital: '?v=36',
-		sat_change_pressure: '?v=38',
-		sat_location_value: '?v=27',
 		sat_agri_potential: '?v=35',
-		sat_forest_health: '?v=38',
 		sat_forestry_aptitude: '?v=35',
 		sat_service_deprivation: '?v=27',
-		sat_territorial_isolation: '?v=27',
 		sat_health_access: '?v=27',
 		sat_education_capital: '?v=27',
 		sat_education_flow: '?v=27',
-		sat_territorial_types: '?v=26',
 		sat_sociodemographic: '?v=24',
 		sat_economic_activity: '?v=24',
 		sat_accessibility: '?v=27',
-		sat_climate_vulnerability: '?v=12',
 		sat_carbon_stock: '?v=20',
 		sat_pm25_drivers: '?v=17',
 		sat_deforestation_dynamics: '?v=16',
-		sat_productive_activity: '?v=22',
 		sat_land_use: '?v=4',
-		sat_soil_water: '?v=12',
-		overture_scores: '?v=36',
 		emsa_powerlines: '?v=20',
 	};
 	const bust = busts[name] || '';
@@ -121,7 +109,6 @@ export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): strin
 export function getDeptSummaryUrl(analysisId: string, territoryPrefix = ''): string {
 	const nameMap: Record<string, string> = {
 		flood_risk: 'flood_dept_summary',
-		territorial_scores: 'scores_dept_summary',
 	};
 	const name = nameMap[analysisId] ?? `sat_${analysisId}_dept_summary`;
 	return `${getBase()}/data/${territoryPrefix}${name}.json`;
@@ -152,29 +139,18 @@ export const PARQUETS = {
 	get overture_transportation() { return getParquetUrl('overture_transportation'); },
 	get overture_places() { return getParquetUrl('overture_places'); },
 	get overture_base() { return getParquetUrl('overture_base'); },
-	get overture_scores() { return getParquetUrl('overture_scores'); },
 	// Satellite composite scores
-	get sat_environmental_risk() { return getParquetUrl('sat_environmental_risk'); },
-	get sat_climate_comfort() { return getParquetUrl('sat_climate_comfort'); },
-	get sat_green_capital() { return getParquetUrl('sat_green_capital'); },
-	get sat_change_pressure() { return getParquetUrl('sat_change_pressure'); },
-	get sat_location_value() { return getParquetUrl('sat_location_value'); },
 	get sat_agri_potential() { return getParquetUrl('sat_agri_potential'); },
-	get sat_forest_health() { return getParquetUrl('sat_forest_health'); },
 	get sat_forestry_aptitude() { return getParquetUrl('sat_forestry_aptitude'); },
 	get sat_service_deprivation() { return getParquetUrl('sat_service_deprivation'); },
-	get sat_territorial_isolation() { return getParquetUrl('sat_territorial_isolation'); },
 	get sat_land_use() { return getParquetUrl('sat_land_use'); },
 	get sat_health_access() { return getParquetUrl('sat_health_access'); },
 	get sat_education_capital() { return getParquetUrl('sat_education_capital'); },
 	get sat_education_flow() { return getParquetUrl('sat_education_flow'); },
-	get sat_territorial_types() { return getParquetUrl('sat_territorial_types'); },
 	get sat_sociodemographic() { return getParquetUrl('sat_sociodemographic'); },
 	get sat_economic_activity() { return getParquetUrl('sat_economic_activity'); },
 	get sat_accessibility() { return getParquetUrl('sat_accessibility'); },
-	get sat_climate_vulnerability() { return getParquetUrl('sat_climate_vulnerability'); },
 	get sat_carbon_stock() { return getParquetUrl('sat_carbon_stock'); },
-	get sat_soil_water() { return getParquetUrl('sat_soil_water'); },
 	// Public infrastructure (datos.gob.ar)
 	get emsa_powerlines() { return getParquetUrl('emsa_powerlines'); },
 	// EUDR deforestation (H3 res-7, 10 provinces)
@@ -1199,11 +1175,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	overture_base: {
 		dataDate: 'Overture 2026-03-18',
 		processedDate: '24/03/2026',
-		sourceKey: 'data.source.overture',
-	},
-	overture_scores: {
-		dataDate: 'Overture 2026-03-18',
-		processedDate: '25/03/2026',
 		sourceKey: 'data.source.overture',
 	},
 	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
