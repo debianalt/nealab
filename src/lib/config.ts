@@ -318,7 +318,7 @@ export function getTerritoriesByCountry(): Record<CountryId, TerritoryConfig[]> 
 
 // ── Lens system ──────────────────────────────────────────────────────────────
 
-export type LensId = 'invertir' | 'producir' | 'servir' | 'vivir';
+export type LensId = 'ambiente' | 'produccion' | 'poblacion' | 'economia';
 
 export interface LensConfig {
 	label: Record<'es' | 'en' | 'gn' | 'pt', string>;
@@ -326,10 +326,10 @@ export interface LensConfig {
 }
 
 export const LENS_CONFIG: Record<LensId, LensConfig> = {
-	invertir: { label: { es: 'Invertir', en: 'Invest', gn: 'Moĩ viru', pt: 'Investir' }, color: '#f59e0b' },
-	producir: { label: { es: 'Producir', en: 'Produce', gn: "Mba'apo", pt: 'Produzir' }, color: '#22c55e' },
-	servir: { label: { es: 'Servir', en: 'Serve', gn: 'Pytyvõ', pt: 'Servir' }, color: '#3b82f6' },
-	vivir: { label: { es: 'Vivir', en: 'Live', gn: 'Ñemity', pt: 'Viver' }, color: '#06b6d4' },
+	ambiente:   { label: { es: 'Ambiente y riesgo',          en: 'Environment & risk',        gn: 'Yvypóra',    pt: 'Ambiente e risco'          }, color: '#ef4444' },
+	produccion: { label: { es: 'Producción y suelo',         en: 'Production & land',         gn: "Mba'apo",    pt: 'Produção e solo'            }, color: '#22c55e' },
+	poblacion:  { label: { es: 'Población y servicios',      en: 'Population & services',     gn: 'Tetã kuéra', pt: 'População e serviços'       }, color: '#3b82f6' },
+	economia:   { label: { es: 'Economía e infraestructura', en: 'Economy & infrastructure',  gn: 'Moĩ viru',   pt: 'Economia e infraestrutura'  }, color: '#f59e0b' },
 } as const;
 
 // ── Hex layer system (multi-resolution) ──────────────────────────────────────
@@ -766,6 +766,7 @@ export interface AnalysisConfig {
 	dashboard?: boolean;
 	coverage?: Record<string, 'available' | 'pending' | 'unavailable'>;
 	comparable?: true;
+	rigorBadge?: 'physical' | 'modeled' | 'census';
 	choropleth?: {
 		parquet: string;
 		column: string;
@@ -775,168 +776,181 @@ export interface AnalysisConfig {
 }
 
 export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
-	// ── Vivir ──
+	// ── Ambiente y riesgo ──
 	{
 		id: 'flood_risk',
-		lensId: 'vivir',
+		lensId: 'ambiente',
 		titleKey: 'analysis.floodRisk.title',
 		descKey: 'analysis.floodRisk.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
+		rigorBadge: 'physical',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	// ── Perfil Territorial (cross-lens, catastro-integrated) ──
-	// ── Radio-based analyses (radio_stats_master via crosswalk) ──
-	// investment_value removed — re_median_usd_m2 only covers 26% of radios
 	{
-		id: 'sociodemographic',
-		lensId: 'vivir',
-		titleKey: 'analysis.socio.title',
-		descKey: 'analysis.socio.desc',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	// forest_potential hidden — covered by forest_health + forestry_aptitude (H3)
-	// economic_activity removed — replaced by productive_activity (real H3 values)
-	// change_dynamics hidden — covered by change_pressure (H3)
-	// productive_aptitude hidden — covered by agri_potential (H3)
-	{
-		id: 'accessibility',
-		lensId: 'servir',
-		titleKey: 'analysis.accessibility.title',
-		descKey: 'analysis.accessibility.desc',
-
-		status: 'available',
-		spatialUnit: 'hexagon',
-		comparable: true,
+		id: 'deforestation_dynamics',
+		lensId: 'ambiente',
+		titleKey: 'sat.deforest.title',
+		descKey: 'sat.deforest.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		comparable: true,
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'hexagon',
 	},
-	// natural_risks hidden — covered by environmental_risk (H3)
-	// ── Satellite H3 analyses ──
+	{
+		id: 'pm25_drivers',
+		lensId: 'ambiente',
+		titleKey: 'sat.pm25.title',
+		descKey: 'sat.pm25.desc',
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		comparable: true,
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'hexagon',
+	},
+	{
+		id: 'carbon_stock',
+		lensId: 'ambiente',
+		titleKey: 'sat.carbon.title',
+		descKey: 'sat.carbon.desc',
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		comparable: true,
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'hexagon',
+	},
+	// ── Producción y suelo ──
 	{
 		id: 'agri_potential',
-		lensId: 'producir',
+		lensId: 'produccion',
 		titleKey: 'sat.agri.title',
 		descKey: 'sat.agri.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	{
-		id: 'powerline_density',
-		lensId: 'producir',
-		titleKey: 'emsa.title',
-		descKey: 'emsa.desc',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		rigorBadge: 'modeled',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'forestry_aptitude',
-		lensId: 'producir',
+		lensId: 'produccion',
 		titleKey: 'sat.forestry.title',
 		descKey: 'sat.forestry.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
 		comparable: true,
+		rigorBadge: 'modeled',
+		status: 'available',
+		spatialUnit: 'hexagon',
+	},
+	{
+		id: 'land_use',
+		lensId: 'produccion',
+		titleKey: 'sat.landUse.title',
+		descKey: 'sat.landUse.desc',
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		comparable: true,
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'hexagon',
+	},
+	// ── Población y servicios ──
+	{
+		id: 'accessibility',
+		lensId: 'poblacion',
+		titleKey: 'analysis.accessibility.title',
+		descKey: 'analysis.accessibility.desc',
+		status: 'available',
+		spatialUnit: 'hexagon',
+		comparable: true,
+		rigorBadge: 'physical',
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+	},
+	{
+		id: 'sociodemographic',
+		lensId: 'poblacion',
+		titleKey: 'analysis.socio.title',
+		descKey: 'analysis.socio.desc',
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'service_deprivation',
-		lensId: 'servir',
+		lensId: 'poblacion',
 		titleKey: 'sat.deprivation.title',
 		descKey: 'sat.deprivation.desc',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'health_access',
-		lensId: 'servir',
+		lensId: 'poblacion',
 		titleKey: 'sat.health.title',
 		descKey: 'sat.health.desc',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'education_capital',
-		lensId: 'servir',
+		lensId: 'poblacion',
 		titleKey: 'sat.eduCap.title',
 		descKey: 'sat.eduCap.desc',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'education_flow',
-		lensId: 'servir',
+		lensId: 'poblacion',
 		titleKey: 'sat.eduFlow.title',
 		descKey: 'sat.eduFlow.desc',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
 		comparable: true,
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	// ── Carbon Stock ──
+	// ── Economía e infraestructura ──
 	{
-		id: 'carbon_stock',
-		lensId: 'producir',
-		titleKey: 'sat.carbon.title',
-		descKey: 'sat.carbon.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		comparable: true,
+		id: 'economic_activity',
+		lensId: 'economia',
+		titleKey: 'analysis.economic.title',
+		descKey: 'analysis.economic.desc',
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		rigorBadge: 'census',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	// ── Deforestation Dynamics ──
-	{
-		id: 'deforestation_dynamics',
-		lensId: 'vivir',
-		titleKey: 'sat.deforest.title',
-		descKey: 'sat.deforest.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	// ── PM2.5 Drivers ──
-	{
-		id: 'pm25_drivers',
-		lensId: 'vivir',
-		titleKey: 'sat.pm25.title',
-		descKey: 'sat.pm25.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	// ── Land Use / MapBiomas ──
-	{
-		id: 'land_use',
-		lensId: 'producir',
-		titleKey: 'sat.landUse.title',
-		descKey: 'sat.landUse.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
-		comparable: true,
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	// ── EUDR ──
 	{
 		id: 'eudr',
-		lensId: 'producir',
+		lensId: 'economia',
 		titleKey: 'trade.eudr.analysis_title',
 		descKey: 'trade.eudr.analysis_desc',
 		// EUDR is a global dataset over 10 NOA+NEA provinces, NOT a per-territory
 		// comparable analysis. Not comparable; loads its own global parquet.
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'hexagon',
+	},
+	{
+		id: 'powerline_density',
+		lensId: 'economia',
+		titleKey: 'emsa.title',
+		descKey: 'emsa.desc',
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable'},
+		rigorBadge: 'physical',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},

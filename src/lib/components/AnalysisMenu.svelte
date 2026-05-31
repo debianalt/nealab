@@ -19,24 +19,24 @@
 	const comparableGroup = $derived(analyses.filter(a => a.comparable && getCoverage(a) !== 'unavailable'));
 	const localGroup = $derived(analyses.filter(a => !a.comparable && getCoverage(a) !== 'unavailable'));
 
-	// Sub-theme grouping: keeps the menu navigable as the catalog grows past
-	// ~6 layers per lens. Map analysis id → sub-theme label. Anything missing
-	// falls under 'Otros'.
+	// Sub-theme grouping within each domain.
 	const SUBGROUPS: Record<string, string> = {
-		// Vivir
-		pm25_drivers: 'Salud ambiental', flood_risk: 'Salud ambiental',
-		deforestation_dynamics: 'Cobertura natural',
-		sociodemographic: 'Población',
-		// Producir
-		forestry_aptitude: 'Bosques', carbon_stock: 'Bosques',
-		agri_potential: 'Suelos y agua',
+		// Ambiente y riesgo
+		flood_risk: 'Riesgo hídrico',
+		deforestation_dynamics: 'Cobertura natural', carbon_stock: 'Cobertura natural',
+		pm25_drivers: 'Calidad del aire',
+		// Producción y suelo
+		agri_potential: 'Suelos', forestry_aptitude: 'Suelos',
 		land_use: 'Uso del suelo',
-		powerline_density: 'Infraestructura',
-		eudr: 'Comercio (EUDR)',
-		// Servir
+		// Población y servicios
 		accessibility: 'Accesibilidad',
+		sociodemographic: 'Población',
 		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
 		education_capital: 'Educación', education_flow: 'Educación',
+		// Economía e infraestructura
+		economic_activity: 'Actividad',
+		eudr: 'Comercio (EUDR)',
+		powerline_density: 'Infraestructura',
 	};
 
 	function getCoverage(analysis: AnalysisConfig): 'available' | 'pending' | 'unavailable' {
@@ -87,6 +87,16 @@
 						>
 							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
 							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
+							{#if analysis.rigorBadge}
+								<span class="item-rigor"
+									class:rigor-physical={analysis.rigorBadge === 'physical'}
+									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
+									class:rigor-census={analysis.rigorBadge === 'census'}>
+									{analysis.rigorBadge === 'physical' ? '🛰 Medición satelital'
+										: analysis.rigorBadge === 'modeled' ? '📐 Aptitud modelada'
+										: '🏛 Indicador censal'}
+								</span>
+							{/if}
 							{#if analysis.status === 'coming_soon'}
 								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
 							{:else if coverage === 'pending'}
@@ -114,6 +124,16 @@
 						>
 							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
 							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
+							{#if analysis.rigorBadge}
+								<span class="item-rigor"
+									class:rigor-physical={analysis.rigorBadge === 'physical'}
+									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
+									class:rigor-census={analysis.rigorBadge === 'census'}>
+									{analysis.rigorBadge === 'physical' ? '🛰 Medición satelital'
+										: analysis.rigorBadge === 'modeled' ? '📐 Aptitud modelada'
+										: '🏛 Indicador censal'}
+								</span>
+							{/if}
 							{#if analysis.status === 'coming_soon'}
 								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
 							{:else if coverage === 'pending'}
@@ -217,6 +237,16 @@
 		color: rgba(255,255,255,0.5);
 		line-height: 1.45;
 	}
+	.item-rigor {
+		display: inline-block;
+		font-size: 8px;
+		font-style: italic;
+		margin-top: 2px;
+		opacity: 0.65;
+	}
+	.rigor-physical { color: #60a5fa; }
+	.rigor-modeled  { color: #4ade80; }
+	.rigor-census   { color: #fbbf24; }
 	.item-badge {
 		display: inline-block;
 		font-size: 8px;

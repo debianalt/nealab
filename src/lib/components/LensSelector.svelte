@@ -5,7 +5,7 @@
 
 	let { lensStore, onPick }: { lensStore: LensStore; onPick?: () => void } = $props();
 
-	const lensIds: LensId[] = ['vivir', 'invertir', 'producir', 'servir'];
+	const lensIds: LensId[] = ['ambiente', 'produccion', 'poblacion', 'economia'];
 </script>
 
 <div class="lens-bar">
