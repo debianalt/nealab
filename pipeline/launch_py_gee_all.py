@@ -43,7 +43,7 @@ PY_TERRITORIES = [
 EXPORT_GROUPS = {
     "hansen": "python pipeline/gee_export_hansen_loss.py --territory {t} --gcs --no-wait",
     "lv":     "python pipeline/gee_export_location_value.py --territory {t} --gcs --no-wait",
-    "sdm":    "python pipeline/gee_export_sdm_covariates.py --territory {t} --no-wait",
+    "sdm":    "python pipeline/gee_export_sdm_covariates.py --territory {t}",
     "mapbiomas": "python pipeline/gee_export_mapbiomas.py --territory {t} --gcs --no-wait",
 }
 

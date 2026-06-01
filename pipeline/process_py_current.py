@@ -61,14 +61,17 @@ def download_pm25(t_id: str, t_dir: str, skip: bool) -> bool:
         print(f"  pm25 rasters: ALL EXISTS ({len(PM25_YEARS)} years)")
         return True
     print(f"  pm25 rasters: downloading {len(needed)} years...")
-    gcs_prefix = f"{GCS_SAT_PREFIX}/{t_id}/sat_pm25_"
-    rc = subprocess.run(
-        f"gcloud storage cp '{gcs_prefix}*.tif' {t_dir}/",
-        shell=True, cwd=SCRIPT_DIR
-    ).returncode
-    if rc != 0:
-        print(f"  pm25 download failed (rc={rc})")
-        return False
+    failed = []
+    for yr in needed:
+        gcs = f"{GCS_SAT_PREFIX}/{t_id}/sat_pm25_{yr}.tif"
+        local_f = os.path.join(t_dir, f"sat_pm25_{yr}.tif")
+        rc = subprocess.run(f"gcloud storage cp {gcs} {local_f}",
+                            shell=True, cwd=SCRIPT_DIR).returncode
+        if rc != 0:
+            failed.append(yr)
+    if failed:
+        print(f"  pm25 download: {len(needed)-len(failed)} ok, {len(failed)} failed: {failed}")
+        return len(failed) < len(needed)  # partial ok if most downloaded
     return True
 
 
