@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { RadioData } from '$lib/stores/map.svelte';
-	import { PETAL_VARS, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
+	import { getPetalVars, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
 	import PetalChart from './PetalChart.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 
@@ -29,12 +29,18 @@
 	// radios' own territory (derived from INDEC redcode prefix) so petals are
 	// comparable across territories. Recomputes if the selection's territory
 	// changes; getProvincialAvg caches per territory.
+	// Derive territory + its petal vars from the first selected radio
+	const activeTerritory = $derived.by(() => {
+		const rcs = [...radios.keys()];
+		return rcs.length ? territoryFromRedcode(rcs[0]) : 'misiones';
+	});
+	const petalVars = $derived(getPetalVars(activeTerritory));
+
 	$effect(() => {
 		const rcs = [...radios.keys()];
 		const hasEnriched = [...radios.values()].some(d => d.enriched != null);
 		if (hasEnriched && rcs.length) {
-			const terr = territoryFromRedcode(rcs[0]);
-			getProvincialAvg(terr).then(avg => { provAvg = avg; }).catch(() => {});
+			getProvincialAvg(activeTerritory).then(avg => { provAvg = avg; }).catch(() => {});
 		}
 	});
 
@@ -46,19 +52,20 @@
 			.filter(([, d]) => d.enriched != null)
 			.map(([rc, d]) => {
 				const e = d.enriched!;
-				const rawValues = PETAL_VARS.map(v => {
+				const rawValues = petalVars.map(v => {
 					const val = e[v.col];
 					return val != null ? parseFloat(val) : 0;
 				});
 				const normalizedValues = normalizeValues(rawValues, provAvg!);
-				const population = parseInt(e.total_personas ?? d.census?.total_personas ?? '0') || 0;
+				// BR parquets use total_pessoas, AR use total_personas
+				const population = parseInt(e.total_pessoas ?? e.total_personas ?? d.census?.total_personas ?? '0') || 0;
 				const areaKm2 = parseFloat(e.area_km2 ?? d.census?.area_km2 ?? '0') || 0;
 				return { redcode: rc, color: d.color, data: d, rawValues, normalizedValues, population, areaKm2 };
 			});
 	});
 
 	const petalLayers = $derived(entries.map(e => ({ values: e.normalizedValues, color: e.color })));
-	const petalLabels = $derived(PETAL_VARS.map(v => i18n.t(v.labelKey)));
+	const petalLabels = $derived(petalVars.map(v => i18n.t(v.labelKey)));
 
 	function shortCode(rc: string): string {
 		return rc.length > 5 ? '...' + rc.slice(-4) : rc;

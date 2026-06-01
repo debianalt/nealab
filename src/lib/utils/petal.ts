@@ -46,11 +46,17 @@ export function territoryFromRedcode(rc: string): string {
 }
 
 /**
- * Population-weighted provincial averages aligned to PETAL_VARS, for the given
- * territory (default Misiones). Vars absent from a territory's census (e.g.
- * pct_agua_red in Corrientes/Chaco/Formosa) get 1.0 — their raw value is 0 there
- * too, so the petal axis reads ~0. Cached per territory. Anchoring each zone to
- * its OWN province makes cross-territory zone petals comparable.
+ * Returns the petal variable set for a given territory.
+ * Use instead of hardcoding PETAL_VARS so BR territories get their own vars.
+ */
+export function getPetalVars(territory: string): RadioVars {
+	const src = CENSUS_SRC[territory] ?? CENSUS_SRC.misiones;
+	return src.vars;
+}
+
+/**
+ * Population-weighted provincial averages aligned to the territory's own petal vars.
+ * Returns an array parallel to getPetalVars(territory). Cached per territory.
  */
 export async function getProvincialAvg(territory: string = 'misiones'): Promise<number[]> {
 	const cached = _cachedProvAvg.get(territory);
@@ -58,16 +64,20 @@ export async function getProvincialAvg(territory: string = 'misiones'): Promise<
 	if (!isReady()) throw new Error('DuckDB not ready');
 
 	const src = CENSUS_SRC[territory] ?? CENSUS_SRC.misiones;
-	const present = new Set(src.vars.map(v => v.col));
-	const cols = PETAL_VARS.filter(v => present.has(v.col))
-		.map(v => `SUM(${v.col} * total_personas) / NULLIF(SUM(total_personas), 0) as avg_${v.col}`)
+	const vars = src.vars;
+	if (vars.length === 0) return [];
+
+	// Use population column name: BR parquets have total_pessoas, AR have total_personas
+	const popCol = territory.endsWith('_br') ? 'total_pessoas' : 'total_personas';
+	const cols = vars
+		.map(v => `SUM(${v.col} * ${popCol}) / NULLIF(SUM(${popCol}), 0) as avg_${v.col}`)
 		.join(', ');
 
-	const sql = `SELECT ${cols} FROM '${src.parquet}' WHERE total_personas > 0`;
+	const sql = `SELECT ${cols} FROM '${src.parquet}' WHERE ${popCol} > 0`;
 	const result = await query(sql);
 	const row = result.get(0)!.toJSON() as Record<string, any>;
 
-	const avg = PETAL_VARS.map(v => present.has(v.col) ? (Number(row[`avg_${v.col}`]) || 1) : 1);
+	const avg = vars.map(v => Number(row[`avg_${v.col}`]) || 1);
 	_cachedProvAvg.set(territory, avg);
 	return avg;
 }
