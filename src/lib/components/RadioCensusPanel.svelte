@@ -10,7 +10,10 @@
 		onBrushSelect?: (redcodes: string[]) => void;
 	} = $props();
 
-	const TERR_LABEL: Record<string, string> = { misiones: 'Misiones', corrientes: 'Corrientes' };
+	const TERR_LABEL: Record<string, string> = {
+		misiones: 'Misiones', corrientes: 'Corrientes', chaco: 'Chaco', formosa: 'Formosa',
+		parana_br: 'Paraná (BR)', santa_catarina_br: 'Santa Catarina (BR)', rio_grande_sul_br: 'Rio Grande do Sul (BR)',
+	};
 
 	let radioData = $state<Map<string, Record<string, any>> | null>(null);
 	let activeVars = $state(PETAL_VARS as typeof PETAL_VARS);

@@ -130,10 +130,13 @@
 
 	const isCatastroAnalysis = $derived(lensStore.activeAnalysis?.id === 'catastro');
 	const isFloodRiskAnalysis = $derived(lensStore.activeAnalysis?.id === 'flood_risk');
-	// Territories with radio-level census data for the base-map RadioCensusPanel.
+	// Territories with radio/setor-level census data for the base-map RadioCensusPanel.
+	const CENSUS_TERRITORIES = new Set([
+		'misiones', 'corrientes', 'chaco', 'formosa',
+		'parana_br', 'santa_catarina_br', 'rio_grande_sul_br',
+	]);
 	const isCensusTerritory = $derived(
-		territoryStore.activeTerritory.id === 'misiones' ||
-		territoryStore.activeTerritory.id === 'corrientes'
+		CENSUS_TERRITORIES.has(territoryStore.activeTerritory.id)
 	);
 
 	function handleBack() {
