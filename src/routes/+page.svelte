@@ -21,6 +21,21 @@
 	import { isInsideParanaBr } from '$lib/utils/parana_br-pip';
 	import { isInsideSantaCatarinaBr } from '$lib/utils/santa_catarina_br-pip';
 	import { isInsideRioGrandeSulBr } from '$lib/utils/rio_grande_sul_br-pip';
+	import { isInsideConcepcion } from '$lib/utils/concepcion-pip';
+	import { isInsideSanPedro } from '$lib/utils/san_pedro-pip';
+	import { isInsideCordillera } from '$lib/utils/cordillera-pip';
+	import { isInsideGuaira } from '$lib/utils/guaira-pip';
+	import { isInsideCaaguazu } from '$lib/utils/caaguazu-pip';
+	import { isInsideCaazapa } from '$lib/utils/caazapa-pip';
+	import { isInsideMisionesPy } from '$lib/utils/misiones_py-pip';
+	import { isInsideParaguari } from '$lib/utils/paraguari-pip';
+	import { isInsideCentral } from '$lib/utils/central-pip';
+	import { isInsideNeembucu } from '$lib/utils/neembucu-pip';
+	import { isInsideAmambay } from '$lib/utils/amambay-pip';
+	import { isInsideCanindeyu } from '$lib/utils/canindeyu-pip';
+	import { isInsidePresidenteHayes } from '$lib/utils/presidente_hayes-pip';
+	import { isInsideBoqueron } from '$lib/utils/boqueron-pip';
+	import { isInsideAltoParaguay } from '$lib/utils/alto_paraguay-pip';
 	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
@@ -222,13 +237,16 @@
 			fetchRadioEnrichment(redcode);
 
 			// Auto-switch territory AFTER addRadio so hasRadios guard in the effect is true
-			const codprov = census?.codprov;
 			const uf = String(redcode ?? '').slice(0, 2);
 			const tid = territoryStore.activeTerritory.id;
-			if (codprov === '54' && tid !== 'misiones') {
+			if (uf === '54' && tid !== 'misiones') {
 				territoryStore.setTerritory('misiones');
-			} else if (codprov === '18' && tid !== 'corrientes') {
+			} else if (uf === '18' && tid !== 'corrientes') {
 				territoryStore.setTerritory('corrientes');
+			} else if (uf === '22' && tid !== 'chaco') {
+				territoryStore.setTerritory('chaco');
+			} else if (uf === '34' && tid !== 'formosa') {
+				territoryStore.setTerritory('formosa');
 			} else if (uf === '41' && tid !== 'parana_br') {
 				territoryStore.setTerritory('parana_br');
 			} else if (uf === '42' && tid !== 'santa_catarina_br') {
@@ -991,15 +1009,31 @@
 	// silently fall back to isInsideMisiones() and drop every BR/CHA/FOR hex.
 	function isInsideActiveTerritory(lat: number, lng: number, territoryPrefix: string): boolean {
 		switch (territoryPrefix) {
-			case 'itapua_py/':         return isInsideItapua(lat, lng);
-			case 'alto_parana_py/':    return isInsideAltoParana(lat, lng);
-			case 'corrientes/':        return isInsideCorrientes(lat, lng);
-			case 'chaco/':             return isInsideChaco(lat, lng);
-			case 'formosa/':           return isInsideFormosa(lat, lng);
-			case 'parana_br/':         return isInsideParanaBr(lat, lng);
-			case 'santa_catarina_br/': return isInsideSantaCatarinaBr(lat, lng);
-			case 'rio_grande_sul_br/': return isInsideRioGrandeSulBr(lat, lng);
-			default:                   return isInsideMisiones(lat, lng); // '' = Misiones
+			case 'itapua_py/':              return isInsideItapua(lat, lng);
+			case 'alto_parana_py/':         return isInsideAltoParana(lat, lng);
+			case 'corrientes/':             return isInsideCorrientes(lat, lng);
+			case 'chaco/':                  return isInsideChaco(lat, lng);
+			case 'formosa/':                return isInsideFormosa(lat, lng);
+			case 'parana_br/':              return isInsideParanaBr(lat, lng);
+			case 'santa_catarina_br/':      return isInsideSantaCatarinaBr(lat, lng);
+			case 'rio_grande_sul_br/':      return isInsideRioGrandeSulBr(lat, lng);
+			// New Paraguay departments
+			case 'concepcion_py/':          return isInsideConcepcion(lat, lng);
+			case 'san_pedro_py/':           return isInsideSanPedro(lat, lng);
+			case 'cordillera_py/':          return isInsideCordillera(lat, lng);
+			case 'guaira_py/':              return isInsideGuaira(lat, lng);
+			case 'caaguazu_py/':            return isInsideCaaguazu(lat, lng);
+			case 'caazapa_py/':             return isInsideCaazapa(lat, lng);
+			case 'misiones_py/':            return isInsideMisionesPy(lat, lng);
+			case 'paraguari_py/':           return isInsideParaguari(lat, lng);
+			case 'central_py/':             return isInsideCentral(lat, lng);
+			case 'neembucu_py/':            return isInsideNeembucu(lat, lng);
+			case 'amambay_py/':             return isInsideAmambay(lat, lng);
+			case 'canindeyu_py/':           return isInsideCanindeyu(lat, lng);
+			case 'presidente_hayes_py/':    return isInsidePresidenteHayes(lat, lng);
+			case 'boqueron_py/':            return isInsideBoqueron(lat, lng);
+			case 'alto_paraguay_py/':       return isInsideAltoParaguay(lat, lng);
+			default:                        return isInsideMisiones(lat, lng); // '' = Misiones
 		}
 	}
 

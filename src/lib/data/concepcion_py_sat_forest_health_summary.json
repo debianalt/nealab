@@ -1,0 +1,80 @@
+{
+  "territory": "concepcion_py",
+  "province": {
+    "total_hexes": 191663,
+    "avg_score": 45.8,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Yby Yau",
+      "parquetKey": "yby_yau",
+      "avg_score": 53.0,
+      "hex_count": 21665,
+      "centroid": [
+        -56.3726,
+        -23.0159
+      ]
+    },
+    {
+      "distrito": "Horqueta",
+      "parquetKey": "horqueta",
+      "avg_score": 51.2,
+      "hex_count": 26825,
+      "centroid": [
+        -56.7402,
+        -23.283
+      ]
+    },
+    {
+      "distrito": "Belen",
+      "parquetKey": "belen",
+      "avg_score": 50.1,
+      "hex_count": 1491,
+      "centroid": [
+        -57.2183,
+        -23.4372
+      ]
+    },
+    {
+      "distrito": "Loreto",
+      "parquetKey": "loreto",
+      "avg_score": 48.3,
+      "hex_count": 9686,
+      "centroid": [
+        -57.1715,
+        -23.2161
+      ]
+    },
+    {
+      "distrito": "Concepcion",
+      "parquetKey": "concepcion",
+      "avg_score": 44.5,
+      "hex_count": 103939,
+      "centroid": [
+        -57.2752,
+        -22.8011
+      ]
+    },
+    {
+      "distrito": "San Carlos",
+      "parquetKey": "san_carlos",
+      "avg_score": 40.9,
+      "hex_count": 16747,
+      "centroid": [
+        -57.3306,
+        -22.3583
+      ]
+    },
+    {
+      "distrito": "San Lazaro",
+      "parquetKey": "san_lazaro",
+      "avg_score": 34.6,
+      "hex_count": 11310,
+      "centroid": [
+        -57.7533,
+        -22.2364
+      ]
+    }
+  ]
+}

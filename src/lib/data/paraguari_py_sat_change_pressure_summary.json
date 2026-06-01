@@ -1,0 +1,180 @@
+{
+  "territory": "paraguari_py",
+  "province": {
+    "total_hexes": 94348,
+    "avg_score": 4.6,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Pirayu",
+      "parquetKey": "pirayu",
+      "avg_score": 7.2,
+      "hex_count": 2137,
+      "centroid": [
+        -57.2018,
+        -25.4796
+      ]
+    },
+    {
+      "distrito": "La Colmena",
+      "parquetKey": "la_colmena",
+      "avg_score": 6.8,
+      "hex_count": 1230,
+      "centroid": [
+        -56.8176,
+        -25.9063
+      ]
+    },
+    {
+      "distrito": "Yaguaron",
+      "parquetKey": "yaguaron",
+      "avg_score": 6.2,
+      "hex_count": 2750,
+      "centroid": [
+        -57.2804,
+        -25.595
+      ]
+    },
+    {
+      "distrito": "Escobar",
+      "parquetKey": "escobar",
+      "avg_score": 5.9,
+      "hex_count": 3140,
+      "centroid": [
+        -57.0105,
+        -25.6329
+      ]
+    },
+    {
+      "distrito": "Sapucai",
+      "parquetKey": "sapucai",
+      "avg_score": 5.9,
+      "hex_count": 2150,
+      "centroid": [
+        -56.9738,
+        -25.7203
+      ]
+    },
+    {
+      "distrito": "Caballero",
+      "parquetKey": "caballero",
+      "avg_score": 5.6,
+      "hex_count": 2610,
+      "centroid": [
+        -56.8862,
+        -25.7573
+      ]
+    },
+    {
+      "distrito": "Acahay",
+      "parquetKey": "acahay",
+      "avg_score": 5.3,
+      "hex_count": 3557,
+      "centroid": [
+        -57.076,
+        -25.8967
+      ]
+    },
+    {
+      "distrito": "Paraguari",
+      "parquetKey": "paraguari",
+      "avg_score": 5.3,
+      "hex_count": 4908,
+      "centroid": [
+        -57.1351,
+        -25.6664
+      ]
+    },
+    {
+      "distrito": "Tebicuarymi",
+      "parquetKey": "tebicuarymi",
+      "avg_score": 5.3,
+      "hex_count": 1751,
+      "centroid": [
+        -56.666,
+        -25.9156
+      ]
+    },
+    {
+      "distrito": "Carapegua",
+      "parquetKey": "carapegua",
+      "avg_score": 5.2,
+      "hex_count": 5302,
+      "centroid": [
+        -57.3255,
+        -25.7621
+      ]
+    },
+    {
+      "distrito": "Ybytymi",
+      "parquetKey": "ybytymi",
+      "avg_score": 5.1,
+      "hex_count": 4447,
+      "centroid": [
+        -56.7656,
+        -25.7754
+      ]
+    },
+    {
+      "distrito": "Ybycui",
+      "parquetKey": "ybycui",
+      "avg_score": 4.9,
+      "hex_count": 8812,
+      "centroid": [
+        -56.942,
+        -26.0391
+      ]
+    },
+    {
+      "distrito": "San Roque Gonzalez",
+      "parquetKey": "san_roque_gonzalez",
+      "avg_score": 4.8,
+      "hex_count": 2353,
+      "centroid": [
+        -57.3024,
+        -25.8795
+      ]
+    },
+    {
+      "distrito": "Mbuyapey",
+      "parquetKey": "mbuyapey",
+      "avg_score": 4.7,
+      "hex_count": 9725,
+      "centroid": [
+        -56.8042,
+        -26.2791
+      ]
+    },
+    {
+      "distrito": "Quiindy",
+      "parquetKey": "quiindy",
+      "avg_score": 4.0,
+      "hex_count": 6788,
+      "centroid": [
+        -57.3214,
+        -26.0118
+      ]
+    },
+    {
+      "distrito": "Quyquyho",
+      "parquetKey": "quyquyho",
+      "avg_score": 3.8,
+      "hex_count": 6662,
+      "centroid": [
+        -57.0129,
+        -26.2561
+      ]
+    },
+    {
+      "distrito": "Caapucu",
+      "parquetKey": "caapucu",
+      "avg_score": 3.5,
+      "hex_count": 26026,
+      "centroid": [
+        -57.3904,
+        -26.3278
+      ]
+    }
+  ]
+}

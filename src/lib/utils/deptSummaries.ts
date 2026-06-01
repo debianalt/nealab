@@ -121,6 +121,10 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	accessibility           : () => import('$lib/data/rio_grande_sul_br_sat_accessibility_summary.json'),
 };
 
+// ── Paraguay departments — Wave 1 (agri_potential only).
+//    carbon_stock, pm25_drivers, deforestation_dynamics, forestry_aptitude,
+//    accessibility, land_use added here as processing completes.
+
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
 	'itapua_py/': ITAPUA_SUMMARIES,
 	'corrientes/': CORRIENTES_SUMMARIES,
@@ -130,6 +134,20 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 	'parana_br/': PARANA_BR_SUMMARIES,
 	'santa_catarina_br/': SANTA_CATARINA_BR_SUMMARIES,
 	'rio_grande_sul_br/': RIO_GRANDE_SUL_BR_SUMMARIES,
+	// New PY departments — agri_potential live; others land when GEE exports finish
+	'concepcion_py/':        { agri_potential: () => import('$lib/data/concepcion_py_sat_agri_potential_summary.json') },
+	'san_pedro_py/':         { agri_potential: () => import('$lib/data/san_pedro_py_sat_agri_potential_summary.json') },
+	'cordillera_py/':        { agri_potential: () => import('$lib/data/cordillera_py_sat_agri_potential_summary.json') },
+	'guaira_py/':            { agri_potential: () => import('$lib/data/guaira_py_sat_agri_potential_summary.json') },
+	'caaguazu_py/':          { agri_potential: () => import('$lib/data/caaguazu_py_sat_agri_potential_summary.json') },
+	'caazapa_py/':           { agri_potential: () => import('$lib/data/caazapa_py_sat_agri_potential_summary.json') },
+	'misiones_py/':          { agri_potential: () => import('$lib/data/misiones_py_sat_agri_potential_summary.json') },
+	'paraguari_py/':         { agri_potential: () => import('$lib/data/paraguari_py_sat_agri_potential_summary.json') },
+	'central_py/':           { agri_potential: () => import('$lib/data/central_py_sat_agri_potential_summary.json') },
+	'neembucu_py/':          { agri_potential: () => import('$lib/data/neembucu_py_sat_agri_potential_summary.json') },
+	'amambay_py/':           { agri_potential: () => import('$lib/data/amambay_py_sat_agri_potential_summary.json') },
+	'canindeyu_py/':         { agri_potential: () => import('$lib/data/canindeyu_py_sat_agri_potential_summary.json') },
+	'presidente_hayes_py/':  { agri_potential: () => import('$lib/data/presidente_hayes_py_sat_agri_potential_summary.json') },
 };
 
 export async function loadDeptSummary(analysisId: string, territoryPrefix: string): Promise<any> {

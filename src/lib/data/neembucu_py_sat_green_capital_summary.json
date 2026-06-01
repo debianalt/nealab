@@ -1,0 +1,170 @@
+{
+  "territory": "neembucu_py",
+  "province": {
+    "total_hexes": 126524,
+    "avg_score": 13.4,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Isla Umbu",
+      "parquetKey": "isla_umbu",
+      "avg_score": 19.7,
+      "hex_count": 5116,
+      "centroid": [
+        -58.309,
+        -26.9676
+      ]
+    },
+    {
+      "distrito": "Tacuaras",
+      "parquetKey": "tacuaras",
+      "avg_score": 18.5,
+      "hex_count": 14798,
+      "centroid": [
+        -57.8738,
+        -26.8217
+      ]
+    },
+    {
+      "distrito": "Humaita",
+      "parquetKey": "humaita",
+      "avg_score": 18.4,
+      "hex_count": 3774,
+      "centroid": [
+        -58.484,
+        -27.0909
+      ]
+    },
+    {
+      "distrito": "Desmochados",
+      "parquetKey": "desmochados",
+      "avg_score": 18.3,
+      "hex_count": 3275,
+      "centroid": [
+        -58.1239,
+        -27.0692
+      ]
+    },
+    {
+      "distrito": "Cerrito",
+      "parquetKey": "cerrito",
+      "avg_score": 17.8,
+      "hex_count": 6459,
+      "centroid": [
+        -57.6294,
+        -27.3058
+      ]
+    },
+    {
+      "distrito": "San Juan Bta. Del Neembuc",
+      "parquetKey": "san_juan_bta_del_neembuc",
+      "avg_score": 17.0,
+      "hex_count": 15035,
+      "centroid": [
+        -57.851,
+        -26.6089
+      ]
+    },
+    {
+      "distrito": "Laureles",
+      "parquetKey": "laureles",
+      "avg_score": 16.4,
+      "hex_count": 8951,
+      "centroid": [
+        -57.5826,
+        -27.167
+      ]
+    },
+    {
+      "distrito": "Guazucua",
+      "parquetKey": "guazucua",
+      "avg_score": 16.2,
+      "hex_count": 13430,
+      "centroid": [
+        -57.7584,
+        -26.9915
+      ]
+    },
+    {
+      "distrito": "Paso De Patria",
+      "parquetKey": "paso_de_patria",
+      "avg_score": 15.6,
+      "hex_count": 2673,
+      "centroid": [
+        -58.5287,
+        -27.2193
+      ]
+    },
+    {
+      "distrito": "Pilar",
+      "parquetKey": "pilar",
+      "avg_score": 15.6,
+      "hex_count": 3617,
+      "centroid": [
+        -58.1896,
+        -26.8898
+      ]
+    },
+    {
+      "distrito": "Mayor Martinez",
+      "parquetKey": "mayor_martinez",
+      "avg_score": 15.2,
+      "hex_count": 4179,
+      "centroid": [
+        -58.136,
+        -27.1867
+      ]
+    },
+    {
+      "distrito": "Gral. Jose E. Diaz",
+      "parquetKey": "gral_jose_e_diaz",
+      "avg_score": 14.6,
+      "hex_count": 4210,
+      "centroid": [
+        -58.342,
+        -27.1778
+      ]
+    },
+    {
+      "distrito": "Villalvin",
+      "parquetKey": "villalvin",
+      "avg_score": 13.1,
+      "hex_count": 5319,
+      "centroid": [
+        -57.9098,
+        -27.1694
+      ]
+    },
+    {
+      "distrito": "Villa Franca",
+      "parquetKey": "villa_franca",
+      "avg_score": 9.8,
+      "hex_count": 17143,
+      "centroid": [
+        -57.9497,
+        -26.3332
+      ]
+    },
+    {
+      "distrito": "Alberdi",
+      "parquetKey": "alberdi",
+      "avg_score": 0.0,
+      "hex_count": 1236,
+      "centroid": [
+        -58.0676,
+        -26.1811
+      ]
+    },
+    {
+      "distrito": "Villa Oliva",
+      "parquetKey": "villa_oliva",
+      "avg_score": 0.0,
+      "hex_count": 17309,
+      "centroid": [
+        -57.7115,
+        -26.0301
+      ]
+    }
+  ]
+}

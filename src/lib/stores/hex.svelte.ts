@@ -193,34 +193,10 @@ export class HexStore {
 			} else {
 				url = getScoresDptoUrl(parquetKey, this.territoryPrefix);
 			}
-			// Project only the columns we actually render. SELECT * was reading every
-			// column chunk (24 cols × 288K rows on Patiño ≈ 13 MB even with ZSTD), but
-			// the choropleth + tooltip only need score + each variable.col + (if temporal
-			// active) the matching *_baseline/*_delta. We DESCRIBE first to skip cols
-			// the parquet doesn't ship (older layers had different schemas) — DuckDB
-			// otherwise errors on missing names.
-			const schemaRes = await query(`DESCRIBE SELECT * FROM '${url}'`);
-			const available = new Set<string>();
-			for (let i = 0; i < schemaRes.numRows; i++) {
-				const row = schemaRes.get(i)!.toJSON() as any;
-				const name = (row.column_name ?? row['Column Name'] ?? '') as string;
-				if (name) available.add(name);
-			}
-			const wanted = new Set<string>(['h3index']);
-			wanted.add('score');
-			if (available.has('type')) wanted.add('type');
-			if (available.has('type_label')) wanted.add('type_label');
-			for (const v of layer.variables) {
-				if (available.has(v.col)) wanted.add(v.col);
-				if (v.rawCol && available.has(v.rawCol)) wanted.add(v.rawCol);
-			}
-			// Temporal cols only when the user has flipped out of 'current'. We still
-			// fetch score_baseline + delta_score (cheap, 2 extra cols) so toggling the
-			// temporal selector doesn't trigger a full reload.
-			if (available.has('score_baseline')) wanted.add('score_baseline');
-			if (available.has('delta_score')) wanted.add('delta_score');
-			const cols = [...wanted].map(c => `"${c}"`).join(', ');
-			const result = await query(`SELECT ${cols} FROM '${url}'`);
+			// SELECT * — dept parquets are small (5K-30K rows) so full projection is
+			// cheaper than the 2 extra range-read round-trips that DESCRIBE required.
+			// The processing loop below handles any column set dynamically.
+			const result = await query(`SELECT * FROM '${url}'`);
 
 			const data = new Map<string, Record<string, any>>();
 			const centroids = new Map<string, [number, number]>();

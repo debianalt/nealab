@@ -1,0 +1,110 @@
+{
+  "territory": "caazapa_py",
+  "province": {
+    "total_hexes": 102393,
+    "avg_score": 35.4,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Tavai",
+      "parquetKey": "tavai",
+      "avg_score": 49.1,
+      "hex_count": 13470,
+      "centroid": [
+        -55.53,
+        -26.195
+      ]
+    },
+    {
+      "distrito": "San Juan Nepomuceno",
+      "parquetKey": "san_juan_nepomuceno",
+      "avg_score": 44.9,
+      "hex_count": 10884,
+      "centroid": [
+        -55.9173,
+        -26.2417
+      ]
+    },
+    {
+      "distrito": "Buena Vista",
+      "parquetKey": "buena_vista",
+      "avg_score": 35.7,
+      "hex_count": 1275,
+      "centroid": [
+        -56.0981,
+        -26.2335
+      ]
+    },
+    {
+      "distrito": "Abai",
+      "parquetKey": "abai",
+      "avg_score": 35.3,
+      "hex_count": 23364,
+      "centroid": [
+        -55.7178,
+        -25.8957
+      ]
+    },
+    {
+      "distrito": "Gral. Higinio Morinigo",
+      "parquetKey": "gral_higinio_morinigo",
+      "avg_score": 34.4,
+      "hex_count": 2765,
+      "centroid": [
+        -56.1114,
+        -26.0729
+      ]
+    },
+    {
+      "distrito": "Yuty",
+      "parquetKey": "yuty",
+      "avg_score": 32.5,
+      "hex_count": 19207,
+      "centroid": [
+        -56.2397,
+        -26.5325
+      ]
+    },
+    {
+      "distrito": "Caazapa",
+      "parquetKey": "caazapa",
+      "avg_score": 32.4,
+      "hex_count": 9308,
+      "centroid": [
+        -56.2983,
+        -26.1867
+      ]
+    },
+    {
+      "distrito": "Maciel",
+      "parquetKey": "maciel",
+      "avg_score": 31.5,
+      "hex_count": 4792,
+      "centroid": [
+        -56.528,
+        -26.2225
+      ]
+    },
+    {
+      "distrito": "Fulgencio Yegros",
+      "parquetKey": "fulgencio_yegros",
+      "avg_score": 25.8,
+      "hex_count": 9598,
+      "centroid": [
+        -56.5581,
+        -26.5506
+      ]
+    },
+    {
+      "distrito": "Dr. Moises Bertoni",
+      "parquetKey": "dr_moises_bertoni",
+      "avg_score": 23.5,
+      "hex_count": 7730,
+      "centroid": [
+        -56.5977,
+        -26.3929
+      ]
+    }
+  ]
+}

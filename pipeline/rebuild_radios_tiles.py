@@ -45,10 +45,10 @@ LAYER_NAME = "radios"
 EXTENT = 4096
 SIMPLIFY_TOLERANCE = 0.0005  # degrees — ~50m at equator, keeps polygons clean at zoom 12
 
-# Extended bbox covering both Misiones + Corrientes
-BBOX = {"west": -59.8, "south": -30.8, "east": -53.5, "north": -25.4}
+# Extended bbox covering Misiones + Corrientes + Chaco + Formosa
+BBOX = {"west": -63.6, "south": -30.8, "east": -53.5, "north": -22.8}
 
-PROVINCES = ('54', '18')  # Misiones, Corrientes
+PROVINCES = ('54', '18', '22', '34')  # Misiones, Corrientes, Chaco, Formosa
 
 
 # ── Tile math (same as rebuild_buildings_tiles.py) ───────────────────────
@@ -219,7 +219,7 @@ def generate_pmtiles(features):
         }
         metadata = {
             "name": "radios",
-            "description": "Census radios for Misiones (AR) + Corrientes (AR) — INDEC Censo 2022",
+            "description": "Census radios for Misiones + Corrientes + Chaco + Formosa (AR) — INDEC Censo 2022",
             "vector_layers": [{
                 "id": LAYER_NAME,
                 "fields": {"redcode": "String", "codprov": "String"},

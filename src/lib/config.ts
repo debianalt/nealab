@@ -4,25 +4,56 @@ function getBase(): string {
 	return R2_PROD;
 }
 
-export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro'): string {
+export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
 	if (name === 'terrain') {
 		return '/api/terrain/{z}/{x}/{y}.png';
 	}
-	const files = {
+	const files: Record<string, string> = {
 		buildings: 'tiles/buildings-v5.pmtiles',
 		itapua_buildings: 'tiles/itapua_buildings-v4.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v4.pmtiles',
 		alto_parana_buildings: 'data/tiles/alto_parana_buildings-v4.pmtiles',
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
-		chaco_buildings: 'data/tiles/chaco_buildings-v3.pmtiles',
-		formosa_buildings: 'data/tiles/formosa_buildings-v3.pmtiles',
+		chaco_buildings: 'data/tiles/chaco_buildings-v4.pmtiles',
+		formosa_buildings: 'data/tiles/formosa_buildings-v4.pmtiles',
 		parana_br_buildings: 'data/tiles/parana_br_buildings-v8.pmtiles',
 		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings-v8.pmtiles',
 		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v8.pmtiles',
-		radios: 'data/tiles/radios-v3.pmtiles',
+		radios: 'data/tiles/radios-v4.pmtiles',
 		hexagons: 'tiles/hexagons-v2.pmtiles',
-		catastro: 'tiles/catastro.pmtiles?v=3'
+		catastro: 'tiles/catastro.pmtiles?v=3',
+		// Paraguay departments — v1 (buildings from Overture, districts from GAUL)
+		concepcion_py_buildings: 'data/tiles/concepcion_py_buildings.pmtiles',
+		concepcion_py_districts: 'data/tiles/concepcion_districts.pmtiles',
+		san_pedro_py_buildings: 'data/tiles/san_pedro_py_buildings.pmtiles',
+		san_pedro_py_districts: 'data/tiles/san_pedro_districts.pmtiles',
+		cordillera_py_buildings: 'data/tiles/cordillera_py_buildings.pmtiles',
+		cordillera_py_districts: 'data/tiles/cordillera_districts.pmtiles',
+		guaira_py_buildings: 'data/tiles/guaira_py_buildings.pmtiles',
+		guaira_py_districts: 'data/tiles/guaira_districts.pmtiles',
+		caaguazu_py_buildings: 'data/tiles/caaguazu_py_buildings.pmtiles',
+		caaguazu_py_districts: 'data/tiles/caaguazu_districts.pmtiles',
+		caazapa_py_buildings: 'data/tiles/caazapa_py_buildings.pmtiles',
+		caazapa_py_districts: 'data/tiles/caazapa_districts.pmtiles',
+		misiones_py_buildings: 'data/tiles/misiones_py_buildings.pmtiles',
+		misiones_py_districts: 'data/tiles/misiones_districts.pmtiles',
+		paraguari_py_buildings: 'data/tiles/paraguari_py_buildings.pmtiles',
+		paraguari_py_districts: 'data/tiles/paraguari_districts.pmtiles',
+		central_py_buildings: 'data/tiles/central_py_buildings.pmtiles',
+		central_py_districts: 'data/tiles/central_districts.pmtiles',
+		neembucu_py_buildings: 'data/tiles/neembucu_py_buildings.pmtiles',
+		neembucu_py_districts: 'data/tiles/neembucu_districts.pmtiles',
+		amambay_py_buildings: 'data/tiles/amambay_py_buildings.pmtiles',
+		amambay_py_districts: 'data/tiles/amambay_districts.pmtiles',
+		canindeyu_py_buildings: 'data/tiles/canindeyu_py_buildings.pmtiles',
+		canindeyu_py_districts: 'data/tiles/canindeyu_districts.pmtiles',
+		presidente_hayes_py_buildings: 'data/tiles/presidente_hayes_py_buildings.pmtiles',
+		presidente_hayes_py_districts: 'data/tiles/presidente_hayes_districts.pmtiles',
+		boqueron_py_buildings: 'data/tiles/boqueron_py_buildings.pmtiles',
+		boqueron_py_districts: 'data/tiles/boqueron_districts.pmtiles',
+		alto_paraguay_py_buildings: 'data/tiles/alto_paraguay_py_buildings.pmtiles',
+		alto_paraguay_py_districts: 'data/tiles/alto_paraguay_districts.pmtiles',
 	};
 	return `pmtiles://${getBase()}/${files[name]}`;
 }
@@ -73,21 +104,20 @@ export function getParquetUrl(name: string): string {
 	return `${getBase()}/data/${name}.parquet${bust}`;
 }
 
-// DuckDB-WASM caches HTTP files by path, ignoring query params.
-// Using Date.now() ensures each session gets a unique URL that bypasses
-// DuckDB's internal httpfs cache, preventing stale parquet data.
-const _sessionBust = Date.now();
+// Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
+// Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
+const DEPT_V = 1;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?cb=${_sessionBust}`;
+	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
 export function getScoresDptoUrl(parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}scores_dpto/overture_scores_${parquetKey}.parquet?cb=${_sessionBust}`;
+	return `${getBase()}/data/${territoryPrefix}scores_dpto/overture_scores_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
 export function getSatDptoUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}sat_dpto/sat_${analysisId}_${parquetKey}.parquet?cb=${_sessionBust}`;
+	return `${getBase()}/data/${territoryPrefix}sat_dpto/sat_${analysisId}_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
 export function getReportUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
@@ -97,13 +127,15 @@ export function getReportUrl(analysisId: string, parquetKey: string, territoryPr
 // EUDR hi-res (res-9) deforestation grid — single combined parquet, sorted by
 // h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
 export function getEudrHiresUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?cb=${_sessionBust}`;
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=1`;
 }
 
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
 	const layer = HEX_LAYER_REGISTRY[analysisId];
 	const name = layer?.parquet ?? `sat_${analysisId}`;
-	return `${getBase()}/data/${territoryPrefix}${name}.parquet?cb=${_sessionBust}`;
+	const base = getParquetUrl(name); // inherits static ?v=N from busts map
+	if (!territoryPrefix) return base;
+	return base.replace('/data/', `/data/${territoryPrefix}`);
 }
 
 export function getDeptSummaryUrl(analysisId: string, territoryPrefix = ''): string {
@@ -264,30 +296,81 @@ export const TERRITORY_REGISTRY: Record<string, TerritoryConfig> = {
 		bbox: [-62.20, -27.00, -57.40, -22.90],  // synced with pipeline/config.py + config_eudr.py
 		parquetPrefix: 'formosa/', flag: '🇦🇷', available: true,
 	},
-	// ── Paraguay — próximamente ──────────────────────────────────────────────
-	neembucu_py: {
-		id: 'neembucu_py', label: 'Ñeembucú', shortLabel: 'NEE', country: 'py',
-		bbox: [-58.50, -27.50, -57.30, -26.40],
-		parquetPrefix: 'neembucu_py/', flag: '🇵🇾', available: false,
+	// ── Paraguay — todos los departamentos ──────────────────────────────────
+	// GAUL-based boundaries. District tiles deployed; satellite data pending GEE.
+	concepcion_py: {
+		id: 'concepcion_py', label: 'Concepción', shortLabel: 'CON', country: 'py',
+		bbox: [-62.3, -23.8, -55.4, -20.3],
+		parquetPrefix: 'concepcion_py/', flag: '🇵🇾', available: true,
+	},
+	san_pedro_py: {
+		id: 'san_pedro_py', label: 'San Pedro', shortLabel: 'SPE', country: 'py',
+		bbox: [-59.4, -25.5, -55.3, -22.3],
+		parquetPrefix: 'san_pedro_py/', flag: '🇵🇾', available: true,
+	},
+	cordillera_py: {
+		id: 'cordillera_py', label: 'Cordillera', shortLabel: 'COR', country: 'py',
+		bbox: [-57.8, -25.4, -56.6, -24.4],
+		parquetPrefix: 'cordillera_py/', flag: '🇵🇾', available: true,
+	},
+	guaira_py: {
+		id: 'guaira_py', label: 'Guairá', shortLabel: 'GUA', country: 'py',
+		bbox: [-56.7, -26.1, -55.4, -25.1],
+		parquetPrefix: 'guaira_py/', flag: '🇵🇾', available: true,
+	},
+	caaguazu_py: {
+		id: 'caaguazu_py', label: 'Caaguazú', shortLabel: 'CAA', country: 'py',
+		bbox: [-56.7, -25.9, -54.2, -23.3],
+		parquetPrefix: 'caaguazu_py/', flag: '🇵🇾', available: true,
+	},
+	caazapa_py: {
+		id: 'caazapa_py', label: 'Caazapá', shortLabel: 'CAZ', country: 'py',
+		bbox: [-56.7, -26.9, -55.0, -25.5],
+		parquetPrefix: 'caazapa_py/', flag: '🇵🇾', available: true,
 	},
 	misiones_py: {
 		id: 'misiones_py', label: 'Misiones', shortLabel: 'MPY', country: 'py',
-		bbox: [-57.30, -27.20, -56.40, -26.80],
-		parquetPrefix: 'misiones_py/', flag: '🇵🇾', available: false,
+		bbox: [-57.5, -27.3, -56.3, -26.7],
+		parquetPrefix: 'misiones_py/', flag: '🇵🇾', available: true,
+	},
+	paraguari_py: {
+		id: 'paraguari_py', label: 'Paraguarí', shortLabel: 'PAR', country: 'py',
+		bbox: [-58.1, -26.7, -56.5, -25.1],
+		parquetPrefix: 'paraguari_py/', flag: '🇵🇾', available: true,
+	},
+	central_py: {
+		id: 'central_py', label: 'Central', shortLabel: 'CEN', country: 'py',
+		bbox: [-58.2, -25.8, -57.1, -24.9],
+		parquetPrefix: 'central_py/', flag: '🇵🇾', available: true,
+	},
+	neembucu_py: {
+		id: 'neembucu_py', label: 'Ñeembucú', shortLabel: 'NEE', country: 'py',
+		bbox: [-58.6, -27.6, -57.1, -26.3],
+		parquetPrefix: 'neembucu_py/', flag: '🇵🇾', available: true,
+	},
+	amambay_py: {
+		id: 'amambay_py', label: 'Amambay', shortLabel: 'AMA', country: 'py',
+		bbox: [-56.6, -23.7, -55.0, -21.7],
+		parquetPrefix: 'amambay_py/', flag: '🇵🇾', available: true,
+	},
+	canindeyu_py: {
+		id: 'canindeyu_py', label: 'Canindeyú', shortLabel: 'CAN', country: 'py',
+		bbox: [-55.7, -25.3, -53.9, -22.6],
+		parquetPrefix: 'canindeyu_py/', flag: '🇵🇾', available: true,
 	},
 	presidente_hayes_py: {
 		id: 'presidente_hayes_py', label: 'Presidente Hayes', shortLabel: 'PHY', country: 'py',
-		bbox: [-62.00, -25.50, -57.50, -22.00],
-		parquetPrefix: 'presidente_hayes_py/', flag: '🇵🇾', available: false,
+		bbox: [-62.1, -25.6, -57.4, -21.9],
+		parquetPrefix: 'presidente_hayes_py/', flag: '🇵🇾', available: true,
 	},
 	boqueron_py: {
 		id: 'boqueron_py', label: 'Boquerón', shortLabel: 'BOQ', country: 'py',
-		bbox: [-62.50, -23.00, -59.50, -20.00],
+		bbox: [-62.6, -23.2, -59.4, -20.0],
 		parquetPrefix: 'boqueron_py/', flag: '🇵🇾', available: false,
 	},
 	alto_paraguay_py: {
 		id: 'alto_paraguay_py', label: 'Alto Paraguay', shortLabel: 'AGP', country: 'py',
-		bbox: [-61.00, -23.00, -57.50, -19.50],
+		bbox: [-61.2, -23.2, -57.4, -18.4],
 		parquetPrefix: 'alto_paraguay_py/', flag: '🇵🇾', available: false,
 	},
 	// ── Brasil — próximamente ────────────────────────────────────────────────
@@ -444,7 +527,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.agri.low',
 		legendHighKey: 'legend.agri.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available'},
 	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
@@ -831,7 +914,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'produccion',
 		titleKey: 'sat.agri.title',
 		descKey: 'sat.agri.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available'},
 		comparable: true,
 		rigorBadge: 'modeled',
 		status: 'available',

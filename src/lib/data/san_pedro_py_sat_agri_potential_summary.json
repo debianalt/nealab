@@ -1,0 +1,160 @@
+{
+  "territory": "san_pedro_py",
+  "province": {
+    "total_hexes": 216922,
+    "avg_score": 66.1,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Elizardo Aquino",
+      "parquetKey": "elizardo_aquino",
+      "avg_score": 68.8,
+      "hex_count": 8489,
+      "centroid": [
+        -56.7857,
+        -24.3795
+      ]
+    },
+    {
+      "distrito": "Itacurubi Del Rosario",
+      "parquetKey": "itacurubi_del_rosario",
+      "avg_score": 68.5,
+      "hex_count": 9559,
+      "centroid": [
+        -56.7993,
+        -24.5836
+      ]
+    },
+    {
+      "distrito": "Villa Del Rosario",
+      "parquetKey": "villa_del_rosario",
+      "avg_score": 68.1,
+      "hex_count": 22268,
+      "centroid": [
+        -57.0866,
+        -24.5571
+      ]
+    },
+    {
+      "distrito": "San Pablo",
+      "parquetKey": "san_pablo",
+      "avg_score": 67.6,
+      "hex_count": 3357,
+      "centroid": [
+        -56.9215,
+        -24.1315
+      ]
+    },
+    {
+      "distrito": "25 De Diciembre",
+      "parquetKey": "25_de_diciembre",
+      "avg_score": 67.2,
+      "hex_count": 9792,
+      "centroid": [
+        -56.8088,
+        -24.776
+      ]
+    },
+    {
+      "distrito": "Chore",
+      "parquetKey": "chore",
+      "avg_score": 67.0,
+      "hex_count": 10408,
+      "centroid": [
+        -56.5957,
+        -24.1739
+      ]
+    },
+    {
+      "distrito": "San Estanislao",
+      "parquetKey": "san_estanislao",
+      "avg_score": 66.8,
+      "hex_count": 40424,
+      "centroid": [
+        -56.2615,
+        -24.5423
+      ]
+    },
+    {
+      "distrito": "Union",
+      "parquetKey": "union",
+      "avg_score": 66.7,
+      "hex_count": 6158,
+      "centroid": [
+        -56.5298,
+        -24.8644
+      ]
+    },
+    {
+      "distrito": "Isidoro Resquin",
+      "parquetKey": "isidoro_resquin",
+      "avg_score": 66.5,
+      "hex_count": 11021,
+      "centroid": [
+        -56.2011,
+        -24.0042
+      ]
+    },
+    {
+      "distrito": "Nueva Germania",
+      "parquetKey": "nueva_germania",
+      "avg_score": 66.2,
+      "hex_count": 22799,
+      "centroid": [
+        -56.3104,
+        -23.735
+      ]
+    },
+    {
+      "distrito": "Lima",
+      "parquetKey": "lima",
+      "avg_score": 65.6,
+      "hex_count": 6774,
+      "centroid": [
+        -56.5553,
+        -23.9736
+      ]
+    },
+    {
+      "distrito": "Yataity Del Norte",
+      "parquetKey": "yataity_del_norte",
+      "avg_score": 65.5,
+      "hex_count": 3070,
+      "centroid": [
+        -56.3437,
+        -24.8237
+      ]
+    },
+    {
+      "distrito": "Tacuati",
+      "parquetKey": "tacuati",
+      "avg_score": 64.2,
+      "hex_count": 23629,
+      "centroid": [
+        -56.6316,
+        -23.5417
+      ]
+    },
+    {
+      "distrito": "Antequera",
+      "parquetKey": "antequera",
+      "avg_score": 64.1,
+      "hex_count": 5595,
+      "centroid": [
+        -57.1736,
+        -24.0802
+      ]
+    },
+    {
+      "distrito": "S.pedro De Ycuamandyyu",
+      "parquetKey": "spedro_de_ycuamandyyu",
+      "avg_score": 63.2,
+      "hex_count": 33579,
+      "centroid": [
+        -57.0771,
+        -23.775
+      ]
+    }
+  ]
+}
