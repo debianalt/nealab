@@ -177,11 +177,12 @@ def main():
         "flood": set(),
     }
 
-    # Mark already-done deforestation (11 processed earlier)
+    # Mark already-done deforestation (11 processed + 1 in-flight at restart)
     done["deforestation"] = {
         "concepcion_py", "san_pedro_py", "cordillera_py", "guaira_py",
         "caaguazu_py", "caazapa_py", "misiones_py", "paraguari_py",
         "central_py", "neembucu_py", "amambay_py",
+        # presidente_hayes was detected ready; will be caught fresh this run
     }
 
     print(f"Monitoring GCS. Polling every {POLL_INTERVAL}s. Timeout: {args.timeout_hours}h")
@@ -263,14 +264,10 @@ def main():
 
 
 def process_deforestation_wrap(t_id: str) -> bool:
-    """Wrapper that imports the deforestation script logic."""
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "def_py", os.path.join(SCRIPT_DIR, "process_deforestation_py.py"))
-    mod = importlib.util.load_from_spec(spec)
-    spec.loader.exec_module(mod)
-    _, ok = mod.process_territory(t_id)
-    return ok
+    """Run deforestation pipeline as subprocess."""
+    return run(
+        f"python process_deforestation_py.py --only {t_id} --workers 1"
+    )
 
 
 if __name__ == "__main__":

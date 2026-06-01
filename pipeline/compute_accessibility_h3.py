@@ -43,15 +43,31 @@ from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, 
 _GCLOUD = 'gcloud.cmd' if platform.system() == 'Windows' else 'gcloud'
 
 CAPITAL_COORDS = {
-    'misiones':            (-27.367,  -55.896),   # Posadas (lat, lng)
-    'itapua_py':           (-27.336,  -55.869),   # Encarnación (lat, lng)
-    'corrientes':          (-27.4676, -58.8341),  # Corrientes capital (lat, lng)
-    'alto_parana_py':      (-25.5097, -54.6111),  # Ciudad del Este (lat, lng)
-    'chaco':               (-27.4513, -58.9920),  # Resistencia (lat, lng)
-    'formosa':             (-26.1817, -58.1730),  # Formosa capital (lat, lng)
-    'parana_br':           (-25.4290, -49.2671),  # Curitiba (lat, lng)
-    'santa_catarina_br':   (-27.5954, -48.5480),  # Florianópolis (lat, lng)
-    'rio_grande_sul_br':   (-30.0346, -51.2177),  # Porto Alegre (lat, lng)
+    'misiones':              (-27.367,  -55.896),   # Posadas
+    'itapua_py':             (-27.336,  -55.869),   # Encarnación
+    'corrientes':            (-27.4676, -58.8341),  # Corrientes capital
+    'alto_parana_py':        (-25.5097, -54.6111),  # Ciudad del Este
+    'chaco':                 (-27.4513, -58.9920),  # Resistencia
+    'formosa':               (-26.1817, -58.1730),  # Formosa capital
+    'parana_br':             (-25.4290, -49.2671),  # Curitiba
+    'santa_catarina_br':     (-27.5954, -48.5480),  # Florianópolis
+    'rio_grande_sul_br':     (-30.0346, -51.2177),  # Porto Alegre
+    # New PY departments — capital city of each department
+    'concepcion_py':         (-23.4063, -57.4340),  # Concepción
+    'san_pedro_py':          (-24.1000, -57.0833),  # San Pedro de Ycuamandiyú
+    'cordillera_py':         (-25.2167, -57.0833),  # Caacupé
+    'guaira_py':             (-25.7667, -56.4333),  # Villarrica
+    'caaguazu_py':           (-25.4500, -56.0167),  # Coronel Oviedo
+    'caazapa_py':            (-26.1833, -56.3667),  # Caazapá
+    'misiones_py':           (-26.8417, -56.8722),  # San Juan Bautista
+    'paraguari_py':          (-25.6250, -57.1500),  # Paraguarí
+    'central_py':            (-25.2967, -57.6667),  # Areguá (capital departamental)
+    'neembucu_py':           (-27.0833, -58.1667),  # Pilar
+    'amambay_py':            (-22.5500, -55.7333),  # Pedro Juan Caballero
+    'canindeyu_py':          (-24.1394, -55.7397),  # Salto del Guairá
+    'presidente_hayes_py':   (-23.4833, -57.8167),  # Villa Hayes
+    'boqueron_py':           (-22.3833, -60.4500),  # Filadelfia
+    'alto_paraguay_py':      (-20.0500, -58.3167),  # Fuerte Olimpo
 }
 
 TYPE_LABELS = {
