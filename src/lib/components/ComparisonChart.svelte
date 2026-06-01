@@ -151,7 +151,12 @@
 
 	<div class="sources">
 		<span class="sources-title">{i18n.t('source.title')}</span>
-		<span>{i18n.t('source.census')}</span>
+		{#if activeTerritory.endsWith('_br')}
+			<span>{i18n.t('source.census.br')}</span>
+			<span class="sources-note">{i18n.t('source.census.br.note')}</span>
+		{:else}
+			<span>{i18n.t('source.census')}</span>
+		{/if}
 		<span>{i18n.t('source.buildings')}</span>
 		<span>{i18n.t('source.basemap')}</span>
 		<span>{i18n.t('source.terrain')}</span>
@@ -286,5 +291,8 @@
 	.sources-title {
 		font-weight: 600; color: rgba(255,255,255,0.45);
 		margin-bottom: 1px;
+	}
+	.sources-note {
+		color: rgba(255,255,255,0.25); font-style: italic;
 	}
 </style>
