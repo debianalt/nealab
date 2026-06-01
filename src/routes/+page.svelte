@@ -128,8 +128,11 @@
 		const isRegional = territoryStore.regionalMode;
 		const countryFilter = territoryStore.countryFilter;
 		if (isRegional) {
-			const bbox = getRegionalBbox(countryFilter);
-			setTimeout(() => mapComponent?.flyToBbox(bbox), 100);
+			const hasRadios = untrack(() => mapStore.selectedRadios.size > 0);
+			if (!hasRadios) {
+				const bbox = getRegionalBbox(countryFilter);
+				setTimeout(() => mapComponent?.flyToBbox(bbox), 100);
+			}
 			mapComponent?.setRegionalMapMode(true);
 			if (untrack(() => hexStore.activeLayer)) {
 				const activePrefix = untrack(() => territoryStore.activeTerritory.parquetPrefix);
