@@ -430,16 +430,24 @@
 					await lassoStore.createZone(redcodes, polygon);
 					updateZoneHighlights();
 				} else {
-					// PY (no census radios): behave like the building click but
-					// multi — select every district the lasso touches (DGEEC
-					// profile via the district-select handler). No fake zone.
-					const districts = mapComponent?.queryDistrictsInPolygon(polygon) ?? [];
-					for (const d of districts) {
-						if (mapStore.hasDistrict(d.distrito)) continue;
-						mapContainer?.dispatchEvent(new CustomEvent('district-select', {
-							bubbles: true,
-							detail: { distrito: d.distrito, personas: d.personas, territory: d.territory }
-						}));
+					const territory = territoryStore.activeTerritory.id;
+					if (territory.endsWith('_br')) {
+						// BR: find setores via rendered building features (tile has redcode)
+						const brRedcodes = mapComponent?.queryBrSetoresInPolygon(polygon) ?? [];
+						if (brRedcodes.length > 0) {
+							await lassoStore.createBrZone(brRedcodes, polygon, territory);
+							updateZoneHighlights();
+						}
+					} else {
+						// PY (no census radios): select districts touched by lasso
+						const districts = mapComponent?.queryDistrictsInPolygon(polygon) ?? [];
+						for (const d of districts) {
+							if (mapStore.hasDistrict(d.distrito)) continue;
+							mapContainer?.dispatchEvent(new CustomEvent('district-select', {
+								bubbles: true,
+								detail: { distrito: d.distrito, personas: d.personas, territory: d.territory }
+							}));
+						}
 					}
 				}
 			}

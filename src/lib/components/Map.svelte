@@ -709,6 +709,21 @@
 				paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 0.85 },
 				filter: emptyFilter
 			});
+			// Brazil zone-buildings highlight layers
+			for (const [tid, src] of [
+				['parana_br', 'parana_br-buildings'],
+				['santa_catarina_br', 'santa_catarina_br-buildings'],
+				['rio_grande_sul_br', 'rio_grande_sul_br-buildings'],
+			] as [string, string][]) {
+				map.addLayer({
+					id: `zone-buildings-${tid}`,
+					type: 'line',
+					source: src,
+					'source-layer': 'buildings',
+					paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 0.85 },
+					filter: emptyFilter,
+				});
+			}
 
 			// ── Department bbox outlines — visible at all zoom levels ────────
 			map.addSource('dept-highlights', {
@@ -2850,6 +2865,24 @@
 		return out;
 	}
 
+	export function queryBrSetoresInPolygon(polygon: [number, number][]): string[] {
+		if (!map) return [];
+		const brLayers = ['parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d']
+			.filter(l => map.getLayer(l));
+		if (brLayers.length === 0) return [];
+		const cv = map.getCanvas();
+		const feats = map.queryRenderedFeatures([[0, 0], [cv.width, cv.height]], { layers: brLayers });
+		const seen = new Set<string>();
+		for (const f of feats) {
+			const rc = f.properties?.redcode;
+			if (!rc) continue;
+			const c = _featureCentroid(f.geometry);
+			if (!c || !pointInPolygon(c, polygon)) continue;
+			seen.add(String(rc));
+		}
+		return [...seen];
+	}
+
 	export function clearLassoDraw() {
 		if (!map) return;
 		const src = map.getSource('lasso-draw') as maplibregl.GeoJSONSource | undefined;
@@ -2866,12 +2899,11 @@
 		const emptyFilter: any = ['==', ['get', 'redcode'], ''];
 
 		if (zones.length === 0) {
-			if (map.getLayer('zone-fill')) map.setFilter('zone-fill', emptyFilter);
-			if (map.getLayer('zone-line')) map.setFilter('zone-line', emptyFilter);
-			if (map.getLayer('zone-buildings')) map.setFilter('zone-buildings', emptyFilter);
-			if (map.getLayer('zone-buildings-corrientes')) map.setFilter('zone-buildings-corrientes', emptyFilter);
-			if (map.getLayer('zone-buildings-chaco')) map.setFilter('zone-buildings-chaco', emptyFilter);
-			if (map.getLayer('zone-buildings-formosa')) map.setFilter('zone-buildings-formosa', emptyFilter);
+			for (const l of ['zone-fill', 'zone-line', 'zone-buildings',
+				'zone-buildings-corrientes', 'zone-buildings-chaco', 'zone-buildings-formosa',
+				'zone-buildings-parana_br', 'zone-buildings-santa_catarina_br', 'zone-buildings-rio_grande_sul_br']) {
+				if (map.getLayer(l)) map.setFilter(l, emptyFilter);
+			}
 			return;
 		}
 
@@ -2912,6 +2944,13 @@
 		if (map.getLayer('zone-buildings-formosa')) {
 			map.setPaintProperty('zone-buildings-formosa', 'line-color', matchExpr);
 			map.setFilter('zone-buildings-formosa', filter);
+		}
+		for (const tid of ['parana_br', 'santa_catarina_br', 'rio_grande_sul_br']) {
+			const l = `zone-buildings-${tid}`;
+			if (map.getLayer(l)) {
+				map.setPaintProperty(l, 'line-color', matchExpr);
+				map.setFilter(l, filter);
+			}
 		}
 	}
 

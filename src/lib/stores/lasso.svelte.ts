@@ -2,7 +2,7 @@ import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS } from '$lib/config';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { pointInPolygon } from '$lib/utils/geometry';
-import { PETAL_VARS, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
+import { PETAL_VARS, getPetalVars, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
 import centroids from '$lib/data/centroids.json';
 
 export { PETAL_VARS };
@@ -149,6 +149,53 @@ export class LassoStore {
 			}];
 		} catch (e) {
 			console.warn('Failed to create lasso zone:', e);
+		}
+	}
+
+	async createBrZone(redcodes: string[], polygon: [number, number][], territory: string): Promise<void> {
+		if (redcodes.length === 0) return;
+		if (!isReady()) return;
+
+		const PARQUET_BR: Record<string, string> = {
+			parana_br:         PARQUETS.radio_stats_parana_br,
+			santa_catarina_br: PARQUETS.radio_stats_santa_catarina_br,
+			rio_grande_sul_br: PARQUETS.radio_stats_rio_grande_sul_br,
+		};
+		const parquet = PARQUET_BR[territory];
+		if (!parquet) return;
+
+		const idx = this.zones.length % ZONE_COLORS.length;
+		const id = ZONE_LABELS[idx] || String.fromCharCode(65 + this.zones.length);
+		const color = ZONE_COLORS[idx];
+
+		try {
+			const vars = getPetalVars(territory);
+			const cols = vars.map(v => v.col).join(', ');
+			const sql = `SELECT redcode, total_pessoas, ${cols}, area_km2 FROM '${parquet}'
+			             WHERE redcode IN (${redcodes.map(r => `'${r}'`).join(',')})`;
+			const result = await query(sql);
+
+			let totalPop = 0, totalArea = 0;
+			const weighted = new Array(vars.length).fill(0);
+			for (let i = 0; i < result.numRows; i++) {
+				const row = result.get(i)!.toJSON() as Record<string, any>;
+				const pop = Number(row.total_pessoas) || 0;
+				totalPop += pop;
+				totalArea += Number(row.area_km2) || 0;
+				for (let v = 0; v < vars.length; v++) {
+					weighted[v] += (Number(row[vars[v].col]) || 0) * pop;
+				}
+			}
+			const provAvg = await getProvincialAvg(territory);
+			const rawValues = totalPop > 0 ? weighted.map(w => w / totalPop) : new Array(vars.length).fill(0);
+			const normalizedValues = normalizeValues(rawValues, provAvg);
+
+			this.zones = [...this.zones, {
+				id, color, redcodes, polygon,
+				stats: { population: totalPop, area_km2: totalArea, radioCount: redcodes.length, rawValues, normalizedValues },
+			}];
+		} catch (e) {
+			console.warn('Failed to create BR lasso zone:', e);
 		}
 	}
 
