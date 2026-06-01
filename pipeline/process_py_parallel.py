@@ -36,7 +36,7 @@ ANALYSIS_CMDS = {
         "python compute_pm25_drivers.py --territory {t} --mode comparable",
         "python split_by_admin.py --territory {t} --only pm25_drivers",
         "npx wrangler r2 object put neahub/data/{prefix}sat_pm25_drivers.parquet "
-        "--file ../output/{t}/sat_pm25_drivers.parquet --remote",
+        "--file output/{t}/sat_pm25_drivers.parquet --remote",
     ],
     "deforestation": [
         "python process_raster_to_h3.py --territory {t} --analysis deforestation_dynamics --mode comparable",
