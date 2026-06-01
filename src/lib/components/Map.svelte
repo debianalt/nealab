@@ -22,6 +22,20 @@
 	import paranaBrBoundary from '$lib/data/parana_br_boundary.json';
 	import scBrBoundary from '$lib/data/santa_catarina_br_boundary.json';
 	import rsBrBoundary from '$lib/data/rio_grande_sul_br_boundary.json';
+	// New PY department boundaries (always-visible pink borders)
+	import concepcionPyBoundary from '$lib/data/concepcion_py_boundary.json';
+	import sanPedroPyBoundary from '$lib/data/san_pedro_py_boundary.json';
+	import cordilleraPyBoundary from '$lib/data/cordillera_py_boundary.json';
+	import guairaPyBoundary from '$lib/data/guaira_py_boundary.json';
+	import caaguazuPyBoundary from '$lib/data/caaguazu_py_boundary.json';
+	import caazapaPyBoundary from '$lib/data/caazapa_py_boundary.json';
+	import misionesPyBoundary from '$lib/data/misiones_py_boundary.json';
+	import paraguariPyBoundary from '$lib/data/paraguari_py_boundary.json';
+	import centralPyBoundary from '$lib/data/central_py_boundary.json';
+	import neembucuPyBoundary from '$lib/data/neembucu_py_boundary.json';
+	import amambayPyBoundary from '$lib/data/amambay_py_boundary.json';
+	import canindeyuPyBoundary from '$lib/data/canindeyu_py_boundary.json';
+	import presidenteHayesPyBoundary from '$lib/data/presidente_hayes_py_boundary.json';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
@@ -274,6 +288,43 @@
 				['rio_grande_sul_br', rsBrBoundary],
 			];
 			for (const [id, data] of v11Borders) {
+				map.addSource(`${id}-boundary`, { type: 'geojson', data });
+				map.addLayer({
+					id: `${id}-border`,
+					type: 'line',
+					source: `${id}-boundary`,
+					layout: { 'line-join': 'round', 'line-cap': 'round' },
+					paint: {
+						'line-color': '#f472b6',
+						'line-width': [
+							'interpolate', ['linear'], ['zoom'],
+							6, 1.2, 9, 1.0, 12, 0.8, 16, 0.5
+						],
+						'line-opacity': [
+							'interpolate', ['linear'], ['zoom'],
+							6, 0.7, 12, 0.5, 16, 0.3
+						]
+					}
+				});
+			}
+
+			// New PY departments — always-visible pink borders (same pattern as v11Borders)
+			const pyDeptBorders: Array<[string, any]> = [
+				['concepcion_py',       concepcionPyBoundary],
+				['san_pedro_py',        sanPedroPyBoundary],
+				['cordillera_py',       cordilleraPyBoundary],
+				['guaira_py',           guairaPyBoundary],
+				['caaguazu_py',         caaguazuPyBoundary],
+				['caazapa_py',          caazapaPyBoundary],
+				['misiones_py',         misionesPyBoundary],
+				['paraguari_py',        paraguariPyBoundary],
+				['central_py',          centralPyBoundary],
+				['neembucu_py',         neembucuPyBoundary],
+				['amambay_py',          amambayPyBoundary],
+				['canindeyu_py',        canindeyuPyBoundary],
+				['presidente_hayes_py', presidenteHayesPyBoundary],
+			];
+			for (const [id, data] of pyDeptBorders) {
 				map.addSource(`${id}-boundary`, { type: 'geojson', data });
 				map.addLayer({
 					id: `${id}-border`,
