@@ -207,7 +207,18 @@
 			if (lensStore.activeAnalysis?.spatialUnit === 'catastro') return; // flood mode uses parcel clicks
 			const { redcode, selected, census } = e.detail;
 
-			// Auto-switch territory based on codprov (AR) or UF prefix (BR)
+			// Add radio FIRST so selectedRadios.size > 0 when the territory-change
+			// effect fires — prevents flyToBbox from running on the first building click.
+			showAbout = false;
+			mapStore.addRadio(redcode, {
+				census,
+				enriched: null,
+				buildingCount: selected.length
+			});
+			mapComponent?.setRadioHighlight(getRadioHighlightEntries());
+			fetchRadioEnrichment(redcode);
+
+			// Auto-switch territory AFTER addRadio so hasRadios guard in the effect is true
 			const codprov = census?.codprov;
 			const uf = String(redcode ?? '').slice(0, 2);
 			const tid = territoryStore.activeTerritory.id;
@@ -222,17 +233,6 @@
 			} else if (uf === '43' && tid !== 'rio_grande_sul_br') {
 				territoryStore.setTerritory('rio_grande_sul_br');
 			}
-
-			// Dismiss welcome panel so ComparisonChart (petals) can render
-			showAbout = false;
-
-			mapStore.addRadio(redcode, {
-				census,
-				enriched: null,
-				buildingCount: selected.length
-			});
-			mapComponent?.setRadioHighlight(getRadioHighlightEntries());
-			fetchRadioEnrichment(redcode);
 		}) as EventListener);
 
 		mapContainer?.addEventListener('radio-deselect', ((e: CustomEvent) => {

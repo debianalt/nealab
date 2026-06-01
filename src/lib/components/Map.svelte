@@ -304,7 +304,7 @@
 				source: 'buildings',
 				'source-layer': 'buildings',
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -320,7 +320,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -383,7 +383,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -443,7 +443,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -459,7 +459,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -475,7 +475,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -491,7 +491,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -507,7 +507,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
@@ -523,7 +523,7 @@
 				'source-layer': 'buildings',
 				layout: { visibility: 'none' },
 				paint: {
-					'fill-extrusion-height': ['max', ['coalesce', ['get', 'best_height_m'], 5], 5],
+					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
 					'fill-extrusion-base': 0,
 					'fill-extrusion-color': mapStore.getColorExpr() as any,
 					'fill-extrusion-opacity': 0.92
