@@ -22,21 +22,13 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR, GCS_BUCKET, TERRITORY_CONFIGS, get_territory
 
-# change_pressure, forest_health, green_capital, agri_potential EXCLUDED
-# from temporal: their temporal variants (dynamic_*) emit a DIFFERENT /
-# FEWER component set than the canonical pixel build_* (what Misiones has
-# + config petalVars + goalposts pca_variable_selection expect), and the
-# temporal run OVERWRITES the canonical parquet. Verified breaks:
-# change_pressure (trend→level), forest_health (c_ndvi_trend→c_ndvi_mean),
-# green_capital (Cor/Ita lost scored c_treecover), agri_potential (Cor/Ita
-# lost scored c_soc/c_ph_optimal/c_clay). RULE: temporal must NEVER clobber
-# a pixel-canonical analysis with a divergent/reduced component set. These
-# stay strictly on the pixel pipeline. Remaining temporal = env_risk
-# (de-facto inactive: baseline 100% nodata) + climate_comfort (verified
-# 4-territory consistent).
-TEMPORAL_ANALYSES = [
-    "environmental_risk", "climate_comfort",
-]
+# All temporal analyses removed after 2026-05-31 catalog cleanup:
+# environmental_risk and climate_comfort (the two that were enabled) were
+# deleted from the catalog as indefensible composites. No remaining catalog
+# analysis has a compatible temporal variant. TEMPORAL_ANALYSES stays empty
+# until a redesign explicitly adds a new temporal-compatible analysis.
+# The temporal cron workflows will exit cleanly (see early-exit guard in main()).
+TEMPORAL_ANALYSES = []
 GCS_PREFIX = "satellite"
 
 
@@ -213,6 +205,10 @@ def main():
         analyses = TEMPORAL_ANALYSES
     else:
         analyses = [a.strip() for a in args.analyses.split(",")]
+
+    if not analyses:
+        print("No temporal analyses configured. TEMPORAL_ANALYSES is empty — exiting cleanly.")
+        return 0
 
     mode = "both" if args.include_baseline else "current"
 

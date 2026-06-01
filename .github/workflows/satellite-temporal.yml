@@ -1,17 +1,14 @@
 name: Update Temporal Baselines (Current vs Baseline)
-# Runs monthly: exports current-period composites from GEE, computes
-# delta scores (current - baseline) for 6 pixel-level analyses.
-# Baseline rasters are cached in R2 and only re-exported on first run
-# or when explicitly requested via include-baseline.
+# Schedule disabled: TEMPORAL_ANALYSES is empty after 2026-05-31 catalog cleanup.
+# The pipeline exits cleanly when invoked with no analyses. Re-enable schedule
+# once a temporal-compatible analysis is added to TEMPORAL_ANALYSES.
 
 on:
-  schedule:
-    - cron: '0 7 5 * *'  # 5th of each month, 07:00 UTC
   workflow_dispatch:
     inputs:
       analyses:
-        description: 'Comma-separated analysis IDs (default: all 6)'
-        default: 'environmental_risk,climate_comfort,green_capital,change_pressure,agri_potential,forest_health'
+        description: 'Comma-separated analysis IDs (or all — currently no-op)'
+        default: 'all'
       include_baseline:
         description: 'Also export baseline from GEE (first run or re-calibration)'
         type: boolean
@@ -50,7 +47,7 @@ jobs:
       - name: Run temporal update pipeline
         run: |
           python pipeline/run_temporal_update.py \
-            --analyses ${{ github.event.inputs.analyses || 'environmental_risk,climate_comfort,green_capital,change_pressure,agri_potential,forest_health' }} \
+            --analyses ${{ github.event.inputs.analyses || 'all' }} \
             ${{ github.event.inputs.include_baseline == 'true' && '--include-baseline' || '' }}
         env:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}
@@ -62,12 +59,7 @@ jobs:
         with:
           name: satellite-temporal
           path: |
-            pipeline/output/sat_environmental_risk.parquet
-            pipeline/output/sat_climate_comfort.parquet
-            pipeline/output/sat_green_capital.parquet
-            pipeline/output/sat_change_pressure.parquet
-            pipeline/output/sat_agri_potential.parquet
-            pipeline/output/sat_forest_health.parquet
+            pipeline/output/sat_*.parquet
           retention-days: 30
 
       - name: Notify on failure

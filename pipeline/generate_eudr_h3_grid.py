@@ -64,7 +64,11 @@ def load_province_boundaries() -> gpd.GeoDataFrame:
     """Load individual province boundaries for province assignment."""
     if not os.path.exists(BOUNDARY_PATH):
         return None
-    return gpd.read_file(BOUNDARY_PATH)
+    provinces = gpd.read_file(BOUNDARY_PATH)
+    if "id" not in provinces.columns:
+        provinces = provinces.copy()
+        provinces["id"] = provinces["name"]
+    return provinces
 
 
 def generate_h3_hexagons(boundary_geom: dict) -> list[str]:
