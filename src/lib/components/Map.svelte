@@ -36,6 +36,8 @@
 	import amambayPyBoundary from '$lib/data/amambay_py_boundary.json';
 	import canindeyuPyBoundary from '$lib/data/canindeyu_py_boundary.json';
 	import presidenteHayesPyBoundary from '$lib/data/presidente_hayes_py_boundary.json';
+	import boqueronPyBoundary from '$lib/data/boqueron_py_boundary.json';
+	import altoParaguayPyBoundary from '$lib/data/alto_paraguay_py_boundary.json';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
@@ -323,6 +325,8 @@
 				['amambay_py',          amambayPyBoundary],
 				['canindeyu_py',        canindeyuPyBoundary],
 				['presidente_hayes_py', presidenteHayesPyBoundary],
+			['boqueron_py',         boqueronPyBoundary],
+			['alto_paraguay_py',    altoParaguayPyBoundary],
 			];
 			for (const [id, data] of pyDeptBorders) {
 				map.addSource(`${id}-boundary`, { type: 'geojson', data });
