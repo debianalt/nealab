@@ -344,15 +344,13 @@
 				source: 'itapua-districts',
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
-				// Hide at low zoom: the underlying GAUL districts don't perfectly
-				// align with the GeoJSON province border (different sources), and
-				// at continent view this shows as a duplicated/blurry outline.
+				// Hide at low zoom: source drift creates double outline at continent view.
 				// Above zoom 8 the user is intentionally looking inside Itapúa.
 				minzoom: 8,
 				paint: {
-					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
-					'line-opacity': 0.5
+					'line-color': '#f472b6',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 13, 0.8],
+					'line-opacity': 0.35
 				}
 			});
 			map.addLayer({
@@ -406,13 +404,12 @@
 				source: 'alto_parana-districts',
 				'source-layer': 'districts',
 				layout: { visibility: 'none' },
-				// See itapua-district-line: tile/boundary source drift creates a
-				// double outline at continent view. Show only when user zooms in.
+				// See itapua-district-line: tile/boundary source drift.
 				minzoom: 8,
 				paint: {
-					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
-					'line-opacity': 0.5
+					'line-color': '#f472b6',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 13, 0.8],
+					'line-opacity': 0.35
 				}
 			});
 			map.addLayer({
@@ -484,7 +481,7 @@
 					id: `${srcId}-district-line`,
 					type: 'line', source: `${srcId}-districts`, 'source-layer': 'districts',
 					layout: { visibility: 'none' }, minzoom: 8,
-					paint: { 'line-color': '#93c5fd', 'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6], 'line-opacity': 0.5 }
+					paint: { 'line-color': '#f472b6', 'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 13, 0.8], 'line-opacity': 0.35 }
 				});
 				map.addLayer({
 					id: `${srcId}-district-selected-fill`,
@@ -1421,23 +1418,23 @@
 		// Phase 2b: district polygon click → load that district's hexes for the active analysis.
 		// Covers Itapúa, Alto Paraná, and all new PY departments.
 		const PY_DISTRICT_LAYERS: Record<string, string> = {
-			'itapua-district-fill': 'itapua_py',
-			'alto_parana-district-fill': 'alto_parana_py',
-			'concepcion-district-fill': 'concepcion_py',
-			'san_pedro-district-fill': 'san_pedro_py',
-			'cordillera-district-fill': 'cordillera_py',
-			'guaira-district-fill': 'guaira_py',
-			'caaguazu-district-fill': 'caaguazu_py',
-			'caazapa-district-fill': 'caazapa_py',
-			'misiones-district-fill': 'misiones_py',
-			'paraguari-district-fill': 'paraguari_py',
-			'central-district-fill': 'central_py',
-			'neembucu-district-fill': 'neembucu_py',
-			'amambay-district-fill': 'amambay_py',
-			'canindeyu-district-fill': 'canindeyu_py',
-			'presidente_hayes-district-fill': 'presidente_hayes_py',
-			'boqueron-district-fill': 'boqueron_py',
-			'alto_paraguay-district-fill': 'alto_paraguay_py',
+			'itapua-district-fill':              'itapua_py',
+			'alto_parana-district-fill':         'alto_parana_py',
+			'concepcion_py-district-fill':       'concepcion_py',
+			'san_pedro_py-district-fill':        'san_pedro_py',
+			'cordillera_py-district-fill':       'cordillera_py',
+			'guaira_py-district-fill':           'guaira_py',
+			'caaguazu_py-district-fill':         'caaguazu_py',
+			'caazapa_py-district-fill':          'caazapa_py',
+			'misiones_py-district-fill':         'misiones_py',
+			'paraguari_py-district-fill':        'paraguari_py',
+			'central_py-district-fill':          'central_py',
+			'neembucu_py-district-fill':         'neembucu_py',
+			'amambay_py-district-fill':          'amambay_py',
+			'canindeyu_py-district-fill':        'canindeyu_py',
+			'presidente_hayes_py-district-fill': 'presidente_hayes_py',
+			'boqueron_py-district-fill':         'boqueron_py',
+			'alto_paraguay_py-district-fill':    'alto_paraguay_py',
 		};
 		for (const lyr of Object.keys(PY_DISTRICT_LAYERS)) {
 			const terr = PY_DISTRICT_LAYERS[lyr];
@@ -2048,33 +2045,31 @@
 		for (const id of ['ar-dept-fill', 'ar-dept-line']) {
 			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
 		}
-		// PY district layers: show only the active territory's layer
+		// PY district layers: show only the active territory's layer.
+		// Layer IDs match the srcId from the creation loop (full territory ID).
+		// Exceptions: 'itapua' and 'alto_parana' were created manually before the loop.
 		const allPyDistrictLayers = [
-			'itapua-district-fill', 'itapua-district-line',
-			'alto_parana-district-fill', 'alto_parana-district-line',
-			'concepcion-district-fill', 'concepcion-district-line',
-			'san_pedro-district-fill', 'san_pedro-district-line',
-			'cordillera-district-fill', 'cordillera-district-line',
-			'guaira-district-fill', 'guaira-district-line',
-			'caaguazu-district-fill', 'caaguazu-district-line',
-			'caazapa-district-fill', 'caazapa-district-line',
-			'misiones-district-fill', 'misiones-district-line',
-			'paraguari-district-fill', 'paraguari-district-line',
-			'central-district-fill', 'central-district-line',
-			'neembucu-district-fill', 'neembucu-district-line',
-			'amambay-district-fill', 'amambay-district-line',
-			'canindeyu-district-fill', 'canindeyu-district-line',
-			'presidente_hayes-district-fill', 'presidente_hayes-district-line',
-			'boqueron-district-fill', 'boqueron-district-line',
-			'alto_paraguay-district-fill', 'alto_paraguay-district-line',
+			'itapua-district-fill',              'itapua-district-line',
+			'alto_parana-district-fill',         'alto_parana-district-line',
+			'concepcion_py-district-fill',       'concepcion_py-district-line',
+			'san_pedro_py-district-fill',        'san_pedro_py-district-line',
+			'cordillera_py-district-fill',       'cordillera_py-district-line',
+			'guaira_py-district-fill',           'guaira_py-district-line',
+			'caaguazu_py-district-fill',         'caaguazu_py-district-line',
+			'caazapa_py-district-fill',          'caazapa_py-district-line',
+			'misiones_py-district-fill',         'misiones_py-district-line',
+			'paraguari_py-district-fill',        'paraguari_py-district-line',
+			'central_py-district-fill',          'central_py-district-line',
+			'neembucu_py-district-fill',         'neembucu_py-district-line',
+			'amambay_py-district-fill',          'amambay_py-district-line',
+			'canindeyu_py-district-fill',        'canindeyu_py-district-line',
+			'presidente_hayes_py-district-fill', 'presidente_hayes_py-district-line',
+			'boqueron_py-district-fill',         'boqueron_py-district-line',
+			'alto_paraguay_py-district-fill',    'alto_paraguay_py-district-line',
 		];
-		// Active PY territory prefix (e.g. 'itapua_py' → 'itapua')
-		const activePyPrefix = activeTerritoryId.endsWith('_py')
-			? activeTerritoryId.slice(0, -3)  // strip '_py'
-			: null;
 		for (const id of allPyDistrictLayers) {
 			if (!map.getLayer(id)) continue;
-			const isActiveTerrLayer = activePyPrefix && id.startsWith(activePyPrefix);
+			const isActiveTerrLayer = id.startsWith(activeTerritoryId);
 			map.setLayoutProperty(id, 'visibility', (visible && isActiveTerrLayer) ? 'visible' : 'none');
 		}
 	}

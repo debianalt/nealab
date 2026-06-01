@@ -38,6 +38,7 @@
 	import { isInsideAltoParaguay } from '$lib/utils/alto_paraguay-pip';
 	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
+	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { terms } from '$lib/stores/terms.svelte';
@@ -902,6 +903,8 @@
 		// and the blue AR-dept polygons don't match our GADM lines anyway.
 		const show = !!a && a.spatialUnit !== 'catastro' && a.id !== 'eudr' && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
+		// Pre-fetch colorDomain so first dept click doesn't wait for the global parquet query
+		if (a?.perDepartment) hexStore.ensureColorDomain().catch(() => {});
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────
@@ -1513,10 +1516,16 @@
 		// Render outside Svelte's reactive batch to prevent $effect interference
 		setTimeout(() => {
 			const allEntries = hexStore.choroplethEntries;
-			const entries = allEntries.filter(e => {
-				const [lat, lng] = cellToLatLng(e.h3index);
-				return isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix);
-			});
+			// Per-dept parquets for non-Misiones territories already contain only
+			// that district's hexes (filtered in pipeline via h3_admin_crosswalk).
+			// Skipping PIP saves 100-300ms on large districts (5K-30K hex × PIP).
+			const needsPip = hexStore.territoryPrefix === '' || hexStore.territoryPrefix === 'misiones/';
+			const entries = needsPip
+				? allEntries.filter(e => {
+					const [lat, lng] = cellToLatLng(e.h3index);
+					return isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix);
+				})
+				: allEntries;
 			if (entries.length > 0) {
 				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = hexStore.activeLayer?.colorScale ?? 'flood';
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
@@ -1617,6 +1626,25 @@
 
 			{#if itapuaHovering && territoryStore.regionalMode}
 				<div class="itapua-hover-badge">🇵🇾 Paraguay · datos satelitales comparables</div>
+			{/if}
+
+			<!-- Dept picker panel: shown when a perDept analysis is active and no dept selected yet -->
+			{#if hexStore.activeLayer?.perDepartment && !hexStore.selectedDpto && !hexStore.loading}
+				<DeptPickerPanel
+					analysisId={hexStore.activeLayer.id}
+					territoryPrefix={hexStore.territoryPrefix}
+					onSelect={(name, parquetKey) => {
+						const t = TERRITORY_REGISTRY[territoryStore.activeTerritory.id];
+						loadDeptSummary(hexStore.activeLayer!.id, hexStore.territoryPrefix).then(summary => {
+							const depts = summary?.departments as any[] | undefined;
+							if (!depts?.length) return;
+							const norm = (s: string) => (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+							const entry = depts.find(d => norm(d.dpto ?? d.distrito ?? d.municipio ?? '') === norm(name));
+							if (!entry?.centroid) { handleSelectFloodDpto(name, parquetKey, [0, 0]); return; }
+							handleSelectFloodDpto(name, parquetKey, entry.centroid as [number, number]);
+						});
+					}}
+				/>
 			{/if}
 
 			<!-- Controls (positioned relative to map) -->
