@@ -453,7 +453,10 @@
 			] as const;
 
 			for (const [tid, bldgKey, distKey] of PY_TERR_LIST) {
+				// Buildings use the stripped ID (without _py) — matches TERRITORY_BUILDINGS_LAYER keys
 				const srcId = tid.replace(/_py$/, '');
+				// Districts use the full territory ID — matches PY_DISTRICT_LAYERS + setDeptPickerVisible
+				const distId = tid;
 				// Buildings source + 3D layer
 				map.addSource(`${srcId}-buildings`, { type: 'vector', url: getTilesUrl(bldgKey as any) });
 				map.addLayer({
@@ -470,29 +473,29 @@
 					}
 				});
 				// District source + 4 layers (fill, line, selected-fill, selected-line)
-				map.addSource(`${srcId}-districts`, { type: 'vector', url: getTilesUrl(distKey as any) });
+				map.addSource(`${distId}-districts`, { type: 'vector', url: getTilesUrl(distKey as any) });
 				map.addLayer({
-					id: `${srcId}-district-fill`,
-					type: 'fill', source: `${srcId}-districts`, 'source-layer': 'districts',
+					id: `${distId}-district-fill`,
+					type: 'fill', source: `${distId}-districts`, 'source-layer': 'districts',
 					layout: { visibility: 'none' },
 					paint: { 'fill-color': '#60a5fa', 'fill-opacity': 0.06 }
 				});
 				map.addLayer({
-					id: `${srcId}-district-line`,
-					type: 'line', source: `${srcId}-districts`, 'source-layer': 'districts',
+					id: `${distId}-district-line`,
+					type: 'line', source: `${distId}-districts`, 'source-layer': 'districts',
 					layout: { visibility: 'none' }, minzoom: 8,
 					paint: { 'line-color': '#f472b6', 'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 13, 0.8], 'line-opacity': 0.35 }
 				});
 				map.addLayer({
-					id: `${srcId}-district-selected-fill`,
-					type: 'fill', source: `${srcId}-districts`, 'source-layer': 'districts',
+					id: `${distId}-district-selected-fill`,
+					type: 'fill', source: `${distId}-districts`, 'source-layer': 'districts',
 					layout: { visibility: 'none' },
 					paint: { 'fill-color': '#60a5fa', 'fill-opacity': 0.45 },
 					filter: emptyDistrictFilter
 				});
 				map.addLayer({
-					id: `${srcId}-district-selected-line`,
-					type: 'line', source: `${srcId}-districts`, 'source-layer': 'districts',
+					id: `${distId}-district-selected-line`,
+					type: 'line', source: `${distId}-districts`, 'source-layer': 'districts',
 					layout: { visibility: 'none' },
 					paint: { 'line-color': '#60a5fa', 'line-width': 3, 'line-opacity': 1 },
 					filter: emptyDistrictFilter
