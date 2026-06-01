@@ -97,7 +97,9 @@
 		hexStore.selectedDpto = null;
 		if (!isRegional) {
 			// Normal mode: fly to territory + clear cross-territory selections
-			setTimeout(() => mapComponent?.flyToBbox(t.bbox), 100);
+			// Skip fly when triggered by a building click (radios are selected) — don't zoom away from clicked point.
+			const hasRadios = untrack(() => mapStore.selectedRadios.size > 0);
+			if (!hasRadios) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 100);
 			mapStore.clearDistricts();
 			mapComponent?.setDistrictHighlight([]);
 		} else {

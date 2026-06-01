@@ -22,6 +22,10 @@
 
 	const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 0 });
 	const fmt1 = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 1 });
+	// Area: auto-precision so small setores (< 1 km²) show 3 decimals, larger show 2
+	const fmtArea = (km2: number) => km2 < 1
+		? km2.toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 3 })
+		: km2.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 	let provAvg: number[] | null = $state(null);
 
@@ -117,7 +121,7 @@
 						{shortCode(entry.redcode)}
 					</span>
 					<span class="rt-col rt-num">{fmt(entry.population)}</span>
-					<span class="rt-col rt-num">{fmt1(entry.areaKm2)}</span>
+					<span class="rt-col rt-num">{fmtArea(entry.areaKm2)}</span>
 					<span class="rt-col rt-actions">
 						<button
 							class="r-dl-btn"

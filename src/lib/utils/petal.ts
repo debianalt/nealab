@@ -115,7 +115,8 @@ export async function loadRadioPopulation(territory: string): Promise<RadioPop> 
 	if (!isReady()) throw new Error('DuckDB not ready');
 
 	const cols = src.vars.map(v => v.col).join(', ');
-	const sql = `SELECT redcode, ${cols} FROM '${src.parquet}' WHERE total_personas > 0`;
+	const popCol = territory.endsWith('_br') ? 'total_pessoas' : 'total_personas';
+	const sql = `SELECT redcode, ${cols} FROM '${src.parquet}' WHERE ${popCol} > 0`;
 	const result = await query(sql);
 
 	const m = new Map<string, Record<string, any>>();
