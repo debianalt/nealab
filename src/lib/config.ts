@@ -659,7 +659,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.landUse.low',
 		legendHighKey: 'legend.landUse.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', cordillera_py: 'available'},
 	},
 	// ── Migrated from radio/catastro to H3 ──
 	sociodemographic: {
@@ -936,7 +936,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'produccion',
 		titleKey: 'sat.landUse.title',
 		descKey: 'sat.landUse.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', cordillera_py: 'available'},
 		comparable: true,
 		rigorBadge: 'physical',
 		status: 'available',
