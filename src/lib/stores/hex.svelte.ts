@@ -89,9 +89,13 @@ export class HexStore {
 	// Used by $effect to detect changes regardless of data size.
 	dataVersion: number = $state(0);
 
-	// Memoization cache for choroplethEntries — avoids O(n) recompute on every call.
+	// Memoization caches — avoids O(n) recompute on every call for all three data slots.
 	private _entriesVersion = -1;
 	private _entriesCache: ReturnType<HexStore['choroplethEntries_compute']> = [];
+	private _compareEntriesVersion = -1;
+	private _compareEntriesCache: ReturnType<HexStore['compareChoroplethEntries_compute']> = [];
+	private _regionalEntriesVersion = -1;
+	private _regionalEntriesCache: ReturnType<HexStore['regionalChoroplethEntries_compute']> = [];
 
 	// Pre-computed geometry caches (built once at load, reused everywhere)
 	centroidCache: Map<string, [number, number]> = new Map(); // h3index → [lng, lat]
@@ -479,28 +483,117 @@ export class HexStore {
 		}
 	}
 
-	// Prime the browser HTTP cache for all dept parquets of the current territory.
-	// DuckDB-WASM httpfs goes through browser fetch(), so cached responses skip network.
-	// Does NOT run DuckDB queries — avoids blocking the connection for user interactions.
-	// The deptDataCache will populate on the user's first visit to each dept.
+	// Two-phase prefetch:
+	// Phase 1 (immediate): HTTP fetch() to warm browser + CDN cache. Non-blocking.
+	// Phase 2 (idle): requestIdleCallback-scheduled DuckDB query + H3 geometry precompute.
+	//   Only runs when the browser is idle (no user interaction, no animations).
+	//   Processes smallest depts first for fastest cache population.
+	//   Never starts a new DuckDB query while user has an active load in progress.
 	private _prefetchDeptParquets(layer: HexLayerConfig): void {
 		const token = ++this._prefetchToken;
 		const prefix = this.territoryPrefix;
 		loadDeptSummary(layer.id, prefix).then(summary => {
 			if (this._prefetchToken !== token || !summary?.departments) return;
-			for (const dept of summary.departments as any[]) {
+			const depts = (summary.departments as any[]);
+
+			// Phase 1: HTTP warm (fire-and-forget, no DuckDB)
+			for (const dept of depts) {
 				if (this._prefetchToken !== token) return;
 				const key = dept.parquetKey as string;
-				if (!key) continue;
-				const cacheKey = `${layer.id}:${key}:${prefix}`;
-				if (deptDataCache.has(cacheKey)) continue;
+				if (!key || deptDataCache.has(`${layer.id}:${key}:${prefix}`)) continue;
 				let url: string;
 				if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
 				else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
 				else url = getScoresDptoUrl(key, prefix);
 				fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
 			}
+
+			// Phase 2: Geometry precompute during idle time (smallest depts first)
+			const remaining = [...depts].sort((a: any, b: any) => (a.hex_count ?? 0) - (b.hex_count ?? 0));
+			this._idlePrecomputeNext(layer, remaining, token, prefix);
 		});
+	}
+
+	private _idlePrecomputeNext(layer: HexLayerConfig, remaining: any[], token: number, prefix: string): void {
+		if (this._prefetchToken !== token || remaining.length === 0) return;
+		const reschedule = () => {
+			if (this._prefetchToken !== token || remaining.length === 0) return;
+			if (typeof requestIdleCallback !== 'undefined') {
+				requestIdleCallback(() => this._idlePrecomputeNext(layer, remaining, token, prefix), { timeout: 4000 });
+			} else {
+				setTimeout(() => this._idlePrecomputeNext(layer, remaining, token, prefix), 300);
+			}
+		};
+		// Don't start a DuckDB query if user is actively loading something
+		if (this.loading) { reschedule(); return; }
+
+		const dept = remaining.shift()!;
+		const key = dept.parquetKey as string;
+		if (!key) { reschedule(); return; }
+		const cacheKey = `${layer.id}:${key}:${prefix}`;
+		if (deptDataCache.has(cacheKey)) { reschedule(); return; }
+
+		let url: string;
+		if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
+		else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
+		else url = getScoresDptoUrl(key, prefix);
+
+		query(`SELECT * FROM '${url}'`).then(result => {
+			if (this._prefetchToken !== token) return;
+			const data = new Map<string, Record<string, any>>();
+			const centroids = new Map<string, [number, number]>();
+			const boundaries = new Map<string, number[][]>();
+			const resultCols = result.schema.fields.map((f: any) => f.name).filter((n: string) => n !== 'h3index');
+			const h3Vec = result.getChild('h3index');
+			const colVecs = Object.fromEntries(resultCols.map((col: string) => [col, result.getChild(col)]));
+			for (let i = 0; i < result.numRows; i++) {
+				const h3index = String(h3Vec!.get(i));
+				try {
+					const [lat, lng] = cellToLatLng(h3index);
+					const values: Record<string, any> = {};
+					for (const col of resultCols) {
+						const val = colVecs[col]?.get(i);
+						if (val === null || val === undefined) continue;
+						const num = Number(val);
+						values[col] = Number.isFinite(num) && typeof val !== 'string' ? num : String(val);
+					}
+					data.set(h3index, values);
+					centroids.set(h3index, [lng, lat]);
+					const boundary = cellToBoundary(h3index);
+					const coords = boundary.map(([lat, lng]) => [lng, lat]);
+					coords.push(coords[0]);
+					boundaries.set(h3index, coords);
+				} catch { /* skip */ }
+			}
+			// Edge-gap fill for Misiones AR (has boundary polygons)
+			const deptName = dept.dpto ?? dept.distrito ?? dept.municipio;
+			if (prefix === '' && deptName) {
+				const deptFeature = findDeptFeature(deptName, prefix);
+				if (deptFeature?.geometry) {
+					const geom = deptFeature.geometry;
+					const polygons: number[][][][] = geom.type === 'MultiPolygon' ? geom.coordinates
+						: geom.type === 'Polygon' ? [geom.coordinates] : [];
+					for (const poly of polygons) {
+						try {
+							for (const h3index of polygonToCells(poly as any, 9, true)) {
+								if (data.has(h3index)) continue;
+								try {
+									const [lat, lng] = cellToLatLng(h3index);
+									data.set(h3index, {});
+									centroids.set(h3index, [lng, lat]);
+									const boundary = cellToBoundary(h3index);
+									const coords = boundary.map(([lat, lng]) => [lng, lat]);
+									coords.push(coords[0]);
+									boundaries.set(h3index, coords);
+								} catch { /* skip */ }
+							}
+						} catch { /* skip */ }
+					}
+				}
+			}
+			deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
+			reschedule(); // schedule next dept
+		}).catch(() => reschedule());
 	}
 
 	clearRegionalData(): void {
@@ -510,7 +603,7 @@ export class HexStore {
 		this.regionalDataVersion++;
 	}
 
-	get regionalChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	private regionalChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.activeLayer.primaryVariable;
 		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
@@ -518,6 +611,14 @@ export class HexStore {
 			entries.push({ h3index, value: (data[pv] ?? 0) as number, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index) });
 		}
 		return entries;
+	}
+
+	get regionalChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+		if (this.regionalDataVersion === this._regionalEntriesVersion) return this._regionalEntriesCache;
+		const result = this.regionalChoroplethEntries_compute();
+		this._regionalEntriesVersion = this.regionalDataVersion;
+		this._regionalEntriesCache = result;
+		return result;
 	}
 
 	private static bboxFromBounds(bounds: Map<string, number[][]>): [number, number, number, number] | null {
@@ -557,7 +658,7 @@ export class HexStore {
 		this.compareDataVersion++;
 	}
 
-	get compareChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	private compareChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.activeLayer.primaryVariable;
 		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
@@ -566,6 +667,14 @@ export class HexStore {
 			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.compareBoundaryCache.get(h3index) });
 		}
 		return entries;
+	}
+
+	get compareChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+		if (this.compareDataVersion === this._compareEntriesVersion) return this._compareEntriesCache;
+		const result = this.compareChoroplethEntries_compute();
+		this._compareEntriesVersion = this.compareDataVersion;
+		this._compareEntriesCache = result;
+		return result;
 	}
 
 	backToDepartments() {

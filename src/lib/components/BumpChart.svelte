@@ -114,13 +114,25 @@
 		return PAD_T + ((rank - 1) / Math.max(totalDepts - 1, 1)) * plotH;
 	}
 
+	// Cache deptPoints per (name × rankings snapshot) — O(n²) loop called for every dept in render.
+	let _deptPointsCache = new Map<string, string>();
+	let _deptPointsRankingsSig = '';
+
 	function deptPoints(name: string): string {
+		const sig = rankings.length + ':' + (rankings[0]?.depts.length ?? 0);
+		if (sig !== _deptPointsRankingsSig) {
+			_deptPointsCache.clear();
+			_deptPointsRankingsSig = sig;
+		}
+		if (_deptPointsCache.has(name)) return _deptPointsCache.get(name)!;
 		const pts: string[] = [];
 		rankings.forEach((col, i) => {
 			const e = col.depts.find(d => d.name === name);
 			if (e) pts.push(`${colX(i).toFixed(1)},${rankY(e.rank).toFixed(1)}`);
 		});
-		return pts.join(' ');
+		const result = pts.join(' ');
+		_deptPointsCache.set(name, result);
+		return result;
 	}
 
 	function handleMouseMove(e: MouseEvent) {

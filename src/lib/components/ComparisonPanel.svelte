@@ -35,6 +35,9 @@
 	let groups: TerritoryGroup[] = $state([]);
 	let selectorOpen = $state(false);
 	let statsGen = 0; // generation counter — cancels stale async loadStats promises
+	// Territory-level stats cache keyed by `territory.id:analysisId`.
+	// Global parquet AVG queries take 200-400ms; reuse across dept switches.
+	const statsCache = new Map<string, TerritoryStats>();
 
 	const activeLayer = $derived(
 		lensStore.activeAnalysis ? HEX_LAYER_REGISTRY[lensStore.activeAnalysis.id] : null
@@ -61,6 +64,7 @@
 		const analysis = lensStore.activeAnalysis;
 		groups = [];
 		selectorOpen = false;
+		statsCache.clear(); // invalidate cached territory stats on analysis switch
 		if (!analysis) return;
 		const territories = Object.values(TERRITORY_REGISTRY)
 			.filter(t => t.available)
@@ -91,6 +95,9 @@
 	async function loadStats(territory: TerritoryConfig, cols: string[]): Promise<TerritoryStats> {
 		if (cols.length === 0) return { territory, values: {}, rawValues: {} };
 		const analysisId = lensStore.activeAnalysis?.id ?? '';
+		// Return cached result if available — global parquet AVG queries are expensive.
+		const ck = `${territory.id}:${analysisId}`;
+		if (statsCache.has(ck)) return statsCache.get(ck)!;
 		const url = getSatGlobalUrl(analysisId, territory.parquetPrefix);
 
 		const rawColMap = new Map<string, string>();
@@ -112,18 +119,20 @@
 			const rawCols = [...rawColMap.values()].filter(c => available.has(c));
 			const allCols = [...new Set([...validCols, ...rawCols])];
 			const selects = allCols.map(col => `AVG("${col}") AS "${col}"`).join(', ');
-			const result = await query(`SELECT ${selects} FROM '${url}'`);
+			const queryResult = await query(`SELECT ${selects} FROM '${url}'`);
 			const values: Record<string, number | null> = {};
 			const rawValues: Record<string, number | null> = {};
 			for (const col of validCols) {
-				const vec = result.getChild(col);
+				const vec = queryResult.getChild(col);
 				values[col] = vec ? (vec.get(0) as number | null) : null;
 			}
 			for (const col of rawCols) {
-				const vec = result.getChild(col);
+				const vec = queryResult.getChild(col);
 				rawValues[col] = vec ? (vec.get(0) as number | null) : null;
 			}
-			return { territory, values, rawValues };
+			const statResult: TerritoryStats = { territory, values, rawValues };
+			statsCache.set(ck, statResult);
+			return statResult;
 		} catch (e) {
 			console.warn('[loadStats] failed for', territory.id, e);
 			return { territory, values: {}, rawValues: {} };

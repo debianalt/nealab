@@ -2695,6 +2695,9 @@
 		return `rgb(${r},${g},${b})`;
 	}
 
+	// Track last state to avoid redundant setPaintProperty calls
+	let _hexLayerInitialized = false;
+
 	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'lisa' = 'flood', domain?: [number, number]) {
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
@@ -2762,10 +2765,15 @@
 		if (fi < features.length) features.length = fi;
 
 		src.setData({ type: 'FeatureCollection', features });
-		map.setPaintProperty('hex-fill', 'fill-color', ['get', 'color']);
+		// Static properties (color expression, line style) only need to be set once.
+		// Opacity is always restored because clearHexChoropleth() sets it to 0.
+		if (!_hexLayerInitialized) {
+			map.setPaintProperty('hex-fill', 'fill-color', ['get', 'color']);
+			map.setPaintProperty('hex-line', 'line-color', '#374151');
+			map.setPaintProperty('hex-line', 'line-width', 0.5);
+			_hexLayerInitialized = true;
+		}
 		map.setPaintProperty('hex-fill', 'fill-opacity', 0.78);
-		map.setPaintProperty('hex-line', 'line-color', '#374151');
-		map.setPaintProperty('hex-line', 'line-width', 0.5);
 		map.setPaintProperty('hex-line', 'line-opacity', 0.25);
 
 		const bgSrc = map.getSource('territory-bg') as maplibregl.GeoJSONSource | undefined;
