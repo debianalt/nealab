@@ -309,8 +309,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.forestCurrent': { es: 'Cobertura forestal actual (%)', en: 'Current forest cover (%)', gn: "Ka'aguy ko'ãga (%)", pt: 'Cobertura florestal atual (%)' },
 
 	// ── Migrated radio/catastro to H3 ──
-	'analysis.flood.type': { es: 'Tipo de riesgo', en: 'Risk type', gn: 'Tipo', pt: 'Tipo de risco' },
-	'analysis.flood.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
 	'analysis.scores.type': { es: 'Tipo de consolidación', en: 'Consolidation type', gn: 'Tipo', pt: 'Tipo de consolidação' },
 	'analysis.scores.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
 	'analysis.socio.type': { es: 'Tipo sociodemografico', en: 'Sociodemographic type', gn: 'Tipo', pt: 'Tipo sociodemográfico' },
