@@ -89,6 +89,10 @@ export class HexStore {
 	// Used by $effect to detect changes regardless of data size.
 	dataVersion: number = $state(0);
 
+	// Memoization cache for choroplethEntries — avoids O(n) recompute on every call.
+	private _entriesVersion = -1;
+	private _entriesCache: ReturnType<HexStore['choroplethEntries_compute']> = [];
+
 	// Pre-computed geometry caches (built once at load, reused everywhere)
 	centroidCache: Map<string, [number, number]> = new Map(); // h3index → [lng, lat]
 	boundaryCache: Map<string, number[][]> = new Map(); // h3index → [[lng, lat], ...]
@@ -197,7 +201,8 @@ export class HexStore {
 		this.clearHexZones();
 		this.clearCompareDept();
 		this.clearRegionalData();
-		this.dataVersion++;
+		// Note: dataVersion is NOT incremented here — we only increment after data is ready.
+		// This prevents a blank-map flash that would occur if $effects fire on the empty visibleData.
 
 		try {
 			// Fast path: return cached geometry + data without a DuckDB round-trip.
@@ -474,102 +479,28 @@ export class HexStore {
 		}
 	}
 
-	// Background-precompute DuckDB query + H3 geometry for all dept parquets of the current
-	// territory. Results stored in deptDataCache so the first user click is also instant.
-	// Processes smallest depts first, pauses while user has an active load in progress.
-	private async _prefetchDeptParquets(layer: HexLayerConfig): Promise<void> {
+	// Prime the browser HTTP cache for all dept parquets of the current territory.
+	// DuckDB-WASM httpfs goes through browser fetch(), so cached responses skip network.
+	// Does NOT run DuckDB queries — avoids blocking the connection for user interactions.
+	// The deptDataCache will populate on the user's first visit to each dept.
+	private _prefetchDeptParquets(layer: HexLayerConfig): void {
 		const token = ++this._prefetchToken;
 		const prefix = this.territoryPrefix;
-
-		const summary = await loadDeptSummary(layer.id, prefix);
-		if (this._prefetchToken !== token || !summary?.departments) return;
-
-		// Smallest depts first → first results appear in cache soonest
-		const sorted = [...(summary.departments as any[])].sort((a, b) => (a.hex_count ?? 0) - (b.hex_count ?? 0));
-
-		for (const dept of sorted) {
-			if (this._prefetchToken !== token) return;
-
-			// Yield priority to any user-triggered load
-			while (this.loading) {
-				await new Promise(r => setTimeout(r, 50));
+		loadDeptSummary(layer.id, prefix).then(summary => {
+			if (this._prefetchToken !== token || !summary?.departments) return;
+			for (const dept of summary.departments as any[]) {
 				if (this._prefetchToken !== token) return;
+				const key = dept.parquetKey as string;
+				if (!key) continue;
+				const cacheKey = `${layer.id}:${key}:${prefix}`;
+				if (deptDataCache.has(cacheKey)) continue;
+				let url: string;
+				if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
+				else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
+				else url = getScoresDptoUrl(key, prefix);
+				fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
 			}
-
-			const key = dept.parquetKey as string;
-			if (!key) continue;
-			const cacheKey = `${layer.id}:${key}:${prefix}`;
-			if (deptDataCache.has(cacheKey)) continue;
-
-			let url: string;
-			if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
-			else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
-			else url = getScoresDptoUrl(key, prefix);
-
-			try {
-				const result = await query(`SELECT * FROM '${url}'`);
-				const data = new Map<string, Record<string, any>>();
-				const centroids = new Map<string, [number, number]>();
-				const boundaries = new Map<string, number[][]>();
-
-				const resultCols = result.schema.fields.map((f: any) => f.name).filter((n: string) => n !== 'h3index');
-				const h3Vec = result.getChild('h3index');
-				const colVecs = Object.fromEntries(resultCols.map((col: string) => [col, result.getChild(col)]));
-
-				for (let i = 0; i < result.numRows; i++) {
-					const h3index = String(h3Vec!.get(i));
-					try {
-						const [lat, lng] = cellToLatLng(h3index);
-						const values: Record<string, any> = {};
-						for (const col of resultCols) {
-							const val = colVecs[col]?.get(i);
-							if (val === null || val === undefined) continue;
-							const num = Number(val);
-							values[col] = Number.isFinite(num) && typeof val !== 'string' ? num : String(val);
-						}
-						data.set(h3index, values);
-						centroids.set(h3index, [lng, lat]);
-						const boundary = cellToBoundary(h3index);
-						const coords = boundary.map(([lat, lng]) => [lng, lat]);
-						coords.push(coords[0]);
-						boundaries.set(h3index, coords);
-					} catch { /* skip invalid h3 */ }
-				}
-
-				// Edge-gap fill only for Misiones (empty prefix) where boundary polygons exist
-				const deptName = dept.dpto ?? dept.distrito ?? dept.municipio;
-				if (prefix === '' && deptName) {
-					const deptFeature = findDeptFeature(deptName, prefix);
-					if (deptFeature?.geometry) {
-						const geom = deptFeature.geometry;
-						const polygons: number[][][][] = geom.type === 'MultiPolygon' ? geom.coordinates
-							: geom.type === 'Polygon' ? [geom.coordinates] : [];
-						for (const poly of polygons) {
-							try {
-								const expected = polygonToCells(poly as any, 9, true);
-								for (const h3index of expected) {
-									if (data.has(h3index)) continue;
-									try {
-										const [lat, lng] = cellToLatLng(h3index);
-										data.set(h3index, {});
-										centroids.set(h3index, [lng, lat]);
-										const boundary = cellToBoundary(h3index);
-										const coords = boundary.map(([lat, lng]) => [lng, lat]);
-										coords.push(coords[0]);
-										boundaries.set(h3index, coords);
-									} catch { /* skip */ }
-								}
-							} catch { /* skip */ }
-						}
-					}
-				}
-
-				deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
-			} catch { /* silent fail — user will trigger on demand */ }
-
-			// Yield to main thread between depts
-			await new Promise(r => setTimeout(r, 0));
-		}
+		});
 	}
 
 	clearRegionalData(): void {
@@ -848,7 +779,8 @@ export class HexStore {
 
 	// ── Choropleth entries ────────────────────────────────────────────────
 
-	get choroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	// Private compute method (for type inference in memoization above)
+	private choroplethEntries_compute() {
 		if (!this.activeLayer) return [];
 		const effectivePrimary = this.activeLayer.temporal && this.temporalMode !== 'current'
 			? getTemporalCol(this.activeLayer.primaryVariable, this.temporalMode)
@@ -860,7 +792,6 @@ export class HexStore {
 			const hasData = raw !== undefined && raw !== null &&
 				(typeof raw !== 'number' || Number.isFinite(raw));
 			const value: number | null = hasData ? Number(raw) : null;
-			// Delta mode: skip true zeros (no change), but keep nodata so they're rendered explicitly
 			if (isDelta && hasData && value === 0) continue;
 			entries.push({
 				h3index,
@@ -871,6 +802,14 @@ export class HexStore {
 			});
 		}
 		return entries;
+	}
+
+	get choroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+		if (this.dataVersion === this._entriesVersion) return this._entriesCache;
+		const result = this.choroplethEntries_compute();
+		this._entriesVersion = this.dataVersion;
+		this._entriesCache = result;
+		return result;
 	}
 
 	// ── Hex zone (lasso) operations ──────────────────────────────────────

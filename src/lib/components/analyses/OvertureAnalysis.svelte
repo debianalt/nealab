@@ -271,6 +271,7 @@
 	);
 
 	let crossProfile = $state<{ label: string; typeLabel: string }[]>([]);
+	let _crossProfileGen = 0;
 
 	$effect(() => {
 		const hex = selectedHex;
@@ -280,6 +281,7 @@
 		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === dpto);
 		if (!dept) { crossProfile = []; return; }
 
+		const gen = ++_crossProfileGen;
 		const h3 = hex.h3index;
 		const promises = CROSS_ANALYSES
 			.filter(a => a.id !== analysis.id)
@@ -298,11 +300,15 @@
 				return { label: a.label, typeLabel: '—' };
 			});
 
-		Promise.all(promises).then(results => { crossProfile = results; });
+		Promise.all(promises).then(results => {
+			if (_crossProfileGen !== gen) return; // newer dept selected
+			crossProfile = results;
+		});
 	});
 
 	// ── Type distribution for selected department ──
 	let typeDistribution = $state<{ type: number; label: string; count: number; pct: number; avgScore: number | null }[]>([]);
+	let _typeDistGen = 0;
 
 	$effect(() => {
 		const dpto = selectedDpto;
@@ -312,10 +318,12 @@
 		// For continuous analyses the query would fail with a Binder Error.
 		if (!isCategorical) { typeDistribution = []; return; }
 
+		const gen = ++_typeDistGen;
 		const pv = layerCfg?.primaryVariable ?? 'score';
 		const scoreCol = pv === 'type' || pv === 'territorial_type' ? '' : `, AVG(${pv}) as avg_score`;
 		query(`SELECT type, type_label, COUNT(*) as n${scoreCol} FROM '${dataUrl}' GROUP BY type, type_label ORDER BY n DESC`)
 			.then(r => {
+				if (_typeDistGen !== gen) return; // newer dept selected
 				const total = Array.from({ length: r.numRows }, (_, i) => Number(r.get(i)!.toJSON().n)).reduce((a, b) => a + b, 0);
 				typeDistribution = Array.from({ length: r.numRows }, (_, i) => {
 					const row = r.get(i)!.toJSON() as Record<string, any>;

@@ -1502,27 +1502,43 @@
 		}
 	}
 
-	async function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
-		mapComponent?.clearHexChoropleth();
+	// Monotonic token: when a newer dept is selected while a load is in progress,
+	// the stale load's render is abandoned (no blank map flash, no wrong data).
+	let _deptToken = 0;
+	// Debounce timer: rapid clicks collapse into a single load after 80ms of inactivity.
+	let _deptDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
+		if (_deptDebounceTimer) clearTimeout(_deptDebounceTimer);
+		_deptDebounceTimer = setTimeout(() => {
+			_deptDebounceTimer = null;
+			_doSelectFloodDpto(dpto, parquetKey, centroid);
+		}, 80);
+	}
+
+	async function _doSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
+		const token = ++_deptToken;
+		// Don't clear the map upfront — previous dept stays visible while new data loads.
 		mapComponent?.clearHexZoneHighlight();
 		mapStore.setActiveHexLayer(hexStore.activeLayer?.id ?? null);
 		if (hexStore.activeLayer) {
 			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical');
 		}
-		// Load dept data + compute color domain in parallel (colorDomain uses global parquet,
-		// loadDepartment uses per-dept parquet — no shared resource conflict).
+		// Load dept data + compute color domain in parallel.
 		await Promise.all([
 			hexStore.loadDepartment(dpto, parquetKey),
 			hexStore.ensureColorDomain().catch(() => {}),
 		]);
+
+		// If a newer dept was clicked while we were loading, abandon this render.
+		if (_deptToken !== token) return;
+
 		prevDataVersion = hexStore.dataVersion;
-		// Render outside Svelte's reactive batch to prevent $effect interference
-		setTimeout(() => {
+		// rAF: render at the next animation frame — no artificial delay, and drops stale frames.
+		requestAnimationFrame(() => {
+			if (_deptToken !== token) return;
 			const allEntries = hexStore.choroplethEntries;
-			// Per-dept parquets for non-Misiones territories already contain only
-			// that district's hexes (filtered in pipeline via h3_admin_crosswalk).
-			// Skipping PIP saves 100-300ms on large districts (5K-30K hex × PIP).
-			// Only Misiones (empty prefix) needs PIP — all other territories are pre-filtered in pipeline.
+			// Only Misiones (empty prefix) needs PIP — all other territories pre-filtered in pipeline.
 			const needsPip = hexStore.territoryPrefix === '';
 			const entries = needsPip
 				? allEntries.filter(e => {
@@ -1535,12 +1551,12 @@
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 				analysisDataLoaded = true;
-				// deptBbox is already computed in loadDepartment — no need to re-run cellToLatLng over all entries
 				if (hexStore.deptBbox) mapComponent?.fitBoundsDept(hexStore.deptBbox);
 			} else {
+				mapComponent?.clearHexChoropleth();
 				mapComponent?.flyToCoords(centroid[1], centroid[0], 10);
 			}
-		}, 20);
+		});
 	}
 
 	function clearAll() {
