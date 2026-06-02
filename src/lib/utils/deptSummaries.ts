@@ -2,20 +2,27 @@
 // Each loader returns the bundled JSON for a given analysis × territory.
 
 const SAT_SUMMARIES: Record<string, () => Promise<any>> = {
-	agri_potential:       () => import('$lib/data/sat_agri_potential_dept_summary.json'),
-	forestry_aptitude:    () => import('$lib/data/sat_forestry_aptitude_dept_summary.json'),
-	service_deprivation:  () => import('$lib/data/sat_service_deprivation_dept_summary.json'),
-	health_access:        () => import('$lib/data/sat_health_access_dept_summary.json'),
-	education_capital:    () => import('$lib/data/sat_education_capital_dept_summary.json'),
-	education_flow:       () => import('$lib/data/sat_education_flow_dept_summary.json'),
-	land_use:             () => import('$lib/data/sat_land_use_dept_summary.json'),
-	flood_risk:           () => import('$lib/data/flood_dept_summary.json'),
-	sociodemographic:     () => import('$lib/data/sat_sociodemographic_dept_summary.json'),
-	economic_activity:    () => import('$lib/data/sat_economic_activity_dept_summary.json'),
-	accessibility:        () => import('$lib/data/sat_accessibility_dept_summary.json'),
-	carbon_stock:         () => import('$lib/data/sat_carbon_stock_dept_summary.json'),
-	pm25_drivers:         () => import('$lib/data/sat_pm25_drivers_dept_summary.json'),
+	agri_potential:         () => import('$lib/data/sat_agri_potential_dept_summary.json'),
+	forestry_aptitude:      () => import('$lib/data/sat_forestry_aptitude_dept_summary.json'),
+	service_deprivation:    () => import('$lib/data/sat_service_deprivation_dept_summary.json'),
+	health_access:          () => import('$lib/data/sat_health_access_dept_summary.json'),
+	education_capital:      () => import('$lib/data/sat_education_capital_dept_summary.json'),
+	education_flow:         () => import('$lib/data/sat_education_flow_dept_summary.json'),
+	land_use:               () => import('$lib/data/sat_land_use_dept_summary.json'),
+	flood_risk:             () => import('$lib/data/flood_dept_summary.json'),
+	sociodemographic:       () => import('$lib/data/sat_sociodemographic_dept_summary.json'),
+	economic_activity:      () => import('$lib/data/sat_economic_activity_dept_summary.json'),
+	accessibility:          () => import('$lib/data/sat_accessibility_dept_summary.json'),
+	carbon_stock:           () => import('$lib/data/sat_carbon_stock_dept_summary.json'),
+	pm25_drivers:           () => import('$lib/data/sat_pm25_drivers_dept_summary.json'),
 	deforestation_dynamics: () => import('$lib/data/sat_deforestation_dynamics_dept_summary.json'),
+	change_pressure:        () => import('$lib/data/sat_change_pressure_dept_summary.json'),
+	climate_comfort:        () => import('$lib/data/sat_climate_comfort_dept_summary.json'),
+	environmental_risk:     () => import('$lib/data/sat_environmental_risk_dept_summary.json'),
+	forest_health:          () => import('$lib/data/sat_forest_health_dept_summary.json'),
+	green_capital:          () => import('$lib/data/sat_green_capital_dept_summary.json'),
+	climate_vulnerability:  () => import('$lib/data/sat_climate_vulnerability_dept_summary.json'),
+	territorial_types:      () => import('$lib/data/sat_territorial_types_dept_summary.json'),
 };
 
 const ITAPUA_SUMMARIES: Record<string, () => Promise<any>> = {
@@ -51,6 +58,13 @@ const CORRIENTES_SUMMARIES: Record<string, () => Promise<any>> = {
 	education_flow:         () => import('$lib/data/corrientes_sat_education_flow_summary.json'),
 	deforestation_dynamics: () => import('$lib/data/corrientes_sat_deforestation_dynamics_summary.json'),
 	forestry_aptitude:      () => import('$lib/data/corrientes_sat_forestry_aptitude_summary.json'),
+	change_pressure:        () => import('$lib/data/corrientes_sat_change_pressure_summary.json'),
+	climate_comfort:        () => import('$lib/data/corrientes_sat_climate_comfort_summary.json'),
+	environmental_risk:     () => import('$lib/data/corrientes_sat_environmental_risk_summary.json'),
+	forest_health:          () => import('$lib/data/corrientes_sat_forest_health_summary.json'),
+	green_capital:          () => import('$lib/data/corrientes_sat_green_capital_summary.json'),
+	climate_vulnerability:  () => import('$lib/data/corrientes_sat_climate_vulnerability_summary.json'),
+	territorial_types:      () => import('$lib/data/corrientes_sat_territorial_types_summary.json'),
 };
 
 // Alto Paraná (PY) — Phase 1: 6 core satellite analyses. More added per phase.
@@ -87,6 +101,13 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	health_access           : () => import('$lib/data/chaco_sat_health_access_summary.json'),
 	education_capital       : () => import('$lib/data/chaco_sat_education_capital_summary.json'),
 	education_flow          : () => import('$lib/data/chaco_sat_education_flow_summary.json'),
+	change_pressure         : () => import('$lib/data/chaco_sat_change_pressure_summary.json'),
+	climate_comfort         : () => import('$lib/data/chaco_sat_climate_comfort_summary.json'),
+	environmental_risk      : () => import('$lib/data/chaco_sat_environmental_risk_summary.json'),
+	forest_health           : () => import('$lib/data/chaco_sat_forest_health_summary.json'),
+	green_capital           : () => import('$lib/data/chaco_sat_green_capital_summary.json'),
+	climate_vulnerability   : () => import('$lib/data/chaco_sat_climate_vulnerability_summary.json'),
+	territorial_types       : () => import('$lib/data/chaco_sat_territorial_types_summary.json'),
 };
 const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	carbon_stock            : () => import('$lib/data/formosa_sat_carbon_stock_summary.json'),
@@ -103,6 +124,13 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	health_access           : () => import('$lib/data/formosa_sat_health_access_summary.json'),
 	education_capital       : () => import('$lib/data/formosa_sat_education_capital_summary.json'),
 	education_flow          : () => import('$lib/data/formosa_sat_education_flow_summary.json'),
+	change_pressure         : () => import('$lib/data/formosa_sat_change_pressure_summary.json'),
+	climate_comfort         : () => import('$lib/data/formosa_sat_climate_comfort_summary.json'),
+	environmental_risk      : () => import('$lib/data/formosa_sat_environmental_risk_summary.json'),
+	forest_health           : () => import('$lib/data/formosa_sat_forest_health_summary.json'),
+	green_capital           : () => import('$lib/data/formosa_sat_green_capital_summary.json'),
+	climate_vulnerability   : () => import('$lib/data/formosa_sat_climate_vulnerability_summary.json'),
+	territorial_types       : () => import('$lib/data/formosa_sat_territorial_types_summary.json'),
 };
 const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/parana_br_sat_deforestation_dynamics_summary.json'),
