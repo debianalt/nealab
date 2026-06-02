@@ -221,6 +221,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/central_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/central_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/central_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/central_py_flood_dept_summary.json'),
 	},
 	'neembucu_py/': {
 		agri_potential:         () => import('$lib/data/neembucu_py_sat_agri_potential_summary.json'),
@@ -230,6 +231,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/neembucu_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/neembucu_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/neembucu_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/neembucu_py_flood_dept_summary.json'),
 	},
 	'amambay_py/': {
 		agri_potential:         () => import('$lib/data/amambay_py_sat_agri_potential_summary.json'),
@@ -239,6 +241,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/amambay_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/amambay_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/amambay_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/amambay_py_flood_dept_summary.json'),
 	},
 	'canindeyu_py/': {
 		agri_potential:         () => import('$lib/data/canindeyu_py_sat_agri_potential_summary.json'),
@@ -248,6 +251,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/canindeyu_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/canindeyu_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/canindeyu_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/canindeyu_py_flood_dept_summary.json'),
 	},
 	'presidente_hayes_py/': {
 		agri_potential:         () => import('$lib/data/presidente_hayes_py_sat_agri_potential_summary.json'),
@@ -257,6 +261,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/presidente_hayes_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/presidente_hayes_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/presidente_hayes_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/presidente_hayes_py_flood_dept_summary.json'),
 	},
 	'boqueron_py/': {
 		agri_potential:         () => import('$lib/data/boqueron_py_sat_agri_potential_summary.json'),

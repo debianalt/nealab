@@ -1,0 +1,31 @@
+{
+  "province": {
+    "total_hexes": 89536,
+    "high_risk_count": 40,
+    "avg_score": 1.1
+  },
+  "departments": [
+    {
+      "dpto": "Bella Vista",
+      "parquetKey": "bella_vista",
+      "avg_score": 1.1,
+      "hex_count": 38024,
+      "high_risk_count": 29,
+      "centroid": [
+        -56.4516,
+        -22.4794
+      ]
+    },
+    {
+      "dpto": "Pedro Juan Caballero",
+      "parquetKey": "pedro_juan_caballero",
+      "avg_score": 1.1,
+      "hex_count": 51512,
+      "high_risk_count": 11,
+      "centroid": [
+        -55.9532,
+        -22.7878
+      ]
+    }
+  ]
+}

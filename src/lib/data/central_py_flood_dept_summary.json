@@ -1,0 +1,229 @@
+{
+  "province": {
+    "total_hexes": 27483,
+    "high_risk_count": 1510,
+    "avg_score": 4.9
+  },
+  "departments": [
+    {
+      "dpto": "Aregua",
+      "parquetKey": "aregua",
+      "avg_score": 16.4,
+      "hex_count": 1123,
+      "high_risk_count": 193,
+      "centroid": [
+        -57.3871,
+        -25.2922
+      ]
+    },
+    {
+      "dpto": "Asuncion",
+      "parquetKey": "asuncion",
+      "avg_score": 12.3,
+      "hex_count": 1465,
+      "high_risk_count": 266,
+      "centroid": [
+        -57.6055,
+        -25.2854
+      ]
+    },
+    {
+      "dpto": "Capiata",
+      "parquetKey": "capiata",
+      "avg_score": 1.0,
+      "hex_count": 833,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.4526,
+        -25.3681
+      ]
+    },
+    {
+      "dpto": "Fdo. De La Mora",
+      "parquetKey": "fdo_de_la_mora",
+      "avg_score": 1.0,
+      "hex_count": 221,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.5499,
+        -25.3229
+      ]
+    },
+    {
+      "dpto": "Guarambare",
+      "parquetKey": "guarambare",
+      "avg_score": 1.1,
+      "hex_count": 312,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.452,
+        -25.4829
+      ]
+    },
+    {
+      "dpto": "Ita",
+      "parquetKey": "ita",
+      "avg_score": 1.2,
+      "hex_count": 1945,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.3763,
+        -25.5227
+      ]
+    },
+    {
+      "dpto": "Itaugua",
+      "parquetKey": "itaugua",
+      "avg_score": 8.1,
+      "hex_count": 1218,
+      "high_risk_count": 93,
+      "centroid": [
+        -57.3525,
+        -25.3931
+      ]
+    },
+    {
+      "dpto": "J. A. Saldivar",
+      "parquetKey": "j_a_saldivar",
+      "avg_score": 1.0,
+      "hex_count": 374,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.4334,
+        -25.4217
+      ]
+    },
+    {
+      "dpto": "Lambare",
+      "parquetKey": "lambare",
+      "avg_score": 6.2,
+      "hex_count": 310,
+      "high_risk_count": 36,
+      "centroid": [
+        -57.6166,
+        -25.3522
+      ]
+    },
+    {
+      "dpto": "Limpio",
+      "parquetKey": "limpio",
+      "avg_score": 10.3,
+      "hex_count": 1313,
+      "high_risk_count": 199,
+      "centroid": [
+        -57.4791,
+        -25.1516
+      ]
+    },
+    {
+      "dpto": "Luque",
+      "parquetKey": "luque",
+      "avg_score": 1.2,
+      "hex_count": 1595,
+      "high_risk_count": 1,
+      "centroid": [
+        -57.4571,
+        -25.2466
+      ]
+    },
+    {
+      "dpto": "M. Roque Alonso",
+      "parquetKey": "m_roque_alonso",
+      "avg_score": 12.3,
+      "hex_count": 455,
+      "high_risk_count": 76,
+      "centroid": [
+        -57.5338,
+        -25.1973
+      ]
+    },
+    {
+      "dpto": "Nemby",
+      "parquetKey": "nemby",
+      "avg_score": 1.1,
+      "hex_count": 283,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.5321,
+        -25.3952
+      ]
+    },
+    {
+      "dpto": "Nueva Italia",
+      "parquetKey": "nueva_italia",
+      "avg_score": 1.8,
+      "hex_count": 4022,
+      "high_risk_count": 31,
+      "centroid": [
+        -57.4761,
+        -25.7667
+      ]
+    },
+    {
+      "dpto": "San Antonio",
+      "parquetKey": "san_antonio",
+      "avg_score": 14.1,
+      "hex_count": 315,
+      "high_risk_count": 67,
+      "centroid": [
+        -57.5599,
+        -25.4165
+      ]
+    },
+    {
+      "dpto": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "avg_score": 1.0,
+      "hex_count": 607,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.5111,
+        -25.3474
+      ]
+    },
+    {
+      "dpto": "Villa Elisa",
+      "parquetKey": "villa_elisa",
+      "avg_score": 3.7,
+      "hex_count": 220,
+      "high_risk_count": 7,
+      "centroid": [
+        -57.5871,
+        -25.3721
+      ]
+    },
+    {
+      "dpto": "Villeta",
+      "parquetKey": "villeta",
+      "avg_score": 4.1,
+      "hex_count": 9166,
+      "high_risk_count": 427,
+      "centroid": [
+        -57.6031,
+        -25.706
+      ]
+    },
+    {
+      "dpto": "Ypacarai",
+      "parquetKey": "ypacarai",
+      "avg_score": 8.3,
+      "hex_count": 1197,
+      "high_risk_count": 103,
+      "centroid": [
+        -57.2577,
+        -25.389
+      ]
+    },
+    {
+      "dpto": "Ypane",
+      "parquetKey": "ypane",
+      "avg_score": 2.1,
+      "hex_count": 509,
+      "high_risk_count": 11,
+      "centroid": [
+        -57.5063,
+        -25.4554
+      ]
+    }
+  ]
+}
