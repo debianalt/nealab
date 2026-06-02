@@ -1,0 +1,42 @@
+{
+  "province": {
+    "total_hexes": 930865,
+    "high_risk_count": 260,
+    "avg_score": 1.1
+  },
+  "departments": [
+    {
+      "dpto": "Gral. Eugenio A. Garay",
+      "parquetKey": "gral_eugenio_a_garay",
+      "avg_score": 1.1,
+      "hex_count": 445852,
+      "high_risk_count": 0,
+      "centroid": [
+        -61.0505,
+        -21.147
+      ]
+    },
+    {
+      "dpto": "Mcal. Estigarribia",
+      "parquetKey": "mcal_estigarribia",
+      "avg_score": 1.2,
+      "hex_count": 137865,
+      "high_risk_count": 13,
+      "centroid": [
+        -60.2955,
+        -22.3753
+      ]
+    },
+    {
+      "dpto": "Pedro P. Pena",
+      "parquetKey": "pedro_p_pena",
+      "avg_score": 1.1,
+      "hex_count": 347148,
+      "high_risk_count": 247,
+      "centroid": [
+        -61.3586,
+        -22.7109
+      ]
+    }
+  ]
+}
