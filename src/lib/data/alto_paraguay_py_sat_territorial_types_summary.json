@@ -1,0 +1,40 @@
+{
+  "territory": "alto_paraguay_py",
+  "province": {
+    "total_hexes": 797665,
+    "avg_score": 2.5,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Mayor Pablo La Gerenza",
+      "parquetKey": "mayor_pablo_la_gerenza",
+      "avg_score": 3.0,
+      "hex_count": 354580,
+      "centroid": [
+        -60.2193,
+        -20.0049
+      ]
+    },
+    {
+      "distrito": "La Victoria",
+      "parquetKey": "la_victoria",
+      "avg_score": 2.4,
+      "hex_count": 238244,
+      "centroid": [
+        -58.845,
+        -21.6079
+      ]
+    },
+    {
+      "distrito": "Fuerte Olimpo",
+      "parquetKey": "fuerte_olimpo",
+      "avg_score": 1.9,
+      "hex_count": 204841,
+      "centroid": [
+        -58.6553,
+        -20.376
+      ]
+    }
+  ]
+}

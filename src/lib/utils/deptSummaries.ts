@@ -398,6 +398,13 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		land_use:               () => import('$lib/data/boqueron_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/boqueron_py_sat_accessibility_summary.json'),
 		flood_risk:             () => import('$lib/data/boqueron_py_flood_dept_summary.json'),
+		change_pressure:        () => import('$lib/data/boqueron_py_sat_change_pressure_summary.json'),
+		climate_comfort:        () => import('$lib/data/boqueron_py_sat_climate_comfort_summary.json'),
+		environmental_risk:     () => import('$lib/data/boqueron_py_sat_environmental_risk_summary.json'),
+		forest_health:          () => import('$lib/data/boqueron_py_sat_forest_health_summary.json'),
+		green_capital:          () => import('$lib/data/boqueron_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/boqueron_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/boqueron_py_sat_territorial_types_summary.json'),
 	},
 	'alto_paraguay_py/': {
 		agri_potential:         () => import('$lib/data/alto_paraguay_py_sat_agri_potential_summary.json'),
@@ -408,6 +415,13 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		land_use:               () => import('$lib/data/alto_paraguay_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/alto_paraguay_py_sat_accessibility_summary.json'),
 		flood_risk:             () => import('$lib/data/alto_paraguay_py_flood_dept_summary.json'),
+		change_pressure:        () => import('$lib/data/alto_paraguay_py_sat_change_pressure_summary.json'),
+		climate_comfort:        () => import('$lib/data/alto_paraguay_py_sat_climate_comfort_summary.json'),
+		environmental_risk:     () => import('$lib/data/alto_paraguay_py_sat_environmental_risk_summary.json'),
+		forest_health:          () => import('$lib/data/alto_paraguay_py_sat_forest_health_summary.json'),
+		green_capital:          () => import('$lib/data/alto_paraguay_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/alto_paraguay_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/alto_paraguay_py_sat_territorial_types_summary.json'),
 	},
 };
 

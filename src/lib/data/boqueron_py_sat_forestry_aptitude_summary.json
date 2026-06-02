@@ -1,0 +1,40 @@
+{
+  "territory": "boqueron_py",
+  "province": {
+    "total_hexes": 930865,
+    "avg_score": 50.0,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Gral. Eugenio A. Garay",
+      "parquetKey": "gral_eugenio_a_garay",
+      "avg_score": 56.5,
+      "hex_count": 445852,
+      "centroid": [
+        -61.0698,
+        -21.1398
+      ]
+    },
+    {
+      "distrito": "Pedro P. Pena",
+      "parquetKey": "pedro_p_pena",
+      "avg_score": 44.2,
+      "hex_count": 347148,
+      "centroid": [
+        -61.3642,
+        -22.7396
+      ]
+    },
+    {
+      "distrito": "Mcal. Estigarribia",
+      "parquetKey": "mcal_estigarribia",
+      "avg_score": 43.5,
+      "hex_count": 137865,
+      "centroid": [
+        -60.3036,
+        -22.3771
+      ]
+    }
+  ]
+}
