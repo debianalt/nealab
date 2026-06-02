@@ -474,24 +474,102 @@ export class HexStore {
 		}
 	}
 
-	// Background-prime browser HTTP cache for all dept parquets of the current territory.
-	// DuckDB-WASM httpfs goes through the browser's fetch(), so these land in the HTTP cache
-	// and the subsequent DuckDB SELECT avoids the network round-trip.
-	private _prefetchDeptParquets(layer: HexLayerConfig): void {
+	// Background-precompute DuckDB query + H3 geometry for all dept parquets of the current
+	// territory. Results stored in deptDataCache so the first user click is also instant.
+	// Processes smallest depts first, pauses while user has an active load in progress.
+	private async _prefetchDeptParquets(layer: HexLayerConfig): Promise<void> {
 		const token = ++this._prefetchToken;
 		const prefix = this.territoryPrefix;
-		loadDeptSummary(layer.id, prefix).then(summary => {
-			if (this._prefetchToken !== token || !summary?.departments) return;
-			for (const dept of summary.departments as any[]) {
-				const key = dept.parquetKey as string;
-				if (!key) continue;
-				let url: string;
-				if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
-				else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
-				else url = getScoresDptoUrl(key, prefix);
-				fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
+
+		const summary = await loadDeptSummary(layer.id, prefix);
+		if (this._prefetchToken !== token || !summary?.departments) return;
+
+		// Smallest depts first → first results appear in cache soonest
+		const sorted = [...(summary.departments as any[])].sort((a, b) => (a.hex_count ?? 0) - (b.hex_count ?? 0));
+
+		for (const dept of sorted) {
+			if (this._prefetchToken !== token) return;
+
+			// Yield priority to any user-triggered load
+			while (this.loading) {
+				await new Promise(r => setTimeout(r, 50));
+				if (this._prefetchToken !== token) return;
 			}
-		});
+
+			const key = dept.parquetKey as string;
+			if (!key) continue;
+			const cacheKey = `${layer.id}:${key}:${prefix}`;
+			if (deptDataCache.has(cacheKey)) continue;
+
+			let url: string;
+			if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
+			else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
+			else url = getScoresDptoUrl(key, prefix);
+
+			try {
+				const result = await query(`SELECT * FROM '${url}'`);
+				const data = new Map<string, Record<string, any>>();
+				const centroids = new Map<string, [number, number]>();
+				const boundaries = new Map<string, number[][]>();
+
+				const resultCols = result.schema.fields.map((f: any) => f.name).filter((n: string) => n !== 'h3index');
+				const h3Vec = result.getChild('h3index');
+				const colVecs = Object.fromEntries(resultCols.map((col: string) => [col, result.getChild(col)]));
+
+				for (let i = 0; i < result.numRows; i++) {
+					const h3index = String(h3Vec!.get(i));
+					try {
+						const [lat, lng] = cellToLatLng(h3index);
+						const values: Record<string, any> = {};
+						for (const col of resultCols) {
+							const val = colVecs[col]?.get(i);
+							if (val === null || val === undefined) continue;
+							const num = Number(val);
+							values[col] = Number.isFinite(num) && typeof val !== 'string' ? num : String(val);
+						}
+						data.set(h3index, values);
+						centroids.set(h3index, [lng, lat]);
+						const boundary = cellToBoundary(h3index);
+						const coords = boundary.map(([lat, lng]) => [lng, lat]);
+						coords.push(coords[0]);
+						boundaries.set(h3index, coords);
+					} catch { /* skip invalid h3 */ }
+				}
+
+				// Edge-gap fill only for Misiones (empty prefix) where boundary polygons exist
+				const deptName = dept.dpto ?? dept.distrito ?? dept.municipio;
+				if (prefix === '' && deptName) {
+					const deptFeature = findDeptFeature(deptName, prefix);
+					if (deptFeature?.geometry) {
+						const geom = deptFeature.geometry;
+						const polygons: number[][][][] = geom.type === 'MultiPolygon' ? geom.coordinates
+							: geom.type === 'Polygon' ? [geom.coordinates] : [];
+						for (const poly of polygons) {
+							try {
+								const expected = polygonToCells(poly as any, 9, true);
+								for (const h3index of expected) {
+									if (data.has(h3index)) continue;
+									try {
+										const [lat, lng] = cellToLatLng(h3index);
+										data.set(h3index, {});
+										centroids.set(h3index, [lng, lat]);
+										const boundary = cellToBoundary(h3index);
+										const coords = boundary.map(([lat, lng]) => [lng, lat]);
+										coords.push(coords[0]);
+										boundaries.set(h3index, coords);
+									} catch { /* skip */ }
+								}
+							} catch { /* skip */ }
+						}
+					}
+				}
+
+				deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
+			} catch { /* silent fail — user will trigger on demand */ }
+
+			// Yield to main thread between depts
+			await new Promise(r => setTimeout(r, 0));
+		}
 	}
 
 	clearRegionalData(): void {

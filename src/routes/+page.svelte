@@ -1509,9 +1509,12 @@
 		if (hexStore.activeLayer) {
 			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical');
 		}
-		await hexStore.loadDepartment(dpto, parquetKey);
-		// Compute provincial min/max for consistent cross-department coloring
-		await hexStore.ensureColorDomain().catch(() => {});
+		// Load dept data + compute color domain in parallel (colorDomain uses global parquet,
+		// loadDepartment uses per-dept parquet — no shared resource conflict).
+		await Promise.all([
+			hexStore.loadDepartment(dpto, parquetKey),
+			hexStore.ensureColorDomain().catch(() => {}),
+		]);
 		prevDataVersion = hexStore.dataVersion;
 		// Render outside Svelte's reactive batch to prevent $effect interference
 		setTimeout(() => {
@@ -1519,7 +1522,8 @@
 			// Per-dept parquets for non-Misiones territories already contain only
 			// that district's hexes (filtered in pipeline via h3_admin_crosswalk).
 			// Skipping PIP saves 100-300ms on large districts (5K-30K hex × PIP).
-			const needsPip = hexStore.territoryPrefix === '' || hexStore.territoryPrefix === 'misiones/';
+			// Only Misiones (empty prefix) needs PIP — all other territories are pre-filtered in pipeline.
+			const needsPip = hexStore.territoryPrefix === '';
 			const entries = needsPip
 				? allEntries.filter(e => {
 					const [lat, lng] = cellToLatLng(e.h3index);
@@ -1531,9 +1535,8 @@
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 				analysisDataLoaded = true;
-				const hexLats = entries.map(e => cellToLatLng(e.h3index)[0]);
-				const hexLngs = entries.map(e => cellToLatLng(e.h3index)[1]);
-				mapComponent?.fitBoundsDept([Math.min(...hexLngs), Math.min(...hexLats), Math.max(...hexLngs), Math.max(...hexLats)]);
+				// deptBbox is already computed in loadDepartment — no need to re-run cellToLatLng over all entries
+				if (hexStore.deptBbox) mapComponent?.fitBoundsDept(hexStore.deptBbox);
 			} else {
 				mapComponent?.flyToCoords(centroid[1], centroid[0], 10);
 			}

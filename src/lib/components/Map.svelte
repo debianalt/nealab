@@ -2729,11 +2729,13 @@
 
 		const getColor = (value: number) => computeHexColor(value, colorScale, minVal, maxVal, range);
 
-		const features: any[] = [];
+		// Pre-allocate to avoid dynamic resizing (measurable on 30K+ hex sets)
+		const features = new Array(entries.length);
+		let fi = 0;
 		for (const entry of entries) {
 			if (!entry.boundary) continue;
 			if (isNodata(entry)) {
-				features.push({
+				features[fi++] = {
 					type: 'Feature',
 					properties: {
 						h3index: entry.h3index,
@@ -2743,10 +2745,10 @@
 						...(entry.properties || {})
 					},
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
-				});
+				};
 				continue;
 			}
-			features.push({
+			features[fi++] = {
 				type: 'Feature',
 				properties: {
 					h3index: entry.h3index,
@@ -2755,8 +2757,9 @@
 					...(entry.properties || {})
 				},
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
-			});
+			};
 		}
+		if (fi < features.length) features.length = fi;
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('hex-fill', 'fill-color', ['get', 'color']);
@@ -2818,23 +2821,25 @@
 		const range = maxVal - minVal || 1;
 		const getColor = (v: number) => computeHexColor(v, colorScale, minVal, maxVal, range);
 
-		const features: any[] = [];
+		const features = new Array(entries.length);
+		let fi = 0;
 		for (const entry of entries) {
 			if (!entry.boundary) continue;
 			if (isNodata(entry)) {
-				features.push({
+				features[fi++] = {
 					type: 'Feature',
 					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, ...(entry.properties || {}) },
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
-				});
+				};
 				continue;
 			}
-			features.push({
+			features[fi++] = {
 				type: 'Feature',
 				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), ...(entry.properties || {}) },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
-			});
+			};
 		}
+		if (fi < features.length) features.length = fi;
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('compare-hex-fill', 'fill-color', ['get', 'color']);
