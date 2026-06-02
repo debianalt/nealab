@@ -1,5 +1,12 @@
+const TILE_PATH_RE = /^\d+\/\d+\/\d+\.png$/;
+
 export const onRequestGet: PagesFunction = async ({ params }) => {
-	const path = Array.isArray(params.path) ? params.path.join('/') : params.path;
+	const path = Array.isArray(params.path) ? params.path.join('/') : (params.path ?? '');
+
+	if (!TILE_PATH_RE.test(path)) {
+		return new Response('Invalid tile path', { status: 400 });
+	}
+
 	const tileUrl = `https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${path}`;
 
 	const tileResponse = await fetch(tileUrl, {

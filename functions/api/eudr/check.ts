@@ -111,22 +111,26 @@ function getEudrAssessment(deforested: boolean, riskScore: number | null): strin
 	return 'LOW_RISK';
 }
 
-function corsHeaders(): Record<string, string> {
+const ALLOWED_ORIGINS = ['https://spatia.ar', 'https://www.spatia.ar', 'https://neahub.pages.dev'];
+
+function corsHeaders(origin: string | null): Record<string, string> {
+	const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
 	return {
-		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Origin': allowedOrigin,
 		'Access-Control-Allow-Methods': 'POST, OPTIONS',
 		'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+		'Vary': 'Origin',
 		'Content-Type': 'application/json',
 	};
 }
 
-export const onRequestOptions: PagesFunction = async () => {
-	return new Response(null, { status: 204, headers: corsHeaders() });
+export const onRequestOptions: PagesFunction = async ({ request }) => {
+	return new Response(null, { status: 204, headers: corsHeaders(request.headers.get('origin')) });
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
 	const startTime = Date.now();
-	const headers = corsHeaders();
+	const headers = corsHeaders(context.request.headers.get('origin'));
 
 	// Rate limiting
 	const ip = context.request.headers.get('cf-connecting-ip') || 'unknown';
