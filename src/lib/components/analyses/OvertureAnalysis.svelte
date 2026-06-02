@@ -6,7 +6,7 @@
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
-	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getReportUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig } from '$lib/config';
+	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getReportUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
@@ -82,6 +82,19 @@
 	const tabTerritories = $derived.by(() => {
 		const available = Object.values(TERRITORY_REGISTRY).filter(t => t.available);
 		return available.filter(t => allSummaries.has(t.id));
+	});
+
+	const COUNTRY_ORDER: CountryId[] = ['ar', 'py', 'br'];
+	const COUNTRY_FLAGS: Record<CountryId, string> = { ar: '🇦🇷', py: '🇵🇾', br: '🇧🇷' };
+
+	const tabsByCountry = $derived.by(() => {
+		const groups = new Map<CountryId, TerritoryConfig[]>();
+		for (const t of tabTerritories) {
+			const list = groups.get(t.country) ?? [];
+			list.push(t);
+			groups.set(t.country, list);
+		}
+		return groups;
 	});
 
 	function handleTabClick(territoryId: string) {
@@ -733,13 +746,22 @@
 		{/if}
 
 		{#if tabTerritories.length > 1}
-			<div class="territory-tabs">
-				{#each tabTerritories as t}
-					<button
-						class="territory-tab"
-						class:active={activeTab === t.id}
-						onclick={() => handleTabClick(t.id)}
-					>{t.shortLabel}</button>
+			<div class="territory-tabs-wrapper">
+				{#each COUNTRY_ORDER as country}
+					{#if tabsByCountry.has(country)}
+						<div class="territory-country-row">
+							<span class="country-flag">{COUNTRY_FLAGS[country]}</span>
+							<div class="territory-tabs">
+								{#each tabsByCountry.get(country)! as t}
+									<button
+										class="territory-tab"
+										class:active={activeTab === t.id}
+										onclick={() => handleTabClick(t.id)}
+									>{t.shortLabel}</button>
+								{/each}
+							</div>
+						</div>
+					{/if}
 				{/each}
 			</div>
 		{/if}
@@ -1008,11 +1030,13 @@
 	.hex-val-num { color: #e5e5e5; font-weight: 500; font-variant-numeric: tabular-nums; }
 
 	/* ── Territory tabs ── */
-	.territory-tabs { display: flex; gap: 0; margin-bottom: 10px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(100,116,139,0.2); }
-	.territory-tab { flex: 1; background: rgba(255,255,255,0.03); border: none; color: #a3a3a3; font-size: 9px; font-weight: 500; padding: 5px 4px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
-	.territory-tab:not(:last-child) { border-right: 1px solid rgba(100,116,139,0.15); }
-	.territory-tab.active { background: rgba(59,130,246,0.15); color: #60a5fa; font-weight: 700; }
-	.territory-tab:hover:not(.active) { background: rgba(255,255,255,0.06); }
+	.territory-tabs-wrapper { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
+	.territory-country-row { display: flex; align-items: flex-start; gap: 4px; }
+	.country-flag { font-size: 11px; line-height: 20px; flex-shrink: 0; }
+	.territory-tabs { display: flex; flex-wrap: wrap; gap: 2px; flex: 1; }
+	.territory-tab { background: rgba(255,255,255,0.04); border: 1px solid rgba(100,116,139,0.18); border-radius: 3px; color: #a3a3a3; font-size: 9px; font-weight: 500; padding: 3px 5px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+	.territory-tab.active { background: rgba(59,130,246,0.15); color: #60a5fa; font-weight: 700; border-color: rgba(59,130,246,0.3); }
+	.territory-tab:hover:not(.active) { background: rgba(255,255,255,0.07); color: #d4d4d4; }
 
 	/* ── Temporal toggle ── */
 	.temporal-toggle { display: flex; gap: 0; margin-bottom: 10px; border-radius: 6px; overflow: hidden; border: 1px solid rgba(100,116,139,0.2); }
