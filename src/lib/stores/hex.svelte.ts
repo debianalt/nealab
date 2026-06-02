@@ -2,6 +2,7 @@ import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS, HEX_LAYER_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature } from '$lib/utils/deptBoundaries';
+import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { cellToLatLng, cellToBoundary, polygonToCells } from 'h3-js';
 
@@ -16,6 +17,16 @@ interface LayerCache {
 	provincialAvg: number[] | null;
 }
 const layerDataCache = new Map<string, LayerCache>();
+
+// Per-department cache: keyed by `layerId:parquetKey:territoryPrefix`.
+// Avoids re-fetching + re-computing H3 geometry on repeated dept visits.
+interface DeptCache {
+	data: Map<string, Record<string, any>>;
+	centroids: Map<string, [number, number]>;
+	boundaries: Map<string, number[][]>;
+	bbox: [number, number, number, number] | null;
+}
+const deptDataCache = new Map<string, DeptCache>();
 
 export interface HexSelectionData {
 	color: string;
@@ -52,6 +63,7 @@ export class HexStore {
 	colorDomain: [number, number] | null = $state(null);
 	selectedDpto: string | null = $state(null);
 	selectedParquetKey: string | null = $state(null);
+	private _prefetchToken = 0;
 
 	// ── Compare dept (cross-territory dept-to-dept comparison) ──────────────
 	compareVisibleData: Map<string, Record<string, any>> = $state(new Map());
@@ -122,9 +134,11 @@ export class HexStore {
 			return;
 		}
 
-		// Per-department layers: don't load all data, wait for department selection
+		// Per-department layers: don't load all data, wait for department selection.
+		// Background-fetch all dept parquets so the first click is fast.
 		if (cfg.perDepartment) {
 			this.loading = false;
+			this._prefetchDeptParquets(cfg);
 			return;
 		}
 
@@ -150,6 +164,8 @@ export class HexStore {
 		if (this.territoryPrefix === prefix) return;
 		this.territoryPrefix = prefix;
 		layerDataCache.clear();
+		deptDataCache.clear();
+		this._prefetchToken++;
 		this.colorDomain = null;
 		this.visibleData = new Map();
 		this.selectedDpto = null;
@@ -184,6 +200,20 @@ export class HexStore {
 		this.dataVersion++;
 
 		try {
+			// Fast path: return cached geometry + data without a DuckDB round-trip.
+			const cacheKey = `${layer.id}:${parquetKey}:${this.territoryPrefix}`;
+			const deptCached = deptDataCache.get(cacheKey);
+			if (deptCached) {
+				this.visibleData = deptCached.data;
+				this.centroidCache = deptCached.centroids;
+				this.boundaryCache = deptCached.boundaries;
+				this.deptBbox = deptCached.bbox;
+				this.dataVersion++;
+				this.loading = false;
+				this.ensureProvincialAvg().catch(() => {});
+				return;
+			}
+
 			// Dispatch URL based on layer type
 			let url: string;
 			if (layer.id === 'flood_risk') {
@@ -272,6 +302,9 @@ export class HexStore {
 				}
 			}
 
+			// Persist computed geometry so re-visiting this dept is instant.
+			deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
+
 			this.visibleData = data;
 			this.centroidCache = centroids;
 			this.boundaryCache = boundaries;
@@ -299,6 +332,19 @@ export class HexStore {
 			url = getSatDptoUrl(layer.id, parquetKey, comparePrefix);
 		} else {
 			url = getScoresDptoUrl(parquetKey, comparePrefix);
+		}
+
+		// Fast path: reuse cached geometry.
+		const compareCacheKey = `${layer.id}:${parquetKey}:${comparePrefix}`;
+		const compareCached = deptDataCache.get(compareCacheKey);
+		if (compareCached) {
+			this.compareVisibleData = compareCached.data;
+			this.compareBoundaryCache = compareCached.boundaries;
+			this.compareDpto = dpto;
+			this.compareTerritoryPrefix = comparePrefix;
+			this.compareDeptBbox = compareCached.bbox ?? HexStore.bboxFromBounds(compareCached.boundaries);
+			this.compareDataVersion++;
+			return;
 		}
 
 		try {
@@ -329,6 +375,8 @@ export class HexStore {
 					bounds.set(h3index, coords);
 				} catch { /* skip invalid h3 */ }
 			}
+
+			deptDataCache.set(compareCacheKey, { data, centroids: new Map(), boundaries: bounds, bbox: HexStore.bboxFromBounds(bounds) });
 
 			this.compareVisibleData = data;
 			this.compareBoundaryCache = bounds;
@@ -424,6 +472,26 @@ export class HexStore {
 		} catch (e) {
 			console.warn('Failed to load regional hex data:', e);
 		}
+	}
+
+	// Background-prime browser HTTP cache for all dept parquets of the current territory.
+	// DuckDB-WASM httpfs goes through the browser's fetch(), so these land in the HTTP cache
+	// and the subsequent DuckDB SELECT avoids the network round-trip.
+	private _prefetchDeptParquets(layer: HexLayerConfig): void {
+		const token = ++this._prefetchToken;
+		const prefix = this.territoryPrefix;
+		loadDeptSummary(layer.id, prefix).then(summary => {
+			if (this._prefetchToken !== token || !summary?.departments) return;
+			for (const dept of summary.departments as any[]) {
+				const key = dept.parquetKey as string;
+				if (!key) continue;
+				let url: string;
+				if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
+				else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
+				else url = getScoresDptoUrl(key, prefix);
+				fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
+			}
+		});
 	}
 
 	clearRegionalData(): void {
