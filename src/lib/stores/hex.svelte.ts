@@ -455,7 +455,7 @@ export class HexStore {
 
 	async loadFullCompare(comparePrefix: string): Promise<void> {
 		const layer = this.activeLayer;
-		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr') return;
+		if (!layer || layer.id === 'eudr') return;
 
 		try {
 			await this.loadGlobalInto(layer, comparePrefix, 'compare');
