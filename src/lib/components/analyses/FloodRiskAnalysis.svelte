@@ -32,7 +32,6 @@
 	const deptSummaries = deptSummaryData.departments.sort((a: any, b: any) => b.avg_score - a.avg_score);
 	const totalHexes = deptSummaryData.province.total_hexes;
 	const totalHighRisk = deptSummaryData.province.high_risk_count;
-	const avgScore = deptSummaryData.province.avg_score;
 
 	const selectedDpto = $derived(hexStore.selectedDpto);
 	const selectedHex = $derived(mapStore.selectedHex);
@@ -124,18 +123,12 @@
 		const rec = selectedHex.jrc_recurrence ?? 0;
 		const seas = ((selectedHex.jrc_seasonality ?? 0) / 12) * 100; // normalize 0-12 to 0-100
 		const ext = selectedHex.flood_extent_pct ?? 0;
-		return [{ values: [occ, rec, seas, ext], color: getRiskColor(selectedHex.flood_risk_score ?? 0), rawValues: [occ, rec, seas, ext] }];
+		return [{ values: [occ, rec, seas, ext], color: getOccurrenceColor(occ), rawValues: [occ, rec, seas, ext] }];
 	});
 
-	function getRiskLabel(score: number): string {
-		if (score >= 70) return i18n.t('analysis.flood.riskHigh');
-		if (score >= 40) return i18n.t('analysis.flood.riskMedium');
-		return i18n.t('analysis.flood.riskLow');
-	}
-
-	function getRiskColor(score: number): string {
-		if (score >= 70) return '#dc2626';
-		if (score >= 40) return '#eab308';
+	function getOccurrenceColor(occurrence: number): string {
+		if (occurrence >= 20) return '#dc2626';
+		if (occurrence >= 5) return '#eab308';
 		return '#22c55e';
 	}
 
@@ -177,7 +170,7 @@
 				<span class="parcel-chip">
 					<span class="chip-dot" style:background={parcel.color}></span>
 					<span class="chip-tipo">{parcel.tipo === 'rural' ? 'R' : 'U'}</span>
-					<span class="chip-score" style:color={getRiskColor(parcel.flood_risk_score)}>{parcel.flood_risk_score.toFixed(0)}</span>
+					<span class="chip-score" style:color={getOccurrenceColor(parcel.jrc_occurrence ?? 0)}>{parcel.jrc_occurrence != null ? parcel.jrc_occurrence.toFixed(0) + '%' : '—'}</span>
 					<button class="chip-x" onclick={() => mapStore.removeFloodParcel(parcel.h3index)}>x</button>
 				</span>
 			{/each}
@@ -241,15 +234,39 @@
 			<div class="hex-id" title={selectedHex.h3index}>
 				{selectedHex.h3index.slice(0, 4)}...{selectedHex.h3index.slice(-4)}
 			</div>
-			<div class="risk-badge" style:background={getRiskColor(selectedHex.flood_risk_score ?? 0)}>
-				{getRiskLabel(selectedHex.flood_risk_score ?? 0)}
+		</div>
+
+		<div class="metrics-table">
+			<div class="metric-row">
+				<span class="metric-label">{i18n.t('analysis.flood.jrcOccurrence')}</span>
+				<span class="metric-val" style:color={getOccurrenceColor(selectedHex.jrc_occurrence ?? 0)}>
+					{selectedHex.jrc_occurrence != null ? selectedHex.jrc_occurrence.toFixed(1) + ' %' : '—'}
+				</span>
+			</div>
+			<div class="metric-row">
+				<span class="metric-label">{i18n.t('analysis.flood.jrcRecurrence')}</span>
+				<span class="metric-val">
+					{selectedHex.jrc_recurrence != null ? selectedHex.jrc_recurrence.toFixed(1) + ' %' : '—'}
+				</span>
+			</div>
+			<div class="metric-row">
+				<span class="metric-label">{i18n.t('analysis.flood.jrcSeasonality')}</span>
+				<span class="metric-val">
+					{selectedHex.jrc_seasonality != null ? selectedHex.jrc_seasonality.toFixed(1) + ' meses' : '—'}
+				</span>
+			</div>
+			<div class="metric-row">
+				<span class="metric-label">{i18n.t('analysis.flood.currentExtent')}</span>
+				<span class="metric-val">
+					{selectedHex.flood_extent_pct != null ? selectedHex.flood_extent_pct.toFixed(1) + ' %' : '—'}
+				</span>
 			</div>
 		</div>
 
 		{#if hexPetalLayers.length > 0}
 			<div class="petal-section">
-				<div class="section-title">Perfil de riesgo hídrico</div>
-				<p class="petal-note">Cada eje muestra un componente del riesgo (0–100). Mayor extensión = mayor riesgo.</p>
+				<div class="section-title">Perfil hídrico</div>
+				<p class="petal-note">Valores físicos directos (%). Mayor extensión = mayor presencia histórica de agua.</p>
 				<div class="petal-wrapper">
 					<PetalChart layers={hexPetalLayers} labels={floodPetalLabels} size={240} />
 				</div>
@@ -257,7 +274,7 @@
 		{/if}
 
 		<div class="source-note-box">
-			<div><strong>Fuente:</strong> JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus, {DATA_FRESHNESS.hex_flood_risk.dataDate}) + Censo Nacional 2022</div>
+			<div><strong>Fuente:</strong> JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus, {DATA_FRESHNESS.hex_flood_risk.dataDate})</div>
 			<div><strong>Última revisión:</strong> {DATA_FRESHNESS.hex_flood_risk.processedDate} · Imágenes SAR disponibles cada ~12 días</div>
 		</div>
 	</div>
@@ -285,8 +302,8 @@
 				<div class="card-label">{i18n.t('analysis.flood.highRecurrence')}</div>
 			</div>
 			<div class="summary-card">
-				<div class="card-value">{avgScore.toFixed(1)}</div>
-				<div class="card-label">{i18n.t('analysis.flood.avgScore')}</div>
+				<div class="card-value">{totalHexes.toLocaleString()}</div>
+				<div class="card-label">{i18n.t('analysis.flood.totalHex')}</div>
 			</div>
 		</div>
 
@@ -325,10 +342,6 @@
 				<div class="method-item">
 					<span class="method-term">{i18n.t('analysis.flood.currentExtent')}</span>
 					<p>{i18n.t('analysis.flood.methodExtent')}</p>
-				</div>
-				<div class="method-item">
-					<span class="method-term">{i18n.t('analysis.flood.riskScore')}</span>
-					<p>{i18n.t('analysis.flood.methodScore')}</p>
 				</div>
 			</div>
 		</details>
@@ -571,6 +584,11 @@
 	.raw-row { display: flex; justify-content: space-between; padding: 1px 0; font-size: 9px; }
 	.raw-label { color: #a3a3a3; }
 	.raw-val { color: #e2e8f0; font-weight: 600; font-family: monospace; }
+	.metrics-table { margin: 8px 0 10px; }
+	.metric-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 9px; }
+	.metric-row:last-child { border-bottom: none; }
+	.metric-label { color: #a3a3a3; }
+	.metric-val { color: #e2e8f0; font-weight: 600; font-family: monospace; }
 	.flood-legend {
 		margin: 12px 0;
 	}

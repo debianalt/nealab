@@ -85,8 +85,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos separam carência habitacional (piso inadequado + superlotação), carência de infraestrutura (sem esgoto) e exclusão digital (sem computador). Cada configuração demanda intervenções distintas: habitação social, extensão de rede de esgoto ou programas de inclusão digital.',
 		},
 		method: {
-			es: `${METHOD_COMMON.es} 6 variables Censo Nacional 2022 (INDEC): NBI, sin cloacas (100 - pct_cloacas), piso inadecuado, hacinamiento, hacinamiento crítico, sin computadora (100 - pct_computadora). Crosswalk dasimétrico ponderado por edificios (2.8M footprints). KMO=0.73.`,
-			en: `${METHOD_COMMON.en} 6 variables from the National Census 2022 (INDEC): UBN, no sewerage (100 − pct_sewerage), inadequate floor, overcrowding, critical overcrowding, no computer (100 − pct_computer). Dasymetric crosswalk weighted by buildings (2.8M footprints). KMO=0.73.`,
+			es: `${METHOD_COMMON.es} 6 variables Censo Nacional 2022 (INDEC): NBI, sin cloacas (100 - pct_cloacas), piso inadecuado, hacinamiento, hacinamiento crítico, sin computadora (100 - pct_computadora). Crosswalk dasimétrico ponderado por edificios (2.8M footprints). KMO=0.73. (Normalización: percentil interno AR — consistente entre Corrientes, Chaco y Formosa. No comparable con PY ni BR.)`,
+			en: `${METHOD_COMMON.en} 6 variables from the National Census 2022 (INDEC): UBN, no sewerage (100 − pct_sewerage), inadequate floor, overcrowding, critical overcrowding, no computer (100 − pct_computer). Dasymetric crosswalk weighted by buildings (2.8M footprints). KMO=0.73. (Normalisation: internal AR percentile — consistent across Corrientes, Chaco and Formosa. Not comparable with PY or BR.)`,
 		},
 	},
 	health_access: {
@@ -103,8 +103,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos separam déficit por distância (zonas rurais remotas), déficit por saturação (zonas densas com alta proporção de população vulnerável) e déficit por cobertura (alto NBI com baixa cobertura sanitária). Cada configuração requer respostas distintas do sistema de saúde.',
 		},
 		method: {
-			es: `${METHOD_COMMON.es} 6 variables: tiempo motorizado a salud (Oxford MAP 2019), cobertura sanitaria, NBI, % adultos mayores, % menores 18, densidad poblacional (Censo 2022). Crosswalk dasimétrico. KMO=0.60.`,
-			en: `${METHOD_COMMON.en} 6 variables: motorised travel time to health (Oxford MAP 2019), health coverage, UBN, % elderly, % under 18, population density (Census 2022). Dasymetric crosswalk. KMO=0.60.`,
+			es: `${METHOD_COMMON.es} 6 variables: tiempo motorizado a salud (Oxford MAP 2019), cobertura sanitaria, NBI, % adultos mayores, % menores 18, densidad poblacional (Censo 2022). Crosswalk dasimétrico. KMO=0.60. (Normalización: percentil interno AR — consistente entre Corrientes, Chaco y Formosa. No comparable con PY ni BR.)`,
+			en: `${METHOD_COMMON.en} 6 variables: motorised travel time to health (Oxford MAP 2019), health coverage, UBN, % elderly, % under 18, population density (Census 2022). Dasymetric crosswalk. KMO=0.60. (Normalisation: internal AR percentile — consistent across Corrientes, Chaco and Formosa. Not comparable with PY or BR.)`,
 		},
 	},
 	education_capital: {
@@ -121,8 +121,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos distinguem zonas com alto capital humano (universidades próximas, alta formação), zonas de educação média (ensino médio completo, sem terciário) e zonas de baixo capital (alta proporção sem instrução). O capital educacional prediz renda, saúde e participação cívica.',
 		},
 		method: {
-			es: `${METHOD_COMMON.es} 4 variables Censo 2022: % sin instrucción, % secundario completo o más (umbral acumulativo), % educación superior (terciario + universitario), % universitario. Terciario y universitario son tracks paralelos en el sistema argentino. Crosswalk dasimétrico. KMO=0.71.`,
-			en: `${METHOD_COMMON.en} 4 variables from Census 2022: % no formal education, % secondary complete or above (cumulative threshold), % higher education (tertiary + university), % university. Tertiary and university are parallel tracks in the Argentine system. Dasymetric crosswalk. KMO=0.71.`,
+			es: `${METHOD_COMMON.es} 4 variables Censo 2022: % sin instrucción, % secundario completo o más (umbral acumulativo), % educación superior (terciario + universitario), % universitario. Terciario y universitario son tracks paralelos en el sistema argentino. Crosswalk dasimétrico. KMO=0.71. (Normalización: percentil interno AR — consistente entre Corrientes, Chaco y Formosa. No comparable con PY ni BR.)`,
+			en: `${METHOD_COMMON.en} 4 variables from Census 2022: % no formal education, % secondary complete or above (cumulative threshold), % higher education (tertiary + university), % university. Tertiary and university are parallel tracks in the Argentine system. Dasymetric crosswalk. KMO=0.71. (Normalisation: internal AR percentile — consistent across Corrientes, Chaco and Formosa. Not comparable with PY or BR.)`,
 		},
 	},
 	education_flow: {
@@ -139,8 +139,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos separam evasão precoce (ensino fundamental), evasão tardia (ensino médio) e gravidez na adolescência como fator de exclusão educacional. A não frequência no fundamental indica falhas básicas do sistema; no médio, problemas de retenção; a maternidade adolescente, vulnerabilidade de gênero interseccionada com pobreza.',
 		},
 		method: {
-			es: `${METHOD_COMMON.es} 3 variables Censo 2022: tasa de inasistencia 6-12 años, tasa de inasistencia 13-18 años, tasa de maternidad adolescente. Variables directas (mayor = peor flujo). Crosswalk dasimétrico. KMO=0.61.`,
-			en: `${METHOD_COMMON.en} 3 variables from Census 2022: non-attendance rate 6–12 years, non-attendance rate 13–18 years, adolescent motherhood rate. Direct variables (higher = worse performance). Dasymetric crosswalk. KMO=0.61.`,
+			es: `${METHOD_COMMON.es} 3 variables Censo 2022: tasa de inasistencia 6-12 años, tasa de inasistencia 13-18 años, tasa de maternidad adolescente. Variables directas (mayor = peor flujo). Crosswalk dasimétrico. KMO=0.61. (Normalización: percentil interno AR — consistente entre Corrientes, Chaco y Formosa. No comparable con PY ni BR.)`,
+			en: `${METHOD_COMMON.en} 3 variables from Census 2022: non-attendance rate 6–12 years, non-attendance rate 13–18 years, adolescent motherhood rate. Direct variables (higher = worse performance). Dasymetric crosswalk. KMO=0.61. (Normalisation: internal AR percentile — consistent across Corrientes, Chaco and Formosa. Not comparable with PY or BR.)`,
 		},
 	},
 	land_use: {

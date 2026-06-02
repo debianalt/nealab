@@ -1349,7 +1349,7 @@
 			const { getFloodDptoUrl } = await import('$lib/config');
 			const url = getFloodDptoUrl(parquetKey);
 			const result = await query(
-				`SELECT h3index, flood_risk_score, jrc_occurrence, jrc_recurrence, jrc_seasonality, flood_extent_pct FROM '${url}' WHERE flood_risk_score IS NOT NULL`
+				`SELECT h3index, jrc_occurrence, jrc_recurrence, jrc_seasonality, flood_extent_pct, flood_risk_score FROM '${url}' WHERE jrc_occurrence IS NOT NULL`
 			);
 
 			const h3ScoreMap = new Map<string, number>();
@@ -1360,7 +1360,7 @@
 				const row = result.get(i)!.toJSON() as Record<string, any>;
 				const [lat, lng] = cellToLatLng(row.h3index);
 				if (!isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix)) continue;
-				h3ScoreMap.set(row.h3index, Number(row.flood_risk_score) || 0);
+				h3ScoreMap.set(row.h3index, Number(row.jrc_occurrence) || 0);
 				h3FullData.set(row.h3index, {
 					flood_risk_score: Number(row.flood_risk_score) || 0,
 					jrc_occurrence: Number(row.jrc_occurrence) || 0,

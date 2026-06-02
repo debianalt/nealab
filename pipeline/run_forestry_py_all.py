@@ -24,7 +24,7 @@ from config import OUTPUT_DIR, GCS_BUCKET, get_territory
 READY_TERRITORIES = [
     "misiones_py", "caaguazu_py", "caazapa_py", "central_py",
     "neembucu_py", "amambay_py", "paraguari_py", "cordillera_py",
-    "guaira_py", "canindeyu_py", "boqueron_py",
+    "guaira_py", "canindeyu_py", "boqueron_py", "alto_paraguay_py",
     # 8-tif territories — will try, may need GCS download for missing 1
     "concepcion_py", "san_pedro_py", "presidente_hayes_py",
 ]

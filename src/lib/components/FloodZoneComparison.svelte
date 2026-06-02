@@ -39,9 +39,9 @@
 	let provAvg: number[] | null = $state(null);
 	let loading = $state(true);
 
-	function getRiskColor(score: number): string {
-		if (score >= 70) return '#dc2626';
-		if (score >= 40) return '#eab308';
+	function getOccurrenceColor(occurrence: number): string {
+		if (occurrence >= 20) return '#dc2626';
+		if (occurrence >= 5) return '#eab308';
 		return '#22c55e';
 	}
 
@@ -105,15 +105,15 @@
 		return { zoneId, rawValues, normalizedValues };
 	}
 
-	// Flood score bars from h3 data
+	// Flood occurrence bars from h3 data
 	const zoneFloodScores = $derived.by(() => {
 		if (h3Data.size === 0 || zones.length === 0) return [];
 		const h3Entries = [...h3Data.entries()];
-		const deptAvg = h3Entries.reduce((s, [, d]) => s + d.flood_risk_score, 0) / h3Entries.length;
+		const deptAvg = h3Entries.reduce((s, [, d]) => s + (d.jrc_occurrence ?? 0), 0) / h3Entries.length;
 
 		return zones.map(zone => ({
 			zoneId: zone.id,
-			flood_risk_score: deptAvg, // dept average (best approx without per-radio crosswalk)
+			jrc_occurrence: deptAvg,
 		}));
 	});
 
@@ -167,18 +167,18 @@
 		{/each}
 	</div>
 
-	<!-- Flood risk score bars -->
+	<!-- Flood occurrence bars -->
 	{#if zoneFloodScores.length > 0}
-		<div class="section-title">{i18n.t('analysis.flood.riskScore')}</div>
+		<div class="section-title">{i18n.t('analysis.flood.jrcOccurrence')}</div>
 		<div class="flood-scores">
 			{#each zoneFloodScores as zd, i}
 				<div class="flood-zone-row">
 					<span class="zone-dot-sm" style:background={zones[i]?.color}></span>
 					<span class="flood-zone-label">{zones[i]?.id}</span>
 					<div class="score-track">
-						<div class="score-fill" style:width="{zd.flood_risk_score}%" style:background={getRiskColor(zd.flood_risk_score)}></div>
+						<div class="score-fill" style:width="{zd.jrc_occurrence}%" style:background={getOccurrenceColor(zd.jrc_occurrence)}></div>
 					</div>
-					<span class="flood-zone-val" style:color={getRiskColor(zd.flood_risk_score)}>{zd.flood_risk_score.toFixed(1)}</span>
+					<span class="flood-zone-val" style:color={getOccurrenceColor(zd.jrc_occurrence)}>{zd.jrc_occurrence.toFixed(1)} %</span>
 				</div>
 			{/each}
 		</div>
