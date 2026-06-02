@@ -23,7 +23,6 @@
 		territory: TerritoryConfig;
 		values: Record<string, number | null>;
 		rawValues: Record<string, number | null>;
-		error?: string;
 	}
 
 	interface TerritoryGroup {
@@ -71,7 +70,11 @@
 				loadDeptList(analysis.id, t.parquetPrefix).then(depts => ({ territory: t, depts }))
 			)
 		).then(results => {
-			groups = results;
+			// Only show territories that have dept-level data OR are explicitly available for
+			// territory-level comparison. Hides territories with no data for the current analysis.
+			groups = results.filter(g =>
+				g.depts.length > 0 || (analysis as any).coverage?.[g.territory.id] === 'available'
+			);
 		});
 	});
 
@@ -122,7 +125,8 @@
 			}
 			return { territory, values, rawValues };
 		} catch (e) {
-			return { territory, values: {}, rawValues: {}, error: String(e) };
+			console.warn('[loadStats] failed for', territory.id, e);
+			return { territory, values: {}, rawValues: {} };
 		}
 	}
 
@@ -265,7 +269,7 @@
 					{@const compareDptoF = compareDpto ? formatDept(compareDpto) : null}
 					{@const primaryLabel = dptoF ? (dptoF.length > 10 ? dptoF.slice(0, 9) + '.' : dptoF) : stats[0].territory.shortLabel}
 					{@const compareLabel = compareDptoF ? (compareDptoF.length > 10 ? compareDptoF.slice(0, 9) + '.' : compareDptoF) : stats[1].territory.shortLabel}
-					{#if hasPetal && !stats[0].error && !stats[1].error}
+					{#if hasPetal}
 						<div class="petal-section">
 							<div class="petal-legend">
 								<span class="petal-dot" style="background:#60a5fa"></span>
@@ -286,22 +290,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							{#if stats[0].error || stats[1].error}
-								<tr><td colspan="4" class="hint">{stats[0].error ?? stats[1].error}</td></tr>
-							{:else}
-								{#each compareVars as v}
-									{@const rawA = v.rawCol ? stats[0].rawValues[v.rawCol] : null}
-									{@const rawB = v.rawCol ? stats[1].rawValues[v.rawCol] : null}
-									{@const a = (rawA != null && typeof rawA === 'number') ? rawA : stats[0].values[v.col]}
-									{@const b = (rawB != null && typeof rawB === 'number') ? rawB : stats[1].values[v.col]}
-									<tr>
-										<td class="col-var">{i18n.t(v.labelKey)}</td>
-										<td class="col-val">{fmt(a)}{v.unit ? ` ${v.unit}` : ''}</td>
-										<td class="col-val">{fmt(b)}{v.unit ? ` ${v.unit}` : ''}</td>
-										<td class="col-diff {diffClass(a, b)}">{diff(a, b)}</td>
-									</tr>
-								{/each}
-							{/if}
+							{#each compareVars as v}
+								{@const rawA = v.rawCol ? stats[0].rawValues[v.rawCol] : null}
+								{@const rawB = v.rawCol ? stats[1].rawValues[v.rawCol] : null}
+								{@const a = (rawA != null && typeof rawA === 'number') ? rawA : stats[0].values[v.col]}
+								{@const b = (rawB != null && typeof rawB === 'number') ? rawB : stats[1].values[v.col]}
+								<tr>
+									<td class="col-var">{i18n.t(v.labelKey)}</td>
+									<td class="col-val">{fmt(a)}{v.unit ? ` ${v.unit}` : ''}</td>
+									<td class="col-val">{fmt(b)}{v.unit ? ` ${v.unit}` : ''}</td>
+									<td class="col-diff {diffClass(a, b)}">{diff(a, b)}</td>
+								</tr>
+							{/each}
 						</tbody>
 					</table>
 					{@const deptLabel = (t: typeof stats[0]['territory']) => t.country === 'py' ? 'Dist.' : t.country === 'br' ? 'Mun.' : 'Dept.'}
