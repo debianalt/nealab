@@ -84,7 +84,7 @@ def process_flood(t_id):
 
         # Run flood update pipeline (upload is built-in at step 7)
         log.write("\n--- run_flood_update.py ---\n")
-        rc = run(f"python run_flood_update.py --territory {t_id} --skip-gee", log=log)
+        rc = run(f"python run_flood_update.py --territory {t_id} --skip-gee --min-hexagons 10000", log=log)
         if not rc:
             log.write(f"FAIL: run_flood_update rc={rc}\n")
             return False

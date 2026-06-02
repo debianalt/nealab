@@ -189,9 +189,10 @@ def run(args):
     step(6, "Validate parquet output")
     from validate import validate_parquet
 
+    min_rows = args.min_hexagons if args.min_hexagons is not None else MIN_HEXAGONS
     is_valid = validate_parquet(
         parquet_path,
-        min_rows=MIN_HEXAGONS,
+        min_rows=min_rows,
         schema_cols=["h3index", "flood_risk_score"],
         value_ranges={"flood_risk_score": SCORE_RANGE},
     )
@@ -310,6 +311,8 @@ Examples:
     parser.add_argument("--jrc", action="store_true",
                         help="Also export JRC Global Surface Water (occurrence/recurrence/seasonality). "
                              "Run once per territory; the assets are static so subsequent runs can skip.")
+    parser.add_argument("--min-hexagons", type=int, default=None,
+                        help="Override minimum hexagon count for validation (default: config MIN_HEXAGONS)")
     args = parser.parse_args()
 
     if args.dry_run:

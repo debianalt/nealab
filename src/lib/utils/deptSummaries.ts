@@ -171,6 +171,7 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		pm25_drivers:           () => import('$lib/data/guaira_py_sat_pm25_drivers_summary.json'),
 		land_use:               () => import('$lib/data/guaira_py_sat_land_use_summary.json'),
 		accessibility:          () => import('$lib/data/guaira_py_sat_accessibility_summary.json'),
+		flood_risk:             () => import('$lib/data/guaira_py_flood_dept_summary.json'),
 	},
 	'caaguazu_py/': {
 		agri_potential:         () => import('$lib/data/caaguazu_py_sat_agri_potential_summary.json'),
