@@ -1,0 +1,210 @@
+{
+  "territory": "cordillera_py",
+  "province": {
+    "total_hexes": 51330,
+    "avg_score": 46.7,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Valenzuela",
+      "parquetKey": "valenzuela",
+      "avg_score": 80.5,
+      "hex_count": 2022,
+      "centroid": [
+        -56.8551,
+        -25.5913
+      ]
+    },
+    {
+      "distrito": "San Jose Obrero",
+      "parquetKey": "san_jose_obrero",
+      "avg_score": 70.8,
+      "hex_count": 2180,
+      "centroid": [
+        -56.8842,
+        -25.1148
+      ]
+    },
+    {
+      "distrito": "Juan De Mena",
+      "parquetKey": "juan_de_mena",
+      "avg_score": 68.4,
+      "hex_count": 10887,
+      "centroid": [
+        -56.7701,
+        -24.9869
+      ]
+    },
+    {
+      "distrito": "Caraguatay",
+      "parquetKey": "caraguatay",
+      "avg_score": 58.4,
+      "hex_count": 5731,
+      "centroid": [
+        -56.7397,
+        -25.2179
+      ]
+    },
+    {
+      "distrito": "Itacurubi De La Cordiller",
+      "parquetKey": "itacurubi_de_la_cordiller",
+      "avg_score": 47.0,
+      "hex_count": 1147,
+      "centroid": [
+        -56.8701,
+        -25.4677
+      ]
+    },
+    {
+      "distrito": "Arroyos Y Esteros",
+      "parquetKey": "arroyos_y_esteros",
+      "avg_score": 44.3,
+      "hex_count": 5898,
+      "centroid": [
+        -57.1657,
+        -25.0372
+      ]
+    },
+    {
+      "distrito": "Piribebuy",
+      "parquetKey": "piribebuy",
+      "avg_score": 44.3,
+      "hex_count": 2027,
+      "centroid": [
+        -57.0428,
+        -25.4661
+      ]
+    },
+    {
+      "distrito": "Loma Grande",
+      "parquetKey": "loma_grande",
+      "avg_score": 44.2,
+      "hex_count": 1011,
+      "centroid": [
+        -57.1909,
+        -25.1471
+      ]
+    },
+    {
+      "distrito": "1 De Marzo",
+      "parquetKey": "1_de_marzo",
+      "avg_score": 40.7,
+      "hex_count": 810,
+      "centroid": [
+        -56.9751,
+        -25.1246
+      ]
+    },
+    {
+      "distrito": "Tobati",
+      "parquetKey": "tobati",
+      "avg_score": 38.9,
+      "hex_count": 2861,
+      "centroid": [
+        -57.0454,
+        -25.218
+      ]
+    },
+    {
+      "distrito": "Santa Elena",
+      "parquetKey": "santa_elena",
+      "avg_score": 35.0,
+      "hex_count": 1171,
+      "centroid": [
+        -56.8205,
+        -25.3962
+      ]
+    },
+    {
+      "distrito": "Mbacayaty Del Yhaguy",
+      "parquetKey": "mbacayaty_del_yhaguy",
+      "avg_score": 34.9,
+      "hex_count": 3150,
+      "centroid": [
+        -56.7007,
+        -25.3325
+      ]
+    },
+    {
+      "distrito": "Isla Pucu",
+      "parquetKey": "isla_pucu",
+      "avg_score": 32.7,
+      "hex_count": 1183,
+      "centroid": [
+        -56.9,
+        -25.302
+      ]
+    },
+    {
+      "distrito": "Atyra",
+      "parquetKey": "atyra",
+      "avg_score": 27.4,
+      "hex_count": 1285,
+      "centroid": [
+        -57.1453,
+        -25.2524
+      ]
+    },
+    {
+      "distrito": "Eusebio Ayala",
+      "parquetKey": "eusebio_ayala",
+      "avg_score": 24.9,
+      "hex_count": 2873,
+      "centroid": [
+        -56.9762,
+        -25.3608
+      ]
+    },
+    {
+      "distrito": "Altos",
+      "parquetKey": "altos",
+      "avg_score": 22.3,
+      "hex_count": 1354,
+      "centroid": [
+        -57.2174,
+        -25.2525
+      ]
+    },
+    {
+      "distrito": "Nueva Colombia",
+      "parquetKey": "nueva_colombia",
+      "avg_score": 20.0,
+      "hex_count": 1026,
+      "centroid": [
+        -57.2658,
+        -25.1606
+      ]
+    },
+    {
+      "distrito": "Emboscada",
+      "parquetKey": "emboscada",
+      "avg_score": 12.9,
+      "hex_count": 2055,
+      "centroid": [
+        -57.3593,
+        -25.1259
+      ]
+    },
+    {
+      "distrito": "Caacupe",
+      "parquetKey": "caacupe",
+      "avg_score": 11.9,
+      "hex_count": 1249,
+      "centroid": [
+        -57.1229,
+        -25.3732
+      ]
+    },
+    {
+      "distrito": "San Bernardino",
+      "parquetKey": "san_bernardino",
+      "avg_score": 10.7,
+      "hex_count": 1410,
+      "centroid": [
+        -57.2908,
+        -25.2889
+      ]
+    }
+  ]
+}

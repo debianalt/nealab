@@ -1,0 +1,229 @@
+{
+  "province": {
+    "total_hexes": 51330,
+    "high_risk_count": 896,
+    "avg_score": 1.5
+  },
+  "departments": [
+    {
+      "dpto": "1 De Marzo",
+      "parquetKey": "1_de_marzo",
+      "avg_score": 1.1,
+      "hex_count": 810,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.9749,
+        -25.1249
+      ]
+    },
+    {
+      "dpto": "Altos",
+      "parquetKey": "altos",
+      "avg_score": 1.1,
+      "hex_count": 1354,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.2162,
+        -25.2535
+      ]
+    },
+    {
+      "dpto": "Arroyos Y Esteros",
+      "parquetKey": "arroyos_y_esteros",
+      "avg_score": 2.1,
+      "hex_count": 5898,
+      "high_risk_count": 429,
+      "centroid": [
+        -57.1667,
+        -25.0377
+      ]
+    },
+    {
+      "dpto": "Atyra",
+      "parquetKey": "atyra",
+      "avg_score": 1.1,
+      "hex_count": 1285,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.1465,
+        -25.2552
+      ]
+    },
+    {
+      "dpto": "Caacupe",
+      "parquetKey": "caacupe",
+      "avg_score": 1.1,
+      "hex_count": 1249,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.123,
+        -25.3728
+      ]
+    },
+    {
+      "dpto": "Caraguatay",
+      "parquetKey": "caraguatay",
+      "avg_score": 1.2,
+      "hex_count": 5731,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.7413,
+        -25.2197
+      ]
+    },
+    {
+      "dpto": "Emboscada",
+      "parquetKey": "emboscada",
+      "avg_score": 2.0,
+      "hex_count": 2055,
+      "high_risk_count": 143,
+      "centroid": [
+        -57.3634,
+        -25.1251
+      ]
+    },
+    {
+      "dpto": "Eusebio Ayala",
+      "parquetKey": "eusebio_ayala",
+      "avg_score": 1.1,
+      "hex_count": 2873,
+      "high_risk_count": 2,
+      "centroid": [
+        -56.9779,
+        -25.3584
+      ]
+    },
+    {
+      "dpto": "Isla Pucu",
+      "parquetKey": "isla_pucu",
+      "avg_score": 1.1,
+      "hex_count": 1183,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8997,
+        -25.3029
+      ]
+    },
+    {
+      "dpto": "Itacurubi De La Cordiller",
+      "parquetKey": "itacurubi_de_la_cordiller",
+      "avg_score": 1.0,
+      "hex_count": 1147,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8691,
+        -25.469
+      ]
+    },
+    {
+      "dpto": "Juan De Mena",
+      "parquetKey": "juan_de_mena",
+      "avg_score": 1.3,
+      "hex_count": 10887,
+      "high_risk_count": 13,
+      "centroid": [
+        -56.769,
+        -24.9889
+      ]
+    },
+    {
+      "dpto": "Loma Grande",
+      "parquetKey": "loma_grande",
+      "avg_score": 1.2,
+      "hex_count": 1011,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.1903,
+        -25.1474
+      ]
+    },
+    {
+      "dpto": "Mbacayaty Del Yhaguy",
+      "parquetKey": "mbacayaty_del_yhaguy",
+      "avg_score": 1.4,
+      "hex_count": 3150,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.7022,
+        -25.3348
+      ]
+    },
+    {
+      "dpto": "Nueva Colombia",
+      "parquetKey": "nueva_colombia",
+      "avg_score": 1.2,
+      "hex_count": 1026,
+      "high_risk_count": 1,
+      "centroid": [
+        -57.265,
+        -25.1587
+      ]
+    },
+    {
+      "dpto": "Piribebuy",
+      "parquetKey": "piribebuy",
+      "avg_score": 1.0,
+      "hex_count": 2027,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.0402,
+        -25.4664
+      ]
+    },
+    {
+      "dpto": "San Bernardino",
+      "parquetKey": "san_bernardino",
+      "avg_score": 5.1,
+      "hex_count": 1410,
+      "high_risk_count": 305,
+      "centroid": [
+        -57.292,
+        -25.2873
+      ]
+    },
+    {
+      "dpto": "San Jose Obrero",
+      "parquetKey": "san_jose_obrero",
+      "avg_score": 1.4,
+      "hex_count": 2180,
+      "high_risk_count": 2,
+      "centroid": [
+        -56.883,
+        -25.1174
+      ]
+    },
+    {
+      "dpto": "Santa Elena",
+      "parquetKey": "santa_elena",
+      "avg_score": 1.1,
+      "hex_count": 1171,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8196,
+        -25.3944
+      ]
+    },
+    {
+      "dpto": "Tobati",
+      "parquetKey": "tobati",
+      "avg_score": 1.3,
+      "hex_count": 2861,
+      "high_risk_count": 1,
+      "centroid": [
+        -57.0467,
+        -25.2186
+      ]
+    },
+    {
+      "dpto": "Valenzuela",
+      "parquetKey": "valenzuela",
+      "avg_score": 1.0,
+      "hex_count": 2022,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8582,
+        -25.5916
+      ]
+    }
+  ]
+}

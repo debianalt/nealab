@@ -1,0 +1,200 @@
+{
+  "territory": "caaguazu_py",
+  "province": {
+    "total_hexes": 135727,
+    "avg_score": 44.6,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Yhu",
+      "parquetKey": "yhu",
+      "avg_score": 64.3,
+      "hex_count": 27067,
+      "centroid": [
+        -55.6355,
+        -24.8194
+      ]
+    },
+    {
+      "distrito": "La Pastora",
+      "parquetKey": "la_pastora",
+      "avg_score": 61.4,
+      "hex_count": 2247,
+      "centroid": [
+        -56.5132,
+        -25.26
+      ]
+    },
+    {
+      "distrito": "R.i. 3 Corrales",
+      "parquetKey": "ri_3_corrales",
+      "avg_score": 56.0,
+      "hex_count": 2925,
+      "centroid": [
+        -56.2343,
+        -25.3597
+      ]
+    },
+    {
+      "distrito": "San Jose De Los Arroyos",
+      "parquetKey": "san_jose_de_los_arroyos",
+      "avg_score": 53.6,
+      "hex_count": 5299,
+      "centroid": [
+        -56.6955,
+        -25.5352
+      ]
+    },
+    {
+      "distrito": "Repatriacion",
+      "parquetKey": "repatriacion",
+      "avg_score": 52.8,
+      "hex_count": 8988,
+      "centroid": [
+        -55.7998,
+        -25.576
+      ]
+    },
+    {
+      "distrito": "Carayao",
+      "parquetKey": "carayao",
+      "avg_score": 51.2,
+      "hex_count": 9778,
+      "centroid": [
+        -56.3183,
+        -25.1893
+      ]
+    },
+    {
+      "distrito": "Mcal. Fco. Solano Lopez",
+      "parquetKey": "mcal_fco_solano_lopez",
+      "avg_score": 50.3,
+      "hex_count": 13563,
+      "centroid": [
+        -55.2805,
+        -25.0871
+      ]
+    },
+    {
+      "distrito": "San Joaquin",
+      "parquetKey": "san_joaquin",
+      "avg_score": 43.3,
+      "hex_count": 4431,
+      "centroid": [
+        -56.0375,
+        -25.0351
+      ]
+    },
+    {
+      "distrito": "Simon Bolivar",
+      "parquetKey": "simon_bolivar",
+      "avg_score": 41.6,
+      "hex_count": 3997,
+      "centroid": [
+        -56.3273,
+        -25.0226
+      ]
+    },
+    {
+      "distrito": "3 De Febrero",
+      "parquetKey": "3_de_febrero",
+      "avg_score": 37.3,
+      "hex_count": 1819,
+      "centroid": [
+        -55.8351,
+        -25.2076
+      ]
+    },
+    {
+      "distrito": "Raul  A. Oviedo",
+      "parquetKey": "raul__a_oviedo",
+      "avg_score": 35.2,
+      "hex_count": 14838,
+      "centroid": [
+        -55.526,
+        -25.1647
+      ]
+    },
+    {
+      "distrito": "Cecilio Baez",
+      "parquetKey": "cecilio_baez",
+      "avg_score": 32.3,
+      "hex_count": 1515,
+      "centroid": [
+        -56.2428,
+        -25.0895
+      ]
+    },
+    {
+      "distrito": "Santa Rosa Del Mbutuy",
+      "parquetKey": "santa_rosa_del_mbutuy",
+      "avg_score": 30.3,
+      "hex_count": 3829,
+      "centroid": [
+        -56.2558,
+        -24.9235
+      ]
+    },
+    {
+      "distrito": "J.e. Estigarribia",
+      "parquetKey": "je_estigarribia",
+      "avg_score": 28.1,
+      "hex_count": 6574,
+      "centroid": [
+        -55.5968,
+        -25.401
+      ]
+    },
+    {
+      "distrito": "Nueva Londres",
+      "parquetKey": "nueva_londres",
+      "avg_score": 28.0,
+      "hex_count": 2284,
+      "centroid": [
+        -56.5598,
+        -25.4168
+      ]
+    },
+    {
+      "distrito": "Juan M. Frutos",
+      "parquetKey": "juan_m_frutos",
+      "avg_score": 27.9,
+      "hex_count": 5778,
+      "centroid": [
+        -55.825,
+        -25.3574
+      ]
+    },
+    {
+      "distrito": "Caaguazu",
+      "parquetKey": "caaguazu",
+      "avg_score": 27.3,
+      "hex_count": 10114,
+      "centroid": [
+        -56.0534,
+        -25.4075
+      ]
+    },
+    {
+      "distrito": "Coronel Oviedo",
+      "parquetKey": "coronel_oviedo",
+      "avg_score": 25.5,
+      "hex_count": 9135,
+      "centroid": [
+        -56.4242,
+        -25.4906
+      ]
+    },
+    {
+      "distrito": "Jose D. Ocampos",
+      "parquetKey": "jose_d_ocampos",
+      "avg_score": 21.5,
+      "hex_count": 1546,
+      "centroid": [
+        -55.4392,
+        -25.4429
+      ]
+    }
+  ]
+}

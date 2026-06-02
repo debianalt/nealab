@@ -1,0 +1,119 @@
+{
+  "province": {
+    "total_hexes": 102393,
+    "high_risk_count": 307,
+    "avg_score": 1.2
+  },
+  "departments": [
+    {
+      "dpto": "Abai",
+      "parquetKey": "abai",
+      "avg_score": 1.1,
+      "hex_count": 23364,
+      "high_risk_count": 25,
+      "centroid": [
+        -55.7149,
+        -25.8946
+      ]
+    },
+    {
+      "dpto": "Buena Vista",
+      "parquetKey": "buena_vista",
+      "avg_score": 1.1,
+      "hex_count": 1275,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.0994,
+        -26.2322
+      ]
+    },
+    {
+      "dpto": "Caazapa",
+      "parquetKey": "caazapa",
+      "avg_score": 1.2,
+      "hex_count": 9308,
+      "high_risk_count": 5,
+      "centroid": [
+        -56.2958,
+        -26.1818
+      ]
+    },
+    {
+      "dpto": "Dr. Moises Bertoni",
+      "parquetKey": "dr_moises_bertoni",
+      "avg_score": 1.3,
+      "hex_count": 7730,
+      "high_risk_count": 3,
+      "centroid": [
+        -56.6033,
+        -26.3929
+      ]
+    },
+    {
+      "dpto": "Fulgencio Yegros",
+      "parquetKey": "fulgencio_yegros",
+      "avg_score": 1.5,
+      "hex_count": 9598,
+      "high_risk_count": 78,
+      "centroid": [
+        -56.5582,
+        -26.5504
+      ]
+    },
+    {
+      "dpto": "Gral. Higinio Morinigo",
+      "parquetKey": "gral_higinio_morinigo",
+      "avg_score": 1.1,
+      "hex_count": 2765,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.1095,
+        -26.0705
+      ]
+    },
+    {
+      "dpto": "Maciel",
+      "parquetKey": "maciel",
+      "avg_score": 1.5,
+      "hex_count": 4792,
+      "high_risk_count": 26,
+      "centroid": [
+        -56.5239,
+        -26.2202
+      ]
+    },
+    {
+      "dpto": "San Juan Nepomuceno",
+      "parquetKey": "san_juan_nepomuceno",
+      "avg_score": 1.1,
+      "hex_count": 10884,
+      "high_risk_count": 0,
+      "centroid": [
+        -55.9164,
+        -26.2413
+      ]
+    },
+    {
+      "dpto": "Tavai",
+      "parquetKey": "tavai",
+      "avg_score": 1.0,
+      "hex_count": 13470,
+      "high_risk_count": 2,
+      "centroid": [
+        -55.5292,
+        -26.1886
+      ]
+    },
+    {
+      "dpto": "Yuty",
+      "parquetKey": "yuty",
+      "avg_score": 1.4,
+      "hex_count": 19207,
+      "high_risk_count": 168,
+      "centroid": [
+        -56.2385,
+        -26.5335
+      ]
+    }
+  ]
+}

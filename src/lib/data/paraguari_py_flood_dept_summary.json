@@ -1,0 +1,196 @@
+{
+  "province": {
+    "total_hexes": 94348,
+    "high_risk_count": 1201,
+    "avg_score": 1.5
+  },
+  "departments": [
+    {
+      "dpto": "Acahay",
+      "parquetKey": "acahay",
+      "avg_score": 1.2,
+      "hex_count": 3557,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.0734,
+        -25.8938
+      ]
+    },
+    {
+      "dpto": "Caapucu",
+      "parquetKey": "caapucu",
+      "avg_score": 1.9,
+      "hex_count": 26026,
+      "high_risk_count": 786,
+      "centroid": [
+        -57.3872,
+        -26.334
+      ]
+    },
+    {
+      "dpto": "Caballero",
+      "parquetKey": "caballero",
+      "avg_score": 1.3,
+      "hex_count": 2610,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8849,
+        -25.7529
+      ]
+    },
+    {
+      "dpto": "Carapegua",
+      "parquetKey": "carapegua",
+      "avg_score": 1.3,
+      "hex_count": 5302,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.3247,
+        -25.7624
+      ]
+    },
+    {
+      "dpto": "Escobar",
+      "parquetKey": "escobar",
+      "avg_score": 1.2,
+      "hex_count": 3140,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.0118,
+        -25.6328
+      ]
+    },
+    {
+      "dpto": "La Colmena",
+      "parquetKey": "la_colmena",
+      "avg_score": 1.2,
+      "hex_count": 1230,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.8184,
+        -25.9074
+      ]
+    },
+    {
+      "dpto": "Mbuyapey",
+      "parquetKey": "mbuyapey",
+      "avg_score": 1.5,
+      "hex_count": 9725,
+      "high_risk_count": 103,
+      "centroid": [
+        -56.8057,
+        -26.2769
+      ]
+    },
+    {
+      "dpto": "Paraguari",
+      "parquetKey": "paraguari",
+      "avg_score": 1.6,
+      "hex_count": 4908,
+      "high_risk_count": 9,
+      "centroid": [
+        -57.135,
+        -25.6667
+      ]
+    },
+    {
+      "dpto": "Pirayu",
+      "parquetKey": "pirayu",
+      "avg_score": 1.1,
+      "hex_count": 2137,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.2066,
+        -25.4767
+      ]
+    },
+    {
+      "dpto": "Quiindy",
+      "parquetKey": "quiindy",
+      "avg_score": 1.8,
+      "hex_count": 6788,
+      "high_risk_count": 131,
+      "centroid": [
+        -57.3206,
+        -26.0101
+      ]
+    },
+    {
+      "dpto": "Quyquyho",
+      "parquetKey": "quyquyho",
+      "avg_score": 1.6,
+      "hex_count": 6662,
+      "high_risk_count": 44,
+      "centroid": [
+        -57.012,
+        -26.2533
+      ]
+    },
+    {
+      "dpto": "San Roque Gonzalez",
+      "parquetKey": "san_roque_gonzalez",
+      "avg_score": 2.3,
+      "hex_count": 2353,
+      "high_risk_count": 124,
+      "centroid": [
+        -57.3018,
+        -25.8816
+      ]
+    },
+    {
+      "dpto": "Sapucai",
+      "parquetKey": "sapucai",
+      "avg_score": 1.2,
+      "hex_count": 2150,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.9728,
+        -25.7192
+      ]
+    },
+    {
+      "dpto": "Tebicuarymi",
+      "parquetKey": "tebicuarymi",
+      "avg_score": 1.3,
+      "hex_count": 1751,
+      "high_risk_count": 2,
+      "centroid": [
+        -56.6657,
+        -25.917
+      ]
+    },
+    {
+      "dpto": "Yaguaron",
+      "parquetKey": "yaguaron",
+      "avg_score": 1.3,
+      "hex_count": 2750,
+      "high_risk_count": 0,
+      "centroid": [
+        -57.2802,
+        -25.5951
+      ]
+    },
+    {
+      "dpto": "Ybycui",
+      "parquetKey": "ybycui",
+      "avg_score": 1.3,
+      "hex_count": 8812,
+      "high_risk_count": 2,
+      "centroid": [
+        -56.9466,
+        -26.0436
+      ]
+    },
+    {
+      "dpto": "Ybytymi",
+      "parquetKey": "ybytymi",
+      "avg_score": 1.4,
+      "hex_count": 4447,
+      "high_risk_count": 0,
+      "centroid": [
+        -56.7678,
+        -25.7763
+      ]
+    }
+  ]
+}

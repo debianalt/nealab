@@ -1,0 +1,110 @@
+{
+  "territory": "misiones_py",
+  "province": {
+    "total_hexes": 92975,
+    "avg_score": 20.2,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "San Ignacio",
+      "parquetKey": "san_ignacio",
+      "avg_score": 35.4,
+      "hex_count": 16735,
+      "centroid": [
+        -57.1427,
+        -26.9445
+      ]
+    },
+    {
+      "distrito": "San Patricio",
+      "parquetKey": "san_patricio",
+      "avg_score": 32.4,
+      "hex_count": 728,
+      "centroid": [
+        -56.8303,
+        -26.9867
+      ]
+    },
+    {
+      "distrito": "Santiago",
+      "parquetKey": "santiago",
+      "avg_score": 31.8,
+      "hex_count": 10349,
+      "centroid": [
+        -56.7915,
+        -27.1361
+      ]
+    },
+    {
+      "distrito": "Santa Rosa",
+      "parquetKey": "santa_rosa",
+      "avg_score": 30.0,
+      "hex_count": 9138,
+      "centroid": [
+        -56.7968,
+        -26.8686
+      ]
+    },
+    {
+      "distrito": "Yabebyry",
+      "parquetKey": "yabebyry",
+      "avg_score": 24.4,
+      "hex_count": 9241,
+      "centroid": [
+        -57.1846,
+        -27.2526
+      ]
+    },
+    {
+      "distrito": "Santa Maria",
+      "parquetKey": "santa_maria",
+      "avg_score": 23.1,
+      "hex_count": 4060,
+      "centroid": [
+        -56.8905,
+        -26.73
+      ]
+    },
+    {
+      "distrito": "San Juan Bautista",
+      "parquetKey": "san_juan_bautista",
+      "avg_score": 13.5,
+      "hex_count": 23961,
+      "centroid": [
+        -57.426,
+        -26.6948
+      ]
+    },
+    {
+      "distrito": "Ayolas",
+      "parquetKey": "ayolas",
+      "avg_score": 2.3,
+      "hex_count": 9478,
+      "centroid": [
+        -57.0272,
+        -27.3756
+      ]
+    },
+    {
+      "distrito": "San Miguel",
+      "parquetKey": "san_miguel",
+      "avg_score": 0.0,
+      "hex_count": 6276,
+      "centroid": [
+        -56.9666,
+        -26.5689
+      ]
+    },
+    {
+      "distrito": "Villa Florida",
+      "parquetKey": "villa_florida",
+      "avg_score": 0.0,
+      "hex_count": 3009,
+      "centroid": [
+        -57.1253,
+        -26.4611
+      ]
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "territory": "central_py",
+  "province": {
+    "total_hexes": 27483,
+    "avg_score": 46.9,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Nueva Italia",
+      "parquetKey": "nueva_italia",
+      "avg_score": 71.4,
+      "hex_count": 4022,
+      "centroid": [
+        -57.4757,
+        -25.7512
+      ]
+    },
+    {
+      "distrito": "Villeta",
+      "parquetKey": "villeta",
+      "avg_score": 64.1,
+      "hex_count": 9166,
+      "centroid": [
+        -57.6064,
+        -25.7011
+      ]
+    },
+    {
+      "distrito": "Ita",
+      "parquetKey": "ita",
+      "avg_score": 44.5,
+      "hex_count": 1945,
+      "centroid": [
+        -57.3749,
+        -25.52
+      ]
+    },
+    {
+      "distrito": "Ypacarai",
+      "parquetKey": "ypacarai",
+      "avg_score": 39.5,
+      "hex_count": 1197,
+      "centroid": [
+        -57.2585,
+        -25.3887
+      ]
+    },
+    {
+      "distrito": "Aregua",
+      "parquetKey": "aregua",
+      "avg_score": 35.9,
+      "hex_count": 1123,
+      "centroid": [
+        -57.3871,
+        -25.2913
+      ]
+    },
+    {
+      "distrito": "Itaugua",
+      "parquetKey": "itaugua",
+      "avg_score": 34.0,
+      "hex_count": 1218,
+      "centroid": [
+        -57.3532,
+        -25.3941
+      ]
+    },
+    {
+      "distrito": "Limpio",
+      "parquetKey": "limpio",
+      "avg_score": 30.5,
+      "hex_count": 1313,
+      "centroid": [
+        -57.4784,
+        -25.1533
+      ]
+    },
+    {
+      "distrito": "Guarambare",
+      "parquetKey": "guarambare",
+      "avg_score": 30.4,
+      "hex_count": 312,
+      "centroid": [
+        -57.452,
+        -25.4829
+      ]
+    },
+    {
+      "distrito": "J. A. Saldivar",
+      "parquetKey": "j_a_saldivar",
+      "avg_score": 30.0,
+      "hex_count": 374,
+      "centroid": [
+        -57.4334,
+        -25.4217
+      ]
+    },
+    {
+      "distrito": "Luque",
+      "parquetKey": "luque",
+      "avg_score": 26.1,
+      "hex_count": 1595,
+      "centroid": [
+        -57.4568,
+        -25.2476
+      ]
+    },
+    {
+      "distrito": "Ypane",
+      "parquetKey": "ypane",
+      "avg_score": 25.6,
+      "hex_count": 509,
+      "centroid": [
+        -57.5063,
+        -25.4553
+      ]
+    },
+    {
+      "distrito": "Capiata",
+      "parquetKey": "capiata",
+      "avg_score": 24.1,
+      "hex_count": 833,
+      "centroid": [
+        -57.4524,
+        -25.3673
+      ]
+    },
+    {
+      "distrito": "San Antonio",
+      "parquetKey": "san_antonio",
+      "avg_score": 23.8,
+      "hex_count": 315,
+      "centroid": [
+        -57.5599,
+        -25.4165
+      ]
+    },
+    {
+      "distrito": "M. Roque Alonso",
+      "parquetKey": "m_roque_alonso",
+      "avg_score": 23.0,
+      "hex_count": 455,
+      "centroid": [
+        -57.5338,
+        -25.1973
+      ]
+    },
+    {
+      "distrito": "Nemby",
+      "parquetKey": "nemby",
+      "avg_score": 19.2,
+      "hex_count": 283,
+      "centroid": [
+        -57.5321,
+        -25.3952
+      ]
+    },
+    {
+      "distrito": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "avg_score": 18.0,
+      "hex_count": 607,
+      "centroid": [
+        -57.5107,
+        -25.3477
+      ]
+    },
+    {
+      "distrito": "Asuncion",
+      "parquetKey": "asuncion",
+      "avg_score": 14.0,
+      "hex_count": 1465,
+      "centroid": [
+        -57.6069,
+        -25.2858
+      ]
+    },
+    {
+      "distrito": "Villa Elisa",
+      "parquetKey": "villa_elisa",
+      "avg_score": 13.9,
+      "hex_count": 220,
+      "centroid": [
+        -57.5871,
+        -25.3721
+      ]
+    },
+    {
+      "distrito": "Lambare",
+      "parquetKey": "lambare",
+      "avg_score": 12.3,
+      "hex_count": 310,
+      "centroid": [
+        -57.6166,
+        -25.3522
+      ]
+    },
+    {
+      "distrito": "Fdo. De La Mora",
+      "parquetKey": "fdo_de_la_mora",
+      "avg_score": 11.8,
+      "hex_count": 221,
+      "centroid": [
+        -57.5499,
+        -25.3229
+      ]
+    }
+  ]
+}

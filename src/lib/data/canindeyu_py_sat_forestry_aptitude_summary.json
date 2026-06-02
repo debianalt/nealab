@@ -1,0 +1,70 @@
+{
+  "territory": "canindeyu_py",
+  "province": {
+    "total_hexes": 142250,
+    "avg_score": 49.5,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Curuguaty",
+      "parquetKey": "curuguaty",
+      "avg_score": 68.0,
+      "hex_count": 42487,
+      "centroid": [
+        -55.7259,
+        -24.3773
+      ]
+    },
+    {
+      "distrito": "Itanara",
+      "parquetKey": "itanara",
+      "avg_score": 67.2,
+      "hex_count": 8321,
+      "centroid": [
+        -55.6588,
+        -23.7626
+      ]
+    },
+    {
+      "distrito": "Corpus Christi",
+      "parquetKey": "corpus_christi",
+      "avg_score": 53.4,
+      "hex_count": 18536,
+      "centroid": [
+        -55.0227,
+        -24.1393
+      ]
+    },
+    {
+      "distrito": "F. Caballero Alvarez",
+      "parquetKey": "f_caballero_alvarez",
+      "avg_score": 41.5,
+      "hex_count": 36828,
+      "centroid": [
+        -54.7025,
+        -24.3729
+      ]
+    },
+    {
+      "distrito": "Villa Igatimi",
+      "parquetKey": "villa_igatimi",
+      "avg_score": 34.2,
+      "hex_count": 19229,
+      "centroid": [
+        -55.4917,
+        -24.1422
+      ]
+    },
+    {
+      "distrito": "Salto Del Guaira",
+      "parquetKey": "salto_del_guaira",
+      "avg_score": 24.7,
+      "hex_count": 16849,
+      "centroid": [
+        -54.4392,
+        -24.212
+      ]
+    }
+  ]
+}
