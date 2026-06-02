@@ -182,6 +182,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/concepcion_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/concepcion_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/concepcion_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/concepcion_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/concepcion_py_sat_territorial_types_summary.json'),
 	},
 	'san_pedro_py/': {
 		agri_potential:         () => import('$lib/data/san_pedro_py_sat_agri_potential_summary.json'),
@@ -197,6 +199,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/san_pedro_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/san_pedro_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/san_pedro_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/san_pedro_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/san_pedro_py_sat_territorial_types_summary.json'),
 	},
 	'cordillera_py/': {
 		agri_potential:         () => import('$lib/data/cordillera_py_sat_agri_potential_summary.json'),
@@ -212,6 +216,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/cordillera_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/cordillera_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/cordillera_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/cordillera_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/cordillera_py_sat_territorial_types_summary.json'),
 	},
 	'guaira_py/': {
 		agri_potential:         () => import('$lib/data/guaira_py_sat_agri_potential_summary.json'),
@@ -227,6 +233,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/guaira_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/guaira_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/guaira_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/guaira_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/guaira_py_sat_territorial_types_summary.json'),
 	},
 	'caaguazu_py/': {
 		agri_potential:         () => import('$lib/data/caaguazu_py_sat_agri_potential_summary.json'),
@@ -242,6 +250,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/caaguazu_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/caaguazu_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/caaguazu_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/caaguazu_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/caaguazu_py_sat_territorial_types_summary.json'),
 	},
 	'caazapa_py/': {
 		agri_potential:         () => import('$lib/data/caazapa_py_sat_agri_potential_summary.json'),
@@ -257,6 +267,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/caazapa_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/caazapa_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/caazapa_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/caazapa_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/caazapa_py_sat_territorial_types_summary.json'),
 	},
 	'misiones_py/': {
 		agri_potential:         () => import('$lib/data/misiones_py_sat_agri_potential_summary.json'),
@@ -272,6 +284,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/misiones_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/misiones_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/misiones_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/misiones_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/misiones_py_sat_territorial_types_summary.json'),
 	},
 	'paraguari_py/': {
 		agri_potential:         () => import('$lib/data/paraguari_py_sat_agri_potential_summary.json'),
@@ -287,6 +301,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/paraguari_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/paraguari_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/paraguari_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/paraguari_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/paraguari_py_sat_territorial_types_summary.json'),
 	},
 	'central_py/': {
 		agri_potential:         () => import('$lib/data/central_py_sat_agri_potential_summary.json'),
@@ -302,6 +318,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/central_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/central_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/central_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/central_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/central_py_sat_territorial_types_summary.json'),
 	},
 	'neembucu_py/': {
 		agri_potential:         () => import('$lib/data/neembucu_py_sat_agri_potential_summary.json'),
@@ -317,6 +335,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/neembucu_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/neembucu_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/neembucu_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/neembucu_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/neembucu_py_sat_territorial_types_summary.json'),
 	},
 	'amambay_py/': {
 		agri_potential:         () => import('$lib/data/amambay_py_sat_agri_potential_summary.json'),
@@ -332,6 +352,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/amambay_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/amambay_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/amambay_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/amambay_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/amambay_py_sat_territorial_types_summary.json'),
 	},
 	'canindeyu_py/': {
 		agri_potential:         () => import('$lib/data/canindeyu_py_sat_agri_potential_summary.json'),
@@ -347,6 +369,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/canindeyu_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/canindeyu_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/canindeyu_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/canindeyu_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/canindeyu_py_sat_territorial_types_summary.json'),
 	},
 	'presidente_hayes_py/': {
 		agri_potential:         () => import('$lib/data/presidente_hayes_py_sat_agri_potential_summary.json'),
@@ -362,6 +386,8 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		environmental_risk:     () => import('$lib/data/presidente_hayes_py_sat_environmental_risk_summary.json'),
 		forest_health:          () => import('$lib/data/presidente_hayes_py_sat_forest_health_summary.json'),
 		green_capital:          () => import('$lib/data/presidente_hayes_py_sat_green_capital_summary.json'),
+		climate_vulnerability:  () => import('$lib/data/presidente_hayes_py_sat_climate_vulnerability_summary.json'),
+		territorial_types:      () => import('$lib/data/presidente_hayes_py_sat_territorial_types_summary.json'),
 	},
 	'boqueron_py/': {
 		agri_potential:         () => import('$lib/data/boqueron_py_sat_agri_potential_summary.json'),
