@@ -48,6 +48,7 @@
 	let container: HTMLDivElement;
 	let hexLayerTitle = '';
 	let hexLayerIsCategorical = false;
+	let hexLayerUnit = ''; // physical unit of the primary variable (tC/ha, min, %…); '' = no suffix
 	let map: maplibregl.Map;
 	let lassoActive = false;
 	let catastroActive = false;
@@ -1568,7 +1569,13 @@
 				valueLine = `<span style="color:#e2e8f0;font-weight:600">${p.type_label}</span>`;
 			} else {
 				const score = p.value != null ? Number(p.value).toFixed(1) : '—';
-				valueLine = `<span style="color:#e2e8f0;font-weight:600">${score}</span><span style="color:rgba(255,255,255,0.4);font-size:9px"> /100</span>`;
+				// Physical unit of the primary variable (tC/ha, min, %…), set per layer.
+				// Empty → no suffix. Replaces the old hardcoded "/100", which mislabeled
+				// every raw layer as a 0-100 score.
+				const suffix = hexLayerUnit
+					? `<span style="color:rgba(255,255,255,0.4);font-size:9px"> ${hexLayerUnit}</span>`
+					: '';
+				valueLine = `<span style="color:#e2e8f0;font-weight:600">${score}</span>${suffix}`;
 			}
 
 			tooltip.innerHTML = `${titleLine}${valueLine}`;
@@ -1625,9 +1632,10 @@
 
 	}
 
-	export function setHexLayerInfo(title: string, isCategorical: boolean) {
+	export function setHexLayerInfo(title: string, isCategorical: boolean, unit: string = '') {
 		hexLayerTitle = title;
 		hexLayerIsCategorical = isCategorical;
+		hexLayerUnit = unit;
 	}
 
 	export function flyToInit() {

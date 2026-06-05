@@ -535,7 +535,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.pm25.high': { es: 'Alta exposición a PM2.5', en: 'High PM2.5 exposure', gn: "Tuicha", pt: 'Alta exposição ao PM2.5' },
 
 	'sat.landUse.title': { es: '¿Qué uso de suelo tiene esta zona?', en: 'What land use does this area have?', gn: "Mba'éichapa ojepuru ko yvy?", pt: 'Qual o uso do solo nesta zona?' },
-	'sat.landUse.desc': { es: 'Tipo de cobertura dominante por hexágono: selva nativa, cultivos, pastizal, agua, humedal y urbano (MapBiomas Landsat 30m, 2022)', en: 'Dominant land cover type per hexagon: native forest, crops, pasture, water, wetland and urban (MapBiomas Landsat 30m, 2022)', gn: "Yvy jepuru: ka'aguy, temity, pasto, y, táva", pt: 'Tipo de cobertura dominante por hexágono: floresta nativa, cultivos, pastagem, água, área úmida e urbano (MapBiomas Landsat 30m, 2022)' },
+	'sat.landUse.desc': { es: 'Composición de cobertura del suelo por hexágono (color = fracción arbórea): árboles, cultivos, pasturas, arbustos, construido, agua (Dynamic World 10m, Google/WRI — comparable entre territorios)', en: 'Land-cover composition per hexagon (colour = tree fraction): trees, crops, grass, shrub, built, water (Dynamic World 10m, Google/WRI — cross-territory comparable)', gn: "Yvy jepuru: ka'aguy, temity, pasto, ka'avo, táva, y (Dynamic World 10m)", pt: 'Composição da cobertura do solo por hexágono (cor = fração arbórea): árvores, cultivos, pastagem, arbustos, construído, água (Dynamic World 10m, Google/WRI — comparável entre territórios)' },
 	'sat.landUse.score': { es: 'Tipo de cobertura', en: 'Cover type', gn: 'Score', pt: 'Tipo de cobertura' },
 	'sat.landUse.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
 	'sat.landUse.typeLabel': { es: 'Tipo de cobertura', en: 'Cover type', gn: 'Laja', pt: 'Tipo de cobertura' },
@@ -554,6 +554,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.landUse.built': { es: 'Construido', en: 'Built', gn: 'Táva', pt: 'Construído' },
 	'sat.landUse.grass': { es: 'Pasturas', en: 'Grass', gn: 'Pasto', pt: 'Pastagens' },
 	'sat.landUse.shrub': { es: 'Arbustos', en: 'Shrubs', gn: "Ka'avo", pt: 'Arbustos' },
+	'sat.landUse.flooded': { es: 'Veg. inundada', en: 'Flooded veg.', gn: 'Ñana y', pt: 'Veg. inundada' },
+	'sat.landUse.snow': { es: 'Nieve/hielo', en: 'Snow/ice', gn: 'Roy', pt: 'Neve/gelo' },
 
 	// ── Radio-based analyses ──
 	'analysis.investment.title': { es: '¿Cómo es el mercado inmobiliario en esta zona?', en: 'What is the real estate market like in this area?', gn: "Mba'éichapa yvy ñemuhague ko'ápe?", pt: 'Como é o mercado imobiliário nesta zona?' },

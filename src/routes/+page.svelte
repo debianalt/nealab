@@ -39,7 +39,7 @@
 	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
-	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
+	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
@@ -586,7 +586,7 @@
 				hexStore.setLayer(analysis.id);
 				hexStore.ensureColorDomain().catch(() => {});
 				mapStore.setActiveHexLayer(analysis.id);
-				mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical');
+				mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg));
 				// Regional mode: load data for other territories in scope
 				if (untrack(() => territoryStore.regionalMode)) {
 					const countryFilter = untrack(() => territoryStore.countryFilter);
@@ -1522,7 +1522,7 @@
 		mapComponent?.clearHexZoneHighlight();
 		mapStore.setActiveHexLayer(hexStore.activeLayer?.id ?? null);
 		if (hexStore.activeLayer) {
-			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical');
+			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical', getHexPrimaryUnit(hexStore.activeLayer));
 		}
 		// Load dept data + compute color domain in parallel.
 		await Promise.all([

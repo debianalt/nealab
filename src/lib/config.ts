@@ -447,6 +447,32 @@ export interface HexLayerConfig {
 	coverage?: Record<string, 'available' | 'pending' | 'unavailable'>;
 	legendLowKey?: string;
 	legendHighKey?: string;
+	comparable?: true;
+	// Fixed color-scale domain [lo, hi] in the primaryVariable's physical units.
+	// When set, ensureColorDomain() uses it directly instead of querying MIN/MAX on
+	// the global parquet — avoids a slow remote scan (carbon: 1 row-group, 2.7 MB
+	// column = 3.6 s) AND makes colors identical cross-territory (more comparable).
+	fixedColorDomain?: [number, number];
+}
+
+/**
+ * Physical-unit label for a hex layer's primary variable, for tooltips/axes.
+ * Returns the declared unit (tC/ha, min, %, µg/m³, mm…), 'percentil prov.' for
+ * census layers, or '/100' only for genuine 0-100 composite scores. Matches the
+ * primary against both `col` and `rawCol` (carbon's primary is a rawCol whose unit
+ * lives on the base entry). Mirrors primaryXLabel in Sidebar.svelte.
+ */
+export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined): string {
+	if (!layer) return '';
+	const pv = layer.primaryVariable;
+	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
+	if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
+	if (layer.variables?.some((x) => x.unit === 'percentil')) return 'percentil prov.';
+	// Genuine 0-100 composite score (eudr risk_score, agri c_ph_optimal) → '/100'.
+	// Anything else with no declared unit (e.g. a raw 0-1 fraction) → no suffix,
+	// so we never re-introduce a fake '/100' on a raw value.
+	if (pv === 'score' || pv.endsWith('_score') || v?.unit === '/100') return '/100';
+	return '';
 }
 
 export function getTemporalCol(col: string, mode: TemporalMode): string {
@@ -636,22 +662,22 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	land_use: {
 		id: 'land_use',
 		parquet: 'sat_land_use',
+		// Dynamic World v1 (Google/WRI, 10m): 9 land-cover probability fractions [0-1].
+		// Global product, identical method across AR/PY/BR → cross-territory comparable.
+		// (Earlier config declared MapBiomas cols that do not exist in the parquet, so
+		// every hex rendered as "Sin cobertura"; realigned to the real Dynamic World schema.)
 		variables: [
-			{ col: 'score',              labelKey: 'sat.landUse.score',        aggregation: 'mean' },
-			{ col: 'type',               labelKey: 'sat.landUse.type',         aggregation: 'mean' },
-			{ col: 'type_label',         labelKey: 'sat.landUse.typeLabel',    aggregation: 'mean' },
-			{ col: 'frac_native_forest', labelKey: 'sat.landUse.nativeForest', aggregation: 'mean' },
-			{ col: 'frac_plantation',    labelKey: 'sat.landUse.plantation',   aggregation: 'mean' },
-			{ col: 'frac_agriculture',   labelKey: 'sat.landUse.agriculture',  aggregation: 'mean' },
-			{ col: 'frac_pasture',       labelKey: 'sat.landUse.pasture',      aggregation: 'mean' },
-			{ col: 'frac_grassland',     labelKey: 'sat.landUse.grassland',    aggregation: 'mean' },
-			{ col: 'frac_wetland',       labelKey: 'sat.landUse.wetland',      aggregation: 'mean' },
-			{ col: 'frac_urban',         labelKey: 'sat.landUse.urban',        aggregation: 'mean' },
-			{ col: 'frac_water',         labelKey: 'sat.landUse.water',        aggregation: 'mean' },
-			{ col: 'frac_mosaic',        labelKey: 'sat.landUse.mosaic',       aggregation: 'mean' },
-			{ col: 'frac_bare',          labelKey: 'sat.landUse.bare',         aggregation: 'mean' },
+			{ col: 'frac_trees',   labelKey: 'sat.landUse.trees',   aggregation: 'mean' },
+			{ col: 'frac_crops',   labelKey: 'sat.landUse.crops',   aggregation: 'mean' },
+			{ col: 'frac_grass',   labelKey: 'sat.landUse.grass',   aggregation: 'mean' },
+			{ col: 'frac_shrub',   labelKey: 'sat.landUse.shrub',   aggregation: 'mean' },
+			{ col: 'frac_built',   labelKey: 'sat.landUse.built',   aggregation: 'mean' },
+			{ col: 'frac_water',   labelKey: 'sat.landUse.water',   aggregation: 'mean' },
+			{ col: 'frac_flooded', labelKey: 'sat.landUse.flooded', aggregation: 'mean' },
+			{ col: 'frac_bare',    labelKey: 'sat.landUse.bare',    aggregation: 'mean' },
+			{ col: 'frac_snow',    labelKey: 'sat.landUse.snow',    aggregation: 'mean' },
 		],
-		primaryVariable: 'frac_native_forest',
+		primaryVariable: 'frac_trees',
 		colorScale: 'green',
 		aggregation: 'mean',
 		titleKey: 'sat.landUse.title',
@@ -746,6 +772,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		primaryVariable: 'c_total_carbon_raw',
 		colorScale: 'sequential',
 		aggregation: 'mean',
+		// P2/P98 of c_total_carbon_raw (tC/ha) over the global pooled parquet. Fixed so
+		// the color scale is identical across territories AND so ensureColorDomain skips
+		// the slow MIN/MAX scan of the 2.7 MB single-row-group column (was ~3.6 s/activation).
+		fixedColorDomain: [165, 316],
 		petalVars: [
 			{ col: 'c_agb_cci', labelKey: 'sat.carbon.agbCci', aggregation: 'mean' },
 			{ col: 'c_total_carbon', labelKey: 'sat.carbon.totalCarbon', aggregation: 'mean' },

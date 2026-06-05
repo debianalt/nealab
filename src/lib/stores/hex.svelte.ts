@@ -993,12 +993,23 @@ export class HexStore {
 		if (!this.activeLayer) return null;
 
 		const layer = this.activeLayer;
+
+		// Fixed physical domain declared in config → no remote query at all.
+		// Avoids the slow MIN/MAX scan on heavy single-row-group parquets (carbon)
+		// and keeps the color scale identical across territories.
+		if (layer.fixedColorDomain) {
+			this.colorDomain = layer.fixedColorDomain;
+			return this.colorDomain;
+		}
+
 		const dataUrl = this.layerGlobalUrl(layer);
 		if (!dataUrl) return null;
 
 		const pv = layer.primaryVariable;
 		try {
-			const sql = `SELECT MIN(${pv}) as lo, MAX(${pv}) as hi FROM '${dataUrl}' WHERE ${pv} IS NOT NULL`;
+			// No WHERE … IS NOT NULL: MIN/MAX already ignore NULLs, and the predicate
+			// blocks DuckDB's footer-statistics pushdown (forces a full column scan).
+			const sql = `SELECT MIN(${pv}) as lo, MAX(${pv}) as hi FROM '${dataUrl}'`;
 			const result = await query(sql);
 			const row = result.get(0)!.toJSON() as Record<string, any>;
 			const lo = Number(row.lo) || 0;
