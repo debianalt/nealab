@@ -196,6 +196,11 @@ export class HexStore {
 		if (!this.activeLayer) return;
 		const layer = this.activeLayer;
 
+		// Abort any in-flight background precompute: the user clicked a specific dept and
+		// its query must NOT queue behind ~17 sequential SELECT* precomputes on the single
+		// DuckDB-WASM thread. This is the dominant cause of carbon feeling "broken".
+		this._prefetchToken++;
+
 		this.loading = true;
 		this.loadError = null;
 		this.selectedDpto = dpto;
@@ -219,7 +224,7 @@ export class HexStore {
 				this.deptBbox = deptCached.bbox;
 				this.dataVersion++;
 				this.loading = false;
-				this.ensureProvincialAvg().catch(() => {});
+				// provincialAvg deferred — loaded lazily by petal/zone paths (see note below).
 				return;
 			}
 
@@ -320,7 +325,10 @@ export class HexStore {
 			this.deptBbox = HexStore.bboxFromCentroids(centroids);
 			this.dataVersion++;
 
-			this.ensureProvincialAvg().catch(() => {});
+			// NOTE: provincialAvg (a heavy AVG query over the GLOBAL parquet) is intentionally
+			// NOT loaded here. It is only needed to normalize the petal/zones, which load it
+			// lazily on hex-click (+page hex-select) and in createHexZone. Keeping it off the
+			// dept-load path removes a second global-parquet scan from the critical render.
 		} catch (e) {
 			console.warn('[loadDept FAIL]', dpto, e);
 			this.loadError = 'dataLoadFailed';
@@ -496,19 +504,13 @@ export class HexStore {
 			if (this._prefetchToken !== token || !summary?.departments) return;
 			const depts = (summary.departments as any[]);
 
-			// Phase 1: HTTP warm (fire-and-forget, no DuckDB)
-			for (const dept of depts) {
-				if (this._prefetchToken !== token) return;
-				const key = dept.parquetKey as string;
-				if (!key || deptDataCache.has(`${layer.id}:${key}:${prefix}`)) continue;
-				let url: string;
-				if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
-				else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
-				else url = getScoresDptoUrl(key, prefix);
-				fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
-			}
+			// NOTE: the old "Phase 1" eagerly fetch()'d EVERY dept parquet at once (~17 ×
+			// 1.12 MB = ~19 MB for carbon), saturating the network the moment the layer was
+			// selected and starving the dept the user actually clicks. Removed — the idle
+			// precompute below already warms the cache one dept at a time, and a dept click
+			// aborts it (via _prefetchToken bump in loadDepartment).
 
-			// Phase 2: Geometry precompute during idle time (smallest depts first)
+			// Geometry precompute during idle time (smallest depts first), one at a time.
 			const remaining = [...depts].sort((a: any, b: any) => (a.hex_count ?? 0) - (b.hex_count ?? 0));
 			this._idlePrecomputeNext(layer, remaining, token, prefix);
 		});
