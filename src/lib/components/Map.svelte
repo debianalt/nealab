@@ -78,6 +78,10 @@
 		map.on('error', (e) => console.error('MAP ERROR:', e.error?.message || e));
 
 		map.on('load', () => {
+			// Signal readiness to +page (drives the regional/compare viewport-load effect,
+			// which otherwise can't re-run once the map finishes initializing — getMap() is
+			// not reactive). Bubbles up to the mapContainer that +page listens on.
+			map.getContainer().dispatchEvent(new CustomEvent('map-ready', { bubbles: true }));
 			// Terrain DEM source (AWS Terrain Tiles, Terrarium encoding)
 			map.addSource('terrain-dem', {
 				type: 'raster-dem',

@@ -307,6 +307,8 @@
 			handleSelectFloodDpto(entry.dpto ?? entry.distrito ?? entry.municipio, entry.parquetKey, entry.centroid as [number, number]);
 		}) as EventListener);
 
+		mapContainer?.addEventListener('map-ready', (() => { mapReady = true; }) as EventListener);
+
 		mapContainer?.addEventListener('compare-hex-select', ((e: CustomEvent) => {
 			if (lassoStore.active) return;
 			const { h3index } = e.detail;
@@ -687,6 +689,7 @@
 	const REGIONAL_ZOOM_MIN = 10;
 	const REGIONAL_MAX_CELLS = 12000;
 	let regionalViewportTooWide = $state(false);
+	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
 	function handleEudrUnitSelect(detail: any) {
 		const { name, country, geometry } = detail ?? {};
@@ -894,6 +897,7 @@
 	$effect(() => {
 		const comparePrefix = hexStore.compareGlobalPrefix;
 		const regionalPrefix = hexStore.regionalGlobalPrefix;
+		if (!mapReady) return; // re-runs when the map finishes loading (getMap() isn't reactive)
 		const map = mapComponent?.getMap();
 		if (!map) return;
 		if (!comparePrefix && !regionalPrefix) {
@@ -925,7 +929,11 @@
 			if (rp) hexStore.loadGlobalViewport('regional', rp, cells).catch(() => {});
 		};
 
-		refresh(); // initial load for the current view
+		// untrack: refresh() mutates store state (compareDataVersion++/regionalDataVersion++
+		// inside loadGlobalViewport). Without untrack the effect would depend on the very
+		// counters it writes → effect_update_depth_exceeded (infinite loop). The deps we want
+		// are only the prefixes + mapReady, read above.
+		untrack(() => refresh()); // initial load for the current view
 		map.on('moveend', refresh);
 		return () => map.off('moveend', refresh);
 	});
