@@ -8,6 +8,19 @@ let initError: string | null = null;
 
 const INIT_TIMEOUT_MS = 20_000;
 
+// Serve the DuckDB-WASM bundles from R2 (same origin as the parquets) instead of the
+// jsDelivr CDN. Ad-blockers / privacy extensions commonly block jsDelivr — that stalled
+// the worker/wasm fetch so init hit the 20s timeout → "error al iniciar el motor de datos"
+// (reported in the user's NORMAL browser, not just incognito). R2 is demonstrably reachable
+// for these users (the app's parquet queries already go there). WASM is uploaded gzipped
+// with Content-Encoding so the wire size matches jsDelivr (~8 MB). mvp + eh only — the
+// coi/pthread bundle needs COOP/COEP headers we don't set.
+const R2_DUCKDB = 'https://pub-580c676bec7f4eeb96d7d30559a3cab7.r2.dev/data/duckdb/v1_32_0';
+const R2_BUNDLES = {
+	mvp: { mainModule: `${R2_DUCKDB}/duckdb-mvp.wasm`, mainWorker: `${R2_DUCKDB}/duckdb-browser-mvp.worker.js` },
+	eh: { mainModule: `${R2_DUCKDB}/duckdb-eh.wasm`, mainWorker: `${R2_DUCKDB}/duckdb-browser-eh.worker.js` },
+};
+
 async function createWorkerBlob(url: string): Promise<Worker> {
 	const res = await fetch(url);
 	const blob = new Blob([await res.text()], { type: 'application/javascript' });
@@ -22,10 +35,10 @@ export async function initDuckDB(): Promise<void> {
 		(async () => {
 			const duckdb = await import('@duckdb/duckdb-wasm');
 
-			const JSDELIVR_BUNDLES = duckdb.getJsDelivrBundles();
-			const bundle = await duckdb.selectBundle(JSDELIVR_BUNDLES);
+			// selectBundle feature-detects eh vs mvp; modules/workers are served from R2.
+			const bundle = await duckdb.selectBundle(R2_BUNDLES);
 
-			// Create worker via blob URL to avoid cross-origin restriction
+			// Worker is cross-origin (R2) → wrap in a blob URL (same as before).
 			const worker = await createWorkerBlob(bundle.mainWorker!);
 			const logger = new duckdb.ConsoleLogger();
 
