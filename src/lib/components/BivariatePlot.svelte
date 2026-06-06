@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { query } from '$lib/stores/duckdb';
-	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl } from '$lib/config';
+	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, getHexPrimaryUnit } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 
@@ -62,9 +62,7 @@
 
 	const yLabel = $derived.by(() => {
 		if (!selectedB) return '';
-		const layer = HEX_LAYER_REGISTRY[selectedB];
-		if (!layer) return 'score /100';
-		return layer.variables.some(v => v.unit === 'percentil') ? 'percentil prov.' : 'score /100';
+		return getHexPrimaryUnit(HEX_LAYER_REGISTRY[selectedB]) || 'score /100';
 	});
 
 	const allPoints = $derived.by(() => {
@@ -87,17 +85,48 @@
 		return allPoints.filter((_, i) => i % stride === 0);
 	});
 
-	function svgX(v: number): number { return PAD_L + (v / 100) * plotW; }
-	function svgY(v: number): number { return PAD_T + (1 - v / 100) * plotH; }
+	// Data-driven domains over the plotted points, so each axis fills the canvas in
+	// whatever physical unit its layer carries (not a fixed 0–100). Fallback [0,100]
+	// when empty; +1 span guard avoids divide-by-zero when all values are equal.
+	const xDom = $derived.by(() => {
+		let lo = Infinity, hi = -Infinity;
+		for (const p of allPoints) { if (p.x < lo) lo = p.x; if (p.x > hi) hi = p.x; }
+		if (lo === Infinity) return [0, 100] as [number, number];
+		if (hi === lo) return [lo, lo + 1] as [number, number];
+		return [lo, hi] as [number, number];
+	});
+	const yDom = $derived.by(() => {
+		let lo = Infinity, hi = -Infinity;
+		for (const p of allPoints) { if (p.y < lo) lo = p.y; if (p.y > hi) hi = p.y; }
+		if (lo === Infinity) return [0, 100] as [number, number];
+		if (hi === lo) return [lo, lo + 1] as [number, number];
+		return [lo, hi] as [number, number];
+	});
+
+	function fmtTick(v: number): string {
+		const a = Math.abs(v);
+		if (a >= 100) return v.toFixed(0);
+		if (a >= 1) return v.toFixed(1);
+		return v.toFixed(2);
+	}
+
+	// Value at a fraction (0..1) of each axis, for guide lines / quadrant labels / ticks.
+	function xAt(f: number): number { const [lo, hi] = xDom; return lo + f * (hi - lo); }
+	function yAt(f: number): number { const [lo, hi] = yDom; return lo + f * (hi - lo); }
+
+	function svgX(v: number): number { const [lo, hi] = xDom; return PAD_L + ((v - lo) / (hi - lo)) * plotW; }
+	function svgY(v: number): number { const [lo, hi] = yDom; return PAD_T + (1 - (v - lo) / (hi - lo)) * plotH; }
 
 	function clientToData(clientX: number, clientY: number, rect: DOMRect): [number, number] {
+		const [xLo, xHi] = xDom;
+		const [yLo, yHi] = yDom;
 		const scaleX = SVG_W / rect.width;
 		const scaleY = SVG_H / rect.height;
 		const lx = (clientX - rect.left) * scaleX;
 		const ly = (clientY - rect.top) * scaleY;
-		const px = Math.max(0, Math.min(100, (lx - PAD_L) / plotW * 100));
-		const py = Math.max(0, Math.min(100, (1 - (ly - PAD_T) / plotH) * 100));
-		return [px, py];
+		const fx = Math.max(0, Math.min(1, (lx - PAD_L) / plotW));
+		const fy = Math.max(0, Math.min(1, 1 - (ly - PAD_T) / plotH));
+		return [xLo + fx * (xHi - xLo), yLo + fy * (yHi - yLo)];
 	}
 
 	let brushRect: { x0: number; y0: number; x1: number; y1: number } | null = $state(null);
@@ -123,7 +152,11 @@
 			window.removeEventListener('mousemove', onMove);
 			window.removeEventListener('mouseup', onUp);
 			const br = brushRect;
-			if (!br || (br.x1 - br.x0 < 2 && br.y1 - br.y0 < 2)) {
+			// Tiny drag → treat as a click and clear. Threshold is 2% of each axis span
+			// so it works regardless of physical unit (tC/ha vs 0–1 fractions).
+			const xEps = (xDom[1] - xDom[0]) * 0.02;
+			const yEps = (yDom[1] - yDom[0]) * 0.02;
+			if (!br || (br.x1 - br.x0 < xEps && br.y1 - br.y0 < yEps)) {
 				clearBrush();
 				return;
 			}
@@ -202,20 +235,20 @@
 			ondblclick={clearBrush}
 			style="cursor: crosshair; display: block;"
 		>
-			<!-- Quadrant guide lines -->
-			<line x1={svgX(50)} x2={svgX(50)} y1={PAD_T} y2={PAD_T + plotH}
+			<!-- Quadrant guide lines (at each axis midpoint) -->
+			<line x1={svgX(xAt(0.5))} x2={svgX(xAt(0.5))} y1={PAD_T} y2={PAD_T + plotH}
 				stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-dasharray="3 2" />
-			<line x1={PAD_L} x2={PAD_L + plotW} y1={svgY(50)} y2={svgY(50)}
+			<line x1={PAD_L} x2={PAD_L + plotW} y1={svgY(yAt(0.5))} y2={svgY(yAt(0.5))}
 				stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-dasharray="3 2" />
 
 			<!-- Faint quadrant labels -->
-			<text x={svgX(25)} y={svgY(75) + 4} text-anchor="middle"
+			<text x={svgX(xAt(0.25))} y={svgY(yAt(0.75)) + 4} text-anchor="middle"
 				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">B/A</text>
-			<text x={svgX(75)} y={svgY(75) + 4} text-anchor="middle"
+			<text x={svgX(xAt(0.75))} y={svgY(yAt(0.75)) + 4} text-anchor="middle"
 				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">A/A</text>
-			<text x={svgX(25)} y={svgY(25) + 4} text-anchor="middle"
+			<text x={svgX(xAt(0.25))} y={svgY(yAt(0.25)) + 4} text-anchor="middle"
 				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">B/B</text>
-			<text x={svgX(75)} y={svgY(25) + 4} text-anchor="middle"
+			<text x={svgX(xAt(0.75))} y={svgY(yAt(0.25)) + 4} text-anchor="middle"
 				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">A/B</text>
 
 			<!-- Scatter points -->
@@ -241,18 +274,18 @@
 				/>
 			{/if}
 
-			<!-- X axis ticks -->
-			{#each [0, 50, 100] as tick}
-				<text x={svgX(tick)} y={SVG_H - 5}
+			<!-- X axis ticks (physical values at 0/50/100 % of the domain) -->
+			{#each [0, 0.5, 1] as f}
+				<text x={svgX(xAt(f))} y={SVG_H - 5}
 					text-anchor="middle" fill="rgba(255,255,255,0.25)"
-					font-size="8" font-family="system-ui, sans-serif">{tick}</text>
+					font-size="8" font-family="system-ui, sans-serif">{fmtTick(xAt(f))}</text>
 			{/each}
 
-			<!-- Y axis ticks -->
-			{#each [0, 50, 100] as tick}
-				<text x={PAD_L - 3} y={svgY(tick) + 3}
+			<!-- Y axis ticks (physical values at 0/50/100 % of the domain) -->
+			{#each [0, 0.5, 1] as f}
+				<text x={PAD_L - 3} y={svgY(yAt(f)) + 3}
 					text-anchor="end" fill="rgba(255,255,255,0.25)"
-					font-size="8" font-family="system-ui, sans-serif">{tick}</text>
+					font-size="8" font-family="system-ui, sans-serif">{fmtTick(yAt(f))}</text>
 			{/each}
 
 			<!-- X axis label -->

@@ -14,10 +14,11 @@
 	} = $props();
 
 	function csvRows() {
-		const BIN_W = 100 / 20;
+		const [lo, hi] = domain;
+		const span = (hi - lo) / BINS;
 		return histogram.map((count, i) => ({
-			bin_lo: (i * BIN_W).toFixed(1),
-			bin_hi: ((i + 1) * BIN_W).toFixed(1),
+			bin_lo: fmtTick(lo + i * span),
+			bin_hi: fmtTick(lo + (i + 1) * span),
 			count,
 		}));
 	}
@@ -28,12 +29,44 @@
 	const plotW = SVG_W - PAD_L - PAD_R;
 	const plotH = SVG_H - PAD_T - PAD_B;
 
+	// Data-driven domain of the primary variable: the chart plots whatever physical
+	// unit the layer carries (tC/ha, min, µg/m³, 0–1 fractions…), not a fixed 0–100.
+	// Mirrors ParallelCoords' per-variable extents. Fallback [0,100] when empty,
+	// and a +1 span guard avoids divide-by-zero when all values are equal.
+	const domain = $derived.by(() => {
+		let lo = Infinity, hi = -Infinity;
+		for (const row of data.values()) {
+			const v = Number(row[variable]);
+			if (!isFinite(v)) continue;
+			if (v < lo) lo = v;
+			if (v > hi) hi = v;
+		}
+		if (lo === Infinity) return [0, 100] as [number, number];
+		if (hi === lo) return [lo, lo + 1] as [number, number];
+		return [lo, hi] as [number, number];
+	});
+
+	// Physical value at a given 0–100 percentage of the plot width, and back.
+	function pctToVal(pct: number): number {
+		const [lo, hi] = domain;
+		return lo + (pct / 100) * (hi - lo);
+	}
+
+	function fmtTick(v: number): string {
+		const a = Math.abs(v);
+		if (a >= 100) return v.toFixed(0);
+		if (a >= 1) return v.toFixed(1);
+		return v.toFixed(2);
+	}
+
 	const histogram = $derived.by(() => {
+		const [lo, hi] = domain;
+		const span = hi - lo;
 		const bins = new Array(BINS).fill(0);
 		for (const row of data.values()) {
 			const v = Number(row[variable]);
 			if (!isFinite(v)) continue;
-			const bin = Math.min(Math.floor(v / (100 / BINS)), BINS - 1);
+			const bin = Math.min(Math.max(Math.floor(((v - lo) / span) * BINS), 0), BINS - 1);
 			bins[bin]++;
 		}
 		return bins;
@@ -85,10 +118,14 @@
 			}
 			brushLo = lo;
 			brushHi = hi;
+			// brushLo/brushHi are 0–100 plot percentages; convert to physical values
+			// before filtering against the raw variable.
+			const vLo = pctToVal(lo);
+			const vHi = pctToVal(hi);
 			const h3s: string[] = [];
 			for (const [h3, row] of data) {
 				const v = Number(row[variable]);
-				if (isFinite(v) && v >= lo && v <= hi) h3s.push(h3);
+				if (isFinite(v) && v >= vLo && v <= vHi) h3s.push(h3);
 			}
 			selectedCount = h3s.length;
 			onBrushSelect(h3s);
@@ -118,7 +155,7 @@
 <ChartFrame title="Distribución" csvRows={csvRows} csvFilename="spatia_histogram">
 	<div class="hpanel">
 	<div class="hpanel-subheader">
-		<span class="hpanel-unit">{xLabel} 0–100</span>
+		<span class="hpanel-unit">{xLabel} {fmtTick(domain[0])}–{fmtTick(domain[1])}</span>
 		{#if brushLo !== null}
 			<span class="hpanel-count">{selectedCount.toLocaleString()} hex · doble-clic para limpiar</span>
 		{:else}
@@ -169,13 +206,13 @@
 			/>
 		{/if}
 
-		<!-- X axis labels -->
+		<!-- X axis labels (physical values at 0/25/50/75/100 % of the domain) -->
 		{#each [0, 25, 50, 75, 100] as tick}
 			<text
 				x={svgX(tick)} y={SVG_H - 4}
 				text-anchor="middle" fill="rgba(255,255,255,0.28)"
 				font-size="8" font-family="system-ui, sans-serif"
-			>{tick}</text>
+			>{fmtTick(pctToVal(tick))}</text>
 		{/each}
 
 
