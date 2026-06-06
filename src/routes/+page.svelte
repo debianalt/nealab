@@ -679,6 +679,15 @@
 
 	let eudrUnit: { name: string; country: string } | null = $state(null);
 
+	// ── Regional/compare viewport-loading (B) ────────────────────────────
+	// Giant PY territories (Chaco/Boquerón 700K-850K hex) make a full-global load of the
+	// regional/compare slots freeze. Instead, load only the H3 cells in the current viewport.
+	// At res-9 the viewport explodes into 100K+ cells when zoomed out, so gate by zoom +
+	// cell cap; below the gate the neighbor-territory hexes show empty (hint shown).
+	const REGIONAL_ZOOM_MIN = 10;
+	const REGIONAL_MAX_CELLS = 12000;
+	let regionalViewportTooWide = $state(false);
+
 	function handleEudrUnitSelect(detail: any) {
 		const { name, country, geometry } = detail ?? {};
 		if (!geometry) return;
@@ -877,6 +886,48 @@
 		}
 		const colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer?.colorScale ?? 'sequential';
 		mapComponent?.setRegionalHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+	});
+
+	// ── Regional/compare viewport loading (B): refresh the neighbor-territory slots on
+	// pan/zoom, loading ONLY the H3 cells in view. Active whenever a full-territory global
+	// is wanted for either slot (regional mode, or a compare territory selected in the panel).
+	$effect(() => {
+		const comparePrefix = hexStore.compareGlobalPrefix;
+		const regionalPrefix = hexStore.regionalGlobalPrefix;
+		const map = mapComponent?.getMap();
+		if (!map) return;
+		if (!comparePrefix && !regionalPrefix) {
+			regionalViewportTooWide = false;
+			return;
+		}
+
+		const refresh = () => {
+			const m = mapComponent?.getMap();
+			if (!m) return;
+			const cp = hexStore.compareGlobalPrefix;
+			const rp = hexStore.regionalGlobalPrefix;
+			if (!cp && !rp) return;
+			let cells: string[] = [];
+			// Only enumerate cells above the zoom gate — at lower zoom a res-9 viewport would
+			// be hundreds of thousands of cells (polygonToCells would itself be slow).
+			if (m.getZoom() >= REGIONAL_ZOOM_MIN) {
+				const b = m.getBounds();
+				const rect = [[
+					[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
+					[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
+					[b.getWest(), b.getSouth()],
+				]];
+				try { cells = polygonToCells(rect as any, 9, true); } catch { cells = []; }
+				if (cells.length > REGIONAL_MAX_CELLS) cells = []; // too wide → clear + hint
+			}
+			regionalViewportTooWide = cells.length === 0;
+			if (cp) hexStore.loadGlobalViewport('compare', cp, cells).catch(() => {});
+			if (rp) hexStore.loadGlobalViewport('regional', rp, cells).catch(() => {});
+		};
+
+		refresh(); // initial load for the current view
+		map.on('moveend', refresh);
+		return () => map.off('moveend', refresh);
 	});
 
 	// ── Clear data load error when analysis changes ──────────────────────────
@@ -1640,6 +1691,17 @@
 				<div class="loading-overlay">
 					<div class="loading-spinner"></div>
 					<span class="loading-text">{i18n.t('analysis.loading')}</span>
+				</div>
+			{/if}
+
+			<!-- Regional/compare viewport too wide: neighbor-territory hexes load on zoom-in (B) -->
+			{#if regionalViewportTooWide}
+				<div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] text-white/80 shadow-lg pointer-events-none">
+					🔍 {i18n.locale === 'es'
+						? 'Acercá para ver los hexágonos de los territorios vecinos'
+						: i18n.locale === 'pt'
+						? 'Aproxime para ver os hexágonos dos territórios vizinhos'
+						: 'Zoom in to load neighbouring territories'}
 				</div>
 			{/if}
 

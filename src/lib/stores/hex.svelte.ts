@@ -83,11 +83,17 @@ export class HexStore {
 	compareDpto: string | null = $state(null);
 	compareTerritoryPrefix: string | null = $state(null);
 	compareDataVersion: number = $state(0);
+	// When a full-territory global is WANTED for the compare slot (vs a single dept),
+	// this holds its prefix. Rows are loaded per-viewport (B) by loadGlobalViewport,
+	// driven by the moveend effect in +page. Null = no full-global compare wanted.
+	compareGlobalPrefix: string | null = $state(null);
 
 	// ── Regional mode (3rd territory hex slot) ───────────────────────────
 	regionalVisibleData: Map<string, Record<string, any>> = $state(new Map());
 	private regionalBoundaryCache: Map<string, number[][]> = new Map();
 	regionalDataVersion: number = $state(0);
+	// Same as compareGlobalPrefix, for the regional (3rd territory) slot.
+	regionalGlobalPrefix: string | null = $state(null);
 
 	// Bounding boxes for dept highlight outlines on map
 	deptBbox: [number, number, number, number] | null = $state(null);
@@ -358,6 +364,7 @@ export class HexStore {
 		if (!this.activeLayer) return;
 		const layer = this.activeLayer;
 		this.loadError = null;
+		this.compareGlobalPrefix = null; // dept-scoped compare → stop the viewport global refresh
 
 		let url: string;
 		if (layer.id === 'flood_risk') {
@@ -434,15 +441,39 @@ export class HexStore {
 	private async loadGlobalInto(
 		layer: HexLayerConfig,
 		prefix: string,
-		target: 'primary' | 'compare' | 'regional'
+		target: 'primary' | 'compare' | 'regional',
+		cells?: string[]
 	): Promise<void> {
 		// Never fire before DuckDB is ready: the effects retry every tick, and a SELECT
 		// before init throws → gets caught → re-fires in a loop.
 		if (!isReady()) return;
+
+		// Viewport mode (B): `cells` present → load ONLY those H3 cells (WHERE IN) instead
+		// of the whole territory global (giant PY territories are 700K-850K hex). No
+		// _globalLoadState dedup — cells change on every pan. An empty cell set (zoomed out
+		// past the cap) clears the slot's display; the caller keeps the wanted prefix so it
+		// reloads on zoom-in.
+		const viewport = cells !== undefined;
+		if (viewport && cells!.length === 0) {
+			if (target === 'compare') {
+				this.compareVisibleData = new Map();
+				this.compareBoundaryCache = new Map();
+				this.compareDeptBbox = null;
+				this.compareDataVersion++;
+			} else if (target === 'regional') {
+				this.regionalVisibleData = new Map();
+				this.regionalBoundaryCache = new Map();
+				this.regionalDataVersion++;
+			}
+			return;
+		}
+
 		const stateKey = `${layer.id}:${target}:${prefix}`;
-		const st = this._globalLoadState.get(stateKey);
-		if (st === 'loading' || st === 'done') return; // already loaded or in flight
-		this._globalLoadState.set(stateKey, 'loading');
+		if (!viewport) {
+			const st = this._globalLoadState.get(stateKey);
+			if (st === 'loading' || st === 'done') return; // already loaded or in flight
+			this._globalLoadState.set(stateKey, 'loading');
+		}
 		try {
 		// EUDR is a single global dataset (10 provinces) at data/eudr/, not a
 		// per-territory parquet — ignore the territory prefix entirely.
@@ -459,7 +490,10 @@ export class HexStore {
 			...(layer.petalVars?.map(v => v.col) ?? [])]
 			.filter((c): c is string => !!c && actualCols.has(c))
 			.filter((c, i, a) => a.indexOf(c) === i);
-		const result = await query(`SELECT ${wanted.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
+		const whereClause = viewport
+			? ` WHERE h3index IN (${cells!.map(c => `'${c}'`).join(',')})`
+			: '';
+			const result = await query(`SELECT ${wanted.map(c => `"${c}"`).join(', ')} FROM '${url}'${whereClause}`);
 		const data = new Map<string, Record<string, any>>();
 		const centroids = new Map<string, [number, number]>();
 		const bounds = new Map<string, number[][]>();
@@ -510,31 +544,41 @@ export class HexStore {
 			this.regionalBoundaryCache = bounds;
 			this.regionalDataVersion++;
 		}
-			this._globalLoadState.set(stateKey, 'done');
+			if (!viewport) this._globalLoadState.set(stateKey, 'done');
 		} catch (e) {
-			this._globalLoadState.delete(stateKey); // allow a later retry
+			if (!viewport) this._globalLoadState.delete(stateKey); // allow a later retry
 			throw e;
 		}
 	}
 
+	// Register a full-territory global for the compare slot. Rows are NOT loaded here:
+	// the moveend effect in +page calls loadGlobalViewport() to fetch only the visible
+	// cells (B). Switching to a single-dept compare clears this (see loadCompareDept).
+	// Kept async so existing `.catch()` callers keep working.
 	async loadFullCompare(comparePrefix: string): Promise<void> {
 		const layer = this.activeLayer;
 		if (!layer || layer.id === 'eudr') return;
-
-		try {
-			await this.loadGlobalInto(layer, comparePrefix, 'compare');
-		} catch (e) {
-			console.warn('Failed to load full compare data:', e);
-		}
+		this.compareDpto = null;
+		this.compareTerritoryPrefix = comparePrefix;
+		this.compareGlobalPrefix = comparePrefix;
 	}
 
+	// Register a full-territory global for the regional (3rd territory) slot. See above.
 	async loadRegionalData(prefix: string): Promise<void> {
 		const layer = this.activeLayer;
 		if (!layer || layer.id === 'flood_risk' || layer.id === 'eudr') return;
+		this.regionalGlobalPrefix = prefix;
+	}
+
+	// Viewport-scoped load for a registered global slot (compare/regional). Called by the
+	// moveend effect in +page with the H3 cells currently in view (empty = too wide → clear).
+	async loadGlobalViewport(target: 'compare' | 'regional', prefix: string, cells: string[]): Promise<void> {
+		const layer = this.activeLayer;
+		if (!layer) return;
 		try {
-			await this.loadGlobalInto(layer, prefix, 'regional');
+			await this.loadGlobalInto(layer, prefix, target, cells);
 		} catch (e) {
-			console.warn('Failed to load regional hex data:', e);
+			console.warn(`Failed to load ${target} viewport data:`, e);
 		}
 	}
 
@@ -646,6 +690,7 @@ export class HexStore {
 	}
 
 	clearRegionalData(): void {
+		this.regionalGlobalPrefix = null; // stop the viewport global refresh for this slot
 		if (this.regionalVisibleData.size === 0) return;
 		this.regionalVisibleData = new Map();
 		this.regionalBoundaryCache = new Map();
@@ -698,6 +743,7 @@ export class HexStore {
 	}
 
 	clearCompareDept(): void {
+		this.compareGlobalPrefix = null; // stop the viewport global refresh for this slot
 		if (this.compareDpto === null && this.compareVisibleData.size === 0) return;
 		this.compareVisibleData = new Map();
 		this.compareBoundaryCache = new Map();
