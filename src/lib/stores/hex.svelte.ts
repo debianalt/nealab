@@ -107,6 +107,7 @@ export class HexStore {
 	}
 
 	setLayer(layerId: string | null) {
+		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -173,6 +174,7 @@ export class HexStore {
 		this.territoryPrefix = prefix;
 		layerDataCache.clear();
 		deptDataCache.clear();
+		this._globalLoadState.clear(); // territory changed → allow regional/compare reloads
 		this._prefetchToken++;
 		this.colorDomain = null;
 		this.visibleData = new Map();
@@ -407,17 +409,42 @@ export class HexStore {
 		}
 	}
 
+	// Tracks in-flight / completed global loads by `${layer}:${target}:${prefix}` so the
+	// regional/compare effects (which re-fire on every reactive tick) don't launch N
+	// redundant full-global SELECTs. Cleared on layer/territory change so switching the
+	// regional territory still reloads. This reactive thrash — not the per-dept path —
+	// is what made carbon feel broken in regional/compare mode (cf=py).
+	private _globalLoadState = new Map<string, 'loading' | 'done'>();
+
 	private async loadGlobalInto(
 		layer: HexLayerConfig,
 		prefix: string,
 		target: 'primary' | 'compare' | 'regional'
 	): Promise<void> {
+		// Never fire before DuckDB is ready: the effects retry every tick, and a SELECT
+		// before init throws → gets caught → re-fires in a loop.
+		if (!isReady()) return;
+		const stateKey = `${layer.id}:${target}:${prefix}`;
+		const st = this._globalLoadState.get(stateKey);
+		if (st === 'loading' || st === 'done') return; // already loaded or in flight
+		this._globalLoadState.set(stateKey, 'loading');
+		try {
 		// EUDR is a single global dataset (10 provinces) at data/eudr/, not a
 		// per-territory parquet — ignore the territory prefix entirely.
 		const url = layer.id === 'eudr'
 			? getEudrParquetUrl(layer.parquet)
 			: getSatGlobalUrl(layer.id, prefix);
-		const result = await query(`SELECT * FROM '${url}'`);
+		// Project to only the columns the regional/compare UI needs (choropleth +
+		// ComparisonPanel + petal + categorical) instead of SELECT * — the global carries
+		// ~20 unused baseline/delta/pca columns. Inspect schema first to tolerate drift.
+		const schemaRes = await query(`SELECT * FROM '${url}' LIMIT 0`);
+		const actualCols = new Set(schemaRes.schema.fields.map((f: any) => f.name as string));
+		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
+			...layer.variables.flatMap(v => [v.col, v.rawCol]),
+			...(layer.petalVars?.map(v => v.col) ?? [])]
+			.filter((c): c is string => !!c && actualCols.has(c))
+			.filter((c, i, a) => a.indexOf(c) === i);
+		const result = await query(`SELECT ${wanted.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
 		const data = new Map<string, Record<string, any>>();
 		const centroids = new Map<string, [number, number]>();
 		const bounds = new Map<string, number[][]>();
@@ -467,6 +494,11 @@ export class HexStore {
 			this.regionalVisibleData = data;
 			this.regionalBoundaryCache = bounds;
 			this.regionalDataVersion++;
+		}
+			this._globalLoadState.set(stateKey, 'done');
+		} catch (e) {
+			this._globalLoadState.delete(stateKey); // allow a later retry
+			throw e;
 		}
 	}
 
