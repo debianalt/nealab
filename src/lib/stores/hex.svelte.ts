@@ -28,6 +28,18 @@ interface DeptCache {
 }
 const deptDataCache = new Map<string, DeptCache>();
 
+// Cap on cached depts. Persists across territory switches (keys include the prefix), so
+// evict the oldest insertion once over the cap to keep memory bounded after many switches.
+const DEPT_CACHE_MAX = 40;
+function setDeptCache(key: string, value: DeptCache): void {
+	if (deptDataCache.has(key)) deptDataCache.delete(key); // refresh recency on re-set
+	deptDataCache.set(key, value);
+	if (deptDataCache.size > DEPT_CACHE_MAX) {
+		const oldest = deptDataCache.keys().next().value;
+		if (oldest !== undefined) deptDataCache.delete(oldest);
+	}
+}
+
 export interface HexSelectionData {
 	color: string;
 	data: Record<string, any>;
@@ -172,8 +184,11 @@ export class HexStore {
 	setTerritoryPrefix(prefix: string) {
 		if (this.territoryPrefix === prefix) return;
 		this.territoryPrefix = prefix;
-		layerDataCache.clear();
-		deptDataCache.clear();
+		layerDataCache.clear(); // keyed by layerId only → must clear to avoid serving the
+		                        // previous province's data under the same layer id.
+		// deptDataCache is NOT cleared: its keys include the territoryPrefix, so entries from
+		// other provinces never collide. Keeping them makes switching BACK to a visited province
+		// (and re-clicking its depts) instant. Growth is bounded by setDeptCache()'s LRU cap.
 		this._globalLoadState.clear(); // territory changed → allow regional/compare reloads
 		this._prefetchToken++;
 		this.colorDomain = null;
@@ -319,7 +334,7 @@ export class HexStore {
 			}
 
 			// Persist computed geometry so re-visiting this dept is instant.
-			deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
+			setDeptCache(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
 
 			this.visibleData = data;
 			this.centroidCache = centroids;
@@ -395,7 +410,7 @@ export class HexStore {
 				} catch { /* skip invalid h3 */ }
 			}
 
-			deptDataCache.set(compareCacheKey, { data, centroids: new Map(), boundaries: bounds, bbox: HexStore.bboxFromBounds(bounds) });
+			setDeptCache(compareCacheKey, { data, centroids: new Map(), boundaries: bounds, bbox: HexStore.bboxFromBounds(bounds) });
 
 			this.compareVisibleData = data;
 			this.compareBoundaryCache = bounds;
@@ -625,7 +640,7 @@ export class HexStore {
 					}
 				}
 			}
-			deptDataCache.set(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
+			setDeptCache(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });
 			reschedule(); // schedule next dept
 		}).catch(() => reschedule());
 	}

@@ -2753,7 +2753,7 @@
 						value: null,
 						color: NODATA_COLOR,
 						nodata: true,
-						...(entry.properties || {})
+						type_label: entry.properties?.type_label
 					},
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 				};
@@ -2765,7 +2765,7 @@
 					h3index: entry.h3index,
 					value: entry.value,
 					color: getColor(entry.value as number),
-					...(entry.properties || {})
+					type_label: entry.properties?.type_label
 				},
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			};
@@ -2844,14 +2844,14 @@
 			if (isNodata(entry)) {
 				features[fi++] = {
 					type: 'Feature',
-					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, ...(entry.properties || {}) },
+					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, type_label: entry.properties?.type_label },
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 				};
 				continue;
 			}
 			features[fi++] = {
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), ...(entry.properties || {}) },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			};
 		}
@@ -2911,14 +2911,14 @@
 			if (isNodata(entry)) {
 				features.push({
 					type: 'Feature',
-					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, ...(entry.properties || {}) },
+					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, type_label: entry.properties?.type_label },
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 				});
 				continue;
 			}
 			features.push({
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), ...(entry.properties || {}) },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			});
 		}
