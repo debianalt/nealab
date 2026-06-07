@@ -447,7 +447,10 @@ export interface HexLayerConfig {
 	coverage?: Record<string, 'available' | 'pending' | 'unavailable'>;
 	legendLowKey?: string;
 	legendHighKey?: string;
-	comparable?: true;
+	// NOTE: cross-territory comparability is declared ONLY on ANALYSIS_REGISTRY
+	// (`comparable: true`) — that is the single source of truth the UI reads. Do not
+	// re-add a `comparable` field here; a stale duplicate previously implied (wrongly)
+	// that only `accessibility` was comparable.
 	// Fixed color-scale domain [lo, hi] in the primaryVariable's physical units.
 	// When set, ensureColorDomain() uses it directly instead of querying MIN/MAX on
 	// the global parquet — avoids a slow remote scan (carbon: 1 row-group, 2.7 MB
@@ -747,7 +750,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		aggregation: 'mean',
 		titleKey: 'analysis.accessibility.title',
 		perDepartment: true,
-		comparable: true,
 		legendLowKey: 'legend.accessibility.low',
 		legendHighKey: 'legend.accessibility.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', central_py: 'available', neembucu_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available', misiones_py: 'available', paraguari_py: 'available', amambay_py: 'available'},
@@ -895,6 +897,10 @@ export interface AnalysisConfig {
 	};
 }
 
+// AUTHORITATIVE source for cross-territory comparability (`comparable: true`) and
+// menu coverage. The UI reads only this registry (AnalysisMenu, BivariatePlot,
+// Sidebar, OvertureAnalysis). Each entry's `coverage` map MUST stay identical to the
+// same-id entry in HEX_LAYER_REGISTRY — a dev-only guard below warns on drift.
 export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 	// ── Ambiente y riesgo ──
 	{
@@ -1075,6 +1081,24 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		spatialUnit: 'hexagon',
 	},
 ];
+
+// ── Dev-only invariant: HEX_LAYER_REGISTRY and ANALYSIS_REGISTRY each carry a
+// `coverage` map per layer id; they must stay identical. This warns on drift during
+// `npm run dev` and is tree-shaken out of the production build (import.meta.env.DEV).
+if (import.meta.env.DEV) {
+	for (const a of ANALYSIS_REGISTRY) {
+		const hex = HEX_LAYER_REGISTRY[a.id];
+		if (!hex?.coverage || !a.coverage) continue;
+		const keys = new Set([...Object.keys(hex.coverage), ...Object.keys(a.coverage)]);
+		for (const k of keys) {
+			if (hex.coverage[k] !== a.coverage[k]) {
+				console.warn(
+					`[config] coverage drift "${a.id}" @ "${k}": HEX=${hex.coverage[k]} ANALYSIS=${a.coverage[k]}`
+				);
+			}
+		}
+	}
+}
 
 // ── Territorial Scores definitions ──────────────────────────────────────────
 export const TERRITORIAL_SCORE_COLS = [

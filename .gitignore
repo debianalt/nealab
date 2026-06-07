@@ -43,3 +43,22 @@ db/parquets/
 /schema_*.parquet
 /mis_*.parquet
 /_ul*
+
+# Source data inputs (census CSVs, GADM boundary shapefiles) — large, fetched/derived
+pipeline/data/
+/data/
+
+# Editor / agent state
+.claude/
+
+# Pipeline run artifacts (logs, ML model binaries) — generated, not versioned.
+# (The few state files already tracked under pipeline/output/ stay tracked.)
+pipeline/output/
+*.joblib
+
+# Local backups and planning/handoff docs (kept on disk, not versioned)
+*.bak
+/findings.md
+/*_PLAN.md
+/HANDOFF_*.md
+pipeline/**/*_PLAN.md

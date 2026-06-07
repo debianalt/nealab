@@ -77,7 +77,7 @@ UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
 - **Pipeline**: `python pipeline/run_flood_update.py --skip-gee` (con rasters locales)
 
 ## Deployment
-- **Production branch:** `main` (push con `git push origin master:main`)
+- **Production branch:** `main` — el branch local es `main` y trackea `origin/main` (NO existe `master` local). Push con `git push origin main` (o `git push`). Mirror público GPL: `git push nealab main:master`.
 - **Deploy:** `npm run deploy` (build + wrangler pages deploy --project-name neahub --branch main)
 - **R2 uploads:** SIEMPRE usar `--remote` flag
 - **CORS R2:** PascalCase (AllowedOrigins, AllowedMethods) — como en `cors-rules.json`
