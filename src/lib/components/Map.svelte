@@ -1790,16 +1790,21 @@
 		// coexist (cross-territory district comparison on the base map).
 		// A territory with zero selected districts gets cleared — but the
 		// OTHER territory's highlight is never wiped.
+		// Value = ACTUAL layer-id prefix. Itapúa/Alto Paraná layers are created
+		// stripped (lines ~417/476) → stripped prefix. The other 15 PY depts are
+		// created in the PY_TERR_LIST loop with the FULL `_py` id (distId = tid)
+		// → their prefix MUST keep `_py`, else getLayer() misses and the highlight
+		// silently never renders.
 		const TERR_PREFIX: Record<string, string> = {
 			itapua_py: 'itapua', alto_parana_py: 'alto_parana',
-			concepcion_py: 'concepcion', san_pedro_py: 'san_pedro',
-			cordillera_py: 'cordillera', guaira_py: 'guaira',
-			caaguazu_py: 'caaguazu', caazapa_py: 'caazapa',
-			misiones_py: 'misiones', paraguari_py: 'paraguari',
-			central_py: 'central', neembucu_py: 'neembucu',
-			amambay_py: 'amambay', canindeyu_py: 'canindeyu',
-			presidente_hayes_py: 'presidente_hayes', boqueron_py: 'boqueron',
-			alto_paraguay_py: 'alto_paraguay',
+			concepcion_py: 'concepcion_py', san_pedro_py: 'san_pedro_py',
+			cordillera_py: 'cordillera_py', guaira_py: 'guaira_py',
+			caaguazu_py: 'caaguazu_py', caazapa_py: 'caazapa_py',
+			misiones_py: 'misiones_py', paraguari_py: 'paraguari_py',
+			central_py: 'central_py', neembucu_py: 'neembucu_py',
+			amambay_py: 'amambay_py', canindeyu_py: 'canindeyu_py',
+			presidente_hayes_py: 'presidente_hayes_py', boqueron_py: 'boqueron_py',
+			alto_paraguay_py: 'alto_paraguay_py',
 		};
 		for (const [terrId, prefix] of Object.entries(TERR_PREFIX)) {
 			const fillId = `${prefix}-district-selected-fill`;

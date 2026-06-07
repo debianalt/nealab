@@ -28,6 +28,20 @@ interface DeptCache {
 }
 const deptDataCache = new Map<string, DeptCache>();
 
+// Schema (column-name set) cache keyed by parquet URL. The URL carries the
+// `?v=N` cache-buster, so a schema change (version bump) invalidates it
+// naturally. Avoids a redundant `SELECT * LIMIT 0` round-trip on every
+// global/viewport load (schema is invariant for a given URL).
+const schemaColsCache = new Map<string, Set<string>>();
+async function getParquetCols(url: string): Promise<Set<string>> {
+	const cached = schemaColsCache.get(url);
+	if (cached) return cached;
+	const schemaRes = await query(`SELECT * FROM '${url}' LIMIT 0`);
+	const cols = new Set<string>(schemaRes.schema.fields.map((f: any) => f.name as string));
+	schemaColsCache.set(url, cols);
+	return cols;
+}
+
 // Cap on cached depts. Persists across territory switches (keys include the prefix), so
 // evict the oldest insertion once over the cap to keep memory bounded after many switches.
 const DEPT_CACHE_MAX = 40;
@@ -483,8 +497,7 @@ export class HexStore {
 		// Project to only the columns the regional/compare UI needs (choropleth +
 		// ComparisonPanel + petal + categorical) instead of SELECT * — the global carries
 		// ~20 unused baseline/delta/pca columns. Inspect schema first to tolerate drift.
-		const schemaRes = await query(`SELECT * FROM '${url}' LIMIT 0`);
-		const actualCols = new Set(schemaRes.schema.fields.map((f: any) => f.name as string));
+		const actualCols = await getParquetCols(url);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			...layer.variables.flatMap(v => [v.col, v.rawCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])]
