@@ -1,4 +1,16 @@
 import type { Locale } from '$lib/stores/i18n.svelte';
+import GOALPOSTS from '../../../pipeline/config/goalposts.json';
+
+// Los rangos de goalpost citados en los textos de metodología se DERIVAN de la
+// fuente canónica pipeline/config/goalposts.json. No hardcodear bounds acá: ante
+// un re-baseline (bump vN) el texto se actualiza solo y nunca queda stale.
+// (Antes el texto publicaba los goalposts v1.0 mientras el scoring usaba v1.1.)
+const _GP = (GOALPOSTS as { indicators: Record<string, { lo: number; hi: number }> }).indicators;
+function gpRange(key: string): string {
+	const g = _GP[key];
+	if (!g) throw new Error(`methodology: goalpost indicator desconocido "${key}"`);
+	return `[${Math.round(g.lo)}, ${Math.round(g.hi)}]`.replace(/-/g, '−');
+}
 
 export interface LocalizedMethodologyContent {
 	howToRead: Record<Locale, string>;
@@ -49,8 +61,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos refletem configurações edafoclimáticas distintas: solos ácidos com alta precipitação (aptidão para erva-mate), solos neutros com calor acumulado (aptidão para tabaco/cítricos) e zonas com limitações múltiplas.',
 		},
 		method: {
-			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: carbono orgánico del suelo [0, 472] g/dm³, distancia a pH óptimo [0, 1.0], arcilla [0, 590] g/kg, precipitación anual [1444, 1961] mm/año, GDD base 10°C [3589, 4587] °C·día. Fuentes: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitación), ERA5 (GDD), FABDEM (pendiente). Período: 2019–2024.`,
-			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: soil organic carbon [0, 472] g/dm³, distance to optimal pH [0, 1.0], clay [0, 590] g/kg, annual precipitation [1444, 1961] mm/year, GDD base 10°C [3589, 4587] °C·day. Sources: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitation), ERA5 (GDD), FABDEM (slope). Period: 2019–2024.`,
+			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: carbono orgánico del suelo ${gpRange('c_soc')} g/dm³, distancia a pH óptimo [0, 1.0], arcilla ${gpRange('c_clay')} g/kg, precipitación anual ${gpRange('c_precipitation')} mm/año, GDD base 10°C ${gpRange('c_gdd')} °C·día. Fuentes: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitación), ERA5 (GDD), FABDEM (pendiente). Período: 2019–2024.`,
+			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: soil organic carbon ${gpRange('c_soc')} g/dm³, distance to optimal pH [0, 1.0], clay ${gpRange('c_clay')} g/kg, annual precipitation ${gpRange('c_precipitation')} mm/year, GDD base 10°C ${gpRange('c_gdd')} °C·day. Sources: SoilGrids v2 (ISRIC, 0–5cm), CHIRPS (precipitation), ERA5 (GDD), FABDEM (slope). Period: 2019–2024.`,
 		},
 	},
 	forestry_aptitude: {
@@ -247,8 +259,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos distinguem conectividade plena (proximidade a serviços e vias), acessibilidade parcial (próximo a uma via, mas distante de serviços especializados) e isolamento funcional (longe de tudo). A comparação entre territórios revela diferenças estruturais em conectividade conforme a topografia e a densidade viária.',
 		},
 		method: {
-			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: tiempo a capital [5, 500] min, tiempo a ciudad ≥50k [5, 350] min, distancia a hospital [0, 35] km, distancia a escuela [0, 20] km, distancia a ruta principal [0, 25] km. Capital = Posadas (MIS) / Encarnación (ITA), calculado vía MCP_Geometric sobre superficie de fricción Oxford MAP 2019. Fuentes: Oxford MAP friction_surface_2019 + accessibility_to_cities_2015 + OpenStreetMap (hospitales, escuelas, rutas).`,
-			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: time to department capital [5, 500] min, time to city ≥50k [5, 350] min, distance to hospital [0, 35] km, distance to school [0, 20] km, distance to primary road [0, 25] km. Capital = Posadas (MIS) / Encarnación (ITA), calculated via MCP_Geometric over Oxford MAP 2019 friction surface. Sources: Oxford MAP friction_surface_2019 + accessibility_to_cities_2015 + OpenStreetMap (hospitals, schools, roads).`,
+			es: `${METHOD_COMPARABLE.es} 5 variables con goalposts fijos: tiempo a capital ${gpRange('c_travel_capital')} min, tiempo a ciudad ≥50k ${gpRange('c_travel_cabecera')} min, distancia a hospital ${gpRange('c_dist_hospital')} km, distancia a escuela ${gpRange('c_dist_school')} km, distancia a ruta principal ${gpRange('c_dist_road')} km. El "tiempo a capital" se mide a la capital departamental de cada territorio, calculado como ruta de mínimo costo sobre la superficie de fricción Oxford MAP 2019. Fuentes: Oxford MAP friction_surface_2019 + accessibility_to_cities_2015 + OpenStreetMap (hospitales, escuelas, rutas).`,
+			en: `${METHOD_COMPARABLE.en} 5 variables with fixed goalposts: time to department capital ${gpRange('c_travel_capital')} min, time to city ≥50k ${gpRange('c_travel_cabecera')} min, distance to hospital ${gpRange('c_dist_hospital')} km, distance to school ${gpRange('c_dist_school')} km, distance to primary road ${gpRange('c_dist_road')} km. "Time to capital" is measured to each territory's departmental capital, computed as a least-cost path over the Oxford MAP 2019 friction surface. Sources: Oxford MAP friction_surface_2019 + accessibility_to_cities_2015 + OpenStreetMap (hospitals, schools, roads).`,
 		},
 	},
 	carbon_stock: {
@@ -265,8 +277,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Zonas de alto estoque com balanço líquido negativo (sumidouro) são candidatas a créditos de carbono por conservação. Zonas de alto estoque com balanço positivo (fonte) são prioridade para intervenção REDD+. Zonas de baixo estoque com alta produtividade (NPP) têm potencial de restauração e sequestro futuro. *Valor teórico do carbono: estimativa de referência calculada como estoque total × 3,67 (conversão C para CO₂) × USD 10/tCO₂e (mediana do mercado voluntário 2024, Ecosystem Marketplace 2024). Não representa um preço de venda nem o valor realizável de um imóvel. A monetização efetiva requer um projeto certificado (VCS, Gold Standard) com linha de base, adicionalidade demonstrada e custos de transação que reduzem significativamente o valor líquido.',
 		},
 		method: {
-			es: `${METHOD_COMPARABLE.es} Score compuesto: media geométrica de biomasa aérea [0, 300] Mg/ha, carbono total [0, 400] tC/ha, carbono orgánico del suelo [0, 472] g/dm³ y flujo neto [−100, 100] MgCO2/ha. Biomasa aérea: ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validación). Biomasa subterránea: Cairns et al. (1997): BGB = 0.489 × AGB^0.89. SOC: SoilGrids v2 (ISRIC, 0–30cm). Flujo de carbono: Harris et al. (2021) / Global Forest Watch (emisiones + remociones + balance neto, 30m, 2001–2024). Productividad: MODIS MOD17A3HGF NPP (500m, 2019–2024). Total carbon = AGB × 0.47 + BGB × 0.47 + SOC. Precio de referencia: Ecosystem Marketplace (2024).`,
-			en: `${METHOD_COMPARABLE.en} Composite score: geometric mean of above-ground biomass [0, 300] Mg/ha, total carbon [0, 400] tC/ha, soil organic carbon [0, 472] g/dm³ and net flux [−100, 100] MgCO₂/ha. Above-ground biomass: ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validation). Below-ground biomass: Cairns et al. (1997): BGB = 0.489 × AGB^0.89. SOC: SoilGrids v2 (ISRIC, 0–30cm). Carbon flux: Harris et al. (2021) / Global Forest Watch (emissions + removals + net balance, 30m, 2001–2024). Productivity: MODIS MOD17A3HGF NPP (500m, 2019–2024). Total carbon = AGB × 0.47 + BGB × 0.47 + SOC. Reference price: Ecosystem Marketplace (2024).`,
+			es: `${METHOD_COMPARABLE.es} Score compuesto: media geométrica de biomasa aérea ${gpRange('c_agb_cci')} Mg/ha, carbono total ${gpRange('c_total_carbon')} tC/ha, carbono orgánico del suelo ${gpRange('c_soc')} g/dm³ y flujo neto ${gpRange('c_net_flux')} MgCO2/ha. Biomasa aérea: ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validación). Biomasa subterránea: Cairns et al. (1997): BGB = 0.489 × AGB^0.89. SOC: SoilGrids v2 (ISRIC, 0–30cm). Flujo de carbono: Harris et al. (2021) / Global Forest Watch (emisiones + remociones + balance neto, 30m, 2001–2024). Productividad: MODIS MOD17A3HGF NPP (500m, 2019–2024). Total carbon = AGB × 0.47 + BGB × 0.47 + SOC. Precio de referencia: Ecosystem Marketplace (2024).`,
+			en: `${METHOD_COMPARABLE.en} Composite score: geometric mean of above-ground biomass ${gpRange('c_agb_cci')} Mg/ha, total carbon ${gpRange('c_total_carbon')} tC/ha, soil organic carbon ${gpRange('c_soc')} g/dm³ and net flux ${gpRange('c_net_flux')} MgCO₂/ha. Above-ground biomass: ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validation). Below-ground biomass: Cairns et al. (1997): BGB = 0.489 × AGB^0.89. SOC: SoilGrids v2 (ISRIC, 0–30cm). Carbon flux: Harris et al. (2021) / Global Forest Watch (emissions + removals + net balance, 30m, 2001–2024). Productivity: MODIS MOD17A3HGF NPP (500m, 2019–2024). Total carbon = AGB × 0.47 + BGB × 0.47 + SOC. Reference price: Ecosystem Marketplace (2024).`,
 		},
 	},
 	pm25_drivers: {
