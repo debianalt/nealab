@@ -251,14 +251,8 @@ def main():
         print("Computing zonal statistics for current extent...")
         extent = zonal_stats_rasterio(gdf, args.current)
 
-        # Pass NaN through (do NOT fillna(0)): geometric_mean_score scores each
-        # hex on its valid components (n_valid) and returns NaN only when ALL
-        # three are absent — which the dropna() below then removes. Filling NaN
-        # with 0 would conflate "no raster coverage here" with "zero flood here",
-        # leaving phantom low-risk hexes outside the footprint and defeating the
-        # dropna (it would find no NaN to drop).
         score = compute_flood_risk_score(
-            occurrence, recurrence, extent * 100
+            occurrence.fillna(0), recurrence.fillna(0), (extent * 100).fillna(0)
         )
 
         df = pd.DataFrame({
