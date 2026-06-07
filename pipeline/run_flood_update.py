@@ -165,9 +165,13 @@ def run(args):
     else:
         s1_extent = pd.Series(0.0, index=gdf.index)
 
-    # Composite score
+    # Composite score — pass NaN through (no fillna(0)): geometric_mean_score
+    # scores each hex on its valid components and yields NaN only when all three
+    # are absent, which the dropna() below removes. Filling with 0 would conflate
+    # "no raster coverage" with "zero flood" → phantom low-risk hexes + a no-op
+    # dropna. S1 dry hexes are a legitimate 0 from the raster (not NaN).
     score = compute_flood_risk_score(
-        jrc_occurrence.fillna(0), jrc_recurrence.fillna(0), (s1_extent * 100).fillna(0)
+        jrc_occurrence, jrc_recurrence, s1_extent * 100
     )
 
     df = pd.DataFrame({
