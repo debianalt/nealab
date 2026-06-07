@@ -13,19 +13,38 @@ ACCT = "85b5bfbd1b86ba164b9443b87eefa3b8"
 BUCKET = "neahub"
 
 
-def token():
-    # Prefer a persistent API token (CLOUDFLARE_API_TOKEN) — it never expires. The
-    # wrangler OAuth token has an expiration_time and 401s once expired, until some
-    # wrangler command refreshes it (the recurring "need a new token" symptom).
-    env = os.environ.get("CLOUDFLARE_API_TOKEN")
-    if env:
-        return env.strip()
-    cfg = os.path.expanduser("~/.wrangler/config/default.toml")
+def _read_oauth(cfg):
+    if not os.path.exists(cfg):
+        return None
     for line in open(cfg, encoding="utf-8"):
         m = re.match(r'^oauth_token\s*=\s*"(.*)"', line.strip())
         if m:
             return m.group(1)
-    raise SystemExit("no CLOUDFLARE_API_TOKEN env and no oauth_token in wrangler config")
+    return None
+
+
+def token():
+    # 1) Prefer a persistent API token (CLOUDFLARE_API_TOKEN) — it never expires.
+    env = os.environ.get("CLOUDFLARE_API_TOKEN")
+    if env:
+        return env.strip()
+    # 2) Fall back to wrangler's OAuth token. It has an expiration_time and a stale
+    #    cached value 401s — so first run `wrangler whoami`, which transparently
+    #    refreshes it via the refresh_token. This makes the script self-heal instead
+    #    of throwing the recurring "need a new token" 401.
+    cfg = os.path.expanduser("~/.wrangler/config/default.toml")
+    try:
+        subprocess.run(["npx", "wrangler", "whoami"], capture_output=True,
+                       timeout=90, shell=(os.name == "nt"))
+    except Exception:
+        pass
+    tok = _read_oauth(cfg)
+    if tok:
+        return tok
+    raise SystemExit(
+        "No Cloudflare credential found. Either set CLOUDFLARE_API_TOKEN (a no-expiry "
+        "API token with R2 read) or run `npx wrangler login`."
+    )
 
 
 def main():
