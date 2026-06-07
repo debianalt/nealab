@@ -14,12 +14,18 @@ BUCKET = "neahub"
 
 
 def token():
+    # Prefer a persistent API token (CLOUDFLARE_API_TOKEN) — it never expires. The
+    # wrangler OAuth token has an expiration_time and 401s once expired, until some
+    # wrangler command refreshes it (the recurring "need a new token" symptom).
+    env = os.environ.get("CLOUDFLARE_API_TOKEN")
+    if env:
+        return env.strip()
     cfg = os.path.expanduser("~/.wrangler/config/default.toml")
     for line in open(cfg, encoding="utf-8"):
         m = re.match(r'^oauth_token\s*=\s*"(.*)"', line.strip())
         if m:
             return m.group(1)
-    raise SystemExit("no oauth_token in wrangler config")
+    raise SystemExit("no CLOUDFLARE_API_TOKEN env and no oauth_token in wrangler config")
 
 
 def main():
