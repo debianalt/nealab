@@ -688,6 +688,10 @@
 	// cell cap; below the gate the neighbor-territory hexes show empty (hint shown).
 	const REGIONAL_ZOOM_MIN = 10;
 	const REGIONAL_MAX_CELLS = 12000;
+	// Giant (LOD) single-territory departments: above this zoom, swap the coarse overview
+	// for real res-9 detail of the cells in view; below it, restore the coarse overview.
+	const LOD_DETAIL_ZOOM_MIN = 11;
+	const LOD_DETAIL_MAX_CELLS = 12000;
 	let regionalViewportTooWide = $state(false);
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
@@ -934,6 +938,49 @@
 		// counters it writes → effect_update_depth_exceeded (infinite loop). The deps we want
 		// are only the prefixes + mapReady, read above.
 		untrack(() => refresh()); // initial load for the current view
+		map.on('moveend', refresh);
+		return () => map.off('moveend', refresh);
+	});
+
+	// ── LOD department viewport detail: swap coarse overview ↔ res-9 detail on zoom ──
+	// A giant department renders an aggregated coarse overview (no main-thread freeze).
+	// On zoom-in past the gate we re-query the res-9 cells in view for real per-hex detail;
+	// on zoom-out we restore the cached coarse overview. perDepartment layers are skipped by
+	// the primary render $effect, so we render here directly after the data swap.
+	$effect(() => {
+		const active = hexStore.lodDeptActive; // reactive: true while a giant dept is selected
+		if (!mapReady || !active) return;
+		const map = mapComponent?.getMap();
+		if (!map) return;
+
+		const refresh = () => {
+			if (!hexStore.lodDeptActive) return;
+			const m = mapComponent?.getMap();
+			if (!m) return;
+			let cells: string[] = [];
+			if (m.getZoom() >= LOD_DETAIL_ZOOM_MIN) {
+				const b = m.getBounds();
+				const rect = [[
+					[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
+					[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
+					[b.getWest(), b.getSouth()],
+				]];
+				try { cells = polygonToCells(rect as any, 9, true); } catch { cells = []; }
+				if (cells.length > LOD_DETAIL_MAX_CELLS) cells = []; // too wide → keep coarse
+			}
+			hexStore.loadDeptViewport(cells).then((changed) => {
+				if (!changed || !hexStore.activeLayer) return;
+				const entries = hexStore.choroplethEntries;
+				if (entries.length === 0) return;
+				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = hexStore.activeLayer.colorScale ?? 'flood';
+				if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
+				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined);
+			}).catch(() => {});
+		};
+
+		// untrack: refresh() mutates dataVersion via loadDeptViewport → without untrack the
+		// effect would depend on the counter it writes → effect_update_depth_exceeded.
+		untrack(() => refresh());
 		map.on('moveend', refresh);
 		return () => map.off('moveend', refresh);
 	});
@@ -1715,6 +1762,17 @@
 
 			{#if itapuaHovering && territoryStore.regionalMode}
 				<div class="itapua-hover-badge">🇵🇾 Paraguay · datos satelitales comparables</div>
+			{/if}
+
+			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
+			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}
+				<div class="absolute bottom-4 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
+					🔬 {i18n.locale === 'es'
+						? 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono'
+						: i18n.locale === 'pt'
+						? 'Vista agregada — médias espaciais · aproxime para ver o detalhe por hexágono'
+						: 'Aggregated overview — spatial means · zoom in for per-hex detail'}
+				</div>
 			{/if}
 
 			<!-- Dept picker panel: shown when a perDept analysis is active and no dept selected yet -->
