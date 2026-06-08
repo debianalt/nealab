@@ -26,7 +26,7 @@ TERRITORIES = [
     ("rio_grande_sul_br", "Rio Grande do Sul"),
 ]
 
-SIMPLIFY_TOLERANCE = 0.003
+SIMPLIFY_TOLERANCE = 0.0008  # ~90m — follows river/coastal borders (was 0.003 ~330m, cut corners)
 
 
 def main() -> int:

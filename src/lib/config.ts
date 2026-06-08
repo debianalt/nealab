@@ -149,7 +149,8 @@ export function getDeptSummaryUrl(analysisId: string, territoryPrefix = ''): str
 // BR municipality boundaries: GADM_BRA_2 simplified per state. Fetched on demand
 // (Option B) instead of bundled — see pipeline/build_br_districts.py.
 export function getBrDistrictsUrl(territoryId: string): string {
-	return `${getBase()}/data/br_districts/${territoryId}_districts.geojson`;
+	// ?v bump on hi-res re-export (0.003→0.0008) to bust the CF edge cache.
+	return `${getBase()}/data/br_districts/${territoryId}_districts.geojson?v=2`;
 }
 
 export const PARQUETS = {
