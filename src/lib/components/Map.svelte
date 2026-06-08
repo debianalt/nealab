@@ -50,6 +50,7 @@
 	let hexLayerIsCategorical = false;
 	let hexLayerUnit = ''; // physical unit of the primary variable (tC/ha, min, %…); '' = no suffix
 	let map: maplibregl.Map;
+	let firstSymbolId: string | undefined; // basemap's first label layer — hex fills sit below it
 	let lassoActive = false;
 	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
@@ -73,7 +74,7 @@
 		});
 
 		map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
-		map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+		map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
 
 		map.on('error', (e) => console.error('MAP ERROR:', e.error?.message || e));
 
@@ -966,12 +967,17 @@
 				data: { type: 'FeatureCollection', features: [] }
 			});
 
+			// Insert the hexagon fills BELOW the basemap's label/symbol layers so street and
+			// place names stay readable on top of the choropleth (orientation). null = no symbol
+			// layer found → fall back to adding on top (previous behaviour).
+			firstSymbolId = (map.getStyle().layers ?? []).find(l => l.type === 'symbol')?.id ?? undefined;
+
 			map.addLayer({
 				id: 'hex-fill',
 				type: 'fill',
 				source: 'hexagons',
 				paint: { 'fill-color': '#3b82f6', 'fill-opacity': 0 }
-			});
+			}, firstSymbolId);
 
 			map.addLayer({
 				id: 'territory-bg-fill',
@@ -984,14 +990,24 @@
 				type: 'line',
 				source: 'hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
-			});
+			}, firstSymbolId);
 			map.addLayer({
 				id: 'hex-selected',
 				type: 'line',
 				source: 'hexagons',
 				paint: { 'line-color': '#ffffff', 'line-width': 3, 'line-opacity': 0.9 },
 				filter: ['==', ['get', 'h3index'], '']
-			});
+			}, firstSymbolId);
+
+			// Improve label contrast over bright hexagons: dark halo on the basemap's text.
+			for (const l of (map.getStyle().layers ?? [])) {
+				if (l.type === 'symbol' && (l.layout as any)?.['text-field']) {
+					try {
+						map.setPaintProperty(l.id, 'text-halo-color', 'rgba(8,10,14,0.9)');
+						map.setPaintProperty(l.id, 'text-halo-width', 1.4);
+					} catch { /* layer may not support it */ }
+				}
+			}
 
 			// EUDR mode: NOA+NEA province outlines (pink). Hidden unless EUDR active.
 			map.addSource('eudr-provinces-main', {
@@ -2790,8 +2806,8 @@
 			map.setPaintProperty('hex-line', 'line-width', 0.5);
 			_hexLayerInitialized = true;
 		}
-		map.setPaintProperty('hex-fill', 'fill-opacity', 0.78);
-		map.setPaintProperty('hex-line', 'line-opacity', 0.25);
+		map.setPaintProperty('hex-fill', 'fill-opacity', mapStore.hexOpacity);
+		map.setPaintProperty('hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
 
 		const bgSrc = map.getSource('territory-bg') as maplibregl.GeoJSONSource | undefined;
 		if (bgSrc) {
@@ -2868,10 +2884,10 @@
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('compare-hex-fill', 'fill-color', ['get', 'color']);
-		map.setPaintProperty('compare-hex-fill', 'fill-opacity', 0.78);
+		map.setPaintProperty('compare-hex-fill', 'fill-opacity', mapStore.hexOpacity);
 		map.setPaintProperty('compare-hex-line', 'line-color', '#374151');
 		map.setPaintProperty('compare-hex-line', 'line-width', 0.5);
-		map.setPaintProperty('compare-hex-line', 'line-opacity', 0.25);
+		map.setPaintProperty('compare-hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
 	}
 
 	export function clearCompareHexChoropleth() {
@@ -2934,10 +2950,10 @@
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('regional-hex-fill', 'fill-color', ['get', 'color']);
-		map.setPaintProperty('regional-hex-fill', 'fill-opacity', 0.78);
+		map.setPaintProperty('regional-hex-fill', 'fill-opacity', mapStore.hexOpacity);
 		map.setPaintProperty('regional-hex-line', 'line-color', '#374151');
 		map.setPaintProperty('regional-hex-line', 'line-width', 0.5);
-		map.setPaintProperty('regional-hex-line', 'line-opacity', 0.25);
+		map.setPaintProperty('regional-hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
 	}
 
 	export function clearRegionalHexChoropleth() {
@@ -2946,6 +2962,62 @@
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
 		if (map.getLayer('regional-hex-fill')) map.setPaintProperty('regional-hex-fill', 'fill-opacity', 0);
 		if (map.getLayer('regional-hex-line')) map.setPaintProperty('regional-hex-line', 'line-opacity', 0);
+	}
+
+	// Apply the user-controlled hex opacity (bottom-left slider) to whichever hex slots are
+	// currently painted, without forcing a full re-render. Layers at fill-opacity 0 (cleared
+	// / not in use) stay hidden — we only touch slots that are already visible.
+	export function applyHexOpacity() {
+		if (!map) return;
+		const o = mapStore.hexOpacity;
+		for (const [fill, line] of [
+			['hex-fill', 'hex-line'],
+			['compare-hex-fill', 'compare-hex-line'],
+			['regional-hex-fill', 'regional-hex-line'],
+		]) {
+			if (!map.getLayer(fill)) continue;
+			const cur = map.getPaintProperty(fill, 'fill-opacity');
+			if (typeof cur === 'number' && cur === 0) continue; // slot not in use → leave hidden
+			map.setPaintProperty(fill, 'fill-opacity', o);
+			if (map.getLayer(line)) map.setPaintProperty(line, 'line-opacity', o * 0.32);
+		}
+	}
+
+	// Sentinel-2 satellite underlay (EOX cloudless, served via /api/satellite proxy). Added
+	// lazily below the hex/label layers so it reads as a reference basemap. Additive — never
+	// setStyle (which would wipe the ~40 mounted layers).
+	export function setSatellite(active: boolean) {
+		if (!map) return;
+		if (active && !map.getSource('satellite')) {
+			map.addSource('satellite', {
+				type: 'raster',
+				tiles: ['/api/satellite/{z}/{x}/{y}.jpg'],
+				tileSize: 256,
+				maxzoom: 16,
+				attribution: 'Sentinel-2 cloudless 2024 © EOX — modified Copernicus Sentinel data 2024'
+			});
+			// Insert just below hex-fill (above the gray "missing hex" territory-bg, so the
+			// imagery shows cleanly), and below the label layers → order = dark base ·
+			// territory-bg · satellite · hex · labels · buildings-3D.
+			const beforeId = map.getLayer('hex-fill') ? 'hex-fill' : firstSymbolId;
+			map.addLayer({
+				id: 'satellite-layer',
+				type: 'raster',
+				source: 'satellite',
+				// EOX s2cloudless renders flat/hazy; push contrast + saturation and clip the
+				// highlights so it has more punch. (Resolution stays 10 m — no real sharpen.)
+				paint: {
+					'raster-opacity': 1,
+					'raster-contrast': 0.28,
+					'raster-saturation': 0.35,
+					'raster-brightness-max': 0.94,
+					'raster-resampling': 'nearest'
+				}
+			}, beforeId);
+		}
+		if (map.getLayer('satellite-layer')) {
+			map.setLayoutProperty('satellite-layer', 'visibility', active ? 'visible' : 'none');
+		}
 	}
 
 	export function highlightHexagon(h3index: string) {

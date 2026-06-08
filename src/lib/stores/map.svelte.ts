@@ -55,6 +55,11 @@ export class MapStore {
 	pitch: number = $state(31);
 	bearing: number = $state(-15);
 	activeHexLayer: string | null = $state(null);
+	// Hexagon fill opacity, user-controlled via the bottom-left slider so the basemap
+	// (streets / buildings / satellite) shows through for orientation. 0.78 = original default.
+	hexOpacity: number = $state(0.78);
+	// Basemap reference mode: 'map' = dark-matter only, 'satellite' = Sentinel-2 raster underlay.
+	basemapMode: 'map' | 'satellite' = $state('map');
 	selectedHex: HexData | null = $state(null);
 	selectedFloodParcels: FloodParcelData[] = $state([]);
 	floodH3Data: Map<string, Record<string, number>> = $state(new Map());

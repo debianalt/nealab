@@ -1764,9 +1764,37 @@
 				<div class="itapua-hover-badge">🇵🇾 Paraguay · datos satelitales comparables</div>
 			{/if}
 
+			<!-- Orientation controls (bottom-left): basemap Map⇄Satellite (any active analysis) +
+			     hex opacity slider (hexagon layers only — it's what the slider targets). -->
+			{#if lensStore.activeAnalysis}
+				<div class="absolute bottom-4 left-4 z-30 flex flex-col gap-1.5 px-2.5 py-2 rounded-lg bg-black/75 backdrop-blur-md border border-white/15 shadow-lg text-[11px] text-white/85">
+					<div class="flex gap-1">
+						<button
+							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'map' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
+							onclick={() => { mapStore.basemapMode = 'map'; mapComponent?.setSatellite(false); }}>
+							{i18n.locale === 'en' ? 'Map' : 'Mapa'}
+						</button>
+						<button
+							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'satellite' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
+							onclick={() => { mapStore.basemapMode = 'satellite'; mapComponent?.setSatellite(true); }}>
+							{i18n.locale === 'pt' ? 'Satélite' : i18n.locale === 'en' ? 'Satellite' : 'Satélite'}
+						</button>
+					</div>
+					{#if hexStore.activeLayer}
+						<label class="flex items-center gap-2">
+							<span class="opacity-70">{i18n.locale === 'en' ? 'Opacity' : i18n.locale === 'pt' ? 'Opacidade' : 'Opacidad'}</span>
+							<input type="range" min="0.3" max="0.9" step="0.05"
+								bind:value={mapStore.hexOpacity}
+								oninput={() => mapComponent?.applyHexOpacity()}
+								class="w-24 accent-sky-400 cursor-pointer" />
+						</label>
+					{/if}
+				</div>
+			{/if}
+
 			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
 			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}
-				<div class="absolute bottom-24 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
+				<div class="absolute bottom-28 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
 					🔬 {i18n.locale === 'es'
 						? 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono'
 						: i18n.locale === 'pt'
