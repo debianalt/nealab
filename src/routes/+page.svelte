@@ -1766,7 +1766,7 @@
 
 			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
 			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}
-				<div class="absolute bottom-4 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
+				<div class="absolute bottom-24 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
 					🔬 {i18n.locale === 'es'
 						? 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono'
 						: i18n.locale === 'pt'

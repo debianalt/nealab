@@ -351,11 +351,26 @@ export class HexStore {
 				return;
 			}
 
-			// Project to the columns the UI actually uses instead of SELECT *. Most dept
-			// parquets carry ~20 cols but the choropleth/panel/petal need only a handful;
-			// for giant Chaco districts (400K+ rows) the unused-column scan + per-row object
-			// build is a real cost. Schema fetched once (cached) to tolerate column drift.
-			const cols = await this.deptWantedCols(layer, url);
+			// Decide LOD from a cheap row count (parquet footer read) BEFORE pulling any
+			// column data. Carbon dept parquets are single-row-group 34 MB; at LOD overview
+			// we only render the choropleth, so we project to JUST the primary column and skip
+			// downloading the ~20 unused variable columns (34 MB → ~4-5 MB). The full variable
+			// set arrives lazily with the res-9 viewport detail on zoom-in.
+			const countRes = await query(`SELECT count(*) AS n FROM '${url}'`);
+			const totalRows = Number((countRes.get(0)!.toJSON() as Record<string, any>).n) || 0;
+			const coarseRes = pickCoarseRes(totalRows);
+			this.selectedHexResLevel = coarseRes;
+
+			let cols: string[];
+			if (coarseRes !== null) {
+				const actualCols = await getParquetCols(url);
+				const minimal = ['h3index', layer.primaryVariable, 'type_label'];
+				if (layer.temporal) minimal.push(getTemporalCol(layer.primaryVariable, 'baseline'), getTemporalCol(layer.primaryVariable, 'delta'));
+				cols = minimal.filter((c): c is string => !!c && actualCols.has(c)).filter((c, i, a) => a.indexOf(c) === i);
+			} else {
+				// Small dept → full projection (choropleth + panel + petal need the variable set).
+				cols = await this.deptWantedCols(layer, url);
+			}
 			const result = await query(`SELECT ${cols.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
 
 			const data = new Map<string, Record<string, any>>();
@@ -370,11 +385,9 @@ export class HexStore {
 				resultCols.map((col: string) => [col, result.getChild(col)])
 			);
 
-			// LOD gate: aggregate giant departments to a coarser resolution so we never build
-			// hundreds of thousands of polygons on the main thread (the panel-freeze).
-			const coarseRes = pickCoarseRes(result.numRows);
-			this.selectedHexResLevel = coarseRes;
-
+			// LOD branch: aggregate giant departments to a coarser resolution so we never build
+			// hundreds of thousands of polygons on the main thread (the panel-freeze). coarseRes
+			// + selectedHexResLevel were already set above from the cheap row count.
 			if (coarseRes !== null) {
 				// ── Aggregate res-9 → coarseRes ─────────────────────────────────────────
 				// Per-row work is ONLY cellToParent (bitwise, cheap) + numeric accumulation;
