@@ -1027,8 +1027,11 @@
 		const primaryHasPolygon = !!(dpto && findDeptFeature(dpto, tp));
 		const compareHasPolygon = !!(compareDpto && compareTp != null
 			&& findDeptFeature(compareDpto, compareTp));
+		// Primary (celeste) highlight only in compare mode — in single-dept selection it's
+		// redundant with the dept's hexagons. Compare (amber) is kept as the comparison marker.
+		const inCompare = territoryStore.compareModeActive;
 		mapComponent?.updateDeptHighlights(
-			primaryHasPolygon ? null : p,
+			inCompare ? (primaryHasPolygon ? null : p) : null,
 			compareHasPolygon ? null : c
 		);
 		if (p && c) {
@@ -1047,7 +1050,10 @@
 		const dpto = hexStore.selectedDpto;
 		const tp = hexStore.territoryPrefix;
 		const feat = dpto ? findDeptFeature(dpto, tp) : null;
-		mapComponent?.setDeptOutline(feat);
+		// The celeste outline of the selected dept is redundant with its hexagons, and the
+		// generalized admin line visibly cuts across rivers on the satellite basemap → only
+		// draw it in compare mode (to mark the primary vs the amber compared dept).
+		mapComponent?.setDeptOutline(territoryStore.compareModeActive ? feat : null);
 
 		const compareDpto = hexStore.compareDpto;
 		const compareTp = hexStore.compareTerritoryPrefix;
