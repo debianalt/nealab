@@ -1,8 +1,10 @@
 <script lang="ts">
-	// Isolated panel for the `censo_temporal` layer: on hexagon selection, queries
-	// the per-year population/housing totals for the selected cells and renders the
-	// 1991→2022 trajectory. Fully self-contained — it does NOT touch the shared hex
-	// load path; it runs its own DuckDB query against the same (cached) parquet.
+	// Isolated panel for the `censo_temporal` layer: on hexagon selection (click)
+	// or lasso zones, queries the per-year population/housing totals for the
+	// selected cells and renders the 1991→2022 trajectory — one chart per lasso
+	// zone (color-matched), or a single chart for the click selection. Fully
+	// self-contained — it does NOT touch the shared hex load path; it runs its
+	// own DuckDB query against the same (cached) parquet.
 	import { query } from '$lib/stores/duckdb';
 	import { getSatGlobalUrl } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
@@ -12,8 +14,15 @@
 
 	const YEARS = ['1991', '2001', '2010', '2022'] as const;
 
-	let pob = $state<number[] | null>(null);
-	let viv = $state<number[] | null>(null);
+	interface CensoGroup {
+		id: string | null; // zone label ('A', 'B', …) or null for click selection
+		color: string | null; // zone color, or null → default blue gradient
+		hexCount: number;
+		pob: number[];
+		viv: number[];
+	}
+
+	let groups = $state<CensoGroup[] | null>(null);
 	let loading = $state(false);
 	let error = $state(false);
 	let metric = $state<'pob' | 'viv'>('pob');
@@ -23,33 +32,52 @@
 	let loadedKey: string | null = null;
 
 	$effect(() => {
-		const keys = [...hexStore.selectedHexes.keys()].sort();
-		const sig = `${hexStore.territoryPrefix}|${keys.join(',')}`;
-		if (!keys.length) { pob = null; viv = null; loadedKey = null; return; }
+		// Lasso zones take priority over click selection (mirrors Sidebar branch order).
+		const sources =
+			hexStore.hexZones.length > 0
+				? hexStore.hexZones.map((z) => ({ id: z.id as string | null, color: z.color as string | null, keys: z.h3indices }))
+				: hexStore.selectedHexes.size > 0
+					? [{ id: null as string | null, color: null as string | null, keys: [...hexStore.selectedHexes.keys()].sort() }]
+					: [];
+		const sig = `${hexStore.territoryPrefix}|${sources.map((s) => `${s.id}:${s.keys.join(',')}`).join(';')}`;
+		if (!sources.length) { groups = null; loadedKey = null; return; }
 		if (sig === loadedKey) return;
 		loadedKey = sig;
-		loading = true; error = false; pob = null; viv = null;
+		loading = true; error = false; groups = null;
 
 		const url = getSatGlobalUrl('censo_temporal', hexStore.territoryPrefix);
-		const inList = keys.map((k) => `'${k}'`).join(',');
 		const cols = YEARS.flatMap((y) => [`SUM(pob_cnt_${y}) AS p${y}`, `SUM(viv_cnt_${y}) AS v${y}`]).join(', ');
-		query(`SELECT ${cols} FROM '${url}' WHERE h3index IN (${inList})`)
-			.then((t) => {
+		Promise.all(
+			sources.map((s) => {
+				const inList = s.keys.map((k) => `'${k}'`).join(',');
+				return query(`SELECT ${cols} FROM '${url}' WHERE h3index IN (${inList})`).then((t) => ({
+					id: s.id,
+					color: s.color,
+					hexCount: s.keys.length,
+					pob: YEARS.map((y) => Number(t.getChild(`p${y}`)?.get(0) ?? 0)),
+					viv: YEARS.map((y) => Number(t.getChild(`v${y}`)?.get(0) ?? 0)),
+				}));
+			})
+		)
+			.then((gs) => {
 				if (sig !== loadedKey) return;
-				pob = YEARS.map((y) => Number(t.getChild(`p${y}`)?.get(0) ?? 0));
-				viv = YEARS.map((y) => Number(t.getChild(`v${y}`)?.get(0) ?? 0));
+				groups = gs;
 				loading = false;
 			})
 			.catch(() => { if (sig === loadedKey) { error = true; loading = false; } });
 	});
 
-	const series = $derived(metric === 'pob' ? pob : viv);
-	const maxV = $derived(series ? Math.max(...series, 1) : 1);
-	const total22 = $derived(series ? series[series.length - 1] : 0);
-	const hasData = $derived(!!series && series.some((v) => v > 0));
-	const pct = $derived(
-		series && series[0] > 0 ? ((series[3] - series[0]) / series[0]) * 100 : null
-	);
+	const totalHexes = $derived(groups ? groups.reduce((a, g) => a + g.hexCount, 0) : 0);
+	const hasData = $derived(!!groups && groups.some((g) => g.pob.some((v) => v > 0) || g.viv.some((v) => v > 0)));
+
+	function seriesOf(g: CensoGroup): number[] {
+		return metric === 'pob' ? g.pob : g.viv;
+	}
+
+	function pctOf(g: CensoGroup): number | null {
+		const s = seriesOf(g);
+		return s[0] > 0 ? ((s[3] - s[0]) / s[0]) * 100 : null;
+	}
 
 	function fmt(n: number): string {
 		return Math.round(n).toLocaleString('es-AR');
@@ -59,7 +87,7 @@
 <div class="ct-root">
 	<div class="ct-header">
 		<span class="ct-title">{i18n.t('side.censoTemporal.title')}</span>
-		<span class="ct-count">{hexStore.selectedHexes.size} hex</span>
+		<span class="ct-count">{totalHexes} hex</span>
 	</div>
 	<p class="ct-subtitle">{i18n.t('side.censoTemporal.subtitle')}</p>
 
@@ -69,7 +97,7 @@
 		<p class="ct-msg">{i18n.t('side.censoTemporal.loading')}</p>
 	{:else if !hasData}
 		<p class="ct-msg">{i18n.t('side.censoTemporal.empty')}</p>
-	{:else if series}
+	{:else if groups}
 		<div class="ct-toggle">
 			<button class="ct-tab" class:active={metric === 'pob'} onclick={() => (metric = 'pob')}>
 				{i18n.t('side.censoTemporal.population')}
@@ -79,26 +107,41 @@
 			</button>
 		</div>
 
-		<div class="ct-bars">
-			{#each YEARS as y, i}
-				<div class="ct-bar-col">
-					<span class="ct-bar-val">{fmt(series[i])}</span>
-					<div class="ct-bar-track">
-						<div class="ct-bar-fill" style="height: {(series[i] / maxV) * 100}%"></div>
+		{#each groups as g}
+			{@const series = seriesOf(g)}
+			{@const maxV = Math.max(...series, 1)}
+			{@const pct = pctOf(g)}
+			<div class="ct-group">
+				{#if g.id !== null}
+					<div class="ct-zone-id">
+						<span class="ct-dot" style:background={g.color}></span>
+						{i18n.t('zone.title')} {g.id}
+						<span class="ct-zone-count">{g.hexCount} hex</span>
 					</div>
-					<span class="ct-bar-year">{y}</span>
-				</div>
-			{/each}
-		</div>
+				{/if}
 
-		{#if pct !== null}
-			<div class="ct-change">
-				<span class="ct-change-label">{i18n.t('side.censoTemporal.change')}</span>
-				<span class="ct-change-val" class:up={pct >= 0} class:down={pct < 0}>
-					{pct >= 0 ? '+' : ''}{pct.toFixed(0)}%
-				</span>
+				<div class="ct-bars">
+					{#each YEARS as y, i}
+						<div class="ct-bar-col">
+							<span class="ct-bar-val">{fmt(series[i])}</span>
+							<div class="ct-bar-track">
+								<div class="ct-bar-fill" style:background={g.color} style="height: {(series[i] / maxV) * 100}%"></div>
+							</div>
+							<span class="ct-bar-year">{y}</span>
+						</div>
+					{/each}
+				</div>
+
+				{#if pct !== null}
+					<div class="ct-change">
+						<span class="ct-change-label">{i18n.t('side.censoTemporal.change')}</span>
+						<span class="ct-change-val" class:up={pct >= 0} class:down={pct < 0}>
+							{pct >= 0 ? '+' : ''}{pct.toFixed(0)}%
+						</span>
+					</div>
+				{/if}
 			</div>
-		{/if}
+		{/each}
 	{/if}
 </div>
 
@@ -113,6 +156,11 @@
 	.ct-tab { flex: 1; padding: 3px 6px; background: none; border: none; border-radius: 4px; color: #737373; font-size: 9px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; }
 	.ct-tab:hover { color: #a3a3a3; }
 	.ct-tab.active { background: rgba(255,255,255,0.10); color: #e2e8f0; }
+	.ct-group { margin-bottom: 12px; }
+	.ct-group:last-child { margin-bottom: 0; }
+	.ct-zone-id { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #e2e8f0; font-weight: 600; margin-bottom: 5px; }
+	.ct-zone-count { font-size: 8px; color: rgba(255,255,255,0.40); font-weight: 400; margin-left: auto; }
+	.ct-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.ct-bars { display: flex; align-items: flex-end; gap: 6px; height: 88px; }
 	.ct-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
 	.ct-bar-val { font-size: 8px; color: rgba(226,232,240,0.75); white-space: nowrap; }

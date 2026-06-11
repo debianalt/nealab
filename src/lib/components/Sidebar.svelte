@@ -193,6 +193,9 @@
 	{:else if hexStore.hexZones.length > 0}
 		<div class="chart-scroll">
 			<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
+			{#if hexStore.activeLayer?.id === 'censo_temporal'}
+				<CensoTemporalPanel {hexStore} />
+			{/if}
 		</div>
 	{:else if lassoStore.zones.length > 0}
 		<div class="chart-scroll">
