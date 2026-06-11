@@ -1274,12 +1274,19 @@ export class HexStore {
 			? getTemporalCol(this.activeLayer.primaryVariable, this.temporalMode)
 			: this.activeLayer.primaryVariable;
 		const isDelta = this.activeLayer.temporal && this.temporalMode === 'delta';
+		// Diverging delta ramp is red(−)→green(+), i.e. assumes higher = better. For
+		// "danger" layers (colorScale 'flood', higher = worse: deforestation, PM2.5) an
+		// INCREASE must read red, not green. Flip the delta sign so the ramp + the
+		// worse/better legend labels stay correct. Layers where higher = better/neutral
+		// (carbon, censo density: sequential) keep the raw sign.
+		const invertDelta = isDelta && this.activeLayer.colorScale === 'flood';
 		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
 		for (const [h3index, data] of this.visibleData) {
 			const raw = data[effectivePrimary];
 			const hasData = raw !== undefined && raw !== null &&
 				(typeof raw !== 'number' || Number.isFinite(raw));
-			const value: number | null = hasData ? Number(raw) : null;
+			let value: number | null = hasData ? Number(raw) : null;
+			if (invertDelta && value !== null) value = -value;
 			if (isDelta && hasData && value === 0) continue;
 			entries.push({
 				h3index,

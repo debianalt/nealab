@@ -63,14 +63,22 @@
 			: 'linear-gradient(to right, #5b21b6, #21918c, #fde725)'
 	);
 
+	// Danger layers (colorScale 'flood', higher = worse) get their delta sign flipped in
+	// the choropleth so an INCREASE renders red. In that mode the static layer labels
+	// ("Baja/Alta presión…") would read backwards, so the diverging ends must be labeled
+	// Peor/Mejor instead. Non-danger temporal layers (carbon, censo: sequential) are not
+	// flipped, so their static low/high labels still fit the change ramp.
+	const isDangerDelta = $derived(isDiverging && layer?.colorScale === 'flood');
 	const lowLabel = $derived(
-		layer?.legendLowKey ? i18n.t(layer.legendLowKey)
+		isDangerDelta ? i18n.t('temporal.legend.worse')
+		: layer?.legendLowKey ? i18n.t(layer.legendLowKey)
 		: isFlood ? i18n.t('legend.lowRisk')
 		: isDiverging ? i18n.t('temporal.legend.worse')
 		: i18n.t('legend.low')
 	);
 	const highLabel = $derived(
-		layer?.legendHighKey ? i18n.t(layer.legendHighKey)
+		isDangerDelta ? i18n.t('temporal.legend.better')
+		: layer?.legendHighKey ? i18n.t(layer.legendHighKey)
 		: isFlood ? i18n.t('legend.highRisk')
 		: isDiverging ? i18n.t('temporal.legend.better')
 		: i18n.t('legend.high')
