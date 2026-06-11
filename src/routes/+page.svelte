@@ -1761,7 +1761,7 @@
 
 			<!-- Regional/compare viewport too wide: neighbor-territory hexes load on zoom-in (B) -->
 			{#if regionalViewportTooWide}
-				<div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] text-white/80 shadow-lg pointer-events-none">
+				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] text-white/80 shadow-lg pointer-events-none">
 					🔍 {i18n.locale === 'es'
 						? 'Acercá para ver los hexágonos de los territorios vecinos'
 						: i18n.locale === 'pt'
