@@ -60,6 +60,7 @@
 	const initialSearch = typeof window !== 'undefined' ? window.location.search : '';
 	function updateUrlState() {
 		const params = new URLSearchParams();
+		if (territoryStore.activeTerritory.id !== 'misiones') params.set('t', territoryStore.activeTerritory.id);
 		if (lensStore.activeLens) params.set('lens', lensStore.activeLens);
 		if (lensStore.activeAnalysis) params.set('a', lensStore.activeAnalysis.id);
 		if (hexStore.selectedDpto) params.set('dept', hexStore.selectedDpto);
@@ -71,6 +72,7 @@
 
 	$effect(() => {
 		const _cf = territoryStore.countryFilter;
+		const _t = territoryStore.activeTerritory.id;
 		const _lens = lensStore.activeLens;
 		const _analysis = lensStore.activeAnalysis;
 		const _dept = hexStore.selectedDpto;
@@ -211,6 +213,8 @@
 			const params = new URLSearchParams(initialSearch);
 			const cf = params.get('cf');
 			if (cf === 'ar' || cf === 'py' || cf === 'br') territoryStore.enterCountryView(cf as CountryId);
+			const t = params.get('t');
+			if (t && TERRITORY_REGISTRY[t] && t !== territoryStore.activeTerritory.id) territoryStore.setTerritory(t);
 			const lens = params.get('lens') as LensId | null;
 			const analysisId = params.get('a');
 			if (lens) {
@@ -224,6 +228,22 @@
 			// After tick: the analysis $effect calls setLayer, which resets
 			// temporalMode to 'current' — setting tm before the flush gets wiped.
 			if (tm === 'baseline' || tm === 'delta') tick().then(() => hexStore.setTemporalMode(tm));
+			// Dept restore: after tick so the analysis/territory effects flushed
+			// (setLayer and the territory effect both clear selectedDpto). The
+			// dept summary gives back the parquetKey + centroid the click flow
+			// would have passed.
+			const dept = params.get('dept');
+			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
+				tick().then(async () => {
+					const summary = await loadDeptSummary(analysisId, hexStore.territoryPrefix);
+					const d = (summary?.departments as any[] | undefined)?.find(
+						(x) => (x.dpto ?? x.distrito ?? x.municipio) === dept
+					);
+					if (d?.parquetKey && d?.centroid) {
+						handleSelectFloodDpto(dept, d.parquetKey, d.centroid as [number, number]);
+					}
+				});
+			}
 		});
 
 		// Option A: map-click territory switching
