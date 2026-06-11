@@ -21,6 +21,22 @@
 
 	const title = $derived(layer ? i18n.t(layer.titleKey) : '');
 
+	// Range badge next to the title. The gradient is colored by the layer's primary
+	// variable, which is NOT always a 0–100 score: physical-unit layers (precipitation
+	// mm, carbon tC/ha, travel min, density hab/km²) were mislabeled "0–100". Show the
+	// real unit when the primary variable carries one; fall back to "0–100" for
+	// score/percentile variables. In temporal delta mode the badge is hidden (the value
+	// is a signed change, not a level).
+	const SCORE_UNITS = new Set(['/100', 'percentil', 'pctl', '%']);
+	const rangeLabel = $derived.by(() => {
+		if (!layer || isDiverging) return '';
+		const pv = layer.primaryVariable;
+		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		const u = v?.unit;
+		if (!u || SCORE_UNITS.has(u)) return '0–100';
+		return u;
+	});
+
 	// Extract unique type labels from visible data (categorical)
 	const typeEntries = $derived.by(() => {
 		if (!isCategorical) return [];
@@ -79,7 +95,7 @@
 	</div>
 {:else if layer && isGradient}
 	<div class="legend">
-		<div class="legend-title">{title} <span class="legend-range">0–100</span></div>
+		<div class="legend-title">{title} {#if rangeLabel}<span class="legend-range">{rangeLabel}</span>{/if}</div>
 		<div class="gradient-bar" style:background={gradient}></div>
 		<div class="gradient-labels">
 			<span>{lowLabel}</span>
