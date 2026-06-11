@@ -884,6 +884,13 @@
 				{/each}
 			</div>
 
+			<!-- Temporal toggle for non-perDepartment temporal layers (censo_temporal).
+			     Guarded by isTemporal: the only non-perDept temporal layer is censo_temporal,
+			     so this renders for that layer only and is inert for every other global layer. -->
+			{#if isTemporal}
+				<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
+			{/if}
+
 			{#if selectedHexes.size === 0}
 				<p class="hint">{i18n.t('lens.selectRadio')}</p>
 			{:else}

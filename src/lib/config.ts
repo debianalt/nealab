@@ -98,6 +98,7 @@ export function getParquetUrl(name: string): string {
 		sat_pm25_drivers: '?v=17',
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=4',
+		sat_censo_temporal: '?v=1',
 		emsa_powerlines: '?v=20',
 	};
 	const bust = busts[name] || '';
@@ -184,6 +185,7 @@ export const PARQUETS = {
 	get sat_economic_activity() { return getParquetUrl('sat_economic_activity'); },
 	get sat_accessibility() { return getParquetUrl('sat_accessibility'); },
 	get sat_carbon_stock() { return getParquetUrl('sat_carbon_stock'); },
+	get sat_censo_temporal() { return getParquetUrl('sat_censo_temporal'); },
 	// Brazil IBGE Censo 2022 setor-level stats
 	get radio_stats_parana_br()         { return `${getBase()}/data/setores_stats_parana_br.parquet`; },
 	get radio_stats_santa_catarina_br() { return `${getBase()}/data/setores_stats_santa_catarina_br.parquet`; },
@@ -714,6 +716,31 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendHighKey: 'legend.socio.high',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
+	// ── Cambio demográfico censal (INDEC 1991·2001·2010·2022, AR-only) ──
+	// New, fully isolated layer: reuses the satellite temporal toggle for the
+	// 2022↔2010 density delta; the full 4-census per-hexagon trajectory is shown
+	// by CensoTemporalPanel (its own click-query), so `variables` is limited to the
+	// temporal-safe pob_dens/viv_dens (which carry _baseline/_delta) — this avoids
+	// touching the shared loadBaseResolution path. Areal apportionment to a fixed
+	// populated H3 universe, renormalized to reconcile to INDEC totals.
+	censo_temporal: {
+		id: 'censo_temporal',
+		parquet: 'sat_censo_temporal',
+		variables: [
+			{ col: 'pob_dens', labelKey: 'censo.pobDens', aggregation: 'mean', unit: 'hab/km²' },
+			{ col: 'viv_dens', labelKey: 'censo.vivDens', aggregation: 'mean', unit: 'viv/km²' },
+		],
+		primaryVariable: 'pob_dens',
+		colorScale: 'sequential',
+		aggregation: 'mean',
+		titleKey: 'analysis.censo.title',
+		perDepartment: false,
+		temporal: true,
+		temporalPeriods: { current: '2022', baseline: '2010', source: 'INDEC · Rodríguez & de Grande (CONICET)' },
+		legendLowKey: 'legend.censo.low',
+		legendHighKey: 'legend.censo.high',
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+	},
 	economic_activity: {
 		id: 'economic_activity',
 		parquet: 'sat_economic_activity',
@@ -993,6 +1020,16 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		comparable: true,
 		rigorBadge: 'physical',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', central_py: 'available', neembucu_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available', misiones_py: 'available', paraguari_py: 'available', amambay_py: 'available'},
+	},
+	{
+		id: 'censo_temporal',
+		lensId: 'poblacion',
+		titleKey: 'analysis.censo.title',
+		descKey: 'analysis.censo.desc',
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+		rigorBadge: 'census',
+		status: 'available',
+		spatialUnit: 'hexagon',
 	},
 	{
 		id: 'sociodemographic',
@@ -1344,6 +1381,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_education_flow: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
 	emsa_powerlines: { dataDate: 'EMSA abril 2024', processedDate: '27/03/2026', sourceKey: 'data.source.emsa' },
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '29/03/2026', sourceKey: 'data.source.censo' },
+	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'data.source.censo' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
 	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },

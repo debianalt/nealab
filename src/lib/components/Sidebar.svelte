@@ -26,6 +26,7 @@
 	import ParallelCoords from './ParallelCoords.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
+	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
 
 	// X-axis label for the distribution panels: physical unit when the primary
 	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
@@ -203,6 +204,9 @@
 	{:else if hexStore.selectedHexes.size > 0}
 		<div class="chart-scroll">
 			<HexComparison {hexStore} />
+			{#if hexStore.activeLayer?.id === 'censo_temporal'}
+				<CensoTemporalPanel {hexStore} />
+			{/if}
 		</div>
 	{:else if lensStore.activeLens && lensStore.activeAnalysis}
 		<!-- Compare selector sticky above chart scroll; charts always visible below.

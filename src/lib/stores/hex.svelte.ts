@@ -4,7 +4,7 @@ import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
-import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-js';
+import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent, gridDisk } from 'h3-js';
 
 // ── LOD (level of detail) for giant departments ──────────────────────────────
 // Chaco/Boqueron districts reach 400K-750K res-9 hexes. Building one polygon per
@@ -527,6 +527,30 @@ export class HexStore {
 					} catch (e) {
 						console.warn('[loadDept polygonToCells failed]', dpto, e);
 					}
+				}
+			}
+
+			// Border buffer (Misiones only): the simplified province polygon (misiones_boundary)
+			// is inset from the real border, so coverage stops ~1-2 hexes short and the dark
+			// basemap shows in a sliver at the Corrientes border. Grow the nodata fill 2 rings
+			// past current coverage; these gray cells bypass the province PIP (+page) so they
+			// reach the real edge. Data cells stay province-bounded (no leakage).
+			if (this.territoryPrefix === '') {
+				const seed = [...data.keys()];
+				const ring = new Set<string>();
+				for (const h of seed) {
+					try { for (const nb of gridDisk(h, 2)) if (!data.has(nb)) ring.add(nb); } catch { /* skip */ }
+				}
+				for (const h3index of ring) {
+					try {
+						const [lat, lng] = cellToLatLng(h3index);
+						data.set(h3index, {});
+						centroids.set(h3index, [lng, lat]);
+						const boundary = cellToBoundary(h3index);
+						const coords = boundary.map(([la, lo]: [number, number]) => [lo, la]);
+						coords.push(coords[0]);
+						boundaries.set(h3index, coords);
+					} catch { /* skip invalid h3 */ }
 				}
 			}
 

@@ -1652,8 +1652,12 @@
 			const allEntries = hexStore.choroplethEntries;
 			// Only Misiones (empty prefix) needs PIP — all other territories pre-filtered in pipeline.
 			const needsPip = hexStore.territoryPrefix === '';
+			// Nodata gray fill (incl. the border buffer added in loadDepartment) always renders —
+			// it covers the dark sliver where the generalized province boundary is inset from the
+			// real border. Data cells stay province-bounded to prevent cross-province leakage.
 			const entries = needsPip
 				? allEntries.filter(e => {
+					if (e.nodata) return true;
 					const [lat, lng] = cellToLatLng(e.h3index);
 					return isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix);
 				})

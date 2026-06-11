@@ -30,7 +30,7 @@
 		land_use: 'Uso del suelo',
 		// Población y servicios
 		accessibility: 'Accesibilidad',
-		sociodemographic: 'Población',
+		sociodemographic: 'Población', censo_temporal: 'Población',
 		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
 		education_capital: 'Educación', education_flow: 'Educación',
 		// Economía e infraestructura
