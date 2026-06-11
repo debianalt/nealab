@@ -379,95 +379,6 @@
 		return getReportUrl(layerCfg.id, dept.parquetKey);
 	});
 
-	// ── Explanatory content per analysis (legacy inline dict, replaced by import) ──
-	const METHOD_COMMON = 'Valores por variable (0–100): cada variable se convierte a percentil provincial. 50 = mediana de Misiones, 100 = valor más alto de la provincia.\n\nTipos (clusters): las variables estandarizadas se procesan con PCA para validar independencia (se descartan variables con |r| > 0.70). Luego k-means agrupa hexágonos con perfiles multivariados similares. Cada hexágono se asigna al tipo cuyo centroide es más cercano. La calidad se valida con coeficiente de silueta. Los tipos no son un ranking — son perfiles cualitativos distintos.';
-
-	const ANALYSIS_CONTENT_LEGACY: Record<string, { howToRead: string; implications: string; method: string }> = {
-		flood_risk: {
-			howToRead: 'Los colores representan el riesgo hídrico de cada hexágono, combinando la presencia histórica de agua (JRC, 1984–2021) y la detección actual de inundación (Sentinel-1 SAR). Azul oscuro = riesgo bajo; amarillo = riesgo medio; rojo = riesgo alto. Selecciona un departamento para ver el detalle.',
-			implications: 'Las zonas de riesgo alto pueden enfrentar anegamientos recurrentes, afectando el valor inmobiliario, la habitabilidad y la infraestructura de servicios básicos (agua, cloacas). La recurrencia interanual distingue inundaciones estacionales predecibles de eventos extremos esporádicos.',
-			method: 'Índice compuesto 0–100 (donde 0 = sin riesgo y 100 = máximo riesgo provincial): 50% presencia histórica de agua (JRC Global Surface Water, Landsat 1984–2021) + 20% recurrencia interanual (JRC) + 30% extensión actual (Sentinel-1 SAR, última imagen procesada). Fuentes: JRC v1.4 + Copernicus Sentinel-1. Resolución: H3 resolución 9.',
-		},
-		agri_potential: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de aptitud agrícola según la co-ocurrencia de calidad del suelo, régimen hídrico, acumulación térmica y topografía.',
-			implications: 'Los tipos reflejan configuraciones edafoclimáticas distintas: suelos ácidos con alta lluvia (aptitud para yerba mate), suelos neutros con calor acumulado (aptitud para tabaco/cítricos), y zonas con limitaciones múltiples.',
-			method: `${METHOD_COMMON} Variables: carbono orgánico SoilGrids, pH óptimo, arcilla, precipitación CHIRPS, GDD ERA5, pendiente FABDEM. k=3 tipos, silueta=0.32.`,
-		},
-		forestry_aptitude: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de aptitud forestal comercial según la co-ocurrencia de acidez del suelo, precipitación, pendiente, y accesibilidad logística.',
-			implications: 'Los tipos identifican zonas óptimas para plantaciones de pino/eucalipto (suelo ácido, lluvia suficiente, pendiente mecanizable, cerca de rutas) frente a zonas marginales donde la forestación comercial no es viable. Este análisis evalúa aptitud del suelo y clima — no reemplaza la verificación de restricciones legales (áreas protegidas, comunidades indígenas, Ley de Bosques 26.331).',
-			method: `${METHOD_COMMON} Variables: pH SoilGrids, arcilla, precipitación CHIRPS, pendiente FABDEM, distancia a ruta OSM, accesibilidad Nelson. k=3 tipos, silueta=0.33.`,
-		},
-		service_deprivation: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de carencia de servicios básicos según NBI, acceso a cloacas, calidad del piso, hacinamiento y acceso digital. Solo se muestran hexágonos con edificaciones detectadas (crosswalk dasimétrico). Cada color representa un perfil de carencia distinto.',
-			implications: 'Los tipos separan carencia habitacional (piso inadecuado + hacinamiento), carencia de infraestructura (sin cloacas), y brecha digital (sin computadora). Cada configuración demanda intervenciones distintas: vivienda social, extensión de red cloacal, o programas de inclusión digital.',
-			method: `${METHOD_COMMON} 6 variables Censo Nacional 2022 (INDEC): NBI, sin cloacas (100 - pct_cloacas), piso inadecuado, hacinamiento, hacinamiento crítico, sin computadora (100 - pct_computadora). Crosswalk dasimétrico ponderado por edificios (2.8M footprints). KMO=0.73.`,
-		},
-		health_access: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de acceso a salud según tiempo al centro de salud, cobertura sanitaria, vulnerabilidad social (NBI), presión demográfica (ancianos y menores) y densidad poblacional. Solo hexágonos con edificaciones.',
-			implications: 'Los tipos separan déficit por distancia (zonas rurales lejanas), déficit por saturación (zonas densas con alta proporción de población vulnerable), y déficit por cobertura (alto NBI con baja cobertura sanitaria). Cada configuración requiere respuestas distintas del sistema de salud.',
-			method: `${METHOD_COMMON} 6 variables: tiempo motorizado a salud (Oxford MAP 2019), cobertura sanitaria, NBI, % adultos mayores, % menores 18, densidad poblacional (Censo 2022). Crosswalk dasimétrico. KMO=0.60.`,
-		},
-		education_capital: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de capital educativo según el nivel de instrucción acumulado: sin instrucción, secundario completo o más, educación superior (terciario + universitario), y universitario. Solo hexágonos con edificaciones.',
-			implications: 'Los tipos distinguen zonas con alto capital humano (universidades cercanas, alta formación), zonas de educación media (secundario completo pero sin terciario), y zonas de bajo capital (alta proporción sin instrucción). El capital educativo es predictor de ingresos, salud y participación cívica.',
-			method: `${METHOD_COMMON} 4 variables Censo 2022: % sin instrucción, % secundario completo o más (umbral acumulativo), % educación superior (terciario + universitario), % universitario. Terciario y universitario son tracks paralelos en el sistema argentino. Crosswalk dasimétrico. KMO=0.71.`,
-		},
-		education_flow: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de desempeño del sistema educativo según inasistencia escolar primaria (6-12), secundaria (13-18) y maternidad adolescente. Solo hexágonos con edificaciones.',
-			implications: 'Los tipos separan deserción temprana (primaria), deserción tardía (secundaria) y embarazo adolescente como factor de exclusión educativa. La inasistencia primaria indica fallas básicas del sistema; la secundaria indica problemas de retención; la maternidad adolescente indica vulnerabilidad de género intersectada con pobreza.',
-			method: `${METHOD_COMMON} 3 variables Censo 2022: tasa de inasistencia 6-12 años, tasa de inasistencia 13-18 años, tasa de maternidad adolescente. Variables directas (mayor = peor flujo). Crosswalk dasimétrico. KMO=0.61.`,
-		},
-		land_use: {
-			howToRead: 'El mapa clasifica cada hexágono según su cobertura dominante: selva nativa, plantación forestal, pastizal, agricultura, agua o urbano. Misiones usa MapBiomas Argentina Col. 1 (Landsat 30m); Itapúa usa MapBiomas Paraguay Col. 1. Nota: MapBiomas Paraguay no distingue plantación forestal, urbano ni mosaico — estas clases aparecen como 0% en Itapúa.',
-			implications: 'Misiones: selva nativa (73%) y plantación forestal (12%) permiten evaluar conservación real. Itapúa: cultivos (~40%) y pastizal natural (~14%) dominan. Plantación forestal, urbano y mosaico muestran 0% en Itapúa por limitaciones de MapBiomas Paraguay Col. 1.',
-			method: `${METHOD_COMMON} Fuente: MapBiomas Argentina Collection 1 (Landsat 30m, 2022). Clases remapeadas: bosque nativo, plantación, pastizal, agricultura, mosaico, humedal, urbano, agua. k=6 tipos, silueta=0.62.`,
-		},
-		powerline_density: {
-			howToRead: 'Mapa de densidad de líneas de media y alta tensión. Hexágonos más claros = mayor densidad de infraestructura eléctrica. Score basado en longitud total y cantidad de líneas dentro de cada hexágono.',
-			implications: 'La cobertura eléctrica condiciona toda actividad productiva y residencial. Zonas con baja densidad de líneas requieren extensión de red para habilitar nuevos emprendimientos. La distancia a líneas existentes es el principal factor de costo de electrificación rural.',
-			method: 'Fuente: EMSA (Secretaría de Energía, datos.energia.gob.ar, abril 2024). Líneas de media y alta tensión georreferenciadas, intersectadas con grilla H3 resolución 9. Score = longitud total de líneas / área del hexágono, normalizado 0-100.',
-		},
-		sociodemographic: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos sociodemográficos según la co-ocurrencia de densidad poblacional, pobreza (NBI), hacinamiento, tenencia de vivienda, tamaño de hogar y acceso digital. Cada color representa un perfil censal distinto.',
-			implications: 'Los tipos distinguen zonas urbanas densas con bajo NBI, periferias con hacinamiento y pobreza, y zonas rurales dispersas con alta propiedad pero baja conectividad. Esta clasificación multivariada evita reducir la complejidad social a un solo indicador.',
-			method: `${METHOD_COMMON} 6 variables del Censo Nacional 2022 (INDEC): densidad hab/km², % NBI, % hacinamiento, % propietarios, tamaño medio hogar, % computadora. Variables a nivel radio censal, agregadas a H3 vía crosswalk ponderado por área.`,
-		},
-		economic_activity: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de actividad económica según la co-ocurrencia de empleo, actividad económica, formación universitaria, luces nocturnas y densidad edilicia. Cada color representa un nivel de dinamismo distinto.',
-			implications: 'Los tipos separan centros económicos consolidados (alto empleo + universitarios + luces), periferias activas con posible informalidad (alta actividad, bajo empleo formal), y zonas rurales de baja actividad económica. La radiancia nocturna (VIIRS) es un proxy robusto de actividad que complementa los datos censales.',
-			method: `${METHOD_COMMON} 5 variables: tasa de empleo y actividad (Censo 2022 INDEC, 14+ años), % universitarios (Censo 2022), radiancia media VIIRS 500m (2022-2024), densidad edilicia Global Building Atlas 2025. Variables censales agregadas a H3 vía crosswalk.`,
-		},
-		eudr: {
-			howToRead: 'El mapa muestra el riesgo de deforestación post-2020 por hexágono (H3 res-9, ~0,1 km²). Score alto (rojo) = mayor pérdida forestal o actividad de fuego después del cutoff EUDR (31/12/2020). Cobertura: NEA argentino + NOA argentino + Paraguay + sur de Brasil.',
-			implications: 'Hexágonos con pérdida post-2020 representan señal de riesgo bajo el Reglamento (UE) 2023/1115. Exportaciones de commodities (soja, carne, madera) originadas en estas zonas requieren due-diligence reforzada. Este análisis es indicativo — la certificación formal requiere geometría parcelaria oficial.',
-			method: 'Score compuesto 0-100: 70% pérdida forestal post-2020 (Hansen GFC v1.12, Landsat, remuestreado a 100 m) + 20% área quemada post-2020 (MODIS MCD64A1, 500m) + 10% pérdida de cobertura previa. Cutoff EUDR: 31/12/2020. Resolución: H3 resolución 9 (~0,1 km²); dato satelital subyacente a 100 m, que es el piso de precisión efectivo. Cobertura: 10 provincias del NOA y NEA argentino + todo Paraguay (18 departamentos) + 3 estados del sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul).',
-		},
-		accessibility: {
-			howToRead: 'El mapa clasifica cada hexágono en tipos de accesibilidad según la co-ocurrencia de tiempo de viaje a Posadas, a la cabecera departamental, distancia a hospital, escuela secundaria y ruta principal. Cada color representa un nivel de conectividad distinto.',
-			implications: 'Los tipos distinguen conectividad plena (cercanía a servicios y rutas), accesibilidad parcial (cerca de ruta pero lejos de servicios especializados), y aislamiento funcional (lejos de todo). Cada configuración requiere estrategias de inversión en infraestructura distintas.',
-			method: `${METHOD_COMMON} 5 variables: tiempo motorizado a Posadas y cabecera (Nelson et al. 2019, superficie de fricción Oxford MAP), distancia euclidiana a hospital, escuela secundaria y ruta primaria (OSM). Fuente: Nelson 2019 + Oxford MAP 2019 + OSM.`,
-		},
-		carbon_stock: {
-			howToRead: 'El mapa muestra el stock de carbono total por hexágono (biomasa aérea + subterránea + carbono del suelo) y el balance anual de emisiones/remociones. Colores más intensos indican mayor stock. Los valores se muestran en unidades físicas (tC/ha, MgCO2/ha).',
-			implications: 'Las zonas de alto stock con balance neto negativo (sumidero) son candidatas para créditos de carbono por conservación. Las zonas de alto stock con balance positivo (emisor) son prioridad para intervención REDD+. Las zonas de bajo stock con alta productividad (NPP) tienen potencial de restauración y secuestro futuro. *Valor teórico del carbono: estimación de referencia calculada como stock total x 3.67 (conversión C a CO2) x USD 10/tCO2e (mediana del mercado voluntario 2024, Ecosystem Marketplace 2024). No representa un precio de venta ni el valor realizable de un predio. La monetización efectiva requiere un proyecto certificado (VCS, Gold Standard) con línea base, adicionalidad demostrada y costos de transacción que reducen significativamente el valor neto.',
-			method: `${METHOD_COMMON} 10 variables: biomasa aérea ESA CCI Biomass v6 (100m, Santoro et al. 2024) + GEDI L4B lidar (1km, validación). Biomasa subterránea vía Cairns et al. (1997): BGB = 0.489 x AGB^0.89. Carbono orgánico del suelo: SoilGrids v2 (ISRIC, 0-30cm extrapolado). Flujo de carbono: Harris et al. (2021) Nature Climate Change / Global Forest Watch (emisiones brutas + remociones + balance neto, 30m, 2001-2024). Productividad: MODIS MOD17A3HGF NPP (500m, 2019-2024). Total carbon = AGB x 0.47 + BGB x 0.47 + SOC. Precio de referencia: Ecosystem Marketplace (2024) State of the Voluntary Carbon Markets.`,
-		},
-		pm25_drivers: {
-			howToRead: 'El mapa muestra la calidad del aire en cada hexágono, medida como concentración media de PM2.5 (partículas finas < 2.5 µm) y descompuesta en cuatro drivers: fuego regional, clima, terreno y vegetación. Score alto (colores fríos) = mejor calidad del aire; score bajo (colores cálidos) = mayor concentración de PM2.5. Selecciona un departamento para ver la contribución relativa de cada driver.',
-			implications: 'La intensidad de fuego regional es el driver dominante de PM2.5 en Misiones: las quemas agrícolas y forestales en provincias vecinas y países limítrofes elevan la concentración de partículas finas incluso en zonas sin deforestación local. Las zonas con alta contribución climática son sensibles a eventos de inversión térmica que atrapan contaminantes. La vegetación actúa como filtro natural — la pérdida de cobertura arbórea reduce la capacidad de depuración del aire.',
-			method: 'Descomposición por machine learning (LightGBM, SHAP feature attribution) de la concentración media anual de PM2.5. Fuente primaria: Atmospheric Composition Analysis Group (ACAG) V6.GL.02 (Dalhousie University, van Donkelaar et al. 2021), panel 1998-2022, resolución 0.01 deg (~1 km). Modelo entrenado con 31 covariables ambientales (R2 = 0.93 en validación cruzada espacial leave-one-department-out). Drivers agrupados por SHAP: fuego regional (contribución dominante, dR2 = 0.195), clima (precipitación, temperatura), terreno (elevación, pendiente) y vegetación (NDVI, NPP). El toggle temporal compara periodo 2001-2010 vs 2013-2022. Resolución espacial: H3 resolución 9.',
-		},
-		deforestation_dynamics: {
-			howToRead: 'Cada hexágono muestra la tasa de pérdida forestal observada en ese punto exacto (pixel Landsat 30m). Colores cálidos = mayor pérdida forestal reciente (2015-2024). El toggle temporal permite comparar con la línea base (2001-2010): el modo "Cambio" muestra si la deforestación aceleró (rojo) o frenó (verde) respecto al periodo base.',
-			implications: 'Las zonas con alta tasa de pérdida sostenida representan frentes de deforestación activos donde la conversión del bosque nativo continúa. Las zonas donde la deforestación frenó (delta negativo) pueden reflejar el efecto de la Ley de Bosques (26.331/OTBN, vigente desde 2007) o el agotamiento del recurso. Las zonas que aceleraron post-2015 a pesar de la regulación requieren atención prioritaria de fiscalización.',
-			method: 'Fuente: Hansen Global Forest Change v1.12 (University of Maryland / Google), derivado de series temporales Landsat a 30m de resolución, cobertura 2001-2024. Cada hexágono H3 resolución 9 (~0.1 km²) recibe el valor del pixel de pérdida en su centroide — no hay promedio por radio censal. La tasa de pérdida se calcula como fracción de años con pérdida detectada en cada periodo. Línea base: 2001-2010; actual: 2015-2024. Actualización automática vía GitHub Actions cuando Hansen publica nuevos datos (~abril de cada año).',
-		},
-	};
-
-	// Dynamic World (land_use) — will be added when data is processed
-	// SAT_SUMMARIES and ANALYSIS_CONTENT entries are ready for when the parquet exists
-
 	const content = $derived(ANALYSIS_CONTENT[analysis.id] ?? null);
 
 	// ── Temporal toggle support ──
@@ -921,6 +832,32 @@
 				</div>
 			{/if}
 		{/if}
+
+		{#if content}
+			<a class="methodology-link" href="/metodologia/{analysis.id}" target="_blank" rel="noopener">
+				¿Cómo se calcula? →
+			</a>
+			<details class="method-details">
+				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>
+				<div class="method-body">
+					<p class="explain-text">{content.howToRead[i18n.locale] ?? content.howToRead.es}</p>
+				</div>
+			</details>
+			<details class="method-details">
+				<summary class="method-summary">{i18n.t('section.implications')}</summary>
+				<div class="method-body">
+					<p class="explain-text">{content.implications[i18n.locale] ?? content.implications.es}</p>
+				</div>
+			</details>
+			<details class="method-details">
+				<summary class="method-summary">{i18n.t('section.methodology')}</summary>
+				<div class="method-body">
+					<p class="explain-text">{content.method[i18n.locale === 'pt' || i18n.locale === 'gn' ? 'es' : i18n.locale] ?? content.method.es}</p>
+				</div>
+			</details>
+		{/if}
+
+		<CTADiagnostic analysisName={i18n.t(analysis.titleKey)} />
 	</div>
 {/if}
 
