@@ -97,7 +97,7 @@ export function getParquetUrl(name: string): string {
 		sat_carbon_stock: '?v=20',
 		sat_pm25_drivers: '?v=17',
 		sat_deforestation_dynamics: '?v=16',
-		sat_land_use: '?v=4',
+		sat_land_use: '?v=5',
 		sat_censo_temporal: '?v=1',
 		emsa_powerlines: '?v=20',
 	};
@@ -107,7 +107,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 1;
+const DEPT_V = 2;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;

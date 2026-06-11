@@ -2,54 +2,124 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 1116998,
-    "avg_score": 2.0,
+    "avg_score": 70.5,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "General Donovan",
-      "parquetKey": "general_donovan",
-      "avg_score": 3.4,
-      "hex_count": 18640,
+      "dpto": "Fray Justo Santa María de Oro",
+      "parquetKey": "fray_justo_santa_maria_de_oro",
+      "avg_score": 84.3,
+      "hex_count": 33569,
       "centroid": [
-        -59.3494,
-        -27.1274
+        -61.3304,
+        -27.8272
       ]
     },
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 3.3,
-      "hex_count": 29310,
+      "dpto": "Mayor Luis J. Fontana",
+      "parquetKey": "mayor_luis_j_fontana",
+      "avg_score": 83.3,
+      "hex_count": 43497,
       "centroid": [
-        -58.7084,
-        -26.9631
+        -60.6704,
+        -27.742
       ]
     },
     {
-      "dpto": "Primero de Mayo",
-      "parquetKey": "primero_de_mayo",
-      "avg_score": 3.3,
-      "hex_count": 15919,
+      "dpto": "Doce de Octubre",
+      "parquetKey": "doce_de_octubre",
+      "avg_score": 80.7,
+      "hex_count": 40893,
       "centroid": [
-        -58.9731,
-        -27.1551
+        -61.4369,
+        -27.3753
       ]
     },
     {
-      "dpto": "Tapenagá",
-      "parquetKey": "tapenaga",
-      "avg_score": 3.0,
-      "hex_count": 70098,
+      "dpto": "O'Higgins",
+      "parquetKey": "ohiggins",
+      "avg_score": 80.6,
+      "hex_count": 17997,
       "centroid": [
-        -59.8436,
-        -27.6698
+        -60.692,
+        -27.2479
+      ]
+    },
+    {
+      "dpto": "Quitilipi",
+      "parquetKey": "quitilipi",
+      "avg_score": 80.5,
+      "hex_count": 17728,
+      "centroid": [
+        -60.1799,
+        -26.6648
+      ]
+    },
+    {
+      "dpto": "General Belgrano",
+      "parquetKey": "general_belgrano",
+      "avg_score": 79.7,
+      "hex_count": 14454,
+      "centroid": [
+        -61.0749,
+        -26.838
+      ]
+    },
+    {
+      "dpto": "Chacabuco",
+      "parquetKey": "chacabuco",
+      "avg_score": 79.4,
+      "hex_count": 15300,
+      "centroid": [
+        -61.3118,
+        -27.1138
+      ]
+    },
+    {
+      "dpto": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "avg_score": 79.1,
+      "hex_count": 24894,
+      "centroid": [
+        -60.37,
+        -27.4108
+      ]
+    },
+    {
+      "dpto": "Independencia",
+      "parquetKey": "independencia",
+      "avg_score": 79.0,
+      "hex_count": 21190,
+      "centroid": [
+        -60.7604,
+        -26.7362
+      ]
+    },
+    {
+      "dpto": "Comandante Fernández",
+      "parquetKey": "comandante_fernandez",
+      "avg_score": 78.9,
+      "hex_count": 16790,
+      "centroid": [
+        -60.4735,
+        -26.7914
+      ]
+    },
+    {
+      "dpto": "Veinticinco de Mayo",
+      "parquetKey": "veinticinco_de_mayo",
+      "avg_score": 78.8,
+      "hex_count": 25567,
+      "centroid": [
+        -60.0398,
+        -26.8257
       ]
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 2.9,
+      "avg_score": 78.7,
       "hex_count": 41114,
       "centroid": [
         -59.1267,
@@ -57,9 +127,79 @@
       ]
     },
     {
+      "dpto": "Nueve de Julio",
+      "parquetKey": "nueve_de_julio",
+      "avg_score": 78.3,
+      "hex_count": 25893,
+      "centroid": [
+        -61.2721,
+        -26.9361
+      ]
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 78.1,
+      "hex_count": 29310,
+      "centroid": [
+        -58.7084,
+        -26.9631
+      ]
+    },
+    {
+      "dpto": "Maipú",
+      "parquetKey": "maipu",
+      "avg_score": 77.9,
+      "hex_count": 31826,
+      "centroid": [
+        -60.4564,
+        -26.3289
+      ]
+    },
+    {
+      "dpto": "Tapenagá",
+      "parquetKey": "tapenaga",
+      "avg_score": 77.8,
+      "hex_count": 70098,
+      "centroid": [
+        -59.8436,
+        -27.6698
+      ]
+    },
+    {
+      "dpto": "General Donovan",
+      "parquetKey": "general_donovan",
+      "avg_score": 76.6,
+      "hex_count": 18640,
+      "centroid": [
+        -59.3494,
+        -27.1274
+      ]
+    },
+    {
+      "dpto": "Libertad",
+      "parquetKey": "libertad",
+      "avg_score": 76.2,
+      "hex_count": 11409,
+      "centroid": [
+        -59.2715,
+        -27.3475
+      ]
+    },
+    {
+      "dpto": "Primero de Mayo",
+      "parquetKey": "primero_de_mayo",
+      "avg_score": 76.0,
+      "hex_count": 15919,
+      "centroid": [
+        -58.9731,
+        -27.1551
+      ]
+    },
+    {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 2.8,
+      "avg_score": 75.5,
       "hex_count": 26903,
       "centroid": [
         -59.7871,
@@ -69,7 +209,7 @@
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 2.8,
+      "avg_score": 75.3,
       "hex_count": 18197,
       "centroid": [
         -59.5538,
@@ -77,39 +217,9 @@
       ]
     },
     {
-      "dpto": "Mayor Luis J. Fontana",
-      "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 2.7,
-      "hex_count": 43497,
-      "centroid": [
-        -60.6704,
-        -27.742
-      ]
-    },
-    {
-      "dpto": "Libertad",
-      "parquetKey": "libertad",
-      "avg_score": 2.6,
-      "hex_count": 11409,
-      "centroid": [
-        -59.2715,
-        -27.3475
-      ]
-    },
-    {
-      "dpto": "San Lorenzo",
-      "parquetKey": "san_lorenzo",
-      "avg_score": 2.6,
-      "hex_count": 24894,
-      "centroid": [
-        -60.37,
-        -27.4108
-      ]
-    },
-    {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 2.5,
+      "avg_score": 74.3,
       "hex_count": 83469,
       "centroid": [
         -59.5073,
@@ -117,119 +227,9 @@
       ]
     },
     {
-      "dpto": "Veinticinco de Mayo",
-      "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 2.5,
-      "hex_count": 25567,
-      "centroid": [
-        -60.0398,
-        -26.8257
-      ]
-    },
-    {
-      "dpto": "Quitilipi",
-      "parquetKey": "quitilipi",
-      "avg_score": 2.3,
-      "hex_count": 17728,
-      "centroid": [
-        -60.1799,
-        -26.6648
-      ]
-    },
-    {
-      "dpto": "Comandante Fernández",
-      "parquetKey": "comandante_fernandez",
-      "avg_score": 2.0,
-      "hex_count": 16790,
-      "centroid": [
-        -60.4735,
-        -26.7914
-      ]
-    },
-    {
-      "dpto": "Fray Justo Santa María de Oro",
-      "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 2.0,
-      "hex_count": 33569,
-      "centroid": [
-        -61.3304,
-        -27.8272
-      ]
-    },
-    {
-      "dpto": "O'Higgins",
-      "parquetKey": "ohiggins",
-      "avg_score": 2.0,
-      "hex_count": 17997,
-      "centroid": [
-        -60.692,
-        -27.2479
-      ]
-    },
-    {
-      "dpto": "General Belgrano",
-      "parquetKey": "general_belgrano",
-      "avg_score": 1.9,
-      "hex_count": 14454,
-      "centroid": [
-        -61.0749,
-        -26.838
-      ]
-    },
-    {
-      "dpto": "Maipú",
-      "parquetKey": "maipu",
-      "avg_score": 1.9,
-      "hex_count": 31826,
-      "centroid": [
-        -60.4564,
-        -26.3289
-      ]
-    },
-    {
-      "dpto": "Chacabuco",
-      "parquetKey": "chacabuco",
-      "avg_score": 1.8,
-      "hex_count": 15300,
-      "centroid": [
-        -61.3118,
-        -27.1138
-      ]
-    },
-    {
-      "dpto": "Doce de Octubre",
-      "parquetKey": "doce_de_octubre",
-      "avg_score": 1.8,
-      "hex_count": 40893,
-      "centroid": [
-        -61.4369,
-        -27.3753
-      ]
-    },
-    {
-      "dpto": "Independencia",
-      "parquetKey": "independencia",
-      "avg_score": 1.8,
-      "hex_count": 21190,
-      "centroid": [
-        -60.7604,
-        -26.7362
-      ]
-    },
-    {
-      "dpto": "Nueve de Julio",
-      "parquetKey": "nueve_de_julio",
-      "avg_score": 1.7,
-      "hex_count": 25893,
-      "centroid": [
-        -61.2721,
-        -26.9361
-      ]
-    },
-    {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 1.3,
+      "avg_score": 71.7,
       "hex_count": 182902,
       "centroid": [
         -61.9817,
@@ -239,7 +239,7 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 1.2,
+      "avg_score": 52.2,
       "hex_count": 289439,
       "centroid": [
         -61.3084,

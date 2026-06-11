@@ -2,44 +2,14 @@
   "territory": "neembucu_py",
   "province": {
     "total_hexes": 126524,
-    "avg_score": 2.3,
+    "avg_score": 66.9,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Pilar",
-      "parquetKey": "pilar",
-      "avg_score": 3.2,
-      "hex_count": 3617,
-      "centroid": [
-        -58.1896,
-        -26.8898
-      ]
-    },
-    {
-      "distrito": "Tacuaras",
-      "parquetKey": "tacuaras",
-      "avg_score": 3.1,
-      "hex_count": 14798,
-      "centroid": [
-        -57.8738,
-        -26.8217
-      ]
-    },
-    {
-      "distrito": "Guazucua",
-      "parquetKey": "guazucua",
-      "avg_score": 3.0,
-      "hex_count": 13430,
-      "centroid": [
-        -57.7584,
-        -26.9915
-      ]
-    },
-    {
       "distrito": "San Juan Bta. Del Neembuc",
       "parquetKey": "san_juan_bta_del_neembuc",
-      "avg_score": 3.0,
+      "avg_score": 85.3,
       "hex_count": 15035,
       "centroid": [
         -57.851,
@@ -47,29 +17,19 @@
       ]
     },
     {
-      "distrito": "Isla Umbu",
-      "parquetKey": "isla_umbu",
-      "avg_score": 2.7,
-      "hex_count": 5116,
+      "distrito": "Gral. Jose E. Diaz",
+      "parquetKey": "gral_jose_e_diaz",
+      "avg_score": 85.2,
+      "hex_count": 4210,
       "centroid": [
-        -58.309,
-        -26.9676
-      ]
-    },
-    {
-      "distrito": "Cerrito",
-      "parquetKey": "cerrito",
-      "avg_score": 2.6,
-      "hex_count": 6459,
-      "centroid": [
-        -57.6294,
-        -27.3058
+        -58.342,
+        -27.1778
       ]
     },
     {
       "distrito": "Desmochados",
       "parquetKey": "desmochados",
-      "avg_score": 2.5,
+      "avg_score": 84.8,
       "hex_count": 3275,
       "centroid": [
         -58.1239,
@@ -77,9 +37,29 @@
       ]
     },
     {
+      "distrito": "Isla Umbu",
+      "parquetKey": "isla_umbu",
+      "avg_score": 84.7,
+      "hex_count": 5116,
+      "centroid": [
+        -58.309,
+        -26.9676
+      ]
+    },
+    {
+      "distrito": "Guazucua",
+      "parquetKey": "guazucua",
+      "avg_score": 84.6,
+      "hex_count": 13430,
+      "centroid": [
+        -57.7584,
+        -26.9915
+      ]
+    },
+    {
       "distrito": "Villalvin",
       "parquetKey": "villalvin",
-      "avg_score": 2.5,
+      "avg_score": 84.1,
       "hex_count": 5319,
       "centroid": [
         -57.9098,
@@ -89,7 +69,7 @@
     {
       "distrito": "Laureles",
       "parquetKey": "laureles",
-      "avg_score": 2.4,
+      "avg_score": 83.9,
       "hex_count": 8951,
       "centroid": [
         -57.5826,
@@ -97,9 +77,49 @@
       ]
     },
     {
+      "distrito": "Mayor Martinez",
+      "parquetKey": "mayor_martinez",
+      "avg_score": 83.8,
+      "hex_count": 4179,
+      "centroid": [
+        -58.136,
+        -27.1867
+      ]
+    },
+    {
+      "distrito": "Tacuaras",
+      "parquetKey": "tacuaras",
+      "avg_score": 83.5,
+      "hex_count": 14798,
+      "centroid": [
+        -57.8738,
+        -26.8217
+      ]
+    },
+    {
+      "distrito": "Pilar",
+      "parquetKey": "pilar",
+      "avg_score": 83.3,
+      "hex_count": 3617,
+      "centroid": [
+        -58.1896,
+        -26.8898
+      ]
+    },
+    {
+      "distrito": "Cerrito",
+      "parquetKey": "cerrito",
+      "avg_score": 80.4,
+      "hex_count": 6459,
+      "centroid": [
+        -57.6294,
+        -27.3058
+      ]
+    },
+    {
       "distrito": "Paso De Patria",
       "parquetKey": "paso_de_patria",
-      "avg_score": 2.4,
+      "avg_score": 75.9,
       "hex_count": 2673,
       "centroid": [
         -58.5287,
@@ -109,7 +129,7 @@
     {
       "distrito": "Humaita",
       "parquetKey": "humaita",
-      "avg_score": 2.3,
+      "avg_score": 75.2,
       "hex_count": 3774,
       "centroid": [
         -58.484,
@@ -117,29 +137,9 @@
       ]
     },
     {
-      "distrito": "Mayor Martinez",
-      "parquetKey": "mayor_martinez",
-      "avg_score": 2.3,
-      "hex_count": 4179,
-      "centroid": [
-        -58.136,
-        -27.1867
-      ]
-    },
-    {
-      "distrito": "Gral. Jose E. Diaz",
-      "parquetKey": "gral_jose_e_diaz",
-      "avg_score": 2.2,
-      "hex_count": 4210,
-      "centroid": [
-        -58.342,
-        -27.1778
-      ]
-    },
-    {
       "distrito": "Villa Franca",
       "parquetKey": "villa_franca",
-      "avg_score": 2.1,
+      "avg_score": 51.9,
       "hex_count": 17143,
       "centroid": [
         -57.9497,
