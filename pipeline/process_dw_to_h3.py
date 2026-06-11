@@ -8,6 +8,7 @@ Reads the class probability raster (9 bands) and computes per-hexagon:
 Usage:
   python pipeline/process_dw_to_h3.py
   python pipeline/process_dw_to_h3.py --input path/to/dw_probs_2024.tif
+  python pipeline/process_dw_to_h3.py --territory itapua_py
 """
 
 import argparse
@@ -22,7 +23,7 @@ from rasterio.features import geometry_mask
 from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
-from config import OUTPUT_DIR, H3_RESOLUTION
+from config import OUTPUT_DIR, H3_RESOLUTION, get_territory
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HEXAGONS_PATH = os.path.join(OUTPUT_DIR, "hexagons-lite.geojson")
@@ -52,9 +53,24 @@ def compute_shannon(fractions: np.ndarray) -> float:
 
 def main():
     parser = argparse.ArgumentParser(description="Process Dynamic World raster to H3")
-    parser.add_argument("--input", default=DEFAULT_INPUT, help="Path to DW probs GeoTIFF")
-    parser.add_argument("--output", default=os.path.join(OUTPUT_DIR, "sat_land_use.parquet"))
+    parser.add_argument("--input", default=None, help="Path to DW probs GeoTIFF")
+    parser.add_argument("--output", default=None)
+    parser.add_argument("--territory", default="misiones", help="Territory ID from pipeline config")
     args = parser.parse_args()
+
+    # Resolve per-territory defaults: raster + hex grid + output live under
+    # output/<territory>/ (Misiones keeps the legacy flat layout).
+    if args.territory != "misiones":
+        get_territory(args.territory)  # validates the ID
+        t_dir = os.path.join(OUTPUT_DIR, args.territory)
+        input_path = args.input or os.path.join(t_dir, f"dw_probs_{args.territory}_2024.tif")
+        output_path = args.output or os.path.join(t_dir, "sat_land_use.parquet")
+        hex_path = os.path.join(t_dir, "hexagons.geojson")
+    else:
+        input_path = args.input or DEFAULT_INPUT
+        output_path = args.output or os.path.join(OUTPUT_DIR, "sat_land_use.parquet")
+        hex_path = HEXAGONS_PATH
+    args.input, args.output = input_path, output_path
 
     if not os.path.exists(args.input):
         print(f"ERROR: Input raster not found: {args.input}")
@@ -65,7 +81,7 @@ def main():
 
     # Load hexagon grid
     import json
-    with open(HEXAGONS_PATH, "r") as f:
+    with open(hex_path, "r") as f:
         hexgrid = json.load(f)
 
     features = hexgrid["features"]
