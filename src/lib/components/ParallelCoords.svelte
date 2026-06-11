@@ -5,10 +5,12 @@
 		data = new Map() as Map<string, Record<string, any>>,
 		variables = [] as { col: string; labelKey: string; unit?: string }[],
 		onBrushSelect = (_h3s: string[]) => {},
+		defaultCollapsed = true,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variables: { col: string; labelKey: string; unit?: string }[];
 		onBrushSelect?: (h3s: string[]) => void;
+		defaultCollapsed?: boolean;
 	} = $props();
 
 	const SVG_W = 260, SVG_H = 180;
@@ -252,7 +254,7 @@
 	}
 </script>
 
-<ChartFrame title="Variables" csvRows={csvRows} csvFilename="spatia_parallel">
+<ChartFrame title="Variables" csvRows={csvRows} csvFilename="spatia_parallel" {defaultCollapsed}>
 	<div class="pc-panel">
 	<div class="pc-subheader">
 		{#if selectedCount > 0}

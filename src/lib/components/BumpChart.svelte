@@ -7,10 +7,12 @@
 		activeAnalysisId = '',
 		selectedDept = null,
 		territoryPrefix = '',
+		defaultCollapsed = true,
 	}: {
 		activeAnalysisId?: string;
 		selectedDept?: string | null;
 		territoryPrefix?: string;
+		defaultCollapsed?: boolean;
 	} = $props();
 
 	const REFERENCE = [
@@ -182,7 +184,7 @@
 	}
 </script>
 
-<ChartFrame title="Perfil comparativo" csvRows={csvRows} csvFilename="spatia_bump">
+<ChartFrame title="Perfil comparativo" csvRows={csvRows} csvFilename="spatia_bump" {defaultCollapsed}>
 	<div class="bump-panel">
 	<div class="bump-subheader">
 		{#if hoverInfo}

@@ -9,6 +9,8 @@
 		csvColumns,
 		csvFilename = 'spatia_chart',
 		initialSize = { w: 900, h: 600 },
+		collapsible = true,
+		defaultCollapsed = false,
 	}: {
 		title: string;
 		children: Snippet;
@@ -16,9 +18,19 @@
 		csvColumns?: string[];
 		csvFilename?: string;
 		initialSize?: { w: number; h: number };
+		collapsible?: boolean;
+		defaultCollapsed?: boolean;
 	} = $props();
 
 	let expanded = $state(false);
+	// Collapse hides the body via CSS (not {#if}) so chart state — brush selections,
+	// computed layouts — survives toggling, same rationale as the expand portal.
+	let collapsed = $state(collapsible && defaultCollapsed);
+
+	function toggleCollapsed() {
+		if (!collapsible || expanded) return;
+		collapsed = !collapsed;
+	}
 	let exportMenuOpen = $state(false);
 	let pos = $state({ x: 120, y: 80 });
 	let size = $state({ w: initialSize.w, h: initialSize.h });
@@ -155,11 +167,16 @@
 >
 	<div
 		class="chart-frame-header"
+		class:chart-frame-header-clickable={collapsible && !expanded}
 		onmousedown={startDrag}
+		onclick={toggleCollapsed}
 		role="presentation"
 	>
-		<span class="chart-frame-title">{title}</span>
-		<div class="chart-frame-actions">
+		<span class="chart-frame-title">
+			{#if collapsible && !expanded}<span class="chart-frame-chevron" class:chart-frame-chevron-open={!collapsed}>▸</span>{/if}
+			{title}
+		</span>
+		<div class="chart-frame-actions" onclick={(e) => e.stopPropagation()} role="presentation">
 			<div class="chart-frame-export-wrap">
 				<button
 					class="chart-frame-btn"
@@ -185,7 +202,7 @@
 			>{expanded ? '×' : '⤢'}</button>
 		</div>
 	</div>
-	<div class="chart-frame-body">
+	<div class="chart-frame-body" class:chart-frame-body-collapsed={collapsed && !expanded}>
 		{@render children()}
 	</div>
 </div>
@@ -244,7 +261,22 @@
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		pointer-events: none;
+		display: flex;
+		align-items: center;
+		gap: 5px;
 	}
+
+	.chart-frame-header-clickable { cursor: pointer; }
+	.chart-frame-header-clickable:hover { background: rgba(255, 255, 255, 0.07); }
+
+	.chart-frame-chevron {
+		font-size: 8px;
+		color: rgba(255, 255, 255, 0.45);
+		transition: transform 0.15s;
+	}
+	.chart-frame-chevron-open { transform: rotate(90deg); }
+
+	.chart-frame-body-collapsed { display: none; }
 
 	.chart-frame-actions {
 		display: flex;

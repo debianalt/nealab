@@ -11,6 +11,7 @@
 		analysisId = '',
 		territoryPrefix = '',
 		onBrushSelect = (_h3s: string[]) => {},
+		defaultCollapsed = true,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
@@ -18,6 +19,7 @@
 		analysisId?: string;
 		territoryPrefix?: string;
 		onBrushSelect?: (h3s: string[]) => void;
+		defaultCollapsed?: boolean;
 	} = $props();
 
 	const PAD_L = 28, PAD_R = 8, PAD_T = 8, PAD_B = 22;
@@ -193,7 +195,7 @@
 	}
 </script>
 
-<ChartFrame title="Bivariado" csvRows={csvRows} csvFilename="spatia_bivariate">
+<ChartFrame title="Bivariado" csvRows={csvRows} csvFilename="spatia_bivariate" {defaultCollapsed}>
 	<div class="bvpanel">
 	<div class="bvpanel-subheader">
 		{#if brushRect !== null}

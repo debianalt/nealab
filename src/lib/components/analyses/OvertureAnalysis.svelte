@@ -112,6 +112,19 @@
 		return [...summary.departments].sort((a: any, b: any) => b.avg_score - a.avg_score);
 	});
 
+	// Dept filter — BR states list 300-500 municipalities; without a filter the
+	// list buries every chart below it. Reset on territory tab switch.
+	let deptFilter = $state('');
+	$effect(() => { activeTab; deptFilter = ''; });
+	const normalize = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+	const filteredDeptList = $derived.by(() => {
+		if (!deptFilter.trim()) return deptList;
+		const q = normalize(deptFilter.trim());
+		return deptList.filter((d: any) =>
+			normalize(String(d.dpto ?? d.distrito ?? d.municipio ?? '')).includes(q)
+		);
+	});
+
 	const colorScale = $derived(layerCfg?.colorScale ?? 'sequential');
 	const isCategorical = $derived(colorScale === 'categorical');
 	const PALETTE = ['#1565c0', '#7e57c2', '#4db6ac', '#66bb6a', '#c0ca33', '#ffb74d', '#e65100', '#78909c'];
@@ -695,14 +708,26 @@
 				{#if !selectedDpto}
 					<p class="dept-select-hint">▼ Seleccioná un sector para ver el análisis</p>
 				{/if}
-				{#each deptList as dept}
-					<button class="dept-row dept-clickable" onclick={() => handleDptoClick(dept)}>
-						<div class="dept-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
-						<div class="dept-score">
-							{dept.hex_count?.toLocaleString() ?? ''} hex
-						</div>
-					</button>
-				{/each}
+				{#if deptList.length > 12}
+					<input
+						class="dept-filter"
+						type="search"
+						placeholder="Filtrar entre {deptList.length}…"
+						bind:value={deptFilter}
+					/>
+				{/if}
+				<div class="dept-list-scroll">
+					{#each filteredDeptList as dept}
+						<button class="dept-row dept-clickable" onclick={() => handleDptoClick(dept)}>
+							<div class="dept-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
+							<div class="dept-score">
+								{dept.hex_count?.toLocaleString() ?? ''} hex
+							</div>
+						</button>
+					{:else}
+						<div class="dept-row" style="color: var(--text-secondary); font-style: italic;">Sin coincidencias</div>
+					{/each}
+				</div>
 			{/if}
 		</div>
 
@@ -883,6 +908,26 @@
 
 	/* ── Department list ── */
 	.dept-section { margin-bottom: 10px; }
+	.dept-filter {
+		width: 100%;
+		background: rgba(255,255,255,0.05);
+		border: 1px solid rgba(255,255,255,0.10);
+		border-radius: 4px;
+		color: #e2e8f0;
+		font-size: 10px;
+		font-family: inherit;
+		padding: 4px 8px;
+		margin-bottom: 6px;
+		outline: none;
+	}
+	.dept-filter:focus { border-color: rgba(96,165,250,0.5); }
+	.dept-filter::placeholder { color: rgba(255,255,255,0.30); }
+	.dept-list-scroll {
+		max-height: 264px; /* ~11 rows — keeps charts reachable below 300-500 row BR lists */
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: #334155 transparent;
+	}
 	.section-title { font-size: 10px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
 	.dept-select-hint { font-size: 9px; color: #60a5fa; margin: 0 0 6px; font-style: italic; opacity: 0.8; }
 	.dept-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }

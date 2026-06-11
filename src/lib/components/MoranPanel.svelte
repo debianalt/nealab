@@ -9,6 +9,7 @@
 		boundaryCache = new Map() as Map<string, number[][]>,
 		onShowLisa = (_entries: { h3index: string; value: number; boundary?: number[][] }[]) => {},
 		onBrushSelect = (_h3s: string[]) => {},
+		defaultCollapsed = true,
 	} = $props();
 
 	const allH3s = $derived([...data.keys()]);
@@ -301,7 +302,7 @@
 
 </script>
 
-<ChartFrame title="Autocorrelación espacial" csvRows={csvRows} csvFilename="spatia_moran">
+<ChartFrame title="Autocorrelación espacial" csvRows={csvRows} csvFilename="spatia_moran" {defaultCollapsed}>
 	<div class="moran-body">
 			{#if computing}
 				<div class="moran-loading">

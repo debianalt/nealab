@@ -601,6 +601,13 @@
 			return;
 		}
 
+		// Compare mode only makes sense on comparable layers — switching to a
+		// non-comparable analysis already drops the compare data (setLayer), so
+		// exit the mode too instead of leaving a dangling "Salir de comparación".
+		if (!analysis.comparable && untrack(() => territoryStore.compareModeActive)) {
+			territoryStore.exitCompareMode();
+		}
+
 		// Catastro-based analyses
 		if (analysis.spatialUnit === 'catastro') {
 			analysisDataLoaded = false;

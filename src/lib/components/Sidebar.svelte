@@ -227,18 +227,19 @@
 				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
 			{/if}
 			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
+				<div class="charts-divider">Gráficos</div>
+				<HistogramPanel
+					data={hexStore.visibleData}
+					variable={hexStore.activeLayer.primaryVariable}
+					xLabel={primaryXLabel(hexStore.activeLayer)}
+					onBrushSelect={onHistogramBrush ?? (() => {})}
+				/>
 				<MoranPanel
 					data={hexStore.visibleData}
 					variable={hexStore.activeLayer.primaryVariable}
 					boundaryCache={hexStore.boundaryCache}
 					onShowLisa={onShowLisa ?? (() => {})}
 					onBrushSelect={onMoranBrush ?? (() => {})}
-				/>
-				<HistogramPanel
-					data={hexStore.visibleData}
-					variable={hexStore.activeLayer.primaryVariable}
-					xLabel={primaryXLabel(hexStore.activeLayer)}
-					onBrushSelect={onHistogramBrush ?? (() => {})}
 				/>
 				<BivariatePlot
 					data={hexStore.visibleData}
@@ -320,6 +321,16 @@
 		min-height: 0;
 		scrollbar-width: thin;
 		scrollbar-color: #334155 transparent;
+	}
+	.charts-divider {
+		font-size: 8px;
+		font-weight: 700;
+		color: rgba(255,255,255,0.35);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin: 12px 0 2px;
+		padding-top: 8px;
+		border-top: 1px solid rgba(255,255,255,0.08);
 	}
 	.chart-scroll::-webkit-scrollbar { width: 4px; }
 	.chart-scroll::-webkit-scrollbar-track { background: transparent; }

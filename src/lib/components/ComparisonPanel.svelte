@@ -34,6 +34,21 @@
 	let loading = $state(false);
 	let groups: TerritoryGroup[] = $state([]);
 	let selectorOpen = $state(false);
+	// Dropdown filter — the flat list spans every dept of every territory
+	// (thousands of rows with the BR states); typing narrows it.
+	let compareFilter = $state('');
+	const normalize = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+	const filteredGroups = $derived.by(() => {
+		const q = normalize(compareFilter.trim());
+		if (!q) return groups;
+		return groups
+			.map(g => {
+				const territoryHit = normalize(g.territory.label).includes(q) || normalize(g.territory.shortLabel).includes(q);
+				const depts = territoryHit ? g.depts : g.depts.filter(d => normalize(d.name).includes(q));
+				return { territory: g.territory, depts, territoryHit };
+			})
+			.filter(g => g.territoryHit || g.depts.length > 0);
+	});
 	let statsGen = 0; // generation counter — cancels stale async loadStats promises
 	// Territory-level stats cache keyed by `territory.id:analysisId`.
 	// Global parquet AVG queries take 200-400ms; reuse across dept switches.
@@ -64,6 +79,7 @@
 		const analysis = lensStore.activeAnalysis;
 		groups = [];
 		selectorOpen = false;
+		compareFilter = '';
 		statsCache.clear(); // invalidate cached territory stats on analysis switch
 		if (!analysis) return;
 		const territories = Object.values(TERRITORY_REGISTRY)
@@ -90,6 +106,7 @@
 			hexStore.loadFullCompare(t.parquetPrefix);
 		}
 		selectorOpen = false;
+		compareFilter = '';
 	}
 
 	async function loadStats(territory: TerritoryConfig, cols: string[]): Promise<TerritoryStats> {
@@ -244,7 +261,13 @@
 			{/if}
 			{#if selectorOpen}
 				<div class="compare-dropdown">
-					{#each groups as g (g.territory.id)}
+					<input
+						class="compare-filter"
+						type="search"
+						placeholder="Buscar territorio o departamento…"
+						bind:value={compareFilter}
+					/>
+					{#each filteredGroups as g (g.territory.id)}
 						<div class="group-header">{g.territory.flag} {g.territory.label}</div>
 						<button class="opt opt-province" onclick={() => selectTarget(g.territory)}>
 							{g.territory.shortLabel} (provincia)
@@ -254,6 +277,8 @@
 								{formatDept(d.name)}
 							</button>
 						{/each}
+					{:else}
+						<div class="group-header">Sin coincidencias</div>
 					{/each}
 				</div>
 			{/if}
@@ -395,6 +420,23 @@
 		scrollbar-width: thin;
 		scrollbar-color: #334155 transparent;
 	}
+
+	.compare-filter {
+		width: 100%;
+		background: rgba(255,255,255,0.05);
+		border: 1px solid rgba(255,255,255,0.10);
+		border-radius: 4px;
+		color: #e2e8f0;
+		font-size: 9px;
+		font-family: inherit;
+		padding: 4px 8px;
+		margin-bottom: 3px;
+		outline: none;
+		position: sticky;
+		top: 0;
+	}
+	.compare-filter:focus { border-color: rgba(96,165,250,0.5); }
+	.compare-filter::placeholder { color: rgba(255,255,255,0.30); }
 
 	.group-header {
 		font-size: 8px;
