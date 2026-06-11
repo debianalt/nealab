@@ -139,6 +139,12 @@ export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): strin
 	return base.replace('/data/', `/data/${territoryPrefix}`);
 }
 
+// Department-level exact INDEC totals for censo_temporal (build_censo_temporal_dept.py).
+// Tiny parquet (~9-25 rows); dept_code maps to `redcode` in ar_dept_boundaries.json.
+export function getCensoTemporalDeptUrl(territoryPrefix = ''): string {
+	return `${getBase()}/data/${territoryPrefix}sat_censo_temporal_dept.parquet?v=1`;
+}
+
 export function getDeptSummaryUrl(analysisId: string, territoryPrefix = ''): string {
 	const nameMap: Record<string, string> = {
 		flood_risk: 'flood_dept_summary',

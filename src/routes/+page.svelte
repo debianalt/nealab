@@ -857,6 +857,23 @@
 		);
 	}
 
+	// censo_temporal dept list: outline the picked department and fly to it. The
+	// outline survives the selectedDpto $effect because censo_temporal never sets
+	// selectedDpto; the list clears it (feature=null) on deselect/unmount.
+	function handleCensoDeptSelect(feature: any | null) {
+		mapComponent?.setDeptOutline(feature ?? null);
+		if (!feature?.geometry) return;
+		let w = 180, s = 90, e = -180, n = -90;
+		const polys = feature.geometry.type === 'Polygon'
+			? [feature.geometry.coordinates]
+			: feature.geometry.coordinates;
+		for (const poly of polys) for (const ring of poly) for (const [x, y] of ring) {
+			if (x < w) w = x; if (x > e) e = x;
+			if (y < s) s = y; if (y > n) n = y;
+		}
+		mapComponent?.flyToBbox([w, s, e, n]);
+	}
+
 	function handleParallelBrush(h3s: string[]) {
 		if (h3s.length === 0) { mapComponent?.clearHexZoneHighlight(); return; }
 		mapComponent?.setHexZoneHighlight(
@@ -1873,6 +1890,7 @@
 			onParallelBrush={handleParallelBrush}
 			onFlowBrush={handleFlowBrush}
 			onRadioCensusBrush={handleRadioCensusBrush}
+			onCensoDeptSelect={handleCensoDeptSelect}
 			onRemoveDistrict={handleRemoveDistrict}
 			onClearDistricts={handleClearDistricts}
 			onDownloadDistrictGeoJson={downloadDistrictGeoJson}

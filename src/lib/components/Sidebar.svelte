@@ -27,6 +27,7 @@
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
+	import CensoTemporalDeptList from './CensoTemporalDeptList.svelte';
 
 	// X-axis label for the distribution panels: physical unit when the primary
 	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
@@ -71,6 +72,7 @@
 		onParallelBrush,
 		onFlowBrush,
 		onRadioCensusBrush,
+		onCensoDeptSelect,
 	}: {
 		mapStore: MapStore;
 		lensStore: LensStore;
@@ -103,6 +105,7 @@
 		onParallelBrush?: (h3s: string[]) => void;
 		onFlowBrush?: (h3s: string[]) => void;
 		onRadioCensusBrush?: (redcodes: string[]) => void;
+		onCensoDeptSelect?: (feature: any | null) => void;
 	} = $props();
 
 	let collapsed = $state(true);
@@ -217,6 +220,9 @@
 		{/if}
 		<div class="chart-scroll">
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} />
+			{#if hexStore.activeLayer?.id === 'censo_temporal'}
+				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
+			{/if}
 			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
 				<MoranPanel
 					data={hexStore.visibleData}
@@ -250,7 +256,9 @@
 					onBrushSelect={onParallelBrush ?? (() => {})}
 				/>
 			{/if}
-			{#if hexStore.activeLayer?.temporal}
+			<!-- FlowChart needs score/score_baseline + a selected dept — only the
+			     perDepartment temporal layers have both (censo_temporal is global). -->
+			{#if hexStore.activeLayer?.temporal && hexStore.activeLayer?.perDepartment}
 				<FlowChart
 					data={hexStore.visibleData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
