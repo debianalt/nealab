@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, untrack } from 'svelte';
+	import { onMount, untrack, tick } from 'svelte';
 	import MapComponent from '$lib/components/Map.svelte';
 	import MapLegend from '$lib/components/MapLegend.svelte';
 	import Controls from '$lib/components/Controls.svelte';
@@ -55,6 +55,9 @@
 	let duckdbFailed = $state(false);
 	let itapuaHovering = $state(false);
 	// ── URL state: read params on mount, write on change ──
+	// Captured at component init: the $effect below flushes before onMount's
+	// restore and would otherwise wipe incoming deep-link params via replaceState.
+	const initialSearch = typeof window !== 'undefined' ? window.location.search : '';
 	function updateUrlState() {
 		const params = new URLSearchParams();
 		if (lensStore.activeLens) params.set('lens', lensStore.activeLens);
@@ -182,36 +185,46 @@
 			showAbout = false;
 		}
 
-		// Restore state from URL params
-		const params = new URLSearchParams(window.location.search);
-		const cf = params.get('cf');
-		if (cf === 'ar' || cf === 'py' || cf === 'br') territoryStore.enterCountryView(cf as CountryId);
-		const lens = params.get('lens') as LensId | null;
-		const analysisId = params.get('a');
-		if (lens) {
-			lensStore.setLens(lens);
-			if (analysisId) {
-				const a = getAnalysisById(analysisId);
-				if (a) lensStore.setAnalysis(a);
-			}
-		}
-		const tm = params.get('tm');
-		if (tm === 'baseline' || tm === 'delta') hexStore.setTemporalMode(tm);
+		// Deep-link restore is gated on BOTH map style load and DuckDB init:
+		// the state changes trigger effects that hit MapLibre (setPaintProperty
+		// throws "Style is not done loading" mid-flush) and setLayer→
+		// loadVisibleData no-ops if DuckDB isn't ready, with nothing to
+		// re-trigger it (isReady() is non-reactive).
+		const whenMapReady = new Promise<void>((resolve) => {
+			if (mapReady) return resolve();
+			mapContainer?.addEventListener('map-ready', () => resolve(), { once: true });
+		});
 
-		initDuckDB()
+		const whenDuckdb = initDuckDB()
 			.then(() => {
 				warmupRadioStats();
-				// Cold-open: trinational deforestation surface, unless a deep-link
-				// (?lens=/?a=) already restored an analysis. Runs post-DuckDB
-				// because isReady() is non-reactive — setLayer→loadVisibleData
-				// no-ops if DuckDB isn't ready yet and nothing re-triggers it.
-				// Cold-open = the GBA buildings / population canvas (no analysis
-				// pre-set): the only instant, universal, trinational surface.
-				// The lens/analysis selector stays the primary nav on top — the
-				// user picks a question (deforestation et al.) from there.
-				// Deep-links (?lens=/?a=) were already restored above in onMount.
+				// Cold-open without deep-link = the GBA buildings / population
+				// canvas (no analysis pre-set): the only instant, universal,
+				// trinational surface. The lens/analysis selector stays the
+				// primary nav on top — the user picks a question from there.
 			})
 			.catch(e => { console.warn('DuckDB init failed:', e); duckdbFailed = true; });
+
+		Promise.all([whenMapReady, whenDuckdb]).then(() => {
+			if (duckdbFailed) return;
+			// Restore state from URL params (initialSearch: see capture note above)
+			const params = new URLSearchParams(initialSearch);
+			const cf = params.get('cf');
+			if (cf === 'ar' || cf === 'py' || cf === 'br') territoryStore.enterCountryView(cf as CountryId);
+			const lens = params.get('lens') as LensId | null;
+			const analysisId = params.get('a');
+			if (lens) {
+				lensStore.setLens(lens);
+				if (analysisId) {
+					const a = getAnalysisById(analysisId);
+					if (a) lensStore.setAnalysis(a);
+				}
+			}
+			const tm = params.get('tm');
+			// After tick: the analysis $effect calls setLayer, which resets
+			// temporalMode to 'current' — setting tm before the flush gets wiped.
+			if (tm === 'baseline' || tm === 'delta') tick().then(() => hexStore.setTemporalMode(tm));
+		});
 
 		// Option A: map-click territory switching
 		mapContainer?.addEventListener('territory-map-select', ((e: CustomEvent) => {
