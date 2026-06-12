@@ -515,9 +515,11 @@
 			<div class="census-detail">
 				{#each componentVars as v}
 					{@const val = selectedHex[v.col]}
-					{@const numVal = typeof val === 'number' ? val : 0}
 					{@const rawVal = v.rawCol ? selectedHex[v.rawCol] : null}
-					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : numVal}
+					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : val}
+					<!-- fmtSmart renders '—' for a missing value; coercing to 0 here used to
+					     display a fake "0 <unit>" when the column wasn't in the loaded data
+					     (stale cache / schema drift). A real 0 still shows as 0. -->
 					<div class="cd-row">
 						<span class="cd-label">{i18n.t(v.labelKey)}</span>
 						<span class="cd-val-data">{fmtSmart(displayVal)}{v.unit ? ` ${v.unit}` : ' /100'}</span>
