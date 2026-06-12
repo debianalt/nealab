@@ -23,6 +23,7 @@
 	const RANK_ASCENDING = new Set([
 		'flood_risk', 'accessibility',
 		'service_deprivation', 'deforestation_dynamics',
+		'pm25_drivers',
 	]);
 
 	const SHORT_LABEL: Record<string, string> = {

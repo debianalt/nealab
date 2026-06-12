@@ -95,7 +95,7 @@ export function getParquetUrl(name: string): string {
 		sat_economic_activity: '?v=26',
 		sat_accessibility: '?v=27',
 		sat_carbon_stock: '?v=20',
-		sat_pm25_drivers: '?v=17',
+		sat_pm25_drivers: '?v=18',
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=5',
 		sat_censo_temporal: '?v=1',
@@ -107,7 +107,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 4;
+const DEPT_V = 5;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -465,6 +465,19 @@ export interface HexLayerConfig {
 	// the global parquet — avoids a slow remote scan (carbon: 1 row-group, 2.7 MB
 	// column = 3.6 s) AND makes colors identical cross-territory (more comparable).
 	fixedColorDomain?: [number, number];
+	// FlowChart banding over a RAW variable (raw-data-first convention). When
+	// absent, FlowChart falls back to score/score_baseline with 33/67 cuts.
+	flowBands?: FlowBands;
+}
+
+export interface FlowBands {
+	col: string;          // current-period column in visibleData
+	baselineCol: string;  // baseline-period column
+	breaks: number[];     // ascending inner cut points (labels.length - 1)
+	labels: string[];     // band labels, low value -> high value
+	colors: string[];     // one per label
+	higherIsWorse?: boolean; // flips improved/worsened semantics in flows
+	note?: string;        // footnote describing the cuts + source
 }
 
 /**
@@ -855,6 +868,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		temporal: true,
 		temporalPeriods: { current: '2013–2022', baseline: '2001–2010', source: 'ACAG V6' },
+		// Bands on RAW µg/m³ anchored to WHO 2021 AQG interim targets (IT-4..IT-1),
+		// matching the parquet typology in compute_pm25_drivers.py.
+		flowBands: {
+			col: 'c_pm25_mean',
+			baselineCol: 'c_pm25_mean_baseline',
+			breaks: [10, 15, 25, 35],
+			labels: ['Muy baja', 'Baja', 'Moderada', 'Alta', 'Muy alta'],
+			colors: ['#22d3ee', '#a3e635', '#f59e0b', '#fb923c', '#f87171'],
+			higherIsWorse: true,
+			note: 'Bandas de PM2.5 (µg/m³, media anual) según metas intermedias OMS 2021: ≤10 · 10–15 · 15–25 · 25–35 · >35 · Clic en un flujo o banda para ver esos hexágonos en el mapa',
+		},
 		legendLowKey: 'legend.pm25.low',
 		legendHighKey: 'legend.pm25.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
@@ -877,6 +901,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		temporal: true,
 		temporalPeriods: { current: '2015–2024', baseline: '2001–2010', source: 'Hansen GFC v1.12' },
+		// Bands on RAW loss rate (%/yr, Hansen goalpost [0,5]): higher = worse,
+		// so band colors and improved/worsened flow semantics are inverted.
+		flowBands: {
+			col: 'c_loss_rate',
+			baselineCol: 'c_loss_rate_baseline',
+			breaks: [0.5, 2],
+			labels: ['Baja', 'Media', 'Alta'],
+			colors: ['#22d3ee', '#f59e0b', '#f87171'],
+			higherIsWorse: true,
+			note: 'Bandas de pérdida forestal (%/año, Hansen): Baja (≤0.5) · Media (0.5–2) · Alta (>2) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
+		},
 		legendLowKey: 'legend.deforest.low',
 		legendHighKey: 'legend.deforest.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},

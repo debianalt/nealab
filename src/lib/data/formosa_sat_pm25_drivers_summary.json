@@ -2,14 +2,14 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 43.6,
+    "avg_score": 15.9,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 48.3,
+      "avg_score": 17.1,
       "hex_count": 58522,
       "centroid": [
         -58.0456,
@@ -19,7 +19,7 @@
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 45.6,
+      "avg_score": 16.4,
       "hex_count": 288652,
       "centroid": [
         -60.0089,
@@ -29,7 +29,7 @@
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 45.2,
+      "avg_score": 16.3,
       "hex_count": 37365,
       "centroid": [
         -58.6711,
@@ -39,7 +39,7 @@
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 43.3,
+      "avg_score": 15.8,
       "hex_count": 95406,
       "centroid": [
         -59.1628,
@@ -49,7 +49,7 @@
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 42.1,
+      "avg_score": 15.5,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
@@ -59,7 +59,7 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 41.2,
+      "avg_score": 15.3,
       "hex_count": 150491,
       "centroid": [
         -61.2886,
@@ -69,7 +69,7 @@
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 40.7,
+      "avg_score": 15.2,
       "hex_count": 39672,
       "centroid": [
         -58.5513,
@@ -79,7 +79,7 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 38.2,
+      "avg_score": 14.6,
       "hex_count": 40559,
       "centroid": [
         -62.1413,
@@ -89,7 +89,7 @@
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 37.6,
+      "avg_score": 14.4,
       "hex_count": 43310,
       "centroid": [
         -62.0811,

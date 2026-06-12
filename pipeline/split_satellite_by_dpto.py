@@ -47,6 +47,12 @@ ALL_ANALYSES = [
     "soil_water",
 ]
 
+# avg_score in summary JSONs reports the raw physical variable where one
+# exists (raw-data-first convention); ranking is unaffected (monotonic).
+SUMMARY_METRIC = {
+    "pm25_drivers": "c_pm25_mean",
+}
+
 
 def h3_to_latlng(h3index: str) -> tuple[float, float]:
     """Convert H3 index to (lat, lng)."""
@@ -137,7 +143,10 @@ def main():
         # Province averages
         score_col = "score" if "score" in df.columns else "territorial_type"
         component_cols = [c for c in df.columns if c not in ("h3index", "score", "territorial_type", "dpto")]
-        prov_avg = round(float(df[score_col].mean()), 1)
+        metric_col = SUMMARY_METRIC.get(analysis_id, score_col)
+        if metric_col not in df.columns:
+            metric_col = score_col
+        prov_avg = round(float(df[metric_col].mean()), 1)
 
         dptos = sorted(df_assigned["dpto"].unique())
         summary_depts = []
@@ -163,7 +172,7 @@ def main():
             centroid = [round(sum(lngs) / len(lngs), 4),
                         round(sum(lats) / len(lats), 4)] if lats else [0, 0]
 
-            avg_score = round(float(hex_data[score_col].mean()), 1)
+            avg_score = round(float(hex_data[metric_col].mean()), 1)
             summary_depts.append({
                 "dpto": dpto,
                 "parquetKey": safe_name,

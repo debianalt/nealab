@@ -235,6 +235,7 @@
 				<FlowChart
 					data={hexStore.visibleData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
+					bands={hexStore.activeLayer.flowBands ?? null}
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}

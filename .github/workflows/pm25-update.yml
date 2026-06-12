@@ -71,7 +71,9 @@ jobs:
       - name: Build model panel and compute drivers layer
         run: |
           python pipeline/model_pm25_spatial.py --phase build
-          python pipeline/compute_pm25_drivers.py
+          # --mode comparable: goalpost-normalized score, cross-territory comparable.
+          # Without it the default 'local' percentile silently breaks comparability.
+          python pipeline/compute_pm25_drivers.py --mode comparable
 
       - name: Split by department
         run: python pipeline/split_satellite_by_dpto.py --only pm25_drivers

@@ -50,12 +50,17 @@ SHAP_GROUPS = {
                    'shap_frac_pasture', 'shap_frac_mosaic', 'shap_frac_wetland'],
 }
 
-QUINTILE_LABELS = {
-    1: 'Muy baja exposicion',
-    2: 'Baja exposicion',
-    3: 'Exposicion moderada',
-    4: 'Alta exposicion',
-    5: 'Muy alta exposicion',
+# Typology anchored to WHO 2021 Air Quality Guideline + Interim Targets (µg/m³,
+# annual mean): AQG=5, IT-4=10, IT-3=15, IT-2=25, IT-1=35. Classified on the RAW
+# concentration (c_pm25_mean), never on a derived score — physically comparable
+# across territories by construction.
+WHO_BINS = [0, 10, 15, 25, 35, np.inf]
+WHO_LABELS = {
+    1: 'Muy baja exposicion',   # <=10 (cumple IT-4)
+    2: 'Baja exposicion',       # 10-15 (IT-3)
+    3: 'Exposicion moderada',   # 15-25 (IT-2)
+    4: 'Alta exposicion',       # 25-35 (IT-1)
+    5: 'Muy alta exposicion',   # >35 (peor que IT-1)
 }
 
 
@@ -177,12 +182,12 @@ def main():
     print("\nMerging...")
     result = pm25.merge(res9_shap, on='h3index', how='left' if not has_shap else 'inner')
 
-    # Typology on current score — absolute quintiles on 0-100 scale
+    # Typology on RAW concentration against WHO interim targets (see WHO_BINS)
     result = result.dropna(subset=['score'])
-    bins = [0, 20, 40, 60, 80, 100]
-    result['type'] = pd.cut(result['score'], bins=bins, labels=[1, 2, 3, 4, 5],
+    result['type'] = pd.cut(result['c_pm25_mean'], bins=WHO_BINS,
+                            labels=[1, 2, 3, 4, 5],
                             include_lowest=True).astype(int)
-    result['type_label'] = result['type'].map(QUINTILE_LABELS)
+    result['type_label'] = result['type'].map(WHO_LABELS)
 
     # Select final columns
     out_cols = [

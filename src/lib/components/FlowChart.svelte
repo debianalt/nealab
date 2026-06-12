@@ -1,15 +1,32 @@
 <script lang="ts">
 	import ChartFrame from './ChartFrame.svelte';
+	import type { FlowBands } from '$lib/config';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
 		temporalPeriods = null as { baseline: string; current: string } | null,
+		bands = null as FlowBands | null,
 		onBrushSelect = (_h3s: string[]) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
 		temporalPeriods?: { baseline: string; current: string } | null;
+		bands?: FlowBands | null;
 		onBrushSelect?: (h3s: string[]) => void;
 	} = $props();
+
+	// Default banding: composite score 0-100 with 33/67 cuts (legacy behaviour).
+	const SCORE_BANDS: FlowBands = {
+		col: 'score',
+		baselineCol: 'score_baseline',
+		breaks: [33, 67],
+		labels: ['Bajo', 'Medio', 'Alto'],
+		colors: ['#fb923c', '#f59e0b', '#22d3ee'],
+		higherIsWorse: false,
+		note: 'Flujo de hexágonos entre bandas: Bajo (<33) · Medio (33–67) · Alto (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
+	};
+
+	const cfg = $derived(bands ?? SCORE_BANDS);
+	const N = $derived(cfg.labels.length);
 
 	const SVG_W = 260, SVG_H = 164;
 	const BAND_W = 40, PAD_T = 22, PAD_B = 22;
@@ -17,22 +34,21 @@
 	const MID_X = SVG_W / 2;
 	const plotH = SVG_H - PAD_T - PAD_B;
 
-	const BAND_LABELS = ['Bajo', 'Medio', 'Alto'];
-	const BAND_COLORS = ['#fb923c', '#f59e0b', '#22d3ee'];
-
-	function toBand(s: number): 0 | 1 | 2 {
-		if (s >= 67) return 2;
-		if (s >= 33) return 1;
-		return 0;
+	// pd.cut semantics (right-closed): value lands in the lowest band whose
+	// upper break it does not exceed — keeps chart bands == parquet typology.
+	function toBand(v: number): number {
+		let b = 0;
+		for (const br of cfg.breaks) if (v > br) b++;
+		return b;
 	}
 
-	type FlowEntry = { h3: string; from: 0 | 1 | 2; to: 0 | 1 | 2 };
+	type FlowEntry = { h3: string; from: number; to: number };
 
 	const entries = $derived.by(() => {
 		const result: FlowEntry[] = [];
 		for (const [h3, row] of data) {
-			const s  = Number(row['score']);
-			const sb = Number(row['score_baseline']);
+			const s  = Number(row[cfg.col]);
+			const sb = Number(row[cfg.baselineCol]);
 			if (!isFinite(s) || !isFinite(sb)) continue;
 			result.push({ h3, from: toBand(sb), to: toBand(s) });
 		}
@@ -40,38 +56,42 @@
 	});
 
 	const matrix = $derived.by(() => {
-		const m: string[][][] = [[[], [], []], [[], [], []], [[], [], []]];
+		const m: string[][][] = Array.from({ length: N }, () =>
+			Array.from({ length: N }, () => [] as string[])
+		);
 		for (const e of entries) m[e.from][e.to].push(e.h3);
 		return m;
 	});
 
 	const total      = $derived(entries.length);
-	const fromTotals = $derived([0, 1, 2].map(i => entries.filter(e => e.from === i).length));
-	const toTotals   = $derived([0, 1, 2].map(i => entries.filter(e => e.to   === i).length));
-	const improved   = $derived(entries.filter(e => e.to > e.from).length);
-	const worsened   = $derived(entries.filter(e => e.to < e.from).length);
+	const bandIdx    = $derived(Array.from({ length: N }, (_, i) => i));
+	const fromTotals = $derived(bandIdx.map(i => entries.filter(e => e.from === i).length));
+	const toTotals   = $derived(bandIdx.map(i => entries.filter(e => e.to   === i).length));
+	// "improved" = moved toward the better end, which depends on direction
+	const isBetter   = $derived((to: number, from: number) =>
+		cfg.higherIsWorse ? to < from : to > from);
+	const improved   = $derived(entries.filter(e => isBetter(e.to, e.from)).length);
+	const worsened   = $derived(entries.filter(e => e.to !== e.from && !isBetter(e.to, e.from)).length);
 	const stable     = $derived(entries.filter(e => e.to === e.from).length);
 
-	// Band Y positions: Alto(2) at top, Bajo(0) at bottom
-	const leftBandY = $derived.by((): Record<number, number> => {
-		if (total === 0) return { 0: PAD_T + plotH * 2/3, 1: PAD_T + plotH / 3, 2: PAD_T };
-		const h2 = (fromTotals[2] / total) * plotH;
-		const h1 = (fromTotals[1] / total) * plotH;
-		return { 2: PAD_T, 1: PAD_T + h2, 0: PAD_T + h2 + h1 };
-	});
-	const leftBandH = $derived(
-		[0, 1, 2].map(i => total > 0 ? (fromTotals[i] / total) * plotH : plotH / 3)
-	);
-
-	const rightBandY = $derived.by((): Record<number, number> => {
-		if (total === 0) return { 0: PAD_T + plotH * 2/3, 1: PAD_T + plotH / 3, 2: PAD_T };
-		const h2 = (toTotals[2] / total) * plotH;
-		const h1 = (toTotals[1] / total) * plotH;
-		return { 2: PAD_T, 1: PAD_T + h2, 0: PAD_T + h2 + h1 };
-	});
-	const rightBandH = $derived(
-		[0, 1, 2].map(i => total > 0 ? (toTotals[i] / total) * plotH : plotH / 3)
-	);
+	// Band Y positions: highest band index at top, stacked downward
+	function bandYs(totals: number[]): number[] {
+		const y: number[] = new Array(N).fill(PAD_T);
+		if (total === 0) {
+			for (let i = 0; i < N; i++) y[i] = PAD_T + ((N - 1 - i) * plotH) / N;
+			return y;
+		}
+		let acc = PAD_T;
+		for (let i = N - 1; i >= 0; i--) {
+			y[i] = acc;
+			acc += (totals[i] / total) * plotH;
+		}
+		return y;
+	}
+	const leftBandY  = $derived(bandYs(fromTotals));
+	const rightBandY = $derived(bandYs(toTotals));
+	const leftBandH  = $derived(bandIdx.map(i => total > 0 ? (fromTotals[i] / total) * plotH : plotH / N));
+	const rightBandH = $derived(bandIdx.map(i => total > 0 ? (toTotals[i] / total) * plotH : plotH / N));
 
 	type FlowVis = {
 		from: number; to: number; count: number; h3s: string[];
@@ -80,19 +100,17 @@
 
 	const visFlows = $derived.by(() => {
 		if (total === 0) return [] as FlowVis[];
-		const lc: Record<number, number> = {
-			0: leftBandY[0], 1: leftBandY[1], 2: leftBandY[2],
-		};
-		const rc: Record<number, number> = {
-			0: rightBandY[0], 1: rightBandY[1], 2: rightBandY[2],
-		};
+		const lc = [...leftBandY];
+		const rc = [...rightBandY];
 		const result: FlowVis[] = [];
-		for (let from = 2; from >= 0; from--) {
-			for (let to = 2; to >= 0; to--) {
+		for (let from = N - 1; from >= 0; from--) {
+			for (let to = N - 1; to >= 0; to--) {
 				const h3s = matrix[from][to];
 				if (!h3s.length) continue;
 				const fh = (h3s.length / total) * plotH;
-				const color = to > from ? '#22d3ee' : to < from ? '#f87171' : 'rgba(148,163,184,0.55)';
+				const color = to === from
+					? 'rgba(148,163,184,0.55)'
+					: isBetter(to, from) ? '#22d3ee' : '#f87171';
 				result.push({
 					from, to, count: h3s.length, h3s,
 					y1: lc[from] + fh / 2,
@@ -132,16 +150,19 @@
 
 	$effect(() => {
 		void data.size;
+		void cfg.col;
 		activeFlow = null; activeSide = null; activeBand = null;
 	});
 
 	function csvRows() {
 		return entries.map(e => ({
 			h3index: e.h3,
-			band_from: BAND_LABELS[e.from],
-			band_to: BAND_LABELS[e.to],
+			band_from: cfg.labels[e.from],
+			band_to: cfg.labels[e.to],
 		}));
 	}
+
+	const reverseBands = $derived([...bandIdx].reverse());
 </script>
 
 <ChartFrame title="Evolución" csvRows={csvRows} csvFilename="spatia_flow">
@@ -149,12 +170,12 @@
 	<div class="fc-subheader">
 		{#if activeFlow !== null}
 			<span class="fc-active">
-				{BAND_LABELS[activeFlow[0]]}→{BAND_LABELS[activeFlow[1]]}: {matrix[activeFlow[0]][activeFlow[1]].length.toLocaleString()} hex
+				{cfg.labels[activeFlow[0]]}→{cfg.labels[activeFlow[1]]}: {matrix[activeFlow[0]][activeFlow[1]].length.toLocaleString()} hex
 				<button class="fc-clear" onclick={() => { activeFlow = null; onBrushSelect([]); }}>× quitar</button>
 			</span>
 		{:else if activeSide !== null && activeBand !== null}
 			<span class="fc-active">
-				{BAND_LABELS[activeBand]} ({activeSide === 'from' ? 'baseline' : 'actual'}): {(activeSide === 'from' ? fromTotals : toTotals)[activeBand].toLocaleString()} hex
+				{cfg.labels[activeBand]} ({activeSide === 'from' ? 'baseline' : 'actual'}): {(activeSide === 'from' ? fromTotals : toTotals)[activeBand].toLocaleString()} hex
 				<button class="fc-clear" onclick={() => { activeSide = null; activeBand = null; onBrushSelect([]); }}>× quitar</button>
 			</span>
 		{:else if total === 0}
@@ -186,14 +207,14 @@
 			{/each}
 
 			<!-- Left bands (baseline) -->
-			{#each [2, 1, 0] as band}
+			{#each reverseBands as band}
 				{#if leftBandH[band] > 0.5}
 					{@const cy = leftBandY[band] + leftBandH[band] / 2}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<rect
 						x={LEFT_X} y={leftBandY[band]}
 						width={BAND_W} height={leftBandH[band]}
-						fill={BAND_COLORS[band]}
+						fill={cfg.colors[band]}
 						opacity={activeSide === 'from' && activeBand === band ? 1 : 0.6}
 						rx="2"
 						style="cursor:pointer"
@@ -205,7 +226,7 @@
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
-						>{BAND_LABELS[band]}</text>
+						>{cfg.labels[band]}</text>
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy + 5}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
@@ -218,20 +239,20 @@
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
-						>{BAND_LABELS[band]}</text>
+						>{cfg.labels[band]}</text>
 					{/if}
 				{/if}
 			{/each}
 
 			<!-- Right bands (actual) -->
-			{#each [2, 1, 0] as band}
+			{#each reverseBands as band}
 				{#if rightBandH[band] > 0.5}
 					{@const cy = rightBandY[band] + rightBandH[band] / 2}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<rect
 						x={RIGHT_X} y={rightBandY[band]}
 						width={BAND_W} height={rightBandH[band]}
-						fill={BAND_COLORS[band]}
+						fill={cfg.colors[band]}
 						opacity={activeSide === 'to' && activeBand === band ? 1 : 0.6}
 						rx="2"
 						style="cursor:pointer"
@@ -243,7 +264,7 @@
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
-						>{BAND_LABELS[band]}</text>
+						>{cfg.labels[band]}</text>
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy + 5}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
@@ -256,7 +277,7 @@
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
-						>{BAND_LABELS[band]}</text>
+						>{cfg.labels[band]}</text>
 					{/if}
 				{/if}
 			{/each}
@@ -274,9 +295,7 @@
 				font-size="5.5" font-family="system-ui,sans-serif"
 			><tspan fill="#22d3ee">↑{improved.toLocaleString()} mejoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} empeoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>
 		</svg>
-		<div class="fc-note">
-			Flujo de hexágonos entre bandas: <em>Bajo</em> (&lt;33) · <em>Medio</em> (33–67) · <em>Alto</em> (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa
-		</div>
+		<div class="fc-note">{cfg.note}</div>
 	{/if}
 	</div>
 </ChartFrame>
@@ -323,9 +342,5 @@
 		padding: 3px 2px 2px;
 		border-top: 1px solid rgba(255,255,255,0.06);
 		margin-top: 1px;
-	}
-	.fc-note em {
-		font-style: normal;
-		color: rgba(255,255,255,0.42);
 	}
 </style>

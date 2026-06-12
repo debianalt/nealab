@@ -545,7 +545,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.pm25.title': { es: '¿Qué nivel de exposición a PM2.5 hay?', en: 'What level of PM2.5 exposure is there?', gn: "Mba'eichagua PM2.5 oĩ?", pt: 'Qual nível de exposição ao PM2.5 existe?' },
 	'sat.pm25.desc': { es: 'Drivers de PM2.5 identificados por machine learning: intensidad de fuego regional, clima, terreno y vegetación. Panel de 25 años (ACAG V6, 1998-2022).', en: 'PM2.5 drivers identified by machine learning: regional fire intensity, climate, terrain and vegetation. 25-year panel (ACAG V6, 1998-2022).', gn: 'PM2.5 drivers', pt: 'Drivers de PM2.5 identificados por machine learning: intensidade de fogo regional, clima, terreno e vegetação. Painel de 25 anos (ACAG V6, 1998-2022).' },
 	'sat.pm25.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
-	'sat.pm25.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
+	'sat.pm25.typeLabel': { es: 'Clasificación OMS', en: 'WHO classification', gn: 'OMS', pt: 'Classificação OMS' },
 	'sat.pm25.pm25Mean': { es: 'PM2.5 medio (µg/m³)', en: 'Mean PM2.5 (µg/m³)', gn: 'PM2.5', pt: 'PM2.5 médio (µg/m³)' },
 	'sat.pm25.fire': { es: 'Contribución del fuego', en: 'Fire contribution', gn: 'Tata', pt: 'Contribuição do fogo' },
 	'sat.pm25.climate': { es: 'Contribución del clima', en: 'Climate contribution', gn: 'Ára', pt: 'Contribuição do clima' },

@@ -2,14 +2,14 @@
   "territory": "amambay_py",
   "province": {
     "total_hexes": 89536,
-    "avg_score": 32.6,
+    "avg_score": 13.9,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Pedro Juan Caballero",
       "parquetKey": "pedro_juan_caballero",
-      "avg_score": 36.1,
+      "avg_score": 14.0,
       "hex_count": 51512,
       "centroid": [
         -55.9568,
@@ -19,7 +19,7 @@
     {
       "distrito": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 27.9,
+      "avg_score": 13.7,
       "hex_count": 38024,
       "centroid": [
         -56.4511,

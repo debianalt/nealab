@@ -2,24 +2,14 @@
   "territory": "alto_parana_py",
   "province": {
     "total_hexes": 147913,
-    "avg_score": 33.6,
+    "avg_score": 13.4,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "YGUAZÚ",
-      "parquetKey": "yguazu",
-      "avg_score": 36.0,
-      "hex_count": 8295,
-      "centroid": [
-        -55.0999,
-        -25.4145
-      ]
-    },
-    {
       "distrito": "MINGA GUAZÚ",
       "parquetKey": "minga_guazu",
-      "avg_score": 35.9,
+      "avg_score": 14.0,
       "hex_count": 5048,
       "centroid": [
         -54.8404,
@@ -27,9 +17,19 @@
       ]
     },
     {
+      "distrito": "YGUAZÚ",
+      "parquetKey": "yguazu",
+      "avg_score": 14.0,
+      "hex_count": 8295,
+      "centroid": [
+        -55.0999,
+        -25.4145
+      ]
+    },
+    {
       "distrito": "HERNANDARIAS",
       "parquetKey": "hernandarias",
-      "avg_score": 35.7,
+      "avg_score": 13.9,
       "hex_count": 8051,
       "centroid": [
         -54.7802,
@@ -39,7 +39,7 @@
     {
       "distrito": "SANTA FE DEL PARANÁ",
       "parquetKey": "santa_fe_del_parana",
-      "avg_score": 35.6,
+      "avg_score": 13.9,
       "hex_count": 8382,
       "centroid": [
         -54.6299,
@@ -47,19 +47,9 @@
       ]
     },
     {
-      "distrito": "TAVAPY",
-      "parquetKey": "tavapy",
-      "avg_score": 35.2,
-      "hex_count": 4566,
-      "centroid": [
-        -55.0691,
-        -25.6222
-      ]
-    },
-    {
       "distrito": "LOS CEDRALES",
       "parquetKey": "los_cedrales",
-      "avg_score": 35.0,
+      "avg_score": 13.8,
       "hex_count": 4204,
       "centroid": [
         -54.7516,
@@ -67,9 +57,19 @@
       ]
     },
     {
+      "distrito": "TAVAPY",
+      "parquetKey": "tavapy",
+      "avg_score": 13.8,
+      "hex_count": 4566,
+      "centroid": [
+        -55.0691,
+        -25.6222
+      ]
+    },
+    {
       "distrito": "CIUDAD DEL ESTE",
       "parquetKey": "ciudad_del_este",
-      "avg_score": 34.9,
+      "avg_score": 13.7,
       "hex_count": 1573,
       "centroid": [
         -54.6775,
@@ -77,19 +77,9 @@
       ]
     },
     {
-      "distrito": "SANTA ROSA DEL MONDAY",
-      "parquetKey": "santa_rosa_del_monday",
-      "avg_score": 34.8,
-      "hex_count": 6533,
-      "centroid": [
-        -54.9236,
-        -25.8464
-      ]
-    },
-    {
       "distrito": "JUAN E. O'LEARY",
       "parquetKey": "juan_e_oleary",
-      "avg_score": 34.6,
+      "avg_score": 13.7,
       "hex_count": 2364,
       "centroid": [
         -55.3633,
@@ -97,9 +87,29 @@
       ]
     },
     {
+      "distrito": "SANTA ROSA DEL MONDAY",
+      "parquetKey": "santa_rosa_del_monday",
+      "avg_score": 13.7,
+      "hex_count": 6533,
+      "centroid": [
+        -54.9236,
+        -25.8464
+      ]
+    },
+    {
+      "distrito": "MBARACAYÚ",
+      "parquetKey": "mbaracayu",
+      "avg_score": 13.6,
+      "hex_count": 11587,
+      "centroid": [
+        -54.6833,
+        -25.0093
+      ]
+    },
+    {
       "distrito": "SANTA RITA",
       "parquetKey": "santa_rita",
-      "avg_score": 34.4,
+      "avg_score": 13.6,
       "hex_count": 6228,
       "centroid": [
         -55.1372,
@@ -109,7 +119,7 @@
     {
       "distrito": "DR. JUAN LEÓN MALLORQUÍN",
       "parquetKey": "dr_juan_leon_mallorquin",
-      "avg_score": 34.2,
+      "avg_score": 13.5,
       "hex_count": 2799,
       "centroid": [
         -55.2555,
@@ -117,19 +127,9 @@
       ]
     },
     {
-      "distrito": "MBARACAYÚ",
-      "parquetKey": "mbaracayu",
-      "avg_score": 34.2,
-      "hex_count": 11587,
-      "centroid": [
-        -54.6833,
-        -25.0093
-      ]
-    },
-    {
       "distrito": "SAN CRISTÓBAL",
       "parquetKey": "san_cristobal",
-      "avg_score": 34.0,
+      "avg_score": 13.5,
       "hex_count": 9768,
       "centroid": [
         -55.3862,
@@ -139,7 +139,7 @@
     {
       "distrito": "PRESIDENTE FRANCO",
       "parquetKey": "presidente_franco",
-      "avg_score": 33.6,
+      "avg_score": 13.4,
       "hex_count": 1267,
       "centroid": [
         -54.6414,
@@ -149,7 +149,7 @@
     {
       "distrito": "DOMINGO MARTÍNEZ DE IRALA",
       "parquetKey": "domingo_martinez_de_irala",
-      "avg_score": 33.3,
+      "avg_score": 13.3,
       "hex_count": 3552,
       "centroid": [
         -54.6889,
@@ -157,19 +157,9 @@
       ]
     },
     {
-      "distrito": "NARANJAL",
-      "parquetKey": "naranjal",
-      "avg_score": 32.9,
-      "hex_count": 6626,
-      "centroid": [
-        -55.208,
-        -25.9527
-      ]
-    },
-    {
       "distrito": "ITAKYRY",
       "parquetKey": "itakyry",
-      "avg_score": 32.7,
+      "avg_score": 13.2,
       "hex_count": 20221,
       "centroid": [
         -55.1516,
@@ -177,9 +167,19 @@
       ]
     },
     {
+      "distrito": "NARANJAL",
+      "parquetKey": "naranjal",
+      "avg_score": 13.2,
+      "hex_count": 6626,
+      "centroid": [
+        -55.208,
+        -25.9527
+      ]
+    },
+    {
       "distrito": "SAN ALBERTO",
       "parquetKey": "san_alberto",
-      "avg_score": 31.9,
+      "avg_score": 13.0,
       "hex_count": 10527,
       "centroid": [
         -54.6794,
@@ -189,7 +189,7 @@
     {
       "distrito": "DR. RAÚL PEÑA",
       "parquetKey": "dr_raul_pena",
-      "avg_score": 31.8,
+      "avg_score": 12.9,
       "hex_count": 2569,
       "centroid": [
         -55.2241,
@@ -199,7 +199,7 @@
     {
       "distrito": "IRUÑA",
       "parquetKey": "iruna",
-      "avg_score": 31.5,
+      "avg_score": 12.9,
       "hex_count": 5643,
       "centroid": [
         -55.0381,
@@ -209,7 +209,7 @@
     {
       "distrito": "ÑACUNDAY",
       "parquetKey": "nacunday",
-      "avg_score": 31.5,
+      "avg_score": 12.9,
       "hex_count": 9053,
       "centroid": [
         -54.7844,
@@ -219,7 +219,7 @@
     {
       "distrito": "MINGA PORÁ",
       "parquetKey": "minga_pora",
-      "avg_score": 31.1,
+      "avg_score": 12.8,
       "hex_count": 9057,
       "centroid": [
         -54.8684,

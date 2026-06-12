@@ -2,14 +2,14 @@
   "territory": "cordillera_py",
   "province": {
     "total_hexes": 51330,
-    "avg_score": 39.0,
+    "avg_score": 16.7,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Emboscada",
       "parquetKey": "emboscada",
-      "avg_score": 51.4,
+      "avg_score": 17.8,
       "hex_count": 2055,
       "centroid": [
         -57.3593,
@@ -19,7 +19,7 @@
     {
       "distrito": "San Bernardino",
       "parquetKey": "san_bernardino",
-      "avg_score": 50.9,
+      "avg_score": 17.7,
       "hex_count": 1410,
       "centroid": [
         -57.2908,
@@ -29,7 +29,7 @@
     {
       "distrito": "Arroyos Y Esteros",
       "parquetKey": "arroyos_y_esteros",
-      "avg_score": 50.5,
+      "avg_score": 17.6,
       "hex_count": 5898,
       "centroid": [
         -57.1657,
@@ -39,7 +39,7 @@
     {
       "distrito": "Loma Grande",
       "parquetKey": "loma_grande",
-      "avg_score": 50.0,
+      "avg_score": 17.5,
       "hex_count": 1011,
       "centroid": [
         -57.1909,
@@ -49,7 +49,7 @@
     {
       "distrito": "Nueva Colombia",
       "parquetKey": "nueva_colombia",
-      "avg_score": 50.0,
+      "avg_score": 17.5,
       "hex_count": 1026,
       "centroid": [
         -57.2658,
@@ -59,7 +59,7 @@
     {
       "distrito": "Altos",
       "parquetKey": "altos",
-      "avg_score": 49.6,
+      "avg_score": 17.4,
       "hex_count": 1354,
       "centroid": [
         -57.2174,
@@ -69,7 +69,7 @@
     {
       "distrito": "Atyra",
       "parquetKey": "atyra",
-      "avg_score": 49.5,
+      "avg_score": 17.4,
       "hex_count": 1285,
       "centroid": [
         -57.1453,
@@ -77,9 +77,19 @@
       ]
     },
     {
+      "distrito": "Caacupe",
+      "parquetKey": "caacupe",
+      "avg_score": 17.4,
+      "hex_count": 1249,
+      "centroid": [
+        -57.1229,
+        -25.3732
+      ]
+    },
+    {
       "distrito": "Tobati",
       "parquetKey": "tobati",
-      "avg_score": 49.1,
+      "avg_score": 17.3,
       "hex_count": 2861,
       "centroid": [
         -57.0454,
@@ -89,7 +99,7 @@
     {
       "distrito": "1 De Marzo",
       "parquetKey": "1_de_marzo",
-      "avg_score": 48.7,
+      "avg_score": 17.2,
       "hex_count": 810,
       "centroid": [
         -56.9751,
@@ -97,19 +107,29 @@
       ]
     },
     {
-      "distrito": "San Jose Obrero",
-      "parquetKey": "san_jose_obrero",
-      "avg_score": 46.8,
-      "hex_count": 2180,
+      "distrito": "Piribebuy",
+      "parquetKey": "piribebuy",
+      "avg_score": 17.2,
+      "hex_count": 2027,
       "centroid": [
-        -56.8842,
-        -25.1148
+        -57.0428,
+        -25.4661
+      ]
+    },
+    {
+      "distrito": "Eusebio Ayala",
+      "parquetKey": "eusebio_ayala",
+      "avg_score": 17.0,
+      "hex_count": 2873,
+      "centroid": [
+        -56.9762,
+        -25.3608
       ]
     },
     {
       "distrito": "Isla Pucu",
       "parquetKey": "isla_pucu",
-      "avg_score": 46.7,
+      "avg_score": 16.7,
       "hex_count": 1183,
       "centroid": [
         -56.9,
@@ -117,9 +137,19 @@
       ]
     },
     {
+      "distrito": "San Jose Obrero",
+      "parquetKey": "san_jose_obrero",
+      "avg_score": 16.7,
+      "hex_count": 2180,
+      "centroid": [
+        -56.8842,
+        -25.1148
+      ]
+    },
+    {
       "distrito": "Juan De Mena",
       "parquetKey": "juan_de_mena",
-      "avg_score": 40.3,
+      "avg_score": 16.0,
       "hex_count": 10887,
       "centroid": [
         -56.7701,
@@ -129,7 +159,7 @@
     {
       "distrito": "Caraguatay",
       "parquetKey": "caraguatay",
-      "avg_score": 39.8,
+      "avg_score": 15.8,
       "hex_count": 5731,
       "centroid": [
         -56.7397,
@@ -137,39 +167,9 @@
       ]
     },
     {
-      "distrito": "Caacupe",
-      "parquetKey": "caacupe",
-      "avg_score": 38.6,
-      "hex_count": 1249,
-      "centroid": [
-        -57.1229,
-        -25.3732
-      ]
-    },
-    {
-      "distrito": "Eusebio Ayala",
-      "parquetKey": "eusebio_ayala",
-      "avg_score": 35.9,
-      "hex_count": 2873,
-      "centroid": [
-        -56.9762,
-        -25.3608
-      ]
-    },
-    {
-      "distrito": "Mbacayaty Del Yhaguy",
-      "parquetKey": "mbacayaty_del_yhaguy",
-      "avg_score": 33.4,
-      "hex_count": 3150,
-      "centroid": [
-        -56.7007,
-        -25.3325
-      ]
-    },
-    {
       "distrito": "Santa Elena",
       "parquetKey": "santa_elena",
-      "avg_score": 25.8,
+      "avg_score": 15.8,
       "hex_count": 1171,
       "centroid": [
         -56.8205,
@@ -177,19 +177,19 @@
       ]
     },
     {
-      "distrito": "Piribebuy",
-      "parquetKey": "piribebuy",
-      "avg_score": 1.9,
-      "hex_count": 2027,
+      "distrito": "Mbacayaty Del Yhaguy",
+      "parquetKey": "mbacayaty_del_yhaguy",
+      "avg_score": 15.2,
+      "hex_count": 3150,
       "centroid": [
-        -57.0428,
-        -25.4661
+        -56.7007,
+        -25.3325
       ]
     },
     {
       "distrito": "Itacurubi De La Cordiller",
       "parquetKey": "itacurubi_de_la_cordiller",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 1147,
       "centroid": [
         -56.8701,
@@ -199,7 +199,7 @@
     {
       "distrito": "Valenzuela",
       "parquetKey": "valenzuela",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 2022,
       "centroid": [
         -56.8551,

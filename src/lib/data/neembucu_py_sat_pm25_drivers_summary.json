@@ -2,14 +2,24 @@
   "territory": "neembucu_py",
   "province": {
     "total_hexes": 126524,
-    "avg_score": 30.1,
+    "avg_score": 14.5,
     "unassigned": 0
   },
   "departments": [
     {
+      "distrito": "Villa Franca",
+      "parquetKey": "villa_franca",
+      "avg_score": 15.1,
+      "hex_count": 17143,
+      "centroid": [
+        -57.9497,
+        -26.3332
+      ]
+    },
+    {
       "distrito": "Pilar",
       "parquetKey": "pilar",
-      "avg_score": 40.1,
+      "avg_score": 15.0,
       "hex_count": 3617,
       "centroid": [
         -58.1896,
@@ -19,7 +29,7 @@
     {
       "distrito": "San Juan Bta. Del Neembuc",
       "parquetKey": "san_juan_bta_del_neembuc",
-      "avg_score": 39.7,
+      "avg_score": 14.9,
       "hex_count": 15035,
       "centroid": [
         -57.851,
@@ -29,7 +39,7 @@
     {
       "distrito": "Tacuaras",
       "parquetKey": "tacuaras",
-      "avg_score": 39.5,
+      "avg_score": 14.9,
       "hex_count": 14798,
       "centroid": [
         -57.8738,
@@ -39,7 +49,7 @@
     {
       "distrito": "Isla Umbu",
       "parquetKey": "isla_umbu",
-      "avg_score": 38.7,
+      "avg_score": 14.7,
       "hex_count": 5116,
       "centroid": [
         -58.309,
@@ -49,7 +59,7 @@
     {
       "distrito": "Guazucua",
       "parquetKey": "guazucua",
-      "avg_score": 38.5,
+      "avg_score": 14.6,
       "hex_count": 13430,
       "centroid": [
         -57.7584,
@@ -57,9 +67,19 @@
       ]
     },
     {
+      "distrito": "Humaita",
+      "parquetKey": "humaita",
+      "avg_score": 14.4,
+      "hex_count": 3774,
+      "centroid": [
+        -58.484,
+        -27.0909
+      ]
+    },
+    {
       "distrito": "Desmochados",
       "parquetKey": "desmochados",
-      "avg_score": 37.2,
+      "avg_score": 14.3,
       "hex_count": 3275,
       "centroid": [
         -58.1239,
@@ -67,9 +87,19 @@
       ]
     },
     {
+      "distrito": "Paso De Patria",
+      "parquetKey": "paso_de_patria",
+      "avg_score": 14.2,
+      "hex_count": 2673,
+      "centroid": [
+        -58.5287,
+        -27.2193
+      ]
+    },
+    {
       "distrito": "Gral. Jose E. Diaz",
       "parquetKey": "gral_jose_e_diaz",
-      "avg_score": 35.6,
+      "avg_score": 13.9,
       "hex_count": 4210,
       "centroid": [
         -58.342,
@@ -79,7 +109,7 @@
     {
       "distrito": "Villalvin",
       "parquetKey": "villalvin",
-      "avg_score": 35.6,
+      "avg_score": 13.9,
       "hex_count": 5319,
       "centroid": [
         -57.9098,
@@ -89,7 +119,7 @@
     {
       "distrito": "Laureles",
       "parquetKey": "laureles",
-      "avg_score": 35.3,
+      "avg_score": 13.8,
       "hex_count": 8951,
       "centroid": [
         -57.5826,
@@ -99,7 +129,7 @@
     {
       "distrito": "Mayor Martinez",
       "parquetKey": "mayor_martinez",
-      "avg_score": 35.1,
+      "avg_score": 13.8,
       "hex_count": 4179,
       "centroid": [
         -58.136,
@@ -107,19 +137,9 @@
       ]
     },
     {
-      "distrito": "Paso De Patria",
-      "parquetKey": "paso_de_patria",
-      "avg_score": 33.7,
-      "hex_count": 2673,
-      "centroid": [
-        -58.5287,
-        -27.2193
-      ]
-    },
-    {
       "distrito": "Cerrito",
       "parquetKey": "cerrito",
-      "avg_score": 33.2,
+      "avg_score": 13.3,
       "hex_count": 6459,
       "centroid": [
         -57.6294,
@@ -127,29 +147,9 @@
       ]
     },
     {
-      "distrito": "Humaita",
-      "parquetKey": "humaita",
-      "avg_score": 33.2,
-      "hex_count": 3774,
-      "centroid": [
-        -58.484,
-        -27.0909
-      ]
-    },
-    {
-      "distrito": "Villa Franca",
-      "parquetKey": "villa_franca",
-      "avg_score": 24.3,
-      "hex_count": 17143,
-      "centroid": [
-        -57.9497,
-        -26.3332
-      ]
-    },
-    {
       "distrito": "Alberdi",
       "parquetKey": "alberdi",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 1236,
       "centroid": [
         -58.0676,
@@ -159,7 +159,7 @@
     {
       "distrito": "Villa Oliva",
       "parquetKey": "villa_oliva",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 17309,
       "centroid": [
         -57.7115,

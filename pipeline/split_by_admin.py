@@ -34,6 +34,12 @@ from config import OUTPUT_DIR, get_territory
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SRC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "src", "lib", "data")
 
+# avg_score in summary JSONs reports the raw physical variable where one
+# exists (raw-data-first convention); ranking is unaffected (monotonic).
+SUMMARY_METRIC = {
+    "pm25_drivers": "c_pm25_mean",
+}
+
 # Analyses that have GEE-based parquets (all territories)
 SAT_ANALYSES = [
     "environmental_risk", "climate_comfort", "green_capital",
@@ -290,7 +296,12 @@ def main():
         score_col = "score" if "score" in df.columns else "territorial_type"
         component_cols = [c for c in df.columns
                           if c not in ("h3index", "score", "territorial_type", admin_col)]
-        prov_avg = round(float(df[score_col].mean()), 1)
+        # avg_score in summaries reports the raw physical variable where one
+        # exists (raw-data-first convention); ranking is unaffected (monotonic).
+        metric_col = SUMMARY_METRIC.get(analysis_id, score_col)
+        if metric_col not in df.columns:
+            metric_col = score_col
+        prov_avg = round(float(df[metric_col].mean()), 1)
 
         admins = sorted(df_assigned[admin_col].unique())
         summary_units = []
@@ -316,7 +327,7 @@ def main():
             centroid = ([round(sum(lngs) / len(lngs), 4), round(sum(lats) / len(lats), 4)]
                         if lats else [0, 0])
 
-            raw_mean = hex_data[score_col].mean()
+            raw_mean = hex_data[metric_col].mean()
             avg_score = None if (raw_mean != raw_mean) else round(float(raw_mean), 1)  # NaN -> None -> JSON null
             summary_units.append({
                 admin_col: admin_name,
