@@ -164,6 +164,37 @@ def main():
         shap_cols_keep = ['h3index'] + [f'raw_{g}' for g in SHAP_GROUPS]
         hex_shap_slim = hex_shap[shap_cols_keep].rename(columns={'h3index': 'h3_res7'})
 
+        # Fill res-7 cells absent from the SHAP model (territory-border cells
+        # and urban cells dropped from the training panel) with the mean raw
+        # attribution of their k-ring neighbours (k<=2, ~7 km). Driver shares
+        # are regionally smooth, so this only closes display gaps; the count
+        # is reported so coverage stays auditable.
+        needed = set(parents['h3_res7'].unique())
+        have = set(hex_shap_slim['h3_res7'])
+        missing = needed - have
+        if missing:
+            import h3 as h3lib
+            def _ring(cell, k):
+                try:
+                    return h3lib.grid_disk(cell, k)   # h3 v4
+                except AttributeError:
+                    return h3lib.k_ring(cell, k)      # h3 v3
+            lookup = hex_shap_slim.set_index('h3_res7')
+            raw_cols = [f'raw_{g}' for g in SHAP_GROUPS]
+            fills = []
+            for cell in missing:
+                for k in (1, 2):
+                    neigh = [n for n in _ring(cell, k) if n in have]
+                    if neigh:
+                        vals = lookup.loc[neigh, raw_cols].mean()
+                        fills.append({'h3_res7': cell, **vals.to_dict()})
+                        break
+            if fills:
+                hex_shap_slim = pd.concat([hex_shap_slim, pd.DataFrame(fills)],
+                                          ignore_index=True)
+            print(f"  SHAP gap fill: {len(fills)}/{len(missing)} res-7 cells "
+                  f"imputed from k-ring neighbours")
+
         res9_shap = parents.merge(hex_shap_slim, on='h3_res7', how='left')
         raw_total = sum(res9_shap[f'raw_{g}'] for g in SHAP_GROUPS)
         raw_total = raw_total.replace(0, np.nan)

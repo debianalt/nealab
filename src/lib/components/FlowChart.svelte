@@ -6,11 +6,13 @@
 		data = new Map() as Map<string, Record<string, any>>,
 		temporalPeriods = null as { baseline: string; current: string } | null,
 		bands = null as FlowBands | null,
+		emptyHint = 'seleccioná un departamento',
 		onBrushSelect = (_h3s: string[]) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
 		temporalPeriods?: { baseline: string; current: string } | null;
 		bands?: FlowBands | null;
+		emptyHint?: string;
 		onBrushSelect?: (h3s: string[]) => void;
 	} = $props();
 
@@ -179,7 +181,7 @@
 				<button class="fc-clear" onclick={() => { activeSide = null; activeBand = null; onBrushSelect([]); }}>× quitar</button>
 			</span>
 		{:else if total === 0}
-			<span class="fc-hint">seleccioná un departamento</span>
+			<span class="fc-hint">{emptyHint}</span>
 		{/if}
 	</div>
 
@@ -293,7 +295,7 @@
 			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
 			<text x={SVG_W / 2} y={SVG_H - 6} text-anchor="middle"
 				font-size="5.5" font-family="system-ui,sans-serif"
-			><tspan fill="#22d3ee">↑{improved.toLocaleString()} mejoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} empeoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>
+			><tspan fill="#22d3ee">↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>
 		</svg>
 		<div class="fc-note">{cfg.note}</div>
 	{/if}

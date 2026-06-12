@@ -228,14 +228,16 @@
 			{#if hexStore.activeLayer?.id === 'censo_temporal'}
 				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
 			{/if}
-			<!-- FlowChart needs score/score_baseline + a selected dept — only the
-			     perDepartment temporal layers have both (censo_temporal is global).
+			<!-- FlowChart: perDepartment temporal layers (score or flowBands data
+			     arrives with the dept selection) plus global temporal layers that
+			     declare flowBands (censo_temporal bands raw density territory-wide).
 			     Rendered first: it is the most legible chart of the temporal stack. -->
-			{#if hexStore.activeLayer?.temporal && hexStore.activeLayer?.perDepartment}
+			{#if hexStore.activeLayer?.temporal && (hexStore.activeLayer?.perDepartment || hexStore.activeLayer?.flowBands)}
 				<FlowChart
 					data={hexStore.visibleData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
 					bands={hexStore.activeLayer.flowBands ?? null}
+					emptyHint={hexStore.activeLayer.perDepartment ? 'seleccioná un departamento' : 'cargando datos del territorio…'}
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}

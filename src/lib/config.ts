@@ -95,7 +95,7 @@ export function getParquetUrl(name: string): string {
 		sat_economic_activity: '?v=26',
 		sat_accessibility: '?v=27',
 		sat_carbon_stock: '?v=20',
-		sat_pm25_drivers: '?v=18',
+		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=5',
 		sat_censo_temporal: '?v=1',
@@ -107,7 +107,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 5;
+const DEPT_V = 6;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -478,6 +478,10 @@ export interface FlowBands {
 	colors: string[];     // one per label
 	higherIsWorse?: boolean; // flips improved/worsened semantics in flows
 	note?: string;        // footnote describing the cuts + source
+	// Direction words for the summary line. Defaults: mejoraron/empeoraron.
+	// Use neutral terms when the variable is not normative (e.g. density).
+	upLabel?: string;     // moved toward the "better" end (per higherIsWorse)
+	downLabel?: string;
 }
 
 /**
@@ -756,6 +760,20 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: false,
 		temporal: true,
 		temporalPeriods: { current: '2022', baseline: '2010', source: 'INDEC · Rodríguez & de Grande (CONICET)' },
+		// Density bands per Degree of Urbanisation (DEGURBA, UN Statistical
+		// Commission 2020): rural <300, urban cluster 300-1500, urban centre
+		// >=1500 hab/km². Density change is not normative -> neutral words.
+		flowBands: {
+			col: 'pob_dens',
+			baselineCol: 'pob_dens_baseline',
+			breaks: [300, 1500],
+			labels: ['Rural', 'Cluster urbano', 'Centro urbano'],
+			colors: ['#a3e635', '#f59e0b', '#22d3ee'],
+			higherIsWorse: false,
+			upLabel: 'densificaron',
+			downLabel: 'perdieron densidad',
+			note: 'Bandas de densidad (hab/km²) según Grado de Urbanización (DEGURBA, ONU 2020): Rural (<300) · Cluster urbano (300–1.500) · Centro urbano (≥1.500) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
+		},
 		legendLowKey: 'legend.censo.low',
 		legendHighKey: 'legend.censo.high',
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
