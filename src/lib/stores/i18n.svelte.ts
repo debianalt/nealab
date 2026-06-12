@@ -201,6 +201,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'analysis.status.available': { es: 'Disponible', en: 'Available', gn: 'Oĩma', pt: 'Disponível' },
 	'analysis.status.comingSoon': { es: 'En desarrollo', en: 'Coming soon', gn: 'Oguerahátama', pt: 'Em desenvolvimento' },
 	'analysis.coverage.pending': { es: 'próximamente', en: 'Coming soon', gn: 'Oguerahátama', pt: 'em breve' },
+	'analysis.coverage.unavailable': { es: 'no disponible en este territorio', en: 'not available in this territory', gn: 'ndaipóri ko tetãme', pt: 'não disponível neste território' },
 	'analysis.back': { es: '← Análisis', en: '← Analyses', gn: "← Mba'ekuaa", pt: '← Análises' },
 	'analysis.noData': { es: 'Sin datos para este radio', en: 'No data for this radio', gn: "Mba'ekuaa'ỹ ko radio-pe", pt: 'Sem dados para este setor' },
 	'analysis.loading': { es: 'Cargando datos...', en: 'Loading data...', gn: "Oñemyenyhẽ mba'ekuaa...", pt: 'Carregando dados...' },

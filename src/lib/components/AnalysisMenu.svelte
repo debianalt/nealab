@@ -16,8 +16,11 @@
 	const lens = $derived(lensStore.activeLens);
 	const cfg = $derived(lens ? LENS_CONFIG[lens] : null);
 	const analyses = $derived(lens ? getAnalysesForLens(lens) : []);
-	const comparableGroup = $derived(analyses.filter(a => a.comparable && getCoverage(a) !== 'unavailable'));
-	const localGroup = $derived(analyses.filter(a => !a.comparable && getCoverage(a) !== 'unavailable'));
+	// Layers without coverage for the active territory stay VISIBLE but
+	// disabled (🚫 badge) — hiding them reads as "the layers disappeared"
+	// when switching territory.
+	const comparableGroup = $derived(analyses.filter(a => a.comparable));
+	const localGroup = $derived(analyses.filter(a => !a.comparable));
 
 	// Sub-theme grouping within each domain.
 	const SUBGROUPS: Record<string, string> = {
@@ -81,8 +84,8 @@
 						<button
 							class="analysis-item"
 							class:available={analysis.status === 'available' && coverage === 'available'}
-							class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
-							disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
+							class:coming-soon={analysis.status === 'coming_soon' || coverage !== 'available'}
+							disabled={analysis.status === 'coming_soon' || coverage !== 'available'}
 							onclick={() => onSelectAnalysis(analysis)}
 						>
 							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
@@ -101,6 +104,8 @@
 								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
 							{:else if coverage === 'pending'}
 								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
+							{:else if coverage === 'unavailable'}
+								<span class="item-badge">🚫 {i18n.t('analysis.coverage.unavailable')}</span>
 							{/if}
 						</button>
 					{/each}
@@ -118,8 +123,8 @@
 						<button
 							class="analysis-item"
 							class:available={analysis.status === 'available' && coverage === 'available'}
-							class:coming-soon={analysis.status === 'coming_soon' || coverage === 'pending'}
-							disabled={analysis.status === 'coming_soon' || coverage === 'pending'}
+							class:coming-soon={analysis.status === 'coming_soon' || coverage !== 'available'}
+							disabled={analysis.status === 'coming_soon' || coverage !== 'available'}
 							onclick={() => onSelectAnalysis(analysis)}
 						>
 							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
@@ -138,6 +143,8 @@
 								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
 							{:else if coverage === 'pending'}
 								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
+							{:else if coverage === 'unavailable'}
+								<span class="item-badge">🚫 {i18n.t('analysis.coverage.unavailable')}</span>
 							{/if}
 						</button>
 					{/each}
