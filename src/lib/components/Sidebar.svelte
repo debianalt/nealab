@@ -31,10 +31,12 @@
 
 	// X-axis label for the distribution panels: physical unit when the primary
 	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
-	function primaryXLabel(layer: AnalysisConfig | null | undefined): string {
+	// `pv` is the EFFECTIVE primary (hexStore may substitute a fallback column when
+	// the territory's parquet lacks the configured one).
+	function primaryXLabel(layer: AnalysisConfig | null | undefined, pv?: string): string {
 		if (!layer) return 'score /100';
-		const pv = layer.primaryVariable;
-		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		const col = pv ?? layer.primaryVariable;
+		const v = layer.variables?.find((x: any) => x.col === col || x.rawCol === col);
 		if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
 		if (layer.variables?.some((x: any) => x.unit === 'percentil')) return 'percentil prov.';
 		return 'score /100';
@@ -230,21 +232,21 @@
 				<div class="charts-divider">Gráficos</div>
 				<HistogramPanel
 					data={hexStore.visibleData}
-					variable={hexStore.activeLayer.primaryVariable}
-					xLabel={primaryXLabel(hexStore.activeLayer)}
+					variable={hexStore.effectivePrimary}
+					xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
 					onBrushSelect={onHistogramBrush ?? (() => {})}
 				/>
 				<MoranPanel
 					data={hexStore.visibleData}
-					variable={hexStore.activeLayer.primaryVariable}
+					variable={hexStore.effectivePrimary}
 					boundaryCache={hexStore.boundaryCache}
 					onShowLisa={onShowLisa ?? (() => {})}
 					onBrushSelect={onMoranBrush ?? (() => {})}
 				/>
 				<BivariatePlot
 					data={hexStore.visibleData}
-					variable={hexStore.activeLayer.primaryVariable}
-					xLabel={primaryXLabel(hexStore.activeLayer)}
+					variable={hexStore.effectivePrimary}
+					xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
 					analysisId={hexStore.activeLayer.id}
 					territoryPrefix={hexStore.territoryPrefix}
 					onBrushSelect={onBivariateBrush ?? (() => {})}

@@ -566,6 +566,16 @@
 		}
 	});
 
+	// hexStore resolves the per-territory primary fallback asynchronously (schema
+	// check on the global parquet); refresh the hover tooltip unit when it lands so
+	// a substituted primary (e.g. score instead of VIIRS) doesn't show the wrong unit.
+	$effect(() => {
+		const ov = hexStore.primaryOverride;
+		const layerCfg = lensStore.activeAnalysis ? HEX_LAYER_REGISTRY[lensStore.activeAnalysis.id] : null;
+		if (!layerCfg || !ov) return;
+		mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg, ov));
+	});
+
 
 	$effect(() => {
 		const analysis = lensStore.activeAnalysis;
@@ -628,7 +638,7 @@
 				hexStore.setLayer(analysis.id);
 				hexStore.ensureColorDomain().catch(() => {});
 				mapStore.setActiveHexLayer(analysis.id);
-				mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg));
+				mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg, untrack(() => hexStore.effectivePrimary)));
 				// Regional mode: load data for other territories in scope
 				if (untrack(() => territoryStore.regionalMode)) {
 					const countryFilter = untrack(() => territoryStore.countryFilter);

@@ -474,9 +474,9 @@ export interface HexLayerConfig {
  * primary against both `col` and `rawCol` (carbon's primary is a rawCol whose unit
  * lives on the base entry). Mirrors primaryXLabel in Sidebar.svelte.
  */
-export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined): string {
+export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined, col?: string): string {
 	if (!layer) return '';
-	const pv = layer.primaryVariable;
+	const pv = col ?? layer.primaryVariable;
 	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
 	if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
 	if (layer.variables?.some((x) => x.unit === 'percentil')) return 'percentil prov.';

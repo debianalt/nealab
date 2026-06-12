@@ -419,7 +419,7 @@
 			: legendLabels
 	);
 
-	const displayScore = $derived(selectedHex ? (getDisplayVal(selectedHex, layerCfg?.primaryVariable ?? 'score') ?? 0) : 0);
+	const displayScore = $derived(selectedHex ? (getDisplayVal(selectedHex, hexStore.effectivePrimary) ?? 0) : 0);
 
 	/**
 	 * Adaptive number formatter — picks precision based on magnitude so that

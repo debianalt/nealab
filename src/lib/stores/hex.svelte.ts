@@ -185,6 +185,7 @@ export class HexStore {
 
 	setLayer(layerId: string | null) {
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
+		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -252,9 +253,42 @@ export class HexStore {
 
 	territoryPrefix: string = $state('');
 
+	// Per-territory primary-variable fallback. Some layers declare a primary that
+	// only exists in a subset of territories (economic_activity paints VIIRS in
+	// Misiones, but the AR-census parquets carry only census columns). When the
+	// loaded parquet lacks the configured primary, fall back to the first numeric
+	// variable the parquet does have — otherwise every hex renders "Sin cobertura"
+	// and MIN/MAX color-domain queries throw Binder errors.
+	primaryOverride: string | null = $state(null);
+
+	get effectivePrimary(): string {
+		return this.primaryOverride ?? this.activeLayer?.primaryVariable ?? 'score';
+	}
+
+	private static PRIMARY_SKIP = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'territorial_type']);
+
+	private updatePrimaryOverride(layer: HexLayerConfig, actualCols: Set<string>): void {
+		if (this.activeLayer?.id !== layer.id) return; // stale async schema
+		if (actualCols.has(layer.primaryVariable)) {
+			if (this.primaryOverride !== null) {
+				this.primaryOverride = null;
+				this.dataVersion++;
+			}
+			return;
+		}
+		const fallback = layer.variables
+			.map(v => v.col)
+			.find(c => !HexStore.PRIMARY_SKIP.has(c) && actualCols.has(c)) ?? null;
+		if (fallback !== this.primaryOverride) {
+			this.primaryOverride = fallback;
+			this.dataVersion++; // repaint choropleth with the substituted primary
+		}
+	}
+
 	setTerritoryPrefix(prefix: string) {
 		if (this.territoryPrefix === prefix) return;
 		this.territoryPrefix = prefix;
+		this.primaryOverride = null;
 		layerDataCache.clear(); // keyed by layerId only → must clear to avoid serving the
 		                        // previous province's data under the same layer id.
 		// deptDataCache is NOT cleared: its keys include the territoryPrefix, so entries from
@@ -293,6 +327,7 @@ export class HexStore {
 	/** Columns the dept UI actually consumes — used to project instead of SELECT *. */
 	private async deptWantedCols(layer: HexLayerConfig, url: string): Promise<string[]> {
 		const actualCols = await getParquetCols(url);
+		this.updatePrimaryOverride(layer, actualCols);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			...layer.variables.flatMap(v => [v.col, v.rawCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])];
@@ -364,8 +399,10 @@ export class HexStore {
 			let cols: string[];
 			if (coarseRes !== null) {
 				const actualCols = await getParquetCols(url);
-				const minimal = ['h3index', layer.primaryVariable, 'type_label'];
-				if (layer.temporal) minimal.push(getTemporalCol(layer.primaryVariable, 'baseline'), getTemporalCol(layer.primaryVariable, 'delta'));
+				this.updatePrimaryOverride(layer, actualCols);
+				const pv = this.effectivePrimary;
+				const minimal = ['h3index', pv, 'type_label'];
+				if (layer.temporal) minimal.push(getTemporalCol(pv, 'baseline'), getTemporalCol(pv, 'delta'));
 				cols = minimal.filter((c): c is string => !!c && actualCols.has(c)).filter((c, i, a) => a.indexOf(c) === i);
 			} else {
 				// Small dept → full projection (choropleth + panel + petal need the variable set).
@@ -980,7 +1017,7 @@ export class HexStore {
 
 	private regionalChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
 		if (!this.activeLayer) return [];
-		const pv = this.activeLayer.primaryVariable;
+		const pv = this.effectivePrimary;
 		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
 		for (const [h3index, data] of this.regionalVisibleData) {
 			entries.push({ h3index, value: (data[pv] ?? 0) as number, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index) });
@@ -1036,7 +1073,7 @@ export class HexStore {
 
 	private compareChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
 		if (!this.activeLayer) return [];
-		const pv = this.activeLayer.primaryVariable;
+		const pv = this.effectivePrimary;
 		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
 		for (const [h3index, data] of this.compareVisibleData) {
 			const value = (data[pv] ?? 0) as number;
@@ -1089,6 +1126,10 @@ export class HexStore {
 		const url = this.layerGlobalUrl(layer);
 		if (!url) return;
 
+		// Project only columns the parquet actually has — config drift on a single
+		// declared column must not Binder-error the whole layer load.
+		const actualCols = await getParquetCols(url);
+		this.updatePrimaryOverride(layer, actualCols);
 		const baseCols = layer.variables.map(v => v.col);
 		const allCols = new Set(baseCols);
 		if (layer.temporal) {
@@ -1097,9 +1138,12 @@ export class HexStore {
 				allCols.add(getTemporalCol(col, 'delta'));
 			}
 		}
+		for (const col of [...allCols]) {
+			if (!actualCols.has(col)) allCols.delete(col);
+		}
 		const cols = [...allCols].join(', ');
 		const result = await query(
-			`SELECT h3index, ${cols} FROM '${url}'`
+			`SELECT h3index${cols ? `, ${cols}` : ''} FROM '${url}'`
 		);
 
 		const data = new Map<string, Record<string, any>>();
@@ -1271,8 +1315,8 @@ export class HexStore {
 	private choroplethEntries_compute() {
 		if (!this.activeLayer) return [];
 		const effectivePrimary = this.activeLayer.temporal && this.temporalMode !== 'current'
-			? getTemporalCol(this.activeLayer.primaryVariable, this.temporalMode)
-			: this.activeLayer.primaryVariable;
+			? getTemporalCol(this.effectivePrimary, this.temporalMode)
+			: this.effectivePrimary;
 		const isDelta = this.activeLayer.temporal && this.temporalMode === 'delta';
 		// Diverging delta ramp is red(−)→green(+), i.e. assumes higher = better. For
 		// "danger" layers (colorScale 'flood', higher = worse: deforestation, PM2.5) an
@@ -1391,8 +1435,12 @@ export class HexStore {
 		const dataUrl = this.layerGlobalUrl(layer);
 		if (!dataUrl) return null;
 
-		const pv = layer.primaryVariable;
 		try {
+			// Resolve the per-territory primary fallback BEFORE querying: MIN/MAX on a
+			// column the parquet lacks is a Binder error (economic_activity AR has no
+			// viirs_mean_radiance). getParquetCols caches, so this is one-time per URL.
+			this.updatePrimaryOverride(layer, await getParquetCols(dataUrl));
+			const pv = this.effectivePrimary;
 			// No WHERE … IS NOT NULL: MIN/MAX already ignore NULLs, and the predicate
 			// blocks DuckDB's footer-statistics pushdown (forces a full column scan).
 			const sql = `SELECT MIN(${pv}) as lo, MAX(${pv}) as hi FROM '${dataUrl}'`;

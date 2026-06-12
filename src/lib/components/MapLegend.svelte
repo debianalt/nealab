@@ -30,7 +30,7 @@
 	const SCORE_UNITS = new Set(['/100', 'percentil', 'pctl', '%']);
 	const rangeLabel = $derived.by(() => {
 		if (!layer || isDiverging) return '';
-		const pv = layer.primaryVariable;
+		const pv = hexStore.effectivePrimary; // may be a per-territory fallback column
 		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
 		const u = v?.unit;
 		if (!u || SCORE_UNITS.has(u)) return '0–100';
