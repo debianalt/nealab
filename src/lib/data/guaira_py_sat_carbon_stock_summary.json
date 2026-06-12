@@ -7,16 +7,6 @@
   },
   "departments": [
     {
-      "distrito": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 33.8,
-      "hex_count": 1253,
-      "centroid": [
-        -56.5984,
-        -25.7384
-      ]
-    },
-    {
       "distrito": "Gral Garay",
       "parquetKey": "gral_garay",
       "avg_score": 33.3,
@@ -29,8 +19,8 @@
     {
       "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 31.7,
-      "hex_count": 765,
+      "avg_score": 33.0,
+      "hex_count": 2018,
       "centroid": [
         -56.648,
         -25.7972

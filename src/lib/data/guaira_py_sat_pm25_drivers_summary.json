@@ -57,16 +57,6 @@
       ]
     },
     {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 41.0,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ]
-    },
-    {
       "distrito": "Colonia Independencia",
       "parquetKey": "colonia_independencia",
       "avg_score": 40.8,
@@ -74,6 +64,16 @@
       "centroid": [
         -56.0671,
         -25.7311
+      ]
+    },
+    {
+      "distrito": "Cnel Martinez",
+      "parquetKey": "cnel_martinez",
+      "avg_score": 40.7,
+      "hex_count": 2018,
+      "centroid": [
+        -56.648,
+        -25.7972
       ]
     },
     {
@@ -94,16 +94,6 @@
       "centroid": [
         -56.4107,
         -25.8273
-      ]
-    },
-    {
-      "distrito": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 40.6,
-      "hex_count": 1253,
-      "centroid": [
-        -56.5984,
-        -25.7384
       ]
     },
     {

@@ -7,16 +7,6 @@
   },
   "departments": [
     {
-      "distrito": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 82.2,
-      "hex_count": 1253,
-      "centroid": [
-        -56.5984,
-        -25.7384
-      ]
-    },
-    {
       "distrito": "Dr. Bottrell",
       "parquetKey": "dr_bottrell",
       "avg_score": 81.2,
@@ -34,6 +24,16 @@
       "centroid": [
         -56.501,
         -25.6879
+      ]
+    },
+    {
+      "distrito": "Cnel Martinez",
+      "parquetKey": "cnel_martinez",
+      "avg_score": 80.9,
+      "hex_count": 2018,
+      "centroid": [
+        -56.648,
+        -25.7972
       ]
     },
     {
@@ -64,16 +64,6 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
-    },
-    {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 78.8,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
       ]
     },
     {

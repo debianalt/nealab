@@ -30,23 +30,12 @@
     {
       "dpto": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 2.0,
-      "hex_count": 765,
+      "avg_score": 1.7,
+      "hex_count": 2018,
       "high_risk_count": 1,
       "centroid": [
-        -56.6481,
-        -25.796
-      ]
-    },
-    {
-      "dpto": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 1.5,
-      "hex_count": 1253,
-      "high_risk_count": 0,
-      "centroid": [
-        -56.5982,
-        -25.7399
+        -56.6171,
+        -25.7611
       ]
     },
     {

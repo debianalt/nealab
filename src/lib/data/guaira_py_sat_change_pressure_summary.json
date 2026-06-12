@@ -107,13 +107,13 @@
       ]
     },
     {
-      "distrito": "Cnel. Martinez",
+      "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 5.0,
-      "hex_count": 1253,
+      "avg_score": 4.9,
+      "hex_count": 2018,
       "centroid": [
-        -56.5984,
-        -25.7384
+        -56.648,
+        -25.7972
       ]
     },
     {
@@ -134,16 +134,6 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
-    },
-    {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 4.8,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
       ]
     },
     {

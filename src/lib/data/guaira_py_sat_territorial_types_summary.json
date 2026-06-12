@@ -97,16 +97,6 @@
       ]
     },
     {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 1.5,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ]
-    },
-    {
       "distrito": "Yataity",
       "parquetKey": "yataity",
       "avg_score": 1.4,
@@ -117,13 +107,13 @@
       ]
     },
     {
-      "distrito": "Cnel. Martinez",
+      "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
       "avg_score": 1.3,
-      "hex_count": 1253,
+      "hex_count": 2018,
       "centroid": [
-        -56.5984,
-        -25.7384
+        -56.648,
+        -25.7972
       ]
     },
     {

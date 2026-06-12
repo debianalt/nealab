@@ -303,8 +303,13 @@ export interface DeptItem {
 export async function loadDeptList(analysisId: string, territoryPrefix: string): Promise<DeptItem[]> {
 	const summary = await loadDeptSummary(analysisId, territoryPrefix);
 	if (!summary?.departments) return [];
-	return (summary.departments as any[])
+	const items = (summary.departments as any[])
 		.map(d => ({ name: (d.dpto ?? d.distrito ?? d.municipio ?? '') as string, parquetKey: d.parquetKey as string }))
 		.filter(d => d.name && d.parquetKey)
 		.sort((a, b) => a.name.localeCompare(b.name));
+	// Dedupe by parquetKey: two name variants of the same admin unit (e.g. guaira's
+	// "Cnel Martinez" / "Cnel. Martinez") share a key, and a duplicate key crashes
+	// the keyed {#each} of the compare dropdown (each_key_duplicate).
+	const seen = new Set<string>();
+	return items.filter(d => (seen.has(d.parquetKey) ? false : (seen.add(d.parquetKey), true)));
 }

@@ -127,16 +127,6 @@
       ]
     },
     {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 34.5,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ]
-    },
-    {
       "distrito": "Dr. Bottrell",
       "parquetKey": "dr_bottrell",
       "avg_score": 33.6,
@@ -157,13 +147,13 @@
       ]
     },
     {
-      "distrito": "Cnel. Martinez",
+      "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 26.9,
-      "hex_count": 1253,
+      "avg_score": 29.8,
+      "hex_count": 2018,
       "centroid": [
-        -56.5984,
-        -25.7384
+        -56.648,
+        -25.7972
       ]
     }
   ]

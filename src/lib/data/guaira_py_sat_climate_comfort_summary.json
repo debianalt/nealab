@@ -27,16 +27,6 @@
       ]
     },
     {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 53.3,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ]
-    },
-    {
       "distrito": "Capitan Troche",
       "parquetKey": "capitan_troche",
       "avg_score": 52.7,
@@ -87,13 +77,13 @@
       ]
     },
     {
-      "distrito": "Cnel. Martinez",
+      "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 50.1,
-      "hex_count": 1253,
+      "avg_score": 51.3,
+      "hex_count": 2018,
       "centroid": [
-        -56.5984,
-        -25.7384
+        -56.648,
+        -25.7972
       ]
     },
     {

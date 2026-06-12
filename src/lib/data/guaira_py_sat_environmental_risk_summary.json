@@ -77,16 +77,6 @@
       ]
     },
     {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 10.4,
-      "hex_count": 765,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ]
-    },
-    {
       "distrito": "Mbocayati",
       "parquetKey": "mbocayati",
       "avg_score": 10.4,
@@ -117,6 +107,16 @@
       ]
     },
     {
+      "distrito": "Cnel Martinez",
+      "parquetKey": "cnel_martinez",
+      "avg_score": 9.8,
+      "hex_count": 2018,
+      "centroid": [
+        -56.648,
+        -25.7972
+      ]
+    },
+    {
       "distrito": "Gral Garay",
       "parquetKey": "gral_garay",
       "avg_score": 9.8,
@@ -134,16 +134,6 @@
       "centroid": [
         -56.501,
         -25.6879
-      ]
-    },
-    {
-      "distrito": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 9.4,
-      "hex_count": 1253,
-      "centroid": [
-        -56.5984,
-        -25.7384
       ]
     },
     {

@@ -97,16 +97,6 @@
       ]
     },
     {
-      "distrito": "Cnel. Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 65.3,
-      "hex_count": 1253,
-      "centroid": [
-        -56.5984,
-        -25.7384
-      ]
-    },
-    {
       "distrito": "Numi",
       "parquetKey": "numi",
       "avg_score": 65.1,
@@ -129,8 +119,8 @@
     {
       "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 64.3,
-      "hex_count": 765,
+      "avg_score": 64.9,
+      "hex_count": 2018,
       "centroid": [
         -56.648,
         -25.7972
