@@ -11,8 +11,8 @@
 		onBrushSelect?: (h3s: string[]) => void;
 	} = $props();
 
-	const SVG_W = 260, SVG_H = 150;
-	const BAND_W = 40, PAD_T = 22, PAD_B = 8;
+	const SVG_W = 260, SVG_H = 164;
+	const BAND_W = 40, PAD_T = 22, PAD_B = 22;
 	const LEFT_X = 18, RIGHT_X = SVG_W - 18 - BAND_W;
 	const MID_X = SVG_W / 2;
 	const plotH = SVG_H - PAD_T - PAD_B;
@@ -92,7 +92,7 @@
 				const h3s = matrix[from][to];
 				if (!h3s.length) continue;
 				const fh = (h3s.length / total) * plotH;
-				const color = to > from ? '#22d3ee' : to < from ? '#f87171' : 'rgba(255,255,255,0.28)';
+				const color = to > from ? '#22d3ee' : to < from ? '#f87171' : 'rgba(148,163,184,0.55)';
 				result.push({
 					from, to, count: h3s.length, h3s,
 					y1: lc[from] + fh / 2,
@@ -157,9 +157,7 @@
 				{BAND_LABELS[activeBand]} ({activeSide === 'from' ? 'baseline' : 'actual'}): {(activeSide === 'from' ? fromTotals : toTotals)[activeBand].toLocaleString()} hex
 				<button class="fc-clear" onclick={() => { activeSide = null; activeBand = null; onBrushSelect([]); }}>× quitar</button>
 			</span>
-		{:else if total > 0}
-			<span class="fc-hint">↑{improved.toLocaleString()} mejoraron · ↓{worsened.toLocaleString()} empeoraron · ={stable.toLocaleString()} estables</span>
-		{:else}
+		{:else if total === 0}
 			<span class="fc-hint">seleccioná un departamento</span>
 		{/if}
 	</div>
@@ -190,6 +188,7 @@
 			<!-- Left bands (baseline) -->
 			{#each [2, 1, 0] as band}
 				{#if leftBandH[band] > 0.5}
+					{@const cy = leftBandY[band] + leftBandH[band] / 2}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<rect
 						x={LEFT_X} y={leftBandY[band]}
@@ -200,9 +199,22 @@
 						style="cursor:pointer"
 						onclick={() => selectBand('from', band)}
 					/>
-					{#if leftBandH[band] > 10}
+					{#if leftBandH[band] > 18}
 						<text
-							x={LEFT_X + BAND_W / 2} y={leftBandY[band] + leftBandH[band] / 2 + 2.5}
+							x={LEFT_X + BAND_W / 2} y={cy - 1.5}
+							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							pointer-events="none"
+						>{BAND_LABELS[band]}</text>
+						<text
+							x={LEFT_X + BAND_W / 2} y={cy + 5}
+							text-anchor="middle" fill="rgba(0,0,0,0.65)"
+							font-size="4.5" font-weight="600" font-family="system-ui,sans-serif"
+							pointer-events="none"
+						>{fromTotals[band].toLocaleString()} · {Math.round(fromTotals[band] / total * 100)}%</text>
+					{:else if leftBandH[band] > 10}
+						<text
+							x={LEFT_X + BAND_W / 2} y={cy + 2.5}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
@@ -214,6 +226,7 @@
 			<!-- Right bands (actual) -->
 			{#each [2, 1, 0] as band}
 				{#if rightBandH[band] > 0.5}
+					{@const cy = rightBandY[band] + rightBandH[band] / 2}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<rect
 						x={RIGHT_X} y={rightBandY[band]}
@@ -224,9 +237,22 @@
 						style="cursor:pointer"
 						onclick={() => selectBand('to', band)}
 					/>
-					{#if rightBandH[band] > 10}
+					{#if rightBandH[band] > 18}
 						<text
-							x={RIGHT_X + BAND_W / 2} y={rightBandY[band] + rightBandH[band] / 2 + 2.5}
+							x={RIGHT_X + BAND_W / 2} y={cy - 1.5}
+							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							pointer-events="none"
+						>{BAND_LABELS[band]}</text>
+						<text
+							x={RIGHT_X + BAND_W / 2} y={cy + 5}
+							text-anchor="middle" fill="rgba(0,0,0,0.65)"
+							font-size="4.5" font-weight="600" font-family="system-ui,sans-serif"
+							pointer-events="none"
+						>{toTotals[band].toLocaleString()} · {Math.round(toTotals[band] / total * 100)}%</text>
+					{:else if rightBandH[band] > 10}
+						<text
+							x={RIGHT_X + BAND_W / 2} y={cy + 2.5}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
 							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
@@ -237,11 +263,16 @@
 
 			<!-- Period labels -->
 			<text x={LEFT_X + BAND_W / 2} y={PAD_T - 7} text-anchor="middle"
-				fill="rgba(255,255,255,0.32)" font-size="6" font-family="system-ui,sans-serif"
+				fill="rgba(255,255,255,0.55)" font-size="6" font-family="system-ui,sans-serif"
 			>{temporalPeriods?.baseline ?? 'Baseline'}</text>
 			<text x={RIGHT_X + BAND_W / 2} y={PAD_T - 7} text-anchor="middle"
-				fill="rgba(255,255,255,0.32)" font-size="6" font-family="system-ui,sans-serif"
+				fill="rgba(255,255,255,0.55)" font-size="6" font-family="system-ui,sans-serif"
 			>{temporalPeriods?.current ?? 'Actual'}</text>
+
+			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
+			<text x={SVG_W / 2} y={SVG_H - 6} text-anchor="middle"
+				font-size="5.5" font-family="system-ui,sans-serif"
+			><tspan fill="#22d3ee">↑{improved.toLocaleString()} mejoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} empeoraron</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>
 		</svg>
 		<div class="fc-note">
 			Flujo de hexágonos entre bandas: <em>Bajo</em> (&lt;33) · <em>Medio</em> (33–67) · <em>Alto</em> (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa

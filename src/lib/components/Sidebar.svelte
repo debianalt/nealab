@@ -228,6 +228,16 @@
 			{#if hexStore.activeLayer?.id === 'censo_temporal'}
 				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
 			{/if}
+			<!-- FlowChart needs score/score_baseline + a selected dept — only the
+			     perDepartment temporal layers have both (censo_temporal is global).
+			     Rendered first: it is the most legible chart of the temporal stack. -->
+			{#if hexStore.activeLayer?.temporal && hexStore.activeLayer?.perDepartment}
+				<FlowChart
+					data={hexStore.visibleData}
+					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
+					onBrushSelect={onFlowBrush ?? (() => {})}
+				/>
+			{/if}
 			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
 				<div class="charts-divider">Gráficos</div>
 				<HistogramPanel
@@ -260,15 +270,6 @@
 					data={hexStore.visibleData}
 					variables={hexStore.numericVariables}
 					onBrushSelect={onParallelBrush ?? (() => {})}
-				/>
-			{/if}
-			<!-- FlowChart needs score/score_baseline + a selected dept — only the
-			     perDepartment temporal layers have both (censo_temporal is global). -->
-			{#if hexStore.activeLayer?.temporal && hexStore.activeLayer?.perDepartment}
-				<FlowChart
-					data={hexStore.visibleData}
-					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
-					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
 		</div>
