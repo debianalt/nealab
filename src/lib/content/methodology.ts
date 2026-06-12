@@ -241,8 +241,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Os tipos separam centros econômicos consolidados (alto emprego + universitários + luzes), periferias ativas com possível informalidade (alta atividade, baixo emprego formal) e zonas rurais de baixa atividade econômica. A radiância noturna (VIIRS) é um proxy robusto de atividade que complementa os dados censitários.',
 		},
 		method: {
-			es: `${METHOD_COMMON.es} 5 variables: tasa de empleo y actividad (Censo 2022 INDEC, 14+ años), % universitarios (Censo 2022), radiancia media VIIRS 500m (2022-2024), densidad edilicia Global Building Atlas 2025. Variables censales agregadas a H3 vía crosswalk.`,
-			en: `${METHOD_COMMON.en} 5 variables: employment rate and activity rate (Census 2022 INDEC, 14+ years), % university graduates (Census 2022), mean VIIRS 500m radiance (2022–2024), building density Global Building Atlas 2025. Census variables aggregated to H3 via crosswalk.`,
+			es: `${METHOD_COMMON.es} 5 variables: tasa de empleo y actividad (Censo 2022 INDEC, 14+ años), % universitarios (Censo 2022), radiancia nocturna VIIRS 500m (media anual 2025, valor crudo en nW/cm²/sr), densidad edilicia Global Building Atlas 2025 (edificios/km² por hexágono, valor crudo). Variables censales agregadas a H3 vía crosswalk; VIIRS y densidad medidas directamente a nivel hexágono en las cuatro provincias del NEA.`,
+			en: `${METHOD_COMMON.en} 5 variables: employment rate and activity rate (Census 2022 INDEC, 14+ years), % university graduates (Census 2022), VIIRS 500m night-time radiance (2025 annual mean, raw nW/cm²/sr), building density Global Building Atlas 2025 (buildings/km² per hexagon, raw value). Census variables aggregated to H3 via crosswalk; VIIRS and density measured directly at hexagon level across the four NEA provinces.`,
 		},
 	},
 	eudr: {
@@ -259,8 +259,8 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			pt: 'Hexágonos com desmatamento pós-2020 representam risco de não conformidade sob o Regulamento (UE) 2023/1115. Exportações de commodities (soja, carne, madeira) originadas dessas zonas requerem due diligence reforçado. Esta análise é indicativa — a verificação formal requer geometria parcelária precisa.',
 		},
 		method: {
-			es: `Score compuesto 0-100: 70% pérdida forestal post-2020 (Hansen GFC v1.12, Landsat, remuestreado a 100 m) + 20% área quemada post-2020 (MODIS MCD64A1, 500m) + 10% pérdida de cobertura previa. Cutoff EUDR: 31/12/2020. Resolución espacial: H3 resolución 9 (~0,1 km²); el dato satelital subyacente es de 100 m, que es el piso de precisión efectivo. Cobertura: 10 provincias del NOA y NEA argentino + todo Paraguay (18 departamentos) + 3 estados del sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul).`,
-			en: `Composite score 0–100: 70% post-2020 forest loss (Hansen GFC v1.12, Landsat, resampled to 100 m) + 20% post-2020 burned area (MODIS MCD64A1, 500m) + 10% prior cover loss. EUDR cut-off: 31/12/2020. Spatial resolution: H3 resolution 9 (~0.1 km²); the underlying satellite data is 100 m, which is the effective precision floor. Coverage: 10 provinces of Northwest and Northeast Argentina + all of Paraguay (18 departments) + 3 southern Brazilian states (Paraná, Santa Catarina, Rio Grande do Sul).`,
+			es: `Score compuesto 0-100: 70% pérdida forestal post-2020 (Hansen GFC v1.12, Landsat, remuestreado a 100 m) + 20% área quemada post-2020 (MODIS MCD64A1, 500m) + 10% pérdida de cobertura previa. Cutoff EUDR: 31/12/2020. Resolución espacial: H3 resolución 9 (~0,1 km²); el dato satelital subyacente es de 100 m, que es el piso de precisión efectivo. Cobertura: 10 provincias del NOA y NEA argentino + todo Paraguay (17 departamentos) + 3 estados del sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul).`,
+			en: `Composite score 0–100: 70% post-2020 forest loss (Hansen GFC v1.12, Landsat, resampled to 100 m) + 20% post-2020 burned area (MODIS MCD64A1, 500m) + 10% prior cover loss. EUDR cut-off: 31/12/2020. Spatial resolution: H3 resolution 9 (~0.1 km²); the underlying satellite data is 100 m, which is the effective precision floor. Coverage: 10 provinces of Northwest and Northeast Argentina + all of Paraguay (17 departments) + 3 southern Brazilian states (Paraná, Santa Catarina, Rio Grande do Sul).`,
 		},
 	},
 	accessibility: {
