@@ -28,10 +28,13 @@ def put(local: str, key: str, dry: bool) -> bool:
         print(f'  DRY {key}')
         return True
     for attempt in range(3):
+        # encoding/errors explicit: wrangler emits UTF-8 (emoji) that crashes
+        # the default cp1252 decoder on Windows.
         r = subprocess.run(
             ['npx', 'wrangler', 'r2', 'object', 'put', f'neahub/{key}',
              '--file', local, '--remote'],
-            capture_output=True, text=True, cwd=str(ROOT), shell=(os.name == 'nt'))
+            capture_output=True, text=True, encoding='utf-8', errors='replace',
+            cwd=str(ROOT), shell=(os.name == 'nt'))
         if r.returncode == 0:
             return True
         time.sleep(2 * (attempt + 1))

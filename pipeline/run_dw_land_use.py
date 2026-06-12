@@ -40,6 +40,18 @@ GCS_PREFIX = 'gs://spatia-satellite/satellite'
 YEAR = 2024
 
 
+def find_gdalbuildvrt() -> str:
+    """gdalbuildvrt from PATH, falling back to the QGIS install."""
+    import shutil
+    found = shutil.which('gdalbuildvrt')
+    if found:
+        return found
+    qgis = r'C:\Program Files\QGIS 3.40.13\bin\gdalbuildvrt.exe'
+    if os.path.exists(qgis):
+        return qgis
+    raise FileNotFoundError('gdalbuildvrt not found (PATH or QGIS bin)')
+
+
 def gee_states() -> dict:
     """Map description -> state for dw_probs tasks."""
     import ee
@@ -95,8 +107,7 @@ def download(t: str) -> str | None:
     if len(shards) == 1:
         return shards[0]
     vrt = str(t_dir / f'dw_probs_{t}_{YEAR}.vrt')
-    r = subprocess.run(['gdalbuildvrt', vrt, *shards], capture_output=True, text=True,
-                       shell=(os.name == 'nt'))
+    r = subprocess.run([find_gdalbuildvrt(), vrt, *shards], capture_output=True, text=True)
     if r.returncode != 0:
         print(f'  [{t}] gdalbuildvrt FAILED: {r.stderr.strip()[:300]}', flush=True)
         return None
