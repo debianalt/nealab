@@ -205,7 +205,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'analysis.back': { es: '← Análisis', en: '← Analyses', gn: "← Mba'ekuaa", pt: '← Análises' },
 	'analysis.noData': { es: 'Sin datos para este radio', en: 'No data for this radio', gn: "Mba'ekuaa'ỹ ko radio-pe", pt: 'Sem dados para este setor' },
 	'analysis.loading': { es: 'Cargando datos...', en: 'Loading data...', gn: "Oñemyenyhẽ mba'ekuaa...", pt: 'Carregando dados...' },
-	'analysis.petalHint': { es: 'Percentil provincial (0-100). Mayor extensión = mayor intensidad relativa.', en: 'Provincial percentile (0-100). Larger petal = higher relative intensity.', gn: 'Percentil provincial (0-100).', pt: 'Percentil provincial (0-100). Maior extensão = maior intensidade relativa.' },
+	'analysis.petalHint': { es: 'Percentil del territorio (0-100). Mayor extensión = mayor intensidad relativa.', en: 'Territory percentile (0-100). Larger petal = higher relative intensity.', gn: 'Percentil tetãme (0-100).', pt: 'Percentil do território (0-100). Maior extensão = maior intensidade relativa.' },
 	'analysis.comingSoon.body': { es: 'Este análisis está en desarrollo. Próximamente disponible con datos actualizados.', en: 'This analysis is under development. Coming soon with updated data.', gn: "Ko mba'ekuaa oñemoĩhína. Oguerahátama.", pt: 'Esta análise está em desenvolvimento. Em breve disponível com dados atualizados.' },
 
 	// Analysis titles
@@ -848,7 +848,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'zone.area': { es: 'Área km²', en: 'Area km²', gn: 'Yvy km²', pt: 'Área km²' },
 	'zone.radios': { es: 'Radios', en: 'Radios', gn: 'Radio', pt: 'Setores' },
 	'zone.noRadios': { es: 'Sin radios en la selección', en: 'No radios in selection', gn: "Radio'ỹ jeporavópe", pt: 'Sem setores na seleção' },
-	'zone.petalNote': { es: 'Relativo al promedio provincial (línea punteada = promedio)', en: 'Relative to provincial average (dashed line = average)', gn: 'Tetã guasu mbytekue rehe (línea = mbytekue)', pt: 'Relativo à média provincial (linha pontilhada = média)' },
+	'zone.petalNote': { es: 'Relativo al promedio del territorio (línea punteada = promedio)', en: 'Relative to territory average (dashed line = average)', gn: 'Tetã mbytekue rehe (línea = mbytekue)', pt: 'Relativo à média do território (linha pontilhada = média)' },
 
 	// ── Hex comparison / hex zones ──────────────────────────────────────
 	'hex.comparison': { es: 'Comparación de hexágonos', en: 'Hexagon comparison', gn: 'Hexágono jojaha', pt: 'Comparação de hexágonos' },
@@ -856,7 +856,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hexZone.title': { es: 'Zonas hexagonales', en: 'Hex zones', gn: 'Hexágono zona', pt: 'Zonas hexagonais' },
 	'hex.resolution': { es: 'Resolución H3', en: 'H3 resolution', gn: 'H3 tuichakue', pt: 'Resolução H3' },
 	'hex.loading': { es: 'Cargando hexágonos...', en: 'Loading hexagons...', gn: 'Oñemyenyhẽ hexágono...', pt: 'Carregando hexágonos...' },
-	'hex.provAvg': { es: 'prom. provincial', en: 'prov. avg', gn: 'tetã guasu mbytekue', pt: 'méd. provincial' },
+	'hex.provAvg': { es: 'prom. del territorio', en: 'territory avg', gn: 'tetã mbytekue', pt: 'méd. do território' },
 
 	// ── Welcome panel ─────────────────────────────────────────────────────
 	'side.welcome.analyses': { es: 'análisis disponibles', en: 'analyses available', gn: "mba'ekuaa oĩva", pt: 'análises disponíveis' },
