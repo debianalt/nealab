@@ -33,17 +33,23 @@ jobs:
           pip install -r pipeline/requirements.txt
           npm install -g wrangler
 
-      - name: Generate H3 grid + admin crosswalk for Itapúa if needed
+      - name: Ensure H3 grid + admin crosswalk (R2 cache → regenerate fallback)
         run: |
+          python pipeline/grid_cache.py --pull --territory itapua_py || true
           if [ ! -f pipeline/output/itapua_py/hexagons.geojson ] && [ ! -f pipeline/output/itapua_py/hexagons-lite.geojson ]; then
+            echo "::warning::grid not in R2 cache, regenerating from GADM source"
             if [ ! -f pipeline/data/gadm41_PRY_2.shp ]; then
               mkdir -p pipeline/data
-              curl -sL https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_PRY_shp.zip -o pipeline/data/gadm41_PRY_shp.zip
+              curl -sL --retry 5 --retry-all-errors --connect-timeout 30 --max-time 600 https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_PRY_shp.zip -o pipeline/data/gadm41_PRY_shp.zip
               (cd pipeline/data && unzip -o gadm41_PRY_shp.zip "gadm41_PRY_2*" >/dev/null)
             fi
             python pipeline/build_admin_crosswalk.py --territory itapua_py --source gadm \
               --shapefile pipeline/data/gadm41_PRY_2.shp
+            python pipeline/grid_cache.py --push --territory itapua_py || echo "::warning::failed to seed R2 grid cache"
           fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Run Itapúa pixel pipeline
         run: |

@@ -38,17 +38,23 @@ jobs:
           pip install -r pipeline/requirements.txt
           npm install -g wrangler
 
-      - name: Generate H3 grid for Corrientes if needed
+      - name: Ensure H3 grid + admin crosswalk (R2 cache → regenerate fallback)
         run: |
+          python pipeline/grid_cache.py --pull --territory corrientes || true
           if [ ! -f pipeline/output/corrientes/hexagons.geojson ] && [ ! -f pipeline/output/corrientes/hexagons-lite.geojson ]; then
+            echo "::warning::grid not in R2 cache, regenerating from GADM source"
             if [ ! -f pipeline/data/gadm41_ARG_2.shp ]; then
               echo "Downloading GADM 4.1 Argentina shapefile..."
               mkdir -p pipeline/data
-              curl -sL https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_ARG_shp.zip -o pipeline/data/gadm41_ARG_shp.zip
+              curl -sL --retry 5 --retry-all-errors --connect-timeout 30 --max-time 600 https://geodata.ucdavis.edu/gadm/gadm4.1/shp/gadm41_ARG_shp.zip -o pipeline/data/gadm41_ARG_shp.zip
               (cd pipeline/data && unzip -o gadm41_ARG_shp.zip "gadm41_ARG_2*" >/dev/null)
             fi
             python pipeline/build_admin_crosswalk.py --territory corrientes --source gadm --shapefile pipeline/data/gadm41_ARG_2.shp || echo "::warning::hexagon grid not generated; temporal step may fail"
+            python pipeline/grid_cache.py --push --territory corrientes || echo "::warning::failed to seed R2 grid cache"
           fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Run temporal update pipeline (Corrientes)
         run: |

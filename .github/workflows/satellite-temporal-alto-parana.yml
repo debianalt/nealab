@@ -37,19 +37,25 @@ jobs:
           pip install -r pipeline/requirements.txt
           npm install -g wrangler
 
-      - name: Generate H3 grid for Alto Paraná if needed
+      - name: Ensure H3 grid + admin crosswalk (R2 cache → regenerate fallback)
         run: |
+          python pipeline/grid_cache.py --pull --territory alto_parana_py || true
           if [ ! -f pipeline/output/alto_parana_py/hexagons.geojson ] && [ ! -f pipeline/output/alto_parana_py/hexagons-lite.geojson ]; then
+            echo "::warning::grid not in R2 cache, regenerating from INE source"
             if [ ! -f "pipeline/output/alto_parana_py_ine_distritos.geojson" ]; then
               mkdir -p pipeline/data
-              curl -sL "https://www.ine.gov.py/microdatos/register/CARTOGRAFIA%20CENSAL%202022/CARTOGRAFIA%20CENSAL_SHP/10%20ALTO%20PARANA.rar" -o pipeline/data/ine_10_alto_parana.rar
+              curl -sL --retry 5 --retry-all-errors --connect-timeout 30 --max-time 600 "https://www.ine.gov.py/microdatos/register/CARTOGRAFIA%20CENSAL%202022/CARTOGRAFIA%20CENSAL_SHP/10%20ALTO%20PARANA.rar" -o pipeline/data/ine_10_alto_parana.rar
               (cd pipeline/data && 7z x -y ine_10_alto_parana.rar -oine_ap >/dev/null)
               python pipeline/ine_cartografia_to_geojson.py --territory alto_parana_py \
                 --shp "pipeline/data/ine_ap/10 ALTO PARANA/Distritos_Alto Parana.shp"
             fi
             python pipeline/build_admin_crosswalk.py --territory alto_parana_py --source geojson \
               --shapefile pipeline/output/alto_parana_py_ine_distritos.geojson || echo "::warning::hexagon grid not generated; temporal step may fail"
+            python pipeline/grid_cache.py --push --territory alto_parana_py || echo "::warning::failed to seed R2 grid cache"
           fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Run temporal update pipeline (Alto Paraná)
         run: |
