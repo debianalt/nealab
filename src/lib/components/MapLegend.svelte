@@ -55,7 +55,7 @@
 		isFlood
 			? 'linear-gradient(to right, #3b82f6, #eab308, #dc2626)'
 			: isGreen
-			? 'linear-gradient(to right, #14532d, #166534, #bbf7d0)'
+			? 'linear-gradient(to right, #bbf7d0, #166534, #14532d)'
 			: isWarm
 			? 'linear-gradient(to right, #78350f, #f59e0b, #fde725)'
 			: isDiverging

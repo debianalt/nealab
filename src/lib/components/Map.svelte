@@ -2712,9 +2712,13 @@
 				g = Math.round(t < 0.5 ? 130 + t * 2 * (179 - 130) : 179 + (t - 0.5) * 2 * (38 - 179));
 				b = Math.round(t < 0.5 ? 246 + t * 2 * (8 - 246) : 8 + (t - 0.5) * 2 * (38 - 8));
 			} else if (colorScale === 'green') {
-				r = Math.round(t < 0.5 ? 20 + t * 2 * (22 - 20) : 22 + (t - 0.5) * 2 * (187 - 22));
-				g = Math.round(t < 0.5 ? 83 + t * 2 * (101 - 83) : 101 + (t - 0.5) * 2 * (247 - 101));
-				b = Math.round(t < 0.5 ? 45 + t * 2 * (52 - 45) : 52 + (t - 0.5) * 2 * (208 - 52));
+				// Inverted vs the house "high value = brighter" convention: green saturation
+				// reads as vegetation density, so high coverage/score = the dark saturated green
+				// and low = pale (matches the land_use methodology text "más verde = más árboles").
+				const tg = 1 - t;
+				r = Math.round(tg < 0.5 ? 20 + tg * 2 * (22 - 20) : 22 + (tg - 0.5) * 2 * (187 - 22));
+				g = Math.round(tg < 0.5 ? 83 + tg * 2 * (101 - 83) : 101 + (tg - 0.5) * 2 * (247 - 101));
+				b = Math.round(tg < 0.5 ? 45 + tg * 2 * (52 - 45) : 52 + (tg - 0.5) * 2 * (208 - 52));
 			} else if (colorScale === 'warm') {
 				r = Math.round(t < 0.5 ? 120 + t * 2 * (245 - 120) : 245 + (t - 0.5) * 2 * (253 - 245));
 				g = Math.round(t < 0.5 ? 53 + t * 2 * (158 - 53) : 158 + (t - 0.5) * 2 * (231 - 158));
