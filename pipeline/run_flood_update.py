@@ -21,6 +21,7 @@ Usage:
 import argparse
 import glob
 import os
+import re
 import sys
 import time
 
@@ -35,6 +36,20 @@ def step(n, msg):
     print(f"\n{'='*60}")
     print(f"  Step {n}: {msg}")
     print(f"{'='*60}\n")
+
+
+def sar_date_from_path(path):
+    """ISO date (YYYY-MM-DD) parsed from a flood_current_YYYYMMDD.tif filename.
+
+    This is the authoritative SAR snapshot date for the parquet being built —
+    it is the exact current-extent raster aggregated into flood_extent_pct,
+    not whatever happens to be the newest .tif in the directory.
+    Returns None for legacy sentinel1_flood.tif (undated) or no current raster.
+    """
+    if not path:
+        return None
+    m = re.search(r"flood_current_(\d{4})(\d{2})(\d{2})", os.path.basename(path))
+    return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else None
 
 
 def find_local_geotiffs(directory=None):
@@ -214,7 +229,12 @@ def run(args):
     try:
         import subprocess as _sp
         split_script = os.path.join(PIPELINE_DIR, "split_flood_by_dpto.py")
-        result = _sp.run([sys.executable, split_script, '--territory', args.territory], cwd=PIPELINE_DIR)
+        split_cmd = [sys.executable, split_script, '--territory', args.territory]
+        sar_date = sar_date_from_path(current_path)
+        if sar_date:
+            split_cmd += ['--sar-date', sar_date]
+            print(f"  SAR snapshot date: {sar_date}")
+        result = _sp.run(split_cmd, cwd=PIPELINE_DIR)
         if result.returncode != 0:
             print("  WARNING: Department splitting failed, continuing...")
         else:

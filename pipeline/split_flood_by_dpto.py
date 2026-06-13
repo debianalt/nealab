@@ -16,9 +16,11 @@ Output:
 """
 
 import argparse
+import glob
 import json
 import math
 import os
+import re
 
 import pandas as pd
 from shapely import wkb
@@ -51,6 +53,24 @@ def h3_to_latlng(h3index: str) -> tuple[float, float]:
     except (ImportError, AttributeError):
         pass
     raise ImportError("h3 library required: pip install h3")
+
+
+def fallback_sar_date(t_prefix: str) -> str | None:
+    """Best-effort SAR date when --sar-date is not passed (standalone runs).
+
+    Globs flood_current_YYYYMMDD.tif in the territory dir and takes the most
+    recent date. Less reliable than the orchestrator path (the newest .tif on
+    disk is not guaranteed to be the one baked into the parquet), so the
+    orchestrator passes --sar-date explicitly. Returns ISO or None.
+    """
+    pattern = os.path.join(OUTPUT_DIR, t_prefix, "flood_current_*.tif") if t_prefix \
+        else os.path.join(OUTPUT_DIR, "flood_current_*.tif")
+    dates = []
+    for f in glob.glob(pattern):
+        m = re.search(r"flood_current_(\d{4})(\d{2})(\d{2})", os.path.basename(f))
+        if m:
+            dates.append(f"{m.group(1)}-{m.group(2)}-{m.group(3)}")
+    return max(dates) if dates else None
 
 
 def safe_filename(name: str) -> str:
@@ -175,11 +195,18 @@ def main():
     parser = argparse.ArgumentParser(description="Split flood parquets by admin unit")
     parser.add_argument("--territory", default="misiones",
                         help="Territory ID from config.py (default: misiones)")
+    parser.add_argument("--sar-date", default=None,
+                        help="ISO date (YYYY-MM-DD) of the Sentinel-1 current-extent "
+                             "snapshot baked into the parquet. Passed by the orchestrator; "
+                             "falls back to the latest flood_current_*.tif on disk.")
     args = parser.parse_args()
 
     territory = get_territory(args.territory)
     t_prefix = territory['output_prefix']
     territory_id = territory['id']
+
+    sar_date = args.sar_date or fallback_sar_date(t_prefix)
+    print(f"SAR snapshot date: {sar_date or 'unknown'}")
 
     flood_path = os.path.join(OUTPUT_DIR, f"{t_prefix}hex_flood_risk.parquet")
     output_dir = os.path.join(OUTPUT_DIR, f"{t_prefix}flood_dpto")
@@ -243,6 +270,10 @@ def main():
         print(f"  {dpto}: {len(hex_data)} hexes, {size_kb:.0f}KB, avg={avg_score}")
 
     summary_with_totals = {
+        "metadata": {
+            "sar_date": sar_date,        # ISO YYYY-MM-DD of current-extent SAR, or None
+            "sar_window_days": 12,       # composite window for "extensión actual"
+        },
         "province": {
             "total_hexes": prov_total_hexes,
             "high_risk_count": prov_high_risk,
