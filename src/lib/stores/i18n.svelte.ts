@@ -110,6 +110,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'section.requestReport': { es: 'Solicitar informe', en: 'Request report', gn: 'Ejerure informe', pt: 'Solicitar relatório' },
 	'section.source': { es: 'Fuente', en: 'Source', gn: 'Fuente', pt: 'Fonte' },
 	'section.processed': { es: 'Procesado', en: 'Processed', gn: 'Procesado', pt: 'Processado' },
+	'section.sarImage': { es: 'Imagen SAR (extensión actual)', en: 'SAR image (current extent)', gn: 'SAR (extensión actual)', pt: 'Imagem SAR (extensão atual)' },
+	'section.sarRevisit': { es: 'revisita ~6–12 días', en: '~6–12 day revisit', gn: 'revisita ~6–12 ára', pt: 'revisita ~6–12 dias' },
 	'legend.highMeansDanger': { es: 'Score alto = mayor riesgo', en: 'High score = greater risk', gn: 'Score yvate = riesgo tuicha', pt: 'Score alto = maior risco' },
 	'legend.highMeansGood': { es: 'Score alto = mejor aptitud', en: 'High score = better aptitude', gn: 'Score yvate = iporãve', pt: 'Score alto = melhor aptidão' },
 

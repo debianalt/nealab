@@ -1388,7 +1388,7 @@ export function getAnalysisById(id: string): AnalysisConfig | undefined {
 
 export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: string; sourceKey: string }> = {
 	hex_flood_risk: {
-		dataDate: 'abril 2026',
+		dataDate: '21/03/2026', // fecha real de la imagen Sentinel-1 SAR horneada (no el mes de procesamiento)
 		processedDate: '21/04/2026',
 		sourceKey: 'analysis.flood.source',
 	},

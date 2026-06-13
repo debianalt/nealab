@@ -106,6 +106,20 @@
 
 	const activeSummaryData = $derived(allSummaries.get(activeTab) ?? deptSummary);
 
+	// Flood layer only: per-territory Sentinel-1 SAR acquisition date for the
+	// "current extent" component. The pipeline injects it into each
+	// *_flood_dept_summary.json under metadata.sar_date (ISO). Null elsewhere
+	// or until the territory has been re-processed → the SAR line is hidden.
+	const sarDate = $derived(
+		analysis.id === 'flood_risk' ? (activeSummaryData?.metadata?.sar_date ?? null) : null
+	);
+	// ISO (2026-03-21) → DD/MM/YYYY to match the processedDate format shown alongside.
+	const sarDateDisplay = $derived.by(() => {
+		if (!sarDate) return null;
+		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(sarDate);
+		return m ? `${m[3]}/${m[2]}/${m[1]}` : sarDate;
+	});
+
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
 		if (!summary?.departments) return [];
@@ -479,6 +493,15 @@
 	}
 </script>
 
+<!-- Flood "current extent": Sentinel-1 SAR snapshot date + revisit cadence.
+     Hoisted snippet rendered inside each freshness/source box; renders nothing
+     unless the active territory's summary carries metadata.sar_date. -->
+{#snippet sarFreshness()}
+	{#if sarDateDisplay}
+		<div><strong>{i18n.t('section.sarImage')}:</strong> {sarDateDisplay} · {i18n.t('section.sarRevisit')}</div>
+	{/if}
+{/snippet}
+
 {#if selectedHex && selectedDpto && isPerDept}
 	<!-- ═══ HEX DETAIL VIEW ═══ -->
 	<div class="view">
@@ -555,6 +578,7 @@
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
 				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				{@render sarFreshness()}
 			</div>
 		{/if}
 	</div>
@@ -646,6 +670,7 @@
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
 				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				{@render sarFreshness()}
 			</div>
 		{/if}
 	</div>
@@ -795,6 +820,7 @@
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
 				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				{@render sarFreshness()}
 			</div>
 		{/if}
 
@@ -810,6 +836,9 @@
 			<div class="freshness">
 				<span class="freshness-label">{i18n.t('data.updatedAt')}: {freshness.processedDate}</span>
 				<span class="freshness-source">{i18n.t(freshness.sourceKey)}</span>
+				{#if sarDateDisplay}
+					<span class="freshness-label">{i18n.t('section.sarImage')}: {sarDateDisplay} · {i18n.t('section.sarRevisit')}</span>
+				{/if}
 			</div>
 		{/if}
 
