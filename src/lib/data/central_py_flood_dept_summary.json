@@ -1,14 +1,18 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 27483,
     "high_risk_count": 1510,
-    "avg_score": 4.9
+    "avg_score": 4.8
   },
   "departments": [
     {
       "dpto": "Aregua",
       "parquetKey": "aregua",
-      "avg_score": 16.4,
+      "avg_score": 16.3,
       "hex_count": 1123,
       "high_risk_count": 193,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Asuncion",
       "parquetKey": "asuncion",
-      "avg_score": 12.3,
+      "avg_score": 12.1,
       "hex_count": 1465,
       "high_risk_count": 266,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Ita",
       "parquetKey": "ita",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 1945,
       "high_risk_count": 0,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Itaugua",
       "parquetKey": "itaugua",
-      "avg_score": 8.1,
+      "avg_score": 8.0,
       "hex_count": 1218,
       "high_risk_count": 93,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Limpio",
       "parquetKey": "limpio",
-      "avg_score": 10.3,
+      "avg_score": 10.2,
       "hex_count": 1313,
       "high_risk_count": 199,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "Luque",
       "parquetKey": "luque",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 1595,
       "high_risk_count": 1,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "M. Roque Alonso",
       "parquetKey": "m_roque_alonso",
-      "avg_score": 12.3,
+      "avg_score": 12.0,
       "hex_count": 455,
       "high_risk_count": 76,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Nueva Italia",
       "parquetKey": "nueva_italia",
-      "avg_score": 1.8,
+      "avg_score": 1.6,
       "hex_count": 4022,
       "high_risk_count": 31,
       "centroid": [
@@ -162,7 +166,7 @@
     {
       "dpto": "San Antonio",
       "parquetKey": "san_antonio",
-      "avg_score": 14.1,
+      "avg_score": 13.9,
       "hex_count": 315,
       "high_risk_count": 67,
       "centroid": [
@@ -195,7 +199,7 @@
     {
       "dpto": "Villeta",
       "parquetKey": "villeta",
-      "avg_score": 4.1,
+      "avg_score": 3.9,
       "hex_count": 9166,
       "high_risk_count": 427,
       "centroid": [
@@ -206,7 +210,7 @@
     {
       "dpto": "Ypacarai",
       "parquetKey": "ypacarai",
-      "avg_score": 8.3,
+      "avg_score": 8.2,
       "hex_count": 1197,
       "high_risk_count": 103,
       "centroid": [
@@ -217,7 +221,7 @@
     {
       "dpto": "Ypane",
       "parquetKey": "ypane",
-      "avg_score": 2.1,
+      "avg_score": 2.0,
       "hex_count": 509,
       "high_risk_count": 11,
       "centroid": [

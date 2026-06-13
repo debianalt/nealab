@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 1033548,
     "high_risk_count": 51514,
@@ -8,7 +12,7 @@
     {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 9.9,
+      "avg_score": 9.7,
       "hex_count": 22244,
       "high_risk_count": 3507,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "avg_score": 7.8,
+      "avg_score": 7.7,
       "hex_count": 8324,
       "high_risk_count": 761,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 15.8,
+      "avg_score": 15.6,
       "hex_count": 6125,
       "high_risk_count": 1333,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 5.8,
+      "avg_score": 5.9,
       "hex_count": 59287,
       "high_risk_count": 4814,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 1.9,
+      "avg_score": 2.2,
       "hex_count": 98250,
       "high_risk_count": 827,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Empedrado",
       "parquetKey": "empedrado",
-      "avg_score": 8.0,
+      "avg_score": 7.9,
       "hex_count": 23792,
       "high_risk_count": 2271,
       "centroid": [
@@ -85,7 +89,7 @@
     {
       "dpto": "General Alvear",
       "parquetKey": "general_alvear",
-      "avg_score": 4.0,
+      "avg_score": 3.9,
       "hex_count": 22565,
       "high_risk_count": 1006,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "General Paz",
       "parquetKey": "general_paz",
-      "avg_score": 5.1,
+      "avg_score": 4.5,
       "hex_count": 29303,
       "high_risk_count": 1430,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 6.1,
+      "avg_score": 6.2,
       "hex_count": 58352,
       "high_risk_count": 6358,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "avg_score": 14.8,
+      "avg_score": 14.6,
       "hex_count": 8810,
       "high_risk_count": 1683,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 6.5,
+      "avg_score": 6.3,
       "hex_count": 103935,
       "high_risk_count": 6385,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
-      "avg_score": 4.9,
+      "avg_score": 4.8,
       "hex_count": 11407,
       "high_risk_count": 746,
       "centroid": [
@@ -162,7 +166,7 @@
     {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
-      "avg_score": 3.2,
+      "avg_score": 3.4,
       "hex_count": 116648,
       "high_risk_count": 2839,
       "centroid": [
@@ -173,7 +177,7 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 1.1,
+      "avg_score": 1.8,
       "hex_count": 31149,
       "high_risk_count": 7,
       "centroid": [
@@ -184,7 +188,7 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 4.1,
+      "avg_score": 4.0,
       "hex_count": 58737,
       "high_risk_count": 2251,
       "centroid": [
@@ -195,7 +199,7 @@
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "avg_score": 3.5,
+      "avg_score": 3.4,
       "hex_count": 21912,
       "high_risk_count": 1061,
       "centroid": [
@@ -206,7 +210,7 @@
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "avg_score": 11.6,
+      "avg_score": 11.4,
       "hex_count": 6926,
       "high_risk_count": 1044,
       "centroid": [
@@ -217,7 +221,7 @@
     {
       "dpto": "San Luis del Palmar",
       "parquetKey": "san_luis_del_palmar",
-      "avg_score": 2.7,
+      "avg_score": 2.4,
       "hex_count": 29721,
       "high_risk_count": 630,
       "centroid": [
@@ -228,7 +232,7 @@
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "avg_score": 3.3,
+      "avg_score": 3.2,
       "hex_count": 76885,
       "high_risk_count": 2204,
       "centroid": [
@@ -239,7 +243,7 @@
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "avg_score": 7.3,
+      "avg_score": 6.7,
       "hex_count": 33285,
       "high_risk_count": 2814,
       "centroid": [
@@ -261,7 +265,7 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 3.5,
+      "avg_score": 3.4,
       "hex_count": 82588,
       "high_risk_count": 2037,
       "centroid": [
@@ -272,7 +276,7 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 1.3,
+      "avg_score": 1.5,
       "hex_count": 29344,
       "high_risk_count": 4,
       "centroid": [

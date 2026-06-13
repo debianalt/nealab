@@ -1,14 +1,18 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 51330,
     "high_risk_count": 896,
-    "avg_score": 1.5
+    "avg_score": 1.3
   },
   "departments": [
     {
       "dpto": "1 De Marzo",
       "parquetKey": "1_de_marzo",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 810,
       "high_risk_count": 0,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Arroyos Y Esteros",
       "parquetKey": "arroyos_y_esteros",
-      "avg_score": 2.1,
+      "avg_score": 1.9,
       "hex_count": 5898,
       "high_risk_count": 429,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Atyra",
       "parquetKey": "atyra",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1285,
       "high_risk_count": 0,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Caacupe",
       "parquetKey": "caacupe",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1249,
       "high_risk_count": 0,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Caraguatay",
       "parquetKey": "caraguatay",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 5731,
       "high_risk_count": 0,
       "centroid": [
@@ -85,7 +89,7 @@
     {
       "dpto": "Eusebio Ayala",
       "parquetKey": "eusebio_ayala",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 2873,
       "high_risk_count": 2,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "Isla Pucu",
       "parquetKey": "isla_pucu",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1183,
       "high_risk_count": 0,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "Juan De Mena",
       "parquetKey": "juan_de_mena",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 10887,
       "high_risk_count": 13,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "Loma Grande",
       "parquetKey": "loma_grande",
-      "avg_score": 1.2,
+      "avg_score": 1.0,
       "hex_count": 1011,
       "high_risk_count": 0,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Mbacayaty Del Yhaguy",
       "parquetKey": "mbacayaty_del_yhaguy",
-      "avg_score": 1.4,
+      "avg_score": 1.1,
       "hex_count": 3150,
       "high_risk_count": 0,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Nueva Colombia",
       "parquetKey": "nueva_colombia",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 1026,
       "high_risk_count": 1,
       "centroid": [
@@ -184,7 +188,7 @@
     {
       "dpto": "San Jose Obrero",
       "parquetKey": "san_jose_obrero",
-      "avg_score": 1.4,
+      "avg_score": 1.2,
       "hex_count": 2180,
       "high_risk_count": 2,
       "centroid": [
@@ -195,7 +199,7 @@
     {
       "dpto": "Santa Elena",
       "parquetKey": "santa_elena",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1171,
       "high_risk_count": 0,
       "centroid": [
@@ -206,7 +210,7 @@
     {
       "dpto": "Tobati",
       "parquetKey": "tobati",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 2861,
       "high_risk_count": 1,
       "centroid": [

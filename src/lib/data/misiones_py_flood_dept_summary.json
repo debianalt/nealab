@@ -1,8 +1,12 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 92975,
     "high_risk_count": 342,
-    "avg_score": 1.5
+    "avg_score": 1.4
   },
   "departments": [
     {
@@ -19,7 +23,7 @@
     {
       "dpto": "San Ignacio",
       "parquetKey": "san_ignacio",
-      "avg_score": 2.4,
+      "avg_score": 2.2,
       "hex_count": 16735,
       "high_risk_count": 187,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "San Juan Bautista",
       "parquetKey": "san_juan_bautista",
-      "avg_score": 1.3,
+      "avg_score": 1.2,
       "hex_count": 23961,
       "high_risk_count": 17,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "San Patricio",
       "parquetKey": "san_patricio",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 728,
       "high_risk_count": 0,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Santa Maria",
       "parquetKey": "santa_maria",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 4060,
       "high_risk_count": 2,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Santa Rosa",
       "parquetKey": "santa_rosa",
-      "avg_score": 1.4,
+      "avg_score": 1.2,
       "hex_count": 9138,
       "high_risk_count": 22,
       "centroid": [
@@ -85,7 +89,7 @@
     {
       "dpto": "Santiago",
       "parquetKey": "santiago",
-      "avg_score": 1.7,
+      "avg_score": 1.5,
       "hex_count": 10349,
       "high_risk_count": 52,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Yabebyry",
       "parquetKey": "yabebyry",
-      "avg_score": 1.9,
+      "avg_score": 1.7,
       "hex_count": 9241,
       "high_risk_count": 62,
       "centroid": [

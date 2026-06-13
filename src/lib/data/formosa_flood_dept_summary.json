@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 825760,
     "high_risk_count": 9233,
@@ -19,7 +23,7 @@
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 2.5,
+      "avg_score": 2.4,
       "hex_count": 71783,
       "high_risk_count": 1869,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 3.4,
+      "avg_score": 3.3,
       "hex_count": 39672,
       "high_risk_count": 1937,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 2.6,
+      "avg_score": 2.4,
       "hex_count": 58522,
       "high_risk_count": 1228,
       "centroid": [

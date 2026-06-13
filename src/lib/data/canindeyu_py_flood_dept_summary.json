@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 142250,
     "high_risk_count": 1806,
@@ -8,7 +12,7 @@
     {
       "dpto": "Corpus Christi",
       "parquetKey": "corpus_christi",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 18536,
       "high_risk_count": 8,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "F. Caballero Alvarez",
       "parquetKey": "f_caballero_alvarez",
-      "avg_score": 1.3,
+      "avg_score": 1.2,
       "hex_count": 36828,
       "high_risk_count": 103,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Itanara",
       "parquetKey": "itanara",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 8321,
       "high_risk_count": 0,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Salto Del Guaira",
       "parquetKey": "salto_del_guaira",
-      "avg_score": 8.6,
+      "avg_score": 8.5,
       "hex_count": 16849,
       "high_risk_count": 1686,
       "centroid": [

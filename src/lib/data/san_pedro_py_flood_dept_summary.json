@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 216922,
     "high_risk_count": 3305,
@@ -8,7 +12,7 @@
     {
       "dpto": "25 De Diciembre",
       "parquetKey": "25_de_diciembre",
-      "avg_score": 1.4,
+      "avg_score": 1.1,
       "hex_count": 9792,
       "high_risk_count": 13,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Antequera",
       "parquetKey": "antequera",
-      "avg_score": 2.5,
+      "avg_score": 2.4,
       "hex_count": 5595,
       "high_risk_count": 638,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Elizardo Aquino",
       "parquetKey": "elizardo_aquino",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 8489,
       "high_risk_count": 0,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Isidoro Resquin",
       "parquetKey": "isidoro_resquin",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 11021,
       "high_risk_count": 2,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Itacurubi Del Rosario",
       "parquetKey": "itacurubi_del_rosario",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 9559,
       "high_risk_count": 8,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "S.pedro De Ycuamandyyu",
       "parquetKey": "spedro_de_ycuamandyyu",
-      "avg_score": 1.5,
+      "avg_score": 1.4,
       "hex_count": 33579,
       "high_risk_count": 937,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "San Pablo",
       "parquetKey": "san_pablo",
-      "avg_score": 1.6,
+      "avg_score": 1.5,
       "hex_count": 3357,
       "high_risk_count": 193,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Union",
       "parquetKey": "union",
-      "avg_score": 1.2,
+      "avg_score": 1.0,
       "hex_count": 6158,
       "high_risk_count": 0,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Villa Del Rosario",
       "parquetKey": "villa_del_rosario",
-      "avg_score": 2.0,
+      "avg_score": 1.8,
       "hex_count": 22268,
       "high_risk_count": 1266,
       "centroid": [

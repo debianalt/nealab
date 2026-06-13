@@ -1,14 +1,18 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 1116998,
     "high_risk_count": 7669,
-    "avg_score": 1.7
+    "avg_score": 1.5
   },
   "departments": [
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 1.5,
+      "avg_score": 1.3,
       "hex_count": 182902,
       "high_risk_count": 0,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 4.7,
+      "avg_score": 4.6,
       "hex_count": 29310,
       "high_risk_count": 2212,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Chacabuco",
       "parquetKey": "chacabuco",
-      "avg_score": 2.4,
+      "avg_score": 2.1,
       "hex_count": 15300,
       "high_risk_count": 0,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 1.4,
+      "avg_score": 1.1,
       "hex_count": 16790,
       "high_risk_count": 3,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Doce de Octubre",
       "parquetKey": "doce_de_octubre",
-      "avg_score": 2.7,
+      "avg_score": 2.6,
       "hex_count": 40893,
       "high_risk_count": 45,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 2.2,
+      "avg_score": 2.1,
       "hex_count": 33569,
       "high_risk_count": 211,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 2.3,
+      "avg_score": 1.5,
       "hex_count": 14454,
       "high_risk_count": 0,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 289439,
       "high_risk_count": 729,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
-      "avg_score": 1.9,
+      "avg_score": 1.2,
       "hex_count": 21190,
       "high_risk_count": 0,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Maipú",
       "parquetKey": "maipu",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 31826,
       "high_risk_count": 1,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 1.5,
+      "avg_score": 1.4,
       "hex_count": 43497,
       "high_risk_count": 22,
       "centroid": [
@@ -162,7 +166,7 @@
     {
       "dpto": "Nueve de Julio",
       "parquetKey": "nueve_de_julio",
-      "avg_score": 2.1,
+      "avg_score": 1.8,
       "hex_count": 25893,
       "high_risk_count": 2,
       "centroid": [
@@ -173,7 +177,7 @@
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 1.7,
+      "avg_score": 1.3,
       "hex_count": 17997,
       "high_risk_count": 0,
       "centroid": [
@@ -195,7 +199,7 @@
     {
       "dpto": "Primero de Mayo",
       "parquetKey": "primero_de_mayo",
-      "avg_score": 2.7,
+      "avg_score": 2.6,
       "hex_count": 15919,
       "high_risk_count": 466,
       "centroid": [
@@ -206,7 +210,7 @@
     {
       "dpto": "Quitilipi",
       "parquetKey": "quitilipi",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 17728,
       "high_risk_count": 8,
       "centroid": [
@@ -217,7 +221,7 @@
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 4.7,
+      "avg_score": 4.4,
       "hex_count": 41114,
       "high_risk_count": 2837,
       "centroid": [
@@ -228,7 +232,7 @@
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 24894,
       "high_risk_count": 1,
       "centroid": [

@@ -1,8 +1,12 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 772479,
     "high_risk_count": 1248,
-    "avg_score": 1.2
+    "avg_score": 1.1
   },
   "departments": [
     {

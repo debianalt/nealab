@@ -1,14 +1,18 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 135727,
     "high_risk_count": 4162,
-    "avg_score": 2.4
+    "avg_score": 3.5
   },
   "departments": [
     {
       "dpto": "3 De Febrero",
       "parquetKey": "3_de_febrero",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1819,
       "high_risk_count": 0,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Caaguazu",
       "parquetKey": "caaguazu",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 10114,
       "high_risk_count": 3,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Coronel Oviedo",
       "parquetKey": "coronel_oviedo",
-      "avg_score": 1.3,
+      "avg_score": 1.2,
       "hex_count": 9135,
       "high_risk_count": 1,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "J.e. Estigarribia",
       "parquetKey": "je_estigarribia",
-      "avg_score": 5.3,
+      "avg_score": 6.7,
       "hex_count": 6574,
       "high_risk_count": 468,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Jose D. Ocampos",
       "parquetKey": "jose_d_ocampos",
-      "avg_score": 2.5,
+      "avg_score": 7.7,
       "hex_count": 1546,
       "high_risk_count": 136,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "La Pastora",
       "parquetKey": "la_pastora",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 2247,
       "high_risk_count": 1,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Mcal. Fco. Solano Lopez",
       "parquetKey": "mcal_fco_solano_lopez",
-      "avg_score": 5.8,
+      "avg_score": 11.2,
       "hex_count": 13563,
       "high_risk_count": 1709,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "Nueva Londres",
       "parquetKey": "nueva_londres",
-      "avg_score": 1.4,
+      "avg_score": 1.2,
       "hex_count": 2284,
       "high_risk_count": 0,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "R.i. 3 Corrales",
       "parquetKey": "ri_3_corrales",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 2925,
       "high_risk_count": 0,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Raul  A. Oviedo",
       "parquetKey": "raul__a_oviedo",
-      "avg_score": 5.9,
+      "avg_score": 10.4,
       "hex_count": 14838,
       "high_risk_count": 1831,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Repatriacion",
       "parquetKey": "repatriacion",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 8988,
       "high_risk_count": 1,
       "centroid": [
@@ -173,7 +177,7 @@
     {
       "dpto": "San Jose De Los Arroyos",
       "parquetKey": "san_jose_de_los_arroyos",
-      "avg_score": 1.3,
+      "avg_score": 1.2,
       "hex_count": 5299,
       "high_risk_count": 0,
       "centroid": [

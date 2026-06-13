@@ -1,14 +1,18 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 173048,
     "high_risk_count": 14414,
-    "avg_score": 8.5
+    "avg_score": 8.0
   },
   "departments": [
     {
       "dpto": "Alto Vera",
       "parquetKey": "alto_vera",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 13092,
       "high_risk_count": 4,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 4.6,
+      "avg_score": 4.2,
       "hex_count": 3149,
       "high_risk_count": 133,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Cambyreta",
       "parquetKey": "cambyreta",
-      "avg_score": 6.0,
+      "avg_score": 5.8,
       "hex_count": 2077,
       "high_risk_count": 129,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Capitan Meza",
       "parquetKey": "capitan_meza",
-      "avg_score": 2.3,
+      "avg_score": 2.0,
       "hex_count": 8347,
       "high_risk_count": 113,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "Capitan Miranda",
       "parquetKey": "capitan_miranda",
-      "avg_score": 1.6,
+      "avg_score": 1.1,
       "hex_count": 1969,
       "high_risk_count": 0,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Carmen Del Parana",
       "parquetKey": "carmen_del_parana",
-      "avg_score": 22.7,
+      "avg_score": 21.9,
       "hex_count": 3013,
       "high_risk_count": 848,
       "centroid": [
@@ -85,7 +89,7 @@
     {
       "dpto": "Coronel Bogado",
       "parquetKey": "coronel_bogado",
-      "avg_score": 11.3,
+      "avg_score": 10.2,
       "hex_count": 6066,
       "high_risk_count": 765,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "Edelira",
       "parquetKey": "edelira",
-      "avg_score": 1.3,
+      "avg_score": 1.1,
       "hex_count": 7388,
       "high_risk_count": 1,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Encarnacion",
       "parquetKey": "encarnacion",
-      "avg_score": 14.8,
+      "avg_score": 14.5,
       "hex_count": 3415,
       "high_risk_count": 584,
       "centroid": [
@@ -118,7 +122,7 @@
     {
       "dpto": "Fram",
       "parquetKey": "fram",
-      "avg_score": 1.4,
+      "avg_score": 1.1,
       "hex_count": 3545,
       "high_risk_count": 0,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "Gral Artigas",
       "parquetKey": "gral_artigas",
-      "avg_score": 2.7,
+      "avg_score": 1.7,
       "hex_count": 15510,
       "high_risk_count": 182,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Gral. Delgado",
       "parquetKey": "gral_delgado",
-      "avg_score": 3.8,
+      "avg_score": 2.6,
       "hex_count": 4846,
       "high_risk_count": 114,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Hohenau",
       "parquetKey": "hohenau",
-      "avg_score": 4.0,
+      "avg_score": 3.6,
       "hex_count": 2994,
       "high_risk_count": 120,
       "centroid": [
@@ -162,7 +166,7 @@
     {
       "dpto": "Isla",
       "parquetKey": "isla",
-      "avg_score": 93.8,
+      "avg_score": 93.4,
       "hex_count": 2429,
       "high_risk_count": 2429,
       "centroid": [
@@ -173,7 +177,7 @@
     {
       "dpto": "Isla Yacyreta",
       "parquetKey": "isla_yacyreta",
-      "avg_score": 77.8,
+      "avg_score": 76.0,
       "hex_count": 8785,
       "high_risk_count": 7555,
       "centroid": [
@@ -184,7 +188,7 @@
     {
       "dpto": "Jesus",
       "parquetKey": "jesus",
-      "avg_score": 1.5,
+      "avg_score": 1.1,
       "hex_count": 1387,
       "high_risk_count": 0,
       "centroid": [
@@ -195,7 +199,7 @@
     {
       "dpto": "La Paz",
       "parquetKey": "la_paz",
-      "avg_score": 1.6,
+      "avg_score": 1.1,
       "hex_count": 2509,
       "high_risk_count": 0,
       "centroid": [
@@ -206,7 +210,7 @@
     {
       "dpto": "Leandro Oviedo",
       "parquetKey": "leandro_oviedo",
-      "avg_score": 1.6,
+      "avg_score": 1.4,
       "hex_count": 1381,
       "high_risk_count": 6,
       "centroid": [
@@ -217,7 +221,7 @@
     {
       "dpto": "Mayor Otano",
       "parquetKey": "mayor_otano",
-      "avg_score": 1.0,
+      "avg_score": 1.1,
       "hex_count": 3257,
       "high_risk_count": 0,
       "centroid": [
@@ -228,7 +232,7 @@
     {
       "dpto": "Natalio",
       "parquetKey": "natalio",
-      "avg_score": 2.2,
+      "avg_score": 2.1,
       "hex_count": 3554,
       "high_risk_count": 63,
       "centroid": [
@@ -239,7 +243,7 @@
     {
       "dpto": "Nueva Alborada",
       "parquetKey": "nueva_alborada",
-      "avg_score": 8.2,
+      "avg_score": 7.8,
       "hex_count": 2534,
       "high_risk_count": 218,
       "centroid": [
@@ -250,7 +254,7 @@
     {
       "dpto": "Obligado",
       "parquetKey": "obligado",
-      "avg_score": 2.7,
+      "avg_score": 2.2,
       "hex_count": 4236,
       "high_risk_count": 63,
       "centroid": [
@@ -261,7 +265,7 @@
     {
       "dpto": "Pirapo",
       "parquetKey": "pirapo",
-      "avg_score": 2.1,
+      "avg_score": 1.7,
       "hex_count": 7336,
       "high_risk_count": 71,
       "centroid": [
@@ -272,7 +276,7 @@
     {
       "dpto": "San Cosme Y Damian",
       "parquetKey": "san_cosme_y_damian",
-      "avg_score": 7.3,
+      "avg_score": 6.1,
       "hex_count": 7180,
       "high_risk_count": 565,
       "centroid": [
@@ -283,7 +287,7 @@
     {
       "dpto": "San Juan",
       "parquetKey": "san_juan",
-      "avg_score": 32.9,
+      "avg_score": 32.8,
       "hex_count": 901,
       "high_risk_count": 362,
       "centroid": [
@@ -294,7 +298,7 @@
     {
       "dpto": "San Pedro Del Parana",
       "parquetKey": "san_pedro_del_parana",
-      "avg_score": 1.4,
+      "avg_score": 1.2,
       "hex_count": 15050,
       "high_risk_count": 3,
       "centroid": [
@@ -316,7 +320,7 @@
     {
       "dpto": "Tomas Romero P.",
       "parquetKey": "tomas_romero_p",
-      "avg_score": 1.2,
+      "avg_score": 1.0,
       "hex_count": 6723,
       "high_risk_count": 0,
       "centroid": [
@@ -327,7 +331,7 @@
     {
       "dpto": "Trinidad",
       "parquetKey": "trinidad",
-      "avg_score": 3.5,
+      "avg_score": 3.3,
       "hex_count": 2375,
       "high_risk_count": 79,
       "centroid": [
@@ -338,7 +342,7 @@
     {
       "dpto": "Yatytay",
       "parquetKey": "yatytay",
-      "avg_score": 1.3,
+      "avg_score": 1.2,
       "hex_count": 3122,
       "high_risk_count": 7,
       "centroid": [

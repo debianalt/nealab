@@ -1,8 +1,12 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 126524,
     "high_risk_count": 9014,
-    "avg_score": 5.2
+    "avg_score": 5.0
   },
   "departments": [
     {
@@ -19,7 +23,7 @@
     {
       "dpto": "Cerrito",
       "parquetKey": "cerrito",
-      "avg_score": 20.0,
+      "avg_score": 19.1,
       "hex_count": 6459,
       "high_risk_count": 1742,
       "centroid": [
@@ -41,7 +45,7 @@
     {
       "dpto": "Gral. Jose E. Diaz",
       "parquetKey": "gral_jose_e_diaz",
-      "avg_score": 9.5,
+      "avg_score": 8.2,
       "hex_count": 4210,
       "high_risk_count": 731,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "Humaita",
       "parquetKey": "humaita",
-      "avg_score": 4.3,
+      "avg_score": 4.2,
       "hex_count": 3774,
       "high_risk_count": 324,
       "centroid": [
@@ -74,7 +78,7 @@
     {
       "dpto": "Isla Umbu",
       "parquetKey": "isla_umbu",
-      "avg_score": 5.2,
+      "avg_score": 5.1,
       "hex_count": 5116,
       "high_risk_count": 518,
       "centroid": [
@@ -85,7 +89,7 @@
     {
       "dpto": "Laureles",
       "parquetKey": "laureles",
-      "avg_score": 2.8,
+      "avg_score": 2.5,
       "hex_count": 8951,
       "high_risk_count": 138,
       "centroid": [
@@ -96,7 +100,7 @@
     {
       "dpto": "Mayor Martinez",
       "parquetKey": "mayor_martinez",
-      "avg_score": 11.8,
+      "avg_score": 11.3,
       "hex_count": 4179,
       "high_risk_count": 818,
       "centroid": [
@@ -107,7 +111,7 @@
     {
       "dpto": "Paso De Patria",
       "parquetKey": "paso_de_patria",
-      "avg_score": 15.6,
+      "avg_score": 14.8,
       "hex_count": 2673,
       "high_risk_count": 730,
       "centroid": [
@@ -129,7 +133,7 @@
     {
       "dpto": "San Juan Bta. Del Neembuc",
       "parquetKey": "san_juan_bta_del_neembuc",
-      "avg_score": 4.7,
+      "avg_score": 4.5,
       "hex_count": 15035,
       "high_risk_count": 1026,
       "centroid": [
@@ -140,7 +144,7 @@
     {
       "dpto": "Tacuaras",
       "parquetKey": "tacuaras",
-      "avg_score": 3.8,
+      "avg_score": 3.7,
       "hex_count": 14798,
       "high_risk_count": 715,
       "centroid": [
@@ -151,7 +155,7 @@
     {
       "dpto": "Villa Franca",
       "parquetKey": "villa_franca",
-      "avg_score": 3.0,
+      "avg_score": 2.9,
       "hex_count": 17143,
       "high_risk_count": 763,
       "centroid": [
@@ -173,7 +177,7 @@
     {
       "dpto": "Villalvin",
       "parquetKey": "villalvin",
-      "avg_score": 9.7,
+      "avg_score": 9.0,
       "hex_count": 5319,
       "high_risk_count": 643,
       "centroid": [

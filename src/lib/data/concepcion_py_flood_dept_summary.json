@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "sar_date": "2026-06-13",
+    "sar_window_days": 12
+  },
   "province": {
     "total_hexes": 191663,
     "high_risk_count": 2492,
@@ -8,7 +12,7 @@
     {
       "dpto": "Belen",
       "parquetKey": "belen",
-      "avg_score": 1.1,
+      "avg_score": 1.0,
       "hex_count": 1491,
       "high_risk_count": 0,
       "centroid": [
@@ -19,7 +23,7 @@
     {
       "dpto": "Concepcion",
       "parquetKey": "concepcion",
-      "avg_score": 2.2,
+      "avg_score": 2.1,
       "hex_count": 103939,
       "high_risk_count": 1910,
       "centroid": [
@@ -30,7 +34,7 @@
     {
       "dpto": "Horqueta",
       "parquetKey": "horqueta",
-      "avg_score": 1.2,
+      "avg_score": 1.1,
       "hex_count": 26825,
       "high_risk_count": 2,
       "centroid": [
@@ -52,7 +56,7 @@
     {
       "dpto": "San Carlos",
       "parquetKey": "san_carlos",
-      "avg_score": 1.1,
+      "avg_score": 1.2,
       "hex_count": 16747,
       "high_risk_count": 17,
       "centroid": [
@@ -63,7 +67,7 @@
     {
       "dpto": "San Lazaro",
       "parquetKey": "san_lazaro",
-      "avg_score": 3.4,
+      "avg_score": 3.5,
       "hex_count": 11310,
       "high_risk_count": 560,
       "centroid": [
