@@ -347,6 +347,52 @@ ANALYSIS_BUILDERS = {
     'air_quality': build_air_quality,
 }
 
+# GEE batch tasks occasionally fail with a transient "Internal error". Retry the
+# affected analysis instead of failing the whole pipeline run for a Google-side blip.
+EXPORT_MAX_RETRIES = 2
+
+
+def _start_export(aid, bbox, use_gcs, t_prefix, scale, territory_id):
+    """Build the composite for `aid` and start a GEE export task. Returns the task."""
+    composite = ANALYSIS_BUILDERS[aid](bbox)
+    gcs_prefix = f'satellite/{t_prefix}sat_{aid}_raster'
+    description = f'{territory_id}_{aid}_raster' if territory_id != 'misiones' else f'sat_{aid}_raster'
+    if use_gcs:
+        task = ee.batch.Export.image.toCloudStorage(
+            image=composite,
+            description=description,
+            bucket=GCS_BUCKET,
+            fileNamePrefix=gcs_prefix,
+            region=bbox,
+            scale=scale,
+            crs='EPSG:4326',
+            maxPixels=1e9,
+        )
+    else:
+        task = ee.batch.Export.image.toDrive(
+            image=composite,
+            description=description,
+            folder=DRIVE_FOLDER,
+            fileNamePrefix=f'{t_prefix}sat_{aid}_raster' if t_prefix else f'sat_{aid}_raster',
+            region=bbox,
+            scale=scale,
+            crs='EPSG:4326',
+            maxPixels=1e9,
+        )
+    task.start()
+    return task
+
+
+def _wait_for(tasks):
+    """Block until no task in `tasks` is READY/RUNNING."""
+    while True:
+        statuses = [(aid, t.status()['state']) for aid, t in tasks]
+        running = sum(1 for _, s in statuses if s in ('READY', 'RUNNING'))
+        if running == 0:
+            return
+        print(f"    [{running} running] " + ', '.join(f"{a}={s}" for a, s in statuses))
+        time.sleep(30)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Export GEE analysis composites to Drive/GCS")
@@ -391,51 +437,15 @@ def main():
                 continue
 
             print(f"\n  Building {aid}...")
-            composite = ANALYSIS_BUILDERS[aid](bbox)
-
-            # GCS prefix: satellite/{t_prefix}sat_{aid}_raster
-            # e.g. satellite/sat_env_risk_raster  (misiones)
-            # e.g. satellite/itapua_py/sat_env_risk_raster  (itapua)
-            gcs_prefix = f'satellite/{t_prefix}sat_{aid}_raster'
-            description = f'{args.territory}_{aid}_raster' if args.territory != 'misiones' else f'sat_{aid}_raster'
-
-            if use_gcs:
-                task = ee.batch.Export.image.toCloudStorage(
-                    image=composite,
-                    description=description,
-                    bucket=GCS_BUCKET,
-                    fileNamePrefix=gcs_prefix,
-                    region=bbox,
-                    scale=scale,
-                    crs='EPSG:4326',
-                    maxPixels=1e9,
-                )
-            else:
-                task = ee.batch.Export.image.toDrive(
-                    image=composite,
-                    description=description,
-                    folder=DRIVE_FOLDER,
-                    fileNamePrefix=f'{t_prefix}sat_{aid}_raster' if t_prefix else f'sat_{aid}_raster',
-                    region=bbox,
-                    scale=scale,
-                    crs='EPSG:4326',
-                    maxPixels=1e9,
-                )
-            task.start()
+            task = _start_export(aid, bbox, use_gcs, t_prefix, scale, args.territory)
             batch_tasks.append((aid, task))
             tasks.append((aid, task))
-            print(f"    Export started: {description}")
+            print(f"    Export started: {aid}")
 
         # Wait for this batch before starting the next (avoid overloading GEE queue)
         if i + args.batch_size < len(analyses):
             print(f"\n  Waiting for batch {i // args.batch_size + 1} ({len(batch_tasks)} tasks)...")
-            while True:
-                statuses = [(aid, t.status()['state']) for aid, t in batch_tasks]
-                running = sum(1 for _, s in statuses if s in ('READY', 'RUNNING'))
-                if running == 0:
-                    break
-                print(f"    [{running} running] " + ', '.join(f"{a}={s}" for a, s in statuses))
-                time.sleep(30)
+            _wait_for(batch_tasks)
 
     if not tasks:
         print("No tasks to run")
@@ -443,24 +453,33 @@ def main():
 
     # Poll for completion
     print(f"\nWaiting for {len(tasks)} exports...")
-    while True:
-        statuses = [(aid, t.status()['state']) for aid, t in tasks]
-        running = sum(1 for _, s in statuses if s in ('READY', 'RUNNING'))
-        if running == 0:
+    _wait_for(tasks)
+
+    # Retry transient failures: GEE batch tasks occasionally die with "Internal error".
+    # Rebuild + restart only the failed analyses instead of failing the whole run.
+    results = dict(tasks)  # aid -> task (latest attempt)
+    for attempt in range(1, EXPORT_MAX_RETRIES + 1):
+        failed = [aid for aid, t in results.items() if t.status()['state'] != 'COMPLETED']
+        if not failed:
             break
-        status_str = ', '.join(f"{a}={s}" for a, s in statuses)
-        print(f"  [{running} running] {status_str}")
-        time.sleep(30)
+        print(f"\n  Retry {attempt}/{EXPORT_MAX_RETRIES} for {len(failed)} failed export(s): {', '.join(failed)}")
+        retried = []
+        for aid in failed:
+            task = _start_export(aid, bbox, use_gcs, t_prefix, scale, args.territory)
+            results[aid] = task
+            retried.append((aid, task))
+            print(f"    Re-export started: {aid}")
+        _wait_for(retried)
 
     # Report results
     print(f"\n{'=' * 60}")
     all_ok = True
-    for aid, task in tasks:
+    for aid, task in results.items():
         status = task.status()
         if status['state'] == 'COMPLETED':
             print(f"  DONE: {aid}")
         else:
-            print(f"  FAILED: {aid} — {status.get('error_message', 'unknown')}")
+            print(f"  FAILED after {EXPORT_MAX_RETRIES} retries: {aid} — {status.get('error_message', 'unknown')}")
             all_ok = False
 
     print(f"\nFiles in Google Drive folder '{DRIVE_FOLDER}'")
