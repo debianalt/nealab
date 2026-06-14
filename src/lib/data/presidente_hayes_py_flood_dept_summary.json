@@ -5,16 +5,16 @@
   },
   "province": {
     "total_hexes": 772479,
-    "high_risk_count": 1248,
-    "avg_score": 1.1
+    "high_risk_count": 1815,
+    "avg_score": 1.2
   },
   "departments": [
     {
       "dpto": "Benjamin Aceval",
       "parquetKey": "benjamin_aceval",
-      "avg_score": 1.2,
+      "avg_score": 1.5,
       "hex_count": 23417,
-      "high_risk_count": 47,
+      "high_risk_count": 177,
       "centroid": [
         -57.65,
         -24.8221
@@ -25,7 +25,7 @@
       "parquetKey": "pozo_colorado",
       "avg_score": 1.2,
       "hex_count": 306577,
-      "high_risk_count": 636,
+      "high_risk_count": 651,
       "centroid": [
         -58.8319,
         -23.1789
@@ -47,7 +47,7 @@
       "parquetKey": "villa_hayes",
       "avg_score": 1.1,
       "hex_count": 345937,
-      "high_risk_count": 116,
+      "high_risk_count": 538,
       "centroid": [
         -58.7311,
         -24.2046

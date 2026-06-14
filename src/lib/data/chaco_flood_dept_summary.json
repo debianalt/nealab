@@ -5,8 +5,8 @@
   },
   "province": {
     "total_hexes": 1116998,
-    "high_risk_count": 7669,
-    "avg_score": 1.5
+    "high_risk_count": 8034,
+    "avg_score": 1.6
   },
   "departments": [
     {
@@ -23,9 +23,9 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 4.6,
+      "avg_score": 4.7,
       "hex_count": 29310,
-      "high_risk_count": 2212,
+      "high_risk_count": 2270,
       "centroid": [
         -58.7058,
         -26.9556
@@ -100,9 +100,9 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 1.1,
+      "avg_score": 1.2,
       "hex_count": 289439,
-      "high_risk_count": 729,
+      "high_risk_count": 1036,
       "centroid": [
         -61.3388,
         -25.2304

@@ -5,8 +5,8 @@
   },
   "province": {
     "total_hexes": 27483,
-    "high_risk_count": 1510,
-    "avg_score": 4.8
+    "high_risk_count": 1694,
+    "avg_score": 5.4
   },
   "departments": [
     {
@@ -155,9 +155,9 @@
     {
       "dpto": "Nueva Italia",
       "parquetKey": "nueva_italia",
-      "avg_score": 1.6,
+      "avg_score": 5.4,
       "hex_count": 4022,
-      "high_risk_count": 31,
+      "high_risk_count": 212,
       "centroid": [
         -57.4761,
         -25.7667
@@ -199,9 +199,9 @@
     {
       "dpto": "Villeta",
       "parquetKey": "villeta",
-      "avg_score": 3.9,
+      "avg_score": 4.0,
       "hex_count": 9166,
-      "high_risk_count": 427,
+      "high_risk_count": 430,
       "centroid": [
         -57.6031,
         -25.706

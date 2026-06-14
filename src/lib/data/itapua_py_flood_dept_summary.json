@@ -5,8 +5,8 @@
   },
   "province": {
     "total_hexes": 173048,
-    "high_risk_count": 14414,
-    "avg_score": 8.0
+    "high_risk_count": 14680,
+    "avg_score": 8.1
   },
   "departments": [
     {
@@ -67,9 +67,9 @@
     {
       "dpto": "Carlos A Lopez",
       "parquetKey": "carlos_a_lopez",
-      "avg_score": 1.0,
+      "avg_score": 1.4,
       "hex_count": 8756,
-      "high_risk_count": 0,
+      "high_risk_count": 60,
       "centroid": [
         -54.9007,
         -26.3711
@@ -221,9 +221,9 @@
     {
       "dpto": "Mayor Otano",
       "parquetKey": "mayor_otano",
-      "avg_score": 1.1,
+      "avg_score": 2.1,
       "hex_count": 3257,
-      "high_risk_count": 0,
+      "high_risk_count": 62,
       "centroid": [
         -54.7725,
         -26.2766
@@ -309,9 +309,9 @@
     {
       "dpto": "San Rafael Del Parana",
       "parquetKey": "san_rafael_del_parana",
-      "avg_score": 1.1,
+      "avg_score": 1.4,
       "hex_count": 16122,
-      "high_risk_count": 0,
+      "high_risk_count": 108,
       "centroid": [
         -55.1254,
         -26.4147
@@ -342,9 +342,9 @@
     {
       "dpto": "Yatytay",
       "parquetKey": "yatytay",
-      "avg_score": 1.2,
+      "avg_score": 1.9,
       "hex_count": 3122,
-      "high_risk_count": 7,
+      "high_risk_count": 43,
       "centroid": [
         -55.0802,
         -26.6686

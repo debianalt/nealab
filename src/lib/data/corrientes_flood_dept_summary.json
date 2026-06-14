@@ -5,8 +5,8 @@
   },
   "province": {
     "total_hexes": 1033548,
-    "high_risk_count": 51514,
-    "avg_score": 4.5
+    "high_risk_count": 63939,
+    "avg_score": 5.1
   },
   "departments": [
     {
@@ -56,9 +56,9 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 2.2,
+      "avg_score": 2.3,
       "hex_count": 98250,
-      "high_risk_count": 827,
+      "high_risk_count": 1034,
       "centroid": [
         -58.3339,
         -29.7036
@@ -78,9 +78,9 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "avg_score": 3.4,
+      "avg_score": 5.6,
       "hex_count": 46922,
-      "high_risk_count": 1518,
+      "high_risk_count": 4323,
       "centroid": [
         -59.2449,
         -29.9869
@@ -111,9 +111,9 @@
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 6.2,
+      "avg_score": 11.1,
       "hex_count": 58352,
-      "high_risk_count": 6358,
+      "high_risk_count": 12762,
       "centroid": [
         -59.2641,
         -29.4568
@@ -135,7 +135,7 @@
       "parquetKey": "ituzaingo",
       "avg_score": 6.3,
       "hex_count": 103935,
-      "high_risk_count": 6385,
+      "high_risk_count": 6424,
       "centroid": [
         -56.8023,
         -27.9146
@@ -177,9 +177,9 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 1.8,
+      "avg_score": 5.5,
       "hex_count": 31149,
-      "high_risk_count": 7,
+      "high_risk_count": 1765,
       "centroid": [
         -57.8753,
         -30.2374
@@ -188,9 +188,9 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 4.0,
+      "avg_score": 4.7,
       "hex_count": 58737,
-      "high_risk_count": 2251,
+      "high_risk_count": 2812,
       "centroid": [
         -57.3125,
         -29.6014
@@ -265,9 +265,9 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 3.4,
+      "avg_score": 3.9,
       "hex_count": 82588,
-      "high_risk_count": 2037,
+      "high_risk_count": 2573,
       "centroid": [
         -56.2353,
         -28.2286
@@ -276,9 +276,9 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 1.5,
+      "avg_score": 1.8,
       "hex_count": 29344,
-      "high_risk_count": 4,
+      "high_risk_count": 119,
       "centroid": [
         -58.8025,
         -30.0075

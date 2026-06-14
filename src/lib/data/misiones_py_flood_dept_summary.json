@@ -5,16 +5,16 @@
   },
   "province": {
     "total_hexes": 92975,
-    "high_risk_count": 342,
-    "avg_score": 1.4
+    "high_risk_count": 3293,
+    "avg_score": 3.4
   },
   "departments": [
     {
       "dpto": "Ayolas",
       "parquetKey": "ayolas",
-      "avg_score": 1.0,
+      "avg_score": 11.6,
       "hex_count": 9478,
-      "high_risk_count": 0,
+      "high_risk_count": 1240,
       "centroid": [
         -57.0271,
         -27.3752
@@ -34,9 +34,9 @@
     {
       "dpto": "San Juan Bautista",
       "parquetKey": "san_juan_bautista",
-      "avg_score": 1.2,
+      "avg_score": 2.9,
       "hex_count": 23961,
-      "high_risk_count": 17,
+      "high_risk_count": 885,
       "centroid": [
         -57.4083,
         -26.7032
@@ -45,9 +45,9 @@
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "avg_score": 1.0,
+      "avg_score": 3.5,
       "hex_count": 6276,
-      "high_risk_count": 0,
+      "high_risk_count": 319,
       "centroid": [
         -56.9666,
         -26.5712
@@ -67,9 +67,9 @@
     {
       "dpto": "Santa Maria",
       "parquetKey": "santa_maria",
-      "avg_score": 1.1,
+      "avg_score": 1.8,
       "hex_count": 4060,
-      "high_risk_count": 2,
+      "high_risk_count": 39,
       "centroid": [
         -56.8895,
         -26.73
@@ -78,9 +78,9 @@
     {
       "dpto": "Santa Rosa",
       "parquetKey": "santa_rosa",
-      "avg_score": 1.2,
+      "avg_score": 1.7,
       "hex_count": 9138,
-      "high_risk_count": 22,
+      "high_risk_count": 100,
       "centroid": [
         -56.7961,
         -26.863
@@ -100,9 +100,9 @@
     {
       "dpto": "Villa Florida",
       "parquetKey": "villa_florida",
-      "avg_score": 1.0,
+      "avg_score": 7.5,
       "hex_count": 3009,
-      "high_risk_count": 0,
+      "high_risk_count": 403,
       "centroid": [
         -57.126,
         -26.4599
@@ -111,9 +111,9 @@
     {
       "dpto": "Yabebyry",
       "parquetKey": "yabebyry",
-      "avg_score": 1.7,
+      "avg_score": 2.0,
       "hex_count": 9241,
-      "high_risk_count": 62,
+      "high_risk_count": 68,
       "centroid": [
         -57.1858,
         -27.2565

@@ -5,7 +5,7 @@
   },
   "province": {
     "total_hexes": 135727,
-    "high_risk_count": 4162,
+    "high_risk_count": 4164,
     "avg_score": 3.5
   },
   "departments": [
@@ -177,9 +177,9 @@
     {
       "dpto": "San Jose De Los Arroyos",
       "parquetKey": "san_jose_de_los_arroyos",
-      "avg_score": 1.2,
+      "avg_score": 1.3,
       "hex_count": 5299,
-      "high_risk_count": 0,
+      "high_risk_count": 2,
       "centroid": [
         -56.6953,
         -25.5351

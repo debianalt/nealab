@@ -5,16 +5,16 @@
   },
   "province": {
     "total_hexes": 126524,
-    "high_risk_count": 9014,
-    "avg_score": 5.0
+    "high_risk_count": 10492,
+    "avg_score": 5.7
   },
   "departments": [
     {
       "dpto": "Alberdi",
       "parquetKey": "alberdi",
-      "avg_score": 1.0,
+      "avg_score": 9.4,
       "hex_count": 1236,
-      "high_risk_count": 0,
+      "high_risk_count": 170,
       "centroid": [
         -58.0673,
         -26.1792
@@ -67,9 +67,9 @@
     {
       "dpto": "Humaita",
       "parquetKey": "humaita",
-      "avg_score": 4.2,
+      "avg_score": 6.3,
       "hex_count": 3774,
-      "high_risk_count": 324,
+      "high_risk_count": 487,
       "centroid": [
         -58.4843,
         -27.0913
@@ -111,9 +111,9 @@
     {
       "dpto": "Paso De Patria",
       "parquetKey": "paso_de_patria",
-      "avg_score": 14.8,
+      "avg_score": 16.1,
       "hex_count": 2673,
-      "high_risk_count": 730,
+      "high_risk_count": 789,
       "centroid": [
         -58.5293,
         -27.2188
@@ -155,9 +155,9 @@
     {
       "dpto": "Villa Franca",
       "parquetKey": "villa_franca",
-      "avg_score": 2.9,
+      "avg_score": 3.3,
       "hex_count": 17143,
-      "high_risk_count": 763,
+      "high_risk_count": 857,
       "centroid": [
         -57.9582,
         -26.3386
@@ -166,9 +166,9 @@
     {
       "dpto": "Villa Oliva",
       "parquetKey": "villa_oliva",
-      "avg_score": 1.0,
+      "avg_score": 5.0,
       "hex_count": 17309,
-      "high_risk_count": 0,
+      "high_risk_count": 992,
       "centroid": [
         -57.7172,
         -26.0372

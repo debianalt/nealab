@@ -5,7 +5,7 @@
   },
   "province": {
     "total_hexes": 142250,
-    "high_risk_count": 1806,
+    "high_risk_count": 1814,
     "avg_score": 2.0
   },
   "departments": [
@@ -23,9 +23,9 @@
     {
       "dpto": "Curuguaty",
       "parquetKey": "curuguaty",
-      "avg_score": 1.0,
+      "avg_score": 1.1,
       "hex_count": 42487,
-      "high_risk_count": 9,
+      "high_risk_count": 17,
       "centroid": [
         -55.73,
         -24.3845
@@ -45,7 +45,7 @@
     {
       "dpto": "Itanara",
       "parquetKey": "itanara",
-      "avg_score": 1.0,
+      "avg_score": 1.1,
       "hex_count": 8321,
       "high_risk_count": 0,
       "centroid": [

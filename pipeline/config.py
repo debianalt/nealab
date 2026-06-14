@@ -33,7 +33,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'itapua_py',
         'label': 'Itapúa',
         'country': 'py',
-        'bbox': [-57.40, -27.70, -54.60, -26.10],   # padded to cover edge hexagons
+        'bbox': [-57.55, -27.85, -54.45, -25.94],   # fix 2026-06-13: borde norte cubría < grid (huecos JRC). unión(bbox,grid)+pad
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',  # provisional; see explore_itapua_admin.py
@@ -83,8 +83,10 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'chaco',
         'label': 'Chaco',
         'country': 'ar',
-        # padded ~0.1deg, matches config_eudr.py:EUDR_PROVINCES['chaco'].
-        'bbox': [-63.50, -28.00, -58.40, -24.80],
+        # fix 2026-06-07: bbox cubría < grid de hexes (cortaba el norte de Chaco →
+        # huecos JRC flood). Ampliado a unión(bbox,grid)+pad. OJO: ya NO coincide
+        # con config_eudr.py:EUDR_PROVINCES['chaco'] (que también estaba corto).
+        'bbox': [-63.65, -28.15, -58.22, -23.96],
         'admin_level': 'departamento',
         'admin_col': 'dpto',
         'admin_collection': None,                    # uses local ARG_adm2.shp
@@ -98,8 +100,10 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'formosa',
         'label': 'Formosa',
         'country': 'ar',
-        # padded ~0.1deg, matches config_eudr.py:EUDR_PROVINCES['formosa'].
-        'bbox': [-62.20, -27.00, -57.40, -22.90],
+        # fix 2026-06-07: bbox cubría < grid de hexes → huecos JRC flood.
+        # Ampliado a unión(bbox,grid)+pad. OJO: ya NO coincide con
+        # config_eudr.py:EUDR_PROVINCES['formosa'] (que también estaba corto).
+        'bbox': [-62.5, -27.15, -57.25, -22.31],
         'admin_level': 'departamento',
         'admin_col': 'dpto',
         'admin_collection': None,                    # uses local ARG_adm2.shp
@@ -193,7 +197,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'cordillera_py',
         'label': 'Cordillera',
         'country': 'py',
-        'bbox': [-57.8, -25.4, -56.6, -24.4],
+        'bbox': [-57.95, -25.81, -56.37, -24.25],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -206,7 +210,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'guaira_py',
         'label': 'Guairá',
         'country': 'py',
-        'bbox': [-56.7, -26.1, -55.4, -25.1],
+        'bbox': [-56.92, -26.33, -55.25, -24.95],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -219,7 +223,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'caaguazu_py',
         'label': 'Caaguazú',
         'country': 'py',
-        'bbox': [-56.7, -25.9, -54.2, -23.3],
+        'bbox': [-56.99, -26.05, -54.05, -23.15],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -232,7 +236,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'caazapa_py',
         'label': 'Caazapá',
         'country': 'py',
-        'bbox': [-56.7, -26.9, -55.0, -25.5],
+        'bbox': [-56.99, -27.05, -54.85, -25.35],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -245,7 +249,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'misiones_py',
         'label': 'Misiones',
         'country': 'py',
-        'bbox': [-57.5, -27.3, -56.3, -26.7],
+        'bbox': [-57.89, -27.63, -56.15, -26.22],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -272,7 +276,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'central_py',
         'label': 'Central',
         'country': 'py',
-        'bbox': [-58.2, -25.8, -57.1, -24.9],
+        'bbox': [-58.35, -26.16, -56.95, -24.75],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -285,7 +289,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'neembucu_py',
         'label': 'Ñeembucú',
         'country': 'py',
-        'bbox': [-58.6, -27.6, -57.1, -26.3],
+        'bbox': [-58.81, -27.75, -56.95, -25.61],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -298,7 +302,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'amambay_py',
         'label': 'Amambay',
         'country': 'py',
-        'bbox': [-56.6, -23.7, -55.0, -21.7],
+        'bbox': [-56.97, -23.85, -54.85, -21.55],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -311,7 +315,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'canindeyu_py',
         'label': 'Canindeyú',
         'country': 'py',
-        'bbox': [-55.7, -25.3, -53.9, -22.6],
+        'bbox': [-56.31, -25.45, -53.75, -22.45],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -325,7 +329,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'presidente_hayes_py',
         'label': 'Presidente Hayes',
         'country': 'py',
-        'bbox': [-62.1, -25.6, -57.4, -21.9],
+        'bbox': [-62.25, -25.75, -57.02, -21.75],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -338,7 +342,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'boqueron_py',
         'label': 'Boquerón',
         'country': 'py',
-        'bbox': [-62.6, -23.2, -59.4, -20.0],
+        'bbox': [-62.79, -24.02, -59.14, -19.85],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
@@ -351,7 +355,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'id': 'alto_paraguay_py',
         'label': 'Alto Paraguay',
         'country': 'py',
-        'bbox': [-61.2, -23.2, -57.4, -18.4],
+        'bbox': [-62.06, -23.35, -57.25, -18.25],   # fix 2026-06-07: cubría < grid (huecos JRC flood)
         'admin_level': 'distrito',
         'admin_col': 'distrito',
         'admin_collection': 'FAO/GAUL/2015/level2',
