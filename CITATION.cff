@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: "nealab: A Reproducible Platform for Subnational Territorial Intelligence"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - given-names: R. E.
+    family-names: Gomez
+    email: lsgomez001@gmail.com
+    affiliation: "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)"
+    orcid: "https://orcid.org/0000-0002-4468-9618"
+repository-code: "https://github.com/debianalt/nealab"
+url: "https://www.spatia.ar"
+license: AGPL-3.0
+version: 2.2.0
+date-released: "2026-06-15"
+doi: "10.5281/zenodo.19483040"
+keywords:
+  - territorial intelligence
+  - H3 hexagonal grid
+  - Google Earth Engine
+  - PCA scoring
+  - DuckDB-WASM
+  - remote sensing
+  - subnational analysis
+  - Misiones
+  - Argentina
+abstract: >-
+  Spatia is a reproducible platform for subnational territorial
+  analysis. It combines satellite imagery (Sentinel-1/2, MODIS, Landsat),
+  census data, and open geospatial datasets into PCA-validated composite
+  indicators on a hexagonal grid (H3 resolution 9). The pipeline runs on
+  Google Earth Engine, processes rasters into H3 zonal statistics, computes
+  scores using geometric means validated by KMO/Bartlett/PCA diagnostics
+  (OECD Handbook / UNDP HDI methodology), and serves results via DuckDB-WASM
+  on Cloudflare Pages. Applied to Misiones province
+  (Argentina) with 320,000 hexagons and 27 analyses across four thematic
+  lenses: investment, production, services, and housing.
