@@ -66,9 +66,9 @@
 
 	<footer class="footer">
 		<p>
-			Citación sugerida: Gomez, R. E. (2026). nealab: A Zero-Cost Platform for Subnational Territorial
-			Intelligence (Version v2). Zenodo.
-			<a href="https://doi.org/10.5281/zenodo.19543818">https://doi.org/10.5281/zenodo.19543818</a>
+			Citación sugerida: Gomez, R. E. (2026). nealab: A Reproducible Platform for Subnational Territorial
+			Intelligence (Version v2.2). Zenodo.
+			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>
 		<p class="affil">CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier</p>
 		<p class="print-only generated">Documento generado el {today} desde spatia.ar/metodologia</p>
