@@ -89,6 +89,7 @@ def main():
                     help="EUDR province key (matches the EUDR parquet, e.g. ar_misiones)")
     ap.add_argument("--year", type=int, default=0, help="MapBiomas vintage year (metadata)")
     ap.add_argument("--res", type=int, default=9)
+    ap.add_argument("--tag", default="", help="Filename tag, e.g. '2020' -> plantation2020_<prov>_res9.parquet")
     ap.add_argument("--out-dir", default=OUT_DIR)
     args = ap.parse_args()
 
@@ -102,7 +103,7 @@ def main():
     if args.year:
         agg["mb_year"] = args.year
 
-    out = os.path.join(args.out_dir, f"plantation_{args.province}_res{args.res}.parquet")
+    out = os.path.join(args.out_dir, f"plantation{args.tag}_{args.province}_res{args.res}.parquet")
     agg.to_parquet(out, index=False)
     size_mb = os.path.getsize(out) / (1024 * 1024)
 
