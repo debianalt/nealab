@@ -14,8 +14,7 @@ export default defineConfig({
 		format: 'es'
 	},
 	build: {
-		target: 'esnext',
-		sourcemap: true
+		target: 'esnext'
 	},
 	server: {
 		proxy: {

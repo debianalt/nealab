@@ -746,8 +746,9 @@
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
 	function handleEudrUnitSelect(detail: any) {
-		// RE-ENABLED temporarily WITH sourcemaps deployed so a real-browser repro of the
-		// effect_update_depth_exceeded loop shows the exact .svelte effect in F12.
+		// Loads the clicked admin-2 unit's hexes + zooms to it. The effect loop this used
+		// to trigger came from the Sidebar per-hex stat panels recomputing over EUDR data
+		// — those are now gated off for EUDR (Sidebar.svelte), so this is safe again.
 		const { name, country, geometry } = detail ?? {};
 		if (!geometry) return;
 		const polys: number[][][][] = geometry.type === 'MultiPolygon'

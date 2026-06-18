@@ -241,7 +241,12 @@
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
-			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
+			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable && hexStore.activeLayer?.id !== 'eudr'}
+				<!-- EUDR excluded: it's a global deforestation-screening layer loaded by
+				     viewport/unit, NOT a per-territory statistical analysis. Rendering the
+				     per-hex stat stack (Moran/histogram/bivariate/parallel) over EUDR data
+				     is meaningless AND triggered a Svelte effect_update_depth_exceeded loop
+				     on admin-2 unit selection that froze all reactivity. -->
 				<div class="charts-divider">Gráficos</div>
 				<HistogramPanel
 					data={hexStore.visibleData}
