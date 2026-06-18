@@ -467,7 +467,7 @@
 			return;
 		}
 
-		if (lat < -35 || lat > -21 || lon < -70 || lon > -53) {
+		if (lat < -35 || lat > -19 || lon < -70 || lon > -47) {
 			error = i18n.t('eudr.check.error_bounds');
 			return;
 		}
@@ -542,7 +542,7 @@
 			<li>
 				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
 				Análisis satelital de pérdida forestal post-2020 (Hansen GFC v1.12 + MODIS de área quemada)
-				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino,
+				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA y NOA argentino,
 				departamentos paraguayos y estados del sur de Brasil. Sirve para screening de riesgo
 				EUDR, due-diligence preliminar y soporte técnico de informes.
 			</li>
