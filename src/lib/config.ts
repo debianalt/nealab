@@ -934,7 +934,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendHighKey: 'legend.deforest.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
-	// ── EUDR deforestation risk (H3 res-7, 31 units: AR 10 prov + PY 18 deptos + BR 3 estados) ──
+	// ── EUDR deforestation risk (H3 res-7) ──
+	// Data spans 31 units (AR 10 prov + PY 18 deptos + BR 3 estados), but the menu
+	// exposes only the 3 AR NEA provinces below: EUDR mode (setEudrMode) swaps the
+	// normal dept-click layer for eudr-admin2-fill, and that admin-2 interaction is
+	// only verified for the AR provinces. Re-enable others after browser verification.
 	eudr: {
 		id: 'eudr',
 		parquet: 'eudr_deforestation',
@@ -958,7 +962,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: false,
 		legendLowKey: 'legend.eudr.low',
 		legendHighKey: 'legend.eudr.high',
-		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'available', itapua_py: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 };
 
@@ -1160,10 +1164,12 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'economia',
 		titleKey: 'trade.eudr.analysis_title',
 		descKey: 'trade.eudr.analysis_desc',
-		// EUDR is a global dataset over 31 units (AR 10 prov + PY 18 deptos + BR 3
-		// estados), NOT a per-territory comparable analysis. Loads its own global
-		// parquet by viewport (loadEudrViewport) — data exists for every territory.
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		// EUDR data spans 31 units (AR 10 prov + PY 18 deptos + BR 3 estados) and
+		// loads its own global parquet by viewport (loadEudrViewport), but the menu
+		// exposes only the 3 AR NEA provinces: EUDR mode swaps the dept-click layer
+		// for eudr-admin2-fill, verified only for AR. Re-enable others after browser
+		// verification of the admin-2 click interaction in PY/BR territories.
+		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 		rigorBadge: 'physical',
 		status: 'available',
 		spatialUnit: 'hexagon',
