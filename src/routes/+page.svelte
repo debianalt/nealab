@@ -830,17 +830,23 @@
 		const unitHandler = (e: Event) => handleEudrUnitSelect((e as CustomEvent).detail);
 		container.addEventListener('eudr-unit-select', unitHandler);
 
-		// Jump to a covered area on activation so hexes appear immediately
+		// Jump to a covered area on activation so hexes appear immediately.
+		// untrack: loadViewport() reads eudrUnit + mutates dataVersion via
+		// loadEudrViewport. Without untrack this effect would depend on eudrUnit and
+		// tear itself down + rebuild on every admin-2 unit click (setEudrMode churn),
+		// and on the counter it writes → effect_update_depth_exceeded. The intended
+		// deps are ONLY activeAnalysis(isEudr) + map, read above. Same pattern as the
+		// regional/compare and LOD viewport effects below.
 		if (map.getZoom() < EUDR_ZOOM_MIN) {
 			map.flyTo({ center: [-54.5, -26.8], zoom: 8, duration: 1000 });
 		} else {
-			loadViewport();
+			untrack(() => loadViewport());
 		}
 		return () => {
 			map.off('moveend', loadViewport);
 			container.removeEventListener('eudr-unit-select', unitHandler);
 			mapComponent?.setEudrMode(false);
-			hexStore.loadEudrViewport([]); // clear EUDR hexes when leaving the layer
+			untrack(() => hexStore.loadEudrViewport([])); // clear EUDR hexes when leaving the layer
 		};
 	});
 
