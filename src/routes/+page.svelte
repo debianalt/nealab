@@ -730,6 +730,45 @@
 	const EUDR_MAX_CELLS = 8000;
 
 	let eudrUnit: { name: string; country: string } | null = $state(null);
+	// Plantation/native breakdown of the selected EUDR admin-2 unit (AR only).
+	// Set once (in the click handler, not an effect) → no reactive cascade.
+	let eudrUnitStats: { harvest: number; conversion: number; native: number; dataCells: number } | null = $state(null);
+
+	function classifyEudrCell(def: number, pn: number | null, p20: number | null, n20: number | null): 'harvest' | 'conversion' | 'native' | 'nodata' {
+		const T = 40;
+		if (pn == null && p20 == null) return 'nodata';
+		if (p20 != null) {
+			if (p20 >= T) return 'harvest';
+			if (n20 != null && n20 >= T) return (pn ?? 0) >= T ? 'conversion' : 'native';
+		}
+		return (pn ?? 0) >= T ? 'harvest' : 'native';
+	}
+
+	async function computeEudrUnitPlantation(cells: string[]) {
+		eudrUnitStats = null;
+		try {
+			const { getEudrParquetUrl, getEudrPlantationRes7Url } = await import('$lib/config');
+			const inList = cells.map((c) => `'${c}'`).join(',');
+			const sql = `SELECT e.deforestation_post_2020 AS def, p.plantation_pct AS pn,
+				p.plantation_2020_pct AS p20, p.native_2020_pct AS n20
+				FROM read_parquet('${getEudrParquetUrl('eudr_deforestation')}') e
+				LEFT JOIN read_parquet('${getEudrPlantationRes7Url()}') p USING (h3index)
+				WHERE e.h3index IN (${inList})`;
+			const rows: any[] = (await query(sql)).toArray();
+			let harvest = 0, conversion = 0, native = 0, dataCells = 0;
+			for (const r of rows) {
+				if (r.pn != null || r.p20 != null) dataCells++;
+				if (Number(r.def) > 0) {
+					const k = classifyEudrCell(Number(r.def), r.pn == null ? null : Number(r.pn),
+						r.p20 == null ? null : Number(r.p20), r.n20 == null ? null : Number(r.n20));
+					if (k === 'harvest') harvest++;
+					else if (k === 'conversion') conversion++;
+					else if (k === 'native') native++;
+				}
+			}
+			eudrUnitStats = { harvest, conversion, native, dataCells };
+		} catch { eudrUnitStats = null; }
+	}
 
 	// ── Regional/compare viewport-loading (B) ────────────────────────────
 	// Giant PY territories (Chaco/Boquerón 700K-850K hex) make a full-global load of the
@@ -769,8 +808,10 @@
 			}
 		}
 		if (cellSet.size === 0) return;
-		hexStore.loadEudrViewport(Array.from(cellSet));
+		const unitCells = Array.from(cellSet);
+		hexStore.loadEudrViewport(unitCells);
 		eudrUnit = { name, country };
+		computeEudrUnitPlantation(unitCells);
 		const m = mapComponent?.getMap();
 		if (m && isFinite(minLng)) {
 			m.fitBounds([[minLng, minLat], [maxLng, maxLat]] as any, { padding: 80, duration: 1000 });
@@ -779,6 +820,7 @@
 
 	function clearEudrUnit() {
 		eudrUnit = null;
+		eudrUnitStats = null;
 		// Resume viewport mode: reload cells for the current view
 		const m = mapComponent?.getMap();
 		if (!m) return;
@@ -799,6 +841,7 @@
 	$effect(() => {
 		if (lensStore.activeAnalysis?.id !== 'eudr' && eudrUnit) {
 			eudrUnit = null;
+			eudrUnitStats = null;
 		}
 	});
 	$effect(() => {
@@ -1818,13 +1861,35 @@
 			<MapComponent bind:this={mapComponent} {mapStore} />
 			<MapLegend {hexStore} />
 
-			<!-- EUDR unit lock indicator + back button -->
+			<!-- EUDR unit lock indicator + plantation breakdown + back button -->
 			{#if lensStore.activeAnalysis?.id === 'eudr' && eudrUnit}
-				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-yellow-400/40 text-[12px] shadow-lg">
-					<span class="text-white/90">📍 <b>{eudrUnit.name}</b> <span class="text-white/40">· {eudrUnit.country}</span></span>
-					<button onclick={clearEudrUnit} class="text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[12px]">
-						← Volver al área completa
-					</button>
+				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-black/80 backdrop-blur-md border border-yellow-400/40 text-[12px] shadow-lg max-w-[400px]">
+					<div class="flex items-center gap-3">
+						<span class="text-white/90">📍 <b>{eudrUnit.name}</b> <span class="text-white/40">· {eudrUnit.country}</span></span>
+						<button onclick={clearEudrUnit} class="text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[12px] whitespace-nowrap">
+							← Volver
+						</button>
+					</div>
+					{#if eudrUnitStats}
+						{#if eudrUnitStats.dataCells === 0}
+							<div class="mt-2 pt-2 border-t border-white/10 text-[10px] text-white/40 leading-relaxed">
+								Sin dato de plantación para esta zona (MapBiomas: solo Argentina por ahora).
+							</div>
+						{:else if (eudrUnitStats.harvest + eudrUnitStats.conversion + eudrUnitStats.native) === 0}
+							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida forestal post-2020 en esta unidad.</div>
+						{:else}
+							<div class="mt-2 pt-2 border-t border-white/10 leading-relaxed">
+								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Hexágonos con pérdida post-2020 · plantación vs nativo (baseline 2020)</div>
+								<div class="flex flex-col gap-0.5 text-[11px]">
+									<span class="text-emerald-300">🌲 {eudrUnitStats.harvest} cosecha de plantación <span class="text-white/40">— conforme, no deforestación</span></span>
+									{#if eudrUnitStats.conversion > 0}
+										<span class="text-red-300">⚠️ {eudrUnitStats.conversion} conversión nativo→plantación post-2020 <span class="text-white/40">— NO conforme</span></span>
+									{/if}
+									<span class="text-amber-300">🌳 {eudrUnitStats.native} deforestación de bosque nativo</span>
+								</div>
+							</div>
+						{/if}
+					{/if}
 				</div>
 			{/if}
 

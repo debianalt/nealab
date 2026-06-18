@@ -139,6 +139,12 @@ export function getEudrPlantationUrl(): string {
 	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=1`;
 }
 
+// res-7 plantation (matches the main-map EUDR layer's res-7 grid) — used to show
+// the plantation/native breakdown when an admin-2 unit is selected on the main map.
+export function getEudrPlantationRes7Url(): string {
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res7.parquet?v=1`;
+}
+
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
 	const layer = HEX_LAYER_REGISTRY[analysisId];
 	const name = layer?.parquet ?? `sat_${analysisId}`;
