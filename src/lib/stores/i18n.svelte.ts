@@ -341,7 +341,7 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── EUDR in analysis menu ──
 	'trade.eudr.open_checker': { es: 'Abrir verificador EUDR', en: 'Open EUDR checker', gn: 'EUDR checker', pt: 'Abrir verificador EUDR' },
-	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (NEA + transfronterizo)', en: 'EUDR · Deforestation risk (NEA + cross-border)', gn: 'EUDR · Deforestación', pt: 'EUDR · Risco de desmatamento (NEA + transfronteiriço)' },
+	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (norte argentino + Paraguay + sur de Brasil)', en: 'EUDR · Deforestation risk (northern Argentina + Paraguay + southern Brazil)', gn: 'EUDR · Deforestación (Argentina norte + Paraguay + Brasil sur)', pt: 'EUDR · Risco de desmatamento (norte argentino + Paraguai + sul do Brasil)' },
 	'trade.eudr.analysis_desc': { es: 'Verificación de deforestación para parcelas de producción (Hansen GFC 30 m + MODIS fire)', en: 'Deforestation verification for production plots (Hansen GFC 30m + MODIS fire)', gn: 'EUDR', pt: 'Verificação de desmatamento para parcelas de produção (Hansen GFC 30 m + MODIS fire)' },
 
 	// ── Temporal toggle ──

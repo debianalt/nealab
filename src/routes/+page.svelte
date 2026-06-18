@@ -1878,15 +1878,18 @@
 						{:else if (eudrUnitStats.harvest + eudrUnitStats.conversion + eudrUnitStats.native) === 0}
 							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida forestal post-2020 en esta unidad.</div>
 						{:else}
+							{@const total = eudrUnitStats.harvest + eudrUnitStats.conversion + eudrUnitStats.native}
+							{@const pct = (n: number) => Math.round((n / total) * 100)}
 							<div class="mt-2 pt-2 border-t border-white/10 leading-relaxed">
-								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Hexágonos con pérdida post-2020 · plantación vs nativo (baseline 2020)</div>
+								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Pérdida forestal post-2020 · plantación vs nativo (baseline MapBiomas 2020)</div>
 								<div class="flex flex-col gap-0.5 text-[11px]">
-									<span class="text-emerald-300">🌲 {eudrUnitStats.harvest} cosecha de plantación <span class="text-white/40">— conforme, no deforestación</span></span>
+									<span class="text-amber-300">🌳 <b>{pct(eudrUnitStats.native)}%</b> bosque nativo <span class="text-white/40">— deforestación</span></span>
+									<span class="text-emerald-300">🌲 <b>{pct(eudrUnitStats.harvest)}%</b> plantación <span class="text-white/40">— cosecha, conforme</span></span>
 									{#if eudrUnitStats.conversion > 0}
-										<span class="text-red-300">⚠️ {eudrUnitStats.conversion} conversión nativo→plantación post-2020 <span class="text-white/40">— NO conforme</span></span>
+										<span class="text-red-300">⚠️ <b>{pct(eudrUnitStats.conversion)}%</b> conversión nativo→plantación <span class="text-white/40">— NO conforme</span></span>
 									{/if}
-									<span class="text-amber-300">🌳 {eudrUnitStats.native} deforestación de bosque nativo</span>
 								</div>
+								<div class="text-[9px] text-white/30 mt-1">{total.toLocaleString()} celdas de ~5 km² con pérdida</div>
 							</div>
 						{/if}
 					{/if}
