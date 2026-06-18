@@ -414,7 +414,7 @@
 			'-- POLÍGONO ANALIZADO --',
 			`Identificador: ${polygonName || '(dibujado en el mapa)'}`,
 			`Hash SHA-256 (geometría): ${reqHash}`,
-			`Provincias/unidades: ${r.provinces.join(', ') || '—'}`,
+			`Provincias/unidades: ${r.provinces.map(prettyProvince).join(', ') || '—'}`,
 			`Área en cobertura: ${r.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha`,
 			`Cobertura del polígono: ${r.coverage_pct.toFixed(1)}%`,
 			`Celdas evaluadas: ${r.cells_in_coverage.toLocaleString()} de ${r.cells_requested.toLocaleString()}`,
@@ -520,6 +520,31 @@
 	function fmt(v: number | null, decimals = 1): string {
 		if (v === null || v === undefined) return '--';
 		return v.toFixed(decimals);
+	}
+
+	// Stored province codes are ascii/lowercase (ar_misiones, py_itapua, br_parana).
+	// Map to display names with accents + country tag; fall back to title-case.
+	const PROVINCE_NAMES: Record<string, string> = {
+		ar_salta: 'Salta (AR)', ar_jujuy: 'Jujuy (AR)', ar_tucuman: 'Tucumán (AR)',
+		ar_catamarca: 'Catamarca (AR)', ar_santiago_del_estero: 'Santiago del Estero (AR)',
+		ar_chaco: 'Chaco (AR)', ar_formosa: 'Formosa (AR)', ar_corrientes: 'Corrientes (AR)',
+		ar_misiones: 'Misiones (AR)', ar_entre_rios: 'Entre Ríos (AR)',
+		py_concepcion: 'Concepción (PY)', py_san_pedro: 'San Pedro (PY)', py_cordillera: 'Cordillera (PY)',
+		py_guaira: 'Guairá (PY)', py_caaguazu: 'Caaguazú (PY)', py_caazapa: 'Caazapá (PY)',
+		py_itapua: 'Itapúa (PY)', py_misiones: 'Misiones (PY)', py_paraguari: 'Paraguarí (PY)',
+		py_alto_parana: 'Alto Paraná (PY)', py_central: 'Central (PY)', py_neembucu: 'Ñeembucú (PY)',
+		py_amambay: 'Amambay (PY)', py_canindeyu: 'Canindeyú (PY)', py_presidente_hayes: 'Presidente Hayes (PY)',
+		py_boqueron: 'Boquerón (PY)', py_alto_paraguay: 'Alto Paraguay (PY)', py_asuncion: 'Asunción (PY)',
+		br_parana: 'Paraná (BR)', br_santa_catarina: 'Santa Catarina (BR)', br_rio_grande_do_sul: 'Rio Grande do Sul (BR)',
+	};
+
+	function prettyProvince(code: string): string {
+		if (!code) return '';
+		const key = code.toLowerCase();
+		if (PROVINCE_NAMES[key]) return PROVINCE_NAMES[key];
+		const m = key.match(/^(ar|py|br)_(.+)$/);
+		const body = (m ? m[2] : key).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+		return m ? `${body} (${m[1].toUpperCase()})` : body;
 	}
 </script>
 
@@ -798,7 +823,7 @@
 						</div>
 						<div class="flex justify-between">
 							<span>{i18n.t('eudr.check.province')}</span>
-							<span class="text-white/70">{result.province || '--'}</span>
+							<span class="text-white/70">{result.province ? prettyProvince(result.province) : '--'}</span>
 						</div>
 						<div class="flex justify-between">
 							<span>{i18n.t('eudr.check.coordinates')}</span>
@@ -892,7 +917,7 @@
 						</div>
 						<div class="flex justify-between">
 							<span>{i18n.t('eudr.check.province')}</span>
-							<span class="text-white/70">{polygonResult.provinces.join(', ') || '--'}</span>
+							<span class="text-white/70">{polygonResult.provinces.map(prettyProvince).join(', ') || '--'}</span>
 						</div>
 					</div>
 
