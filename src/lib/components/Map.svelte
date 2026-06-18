@@ -2018,8 +2018,18 @@
 		applyTerritoryVisibility();
 	}
 
-	// EUDR mode: hide the Spatia territory map (buildings/masks/districts) and
-	// show only the NOA+NEA province outlines. Restore via applyTerritoryVisibility.
+	// EUDR mode: hide the Spatia territory map (buildings/masks/borders/province)
+	// and show only the NOA+NEA province outlines. These are restored on exit by
+	// applyTerritoryVisibility() — so ONLY layers it restores belong here.
+	//
+	// Deliberately EXCLUDED (do NOT add them back): the dept-picker layers
+	// (ar-dept-fill/line + every *-district-fill/line) are owned reactively by
+	// setDeptPickerVisible — its $effect already hides them while EUDR is active
+	// (show=false when activeAnalysis.id==='eudr') and restores them on exit. The
+	// selected-dept outlines (dept-outline-line / compare-dept-outline-line) are
+	// data-driven via setDeptOutline (empty while no dept is selected, as in EUDR).
+	// Hiding any of these here too made applyTerritoryVisibility the wrong owner and
+	// left them stuck-hidden after leaving EUDR → dept/distrito clicks died.
 	const EUDR_HIDDEN_LAYERS = [
 		'buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d',
 		'chaco-buildings-3d', 'formosa-buildings-3d',
@@ -2027,11 +2037,7 @@
 		'mask-fill', 'itapua-mask-fill', 'corrientes-mask-fill', 'alto_parana-mask-fill',
 		'province-border', 'corrientes-border', 'alto_parana-border', 'itapua-border',
 		'chaco-border', 'formosa-border', 'parana_br-border', 'santa_catarina_br-border', 'rio_grande_sul_br-border',
-		'itapua-district-fill', 'itapua-district-line', 'alto_parana-district-fill', 'alto_parana-district-line',
 		'province-fill', 'province-line',
-		// Argentine dept blue overlays (Misiones/Corrientes radios-derived) — replaced
-		// by our GADM admin-2 layer in EUDR mode
-		'ar-dept-fill', 'ar-dept-line', 'dept-outline-line', 'compare-dept-outline-line',
 	];
 
 	// Basemap (CartoDB) admin lines come from a different source than our GADM
