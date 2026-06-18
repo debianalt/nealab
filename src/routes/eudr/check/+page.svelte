@@ -511,7 +511,7 @@
 			`Pérdida 2021/22/23/24: ${yr(2021)}% / ${yr(2022)}% / ${yr(2023)}% / ${yr(2024)}%`,
 			r.plantation_data_cells > 0
 				? `Plantación vs nativo (celdas con pérdida, baseline MapBiomas 2020): ${r.deforested_harvest} cosecha de plantación previa a 2020 (conforme) · ${r.deforested_conversion} conversión nativo→plantación post-2020 (NO conforme) · ${r.deforested_native} pérdida de bosque nativo`
-				: 'Plantación vs nativo: sin dato de plantación para esta zona (MapBiomas solo AR por ahora)',
+				: 'Plantación vs nativo: SIN dato de plantación para esta zona (Paraguay/Brasil — MapBiomas no clasifica silvicultura). La pérdida no pudo distinguirse entre cosecha de plantación y deforestación de bosque nativo; si hay forestación, posible falso positivo (verificar en terreno o catastro).',
 			'',
 			'-- METODOLOGÍA --',
 			'Hansen GFC v1.12 + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m.',
@@ -907,6 +907,10 @@
 							<div class="mb-4 px-3 py-2 rounded bg-emerald-500/[0.06] border border-emerald-500/15 text-[10px] text-emerald-200/60 leading-relaxed">
 								🌲 {i18n.t('eudr.check.plant_zone').replace('{pct}', fmt(ctx.plantation, 0))}
 							</div>
+						{:else if ctx.kind === 'nodata' && (result.loss_post_2020_pct ?? 0) > 0}
+							<div class="mb-4 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] text-amber-200/85 leading-relaxed">
+								{i18n.t('eudr.check.plant_nodata_loss')}
+							</div>
 						{:else if ctx.kind === 'nodata'}
 							<div class="mb-4 px-3 py-2 rounded bg-white/[0.03] border border-white/10 text-[10px] text-white/35 leading-relaxed">
 								{i18n.t('eudr.check.plant_nodata')}
@@ -1009,6 +1013,10 @@
 					{#if polygonResult.deforested_cells > 0 && polygonResult.plantation_data_cells > 0}
 						<div class="mb-4 px-3 py-2 rounded bg-emerald-500/10 border border-emerald-500/25 text-[10px] text-emerald-200/80 leading-relaxed">
 							🌲 {i18n.t('eudr.check.poly_plant_split').replace('{harvest}', String(polygonResult.deforested_harvest)).replace('{conversion}', String(polygonResult.deforested_conversion)).replace('{native}', String(polygonResult.deforested_native))}
+						</div>
+					{:else if polygonResult.plantation_data_cells === 0 && polygonResult.deforested_cells > 0}
+						<div class="mb-4 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] text-amber-200/85 leading-relaxed">
+							{i18n.t('eudr.check.plant_nodata_loss')}
 						</div>
 					{:else if polygonResult.plantation_data_cells === 0}
 						<div class="mb-4 px-3 py-2 rounded bg-white/[0.03] border border-white/10 text-[10px] text-white/35 leading-relaxed">
