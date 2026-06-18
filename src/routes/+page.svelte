@@ -746,6 +746,13 @@
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
 	function handleEudrUnitSelect(detail: any) {
+		// TEMPORARILY DISABLED — clicking an admin-2 unit (e.g. San Pedro, Misiones)
+		// triggers a Svelte effect_update_depth_exceeded loop that freezes all
+		// reactivity (dept clicks die afterwards). Root cause not yet isolated (can't
+		// repro headless — no WebGL). The EUDR choropleth still renders by viewport on
+		// pan/zoom; only the click-to-zoom-into-a-unit convenience is off until fixed.
+		return;
+		// eslint-disable-next-line no-unreachable
 		const { name, country, geometry } = detail ?? {};
 		if (!geometry) return;
 		const polys: number[][][][] = geometry.type === 'MultiPolygon'
