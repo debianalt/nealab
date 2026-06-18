@@ -2,7 +2,7 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import EudrMap from '$lib/components/EudrMap.svelte';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
-	import { getEudrHiresUrl } from '$lib/config';
+	import { getEudrHiresUrl, getEudrPlantationUrl } from '$lib/config';
 	import { latLngToCell, polygonToCells } from 'h3-js';
 
 	const EUDR_RES = 9;
@@ -39,6 +39,19 @@
 		data_vintage?: string;
 		data_sources?: string[];
 		loss_by_year?: Record<number, number>; // {2021: 0.3, 2022: 1.2, ...} %
+		plantation_pct?: number | null;      // MapBiomas class 9 — null = sin dato (PY/BR)
+		native_forest_pct?: number | null;   // MapBiomas native forest
+	}
+
+	// Plantation context for a hex/area: distinguishes Hansen "loss" over a forestry
+	// plantation (harvest cycle, NOT native deforestation) from loss over native forest.
+	// null plantation_pct = no MapBiomas plantation coverage for that zone (PY/BR).
+	const PLANTATION_THRESHOLD = 40; // % of hex that must be plantation to flag as forestry
+	function plantationContext(loss: number | null, plantation: number | null | undefined) {
+		if (plantation === null || plantation === undefined) return { kind: 'nodata' as const };
+		if ((loss ?? 0) > 0 && plantation >= PLANTATION_THRESHOLD) return { kind: 'managed' as const, plantation };
+		if (plantation >= PLANTATION_THRESHOLD) return { kind: 'plantation' as const, plantation };
+		return { kind: 'native' as const, plantation };
 	}
 
 	let result: EudrResult | null = $state(null);
@@ -56,6 +69,10 @@
 		mean_loss_pos: number;
 		provinces: string[];
 		loss_by_year: Record<number, number>;
+		plantation_data_cells: number;   // cells with MapBiomas plantation coverage (AR)
+		plantation_cells: number;        // cells that are forestry plantation (≥ threshold)
+		deforested_plantation: number;   // deforested cells on plantation → likely harvest cycle
+		deforested_native: number;       // deforested cells NOT plantation (data present) → possible real deforestation
 	}
 	let polygonResult: PolygonResult | null = $state(null);
 	let polygonError = $state('');
@@ -139,7 +156,12 @@
 		try {
 			await initDuckDB();
 			// h3 cells are alphanumeric — safe to interpolate. Range-read prunes to one row group.
-			const sql = `SELECT * FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index = '${cell}' LIMIT 1`;
+			// LEFT JOIN the plantation layer (AR-only) so loss over a forestry plantation
+			// isn't mislabelled as native deforestation; plantation_pct is null where absent.
+			const sql = `SELECT e.*, p.plantation_pct, p.native_forest_pct
+				FROM read_parquet('${getEudrHiresUrl()}') e
+				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
+				WHERE e.h3index = '${cell}' LIMIT 1`;
 			const table = await query(sql);
 			const rows = table.toArray();
 
@@ -176,6 +198,8 @@
 				eudr_assessment: assessment(deforested, score),
 				data_vintage: DATA_VINTAGE,
 				loss_by_year: byYear,
+				plantation_pct: r.plantation_pct == null ? null : Number(r.plantation_pct),
+				native_forest_pct: r.native_forest_pct == null ? null : Number(r.native_forest_pct),
 			};
 		} catch (e: any) {
 			error = e?.message || 'Error checking coordinates';
@@ -243,13 +267,20 @@
 
 			await initDuckDB();
 			const inList = cells.map((c) => `'${c}'`).join(',');
-			const sql = `SELECT h3index, province, risk_score, loss_post_2020_pct, deforestation_post_2020,
-				loss_2021_pct, loss_2022_pct, loss_2023_pct, loss_2024_pct
-				FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index IN (${inList})`;
+			const sql = `SELECT e.h3index, e.province, e.risk_score, e.loss_post_2020_pct, e.deforestation_post_2020,
+				e.loss_2021_pct, e.loss_2022_pct, e.loss_2023_pct, e.loss_2024_pct, p.plantation_pct
+				FROM read_parquet('${getEudrHiresUrl()}') e
+				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
+				WHERE e.h3index IN (${inList})`;
 			const rows: any[] = (await query(sql)).toArray();
 
 			const inCov = rows.length;
 			const deforested = rows.filter((r) => Number(r.deforestation_post_2020) > 0);
+			const PT = PLANTATION_THRESHOLD;
+			const plantationDataCells = rows.filter((r) => r.plantation_pct != null).length;
+			const plantationCells = rows.filter((r) => Number(r.plantation_pct) >= PT).length;
+			const defPlantation = deforested.filter((r) => Number(r.plantation_pct) >= PT).length;
+			const defNative = deforested.filter((r) => r.plantation_pct != null && Number(r.plantation_pct) < PT).length;
 			const risks = rows.map((r) => Number(r.risk_score));
 			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
 			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
@@ -271,6 +302,10 @@
 				mean_loss_pos: lossPos.length ? lossPos.reduce((a, b) => a + b, 0) / lossPos.length : 0,
 				provinces,
 				loss_by_year: lossByYear,
+				plantation_data_cells: plantationDataCells,
+				plantation_cells: plantationCells,
+				deforested_plantation: defPlantation,
+				deforested_native: defNative,
 			};
 
 			mapComponent?.showPolygon(rings);
@@ -319,10 +354,12 @@
 			await initDuckDB();
 			const uniqueCells = [...new Set(rows.map((r) => r.cell))];
 			const inList = uniqueCells.map((c) => `'${c}'`).join(',');
-			const sql = `SELECT h3index, province, forest_cover_2020, forest_cover_current,
-				loss_post_2020_pct, fire_post_2020_pct, risk_score, deforestation_post_2020,
-				loss_2021_pct, loss_2022_pct, loss_2023_pct, loss_2024_pct
-				FROM read_parquet('${getEudrHiresUrl()}') WHERE h3index IN (${inList})`;
+			const sql = `SELECT e.h3index, e.province, e.forest_cover_2020, e.forest_cover_current,
+				e.loss_post_2020_pct, e.fire_post_2020_pct, e.risk_score, e.deforestation_post_2020,
+				e.loss_2021_pct, e.loss_2022_pct, e.loss_2023_pct, e.loss_2024_pct, p.plantation_pct
+				FROM read_parquet('${getEudrHiresUrl()}') e
+				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
+				WHERE e.h3index IN (${inList})`;
 			const data = (await query(sql)).toArray();
 			const byCell = new Map<string, any>();
 			for (const d of data) byCell.set(String(d.h3index), d);
@@ -333,6 +370,7 @@
 				'loss_post_2020_pct', 'fire_post_2020_pct', 'risk_score',
 				'deforestation_post_2020', 'eudr_assessment',
 				'loss_2021_pct', 'loss_2022_pct', 'loss_2023_pct', 'loss_2024_pct',
+				'plantation_pct', 'loss_context',
 			];
 			const csv = [outHeaders.join(',')];
 			let outside = 0;
@@ -344,17 +382,25 @@
 				const d = byCell.get(r.cell);
 				if (!d) {
 					outside++;
-					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', '', '', '', ''].map(esc).join(','));
+					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', '', '', '', '', '', ''].map(esc).join(','));
 					continue;
 				}
 				const score = d.risk_score === null ? null : Number(d.risk_score);
 				const def = Number(d.deforestation_post_2020) > 0;
+				const plant = d.plantation_pct == null ? null : Number(d.plantation_pct);
+				let lossCtx = '';
+				if (def) {
+					if (plant == null) lossCtx = 'no_plantation_data';
+					else if (plant >= PLANTATION_THRESHOLD) lossCtx = 'plantation_harvest';
+					else lossCtx = 'native_deforestation';
+				}
 				csv.push([
 					r.id, r.lat, r.lon, r.cell, 'yes',
 					d.province ?? '', d.forest_cover_2020 ?? '', d.forest_cover_current ?? '',
 					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '', score ?? '',
 					def ? 1 : 0, assessment(def, score),
 					d.loss_2021_pct ?? '', d.loss_2022_pct ?? '', d.loss_2023_pct ?? '', d.loss_2024_pct ?? '',
+					plant ?? '', lossCtx,
 				].map(esc).join(','));
 			}
 			const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8' });
@@ -425,10 +471,14 @@
 			`Riesgo medio (0-100): ${r.mean_risk.toFixed(1)}`,
 			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
 			`Pérdida 2021/22/23/24: ${yr(2021)}% / ${yr(2022)}% / ${yr(2023)}% / ${yr(2024)}%`,
+			r.plantation_data_cells > 0
+				? `Plantación vs nativo (celdas con pérdida): ${r.deforested_plantation} en plantación forestal (posible cosecha, no deforestación) · ${r.deforested_native} en cobertura no-plantación (posible deforestación de nativo)`
+				: 'Plantación vs nativo: sin dato de plantación para esta zona (MapBiomas solo AR por ahora)',
 			'',
 			'-- METODOLOGÍA --',
 			'Hansen GFC v1.12 + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m.',
 			'Score 0-100 = 70% pérdida post-2020 + 20% fuego post-2020 + 10% pérdida previa.',
+			'Plantación vs bosque nativo: MapBiomas Argentina Col.1 (clase 9 = silvicultura).',
 			'',
 			'(Adjunto el GeoJSON del polígono.)',
 			'',
@@ -796,6 +846,24 @@
 						</div>
 					</div>
 
+					<!-- Plantation context: keep Hansen plantation-harvest "loss" from reading as native deforestation -->
+					{#if result.eudr_assessment !== 'OUTSIDE_COVERAGE'}
+						{@const ctx = plantationContext(result.loss_post_2020_pct, result.plantation_pct)}
+						{#if ctx.kind === 'managed'}
+							<div class="mb-4 px-3 py-2 rounded bg-emerald-500/10 border border-emerald-500/25 text-[10px] text-emerald-200/80 leading-relaxed">
+								🌲 {i18n.t('eudr.check.plant_managed').replace('{pct}', fmt(ctx.plantation, 0))}
+							</div>
+						{:else if ctx.kind === 'plantation'}
+							<div class="mb-4 px-3 py-2 rounded bg-emerald-500/[0.06] border border-emerald-500/15 text-[10px] text-emerald-200/60 leading-relaxed">
+								🌲 {i18n.t('eudr.check.plant_zone').replace('{pct}', fmt(ctx.plantation, 0))}
+							</div>
+						{:else if ctx.kind === 'nodata'}
+							<div class="mb-4 px-3 py-2 rounded bg-white/[0.03] border border-white/10 text-[10px] text-white/35 leading-relaxed">
+								{i18n.t('eudr.check.plant_nodata')}
+							</div>
+						{/if}
+					{/if}
+
 					<!-- Loss by year (post-cutoff temporal curve) -->
 					{#if result.loss_by_year && (result.loss_post_2020_pct ?? 0) > 0}
 						<div class="mb-4">
@@ -886,6 +954,17 @@
 							<div class="text-lg font-bold text-white">{polygonResult.mean_risk.toFixed(1)}</div>
 						</div>
 					</div>
+
+					<!-- Plantation vs native split of the deforested cells (forestry false-positive guard) -->
+					{#if polygonResult.deforested_cells > 0 && polygonResult.plantation_data_cells > 0}
+						<div class="mb-4 px-3 py-2 rounded bg-emerald-500/10 border border-emerald-500/25 text-[10px] text-emerald-200/80 leading-relaxed">
+							🌲 {i18n.t('eudr.check.poly_plant_split').replace('{plant}', String(polygonResult.deforested_plantation)).replace('{native}', String(polygonResult.deforested_native))}
+						</div>
+					{:else if polygonResult.plantation_data_cells === 0}
+						<div class="mb-4 px-3 py-2 rounded bg-white/[0.03] border border-white/10 text-[10px] text-white/35 leading-relaxed">
+							{i18n.t('eudr.check.plant_nodata')}
+						</div>
+					{/if}
 
 					<!-- Loss by year (post-cutoff EUDR temporal curve) -->
 					{#if polygonResult.deforested_cells > 0}

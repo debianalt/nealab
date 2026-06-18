@@ -131,6 +131,14 @@ export function getEudrHiresUrl(): string {
 	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=1`;
 }
 
+// Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
+// Joined by h3index in /eudr/check to flag plantation harvest cycles that Hansen
+// mislabels as deforestation. AR-only for now (MapBiomas AR Collection 1);
+// PY/BR have no usable plantation class → those hexes are simply absent (sin dato).
+export function getEudrPlantationUrl(): string {
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=1`;
+}
+
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
 	const layer = HEX_LAYER_REGISTRY[analysisId];
 	const name = layer?.parquet ?? `sat_${analysisId}`;
