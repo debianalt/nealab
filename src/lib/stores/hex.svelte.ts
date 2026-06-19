@@ -1203,8 +1203,11 @@ export class HexStore {
 			const url = getEudrParquetUrl(layer.parquet);
 			const colNames = layer.variables.map(v => v.col);
 			const inList = cells.map(c => `'${c}'`).join(',');
+			// NOA (Salta/Jujuy/Tucumán/Catamarca/Sgo. del Estero) fuera del alcance NEA —
+			// el dato existe en el parquet pero no se muestra (foco NEA + transfronterizo).
 			const result = await query(
-				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})`
+				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})
+					AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero')`
 			);
 			const data = new Map<string, Record<string, any>>();
 			const centroids = new Map<string, [number, number]>();
