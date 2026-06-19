@@ -1890,10 +1890,10 @@
 							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida de cobertura arbórea post-2020 en esta unidad.</div>
 						{:else if withData < eudrUnitStats.lossTotal * 0.5}
 							<!-- La mayoría de las celdas con pérdida no tienen dato de plantación → no
-							     mostramos un % engañoso (PY/BR, o AR fuera de Misiones/Corrientes). -->
+							     mostramos un % engañoso (Paraguay / Brasil). -->
 							<div class="mt-2 pt-2 border-t border-white/10 text-[10px] text-white/40 leading-relaxed">
-								Sin dato de plantación para esta zona — la cobertura plantación/nativo de MapBiomas
-								está disponible por ahora solo en <b>Misiones y Corrientes (Argentina)</b>. No se
+								Sin dato de plantación para esta zona (Paraguay/Brasil) — la cobertura plantación/nativo
+								de MapBiomas está en el <b>NEA argentino</b> (Misiones, Corrientes, Chaco, Formosa). No se
 								puede distinguir plantación de bosque nativo aquí.
 							</div>
 						{:else}

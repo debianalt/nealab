@@ -38,6 +38,7 @@ NATIVE_CLASSES = {3, 4, 5, 6}
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(SCRIPT_DIR, "output", "eudr", "hires")
+STRIDE = 1  # pixel decimation factor (set from --stride); 1 = full resolution
 
 
 def aggregate(raster_path, res):
@@ -46,6 +47,14 @@ def aggregate(raster_path, res):
         arr = src.read(1)
         transform = src.transform
         print(f"  Raster: {src.width}x{src.height}  res={src.res}  crs={src.crs}")
+
+    # Decimación opcional: para una FRACCIÓN de cobertura, muestrear 1 de cada
+    # `stride` píxeles es estadísticamente equivalente y ~stride² más rápido (el
+    # cuello de botella es el list-comp de h3 sobre decenas de millones de píxeles).
+    if STRIDE > 1:
+        arr = arr[::STRIDE, ::STRIDE]
+        transform = transform * transform.scale(STRIDE, STRIDE)
+        print(f"  Decimado x{STRIDE} -> {arr.shape[1]}x{arr.shape[0]}")
 
     valid = arr > 0  # class 0 = nodata / unclassified
     n = int(valid.sum())
@@ -90,8 +99,11 @@ def main():
     ap.add_argument("--year", type=int, default=0, help="MapBiomas vintage year (metadata)")
     ap.add_argument("--res", type=int, default=9)
     ap.add_argument("--tag", default="", help="Filename tag, e.g. '2020' -> plantation2020_<prov>_res9.parquet")
+    ap.add_argument("--stride", type=int, default=1, help="Decimación de píxeles (3 ~9x más rápido, fracción equivalente)")
     ap.add_argument("--out-dir", default=OUT_DIR)
     args = ap.parse_args()
+    global STRIDE
+    STRIDE = args.stride
 
     if not os.path.exists(args.raster):
         print(f"ERROR: raster not found: {args.raster}")
