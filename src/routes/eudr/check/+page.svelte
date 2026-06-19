@@ -94,9 +94,10 @@
 		loss_by_year: Record<number, number>;
 		plantation_data_cells: number;   // cells with MapBiomas plantation coverage (AR)
 		plantation_cells: number;        // cells that are forestry plantation (≥ threshold, current)
-		deforested_harvest: number;      // deforested cells = plantation harvest cycle → compliant
-		deforested_conversion: number;   // deforested cells = native→plantation post-2020 → NON-compliant
-		deforested_native: number;       // deforested cells = native-forest loss → possible deforestation
+		deforested_harvest: number;      // loss cells whose 2020 cover was plantation
+		deforested_native: number;       // loss cells whose 2020 cover was native forest
+		deforested_other: number;        // loss cells whose 2020 cover was non-forest (agro/pasture/mosaic)
+		deforested_conversion: number;   // observación: native 2020 → plantation now (possible conversion)
 	}
 	let polygonResult: PolygonResult | null = $state(null);
 	let polygonError = $state('');
@@ -307,12 +308,24 @@
 			const PT = PLANTATION_THRESHOLD;
 			const plantationDataCells = rows.filter((r) => r.plantation_pct != null).length;
 			const plantationCells = rows.filter((r) => Number(r.plantation_pct) >= PT).length;
-			// Classify each deforested cell via the 2020-baseline plantation context.
-			const defKinds = deforested.map((r) => plantationContext(
-				num(r.loss_post_2020_pct), num(r.plantation_pct), num(r.plantation_2020_pct), num(r.native_2020_pct)).kind);
-			const defHarvest = defKinds.filter((k) => k === 'managed_confirmed' || k === 'managed').length;
-			const defConversion = defKinds.filter((k) => k === 'conversion').length;
-			const defNative = defKinds.filter((k) => k === 'native_loss' || k === 'native').length;
+			// Cobertura 2020 de cada celda con pérdida (empírico, 3 buckets — NUNCA se
+			// asume nativo sin dato: lo no-plantación-no-nativo es "otra cobertura").
+			const cover2020 = (r: any): 'plantation' | 'native' | 'other' | 'nodata' => {
+				const p20 = num(r.plantation_2020_pct), n20 = num(r.native_2020_pct), pn = num(r.plantation_pct);
+				if (p20 == null && n20 == null && pn == null) return 'nodata';
+				if (p20 != null || n20 != null) {
+					if ((p20 ?? 0) >= PT) return 'plantation';
+					if ((n20 ?? 0) >= PT) return 'native';
+					return 'other';
+				}
+				return (pn ?? 0) >= PT ? 'plantation' : 'other';
+			};
+			const defCover = deforested.map(cover2020);
+			const defHarvest = defCover.filter((k) => k === 'plantation').length;
+			const defNative = defCover.filter((k) => k === 'native').length;
+			const defOther = defCover.filter((k) => k === 'other').length;
+			// Observación de posible conversión: nativo en 2020, plantación hoy.
+			const defConversion = deforested.filter((r) => (num(r.native_2020_pct) ?? 0) >= PT && (num(r.plantation_pct) ?? 0) >= PT).length;
 			const risks = rows.map((r) => Number(r.risk_score));
 			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
 			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
@@ -337,8 +350,9 @@
 				plantation_data_cells: plantationDataCells,
 				plantation_cells: plantationCells,
 				deforested_harvest: defHarvest,
-				deforested_conversion: defConversion,
 				deforested_native: defNative,
+				deforested_other: defOther,
+				deforested_conversion: defConversion,
 			};
 
 			mapComponent?.showPolygon(rings);
@@ -510,7 +524,7 @@
 			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
 			`Pérdida 2021/22/23/24: ${yr(2021)}% / ${yr(2022)}% / ${yr(2023)}% / ${yr(2024)}%`,
 			r.plantation_data_cells > 0
-				? `Plantación vs nativo (celdas con pérdida, baseline MapBiomas 2020): ${r.deforested_harvest} cosecha de plantación previa a 2020 (conforme) · ${r.deforested_conversion} conversión nativo→plantación post-2020 (NO conforme) · ${r.deforested_native} pérdida de bosque nativo`
+				? `Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea: ${r.deforested_harvest} sobre plantación forestal · ${r.deforested_native} sobre bosque nativo · ${r.deforested_other} sobre otra cobertura (agro/pasturas/mosaico) · ${r.deforested_conversion} eran nativo en 2020 y hoy figuran como plantación (posible conversión, a verificar). Señal indicativa — no determina causa de la pérdida ni cumplimiento EUDR.`
 				: 'Plantación vs nativo: SIN dato de plantación para esta zona (Paraguay/Brasil — MapBiomas no clasifica silvicultura). La pérdida no pudo distinguirse entre cosecha de plantación y deforestación de bosque nativo; si hay forestación, posible falso positivo (verificar en terreno o catastro).',
 			'',
 			'-- METODOLOGÍA --',
@@ -1015,7 +1029,7 @@
 					<!-- Plantation vs native split of the deforested cells (forestry false-positive guard) -->
 					{#if polygonResult.deforested_cells > 0 && polygonResult.plantation_data_cells > 0}
 						<div class="mb-4 px-3 py-2 rounded bg-emerald-500/10 border border-emerald-500/25 text-[10px] text-emerald-200/80 leading-relaxed">
-							🌲 {i18n.t('eudr.check.poly_plant_split').replace('{harvest}', String(polygonResult.deforested_harvest)).replace('{conversion}', String(polygonResult.deforested_conversion)).replace('{native}', String(polygonResult.deforested_native))}
+							🌲 {i18n.t('eudr.check.poly_plant_split').replace('{harvest}', String(polygonResult.deforested_harvest)).replace('{native}', String(polygonResult.deforested_native)).replace('{other}', String(polygonResult.deforested_other)).replace('{conversion}', String(polygonResult.deforested_conversion))}
 						</div>
 					{:else if polygonResult.plantation_data_cells === 0 && polygonResult.deforested_cells > 0}
 						<div class="mb-4 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] text-amber-200/85 leading-relaxed">

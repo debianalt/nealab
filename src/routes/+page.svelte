@@ -730,18 +730,26 @@
 	const EUDR_MAX_CELLS = 8000;
 
 	let eudrUnit: { name: string; country: string } | null = $state(null);
-	// Plantation/native breakdown of the selected EUDR admin-2 unit (AR only).
-	// Set once (in the click handler, not an effect) → no reactive cascade.
-	let eudrUnitStats: { harvest: number; conversion: number; native: number; dataCells: number } | null = $state(null);
+	// Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea en una unidad EUDR.
+	// EMPÍRICO: clasifica por qué cobertura había en 2020, sin afirmar "deforestación"
+	// ni cumplimiento (la pérdida Hansen puede ser cosecha, fuego, manejo o conversión).
+	// Set una sola vez en el click handler (no $effect) → sin cascade reactivo.
+	let eudrUnitStats: { plantation: number; native: number; other: number; conversion: number; dataCells: number } | null = $state(null);
 
-	function classifyEudrCell(def: number, pn: number | null, p20: number | null, n20: number | null): 'harvest' | 'conversion' | 'native' | 'nodata' {
+	// 'plantation' = era plantación en 2020 (≥40%); 'native' = era bosque nativo en 2020
+	// (≥40%); 'other' = otra cobertura (agro/pasturas/mosaico) — NUNCA se asume nativo sin
+	// dato. 'conversion' es una observación aparte (nativo 2020 → plantación hoy).
+	function classifyEudrCover2020(pn: number | null, p20: number | null, n20: number | null): 'plantation' | 'native' | 'other' | 'nodata' {
 		const T = 40;
-		if (pn == null && p20 == null) return 'nodata';
-		if (p20 != null) {
-			if (p20 >= T) return 'harvest';
-			if (n20 != null && n20 >= T) return (pn ?? 0) >= T ? 'conversion' : 'native';
+		if (pn == null && p20 == null && n20 == null) return 'nodata';
+		if (p20 != null || n20 != null) {
+			if ((p20 ?? 0) >= T) return 'plantation';
+			if ((n20 ?? 0) >= T) return 'native';
+			return 'other';
 		}
-		return (pn ?? 0) >= T ? 'harvest' : 'native';
+		// sin baseline 2020: solo afirmamos plantación si el estado actual la muestra; el
+		// resto es "otra" (no inventamos bosque nativo sin evidencia)
+		return (pn ?? 0) >= T ? 'plantation' : 'other';
 	}
 
 	async function computeEudrUnitPlantation(cells: string[]) {
@@ -755,18 +763,23 @@
 				LEFT JOIN read_parquet('${getEudrPlantationRes7Url()}') p USING (h3index)
 				WHERE e.h3index IN (${inList})`;
 			const rows: any[] = (await query(sql)).toArray();
-			let harvest = 0, conversion = 0, native = 0, dataCells = 0;
+			let plantation = 0, native = 0, other = 0, conversion = 0, dataCells = 0;
+			const T = 40;
 			for (const r of rows) {
-				if (r.pn != null || r.p20 != null) dataCells++;
+				if (r.pn != null || r.p20 != null || r.n20 != null) dataCells++;
 				if (Number(r.def) > 0) {
-					const k = classifyEudrCell(Number(r.def), r.pn == null ? null : Number(r.pn),
-						r.p20 == null ? null : Number(r.p20), r.n20 == null ? null : Number(r.n20));
-					if (k === 'harvest') harvest++;
-					else if (k === 'conversion') conversion++;
+					const pn = r.pn == null ? null : Number(r.pn);
+					const p20 = r.p20 == null ? null : Number(r.p20);
+					const n20 = r.n20 == null ? null : Number(r.n20);
+					const k = classifyEudrCover2020(pn, p20, n20);
+					if (k === 'plantation') plantation++;
 					else if (k === 'native') native++;
+					else if (k === 'other') other++;
+					// observación de posible conversión: era nativo en 2020, hoy es plantación
+					if ((n20 ?? 0) >= T && (pn ?? 0) >= T) conversion++;
 				}
 			}
-			eudrUnitStats = { harvest, conversion, native, dataCells };
+			eudrUnitStats = { plantation, native, other, conversion, dataCells };
 		} catch { eudrUnitStats = null; }
 	}
 
@@ -1875,21 +1888,22 @@
 							<div class="mt-2 pt-2 border-t border-white/10 text-[10px] text-white/40 leading-relaxed">
 								Sin dato de plantación para esta zona (MapBiomas: solo Argentina por ahora).
 							</div>
-						{:else if (eudrUnitStats.harvest + eudrUnitStats.conversion + eudrUnitStats.native) === 0}
-							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida forestal post-2020 en esta unidad.</div>
+						{:else if (eudrUnitStats.plantation + eudrUnitStats.native + eudrUnitStats.other) === 0}
+							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida de cobertura arbórea post-2020 en esta unidad.</div>
 						{:else}
-							{@const total = eudrUnitStats.harvest + eudrUnitStats.conversion + eudrUnitStats.native}
+							{@const total = eudrUnitStats.plantation + eudrUnitStats.native + eudrUnitStats.other}
 							{@const pct = (n: number) => Math.round((n / total) * 100)}
 							<div class="mt-2 pt-2 border-t border-white/10 leading-relaxed">
-								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Pérdida forestal post-2020 · plantación vs nativo (baseline MapBiomas 2020)</div>
+								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Cobertura en 2020 (MapBiomas) de las celdas con pérdida arbórea post-2020</div>
 								<div class="flex flex-col gap-0.5 text-[11px]">
-									<span class="text-amber-300">🌳 <b>{pct(eudrUnitStats.native)}%</b> bosque nativo <span class="text-white/40">— deforestación</span></span>
-									<span class="text-emerald-300">🌲 <b>{pct(eudrUnitStats.harvest)}%</b> plantación <span class="text-white/40">— cosecha, conforme</span></span>
+									<span class="text-amber-300">🌳 <b>{pct(eudrUnitStats.native)}%</b> bosque nativo</span>
+									<span class="text-emerald-300">🌲 <b>{pct(eudrUnitStats.plantation)}%</b> plantación forestal</span>
+									<span class="text-white/55">▫️ <b>{pct(eudrUnitStats.other)}%</b> otra cobertura <span class="text-white/35">(agro, pasturas, mosaico)</span></span>
 									{#if eudrUnitStats.conversion > 0}
-										<span class="text-red-300">⚠️ <b>{pct(eudrUnitStats.conversion)}%</b> conversión nativo→plantación <span class="text-white/40">— NO conforme</span></span>
+										<span class="text-amber-200/80 text-[10px] mt-0.5">↳ {eudrUnitStats.conversion} celda{eudrUnitStats.conversion === 1 ? '' : 's'}: nativo en 2020 → plantación hoy (posible conversión — verificar)</span>
 									{/if}
 								</div>
-								<div class="text-[9px] text-white/30 mt-1">{total.toLocaleString()} celdas de ~5 km² con pérdida</div>
+								<div class="text-[9px] text-white/30 mt-1 leading-snug">{total.toLocaleString()} celdas de ~5 km². Señal indicativa — no determina la causa de la pérdida (cosecha, fuego, conversión) ni constituye veredicto de cumplimiento EUDR.</div>
 							</div>
 						{/if}
 					{/if}
