@@ -1207,7 +1207,7 @@ export class HexStore {
 			// el dato existe en el parquet pero no se muestra (foco NEA + transfronterizo).
 			const result = await query(
 				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})
-					AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero')`
+					AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`
 			);
 			const data = new Map<string, Record<string, any>>();
 			const centroids = new Map<string, [number, number]>();

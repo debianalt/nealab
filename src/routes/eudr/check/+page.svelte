@@ -186,7 +186,7 @@
 			const sql = `SELECT e.*, p.plantation_pct, p.native_forest_pct, p.plantation_2020_pct, p.native_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
-				WHERE e.h3index = '${cell}' AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero') LIMIT 1`;
+				WHERE e.h3index = '${cell}' AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos') LIMIT 1`;
 			const table = await query(sql);
 			const rows = table.toArray();
 
@@ -299,7 +299,7 @@
 				p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
-				WHERE e.h3index IN (${inList}) AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero')`;
+				WHERE e.h3index IN (${inList}) AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`;
 			const rows: any[] = (await query(sql)).toArray();
 
 			const num = (v: any) => (v == null ? null : Number(v));
@@ -406,7 +406,7 @@
 				e.loss_2021_pct, e.loss_2022_pct, e.loss_2023_pct, e.loss_2024_pct, p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
-				WHERE e.h3index IN (${inList}) AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero')`;
+				WHERE e.h3index IN (${inList}) AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`;
 			const data = (await query(sql)).toArray();
 			const byCell = new Map<string, any>();
 			for (const d of data) byCell.set(String(d.h3index), d);
@@ -669,8 +669,8 @@
 			<li>
 				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
 				Análisis satelital de pérdida forestal post-2020 (Hansen GFC v1.12 + MODIS de área quemada)
-				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA y litoral argentino
-				(Misiones, Corrientes, Chaco, Formosa y Entre Ríos), departamentos paraguayos y estados del sur de Brasil. Sirve para
+				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino
+				(Misiones, Corrientes, Chaco y Formosa), departamentos paraguayos y estados del sur de Brasil. Sirve para
 				screening de riesgo EUDR, due-diligence preliminar y soporte técnico de informes.
 				En Argentina (Misiones y Corrientes) distingue además la pérdida sobre <b>plantación forestal</b>
 				(ciclo de cosecha, conforme) de la <b>deforestación de bosque nativo</b>, cruzando con MapBiomas
