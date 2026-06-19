@@ -1038,12 +1038,14 @@
 						</div>
 					</div>
 
-					<!-- Plantation vs native split of the deforested cells (forestry false-positive guard) -->
-					{#if polygonResult.deforested_cells > 0 && polygonResult.plantation_data_cells > 0}
+					<!-- Plantation vs native split — only when most loss cells actually have
+					     MapBiomas cover data; else a couple of AR-border cells in a PY/BR polygon
+					     would yield a misleading split. -->
+					{#if polygonResult.deforested_cells > 0 && (polygonResult.deforested_harvest + polygonResult.deforested_native + polygonResult.deforested_other) >= polygonResult.deforested_cells * 0.5}
 						<div class="mb-4 px-3 py-2 rounded bg-emerald-500/10 border border-emerald-500/25 text-[10px] text-emerald-200/80 leading-relaxed">
 							🌲 {i18n.t('eudr.check.poly_plant_split').replace('{harvest}', String(polygonResult.deforested_harvest)).replace('{native}', String(polygonResult.deforested_native)).replace('{other}', String(polygonResult.deforested_other)).replace('{conversion}', String(polygonResult.deforested_conversion))}
 						</div>
-					{:else if polygonResult.plantation_data_cells === 0 && polygonResult.deforested_cells > 0}
+					{:else if polygonResult.deforested_cells > 0}
 						<div class="mb-4 px-3 py-2 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] text-amber-200/85 leading-relaxed">
 							{i18n.t('eudr.check.plant_nodata_loss')}
 						</div>
