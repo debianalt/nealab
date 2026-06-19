@@ -71,6 +71,16 @@
 	const petalLayers = $derived(entries.map(e => ({ values: e.normalizedValues, color: e.color })));
 	const petalLabels = $derived(petalVars.map(v => i18n.t(v.labelKey)));
 
+	// Census schemas differ by country (INDEC AR · DGEEC PY · IBGE BR); a petal
+	// mixing AR + BR tracts is read with the first tract's columns and normalized
+	// against its provincial average, so cross-country values are not comparable.
+	const mixedCountry = $derived.by(() => {
+		const countries = new Set(
+			[...radios.keys()].map(rc => (territoryFromRedcode(rc).endsWith('_br') ? 'BR' : 'AR'))
+		);
+		return countries.size > 1;
+	});
+
 	function shortCode(rc: string): string {
 		return rc.length > 5 ? '...' + rc.slice(-4) : rc;
 	}
@@ -98,6 +108,10 @@
 			</button>
 		{/each}
 	</div>
+
+	{#if mixedCountry}
+		<p class="census-warn">{i18n.t('warn.censusCrossCountry')}</p>
+	{/if}
 
 	<!-- Petal chart (normalized: 50 = provincial avg) -->
 	{#if petalLayers.length > 0}
@@ -197,6 +211,16 @@
 	.ref-note {
 		font-size: 8px; color: rgba(255,255,255,0.45);
 		text-align: center; margin: 4px 0 0;
+	}
+
+	.census-warn {
+		font-size: 9px; line-height: 1.4;
+		color: #fde68a;
+		background: rgba(250,204,21,0.10);
+		border: 1px solid rgba(250,204,21,0.35);
+		border-radius: 4px;
+		padding: 5px 7px;
+		margin: 0 0 8px;
 	}
 
 	.r-table { margin: 8px 0; }
