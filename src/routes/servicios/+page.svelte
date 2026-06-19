@@ -26,7 +26,7 @@
 <div class="page">
 	<div class="content">
 	<div class="print-brand">
-		nealab · inteligencia geoespacial abierta · spatia.ar
+		nealab · análisis geoespacial abierto · spatia.ar
 	</div>
 
 	<header class="hdr">
@@ -122,7 +122,7 @@
 	<footer class="footer">
 		<p>
 			{c.citationLabel}: Gomez, R. E. (2026). nealab: A Reproducible Platform for Subnational
-			Territorial Intelligence (Version v2.2). Zenodo.
+			Geospatial Analysis (Version v2.3). Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>
 		<p class="affil">{c.affil}</p>

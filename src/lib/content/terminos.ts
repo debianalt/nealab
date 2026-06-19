@@ -50,7 +50,7 @@ export interface TerminosContent {
 export const TERMINOS: Record<Locale, TerminosContent> = {
 	es: {
 		pageTitle: 'Términos y condiciones — nealab',
-		metaDesc: 'Términos y condiciones de uso de nealab, plataforma de inteligencia geoespacial abierta. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
+		metaDesc: 'Términos y condiciones de uso de nealab, plataforma de análisis geoespacial abierto. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
 		printBrand: 'nealab · términos y condiciones · spatia.ar',
 		kicker: 'Términos y condiciones de uso · nealab / spatia.ar',
 		title: 'Términos y condiciones',
@@ -119,7 +119,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 
 	en: {
 		pageTitle: 'Terms and conditions — nealab',
-		metaDesc: 'Terms and conditions of use for nealab, open geospatial intelligence platform. Disclaimer of warranties, limitation of liability, applicable law.',
+		metaDesc: 'Terms and conditions of use for nealab, open geospatial analysis platform. Disclaimer of warranties, limitation of liability, applicable law.',
 		printBrand: 'nealab · terms and conditions · spatia.ar',
 		kicker: 'Terms and conditions of use · nealab / spatia.ar',
 		title: 'Terms and conditions',
@@ -188,7 +188,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 
 	pt: {
 		pageTitle: 'Termos e condições — nealab',
-		metaDesc: 'Termos e condições de uso do nealab, plataforma de inteligência geoespacial aberta. Exclusão de garantias, limitação de responsabilidade, lei aplicável.',
+		metaDesc: 'Termos e condições de uso do nealab, plataforma de análise geoespacial aberta. Exclusão de garantias, limitação de responsabilidade, lei aplicável.',
 		printBrand: 'nealab · termos e condições · spatia.ar',
 		kicker: 'Termos e condições de uso · nealab / spatia.ar',
 		title: 'Termos e condições',
@@ -257,7 +257,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 
 	gn: {
 		pageTitle: 'Términos ha condiciones — nealab',
-		metaDesc: 'Términos ha condiciones de uso nealab-pegua, plataforma de inteligencia geoespacial abierta. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
+		metaDesc: 'Términos ha condiciones de uso nealab-pegua, plataforma de análisis geoespacial abierto. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
 		printBrand: 'nealab · términos ha condiciones · spatia.ar',
 		kicker: 'Términos ha condiciones de uso · nealab / spatia.ar',
 		title: 'Términos ha condiciones',

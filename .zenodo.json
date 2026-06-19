@@ -1,5 +1,5 @@
 {
-  "title": "NeaLab: A Reproducible Platform for Subnational Territorial Intelligence",
+  "title": "NeaLab: A Reproducible Platform for Subnational Geospatial Analysis",
   "description": "Reproducible platform combining satellite imagery, census data, and geospatial datasets into composite indicators over an H3 hexagonal grid. Applied to Misiones and the NEA (Nordeste Argentino) with 320,000 hexagons across four analytical domains.",
   "creators": [
     {
@@ -9,7 +9,7 @@
     }
   ],
   "keywords": [
-    "territorial intelligence",
+    "geospatial analysis",
     "geospatial",
     "H3",
     "DuckDB",

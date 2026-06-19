@@ -287,7 +287,7 @@ def generate_report(analysis_id, dept_name, dept_df, prov_df, summary, output_pa
         # ══════ PAGE 1: COVER ══════
         fig = new_page(pdf)
         fig.text(0.5, 0.88, "spatia.ar", ha='center', fontsize=24, fontweight='bold', color='#000000')
-        fig.text(0.5, 0.84, "Inteligencia Territorial para Misiones", ha='center', fontsize=10, color='#666666')
+        fig.text(0.5, 0.84, "Análisis Geoespacial para Misiones", ha='center', fontsize=10, color='#666666')
         fig.text(0.5, 0.74, meta["title"], ha='center', fontsize=18, fontweight='bold', color='#000000')
         fig.text(0.5, 0.70, meta["subtitle"], ha='center', fontsize=11, color='#666666')
         fig.text(0.5, 0.62, dept_name, ha='center', fontsize=22, fontweight='bold', color='#333333')
@@ -551,7 +551,7 @@ def generate_report(analysis_id, dept_name, dept_df, prov_df, summary, output_pa
             f"    global 10m land use land cover mapping. Scientific Data 9:251.\n"
             f"  • Uber Technologies (2018). H3: Hexagonal hierarchical\n"
             f"    geospatial indexing system. https://h3geo.org/\n\n"
-            f"Generado por Spatia — Inteligencia Territorial para Misiones\n"
+            f"Generado por Spatia — Análisis Geoespacial para Misiones\n"
             f"https://spatia.ar\n"
             f"Fecha de generación: {date.today().strftime('%d/%m/%Y')}\n"
             f"Contacto: Raimundo Elías Gómez — CONICET"

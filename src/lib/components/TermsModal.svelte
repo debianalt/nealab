@@ -5,7 +5,7 @@
 <div class="overlay">
 	<div class="modal">
 		<div class="kicker">spatia.ar</div>
-		<h1 class="title">Inteligencia territorial, acceso abierto</h1>
+		<h1 class="title">Análisis geoespacial, acceso abierto</h1>
 
 		<p class="platform-intro">
 			Análisis geoespacial sobre el Noreste Argentino — NEA (Misiones, Corrientes, Chaco, Formosa) —

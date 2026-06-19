@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "nealab: A Reproducible Platform for Subnational Territorial Intelligence"
+title: "nealab: A Reproducible Platform for Subnational Geospatial Analysis"
 message: "If you use this software, please cite it using these metadata."
 type: software
 authors:
@@ -11,11 +11,11 @@ authors:
 repository-code: "https://github.com/debianalt/nealab"
 url: "https://www.spatia.ar"
 license: AGPL-3.0
-version: 2.2.0
-date-released: "2026-06-15"
+version: 2.3.0
+date-released: "2026-06-19"
 doi: "10.5281/zenodo.19483040"
 keywords:
-  - territorial intelligence
+  - geospatial analysis
   - H3 hexagonal grid
   - Google Earth Engine
   - PCA scoring
