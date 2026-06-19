@@ -655,9 +655,12 @@
 			<li>
 				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
 				Análisis satelital de pérdida forestal post-2020 (Hansen GFC v1.12 + MODIS de área quemada)
-				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA y NOA argentino,
-				departamentos paraguayos y estados del sur de Brasil. Sirve para screening de riesgo
-				EUDR, due-diligence preliminar y soporte técnico de informes.
+				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del norte y litoral argentino
+				(NEA, NOA y Entre Ríos), departamentos paraguayos y estados del sur de Brasil. Sirve para
+				screening de riesgo EUDR, due-diligence preliminar y soporte técnico de informes.
+				En Argentina (Misiones y Corrientes) distingue además la pérdida sobre <b>plantación forestal</b>
+				(ciclo de cosecha, conforme) de la <b>deforestación de bosque nativo</b>, cruzando con MapBiomas
+				y un baseline al corte 2020.
 			</li>
 			<li>
 				<span class="eudr-gate-label">Alcance regulatorio.</span>
