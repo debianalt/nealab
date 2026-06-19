@@ -711,6 +711,18 @@
 		{i18n.t('eudr.check.click_map')}
 	</div>
 
+	<!-- Risk colour-ramp legend for the polygon heatmap -->
+	{#if polygonResult}
+		<div class="absolute bottom-12 left-3 z-10 bg-black/75 backdrop-blur-md border border-border rounded-lg px-3 py-2 w-[230px] pointer-events-none">
+			<div class="text-[10px] text-white/70 font-semibold mb-1.5 leading-tight">{i18n.t('eudr.check.legend_title')}</div>
+			<div class="h-2 rounded-full" style="background: linear-gradient(to right, #fef3c7 0%, #fde047 25%, #f59e0b 50%, #ef4444 75%, #991b1b 100%);"></div>
+			<div class="flex justify-between text-[9px] text-white/45 mt-0.5">
+				<span>0 · bajo</span><span>50</span><span>100 · alto</span>
+			</div>
+			<div class="text-[9px] text-white/35 mt-1 leading-snug">{i18n.t('eudr.check.legend_note')}</div>
+		</div>
+	{/if}
+
 	<!-- Floating panel: input + results -->
 	<div class="absolute top-3 right-3 w-[380px] max-w-[calc(100vw-1.5rem)] max-h-[calc(100vh-104px)] flex flex-col gap-3 overflow-y-auto z-20">
 			<!-- Coordinate Input -->

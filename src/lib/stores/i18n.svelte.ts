@@ -947,6 +947,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.clear_all': { es: '✕ Limpiar todo', en: '✕ Clear all', gn: '✕ Embogue', pt: '✕ Limpar tudo' },
 	'eudr.check.checking': { es: 'Verificando...', en: 'Checking...', gn: 'Checking...', pt: 'Verificando...' },
 	'eudr.check.click_map': { es: 'Click en el mapa para seleccionar ubicación', en: 'Click on the map to select location', gn: 'Click', pt: 'Clique no mapa para selecionar localização' },
+	'eudr.check.legend_title': { es: 'Riesgo de deforestación post-2020 (score 0–100)', en: 'Post-2020 deforestation risk (score 0–100)', gn: 'Riesgo deforestación post-2020 (0–100)', pt: 'Risco de desmatamento pós-2020 (score 0–100)' },
+	'eudr.check.legend_note': { es: 'Color por hexágono (~0,1 km²): 70% pérdida forestal + 20% fuego + 10% sin bosque (cutoff 31/12/2020)', en: 'Colour per hexagon (~0.1 km²): 70% forest loss + 20% fire + 10% no forest (cut-off 31/12/2020)', gn: 'Color hexágono rupive (~0,1 km²): 70% pérdida + 20% tata + 10% ka\'aguy\'ỹ', pt: 'Cor por hexágono (~0,1 km²): 70% perda florestal + 20% fogo + 10% sem floresta (corte 31/12/2020)' },
 	'eudr.check.error_invalid': { es: 'Coordenadas inválidas', en: 'Invalid coordinates', gn: 'Error', pt: 'Coordenadas inválidas' },
 	'eudr.check.error_bounds': { es: 'Coordenadas fuera del área de cobertura', en: 'Coordinates outside coverage area', gn: 'Error', pt: 'Coordenadas fora da área de cobertura' },
 	'eudr.check.result_title': { es: 'Resultado', en: 'Result', gn: 'Result', pt: 'Resultado' },
