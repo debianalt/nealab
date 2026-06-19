@@ -1188,7 +1188,7 @@ export class HexStore {
 
 	// EUDR: load only the H3 cells in the current viewport (scalable —
 	// never loads the whole multi-province dataset at once).
-	async loadEudrViewport(cells: string[]) {
+	async loadEudrViewport(cells: string[], filterProvinces = true) {
 		const layer = this.activeLayer;
 		if (!layer || layer.id !== 'eudr' || !isReady()) return;
 		if (cells.length === 0) {
@@ -1203,11 +1203,16 @@ export class HexStore {
 			const url = getEudrParquetUrl(layer.parquet);
 			const colNames = layer.variables.map(v => v.col);
 			const inList = cells.map(c => `'${c}'`).join(',');
-			// NOA (Salta/Jujuy/Tucumán/Catamarca/Sgo. del Estero) fuera del alcance NEA —
-			// el dato existe en el parquet pero no se muestra (foco NEA + transfronterizo).
+			// NOA (Salta/Jujuy/Tucumán/Catamarca/Sgo. del Estero) + Entre Ríos fuera del alcance
+			// NEA — sólo se filtran al PANEAR (filterProvinces=true). En el click-en-unidad NO se
+			// filtra: deptos chaqueños gigantes (Almirante Brown, Güemes) tienen celdas de borde
+			// etiquetadas con provincia NOA que igual pertenecen al depto y deben cargar.
+			const provFilter = filterProvinces
+				? `AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`
+				: '';
 			const result = await query(
 				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})
-					AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`
+					${provFilter}`
 			);
 			const data = new Map<string, Record<string, any>>();
 			const centroids = new Map<string, [number, number]>();

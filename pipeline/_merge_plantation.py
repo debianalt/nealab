@@ -22,12 +22,12 @@ join_2020 = f"""
             FROM read_parquet('{B20}')
         ) WHERE rn = 1
     ) b USING (h3index)""" if has2020 else ""
-sel_2020 = ("b.plantation_pct AS plantation_2020_pct, b.native_forest_pct AS native_2020_pct"
-            if has2020 else "CAST(NULL AS DOUBLE) AS plantation_2020_pct, CAST(NULL AS DOUBLE) AS native_2020_pct")
+sel_2020 = ("b.plantation_pct AS plantation_2020_pct, b.native_forest_pct AS native_2020_pct, b.savanna_pct AS savanna_2020_pct"
+            if has2020 else "CAST(NULL AS DOUBLE) AS plantation_2020_pct, CAST(NULL AS DOUBLE) AS native_2020_pct, CAST(NULL AS DOUBLE) AS savanna_2020_pct")
 
 con.execute(f"""
 COPY (
-    SELECT c.h3index, c.plantation_pct, c.native_forest_pct,
+    SELECT c.h3index, c.plantation_pct, c.native_forest_pct, c.savanna_pct,
            {sel_2020}, c.province
     FROM (
         SELECT * EXCLUDE(rn) FROM (

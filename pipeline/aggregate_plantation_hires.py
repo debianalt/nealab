@@ -34,7 +34,11 @@ import rasterio
 import h3
 
 PLANTATION_CLASSES = {9}
-NATIVE_CLASSES = {3, 4, 5, 6}
+# Split de vegetación nativa por clase MapBiomas real (más empírico que "bosque nativo"
+# para Chaco/Corrientes, que son sabana/monte, no selva):
+FOREST_CLASSES = {3}        # Formación Forestal (bosque/selva propiamente dicho)
+SAVANNA_CLASSES = {4, 5, 6}  # Sabánica (monte chaqueño) + Manglar + Bosque inundable
+NATIVE_CLASSES = FOREST_CLASSES | SAVANNA_CLASSES  # compat (no usado en el split)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.path.join(SCRIPT_DIR, "output", "eudr", "hires")
@@ -69,7 +73,8 @@ def aggregate(raster_path, res):
     classes = arr[valid]
 
     is_plant = np.isin(classes, list(PLANTATION_CLASSES))
-    is_native = np.isin(classes, list(NATIVE_CLASSES))
+    is_forest = np.isin(classes, list(FOREST_CLASSES))
+    is_savanna = np.isin(classes, list(SAVANNA_CLASSES))
 
     th = time.time()
     cells = [h3.latlng_to_cell(la, lo, res) for la, lo in zip(lats, lons)]
@@ -78,15 +83,17 @@ def aggregate(raster_path, res):
     df = pd.DataFrame({
         "h3index": cells,
         "plant": is_plant.astype("float32"),
-        "native": is_native.astype("float32"),
+        "forest": is_forest.astype("float32"),
+        "savanna": is_savanna.astype("float32"),
     })
     agg = df.groupby("h3index").agg(
         plantation_pct=("plant", "mean"),
-        native_forest_pct=("native", "mean"),
+        native_forest_pct=("forest", "mean"),
+        savanna_pct=("savanna", "mean"),
         mb_px=("plant", "size"),
     ).reset_index()
-    agg["plantation_pct"] = (agg["plantation_pct"] * 100).round(1)
-    agg["native_forest_pct"] = (agg["native_forest_pct"] * 100).round(1)
+    for c in ("plantation_pct", "native_forest_pct", "savanna_pct"):
+        agg[c] = (agg[c] * 100).round(1)
     print(f"  Aggregated to {len(agg):,} cells ({time.time() - t0:.0f}s)")
     return agg
 
