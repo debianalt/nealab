@@ -53,6 +53,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--territory', required=True)
     ap.add_argument('--year', type=int, default=2024)
+    ap.add_argument('--skip-viirs', action='store_true',
+                    help='keep existing viirs_mean_radiance; only recompute '
+                         'building_density (use when the VIIRS tif is absent).')
     args = ap.parse_args()
     t = args.territory
     get_territory(t)  # validate
@@ -61,7 +64,8 @@ def main():
     t_dir = OUTPUT_DIR if t == 'misiones' else os.path.join(OUTPUT_DIR, t)
     pq_path = os.path.join(t_dir, 'sat_economic_activity.parquet')
     tif_path = os.path.join(t_dir, f'viirs_{t}_{args.year}.tif')
-    for p in (pq_path, tif_path):
+    required = (pq_path,) if args.skip_viirs else (pq_path, tif_path)
+    for p in required:
         if not os.path.exists(p):
             print(f'ERROR: missing {p}')
             return 1
@@ -70,26 +74,46 @@ def main():
     print(f'[{t}] {len(df):,} hexes in sat_economic_activity')
 
     # ── VIIRS at centroids ───────────────────────────────────────────────
-    t0 = time.time()
-    latlngs = np.array([h3.cell_to_latlng(ix) for ix in df['h3index']])
-    viirs = sample_raster_bilinear(tif_path, latlngs[:, 1], latlngs[:, 0])
-    df['viirs_mean_radiance'] = np.round(np.nan_to_num(viirs, nan=0.0), 4)
-    print(f'[{t}] viirs sampled in {time.time()-t0:.0f}s '
-          f'(mean={np.nanmean(viirs):.3f}, max={np.nanmax(viirs):.1f} nW/cm²/sr)')
+    if args.skip_viirs:
+        if 'viirs_mean_radiance' not in df.columns:
+            print('ERROR: --skip-viirs but parquet has no viirs_mean_radiance column')
+            return 1
+        print(f'[{t}] skip-viirs: keeping existing viirs_mean_radiance')
+    else:
+        t0 = time.time()
+        latlngs = np.array([h3.cell_to_latlng(ix) for ix in df['h3index']])
+        viirs = sample_raster_bilinear(tif_path, latlngs[:, 1], latlngs[:, 0])
+        df['viirs_mean_radiance'] = np.round(np.nan_to_num(viirs, nan=0.0), 4)
+        print(f'[{t}] viirs sampled in {time.time()-t0:.0f}s '
+              f'(mean={np.nanmean(viirs):.3f}, max={np.nanmax(viirs):.1f} nW/cm²/sr)')
 
     # ── Building density ─────────────────────────────────────────────────
+    # Footprint sources: GBA covers most of each territory, but in Misiones the
+    # eastern departments (Guaraní, eastern Cainguás/San Pedro) are absent from
+    # gba_buildings and are covered by the complementary vida_buildings table.
+    # build_ar_buildings / rebuild_buildings_tiles already UNION both for the map
+    # layer; reading only gba_buildings here left those hexes at 0 edif/km² while
+    # the map showed buildings. Mirror the tile builder: union both for Misiones.
     t0 = time.time()
+    if t == 'misiones':
+        sources = [
+            'SELECT ST_X(centroid), ST_Y(centroid) FROM gba_buildings',
+            'SELECT ST_X(ST_Centroid(geom)), ST_Y(ST_Centroid(geom)) FROM vida_buildings',
+        ]
+    else:
+        sources = [f'SELECT ST_X(centroid), ST_Y(centroid) FROM gba_buildings_{t}']
     con = psycopg2.connect(**PG)
-    cur = con.cursor('gba_stream')  # server-side cursor: millions of rows
-    cur.itersize = 200_000
-    table = 'gba_buildings' if t == 'misiones' else f'gba_buildings_{t}'
-    cur.execute(f'SELECT ST_X(centroid), ST_Y(centroid) FROM {table}')
     counts: dict[str, int] = {}
     n = 0
-    for x, y in cur:
-        ix = h3.latlng_to_cell(y, x, H3_RES)
-        counts[ix] = counts.get(ix, 0) + 1
-        n += 1
+    for si, src in enumerate(sources):
+        cur = con.cursor(f'bld_stream_{si}')  # server-side cursor: millions of rows
+        cur.itersize = 200_000
+        cur.execute(src)
+        for x, y in cur:
+            ix = h3.latlng_to_cell(y, x, H3_RES)
+            counts[ix] = counts.get(ix, 0) + 1
+            n += 1
+        cur.close()
     con.close()
     print(f'[{t}] {n:,} buildings bucketed to {len(counts):,} hexes in {time.time()-t0:.0f}s')
 
