@@ -681,6 +681,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.resolution': { es: 'Resolución H3', en: 'H3 resolution', gn: 'H3 tuichakue', pt: 'Resolução H3' },
 	'hex.loading': { es: 'Cargando hexágonos...', en: 'Loading hexagons...', gn: 'Oñemyenyhẽ hexágono...', pt: 'Carregando hexágonos...' },
 	'hex.provAvg': { es: 'prom. del territorio', en: 'territory avg', gn: 'tetã mbytekue', pt: 'méd. do território' },
+	'hex.provAvgProvince': { es: 'prom. de la provincia', en: 'province avg', gn: 'tetã mbytekue', pt: 'méd. da província' },
 	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },
 	'hex.buildings': { es: 'Edificios', en: 'Buildings', gn: 'Óga', pt: 'Edifícios' },
 	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
