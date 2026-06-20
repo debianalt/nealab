@@ -313,7 +313,10 @@ ANALYSIS_DEFS = [
         "sql": """
             SELECT r.redcode,
                 COALESCE(ce.pct_nbi, 0) AS c_nbi,
-                100.0 - COALESCE(ce.pct_cloacas, 0) AS c_sin_cloacas,
+                -- pct_cloacas YA es "% de hogares SIN cloaca" (censo_nbi_2022.h_cloaca =
+                -- "Hogares sin cloaca"; corr +0.10 con NBI). NO invertir: el 100- previo
+                -- la daba vuelta a "% con cloaca" y la rankeaba como carencia al revés.
+                COALESCE(ce.pct_cloacas, 0) AS c_sin_cloacas,
                 COALESCE(ce.pct_sin_piso_adecuado, 0) AS c_piso,
                 COALESCE(ce.pct_hacinamiento, 0) AS c_hacinamiento,
                 COALESCE(ce.pct_hacinamiento_critico, 0) AS c_hacinamiento_crit,
