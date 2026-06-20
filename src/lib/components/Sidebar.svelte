@@ -286,6 +286,7 @@
 						onBrushSelect={onParallelBrush ?? (() => {})}
 					/>
 				{/if}
+			{/if}
 		</div>
 	{:else if mapStore.selectedDistricts.size > 0}
 		<!-- Itapúa: districts selected -->
