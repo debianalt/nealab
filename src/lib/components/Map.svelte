@@ -55,6 +55,11 @@
 	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
 	let regionalModeActive = false;
+	// Forestry plantations overlay (DNDFI 2026): off by default; only meaningful when
+	// the forestry_aptitude layer is active over an AR territory.
+	let plantationsToggle = $state(false);
+	const PLANTATION_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa'];
+	const NATIVE_PLANTATION_TERRITORIES = ['chaco', 'formosa']; // native-species niche (caveat)
 
 	onMount(() => {
 		const protocol = new Protocol();
@@ -371,6 +376,30 @@
 					'fill-extrusion-opacity': 0.92
 				}
 			});
+
+			// Forestry plantations overlay (DNDFI Inventario Nacional 2026) — one vector
+			// source per AR territory, hidden until forestry_aptitude is active AND the
+			// user toggles it on (updatePlantationsVisibility). It is the same inventory
+			// the SDM uses as presence, so the score and the overlay are one object.
+			for (const t of ['misiones', 'corrientes', 'chaco', 'formosa'] as const) {
+				map.addSource(`${t}-plantations`, { type: 'vector', url: getTilesUrl(`${t}_plantations` as any) });
+				map.addLayer({
+					id: `${t}-plantations-fill`,
+					type: 'fill',
+					source: `${t}-plantations`,
+					'source-layer': 'plantations',
+					layout: { visibility: 'none' },
+					paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.35 }
+				});
+				map.addLayer({
+					id: `${t}-plantations-line`,
+					type: 'line',
+					source: `${t}-plantations`,
+					'source-layer': 'plantations',
+					layout: { visibility: 'none' },
+					paint: { 'line-color': '#b45309', 'line-width': 0.8, 'line-opacity': 0.9 }
+				});
+			}
 
 			// Itapúa buildings (pre-created, hidden until territory switch)
 			map.addSource('itapua-buildings', { type: 'vector', url: getTilesUrl('itapua_buildings') });
@@ -1720,7 +1749,29 @@
 			map.setPaintProperty(layer, 'fill-extrusion-color', colorExpr as any);
 			map.setPaintProperty(layer, 'fill-extrusion-opacity', opacity);
 		}
+		updatePlantationsVisibility();
 	}
+
+	// Show the plantations overlay only for the active AR territory, and only when the
+	// forestry_aptitude layer is active and the user toggled it on. All others hidden.
+	function updatePlantationsVisibility() {
+		if (!map || !map.isStyleLoaded()) return;
+		const forestryActive = mapStore.activeHexLayer === 'forestry_aptitude';
+		for (const t of PLANTATION_TERRITORIES) {
+			const vis = (forestryActive && plantationsToggle && activeTerritoryId === t) ? 'visible' : 'none';
+			for (const suffix of ['fill', 'line']) {
+				const id = `${t}-plantations-${suffix}`;
+				if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis);
+			}
+		}
+	}
+
+	// React to layer-activation / toggle changes (territory changes call it directly).
+	$effect(() => {
+		mapStore.activeHexLayer;
+		plantationsToggle;
+		updatePlantationsVisibility();
+	});
 
 	export function updateColorExpr() {
 		const colorExpr = mapStore.getColorExpr() as any;
@@ -3303,4 +3354,30 @@
 	}
 </script>
 
-<div bind:this={container} style="width:100%;height:100%;"></div>
+<div class="map-wrap">
+	<div bind:this={container} style="width:100%;height:100%;"></div>
+	{#if mapStore.activeHexLayer === 'forestry_aptitude'}
+		<div class="plantations-toggle">
+			<label class="pt-row">
+				<input type="checkbox" bind:checked={plantationsToggle} />
+				<span class="pt-swatch"></span>
+				<span>{i18n.t('forestry.overlay.toggle')}</span>
+			</label>
+			<div class="pt-note">{i18n.t('forestry.overlay.note')}</div>
+		</div>
+	{/if}
+</div>
+
+<style>
+	.map-wrap { position: relative; width: 100%; height: 100%; }
+	.plantations-toggle {
+		position: absolute; bottom: 16px; left: 12px; z-index: 5;
+		background: rgba(15, 23, 42, 0.88); border: 1px solid #334155;
+		border-radius: 6px; padding: 7px 10px; max-width: 240px;
+		font-size: 11px; color: #e2e8f0; backdrop-filter: blur(2px);
+	}
+	.pt-row { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 600; }
+	.pt-row input { cursor: pointer; }
+	.pt-swatch { width: 12px; height: 12px; border-radius: 2px; background: #f59e0b; border: 1px solid #b45309; flex-shrink: 0; }
+	.pt-note { margin-top: 4px; font-size: 9px; color: #94a3b8; line-height: 1.4; }
+</style>

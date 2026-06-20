@@ -2,14 +2,14 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 50.0,
+    "avg_score": 21.9,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 87.5,
+      "avg_score": 64.1,
       "hex_count": 40559,
       "centroid": [
         -62.1413,
@@ -17,29 +17,9 @@
       ]
     },
     {
-      "dpto": "Matacos",
-      "parquetKey": "matacos",
-      "avg_score": 83.6,
-      "hex_count": 43310,
-      "centroid": [
-        -62.0811,
-        -23.8673
-      ]
-    },
-    {
-      "dpto": "Laishi",
-      "parquetKey": "laishi",
-      "avg_score": 81.3,
-      "hex_count": 39672,
-      "centroid": [
-        -58.5513,
-        -26.4647
-      ]
-    },
-    {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 59.7,
+      "avg_score": 37.8,
       "hex_count": 37365,
       "centroid": [
         -58.6711,
@@ -47,19 +27,19 @@
       ]
     },
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 51.4,
-      "hex_count": 150491,
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 28.2,
+      "hex_count": 43310,
       "centroid": [
-        -61.2886,
-        -24.027
+        -62.0811,
+        -23.8673
       ]
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 51.1,
+      "avg_score": 28.0,
       "hex_count": 95406,
       "centroid": [
         -59.1628,
@@ -67,19 +47,39 @@
       ]
     },
     {
-      "dpto": "Patiño",
-      "parquetKey": "patino",
-      "avg_score": 44.9,
-      "hex_count": 288652,
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 26.5,
+      "hex_count": 39672,
       "centroid": [
-        -60.0089,
-        -24.8951
+        -58.5513,
+        -26.4647
+      ]
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 21.0,
+      "hex_count": 150491,
+      "centroid": [
+        -61.2886,
+        -24.027
+      ]
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 20.8,
+      "hex_count": 58522,
+      "centroid": [
+        -58.0456,
+        -25.3808
       ]
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 30.3,
+      "avg_score": 14.6,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
@@ -87,13 +87,13 @@
       ]
     },
     {
-      "dpto": "Pilcomayo",
-      "parquetKey": "pilcomayo",
-      "avg_score": 15.0,
-      "hex_count": 58522,
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 12.8,
+      "hex_count": 288652,
       "centroid": [
-        -58.0456,
-        -25.3808
+        -60.0089,
+        -24.8951
       ]
     }
   ]

@@ -4,12 +4,16 @@ function getBase(): string {
 	return R2_PROD;
 }
 
-export function getTilesUrl(name: 'buildings' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
+export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrientes_plantations' | 'chaco_plantations' | 'formosa_plantations' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
 	if (name === 'terrain') {
 		return '/api/terrain/{z}/{x}/{y}.png';
 	}
 	const files: Record<string, string> = {
 		buildings: 'tiles/buildings-v5.pmtiles',
+		misiones_plantations: 'data/tiles/misiones_plantations.pmtiles',
+		corrientes_plantations: 'data/tiles/corrientes_plantations.pmtiles',
+		chaco_plantations: 'data/tiles/chaco_plantations.pmtiles',
+		formosa_plantations: 'data/tiles/formosa_plantations.pmtiles',
 		itapua_buildings: 'tiles/itapua_buildings-v4.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v4.pmtiles',
@@ -86,7 +90,7 @@ export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=38',
 		sat_agri_potential: '?v=36',
-		sat_forestry_aptitude: '?v=35',
+		sat_forestry_aptitude: '?v=36',
 		sat_service_deprivation: '?v=27',
 		sat_health_access: '?v=27',
 		sat_education_capital: '?v=27',
@@ -107,7 +111,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 9;
+const DEPT_V = 10;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
