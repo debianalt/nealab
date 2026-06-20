@@ -383,11 +383,15 @@
 			// the SDM uses as presence, so the score and the overlay are one object.
 			for (const t of ['misiones', 'corrientes', 'chaco', 'formosa'] as const) {
 				map.addSource(`${t}-plantations`, { type: 'vector', url: getTilesUrl(`${t}_plantations` as any) });
+				// minzoom 9: only render at department-level zoom, not at province/NEA
+				// overview — the tiler keeps full-res polygons at every zoom, so drawing
+				// ~110k polygons at z6–8 is heavy and not useful.
 				map.addLayer({
 					id: `${t}-plantations-fill`,
 					type: 'fill',
 					source: `${t}-plantations`,
 					'source-layer': 'plantations',
+					minzoom: 9,
 					layout: { visibility: 'none' },
 					paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.35 }
 				});
@@ -396,6 +400,7 @@
 					type: 'line',
 					source: `${t}-plantations`,
 					'source-layer': 'plantations',
+					minzoom: 9,
 					layout: { visibility: 'none' },
 					paint: { 'line-color': '#b45309', 'line-width': 0.8, 'line-opacity': 0.9 }
 				});
@@ -1761,7 +1766,12 @@
 			const vis = (forestryActive && plantationsToggle && activeTerritoryId === t) ? 'visible' : 'none';
 			for (const suffix of ['fill', 'line']) {
 				const id = `${t}-plantations-${suffix}`;
-				if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis);
+				if (!map.getLayer(id)) continue;
+				map.setLayoutProperty(id, 'visibility', vis);
+				// Lift above the hex choropleth (but below labels) so a dense score layer
+				// like Misiones doesn't bury the overlay. Without this the overlay only
+				// showed where the choropleth was sparse (e.g. Corrientes).
+				if (vis === 'visible') map.moveLayer(id, firstSymbolId);
 			}
 		}
 	}

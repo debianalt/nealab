@@ -63,6 +63,18 @@ def load_frame(con, t: str):
     out_dir = set_globals(t)
     df = sdm.build_prediction_frame(con, out_dir)
     df["blocked_reason"] = sdm.compute_mask(df)
+    # Re-mask water by Dynamic World land cover, not JRC. compute_mask masks any hex
+    # with JRC water fraction >= 0.30, but JRC's *seasonal* surface water over-masks
+    # river margins and flood-prone valleys that DW classifies as land — and in Misiones
+    # those follow the (river-defined) department borders, leaving "sin cobertura"
+    # strips. Keep masked only hexes DW considers majority-water; re-score the rest.
+    lu = pd.read_parquet(os.path.join(out_dir, "sat_land_use.parquet"))[["h3index", "frac_water"]]
+    lu = lu.rename(columns={"frac_water": "_lu_water"})
+    if lu["_lu_water"].max() > 1.5:  # scale-robust: MapBiomas is 0-100, DW is 0-1
+        lu["_lu_water"] = lu["_lu_water"] / 100.0
+    df = df.merge(lu, on="h3index", how="left")
+    relax = (df["blocked_reason"] == "water") & (df["_lu_water"].fillna(0) < 0.50)
+    df.loc[relax, "blocked_reason"] = ""
     pres_path = os.path.join(out_dir, "dndfi_presence_h3.parquet")
     pres = pd.read_parquet(pres_path)[["h3index", "frac_plantada"]]
     df = df.merge(pres, on="h3index", how="left")
