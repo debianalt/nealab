@@ -78,7 +78,7 @@
 		});
 
 		map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
-		map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+		map.addControl(new maplibregl.AttributionControl({ compact: false }), 'bottom-right');
 
 		map.on('error', (e) => console.error('MAP ERROR:', e.error?.message || e));
 
@@ -3379,3 +3379,35 @@
 </script>
 
 <div bind:this={container} style="width:100%;height:100%;"></div>
+
+<style>
+	/* Bottom-right control stack: force the zoom ABOVE the credit line, and pin the
+	   attribution flush to the corner. MapLibre injects this DOM, so :global() is required. */
+	:global(.maplibregl-ctrl-bottom-right) {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+	:global(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-group) {
+		order: 1; /* zoom on top */
+		margin: 0 8px 6px 0;
+	}
+	:global(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib) {
+		order: 2; /* credit at the very bottom-right corner */
+		background: transparent;
+		margin: 0;
+		padding: 0 6px 3px 0;
+		max-width: 360px;
+		text-align: right;
+	}
+	:global(.maplibregl-ctrl-attrib-inner),
+	:global(.maplibregl-ctrl-attrib),
+	:global(.maplibregl-ctrl-attrib a),
+	:global(.maplibregl-ctrl-attrib-inner a) {
+		color: #fff !important;
+		font-size: 9px;
+		line-height: 1.25;
+		text-decoration: none;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+	}
+</style>
