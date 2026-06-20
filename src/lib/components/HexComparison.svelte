@@ -51,6 +51,17 @@
 	const hasMagnitude = $derived(
 		selected.some(([, d]) => d.data?.n_edificios != null || d.data?.hogares_estimados != null)
 	);
+	// Only the variables that actually carry a _raw estimate get a % row in the
+	// magnitude table. Layers whose values are already raw (economic_activity:
+	// %, nW, edif/km²) have no _raw → table shows just Edificios + Hogares.
+	const rawVars = $derived(
+		componentVars.filter(v => selected.some(([, d]) => Number.isFinite(d.data?.[`${v.col}_raw`])))
+	);
+	// The percentile reading note only applies to layers displayed as provincial
+	// percentiles (all components unit 'percentil'), not raw-value layers.
+	const isPercentileLayer = $derived(
+		componentVars.length > 0 && componentVars.every(v => v.unit === 'percentil')
+	);
 
 	function downloadSelectedCsv() {
 		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
@@ -127,7 +138,7 @@
 				{/each}
 			</div>
 		{/each}
-		{#if isCensus}
+		{#if isPercentileLayer}
 			<div class="cd-note">{i18n.t('hex.percentileNote')}</div>
 		{/if}
 	{/if}
@@ -156,15 +167,17 @@
 						<td>{i18n.t('hex.households')}</td>
 						{#each selected as [, d]}<td>{fmtInt(d.data?.hogares_estimados)}</td>{/each}
 					</tr>
-					{#each componentVars as v}
-						<tr>
-							<td>{i18n.t(v.labelKey)}</td>
-							{#each selected as [, d]}
-								{@const raw = d.data?.[`${v.col}_raw`]}
-								<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} %` : '—'}</td>
-							{/each}
-						</tr>
-					{/each}
+					{#if isPercentileLayer}
+						{#each rawVars as v}
+							<tr>
+								<td>{i18n.t(v.labelKey)}</td>
+								{#each selected as [, d]}
+									{@const raw = d.data?.[`${v.col}_raw`]}
+									<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} %` : '—'}</td>
+								{/each}
+							</tr>
+						{/each}
+					{/if}
 				</tbody>
 			</table>
 			<div class="mag-note">{i18n.t('hex.estPctNote')}</div>

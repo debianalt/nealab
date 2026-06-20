@@ -126,6 +126,29 @@ def main():
     nz = (dens > 0).sum()
     print(f'[{t}] density: {nz:,} hexes >0 (mean of nonzero={dens[dens>0].mean():.1f} edif/km²)')
 
+    # ── Raw counts (edificios/hogares) from the dasymetric crosswalk ──────
+    # Same source as the census layers so per-hex Edificios/Hogares match across
+    # the whole platform. Hexes outside the crosswalk (no buildings) → 0.
+    cw_path = (os.path.join(OUTPUT_DIR, 'h3_radio_crosswalk.parquet') if t == 'misiones'
+               else os.path.join(t_dir, f'h3_radio_crosswalk_{t}.parquet'))
+    df = df.drop(columns=[c for c in ('n_edificios', 'hogares_estimados') if c in df.columns])
+    if os.path.exists(cw_path):
+        cw = pd.read_parquet(cw_path)
+        if {'n_buildings', 'est_hogares'}.issubset(cw.columns):
+            mag = (cw.groupby('h3index')
+                     .agg(n_edificios=('n_buildings', 'sum'),
+                          hogares_estimados=('est_hogares', 'sum'))
+                     .reset_index())
+            df = df.merge(mag, on='h3index', how='left')
+            df['n_edificios'] = df['n_edificios'].fillna(0).astype('int64')
+            df['hogares_estimados'] = df['hogares_estimados'].fillna(0).round(0).astype('int64')
+            print(f'[{t}] merged n_edificios/hogares_estimados from crosswalk '
+                  f'(edif={int(df.n_edificios.sum()):,}, hog={int(df.hogares_estimados.sum()):,})')
+        else:
+            print(f'[{t}] WARN: crosswalk lacks n_buildings/est_hogares — skipping counts')
+    else:
+        print(f'[{t}] WARN: crosswalk not found ({cw_path}) — skipping counts')
+
     df.to_parquet(pq_path, index=False)
     print(f'[{t}] wrote {pq_path} ({os.path.getsize(pq_path)//1024} KB, cols={list(df.columns)})')
     return 0
