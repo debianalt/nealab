@@ -60,6 +60,9 @@ export class MapStore {
 	hexOpacity: number = $state(0.78);
 	// Basemap reference mode: 'map' = dark-matter only, 'satellite' = Sentinel-2 raster underlay.
 	basemapMode: 'map' | 'satellite' = $state('map');
+	// Forestry plantations overlay (DNDFI): controlled from the right panel
+	// (AnalysisView), only when forestry_aptitude is active with a dept selected.
+	plantationsVisible: boolean = $state(false);
 	selectedHex: HexData | null = $state(null);
 	selectedFloodParcels: FloodParcelData[] = $state([]);
 	floodH3Data: Map<string, Record<string, number>> = $state(new Map());

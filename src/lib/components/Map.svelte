@@ -55,11 +55,10 @@
 	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
 	let regionalModeActive = false;
-	// Forestry plantations overlay (DNDFI 2026): off by default; only meaningful when
-	// the forestry_aptitude layer is active over an AR territory.
-	let plantationsToggle = $state(false);
+	// Forestry plantations overlay (DNDFI). Visibility is driven from the right panel
+	// (mapStore.plantationsVisible), only when forestry_aptitude is active with a dept
+	// selected. Per-territory tiles, gated by minzoom 9 so they load per-department.
 	const PLANTATION_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa'];
-	const NATIVE_PLANTATION_TERRITORIES = ['chaco', 'formosa']; // native-species niche (caveat)
 
 	onMount(() => {
 		const protocol = new Protocol();
@@ -393,7 +392,16 @@
 					'source-layer': 'plantations',
 					minzoom: 9,
 					layout: { visibility: 'none' },
-					paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.35 }
+					paint: {
+						// Differentiate plantation type by species group (DNDFI grupo_espe).
+						'fill-color': ['match', ['get', 'grupo_espe'],
+							'Pinos', '#22c55e',
+							'Eucaliptos', '#38bdf8',
+							'Nativas', '#f59e0b',
+							'Sauces y Álamos', '#a78bfa',
+							/* otras / sin clasificar */ '#9ca3af'],
+						'fill-opacity': 0.5
+					}
 				});
 				map.addLayer({
 					id: `${t}-plantations-line`,
@@ -1763,7 +1771,7 @@
 		if (!map || !map.isStyleLoaded()) return;
 		const forestryActive = mapStore.activeHexLayer === 'forestry_aptitude';
 		for (const t of PLANTATION_TERRITORIES) {
-			const vis = (forestryActive && plantationsToggle && activeTerritoryId === t) ? 'visible' : 'none';
+			const vis = (forestryActive && mapStore.plantationsVisible && activeTerritoryId === t) ? 'visible' : 'none';
 			for (const suffix of ['fill', 'line']) {
 				const id = `${t}-plantations-${suffix}`;
 				if (!map.getLayer(id)) continue;
@@ -1779,7 +1787,7 @@
 	// React to layer-activation / toggle changes (territory changes call it directly).
 	$effect(() => {
 		mapStore.activeHexLayer;
-		plantationsToggle;
+		mapStore.plantationsVisible;
 		updatePlantationsVisibility();
 	});
 
@@ -3364,32 +3372,4 @@
 	}
 </script>
 
-<div class="map-wrap">
-	<div bind:this={container} style="width:100%;height:100%;"></div>
-	{#if mapStore.activeHexLayer === 'forestry_aptitude'}
-		<div class="plantations-toggle">
-			<label class="pt-row">
-				<input type="checkbox" bind:checked={plantationsToggle} />
-				<span class="pt-swatch"></span>
-				<span>{i18n.t('forestry.overlay.toggle')}</span>
-			</label>
-			<div class="pt-note">{i18n.t('forestry.overlay.note')}</div>
-		</div>
-	{/if}
-</div>
-
-<style>
-	.map-wrap { position: relative; width: 100%; height: 100%; }
-	.plantations-toggle {
-		/* Top-center: clears the bottom-left Map/Satellite control AND the aggregated
-		   view's legend, which both live bottom-left. */
-		position: absolute; top: 56px; left: 50%; transform: translateX(-50%); z-index: 5;
-		background: rgba(15, 23, 42, 0.88); border: 1px solid #334155;
-		border-radius: 6px; padding: 7px 10px; max-width: 240px;
-		font-size: 11px; color: #e2e8f0; backdrop-filter: blur(2px);
-	}
-	.pt-row { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 600; }
-	.pt-row input { cursor: pointer; }
-	.pt-swatch { width: 12px; height: 12px; border-radius: 2px; background: #f59e0b; border: 1px solid #b45309; flex-shrink: 0; }
-	.pt-note { margin-top: 4px; font-size: 9px; color: #94a3b8; line-height: 1.4; }
-</style>
+<div bind:this={container} style="width:100%;height:100%;"></div>
