@@ -382,15 +382,14 @@
 			// the SDM uses as presence, so the score and the overlay are one object.
 			for (const t of ['misiones', 'corrientes', 'chaco', 'formosa'] as const) {
 				map.addSource(`${t}-plantations`, { type: 'vector', url: getTilesUrl(`${t}_plantations` as any) });
-				// minzoom 9: only render at department-level zoom, not at province/NEA
-				// overview — the tiler keeps full-res polygons at every zoom, so drawing
-				// ~110k polygons at z6–8 is heavy and not useful.
+				// No minzoom: the overlay is filtered to the selected department (setFilter
+				// on `depto` in updatePlantationsVisibility), so only that dept's polygons
+				// render — light at any zoom, and loaded per-department, not by zoom level.
 				map.addLayer({
 					id: `${t}-plantations-fill`,
 					type: 'fill',
 					source: `${t}-plantations`,
 					'source-layer': 'plantations',
-					minzoom: 9,
 					layout: { visibility: 'none' },
 					paint: {
 						// Differentiate plantation type by species group (DNDFI grupo_espe).
@@ -408,7 +407,6 @@
 					type: 'line',
 					source: `${t}-plantations`,
 					'source-layer': 'plantations',
-					minzoom: 9,
 					layout: { visibility: 'none' },
 					paint: { 'line-color': '#b45309', 'line-width': 0.8, 'line-opacity': 0.9 }
 				});
@@ -1770,16 +1768,23 @@
 	function updatePlantationsVisibility() {
 		if (!map || !map.isStyleLoaded()) return;
 		const forestryActive = mapStore.activeHexLayer === 'forestry_aptitude';
+		// DNDFI `depto` is upper-case; the app's selected dept name matches once upcased.
+		const dept = (mapStore.plantationsDept || '').toUpperCase();
 		for (const t of PLANTATION_TERRITORIES) {
-			const vis = (forestryActive && mapStore.plantationsVisible && activeTerritoryId === t) ? 'visible' : 'none';
+			const vis = (forestryActive && mapStore.plantationsVisible && !!dept && activeTerritoryId === t);
 			for (const suffix of ['fill', 'line']) {
 				const id = `${t}-plantations-${suffix}`;
 				if (!map.getLayer(id)) continue;
-				map.setLayoutProperty(id, 'visibility', vis);
-				// Lift above the hex choropleth (but below labels) so a dense score layer
-				// like Misiones doesn't bury the overlay. Without this the overlay only
-				// showed where the choropleth was sparse (e.g. Corrientes).
-				if (vis === 'visible') map.moveLayer(id, firstSymbolId);
+				if (vis) {
+					// Show only the selected department's plantations (per-dept, any zoom).
+					map.setFilter(id, ['==', ['get', 'depto'], dept]);
+					map.setLayoutProperty(id, 'visibility', 'visible');
+					// Lift above the hex choropleth (but below labels) so the dense Misiones
+					// score layer doesn't bury the overlay.
+					map.moveLayer(id, firstSymbolId);
+				} else {
+					map.setLayoutProperty(id, 'visibility', 'none');
+				}
 			}
 		}
 	}
@@ -1788,6 +1793,7 @@
 	$effect(() => {
 		mapStore.activeHexLayer;
 		mapStore.plantationsVisible;
+		mapStore.plantationsDept;
 		updatePlantationsVisibility();
 	});
 

@@ -62,7 +62,10 @@ export class MapStore {
 	basemapMode: 'map' | 'satellite' = $state('map');
 	// Forestry plantations overlay (DNDFI): controlled from the right panel
 	// (AnalysisView), only when forestry_aptitude is active with a dept selected.
+	// plantationsDept = the selected department name, used to filter the overlay to
+	// that department (loads per-dept, not by zoom).
 	plantationsVisible: boolean = $state(false);
+	plantationsDept: string | null = $state(null);
 	selectedHex: HexData | null = $state(null);
 	selectedFloodParcels: FloodParcelData[] = $state([]);
 	floodH3Data: Map<string, Record<string, number>> = $state(new Map());

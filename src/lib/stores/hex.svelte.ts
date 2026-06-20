@@ -4,7 +4,7 @@ import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
-import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent, gridDisk } from 'h3-js';
+import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-js';
 
 // ── LOD (level of detail) for giant departments ──────────────────────────────
 // Chaco/Boqueron districts reach 400K-750K res-9 hexes. Building one polygon per
@@ -567,29 +567,12 @@ export class HexStore {
 				}
 			}
 
-			// Border buffer (Misiones only): the simplified province polygon (misiones_boundary)
-			// is inset from the real border, so coverage stops ~1-2 hexes short and the dark
-			// basemap shows in a sliver at the Corrientes border. Grow the nodata fill 2 rings
-			// past current coverage; these gray cells bypass the province PIP (+page) so they
-			// reach the real edge. Data cells stay province-bounded (no leakage).
-			if (this.territoryPrefix === '') {
-				const seed = [...data.keys()];
-				const ring = new Set<string>();
-				for (const h of seed) {
-					try { for (const nb of gridDisk(h, 2)) if (!data.has(nb)) ring.add(nb); } catch { /* skip */ }
-				}
-				for (const h3index of ring) {
-					try {
-						const [lat, lng] = cellToLatLng(h3index);
-						data.set(h3index, {});
-						centroids.set(h3index, [lng, lat]);
-						const boundary = cellToBoundary(h3index);
-						const coords = boundary.map(([la, lo]: [number, number]) => [lo, la]);
-						coords.push(coords[0]);
-						boundaries.set(h3index, coords);
-					} catch { /* skip invalid h3 */ }
-				}
-			}
+			// (Removed) The Misiones-only 2-ring "border buffer" grew gray nodata cells
+			// around the whole dept perimeter to hide a thin dark sliver at the province
+			// edge — but it also painted gray "sin cobertura" rings along every interior
+			// department border, which read as missing data. Dropped: the only cost is a
+			// ~1-hex dark sliver at the real province edge (which is the Paraná/Uruguay
+			// river anyway). Bonus: skips a gridDisk×2 + cellToBoundary pass (faster load).
 
 			// Persist computed geometry so re-visiting this dept is instant.
 			setDeptCache(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids) });

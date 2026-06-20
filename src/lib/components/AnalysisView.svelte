@@ -42,7 +42,12 @@
 	// selected (loads per-dept). Reset the flag otherwise so it never lingers on the map.
 	const showPlantControl = $derived(analysis?.id === 'forestry_aptitude' && !!hexStore.selectedDpto);
 	$effect(() => {
-		if (!showPlantControl && mapStore.plantationsVisible) mapStore.plantationsVisible = false;
+		if (showPlantControl) {
+			mapStore.plantationsDept = hexStore.selectedDpto;
+		} else {
+			mapStore.plantationsDept = null;
+			if (mapStore.plantationsVisible) mapStore.plantationsVisible = false;
+		}
 	});
 
 </script>
