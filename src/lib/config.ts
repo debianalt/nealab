@@ -456,6 +456,7 @@ export interface HexVariable {
 	rawCol?: string;
 	unit?: string;
 	rawUnit?: string; // unit of the _raw physical value when it differs from `unit` (e.g. percentil display, hab/km² or min raw)
+	scale?: number;   // multiply the stored value for display (e.g. DW land-cover fractions 0–1 → % with scale 100)
 	hideIfZero?: boolean;
 }
 
@@ -708,15 +709,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		// (Earlier config declared MapBiomas cols that do not exist in the parquet, so
 		// every hex rendered as "Sin cobertura"; realigned to the real Dynamic World schema.)
 		variables: [
-			{ col: 'frac_trees',   labelKey: 'sat.landUse.trees',   aggregation: 'mean' },
-			{ col: 'frac_crops',   labelKey: 'sat.landUse.crops',   aggregation: 'mean' },
-			{ col: 'frac_grass',   labelKey: 'sat.landUse.grass',   aggregation: 'mean' },
-			{ col: 'frac_shrub',   labelKey: 'sat.landUse.shrub',   aggregation: 'mean' },
-			{ col: 'frac_built',   labelKey: 'sat.landUse.built',   aggregation: 'mean' },
-			{ col: 'frac_water',   labelKey: 'sat.landUse.water',   aggregation: 'mean' },
-			{ col: 'frac_flooded', labelKey: 'sat.landUse.flooded', aggregation: 'mean' },
-			{ col: 'frac_bare',    labelKey: 'sat.landUse.bare',    aggregation: 'mean' },
-			{ col: 'frac_snow',    labelKey: 'sat.landUse.snow',    aggregation: 'mean' },
+			{ col: 'frac_trees',   labelKey: 'sat.landUse.trees',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_crops',   labelKey: 'sat.landUse.crops',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_grass',   labelKey: 'sat.landUse.grass',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_shrub',   labelKey: 'sat.landUse.shrub',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_built',   labelKey: 'sat.landUse.built',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_water',   labelKey: 'sat.landUse.water',   aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_flooded', labelKey: 'sat.landUse.flooded', aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_bare',    labelKey: 'sat.landUse.bare',    aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'frac_snow',    labelKey: 'sat.landUse.snow',    aggregation: 'mean', unit: '%', scale: 100 },
 		],
 		primaryVariable: 'frac_trees',
 		colorScale: 'green',

@@ -70,6 +70,14 @@
 	// work were stripped of the variable, so the parquet's residual type_label
 	// (e.g. "Sin cobertura censal") is not surfaced.
 	const hasClassification = $derived(variables.some(v => v.col === 'type_label'));
+	// Baseline noun for the petal reference, by territory admin level (the petal
+	// normalizes against the territory average): AR=provincia, PY=departamento, BR=estado.
+	const adminAvgKey = $derived.by(() => {
+		const p = (hexStore.territoryPrefix || '').replace(/\/$/, '');
+		if (p.endsWith('_py')) return 'hex.provAvgDept';
+		if (p.endsWith('_br')) return 'hex.provAvgState';
+		return 'hex.provAvgProvince';
+	});
 
 	function downloadSelectedCsv() {
 		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
@@ -111,7 +119,7 @@
 	{#if petalLayers.length > 0 && petalLabels.length >= 3 && showPetals}
 		<PetalChart layers={petalLayers} labels={petalLabels} size={340} />
 		<div class="hc-ref-note">
-			<span class="hc-ref-dash"></span> 50 = {i18n.t(isCensus ? 'hex.provAvgProvince' : 'hex.provAvg')}
+			<span class="hc-ref-dash"></span> 50 = {i18n.t(adminAvgKey)}
 		</div>
 	{/if}
 
@@ -140,7 +148,7 @@
 						{#if !hasData}
 							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
 						{:else}
-							<span class="cd-val-data">{isStr ? val : fmtSmart(displayVal) + (v.unit ? ` ${v.unit}` : ' /100')}</span>
+							<span class="cd-val-data">{isStr ? val : fmtSmart(displayVal * (v.scale ?? 1)) + (v.unit ? ` ${v.unit}` : ' /100')}</span>
 						{/if}
 					</div>
 				{/each}
