@@ -357,7 +357,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.deprivation.nbi': { es: 'Hogares con NBI', en: 'Households with UBN', gn: 'NBI', pt: 'Lares com NBI' },
 	'sat.deprivation.sinAgua': { es: 'Sin red de agua', en: 'No water network', gn: "Y'ỹ", pt: 'Sem rede de água' },
 	'sat.deprivation.sinCloacas': { es: 'Sin cloacas', en: 'No sewage', gn: "Cloaca'ỹ", pt: 'Sem esgoto' },
-	'sat.deprivation.piso': { es: 'Sin piso de cerámica, mosaico o madera', en: 'No ceramic, tile or wood floor', gn: 'Yvy ñembojeguáava', pt: 'Sem piso de cerâmica, mosaico ou madeira' },
+	'sat.deprivation.piso': { es: 'Sin piso revestido', en: 'Unfinished floor', gn: 'Yvy ñembojeguáava', pt: 'Sem piso revestido' },
 	'sat.deprivation.hacinamiento': { es: 'Hacinamiento', en: 'Overcrowding', gn: "Heta óga peteĩme", pt: 'Superlotação' },
 	'sat.deprivation.hacinamientoCrit': { es: 'Hacinamiento crítico', en: 'Critical overcrowding', gn: "Heta tuicha óga peteĩme", pt: 'Superlotação crítica' },
 	'sat.deprivation.sinComputadora': { es: 'Sin computadora', en: 'No computer', gn: "Computadora'ỹ", pt: 'Sem computador' },
