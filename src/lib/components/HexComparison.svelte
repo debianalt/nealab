@@ -49,7 +49,7 @@
 	// Show the magnitude/% table only when the layer carries dasymetric magnitude
 	// (n_edificios / hogares_estimados present in the parquet after regeneration).
 	const hasMagnitude = $derived(
-		selected.some(([, d]) => d.data?.n_edificios != null || d.data?.hogares_estimados != null)
+		selected.some(([, d]) => d.data?.n_edificios != null)
 	);
 	// Only the variables that actually carry a _raw estimate get a % row in the
 	// magnitude table. Layers whose values are already raw (economic_activity:
@@ -168,17 +168,13 @@
 						<td>{i18n.t('hex.buildings')}</td>
 						{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
 					</tr>
-					<tr>
-						<td>{i18n.t('hex.households')}</td>
-						{#each selected as [, d]}<td>{fmtInt(d.data?.hogares_estimados)}</td>{/each}
-					</tr>
 					{#if isPercentileLayer}
 						{#each rawVars as v}
 							<tr>
 								<td>{i18n.t(v.labelKey)}</td>
 								{#each selected as [, d]}
 									{@const raw = d.data?.[`${v.col}_raw`]}
-									<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} %` : '—'}</td>
+									<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} ${v.rawUnit ?? '%'}` : '—'}</td>
 								{/each}
 							</tr>
 						{/each}

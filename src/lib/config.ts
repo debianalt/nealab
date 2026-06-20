@@ -455,6 +455,7 @@ export interface HexVariable {
 	aggregation: 'mean' | 'sum' | 'max';
 	rawCol?: string;
 	unit?: string;
+	rawUnit?: string; // unit of the _raw physical value when it differs from `unit` (e.g. percentil display, hab/km² or min raw)
 	hideIfZero?: boolean;
 }
 
@@ -647,12 +648,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'health_access',
 		parquet: 'sat_health_access',
 		variables: [
-			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'percentil' },
+			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'percentil', rawUnit: 'min' },
 			{ col: 'c_health_coverage', labelKey: 'sat.health.coverage', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_nbi', labelKey: 'sat.health.nbi', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_elderly', labelKey: 'sat.health.elderly', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_children', labelKey: 'sat.health.children', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_pop_density', labelKey: 'sat.health.popDensity', aggregation: 'mean', unit: 'percentil' },
+			{ col: 'c_pop_density', labelKey: 'sat.health.popDensity', aggregation: 'mean', unit: 'percentil', rawUnit: 'hab/km²' },
 		],
 		primaryVariable: 'c_healthcare_time',
 		colorScale: 'flood',
