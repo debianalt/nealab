@@ -59,6 +59,24 @@ def set_globals(t: str) -> str:
     return sdm._T_OUT_DIR
 
 
+def _interp_column(df: pd.DataFrame, col: str, where) -> int:
+    """k-NN fill df[col] nulls (restricted to `where`) from hexes that have a value."""
+    import h3
+    from scipy.spatial import cKDTree
+    miss = df[col].isna() & where
+    have = df[col].notna()
+    if not miss.any() or have.sum() < 10:
+        return 0
+    hv = df.loc[have]
+    ch = np.array([h3.cell_to_latlng(h) for h in hv["h3index"]])
+    cm = np.array([h3.cell_to_latlng(h) for h in df.loc[miss, "h3index"]])
+    d, idx = cKDTree(ch).query(cm, k=5)
+    w = 1.0 / (d + 1e-9)
+    w /= w.sum(axis=1, keepdims=True)
+    df.loc[miss, col] = np.round((hv[col].values[idx] * w).sum(axis=1), 2)
+    return int(miss.sum())
+
+
 def load_frame(con, t: str):
     out_dir = set_globals(t)
     df = sdm.build_prediction_frame(con, out_dir)
@@ -68,18 +86,29 @@ def load_frame(con, t: str):
     # river margins and flood-prone valleys that DW classifies as land — and in Misiones
     # those follow the (river-defined) department borders, leaving "sin cobertura"
     # strips. Keep masked only hexes DW considers majority-water; re-score the rest.
-    lu = pd.read_parquet(os.path.join(out_dir, "sat_land_use.parquet"))[["h3index", "frac_water"]]
-    lu = lu.rename(columns={"frac_water": "_lu_water"})
-    if lu["_lu_water"].max() > 1.5:  # scale-robust: MapBiomas is 0-100, DW is 0-1
-        lu["_lu_water"] = lu["_lu_water"] / 100.0
+    luf = pd.read_parquet(os.path.join(out_dir, "sat_land_use.parquet"))
+    lu = pd.DataFrame({
+        "h3index": luf["h3index"],
+        "_lu_water": luf["frac_water"],
+        "_lu_flooded": luf["frac_flooded"] if "frac_flooded" in luf.columns else 0.0,
+    })
+    for c in ["_lu_water", "_lu_flooded"]:  # scale-robust: MapBiomas 0-100, DW 0-1
+        if lu[c].max() > 1.5:
+            lu[c] = lu[c] / 100.0
     df = df.merge(lu, on="h3index", how="left")
     relax = (df["blocked_reason"] == "water") & (df["_lu_water"].fillna(0) < 0.50)
     df.loc[relax, "blocked_reason"] = ""
-    # Only score hexes that have REAL covariates. Relaxing the water mask re-includes
-    # some Iberá-estero hexes that have no SoilGrids/climate data; the RF would score
-    # them off median-filled features (meaningless) and the tooltip shows "Sin
-    # cobertura". Mark hexes missing any displayed covariate as no-data so scored
-    # hexes always have a full tooltip (scored <=> has data).
+    # Fill SoilGrids holes (clay/soc null) on DRY LAND only — e.g. far-west Formosa
+    # (Ramón Lista) is a soil-data gap, not water, and was showing as a no-data
+    # triangle. Wetlands like the Iberá esteros (high water+flooded) are NOT filled,
+    # so we don't invent forestry scores over marshland.
+    dry = (df["_lu_water"].fillna(0) + df["_lu_flooded"].fillna(0)) < 0.25
+    for c in ["clay", "soc"]:
+        n = _interp_column(df, c, dry)
+        if n:
+            print(f"  {t}: interpolated {c} for {n:,} dry-land soil-gap hexes")
+    # Only score hexes that have REAL covariates (scored <=> full tooltip). After the
+    # dry-land fill, remaining nulls are genuine no-data (wetland/water) -> not scored.
     core = ["gdd", "precip_total", "water_deficit", "slope_mean", "clay", "soc"]
     nodata = df[core].isna().any(axis=1)
     df.loc[nodata & (df["blocked_reason"] == ""), "blocked_reason"] = "nodata"
