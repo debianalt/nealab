@@ -687,7 +687,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.buildings': { es: 'Edificios', en: 'Buildings', gn: 'Óga', pt: 'Edifícios' },
 	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
 	'hex.households': { es: 'Hogares estimados', en: 'Estimated households', gn: 'Óga papapy', pt: 'Domicílios estimados' },
-	'hex.estPctNote': { es: 'Valores estimados por hexágono (promedio dasimétrico ponderado por edificios)', en: 'Estimated values per hexagon (building-weighted dasymetric average)', gn: 'Papapy hexágono rehegua', pt: 'Valores estimados por hexágono (média dasimétrica ponderada por edifícios)' },
+	'hex.estPctNote': { es: 'Valores estimados por hexágono: el dato del radio censal se redistribuye a los hexágonos ponderando por edificios (método dasimétrico).', en: 'Estimated values per hexagon: the census-tract value is redistributed to hexagons weighted by buildings (dasymetric method).', gn: 'Papapy hexágono rehegua: radio censal-gui oñemboja\'o hexágono-pe óga rupive (dasimétrico).', pt: 'Valores estimados por hexágono: o dado do setor censitário é redistribuído aos hexágonos ponderando por edifícios (método dasimétrico).' },
 
 	// ── Welcome panel ─────────────────────────────────────────────────────
 	'side.onboarding.title': { es: 'Empezar a explorar', en: 'Start exploring', gn: "Eñepyrũ eheka", pt: 'Começar a explorar' },
