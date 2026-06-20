@@ -91,7 +91,7 @@ export function getParquetUrl(name: string): string {
 		hex_flood_risk: '?v=38',
 		sat_agri_potential: '?v=36',
 		sat_forestry_aptitude: '?v=39',
-		sat_service_deprivation: '?v=28',
+		sat_service_deprivation: '?v=29',
 		sat_health_access: '?v=27',
 		sat_education_capital: '?v=27',
 		sat_education_flow: '?v=27',
@@ -111,7 +111,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 14;
+const DEPT_V = 15;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -627,8 +627,8 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'service_deprivation',
 		parquet: 'sat_service_deprivation',
 		variables: [
-			{ col: 'type', labelKey: 'sat.deprivation.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.deprivation.typeLabel', aggregation: 'mean' },
+			// No K-means classification for this layer (compute_satellite_scores emits no
+			// type/type_label) → the "Clasificación" row is intentionally omitted.
 			{ col: 'c_nbi', labelKey: 'sat.deprivation.nbi', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_sin_cloacas', labelKey: 'sat.deprivation.sinCloacas', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_piso', labelKey: 'sat.deprivation.piso', aggregation: 'mean', unit: 'percentil' },

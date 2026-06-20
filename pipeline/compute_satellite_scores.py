@@ -596,20 +596,21 @@ def compute_analysis(
         hex_data[out_col] = hex_data[out_col].round(1)
 
     # Per-hexagon magnitude from the dasymetric crosswalk (mass-preserving):
-    # n_edificios = building count, pob_estimada = Σ per-building est_personas.
-    # Summed across all hexes these match the census radio totals.
+    # n_edificios = building count, hogares_estimados = Σ per-building est_hogares.
+    # Households are the natural denominator for the census deprivation indicators
+    # (all are % of households). Summed across all hexes these match radio totals.
     mag_cols: list[str] = []
-    if {"n_buildings", "est_personas"}.issubset(crosswalk.columns):
+    if {"n_buildings", "est_hogares"}.issubset(crosswalk.columns):
         mag = (
             crosswalk.groupby("h3index")
             .agg(n_edificios=("n_buildings", "sum"),
-                 pob_estimada=("est_personas", "sum"))
+                 hogares_estimados=("est_hogares", "sum"))
             .reset_index()
         )
         mag["n_edificios"] = mag["n_edificios"].astype("int64")
-        mag["pob_estimada"] = mag["pob_estimada"].round(0).astype("int64")
+        mag["hogares_estimados"] = mag["hogares_estimados"].round(0).astype("int64")
         hex_data = hex_data.merge(mag, on="h3index", how="left")
-        mag_cols = ["n_edificios", "pob_estimada"]
+        mag_cols = ["n_edificios", "hogares_estimados"]
 
     # Select output columns (percentile components + preserved _raw + magnitude)
     raw_cols = [f"{c}_raw" for c in comp_cols if f"{c}_raw" in hex_data.columns]

@@ -46,7 +46,8 @@ BUILDING_QUERY = """
     SELECT redcode,
            ST_Y(ST_Centroid(geom)) AS lat,
            ST_X(ST_Centroid(geom)) AS lng,
-           COALESCE(est_personas, 0) AS est_personas
+           COALESCE(est_personas, 0) AS est_personas,
+           COALESCE(est_hogares, 0) AS est_hogares
     FROM {table}
     WHERE redcode IS NOT NULL
 """
@@ -82,24 +83,25 @@ def build_dasymetric_weights(df: pd.DataFrame) -> pd.DataFrame:
     alongside the weight so downstream can report magnitude per hexagon. est_personas
     is mass-preserving: summed across all hexes it equals the census radio totals.
     """
-    print("  Aggregating building counts + population...")
+    print("  Aggregating building counts + population + households...")
     counts = (
         df.groupby(["h3index", "redcode"])
         .agg(n_buildings=("redcode", "size"),
-             est_personas=("est_personas", "sum"))
+             est_personas=("est_personas", "sum"),
+             est_hogares=("est_hogares", "sum"))
         .reset_index()
     )
 
     radio_totals = counts.groupby("redcode")["n_buildings"].transform("sum")
     counts["weight"] = counts["n_buildings"] / radio_totals
 
-    result = counts[["h3index", "redcode", "weight", "n_buildings", "est_personas"]].reset_index(drop=True)
+    result = counts[["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares"]].reset_index(drop=True)
     return result
 
 
 def build_areal_fallback(radios_with_buildings: set) -> pd.DataFrame:
     """Areal crosswalk for radios that have no buildings (same logic as generate_h3_grid.py)."""
-    fallback_cols = ["h3index", "redcode", "weight", "n_buildings", "est_personas"]
+    fallback_cols = ["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares"]
     if not os.path.exists(RADIOS_PATH):
         print(f"  WARNING: {RADIOS_PATH} not found — cannot compute areal fallback")
         return pd.DataFrame(columns=fallback_cols)
@@ -147,6 +149,7 @@ def build_areal_fallback(radios_with_buildings: set) -> pd.DataFrame:
                 "weight": row["weight"],
                 "n_buildings": 0,        # areal-fallback radios have no buildings
                 "est_personas": 0.0,     # population unknown at hex level here
+                "est_hogares": 0.0,      # households unknown at hex level here
             })
 
     return pd.DataFrame(rows)
@@ -233,6 +236,7 @@ def main():
     dasy["weight"] = dasy["weight"].astype("float64")
     dasy["n_buildings"] = dasy["n_buildings"].fillna(0).astype("int64")
     dasy["est_personas"] = dasy["est_personas"].fillna(0).astype("float64")
+    dasy["est_hogares"] = dasy["est_hogares"].fillna(0).astype("float64")
 
     dasy.to_parquet(CROSSWALK_PATH, index=False)
     size_mb = os.path.getsize(CROSSWALK_PATH) / (1024 * 1024)

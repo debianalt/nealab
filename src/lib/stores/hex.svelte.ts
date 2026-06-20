@@ -335,7 +335,7 @@ export class HexStore {
 		const actualCols = await getParquetCols(url);
 		this.updatePrimaryOverride(layer, actualCols);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
-			'n_edificios', 'pob_estimada',
+			'n_edificios', 'hogares_estimados',
 			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`]),
 			...(layer.petalVars?.map(v => v.col) ?? [])];
 		if (layer.temporal) {
@@ -789,7 +789,7 @@ export class HexStore {
 		// ~20 unused baseline/delta/pca columns. Inspect schema first to tolerate drift.
 		const actualCols = await getParquetCols(url);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
-			'n_edificios', 'pob_estimada',
+			'n_edificios', 'hogares_estimados',
 			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`]),
 			...(layer.petalVars?.map(v => v.col) ?? [])]
 			.filter((c): c is string => !!c && actualCols.has(c))

@@ -684,6 +684,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },
 	'hex.buildings': { es: 'Edificios', en: 'Buildings', gn: 'Óga', pt: 'Edifícios' },
 	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
+	'hex.households': { es: 'Hogares estimados', en: 'Estimated households', gn: 'Óga papapy', pt: 'Domicílios estimados' },
 	'hex.estPctNote': { es: '% estimado por hexágono (promedio dasimétrico ponderado por edificios)', en: 'Estimated % per hexagon (building-weighted dasymetric average)', gn: '% hexágono rehegua', pt: '% estimado por hexágono (média dasimétrica ponderada por edifícios)' },
 
 	// ── Welcome panel ─────────────────────────────────────────────────────

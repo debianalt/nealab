@@ -47,9 +47,9 @@
 	}
 
 	// Show the magnitude/% table only when the layer carries dasymetric magnitude
-	// (n_edificios / pob_estimada present in the parquet after regeneration).
+	// (n_edificios / hogares_estimados present in the parquet after regeneration).
 	const hasMagnitude = $derived(
-		selected.some(([, d]) => d.data?.n_edificios != null || d.data?.pob_estimada != null)
+		selected.some(([, d]) => d.data?.n_edificios != null || d.data?.hogares_estimados != null)
 	);
 
 	function downloadSelectedCsv() {
@@ -150,8 +150,8 @@
 						{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
 					</tr>
 					<tr>
-						<td>{i18n.t('hex.popEst')}</td>
-						{#each selected as [, d]}<td>{fmtInt(d.data?.pob_estimada)}</td>{/each}
+						<td>{i18n.t('hex.households')}</td>
+						{#each selected as [, d]}<td>{fmtInt(d.data?.hogares_estimados)}</td>{/each}
 					</tr>
 					{#each componentVars as v}
 						<tr>
