@@ -12,8 +12,14 @@ import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-j
 // UI for seconds. Above LOD_ACTIVATION_ROWS we aggregate to a coarser H3 resolution
 // chosen so the rendered polygon count lands near LOD_TARGET_POLYGONS — visually
 // near-identical at department-overview zoom, but ~10-50x fewer polygons.
-const LOD_ACTIVATION_ROWS = 60000;
-const LOD_TARGET_POLYGONS = 15000;
+// Lowered (was 60000/15000): a CPU profile showed dept-select time is dominated by
+// MapLibre's synchronous tessellation + GPU upload of the choropleth — i.e. the
+// rendered POLYGON COUNT, not JS. Misiones depts (10-35k res-9 hexes) sat under the
+// old 60k gate and rendered full res-9 (+ edge-fill), costing several seconds each.
+// Aggregating to ~6k coarse polygons at overview (res-9 restored per-viewport on
+// zoom-in) cuts that ~5-6x with no visible change at department scale.
+const LOD_ACTIVATION_ROWS = 12000;
+const LOD_TARGET_POLYGONS = 6000;
 // Returns the FINEST coarse resolution (8..4) whose estimated parent count is within
 // the target, or null when no aggregation is needed (department renders fine at res-9).
 function pickCoarseRes(n: number): number | null {
