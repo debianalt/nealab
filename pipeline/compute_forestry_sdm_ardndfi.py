@@ -75,6 +75,14 @@ def load_frame(con, t: str):
     df = df.merge(lu, on="h3index", how="left")
     relax = (df["blocked_reason"] == "water") & (df["_lu_water"].fillna(0) < 0.50)
     df.loc[relax, "blocked_reason"] = ""
+    # Only score hexes that have REAL covariates. Relaxing the water mask re-includes
+    # some Iberá-estero hexes that have no SoilGrids/climate data; the RF would score
+    # them off median-filled features (meaningless) and the tooltip shows "Sin
+    # cobertura". Mark hexes missing any displayed covariate as no-data so scored
+    # hexes always have a full tooltip (scored <=> has data).
+    core = ["gdd", "precip_total", "water_deficit", "slope_mean", "clay", "soc"]
+    nodata = df[core].isna().any(axis=1)
+    df.loc[nodata & (df["blocked_reason"] == ""), "blocked_reason"] = "nodata"
     pres_path = os.path.join(out_dir, "dndfi_presence_h3.parquet")
     pres = pd.read_parquet(pres_path)[["h3index", "frac_plantada"]]
     df = df.merge(pres, on="h3index", how="left")
@@ -176,7 +184,8 @@ def main():
         out.loc[vp.index, "type_label"] = vp["type_label"].values
         for col in OUT_COLS:
             if col in df.columns:
-                out[col] = df[col].round(2).values
+                out[col] = pd.NA
+                out.loc[vp.index, col] = df.loc[vp.index, col].round(2).values
         out["score"] = pd.to_numeric(out["score"], errors="coerce")
         out["type"] = pd.to_numeric(out["type"], errors="coerce").astype("Int32")
 
