@@ -62,6 +62,11 @@
 	const isPercentileLayer = $derived(
 		componentVars.length > 0 && componentVars.every(v => v.unit === 'percentil')
 	);
+	// Only show the classification chip for layers whose K-means typology is
+	// meaningful (declare a type_label variable in config). Layers where it doesn't
+	// work were stripped of the variable, so the parquet's residual type_label
+	// (e.g. "Sin cobertura censal") is not surfaced.
+	const hasClassification = $derived(variables.some(v => v.col === 'type_label'));
 
 	function downloadSelectedCsv() {
 		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
@@ -114,7 +119,7 @@
 				<div class="cd-hex-id">
 					<span class="hc-dot" style:background={hexData.color}></span>
 					{h3index.slice(0, 4)}...{h3index.slice(-4)}
-					{#if hexData.data?.type_label}
+					{#if hasClassification && hexData.data?.type_label}
 						<span class="cd-type">{hexData.data.type_label}</span>
 					{/if}
 				</div>

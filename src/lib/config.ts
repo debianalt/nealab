@@ -582,8 +582,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'agri_potential',
 		parquet: 'sat_agri_potential',
 		variables: [
-			{ col: 'type', labelKey: 'sat.agri.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.agri.typeLabel', aggregation: 'mean' },
 			{ col: 'c_soc', labelKey: 'sat.agri.soc', aggregation: 'mean', unit: '/100' },
 			{ col: 'c_ph_optimal', labelKey: 'sat.agri.phOptimal', aggregation: 'mean', unit: '/100' },
 			{ col: 'c_clay', labelKey: 'sat.agri.clay', aggregation: 'mean', unit: '/100' },
@@ -649,8 +647,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'health_access',
 		parquet: 'sat_health_access',
 		variables: [
-			{ col: 'type', labelKey: 'sat.health.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.health.typeLabel', aggregation: 'mean' },
 			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_health_coverage', labelKey: 'sat.health.coverage', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_nbi', labelKey: 'sat.health.nbi', aggregation: 'mean', unit: 'percentil' },
@@ -671,8 +667,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'education_capital',
 		parquet: 'sat_education_capital',
 		variables: [
-			{ col: 'type', labelKey: 'sat.eduCap.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.eduCap.typeLabel', aggregation: 'mean' },
 			{ col: 'c_no_schooling', labelKey: 'sat.eduCap.noSchooling', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_secondary_plus', labelKey: 'sat.eduCap.secondaryPlus', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_higher_edu', labelKey: 'sat.eduCap.higherEdu', aggregation: 'mean', unit: 'percentil' },
@@ -691,8 +685,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'education_flow',
 		parquet: 'sat_education_flow',
 		variables: [
-			{ col: 'type', labelKey: 'sat.eduFlow.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.eduFlow.typeLabel', aggregation: 'mean' },
 			{ col: 'c_dropout_primary', labelKey: 'sat.eduFlow.dropoutPrimary', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_dropout_secondary', labelKey: 'sat.eduFlow.dropoutSecondary', aggregation: 'mean', unit: 'percentil' },
 			{ col: 'c_teen_pregnancy', labelKey: 'sat.eduFlow.teenPregnancy', aggregation: 'mean', unit: 'percentil' },
@@ -802,8 +794,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		parquet: 'sat_economic_activity',
 		variables: [
 			{ col: 'score', labelKey: 'analysis.economic.score', aggregation: 'mean' },
-			{ col: 'type', labelKey: 'analysis.economic.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'analysis.economic.typeLabel', aggregation: 'mean' },
 			{ col: 'tasa_empleo', labelKey: 'radio.empleo', aggregation: 'mean', unit: '%' },
 			{ col: 'tasa_actividad', labelKey: 'radio.actividad', aggregation: 'mean', unit: '%' },
 			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%' },
