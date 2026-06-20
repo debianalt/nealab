@@ -531,6 +531,10 @@ def compute_analysis(
     gp_indicators = goalposts.get('indicators', {}) if goalposts else {}
     for out_col, sql_col, _weight, invert in components:
         raw = hex_data[sql_col].astype(float)
+        # Preserve the dasymetric (building-weighted) physical value before it is
+        # overwritten by the percentile/goalpost score. For census layers this is
+        # the estimated % per hexagon (e.g. c_nbi_raw = estimated NBI %).
+        hex_data[out_col + "_raw"] = raw.round(1)
         if mode == 'comparable' and out_col in gp_indicators:
             gp = gp_indicators[out_col]
             hex_data[out_col] = score_with_goalposts(
@@ -591,8 +595,25 @@ def compute_analysis(
     for out_col, _, _, _ in components:
         hex_data[out_col] = hex_data[out_col].round(1)
 
-    # Select output columns
-    out_cols = ["h3index", "score"] + comp_cols
+    # Per-hexagon magnitude from the dasymetric crosswalk (mass-preserving):
+    # n_edificios = building count, pob_estimada = Σ per-building est_personas.
+    # Summed across all hexes these match the census radio totals.
+    mag_cols: list[str] = []
+    if {"n_buildings", "est_personas"}.issubset(crosswalk.columns):
+        mag = (
+            crosswalk.groupby("h3index")
+            .agg(n_edificios=("n_buildings", "sum"),
+                 pob_estimada=("est_personas", "sum"))
+            .reset_index()
+        )
+        mag["n_edificios"] = mag["n_edificios"].astype("int64")
+        mag["pob_estimada"] = mag["pob_estimada"].round(0).astype("int64")
+        hex_data = hex_data.merge(mag, on="h3index", how="left")
+        mag_cols = ["n_edificios", "pob_estimada"]
+
+    # Select output columns (percentile components + preserved _raw + magnitude)
+    raw_cols = [f"{c}_raw" for c in comp_cols if f"{c}_raw" in hex_data.columns]
+    out_cols = ["h3index", "score"] + comp_cols + raw_cols + mag_cols
     if emit_legacy:
         out_cols.append("score_legacy")
     result = hex_data[out_cols].copy()

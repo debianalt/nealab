@@ -14,7 +14,10 @@
 	const selected = $derived([...hexStore.selectedHexes.entries()]);
 	const layer = $derived(hexStore.activeLayer);
 	const isCensus = $derived(layer ? CENSUS_ANALYSES.has(layer.id) : false);
-	const showPetals = $derived(layer ? !CENSUS_ANALYSES.has(layer.id) : true);
+	// service_deprivation is census but its 6 components are 0–100 percentiles, ideal
+	// for the petal (visual hex-to-hex comparison) — keep it visible.
+	const PETAL_HIDDEN = new Set([...CENSUS_ANALYSES].filter(id => id !== 'service_deprivation'));
+	const showPetals = $derived(layer ? !PETAL_HIDDEN.has(layer.id) : true);
 	const variables = $derived(layer?.variables ?? []);
 	const componentVars = $derived(
 		variables.filter(v => !['score', 'type', 'pca_1', 'pca_2'].includes(v.col))
@@ -36,6 +39,18 @@
 		if (abs < 100) return v.toFixed(1);
 		return v.toFixed(0);
 	}
+
+	/** Integer formatter with thousands separators (es-AR) for counts/population. */
+	function fmtInt(v: unknown): string {
+		if (typeof v !== 'number' || !Number.isFinite(v)) return '—';
+		return Math.round(v).toLocaleString('es-AR');
+	}
+
+	// Show the magnitude/% table only when the layer carries dasymetric magnitude
+	// (n_edificios / pob_estimada present in the parquet after regeneration).
+	const hasMagnitude = $derived(
+		selected.some(([, d]) => d.data?.n_edificios != null || d.data?.pob_estimada != null)
+	);
 
 	function downloadSelectedCsv() {
 		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
@@ -112,6 +127,45 @@
 				{/each}
 			</div>
 		{/each}
+	{/if}
+
+	<!-- Magnitude (buildings, est. population) + estimated % per variable -->
+	{#if hasMagnitude}
+		<div class="mag-section">
+			<div class="mag-title">{i18n.t('hex.magTable')}</div>
+			<table class="mag-table">
+				<thead>
+					<tr>
+						<th></th>
+						{#each selected as [h3index, d]}
+							<th>
+								<span class="hc-dot" style:background={d.color}></span>{h3index.slice(0, 4)}…
+							</th>
+						{/each}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{i18n.t('hex.buildings')}</td>
+						{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
+					</tr>
+					<tr>
+						<td>{i18n.t('hex.popEst')}</td>
+						{#each selected as [, d]}<td>{fmtInt(d.data?.pob_estimada)}</td>{/each}
+					</tr>
+					{#each componentVars as v}
+						<tr>
+							<td>{i18n.t(v.labelKey)}</td>
+							{#each selected as [, d]}
+								{@const raw = d.data?.[`${v.col}_raw`]}
+								<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} %` : '—'}</td>
+							{/each}
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+			<div class="mag-note">{i18n.t('hex.estPctNote')}</div>
+		</div>
 	{/if}
 
 	{#if selected.length > 0}
@@ -192,6 +246,16 @@
 		line-height: 1;
 	}
 	.hc-remove:hover { color: #ef4444; }
+
+	.mag-section { margin: 10px 0 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+	.mag-title { font-size: 10px; font-weight: 600; color: #e2e8f0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+	.mag-table { width: 100%; border-collapse: collapse; }
+	.mag-table th, .mag-table td { padding: 3px 4px; text-align: right; font-size: 10px; color: #e2e8f0; white-space: nowrap; }
+	.mag-table th:first-child, .mag-table td:first-child { text-align: left; color: #d4d4d4; font-size: 9px; font-weight: 400; }
+	.mag-table thead th { font-family: monospace; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); }
+	.mag-table thead th .hc-dot { width: 7px; height: 7px; margin-right: 3px; vertical-align: middle; }
+	.mag-table tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(255,255,255,0.04); }
+	.mag-note { font-size: 8px; color: rgba(255,255,255,0.4); font-style: italic; margin-top: 5px; line-height: 1.3; }
 
 	.hc-download-row { margin-top: 8px; display: flex; gap: 6px; }
 	.hc-dl-btn { flex: 1; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 9px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }

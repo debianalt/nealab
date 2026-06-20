@@ -681,6 +681,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.resolution': { es: 'Resolución H3', en: 'H3 resolution', gn: 'H3 tuichakue', pt: 'Resolução H3' },
 	'hex.loading': { es: 'Cargando hexágonos...', en: 'Loading hexagons...', gn: 'Oñemyenyhẽ hexágono...', pt: 'Carregando hexágonos...' },
 	'hex.provAvg': { es: 'prom. del territorio', en: 'territory avg', gn: 'tetã mbytekue', pt: 'méd. do território' },
+	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },
+	'hex.buildings': { es: 'Edificios', en: 'Buildings', gn: 'Óga', pt: 'Edifícios' },
+	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
+	'hex.estPctNote': { es: '% estimado por hexágono (promedio dasimétrico ponderado por edificios)', en: 'Estimated % per hexagon (building-weighted dasymetric average)', gn: '% hexágono rehegua', pt: '% estimado por hexágono (média dasimétrica ponderada por edifícios)' },
 
 	// ── Welcome panel ─────────────────────────────────────────────────────
 	'side.onboarding.title': { es: 'Empezar a explorar', en: 'Start exploring', gn: "Eñepyrũ eheka", pt: 'Começar a explorar' },
