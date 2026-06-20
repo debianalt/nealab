@@ -111,6 +111,10 @@
 	} = $props();
 
 	let collapsed = $state(true);
+	// Charts (histogram/Moran/bivariate/bump/parallel) compute synchronously over the
+	// whole dept hex set — seconds of main-thread block on every dept select. Collapsed
+	// by default so selecting a department is instant; they mount/compute on expand.
+	let chartsOpen = $state(false);
 
 	// Auto-open when actual results exist
 	$effect(() => {
@@ -246,39 +250,42 @@
 				     per-hex stat stack (Moran/histogram/bivariate/parallel) over EUDR data
 				     is meaningless AND triggered a Svelte effect_update_depth_exceeded loop
 				     on admin-2 unit selection that froze all reactivity. -->
-				<div class="charts-divider">Gráficos</div>
-				<HistogramPanel
-					data={hexStore.visibleData}
-					variable={hexStore.effectivePrimary}
-					xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
-					onBrushSelect={onHistogramBrush ?? (() => {})}
-				/>
-				<MoranPanel
-					data={hexStore.visibleData}
-					variable={hexStore.effectivePrimary}
-					boundaryCache={hexStore.boundaryCache}
-					onShowLisa={onShowLisa ?? (() => {})}
-					onBrushSelect={onMoranBrush ?? (() => {})}
-				/>
-				<BivariatePlot
-					data={hexStore.visibleData}
-					variable={hexStore.effectivePrimary}
-					xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
-					analysisId={hexStore.activeLayer.id}
-					territoryPrefix={hexStore.territoryPrefix}
-					onBrushSelect={onBivariateBrush ?? (() => {})}
-				/>
-				<BumpChart
-					activeAnalysisId={hexStore.activeLayer.id}
-					selectedDept={hexStore.selectedDpto}
-					territoryPrefix={hexStore.territoryPrefix}
-				/>
-				<ParallelCoords
-					data={hexStore.visibleData}
-					variables={hexStore.numericVariables}
-					onBrushSelect={onParallelBrush ?? (() => {})}
-				/>
-			{/if}
+				<button class="charts-divider charts-toggle" onclick={() => chartsOpen = !chartsOpen}>
+					Gráficos {chartsOpen ? '▾' : '▸'}
+				</button>
+				{#if chartsOpen}
+					<HistogramPanel
+						data={hexStore.visibleData}
+						variable={hexStore.effectivePrimary}
+						xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
+						onBrushSelect={onHistogramBrush ?? (() => {})}
+					/>
+					<MoranPanel
+						data={hexStore.visibleData}
+						variable={hexStore.effectivePrimary}
+						boundaryCache={hexStore.boundaryCache}
+						onShowLisa={onShowLisa ?? (() => {})}
+						onBrushSelect={onMoranBrush ?? (() => {})}
+					/>
+					<BivariatePlot
+						data={hexStore.visibleData}
+						variable={hexStore.effectivePrimary}
+						xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
+						analysisId={hexStore.activeLayer.id}
+						territoryPrefix={hexStore.territoryPrefix}
+						onBrushSelect={onBivariateBrush ?? (() => {})}
+					/>
+					<BumpChart
+						activeAnalysisId={hexStore.activeLayer.id}
+						selectedDept={hexStore.selectedDpto}
+						territoryPrefix={hexStore.territoryPrefix}
+					/>
+					<ParallelCoords
+						data={hexStore.visibleData}
+						variables={hexStore.numericVariables}
+						onBrushSelect={onParallelBrush ?? (() => {})}
+					/>
+				{/if}
 		</div>
 	{:else if mapStore.selectedDistricts.size > 0}
 		<!-- Itapúa: districts selected -->
@@ -342,6 +349,11 @@
 		padding-top: 8px;
 		border-top: 1px solid rgba(255,255,255,0.08);
 	}
+	.charts-toggle {
+		display: block; width: 100%; text-align: left; background: none;
+		font-family: inherit; cursor: pointer;
+	}
+	.charts-toggle:hover { color: rgba(255,255,255,0.6); }
 	.chart-scroll::-webkit-scrollbar { width: 4px; }
 	.chart-scroll::-webkit-scrollbar-track { background: transparent; }
 	.chart-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
