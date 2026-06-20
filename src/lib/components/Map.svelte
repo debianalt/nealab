@@ -3371,7 +3371,8 @@
 <style>
 	.map-wrap { position: relative; width: 100%; height: 100%; }
 	.plantations-toggle {
-		position: absolute; bottom: 16px; left: 12px; z-index: 5;
+		/* Sits above the bottom-left Map/Satellite + opacity control (~80px tall). */
+		position: absolute; bottom: 112px; left: 16px; z-index: 5;
 		background: rgba(15, 23, 42, 0.88); border: 1px solid #334155;
 		border-radius: 6px; padding: 7px 10px; max-width: 240px;
 		font-size: 11px; color: #e2e8f0; backdrop-filter: blur(2px);
