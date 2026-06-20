@@ -127,6 +127,9 @@
 				{/each}
 			</div>
 		{/each}
+		{#if isCensus}
+			<div class="cd-note">{i18n.t('hex.percentileNote')}</div>
+		{/if}
 	{/if}
 
 	<!-- Magnitude (buildings, est. population) + estimated % per variable -->
@@ -189,6 +192,7 @@
 	.cd-val { font-size: 8px; font-weight: 600; color: #cbd5e1; width: 24px; text-align: right; flex-shrink: 0; }
 	.cd-val-data { font-size: 10px; font-weight: 600; color: #e2e8f0; text-align: right; margin-left: auto; white-space: nowrap; }
 	.cd-val-nodata { color: #94a3b8; font-style: italic; font-weight: 500; }
+	.cd-note { font-size: 8.5px; color: rgba(255,255,255,0.45); font-style: italic; line-height: 1.35; margin: 6px 0 2px; }
 	.hc-header {
 		display: flex;
 		justify-content: space-between;

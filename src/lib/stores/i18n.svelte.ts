@@ -682,6 +682,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.loading': { es: 'Cargando hexágonos...', en: 'Loading hexagons...', gn: 'Oñemyenyhẽ hexágono...', pt: 'Carregando hexágonos...' },
 	'hex.provAvg': { es: 'prom. del territorio', en: 'territory avg', gn: 'tetã mbytekue', pt: 'méd. do território' },
 	'hex.provAvgProvince': { es: 'prom. de la provincia', en: 'province avg', gn: 'tetã mbytekue', pt: 'méd. da província' },
+	'hex.percentileNote': { es: 'Percentiles provinciales (0–100): posición del hexágono frente al resto de la provincia. 50 = mediana; cuanto más alto, mayor carencia (100 = el peor de la provincia); más bajo, menor carencia.', en: 'Provincial percentiles (0–100): the hexagon\'s position relative to the rest of the province. 50 = median; higher means greater deprivation (100 = worst in the province), lower means less.', gn: 'Percentiles (0–100): 50 = mbytekue; ijyvateve = carencia tuichave.', pt: 'Percentis provinciais (0–100): posição do hexágono frente ao resto da província. 50 = mediana; quanto mais alto, maior carência (100 = o pior da província); mais baixo, menor.' },
 	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },
 	'hex.buildings': { es: 'Edificios', en: 'Buildings', gn: 'Óga', pt: 'Edifícios' },
 	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
