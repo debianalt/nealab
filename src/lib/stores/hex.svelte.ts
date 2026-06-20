@@ -402,18 +402,13 @@ export class HexStore {
 			const coarseRes = pickCoarseRes(totalRows);
 			this.selectedHexResLevel = coarseRes;
 
-			let cols: string[];
-			if (coarseRes !== null) {
-				const actualCols = await getParquetCols(url);
-				this.updatePrimaryOverride(layer, actualCols);
-				const pv = this.effectivePrimary;
-				const minimal = ['h3index', pv, 'type_label'];
-				if (layer.temporal) minimal.push(getTemporalCol(pv, 'baseline'), getTemporalCol(pv, 'delta'));
-				cols = minimal.filter((c): c is string => !!c && actualCols.has(c)).filter((c, i, a) => a.indexOf(c) === i);
-			} else {
-				// Small dept → full projection (choropleth + panel + petal need the variable set).
-				cols = await this.deptWantedCols(layer, url);
-			}
+			// Always project the full variable set (choropleth + panel + petal). In LOD
+			// (coarse) mode these columns are averaged per coarse parent in the aggregation
+			// loop below, so the petal/radar shows real data in the aggregated view too —
+			// not only at res-9. (Was: LOD projected just the primary var → coarse hexes had
+			// no covariates → empty petal / single point in the aggregated view.) The extra
+			// numeric columns are cheap; the cost LOD avoids is the per-cell geometry build.
+			const cols = await this.deptWantedCols(layer, url);
 			const result = await query(`SELECT ${cols.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
 
 			const data = new Map<string, Record<string, any>>();
