@@ -2804,6 +2804,13 @@
 				r = Math.round(t < 0.5 ? 120 + t * 2 * (245 - 120) : 245 + (t - 0.5) * 2 * (253 - 245));
 				g = Math.round(t < 0.5 ? 53 + t * 2 * (158 - 53) : 158 + (t - 0.5) * 2 * (231 - 158));
 				b = Math.round(t < 0.5 ? 15 + t * 2 * (11 - 15) : 11 + (t - 0.5) * 2 * (37 - 11));
+			} else if (colorScale === 'night') {
+				// Night activity (VIIRS): azul-noche casi negro (#0b1026) → ámbar de marca
+				// (#f59e0b) → blanco cálido incandescente (#fff7d6). Piso oscuro + techo
+				// blanco-hot ⇒ la alta actividad nocturna "salta" como luces de ciudad.
+				r = Math.round(t < 0.5 ? 11 + t * 2 * (245 - 11) : 245 + (t - 0.5) * 2 * (255 - 245));
+				g = Math.round(t < 0.5 ? 16 + t * 2 * (158 - 16) : 158 + (t - 0.5) * 2 * (247 - 158));
+				b = Math.round(t < 0.5 ? 38 + t * 2 * (11 - 38) : 11 + (t - 0.5) * 2 * (214 - 11));
 			} else {
 				r = Math.round(t < 0.5 ? 91 + t * 2 * (33 - 91) : 33 + (t - 0.5) * 2 * (253 - 33));
 				g = Math.round(t < 0.5 ? 33 + t * 2 * (145 - 33) : 145 + (t - 0.5) * 2 * (231 - 145));
@@ -2816,7 +2823,7 @@
 	// Track last state to avoid redundant setPaintProperty calls
 	let _hexLayerInitialized = false;
 
-	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'lisa' = 'flood', domain?: [number, number]) {
+	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' = 'flood', domain?: [number, number]) {
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -2916,7 +2923,7 @@
 		if (bgSrc) bgSrc.setData({ type: 'FeatureCollection', features: [] });
 	}
 
-	export function setCompareHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = 'sequential', domain?: [number, number]) {
+	export function setCompareHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number]) {
 		if (!map) return;
 		const src = map.getSource('compare-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -2984,7 +2991,7 @@
 		if (map.getLayer('compare-hex-selected')) map.setFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
 	}
 
-	export function setRegionalHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = 'sequential', domain?: [number, number]) {
+	export function setRegionalHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number]) {
 		if (!map) return;
 		const src = map.getSource('regional-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;

@@ -714,7 +714,7 @@
 			return;
 		}
 
-		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer?.colorScale ?? 'flood';
+		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'flood';
 		if (layer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 		analysisDataLoaded = true;
@@ -918,7 +918,7 @@
 			const layer = hexStore.activeLayer;
 			const cEntries = hexStore.choroplethEntries;
 			if (cEntries.length === 0) { mapComponent?.clearHexChoropleth(); return; }
-			let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer?.colorScale ?? 'flood';
+			let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'flood';
 			if (layer?.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
 			mapComponent?.setHexChoropleth(cEntries, cs, hexStore.colorDomain ?? undefined);
 			return;
@@ -1011,7 +1011,7 @@
 			mapComponent?.clearCompareHexChoropleth();
 			return;
 		}
-		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer?.colorScale ?? 'sequential';
+		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'sequential';
 		mapComponent?.setCompareHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 	});
 
@@ -1026,7 +1026,7 @@
 			mapComponent?.clearRegionalHexChoropleth();
 			return;
 		}
-		const colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = layer?.colorScale ?? 'sequential';
+		const colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'sequential';
 		mapComponent?.setRegionalHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 	});
 
@@ -1107,7 +1107,7 @@
 				if (!changed || !hexStore.activeLayer) return;
 				const entries = hexStore.choroplethEntries;
 				if (entries.length === 0) return;
-				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' = hexStore.activeLayer.colorScale ?? 'flood';
+				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer.colorScale ?? 'flood';
 				if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
 				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined);
 			}).catch(() => {});
@@ -1215,7 +1215,7 @@
 		if (!layer?.temporal || !layer?.perDepartment) return;
 		const entries = hexStore.choroplethEntries;
 		if (entries.length === 0) return;
-		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = layer.colorScale ?? 'flood';
+		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer.colorScale ?? 'flood';
 		if (mode === 'delta') colorScale = 'diverging';
 		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 	});
@@ -1798,7 +1798,7 @@
 				})
 				: allEntries;
 			if (entries.length > 0) {
-				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' = hexStore.activeLayer?.colorScale ?? 'flood';
+				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer?.colorScale ?? 'flood';
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
 				analysisDataLoaded = true;

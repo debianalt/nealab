@@ -16,8 +16,9 @@
 	const isFlood = $derived(effectiveScale === 'flood');
 	const isGreen = $derived(effectiveScale === 'green');
 	const isWarm = $derived(effectiveScale === 'warm');
+	const isNight = $derived(effectiveScale === 'night');
 	const isDiverging = $derived(effectiveScale === 'diverging');
-	const isGradient = $derived(isSequential || isFlood || isGreen || isWarm || isDiverging);
+	const isGradient = $derived(isSequential || isFlood || isGreen || isWarm || isNight || isDiverging);
 
 	const title = $derived(layer ? i18n.t(layer.titleKey) : '');
 
@@ -58,6 +59,8 @@
 			? 'linear-gradient(to right, #bbf7d0, #166534, #14532d)'
 			: isWarm
 			? 'linear-gradient(to right, #78350f, #f59e0b, #fde725)'
+			: isNight
+			? 'linear-gradient(to right, #0b1026, #f59e0b, #fff7d6)'
 			: isDiverging
 			? 'linear-gradient(to right, #ef4444, #a3a3a3, #22c55e)'
 			: 'linear-gradient(to right, #5b21b6, #21918c, #fde725)'

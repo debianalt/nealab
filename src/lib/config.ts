@@ -467,7 +467,7 @@ export interface HexLayerConfig {
 	parquet: string;
 	variables: HexVariable[];
 	primaryVariable: string;
-	colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm';
+	colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night';
 	aggregation: 'mean' | 'sum' | 'max';
 	petalVars?: HexVariable[];
 	titleKey: string;
@@ -803,7 +803,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'building_density_per_km2', labelKey: 'radio.buildingDensity', aggregation: 'mean', unit: 'edif/km²' },
 		],
 		primaryVariable: 'viirs_mean_radiance',
-		colorScale: 'warm',
+		colorScale: 'night',
 		aggregation: 'mean',
 		titleKey: 'analysis.economic.title',
 		perDepartment: true,
