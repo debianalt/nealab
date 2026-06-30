@@ -1,7 +1,7 @@
 {
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
-  "name": "Spatia",
+  "name": "nealab",
   "description": "A reproducible platform for subnational geospatial analysis. Combines satellite imagery, census data, and open geospatial datasets into PCA-validated composite indicators on an H3 hexagonal grid.",
   "identifier": "https://doi.org/10.5281/zenodo.19483040",
   "codeRepository": "https://github.com/debianalt/nealab",
@@ -14,10 +14,10 @@
   "author": [
     {
       "@type": "Person",
-      "givenName": "R. E.",
-      "familyName": "Gomez",
+      "givenName": "Raimundo Elías",
+      "familyName": "Gómez",
       "@id": "https://orcid.org/0000-0002-4468-9618",
-      "email": "lsgomez001@gmail.com",
+      "email": "nealab@spatia.ar",
       "affiliation": {
         "@type": "Organization",
         "name": "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)"
@@ -57,7 +57,7 @@
   "referencePublication": {
     "@type": "ScholarlyArticle",
     "name": "nealab: A Reproducible Platform for Subnational Geospatial Analysis",
-    "author": "Gomez, R.E.",
+    "author": "Gómez, R. E.",
     "isPartOf": {
       "@type": "PublicationIssue",
       "isPartOf": {

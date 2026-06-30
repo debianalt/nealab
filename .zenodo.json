@@ -1,10 +1,10 @@
 {
-  "title": "NeaLab: A Reproducible Platform for Subnational Geospatial Analysis",
-  "description": "Reproducible platform combining satellite imagery, census data, and geospatial datasets into composite indicators over an H3 hexagonal grid. Applied to Misiones and the NEA (Nordeste Argentino) with 320,000 hexagons across four analytical domains.",
+  "title": "nealab: A Reproducible Platform for Subnational Geospatial Analysis",
+  "description": "Reproducible platform combining satellite imagery, census data, and geospatial datasets into composite indicators over an H3 hexagonal grid. Applied to the NEA (northeast Argentina) and its cross-border regions (Paraguay and southern Brazil), with ~320,000 hexagons per territory across four analytical domains.",
   "creators": [
     {
-      "name": "Gomez, R. E.",
-      "affiliation": "CONICET / Universidad Nacional de Misiones",
+      "name": "Gómez, Raimundo Elías",
+      "affiliation": "Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) / Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (UNaM)",
       "orcid": "0000-0002-4468-9618"
     }
   ],
@@ -19,6 +19,6 @@
     "NEA",
     "Misiones"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "upload_type": "software"
 }
