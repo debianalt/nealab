@@ -1,4 +1,4 @@
-# Spatia — Inteligencia Territorial para Misiones
+# nealab — análisis geoespacial (NEA y regiones transfronterizas)
 
 ## Tech Stack
 - SvelteKit 5 + adapter-static
@@ -55,7 +55,7 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 - **Legacy comparison**: `--legacy` flag emits `score_legacy` column with old weighted arithmetic mean
 
 ## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
-Spatia has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
+nealab has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
 
 - **`--mode comparable`**: fixed goalpost P2/P98 normalization → cross-territory comparable. Score 60 in Misiones = 60 in Itapúa. PCA variable selection LOCKED from `goalposts.json:pca_variable_selection`. Used for the 23 comparable satellite layers.
 - **`--mode local`**: percentile rank within territory (default historical). Used for census-based layers whose schemas differ across countries (INDEC vs DGEEC).

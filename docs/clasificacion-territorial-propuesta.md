@@ -3,6 +3,8 @@
 **Documento de trabajo — marzo 2026**
 **Plataforma Spatia · Inteligencia Territorial · Misiones, Argentina**
 
+> **Nota (jun 2026):** hoy la plataforma se publica como **nealab — análisis geoespacial** (spatia.ar), AGPL-3.0, con cobertura NEA + regiones transfronterizas. Este documento de trabajo (marzo 2026) conserva la marca y el encuadre de entonces.
+
 ---
 
 ## 1. Introducción: insuficiencia del scoring lineal ponderado
