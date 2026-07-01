@@ -1,7 +1,7 @@
 import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS, HEX_LAYER_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
-import { findDeptFeature } from '$lib/utils/deptBoundaries';
+import { findDeptFeature, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-js';
@@ -357,6 +357,9 @@ export class HexStore {
 
 		this.loading = true;
 		this.loadError = null;
+		// AR dept polygons back the outline effects (which read a non-reactive module
+		// var) and the hole-fill below — ensure they're loaded before selectedDpto flips.
+		if (isArDeptTerritory(this.territoryPrefix)) await ensureArBoundaries();
 		this.selectedDpto = dpto;
 		this.selectedParquetKey = parquetKey;
 		this.visibleData = new Map();
@@ -895,8 +898,11 @@ export class HexStore {
 	private _prefetchDeptParquets(layer: HexLayerConfig): void {
 		const token = ++this._prefetchToken;
 		const prefix = this.territoryPrefix;
-		loadDeptSummary(layer.id, prefix).then(summary => {
+		loadDeptSummary(layer.id, prefix).then(async summary => {
 			if (this._prefetchToken !== token || !summary?.departments) return;
+			// AR idle hole-fill (findDeptFeature) needs the dept polygons — warm them
+			// before precomputing so cached depts aren't stored without the edge-fill.
+			if (isArDeptTerritory(prefix)) { await ensureArBoundaries(); if (this._prefetchToken !== token) return; }
 			const depts = (summary.departments as any[]);
 
 			// NOTE: the old "Phase 1" eagerly fetch()'d EVERY dept parquet at once (~17 ×

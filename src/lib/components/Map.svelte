@@ -8,7 +8,7 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
 	import misionesBoundary from '$lib/data/misiones_boundary.json';
-	import arDeptBoundaries from '$lib/data/ar_dept_boundaries.json';
+	import { ensureArBoundaries, getArFeatures } from '$lib/utils/deptBoundaries';
 	import { pointInPolygon } from '$lib/utils/geometry';
 	import misionesMask from '$lib/data/misiones_mask.json';
 	import itapuaBoundary from '$lib/data/itapua_boundary.json';
@@ -921,7 +921,9 @@
 			// active analysis. Shown only in the department-selection state.
 			map.addSource('ar-depts', {
 				type: 'geojson',
-				data: arDeptBoundaries as any
+				// Seeded empty; loadArDeptSource() fills it (lazy 465KB) when the AR dept
+				// picker is first shown for an AR territory.
+				data: { type: 'FeatureCollection', features: [] } as any
 			});
 			map.addLayer({
 				id: 'ar-dept-fill',
@@ -2211,6 +2213,16 @@
 	// Phase 2: show/hide the department-picker polygons (clickable selection
 	// surface, shown when an analysis is active and no department is selected).
 	// For PY territories, only show the active territory's district fill/line.
+	// Lazy-fill the AR dept picker source (the 465KB boundary GeoJSON is deferred out
+	// of the initial bundle). Idempotent; no-op until the import resolves.
+	export async function loadArDeptSource() {
+		await ensureArBoundaries();
+		const feats = getArFeatures();
+		if (!feats || !map) return;
+		const src = map.getSource('ar-depts') as any;
+		if (src?.setData) src.setData({ type: 'FeatureCollection', features: feats });
+	}
+
 	export function setDeptPickerVisible(visible: boolean) {
 		if (!map) return;
 		// AR departments (always shown together since they don't overlap)

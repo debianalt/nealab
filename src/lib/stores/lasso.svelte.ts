@@ -3,11 +3,7 @@ import { PARQUETS } from '$lib/config';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { PETAL_VARS, getPetalVars, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
-import centroids from '$lib/data/centroids.json';
-
 export { PETAL_VARS };
-
-const centroidMap = centroids as unknown as Record<string, [number, number]>;
 
 const ZONE_COLORS = ['#60a5fa', '#f97316', '#22c55e', '#a855f7', '#ef4444', '#eab308'];
 const ZONE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
@@ -33,6 +29,25 @@ export class LassoStore {
 	drawing = $state(false);
 	currentPolygon: [number, number][] = $state([]);
 	zones: Zone[] = $state([]);
+
+	// centroids.json (~336KB, ~6.9K AR census-radio centroids) is only needed once
+	// the lasso is actually used — lazy-loaded so it stays out of the cold-open bundle.
+	#centroidMap: Record<string, [number, number]> | null = null;
+	#centroidsPending: Promise<void> | null = null;
+
+	async ensureCentroids(): Promise<void> {
+		if (this.#centroidMap) return;
+		if (!this.#centroidsPending) {
+			const p = import('$lib/data/centroids.json').then((m) => {
+				this.#centroidMap = m.default as unknown as Record<string, [number, number]>;
+			});
+			// Reset on failure so a transient error doesn't wedge the lasso for the
+			// rest of the session — the next use retries the import.
+			p.catch(() => { this.#centroidsPending = null; });
+			this.#centroidsPending = p;
+		}
+		await this.#centroidsPending;
+	}
 
 	toggle() {
 		this.active = !this.active;
@@ -63,9 +78,10 @@ export class LassoStore {
 		this.currentPolygon = [];
 	}
 
-	findRadiosInPolygon(polygon: [number, number][]): string[] {
+	async findRadiosInPolygon(polygon: [number, number][]): Promise<string[]> {
+		await this.ensureCentroids();
 		const result: string[] = [];
-		for (const [redcode, centroid] of Object.entries(centroidMap)) {
+		for (const [redcode, centroid] of Object.entries(this.#centroidMap!)) {
 			// centroids are [lat, lng], polygon points are [lng, lat] (from map)
 			const point: [number, number] = [centroid[1], centroid[0]];
 			if (pointInPolygon(point, polygon)) {

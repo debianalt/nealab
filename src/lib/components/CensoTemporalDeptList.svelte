@@ -4,7 +4,7 @@
 	// pipeline/build_censo_temporal_dept.py). Companion to the hex apportionment —
 	// these are the published aggregates, the hexagons remain the fine estimate.
 	import ChartFrame from './ChartFrame.svelte';
-	import boundariesJson from '$lib/data/ar_dept_boundaries.json';
+	import { ensureArBoundaries, getArFeatures } from '$lib/utils/deptBoundaries';
 	import { query } from '$lib/stores/duckdb';
 	import { getCensoTemporalDeptUrl } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
@@ -52,6 +52,10 @@
 	});
 
 	// Clear the dept outline on the map when the panel unmounts (layer change).
+	// Warm the AR dept polygons (deferred out of the bundle) so a dept-row click's
+	// synchronous deptFeature() lookup has them ready. Runs once on mount.
+	$effect(() => { ensureArBoundaries().catch(() => {}); });
+
 	$effect(() => () => onSelectDept?.(null));
 
 	const sorted = $derived(rows ? [...rows].sort((a, b) => (b[metric][3] ?? 0) - (a[metric][3] ?? 0)) : null);
@@ -71,7 +75,7 @@
 	function deptFeature(name: string): any | null {
 		const prov = PROV_BY_PREFIX[hexStore.territoryPrefix];
 		if (!prov) return null;
-		const feats = (boundariesJson as any).features.filter((f: any) => String(f.properties.redcode).startsWith(prov));
+		const feats = (getArFeatures() ?? []).filter((f: any) => String(f.properties.redcode).startsWith(prov));
 		return feats.find((f: any) => f.properties.nombre === name)
 			?? feats.find((f: any) => norm(f.properties.nombre) === norm(name))
 			?? null;

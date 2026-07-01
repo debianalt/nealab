@@ -10,3 +10,10 @@
 # The HTML stays max-age=0/must-revalidate, so a fresh load always pulls the new hashes.
 /_app/immutable/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Static boundary/geojson data (eudr_admin2_boundary.json ~4.9MB, district geojsons).
+# Unversioned filenames, but Cloudflare Pages purges the edge on every deploy, so a
+# content change propagates immediately; browsers hold at most a day + SWR week.
+# Was: DYNAMIC / max-age=0 (revalidated on every navigation).
+/data/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

@@ -36,7 +36,7 @@
 	import { isInsidePresidenteHayes } from '$lib/utils/presidente_hayes-pip';
 	import { isInsideBoqueron } from '$lib/utils/boqueron-pip';
 	import { isInsideAltoParaguay } from '$lib/utils/alto_paraguay-pip';
-	import { findDeptFeature, ensureBrBoundaries } from '$lib/utils/deptBoundaries';
+	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
@@ -478,7 +478,7 @@
 				await hexStore.createHexZone(h3indices, polygon);
 				updateHexZoneHighlights();
 			} else {
-				const redcodes = lassoStore.findRadiosInPolygon(polygon);
+				const redcodes = await lassoStore.findRadiosInPolygon(polygon);
 				if (redcodes.length > 0) {
 					// AR: real census radios → socioeconomic zone (unchanged).
 					await lassoStore.createZone(redcodes, polygon);
@@ -1144,6 +1144,9 @@
 		// and the blue AR-dept polygons don't match our GADM lines anyway.
 		const show = !!a && a.spatialUnit !== 'catastro' && a.id !== 'eudr' && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
+		// Lazy-fill the AR dept polygons (deferred out of the initial bundle) once the
+		// picker is shown for an AR territory — PY/BR use their own district layers.
+		if (show && isArDeptTerritory(hexStore.territoryPrefix)) mapComponent?.loadArDeptSource();
 		// Pre-fetch colorDomain so first dept click doesn't wait for the global parquet query
 		if (a?.perDepartment) hexStore.ensureColorDomain().catch(() => {});
 	});
@@ -1543,6 +1546,9 @@
 
 	function handleToggleLasso() {
 		lassoStore.toggle();
+		// Warm the centroids chunk while the user draws, so findRadiosInPolygon
+		// (awaited on mouseup) is instant. Swallow: the mouseup await retries.
+		if (lassoStore.active) lassoStore.ensureCentroids().catch(() => {});
 		mapComponent?.setLassoMode(lassoStore.active);
 	}
 
