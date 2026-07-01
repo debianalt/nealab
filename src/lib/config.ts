@@ -131,8 +131,9 @@ export function getReportUrl(analysisId: string, parquetKey: string, territoryPr
 
 // EUDR hi-res (res-9) deforestation grid — single combined parquet, sorted by
 // h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
+// v=2: monthly CI refresh wired (eudr-update.yml re-aggregates AR+PY+BR = 31 units).
 export function getEudrHiresUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=1`;
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=2`;
 }
 
 // Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
@@ -1476,7 +1477,8 @@ export const MAP_EUDR = {
 const R2_EUDR_BASE = `${R2_PROD}/data/eudr`;
 
 export function getEudrParquetUrl(name: string): string {
-	return `${R2_EUDR_BASE}/${name}.parquet?v=24`;
+	// v=25: monthly CI refresh wired (res-7 layer re-aggregated + re-uploaded).
+	return `${R2_EUDR_BASE}/${name}.parquet?v=25`;
 }
 
 export function getEudrProvinceParquetUrl(province: string): string {
