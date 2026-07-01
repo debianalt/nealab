@@ -58,6 +58,21 @@ BANDS = {
 }
 
 
+def default_rasters():
+    """Auto-detect the pipeline's EUDR raster(s) on disk.
+
+    Prefers the combined mosaic produced by run_eudr_update.py (the file the CI
+    pipeline actually writes); falls back to the legacy per-export ``10prov``
+    shards if a dev still has them locally.
+    """
+    for pattern in ("eudr_deforestation_combined*.tif", "eudr_deforestation_10prov-*.tif"):
+        hits = sorted(glob.glob(os.path.join(OUTPUT_DIR, pattern)))
+        hits = [h for h in hits if os.path.exists(h)]
+        if hits:
+            return hits
+    return []
+
+
 def load_province_geom(province_id):
     with open(BOUNDARY_PATH, "r", encoding="utf-8") as f:
         fc = json.load(f)
@@ -179,13 +194,11 @@ def main():
     ap.add_argument("--province", required=True, choices=list(EUDR_PROVINCES))
     ap.add_argument("--res", type=int, default=9)
     ap.add_argument("--raster", nargs="*", default=None,
-                    help="Raster shard(s). Default: auto-detect 10prov shards.")
+                    help="Raster(s). Default: auto-detect the combined EUDR mosaic on disk.")
     ap.add_argument("--out-dir", default=os.path.join(OUTPUT_DIR, "hires"))
     args = ap.parse_args()
 
-    rasters = args.raster
-    if not rasters:
-        rasters = sorted(glob.glob(os.path.join(OUTPUT_DIR, "eudr_deforestation_10prov-*.tif")))
+    rasters = args.raster or default_rasters()
     rasters = [r for r in rasters if os.path.exists(r)]
     if not rasters:
         print("No raster shards found.")

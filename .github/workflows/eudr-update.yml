@@ -80,10 +80,10 @@ jobs:
           python -c "import geopandas as gpd; ar=['Salta','Jujuy','Tucumán','Catamarca','Santiago del Estero','Formosa','Chaco','Corrientes','Misiones','Entre Ríos']; g=gpd.read_file('zip://pipeline/data/gadm41_ARG_shp.zip!gadm41_ARG_1.shp'); g[g['NAME_1'].isin(ar)][['NAME_1','geometry']].to_file('pipeline/data/ar_eudr_provinces.geojson', driver='GeoJSON')"
           AR='Salta,Jujuy,Tucumán,Catamarca,Santiago del Estero,Formosa,Chaco,Corrientes,Misiones,Entre Ríos'
           PY='Alto Paraguay,Alto Paraná,Amambay,Asunción,Boquerón,Caaguazú,Caazapá,Canindeyú,Central,Concepción,Cordillera,Guairá,Itapúa,Misiones,Paraguarí,Presidente Hayes,San Pedro,Ñeembucú'
-          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 9
-          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 7
-          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 9
-          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 7
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 9 --raster pipeline/output/eudr/eudr_deforestation_combined.tif
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/ar_eudr_provinces.geojson --name-field NAME_1 --units "$AR" --province-prefix ar --out-tag ar --res 7 --raster pipeline/output/eudr/eudr_deforestation_combined.tif
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 9 --raster pipeline/output/eudr/eudr_deforestation_combined.tif
+          python pipeline/aggregate_eudr_region.py --shp pipeline/data/gadm41_PRY_1.shp --name-field NAME_1 --units "$PY" --province-prefix py --out-tag py --res 7 --raster pipeline/output/eudr/eudr_deforestation_combined.tif
           # BR: re-aggregate from cached GCS raster if present (does not trigger a new GEE export here)
           python -c "
           import os, sys

@@ -12,7 +12,6 @@ Usage:
 """
 
 import argparse
-import glob
 import os
 import sys
 import time
@@ -28,7 +27,7 @@ import h3
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_eudr import OUTPUT_DIR
-from aggregate_eudr_hires import BANDS, post_process
+from aggregate_eudr_hires import BANDS, post_process, default_rasters
 
 
 def aggregate_geom(srcs, geom, province_label, res):
@@ -86,7 +85,7 @@ def main():
     ap.add_argument("--raster", nargs="*", default=None)
     args = ap.parse_args()
 
-    rasters = args.raster or sorted(glob.glob(os.path.join(OUTPUT_DIR, "eudr_deforestation_10prov-*.tif")))
+    rasters = args.raster or default_rasters()
     rasters = [r for r in rasters if os.path.exists(r)]
     if not rasters:
         print("No raster shards found.")
