@@ -24,6 +24,7 @@ from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
 from config import OUTPUT_DIR, H3_RESOLUTION, get_territory
+from parquet_io import write_h3_parquet
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HEXAGONS_PATH = os.path.join(OUTPUT_DIR, "hexagons-lite.geojson")
@@ -140,7 +141,7 @@ def main():
                 continue
 
     df = pd.DataFrame(results)
-    df.to_parquet(args.output, index=False)
+    write_h3_parquet(df, args.output)
 
     elapsed = time.time() - t0
     size_kb = os.path.getsize(args.output) / 1024

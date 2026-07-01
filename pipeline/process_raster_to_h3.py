@@ -29,6 +29,7 @@ from shapely.geometry import shape
 import duckdb
 
 from config import OUTPUT_DIR, H3_RESOLUTION, get_territory
+from parquet_io import write_h3_parquet
 from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, score_with_goalposts
 
 HEXAGONS_PATH = os.path.join(OUTPUT_DIR, "hexagons-lite.geojson")
@@ -351,7 +352,7 @@ def process_analysis(analysis_id, raster_path, hexgrid_features, output_path,
     out_cols = ['h3index', 'score'] + [c[1] for c in components]
     result = df[out_cols].dropna(subset=['score'])
 
-    result.to_parquet(output_path, index=False)
+    write_h3_parquet(result, output_path)
     elapsed = time.time() - t0
     size_kb = os.path.getsize(output_path) / 1024
 

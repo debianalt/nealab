@@ -22,6 +22,7 @@ import time
 import pandas as pd
 
 from config import OUTPUT_DIR
+from parquet_io import write_h3_parquet
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DPTO_OUTPUT_DIR = os.path.join(OUTPUT_DIR, "sat_dpto")
@@ -158,7 +159,7 @@ def main():
 
             safe_name = safe_filename(dpto)
             out_path = os.path.join(DPTO_OUTPUT_DIR, f"sat_{analysis_id}_{safe_name}.parquet")
-            hex_data.to_parquet(out_path, index=False)
+            write_h3_parquet(hex_data, out_path)
 
             # Centroid
             lats, lngs = [], []

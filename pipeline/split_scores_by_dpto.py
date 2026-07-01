@@ -31,6 +31,7 @@ from shapely.ops import unary_union
 from shapely.prepared import prep
 
 from config import OUTPUT_DIR, get_territory
+from parquet_io import write_h3_parquet
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SRC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "src", "lib", "data")
@@ -188,7 +189,7 @@ def split_and_save(scores: pd.DataFrame, admin_col: str, output_dir: str,
 
         safe_name = safe_filename(unit)
         parquet_path = os.path.join(output_dir, f"overture_scores_{safe_name}.parquet")
-        hex_data.to_parquet(parquet_path, index=False)
+        write_h3_parquet(hex_data, parquet_path)
         size_kb = os.path.getsize(parquet_path) / 1024
 
         lats, lngs = [], []

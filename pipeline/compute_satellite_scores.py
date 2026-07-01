@@ -37,6 +37,7 @@ import numpy as np
 import pandas as pd
 
 from config import OUTPUT_DIR
+from parquet_io import write_h3_parquet
 from scoring import (
     geometric_mean_score,
     run_full_diagnostics,
@@ -776,7 +777,7 @@ def main():
                 goalposts=goalposts,
             )
             out_path = os.path.join(output_dir, f"sat_{aid}.parquet")
-            result.to_parquet(out_path, index=False)
+            write_h3_parquet(result, out_path)
             size_kb = os.path.getsize(out_path) / 1024
             print(f"    Output: {out_path} ({size_kb:.0f} KB)")
             results[aid] = len(result)

@@ -68,7 +68,7 @@ def _run_wrangler_upload(local_path: str, r2_key: str) -> bool:
     result = subprocess.run(
         ["npx", "wrangler", "r2", "object", "put",
          f"{R2_BUCKET}/{r2_key}", "--file", local_path, "--remote",
-         "--cache-control", "public, max-age=86400, immutable"],
+         "--cache-control", "public, max-age=31536000, immutable"],
         capture_output=True,
         shell=True,
         encoding="utf-8",
