@@ -1,4 +1,4 @@
-const R2_PROD = 'https://pub-580c676bec7f4eeb96d7d30559a3cab7.r2.dev';
+const R2_PROD = 'https://cdn.spatia.ar';
 
 function getBase(): string {
 	return R2_PROD;

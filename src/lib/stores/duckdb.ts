@@ -15,7 +15,7 @@ const INIT_TIMEOUT_MS = 20_000;
 // for these users (the app's parquet queries already go there). WASM is uploaded gzipped
 // with Content-Encoding so the wire size matches jsDelivr (~8 MB). mvp + eh only — the
 // coi/pthread bundle needs COOP/COEP headers we don't set.
-const R2_DUCKDB = 'https://pub-580c676bec7f4eeb96d7d30559a3cab7.r2.dev/data/duckdb/v1_32_0';
+const R2_DUCKDB = 'https://cdn.spatia.ar/data/duckdb/v1_32_0';
 const R2_BUNDLES = {
 	mvp: { mainModule: `${R2_DUCKDB}/duckdb-mvp.wasm`, mainWorker: `${R2_DUCKDB}/duckdb-browser-mvp.worker.js` },
 	eh: { mainModule: `${R2_DUCKDB}/duckdb-eh.wasm`, mainWorker: `${R2_DUCKDB}/duckdb-browser-eh.worker.js` },

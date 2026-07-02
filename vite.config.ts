@@ -19,7 +19,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/r2': {
-				target: 'https://pub-580c676bec7f4eeb96d7d30559a3cab7.r2.dev',
+				target: 'https://cdn.spatia.ar',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/r2/, '')
 			},
