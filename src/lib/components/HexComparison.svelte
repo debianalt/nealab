@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import PetalChart from './PetalChart.svelte';
+	import { ANALYSIS_REGISTRY } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
 
@@ -65,6 +66,12 @@
 	const isPercentileLayer = $derived(
 		componentVars.length > 0 && componentVars.every(v => v.unit === 'percentil')
 	);
+	// Goalpost-normalized layers show absolute /100 values (frozen regional bounds) —
+	// the opposite reading to the petal (relative to territory avg). Note disambiguates.
+	const isGoalpostLayer = $derived(
+		componentVars.some(v => v.unit === '/100')
+		&& ANALYSIS_REGISTRY.some(a => a.id === layer?.id && a.comparable)
+	);
 	// Only show the classification chip for layers whose K-means typology is
 	// meaningful (declare a type_label variable in config). Layers where it doesn't
 	// work were stripped of the variable, so the parquet's residual type_label
@@ -119,7 +126,7 @@
 	{#if petalLayers.length > 0 && petalLabels.length >= 3 && showPetals}
 		<PetalChart layers={petalLayers} labels={petalLabels} size={340} />
 		<div class="hc-ref-note">
-			<span class="hc-ref-dash"></span> 50 = {i18n.t(adminAvgKey)}
+			<span class="hc-ref-dash"></span> {i18n.t('hex.petalRelative')} 50 = {i18n.t(adminAvgKey)}
 		</div>
 	{/if}
 
@@ -156,6 +163,9 @@
 		{/each}
 		{#if isPercentileLayer}
 			<div class="cd-note">{i18n.t('hex.percentileNote')}</div>
+		{/if}
+		{#if isGoalpostLayer}
+			<div class="cd-note">{i18n.t('hex.goalpostNote')}</div>
 		{/if}
 	{/if}
 
