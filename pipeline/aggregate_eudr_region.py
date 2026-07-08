@@ -27,7 +27,7 @@ import h3
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_eudr import OUTPUT_DIR
-from aggregate_eudr_hires import BANDS, post_process, default_rasters
+from aggregate_eudr_hires import BANDS, LOSS_YEAR_CODES, post_process, default_rasters
 
 
 def aggregate_geom(srcs, geom, province_label, res):
@@ -62,10 +62,10 @@ def aggregate_geom(srcs, geom, province_label, res):
             band = np.nan_to_num(band, nan=0.0)
         data[name] = band
 
-    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..24=2024)
+    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..)
     if "loss_year" in BANDS and BANDS["loss_year"] <= nbands:
         ly = stack[BANDS["loss_year"] - 1][valid]
-        for y in (21, 22, 23, 24):
+        for y in LOSS_YEAR_CODES:
             data[f"loss_y{2000 + y}"] = (ly == y).astype("float32")
 
     df = pd.DataFrame(data)

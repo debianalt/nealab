@@ -3,7 +3,7 @@ Export EUDR deforestation rasters from Google Earth Engine.
 
 Bands exported:
   1. treecover_2000   — Hansen treecover2000 (0-100%)
-  2. loss_year        — Hansen lossyear (0=no loss, 1=2001 ... 24=2024)
+  2. loss_year        — Hansen lossyear (0=no loss, 1=2001 ... 25=2025)
   3. loss_post_2020   — Binary mask: lossyear >= 21 (i.e. 2021+)
   4. treecover_current — treecover2000 minus cumulative loss proxy
   5. fire_post_2020   — MODIS MCD64A1 burned area fraction post-2020
@@ -30,6 +30,8 @@ from config_eudr import (
     EUDR_CUTOFF_YEAR,
     EXPORT_SCALE,
     DRIVE_FOLDER,
+    HANSEN_ASSET,
+    HANSEN_MAX_YEAR,
 )
 
 
@@ -58,21 +60,22 @@ def build_eudr_deforestation(bbox):
     """
     Build a multi-band image with EUDR-relevant deforestation metrics.
 
-    Uses Hansen Global Forest Change 2024 v1.12 (30m resolution, Landsat)
-    and MODIS MCD64A1 burned area (500m, monthly).
+    Uses Hansen Global Forest Change (30m resolution, Landsat; asset/vintage
+    from config_eudr.HANSEN_ASSET) and MODIS MCD64A1 burned area (500m, monthly).
     """
-    hansen = ee.Image("UMD/hansen/global_forest_change_2024_v1_12")
+    hansen = ee.Image(HANSEN_ASSET)
 
     # Band 1: Tree cover in year 2000 (0-100%)
     treecover_2000 = hansen.select("treecover2000")
 
-    # Band 2: Year of loss (1-24 where 1=2001, 24=2024; 0=no loss)
+    # Band 2: Year of loss (1=2001 ... HANSEN_MAX_YEAR-2000; 0=no loss)
     loss_year = hansen.select("lossyear").unmask(0)
 
     # Band 3: Binary — loss after EUDR cutoff (2020)
     # lossyear 21 = 2021, 22 = 2022, etc.
     cutoff_code = EUDR_CUTOFF_YEAR - 2000  # 20
-    loss_post_2020 = loss_year.gt(cutoff_code).And(loss_year.lte(24))
+    max_code = HANSEN_MAX_YEAR - 2000
+    loss_post_2020 = loss_year.gt(cutoff_code).And(loss_year.lte(max_code))
 
     # Band 4: Approximate current tree cover
     # treecover2000 minus pixels where loss occurred (binary loss mask)
@@ -81,10 +84,13 @@ def build_eudr_deforestation(bbox):
         ee.Image(1).subtract(total_loss_mask)
     )
 
-    # Band 5: Fire post-2020 (MODIS burned area)
+    # Band 5: Fire post-2020 (MODIS burned area). End date is "today" so the
+    # monthly CI refresh actually picks up new MODIS months (MCD64A1 lags ~1-2
+    # months; a fixed end date silently froze the fire signal).
+    fire_end = time.strftime("%Y-%m-%d")
     fire_post_2020 = (
         ee.ImageCollection("MODIS/061/MCD64A1")
-        .filterDate("2021-01-01", "2025-01-01")
+        .filterDate("2021-01-01", fire_end)
         .filterBounds(bbox)
         .select("BurnDate")
         .map(lambda img: img.gt(0).unmask(0))

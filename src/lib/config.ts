@@ -129,11 +129,18 @@ export function getReportUrl(analysisId: string, parquetKey: string, territoryPr
 	return `${getBase()}/data/${territoryPrefix}reports/sat_${analysisId}_${parquetKey}.pdf`;
 }
 
+// EUDR refresh manifest — written by pipeline/combine_eudr_parquets.py on each
+// monthly CI run ({refreshed, hansen_version, vintage, units}). Daily cache-buster:
+// the manifest must track the refresh, not sit in the edge cache.
+export function getEudrMetaUrl(): string {
+	return `${getBase()}/data/eudr/meta.json?d=${new Date().toISOString().slice(0, 10)}`;
+}
+
 // EUDR hi-res (res-9) deforestation grid — single combined parquet, sorted by
 // h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
-// v=2: monthly CI refresh wired (eudr-update.yml re-aggregates AR+PY+BR = 31 units).
+// v=3: Hansen v1.13 (loss through 2025, adds loss_2025_pct) + ZSTD compression.
 export function getEudrHiresUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=2`;
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=3`;
 }
 
 // Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
@@ -141,14 +148,14 @@ export function getEudrHiresUrl(): string {
 // mislabels as deforestation. AR-only for now (MapBiomas AR Collection 1);
 // PY/BR have no usable plantation class → those hexes are simply absent (sin dato).
 export function getEudrPlantationUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=2`;
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=3`;
 }
 
 // res-7 plantation (matches the main-map EUDR layer's res-7 grid) — used to show
 // the plantation/native breakdown when an admin-2 unit is selected on the main map.
 // v=2: split bosque (clase 3) vs monte/sabana (clase 4+6) + 4 NEA provincias.
 export function getEudrPlantationRes7Url(): string {
-	return `${getBase()}/data/eudr/hires/eudr_plantation_res7.parquet?v=2`;
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res7.parquet?v=3`;
 }
 
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
@@ -1463,7 +1470,8 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
 	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
-	eudr_deforestation: { dataDate: 'Hansen GFC v1.12 + MODIS MCD64A1 (cutoff 31/12/2020)', processedDate: '27/03/2026', sourceKey: 'data.source.satellite' },
+	// EUDR: fecha real de refresh viene de data/eudr/meta.json (getEudrMetaUrl) — esto es fallback.
+	eudr_deforestation: { dataDate: 'Hansen GFC v1.13 + MODIS MCD64A1 (cutoff 31/12/2020)', processedDate: '08/07/2026', sourceKey: 'data.source.satellite' },
 };
 
 // ── EUDR Configuration ──────────────────────────────────────────────────
@@ -1477,12 +1485,8 @@ export const MAP_EUDR = {
 const R2_EUDR_BASE = `${R2_PROD}/data/eudr`;
 
 export function getEudrParquetUrl(name: string): string {
-	// v=25: monthly CI refresh wired (res-7 layer re-aggregated + re-uploaded).
-	return `${R2_EUDR_BASE}/${name}.parquet?v=25`;
-}
-
-export function getEudrProvinceParquetUrl(province: string): string {
-	return `${R2_EUDR_BASE}/by_province/eudr_${province}.parquet?v=20`;
+	// v=26: Hansen v1.13 (loss through 2025) + ZSTD.
+	return `${R2_EUDR_BASE}/${name}.parquet?v=26`;
 }
 
 export const EUDR_RISK_COLORS = {

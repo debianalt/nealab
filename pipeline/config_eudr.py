@@ -35,6 +35,15 @@ H3_EUDR_RESOLUTION = 7  # ~5.16 km2 per hex, ~112K hexagons for 4 provinces
 EUDR_CUTOFF_YEAR = 2020  # Deforestation after 31 Dec 2020 is non-compliant
 EUDR_COMMODITIES = ["soya", "cattle", "wood"]
 
+# ── Hansen GFC vintage ───────────────────────────────────────────────────
+# Bump these three on each annual Hansen release. Frontend texts that cite the
+# version live in src/routes/eudr/check/+page.svelte and
+# src/lib/content/methodology.ts; the served vintage comes from eudr_meta.json
+# written by combine_eudr_parquets.py.
+HANSEN_ASSET = "UMD/hansen/global_forest_change_2025_v1_13"
+HANSEN_VERSION = "v1.13"
+HANSEN_MAX_YEAR = 2025   # last loss year in the asset (lossyear code 25)
+
 # ── GEE Export ───────────────────────────────────────────────────────────
 EXPORT_SCALE = 100       # metres per pixel (Hansen native 30m, 100m for efficiency)
 DRIVE_FOLDER = "spatia-eudr"

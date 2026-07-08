@@ -41,26 +41,8 @@ jobs:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
-      - name: Import to D1
-        # Requires CLOUDFLARE_API_TOKEN with D1:Edit permission.
-        # If this step fails, update the token at Cloudflare Dashboard → API Tokens.
-        # `set +e` plus explicit `exit 0` guarantees the step never fails the job —
-        # `continue-on-error: true` alone is insufficient: wrangler's exit code 1
-        # surfaces in the run conclusion even with it set.
-        run: |
-          set +e
-          python db/import_eudr.py
-          if [ -f db/seed_eudr.sql ]; then
-            npx wrangler d1 execute spatia-db --remote --file db/seed_eudr.sql
-            if [ $? -ne 0 ]; then
-              echo "::warning::D1 import failed — CLOUDFLARE_API_TOKEN needs D1 Edit permission"
-            fi
-          else
-            echo "::warning::seed_eudr.sql not produced, skipping D1 import"
-          fi
-          exit 0
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      # "Import to D1" step removed 2026-07-08: it only fed /api/eudr/check,
+      # which is deprecated (410) — the UI queries the res-9 parquets directly.
 
       - name: Refresh res-9 hires + lossyear (AR + PY + BR if cached)
         # Re-aggregates AR & PY from the freshly-downloaded raster shards with
@@ -115,6 +97,7 @@ jobs:
           python pipeline/combine_eudr_parquets.py
           npx wrangler r2 object put neahub/data/eudr/hires/eudr_res9_combined.parquet --file pipeline/output/eudr/hires/eudr_res9_combined.parquet --remote
           npx wrangler r2 object put neahub/data/eudr/eudr_deforestation.parquet --file pipeline/output/eudr/eudr_deforestation.parquet --remote
+          npx wrangler r2 object put neahub/data/eudr/meta.json --file pipeline/output/eudr/eudr_meta.json --remote
         env:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

@@ -38,10 +38,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config_eudr import (
     OUTPUT_DIR,
     EUDR_PROVINCES,
+    HANSEN_MAX_YEAR,
     WEIGHT_LOSS_POST_2020,
     WEIGHT_FIRE_POST_2020,
     WEIGHT_NO_FOREST_2020,
 )
+
+# Post-cutoff Hansen lossyear codes (21=2021 .. HANSEN_MAX_YEAR-2000) and the
+# calendar years they map to — shared with aggregate_eudr_region.py.
+LOSS_YEAR_CODES = tuple(range(21, HANSEN_MAX_YEAR - 2000 + 1))
+LOSS_YEARS = tuple(range(2021, HANSEN_MAX_YEAR + 1))
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOUNDARY_PATH = os.path.join(
@@ -136,10 +142,10 @@ def aggregate(raster_paths, province_id, res):
             band = np.nan_to_num(band, nan=0.0)
         data[name] = band
 
-    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..24=2024)
+    # Per-year post-cutoff loss masks (Hansen lossyear: 21=2021..)
     if "loss_year" in BANDS and BANDS["loss_year"] <= nbands:
         ly = stack[BANDS["loss_year"] - 1][valid]
-        for y in (21, 22, 23, 24):
+        for y in LOSS_YEAR_CODES:
             data[f"loss_y{2000 + y}"] = (ly == y).astype("float32")
 
     df = pd.DataFrame(data)
@@ -172,7 +178,7 @@ def post_process(df):
 
     # Per-year post-2020 loss as percentages (for the temporal curve)
     year_cols = []
-    for y in (2021, 2022, 2023, 2024):
+    for y in LOSS_YEARS:
         src = f"loss_y{y}"
         out = f"loss_{y}_pct"
         if src in df.columns:

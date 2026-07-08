@@ -1,14 +1,39 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import EudrMap from '$lib/components/EudrMap.svelte';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
-	import { getEudrHiresUrl, getEudrPlantationUrl } from '$lib/config';
+	import { getEudrHiresUrl, getEudrPlantationUrl, getEudrMetaUrl } from '$lib/config';
 	import { latLngToCell, polygonToCells } from 'h3-js';
 
 	const EUDR_RES = 9;
-	const DATA_VINTAGE = '2024-12-31';
+	// Hansen loss years present in the parquets (bump with HANSEN_MAX_YEAR in
+	// pipeline/config_eudr.py — the columns must exist in eudr_res9_combined).
+	const LOSS_YEARS = [2021, 2022, 2023, 2024, 2025];
+	const YEAR_SLOT = 200 / LOSS_YEARS.length; // svg viewBox is 200 wide
+	const LOSS_YEAR_COLS = LOSS_YEARS.map((y) => `e.loss_${y}_pct`).join(', ');
 	const HEX_AREA_HA = 10.5; // res-9 hexagon ≈ 0.105 km² = 10.5 ha
 	const MAX_POLY_CELLS = 9500; // ~100k ha cap for interactive analysis
+
+	// Vintage/refresh metadata — fallbacks overwritten by data/eudr/meta.json,
+	// which the monthly CI refresh rewrites (keeps the UI honest without deploys).
+	let dataVintage = $state('2025-12-31');
+	let hansenVersion = $state('v1.13');
+	let dataRefreshed = $state('');
+
+	onMount(async () => {
+		try {
+			const r = await fetch(getEudrMetaUrl());
+			if (r.ok) {
+				const m = await r.json();
+				if (m.vintage) dataVintage = m.vintage;
+				if (m.hansen_version) hansenVersion = m.hansen_version;
+				if (m.refreshed) dataRefreshed = m.refreshed;
+			}
+		} catch {
+			// keep fallbacks
+		}
+	});
 
 	let mapComponent: EudrMap;
 
@@ -203,7 +228,7 @@
 					loss_post_2020_pct: null, fire_post_2020_pct: null,
 					risk_score: null, risk_level: 'outside_coverage',
 					deforestation_post_2020: false, eudr_assessment: 'OUTSIDE_COVERAGE',
-					data_vintage: DATA_VINTAGE,
+					data_vintage: dataVintage,
 				};
 				return;
 			}
@@ -212,7 +237,7 @@
 			const score = r.risk_score === null ? null : Number(r.risk_score);
 			const deforested = Number(r.deforestation_post_2020) > 0;
 			const byYear: Record<number, number> = {};
-			for (const y of [2021, 2022, 2023, 2024]) {
+			for (const y of LOSS_YEARS) {
 				const v = r[`loss_${y}_pct`];
 				byYear[y] = v == null ? 0 : Number(v);
 			}
@@ -227,7 +252,7 @@
 				risk_level: riskLevel(score),
 				deforestation_post_2020: deforested,
 				eudr_assessment: assessment(deforested, score),
-				data_vintage: DATA_VINTAGE,
+				data_vintage: dataVintage,
 				loss_by_year: byYear,
 				plantation_pct: r.plantation_pct == null ? null : Number(r.plantation_pct),
 				native_forest_pct: r.native_forest_pct == null ? null : Number(r.native_forest_pct),
@@ -302,7 +327,7 @@
 			await initDuckDB();
 			const inList = cells.map((c) => `'${c}'`).join(',');
 			const sql = `SELECT e.h3index, e.province, e.risk_score, e.loss_post_2020_pct, e.deforestation_post_2020,
-				e.loss_2021_pct, e.loss_2022_pct, e.loss_2023_pct, e.loss_2024_pct,
+				${LOSS_YEAR_COLS},
 				p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
@@ -339,7 +364,7 @@
 			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
 			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
 			const lossByYear: Record<number, number> = {};
-			for (const y of [2021, 2022, 2023, 2024]) {
+			for (const y of LOSS_YEARS) {
 				const sum = rows.reduce((s, r) => s + (Number(r[`loss_${y}_pct`]) || 0), 0);
 				lossByYear[y] = inCov ? sum / inCov : 0;
 			}
@@ -413,7 +438,7 @@
 			const inList = uniqueCells.map((c) => `'${c}'`).join(',');
 			const sql = `SELECT e.h3index, e.province, e.forest_cover_2020, e.forest_cover_current,
 				e.loss_post_2020_pct, e.fire_post_2020_pct, e.risk_score, e.deforestation_post_2020,
-				e.loss_2021_pct, e.loss_2022_pct, e.loss_2023_pct, e.loss_2024_pct, p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
+				${LOSS_YEAR_COLS}, p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
 				WHERE e.h3index IN (${inList}) AND e.province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`;
@@ -426,7 +451,7 @@
 				'forest_cover_2020', 'forest_cover_current',
 				'loss_post_2020_pct', 'fire_post_2020_pct', 'risk_score',
 				'deforestation_post_2020', 'eudr_assessment',
-				'loss_2021_pct', 'loss_2022_pct', 'loss_2023_pct', 'loss_2024_pct',
+				...LOSS_YEARS.map((y) => `loss_${y}_pct`),
 				'plantation_pct', 'loss_context',
 			];
 			const csv = [outHeaders.join(',')];
@@ -439,7 +464,7 @@
 				const d = byCell.get(r.cell);
 				if (!d) {
 					outside++;
-					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', '', '', '', '', '', ''].map(esc).join(','));
+					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', ...LOSS_YEARS.map(() => ''), '', ''].map(esc).join(','));
 					continue;
 				}
 				const score = d.risk_score === null ? null : Number(d.risk_score);
@@ -464,7 +489,7 @@
 					d.province ?? '', d.forest_cover_2020 ?? '', d.forest_cover_current ?? '',
 					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '', score ?? '',
 					def ? 1 : 0, assessment(def, score),
-					d.loss_2021_pct ?? '', d.loss_2022_pct ?? '', d.loss_2023_pct ?? '', d.loss_2024_pct ?? '',
+					...LOSS_YEARS.map((y) => d[`loss_${y}_pct`] ?? ''),
 					plant ?? '', lossCtx,
 				].map(esc).join(','));
 			}
@@ -535,13 +560,13 @@
 			`Riesgo máximo (0-100): ${r.max_risk.toFixed(0)}`,
 			`Riesgo medio (0-100): ${r.mean_risk.toFixed(1)}`,
 			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
-			`Pérdida 2021/22/23/24: ${yr(2021)}% / ${yr(2022)}% / ${yr(2023)}% / ${yr(2024)}%`,
+			`Pérdida anual ${LOSS_YEARS[0]}–${LOSS_YEARS[LOSS_YEARS.length - 1]}: ${LOSS_YEARS.map((y) => `${yr(y)}%`).join(' / ')}`,
 			r.plantation_data_cells > 0
 				? `Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea: ${r.deforested_harvest} sobre plantación forestal · ${r.deforested_forest} sobre bosque (formación forestal) · ${r.deforested_savanna} sobre monte/sabana nativa · ${r.deforested_other} sobre otra cobertura (agro/pasturas/mosaico) · ${r.deforested_conversion} eran bosque en 2020 y hoy figuran como plantación (posible conversión, a verificar). Señal indicativa — no determina causa de la pérdida ni cumplimiento EUDR.`
 				: 'Plantación vs nativo: SIN dato de plantación para esta zona (Paraguay/Brasil — MapBiomas no clasifica silvicultura). La pérdida no pudo distinguirse entre cosecha de plantación y deforestación de bosque nativo; si hay forestación, posible falso positivo (verificar en terreno o catastro).',
 			'',
 			'-- METODOLOGÍA --',
-			'Hansen GFC v1.12 + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m.',
+			`Hansen GFC ${hansenVersion} + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m. Datos al ${dataVintage}.`,
 			'Score 0-100 = 70% pérdida post-2020 + 20% fuego post-2020 + 10% pérdida previa.',
 			'Plantación vs bosque nativo: MapBiomas Argentina Col.1 (clase 9 = silvicultura).',
 			'',
@@ -681,7 +706,7 @@
 		<ul class="eudr-gate-points">
 			<li>
 				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
-				Análisis satelital de pérdida forestal post-2020 (Hansen GFC v1.12 + MODIS de área quemada)
+				Análisis satelital de pérdida forestal post-2020 (Hansen GFC {hansenVersion} + MODIS de área quemada)
 				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino
 				(Misiones, Corrientes, Chaco y Formosa), departamentos paraguayos y estados del sur de Brasil. Sirve para
 				screening de riesgo EUDR, due-diligence preliminar y soporte técnico de informes.
@@ -969,14 +994,14 @@
 						<div class="mb-4">
 							<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.loss_by_year')}</div>
 							<svg viewBox="0 0 200 64" class="w-full" preserveAspectRatio="none">
-								{#each [2021, 2022, 2023, 2024] as y, i}
+								{#each LOSS_YEARS as y, i}
 									{@const v = result.loss_by_year?.[y] || 0}
-									{@const maxV = Math.max(result.loss_by_year?.[2021] || 0, result.loss_by_year?.[2022] || 0, result.loss_by_year?.[2023] || 0, result.loss_by_year?.[2024] || 0, 0.01)}
+									{@const maxV = Math.max(...LOSS_YEARS.map((yy) => result?.loss_by_year?.[yy] || 0), 0.01)}
 									{@const h = (v / maxV) * 38}
-									<rect x={i * 50 + 8} y={50 - h} width="34" height={h} fill={yearBarColor(v)} rx="2"/>
-									<text x={i * 50 + 25} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
+									<rect x={i * YEAR_SLOT + 5} y={50 - h} width={YEAR_SLOT - 10} height={h} fill={yearBarColor(v)} rx="2"/>
+									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
 									{#if v > 0.01}
-										<text x={i * 50 + 25} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
+										<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
 									{/if}
 								{/each}
 							</svg>
@@ -1003,7 +1028,13 @@
 					{#if result.data_vintage}
 						<div class="mt-3 flex justify-between text-[11px] text-white/50">
 							<span>{i18n.t('eudr.check.vintage')}</span>
-							<span class="text-white/70">Hansen GFC · {result.data_vintage}</span>
+							<span class="text-white/70">Hansen GFC {hansenVersion} · {result.data_vintage}</span>
+						</div>
+					{/if}
+					{#if dataRefreshed}
+						<div class="mt-1 flex justify-between text-[11px] text-white/50">
+							<span>{i18n.t('eudr.check.refreshed')}</span>
+							<span class="text-white/70">{dataRefreshed}</span>
 						</div>
 					{/if}
 
@@ -1077,14 +1108,14 @@
 						<div class="mb-4">
 							<div class="text-[10px] text-white/40 uppercase mb-2">{i18n.t('eudr.check.loss_by_year')}</div>
 							<svg viewBox="0 0 200 64" class="w-full" preserveAspectRatio="none">
-								{#each [2021, 2022, 2023, 2024] as y, i}
+								{#each LOSS_YEARS as y, i}
 									{@const v = polygonResult.loss_by_year[y] || 0}
-									{@const maxV = Math.max(polygonResult.loss_by_year[2021] || 0, polygonResult.loss_by_year[2022] || 0, polygonResult.loss_by_year[2023] || 0, polygonResult.loss_by_year[2024] || 0, 0.01)}
+									{@const maxV = Math.max(...LOSS_YEARS.map((yy) => polygonResult?.loss_by_year?.[yy] || 0), 0.01)}
 									{@const h = (v / maxV) * 38}
-									<rect x={i * 50 + 8} y={50 - h} width="34" height={h} fill={yearBarColor(v)} rx="2"/>
-									<text x={i * 50 + 25} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
+									<rect x={i * YEAR_SLOT + 5} y={50 - h} width={YEAR_SLOT - 10} height={h} fill={yearBarColor(v)} rx="2"/>
+									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">{y}</text>
 									{#if v > 0.01}
-										<text x={i * 50 + 25} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
+										<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="JetBrains Mono">{v.toFixed(2)}%</text>
 									{/if}
 								{/each}
 							</svg>
