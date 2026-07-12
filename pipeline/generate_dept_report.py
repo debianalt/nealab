@@ -384,10 +384,12 @@ def generate_report(analysis_id, dept_name, dept_df, prov_df, summary, output_pa
 
         # Box plot comparison
         ax_box = fig.add_axes([0.12, 0.28, 0.76, 0.18])
-        bp = ax_box.boxplot([scores, prov_scores], vert=False, labels=[dept_name, 'Provincia'],
+        bp = ax_box.boxplot([scores, prov_scores], vert=False,
                            widths=0.6, patch_artist=True,
                            boxprops=dict(facecolor='#e0e0e0', edgecolor='#666666'),
                            medianprops=dict(color='#000000', linewidth=2))
+        # labels= removed in matplotlib 3.11; set_yticklabels works on all versions
+        ax_box.set_yticklabels([dept_name, 'Provincia'])
         ax_box.set_xlabel('Score')
         ax_box.set_title('Comparación de distribución')
 

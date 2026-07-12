@@ -44,6 +44,24 @@ def _safe_annual_mean(collection_id, band, bbox, date_start, date_end):
     return ee.Image(ee.Algorithms.If(size.gt(0), col.mean(), fallback.mean()))
 
 
+def _shift_year(d):
+    """'2026-01-01' -> '2025-01-01' (Feb 29 -> Feb 28)."""
+    rest = d[5:] if d[5:] != '02-29' else '02-28'
+    return f"{int(d[:4]) - 1}-{rest}"
+
+
+def _safe_collection(collection_id, bbox, date_start, date_end):
+    """Collection filtered to the window; if empty (annual product lag or
+    MODIS sunset), fall back to the same window one year earlier —
+    seasonally aligned, same product."""
+    col = (ee.ImageCollection(collection_id)
+           .filterDate(date_start, date_end).filterBounds(bbox))
+    fb = (ee.ImageCollection(collection_id)
+          .filterDate(_shift_year(date_start), _shift_year(date_end))
+          .filterBounds(bbox))
+    return ee.ImageCollection(ee.Algorithms.If(col.size().gt(0), col, fb))
+
+
 def authenticate():
     """Authenticate to GEE — service account in CI, user credentials locally."""
     key_env = os.environ.get("GEE_SERVICE_ACCOUNT_KEY", "")
@@ -68,13 +86,11 @@ def authenticate():
 
 def dynamic_environmental_risk(bbox, date_start, date_end):
     """Dynamic: fire frequency + thermal amplitude."""
-    fire = (ee.ImageCollection('MODIS/061/MCD64A1')
-            .filterDate(date_start, date_end).filterBounds(bbox)
+    fire = (_safe_collection('MODIS/061/MCD64A1', bbox, date_start, date_end)
             .select('BurnDate').map(lambda img: img.gt(0).unmask(0))
             .mean())
 
-    lst_col = (ee.ImageCollection('MODIS/061/MOD11A2')
-               .filterDate(date_start, date_end).filterBounds(bbox))
+    lst_col = _safe_collection('MODIS/061/MOD11A2', bbox, date_start, date_end)
     lst_day = lst_col.select('LST_Day_1km').mean().multiply(0.02).subtract(273.15).unmask(0)
     lst_night = lst_col.select('LST_Night_1km').mean().multiply(0.02).subtract(273.15).unmask(0)
     thermal_amp = lst_day.subtract(lst_night).max(0)
@@ -86,8 +102,7 @@ def dynamic_environmental_risk(bbox, date_start, date_end):
 
 def dynamic_climate_comfort(bbox, date_start, date_end):
     """Dynamic: all 5 components are temporal."""
-    lst_col = (ee.ImageCollection('MODIS/061/MOD11A2')
-               .filterDate(date_start, date_end).filterBounds(bbox))
+    lst_col = _safe_collection('MODIS/061/MOD11A2', bbox, date_start, date_end)
     heat_day = lst_col.select('LST_Day_1km').mean().multiply(0.02).subtract(273.15)
     heat_night = lst_col.select('LST_Night_1km').mean().multiply(0.02).subtract(273.15)
 
@@ -107,8 +122,7 @@ def dynamic_climate_comfort(bbox, date_start, date_end):
         lambda img: img.lt(273.15).unmask(0)
     ).sum().divide(n_years)
 
-    et_col = (ee.ImageCollection('MODIS/061/MOD16A2GF')
-              .filterDate(date_start, date_end).filterBounds(bbox))
+    et_col = _safe_collection('MODIS/061/MOD16A2GF', bbox, date_start, date_end)
     et = et_col.select('ET').mean().multiply(0.1)
     pet = et_col.select('PET').mean().multiply(0.1)
     et_pet = et.divide(pet.max(1))
