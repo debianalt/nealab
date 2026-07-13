@@ -4,9 +4,11 @@ name: Update Temporal Baselines (Alto Paraná)
 # Note: environmental_risk temporal baseline is 100% nodata for AP and is
 # skipped gracefully (env_risk is non-temporal across all territories).
 
+# Schedule disabled 2026-07-12: environmental_risk/climate_comfort left the
+# catalog in the 2026-05-31 cleanup — no UI consumes these parquets.
+# Manual-only (like Misiones); re-enable the cron if a temporal-compatible
+# analysis returns to the catalog.
 on:
-  schedule:
-    - cron: '0 8 21 * *'  # 21st of each month, 08:00 UTC (offset from Itapúa 07:00/20th)
   workflow_dispatch:
     inputs:
       analyses:
