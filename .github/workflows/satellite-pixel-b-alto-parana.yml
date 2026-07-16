@@ -1,5 +1,5 @@
 name: Update Satellite Analyses (Alto Paraná — Group B)
-# change_pressure + agri_potential + forest_health for Alto Paraná (PY)
+# agri_potential (change_pressure + forest_health were pruned 31-may — dead layers) for Alto Paraná (PY)
 
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
     inputs:
       analyses:
         description: 'Comma-separated analysis IDs (default: all group B)'
-        default: 'change_pressure,agri_potential,forest_health'
+        default: 'agri_potential'
 
 jobs:
   update:
@@ -54,7 +54,7 @@ jobs:
         run: |
           python pipeline/run_itapua_pipeline.py \
             --territory alto_parana_py --mode comparable \
-            --only ${{ github.event.inputs.analyses || 'change_pressure,agri_potential,forest_health' }} \
+            --only ${{ github.event.inputs.analyses || 'agri_potential' }} \
             --upload
         env:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}

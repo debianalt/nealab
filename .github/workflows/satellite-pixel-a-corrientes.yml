@@ -1,9 +1,13 @@
 name: Update Satellite Analyses (Corrientes — Group A)
 # environmental_risk + climate_comfort + green_capital for Corrientes (AR)
 
+# DISABLED 2026-07-16: every analysis below was pruned from the catalogue on
+# 31-may (see project_spatia_catalog_2026-05-31) — cut from ANALYSIS_REGISTRY,
+# HEX_LAYER_REGISTRY, methodology and the menu. The frontend cannot render any of
+# them, so these scheduled runs burned GEE quota and CI minutes writing R2 objects
+# nobody can reach. The schedule is removed; workflow_dispatch stays so the job is
+# still reachable by hand if a layer is ever revived. Safe to delete outright.
 on:
-  schedule:
-    - cron: '0 7 8,23 * *'  # 8th and 23rd of each month, 07:00 UTC
   workflow_dispatch:
     inputs:
       analyses:

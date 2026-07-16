@@ -82,9 +82,20 @@ def main():
             break
         print(f"  ...{total_n} objects so far", file=sys.stderr)
 
-    GB = 1024**3
-    MB = 1024**2
-    print(f"\n=== TOTAL: {total_n:,} objects  {total_b/GB:.2f} GB ===\n")
+    # Decimal, not binary: Cloudflare bills R2 in GB = 10^9 and the free tier is 10 GB.
+    # This used to be 1024**3 (a GiB) while still printing "GB", which under-reported by
+    # 7.4% — enough to read 10.01 "GB" while actually sitting at 10.75 GB billable.
+    GB = 1000**3
+    MB = 1000**2
+    FREE_TIER_GB = 10
+    over = total_b / GB - FREE_TIER_GB
+    print(f"\n=== TOTAL: {total_n:,} objects  {total_b/GB:.2f} GB (decimal, as billed) ===")
+    if over > 0:
+        print(f"    {over:.3f} GB over the {FREE_TIER_GB} GB free tier "
+              f"→ ~${over * 0.015:.3f}/month")
+    else:
+        print(f"    {-over:.3f} GB of headroom under the {FREE_TIER_GB} GB free tier")
+    print()
     print("=== by top-level prefix ===")
     for p, (c, b) in sorted(by_prefix.items(), key=lambda x: -x[1][1]):
         print(f"  {p:30s} {c:8,d} obj  {b/GB:7.3f} GB")

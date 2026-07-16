@@ -17,6 +17,10 @@ Output:
 R2 upload (after confirming output looks correct):
   npx wrangler r2 object put neahub/data/tiles/corrientes_buildings.pmtiles \\
     --file pipeline/output/corrientes_buildings.pmtiles --remote
+
+⚠️  STALE TARGET: config.ts:getTilesUrl reads `data/tiles/corrientes_buildings-v4.pmtiles`.
+    The unversioned key above is not fetched by the site, so this upload is a silent
+    no-op. Confirm this build matches what -v4 holds before retargeting the command.
 """
 
 import gzip

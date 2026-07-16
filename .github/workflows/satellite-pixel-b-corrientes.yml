@@ -1,5 +1,5 @@
 name: Update Satellite Analyses (Corrientes — Group B)
-# change_pressure + agri_potential + forest_health for Corrientes (AR)
+# agri_potential (change_pressure + forest_health were pruned 31-may — dead layers) for Corrientes (AR)
 
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
     inputs:
       analyses:
         description: 'Comma-separated analysis IDs (default: all group B)'
-        default: 'change_pressure,agri_potential,forest_health'
+        default: 'agri_potential'
 
 jobs:
   update:
@@ -54,7 +54,7 @@ jobs:
       - name: Run Corrientes pixel pipeline
         run: |
           python pipeline/run_corrientes_pipeline.py \
-            --only ${{ github.event.inputs.analyses || 'change_pressure,agri_potential,forest_health' }} \
+            --only ${{ github.event.inputs.analyses || 'agri_potential' }} \
             --upload
         env:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}

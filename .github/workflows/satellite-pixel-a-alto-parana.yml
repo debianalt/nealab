@@ -1,9 +1,13 @@
 name: Update Satellite Analyses (Alto Paraná — Group A)
 # environmental_risk + climate_comfort + green_capital for Alto Paraná (PY)
 
+# DISABLED 2026-07-16: every analysis below was pruned from the catalogue on
+# 31-may (see project_spatia_catalog_2026-05-31) — cut from ANALYSIS_REGISTRY,
+# HEX_LAYER_REGISTRY, methodology and the menu. The frontend cannot render any of
+# them, so these scheduled runs burned GEE quota and CI minutes writing R2 objects
+# nobody can reach. The schedule is removed; workflow_dispatch stays so the job is
+# still reachable by hand if a layer is ever revived. Safe to delete outright.
 on:
-  schedule:
-    - cron: '0 8 13,28 * *'  # 13th & 28th, 08:00 UTC (offset from Itapúa 07:00)
   workflow_dispatch:
     inputs:
       analyses:

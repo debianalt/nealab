@@ -21,6 +21,11 @@ Output:
 R2 upload (run after confirming output looks correct):
   npx wrangler r2 object put neahub/data/tiles/itapua_buildings.pmtiles \\
     --file pipeline/output/itapua_buildings.pmtiles --remote
+
+⚠️  STALE TARGET: config.ts:getTilesUrl reads `tiles/itapua_buildings-v4.pmtiles` — note
+    both the -v4 suffix AND the absence of the `data/` prefix. The key above matches
+    neither, so this upload is a silent no-op. Confirm this build matches what -v4 holds
+    before retargeting the command.
 """
 
 import argparse

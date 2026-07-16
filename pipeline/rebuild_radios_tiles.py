@@ -14,6 +14,11 @@ Output:
 R2 upload (run after confirming output):
   npx wrangler r2 object put neahub/data/tiles/radios-v3.pmtiles \\
     --file pipeline/output/radios-v3.pmtiles --remote
+
+⚠️  STALE TARGET: config.ts:getTilesUrl reads `data/tiles/radios-v4.pmtiles`. The key
+    above is v3, so running this command uploads to an object the site never fetches —
+    a silent no-op. Do NOT just retarget it to -v4: this script builds v3 content, and
+    v4 was produced elsewhere. Reconcile what v4 actually contains before overwriting it.
 """
 
 import gzip
