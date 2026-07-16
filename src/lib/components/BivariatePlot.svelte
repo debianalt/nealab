@@ -199,11 +199,11 @@
 	<div class="bvpanel">
 	<div class="bvpanel-subheader">
 		{#if brushRect !== null}
-			<span class="bvpanel-count">{selectedCount.toLocaleString()} hex · doble-clic para limpiar</span>
+			<span class="bvpanel-count">{selectedCount.toLocaleString()} {i18n.t('chart.hexDblClick')}</span>
 		{:else if selectedB && allPoints.length > 0}
-			<span class="bvpanel-hint">{allPoints.length.toLocaleString()} pts · arrastrá para seleccionar</span>
+			<span class="bvpanel-hint">{allPoints.length.toLocaleString()} {i18n.t('chart.bivariate.pts')}</span>
 		{:else}
-			<span class="bvpanel-hint">elegí un eje Y abajo</span>
+			<span class="bvpanel-hint">{i18n.t('chart.bivariate.pickY')}</span>
 		{/if}
 	</div>
 
@@ -220,13 +220,13 @@
 	{#if bLoading}
 		<div class="bvpanel-state">cargando…</div>
 	{:else if bError}
-		<div class="bvpanel-state bvpanel-error">error al cargar datos</div>
+		<div class="bvpanel-state bvpanel-error">{i18n.t('chart.loadError')}</div>
 	{:else if !selectedB}
 		<div class="bvpanel-empty-prompt">
-			Seleccioná un segundo análisis en "Eje Y" para explorar correlaciones y seleccionar hexágonos en el mapa.
+			{i18n.t('chart.bivariate.intro')}
 		</div>
 	{:else if selectedB && allPoints.length === 0 && bData.size > 0}
-		<div class="bvpanel-state">sin hexágonos en común</div>
+		<div class="bvpanel-state">{i18n.t('chart.bivariate.noCommon')}</div>
 	{:else if selectedB && allPoints.length > 0}
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<svg

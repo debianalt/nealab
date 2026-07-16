@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { formatDept } from '$lib/utils/format';
 	import ChartFrame from './ChartFrame.svelte';
@@ -195,7 +196,7 @@
 		{:else if loading}
 			<span class="bump-hint">cargando…</span>
 		{:else}
-			<span class="bump-hint">pasá el mouse para explorar</span>
+			<span class="bump-hint">{i18n.t('chart.bump.hint')}</span>
 		{/if}
 	</div>
 
@@ -284,13 +285,13 @@
 			<!-- Bottom axis: rank label -->
 			<text x={PAD_L + plotW / 2} y={SVG_H - 2}
 				text-anchor="middle" fill="rgba(255,255,255,0.18)"
-				font-size="6.5" font-family="system-ui, sans-serif">posición relativa (#1 = mejor)</text>
+				font-size="6.5" font-family="system-ui, sans-serif">{i18n.t('chart.bump.axis')}</text>
 		</svg>
 		<div class="bump-note">
-			#1 = mejor posición siempre · En <em>riesgo/aislamiento</em> (Inund., Amb., Acceso): #1 = menos expuesto · En <em>potencial</em> (resto): #1 = mayor valor
+			{@html i18n.t('chart.bump.note')}
 		</div>
 	{:else if !loading}
-		<div class="bump-state">sin datos comparables disponibles</div>
+		<div class="bump-state">{i18n.t('chart.bump.noData')}</div>
 	{/if}
 	</div>
 </ChartFrame>

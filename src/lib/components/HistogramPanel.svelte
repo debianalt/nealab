@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 
 	let {
@@ -157,9 +158,9 @@
 	<div class="hpanel-subheader">
 		<span class="hpanel-unit">{xLabel} {fmtTick(domain[0])}–{fmtTick(domain[1])}</span>
 		{#if brushLo !== null}
-			<span class="hpanel-count">{selectedCount.toLocaleString()} hex · doble-clic para limpiar</span>
+			<span class="hpanel-count">{selectedCount.toLocaleString()} {i18n.t('chart.hexDblClick')}</span>
 		{:else}
-			<span class="hpanel-hint">arrastrá para seleccionar rango</span>
+			<span class="hpanel-hint">{i18n.t('chart.histogram.dragRange')}</span>
 		{/if}
 	</div>
 	<!-- svelte-ignore a11y_no_static_element_interactions -->

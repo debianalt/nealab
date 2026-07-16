@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 
 	let {
@@ -261,10 +262,10 @@
 			<span class="pc-count">{selectedCount.toLocaleString()} hex</span>
 			<button class="pc-clear-btn" onclick={clearAll}>× limpiar todo</button>
 		{:else if brushes.size > 0}
-			<span class="pc-count">0 hex en intersección</span>
+			<span class="pc-count">{i18n.t('chart.parallel.noIntersection')}</span>
 			<button class="pc-clear-btn" onclick={clearAll}>× limpiar todo</button>
 		{:else if nAxes >= 2 && allPoints.length > 0}
-			<span class="pc-hint">pasá el mouse sobre una variable y arrastrá</span>
+			<span class="pc-hint">{i18n.t('chart.parallel.hint')}</span>
 		{:else}
 			<span class="pc-hint">cargando…</span>
 		{/if}
@@ -370,7 +371,7 @@
 			{/each}
 		</svg>
 		<div class="pc-note">
-			Pasá el mouse sobre una variable y <em>arrastrá para filtrar</em> por rango · El <em>×</em> sobre cada filtro activo lo limpia individualmente · "Limpiar todo" quita todos los filtros
+			{@html i18n.t('chart.parallel.note')}
 		</div>
 	{/if}
 	</div>

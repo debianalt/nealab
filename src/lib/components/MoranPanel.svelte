@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import * as d3 from 'd3';
 	import { gridDisk } from 'h3-js';
 	import ChartFrame from './ChartFrame.svelte';
@@ -339,9 +340,9 @@
 					{/each}
 				</div>
 			{:else if data.size > 0}
-				<div class="moran-empty">Datos insuficientes para calcular autocorrelación</div>
+				<div class="moran-empty">{i18n.t('chart.moran.insufficient')}</div>
 			{:else}
-				<div class="moran-empty">Cargá una capa para calcular autocorrelación espacial</div>
+				<div class="moran-empty">{i18n.t('chart.moran.loadLayer')}</div>
 			{/if}
 	</div>
 </ChartFrame>
