@@ -253,7 +253,7 @@
 					{territoryStore.compareTerritory.flag}
 					{hexStore.compareDpto ? formatDept(hexStore.compareDpto) : territoryStore.compareTerritory.shortLabel} ▾
 				{:else}
-					Comparar con… ▾
+					{i18n.t('panel.compareWith')} ▾
 				{/if}
 			</button>
 			{#if territoryStore.compareModeActive}
@@ -278,7 +278,7 @@
 							</button>
 						{/each}
 					{:else}
-						<div class="group-header">Sin coincidencias</div>
+						<div class="group-header">{i18n.t('common.noMatches')}</div>
 					{/each}
 				</div>
 			{/if}
@@ -351,7 +351,7 @@
 						{/if}
 					</p>
 					{#if crossTerritory && hasPercentil}
-						<p class="note note-warn">Percentiles calculados dentro de cada provincia. El eje 50 = mediana provincial.</p>
+						<p class="note note-warn">{i18n.t('panel.percentileNote')}</p>
 					{/if}
 				{/if}
 			</div>

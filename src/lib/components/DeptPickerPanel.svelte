@@ -37,7 +37,7 @@
 
 <div class="dept-panel">
 	<div class="panel-header">
-		<span class="panel-title">Seleccioná un distrito</span>
+		<span class="panel-title">{i18n.t('panel.selectDistrict')}</span>
 		{#if onClose}
 			<button class="close-btn" onclick={onClose}>✕</button>
 		{/if}
@@ -56,7 +56,7 @@
 		{#if loading}
 			<div class="hint">{i18n.t('common.loading')}</div>
 		{:else if filtered.length === 0}
-			<div class="hint">Sin resultados</div>
+			<div class="hint">{i18n.t('common.noResults')}</div>
 		{:else}
 			{#each filtered as d (d.parquetKey)}
 				<button class="dept-item" onclick={() => handleSelect(d)}>

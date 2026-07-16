@@ -186,18 +186,18 @@
 
 	<!-- Census vulnerability petal chart -->
 	{#if loading}
-		<div class="loading">Cargando perfil de vulnerabilidad...</div>
+		<div class="loading">{i18n.t('flood.loadingProfile')}</div>
 	{:else if petalLayers.length > 0}
-		<div class="section-title">Perfil de vulnerabilidad hídrica</div>
-		<p class="petal-note">Relativo al promedio provincial (50 = promedio). Mayor extensión = mayor riesgo.</p>
+		<div class="section-title">{i18n.t('flood.profileTitle')}</div>
+		<p class="petal-note">{i18n.t('flood.petalNote')}</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={320} />
 		<div class="petal-defs">
-			<div><strong>Frec. inundación:</strong> frecuencia histórica de anegamiento (satelital)</div>
-			<div><strong>Altura s/ drenaje:</strong> elevación sobre el curso de agua más cercano</div>
-			<div><strong>NBI:</strong> hogares con necesidades básicas insatisfechas (Censo 2022)</div>
-			<div><strong>Sin cloacas:</strong> hogares sin red cloacal (Censo 2022)</div>
-			<div><strong>Sin agua de red:</strong> hogares sin agua de red pública (Censo 2022)</div>
-			<div><strong>Déficit infra:</strong> índice compuesto de carencias en servicios básicos</div>
+			<div>{@html i18n.t('flood.def.freq')}</div>
+			<div>{@html i18n.t('flood.def.hand')}</div>
+			<div>{@html i18n.t('flood.def.nbi')}</div>
+			<div>{@html i18n.t('flood.def.sewer')}</div>
+			<div>{@html i18n.t('flood.def.water')}</div>
+			<div>{@html i18n.t('flood.def.infra')}</div>
 		</div>
 
 		<!-- Raw values per zone -->

@@ -130,7 +130,7 @@
 
 	<!-- Petal chart -->
 	{#if petalLayers.length > 0}
-		<p class="ref-note">NBI 2022 — 50 = promedio del departamento · mayor = más privación</p>
+		<p class="ref-note">{i18n.t('district.nbiNote')}</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={300} />
 	{/if}
 
@@ -160,7 +160,7 @@
 					<span class="rt-col rt-actions">
 						<button
 							class="r-dl-btn"
-							title="Polígono del distrito (GeoJSON)"
+							title={i18n.t('export.districtGeojson')}
 							onclick={() => onDownloadDistrictGeoJson?.(entry.distrito, districts.get(entry.distrito)?.territory ?? 'itapua_py', districts.get(entry.distrito)?.enriched ?? {})}
 							disabled={!onDownloadDistrictGeoJson}
 						>geo</button>
@@ -178,7 +178,7 @@
 
 	<div class="sources">
 		<span class="sources-title">Fuentes</span>
-		<span>INE Paraguay — CNPV 2022 (NBI por distrito)</span>
+		<span>{i18n.t('district.source')}</span>
 		<span>Overture Maps Buildings</span>
 	</div>
 </div>

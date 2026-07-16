@@ -124,7 +124,7 @@
 		<div class="r-table">
 			<div class="r-table-header">
 				<span class="rt-col rt-zone">Radio</span>
-				<span class="rt-col rt-num">Población</span>
+				<span class="rt-col rt-num">{i18n.t('comparison.col.population')}</span>
 				<span class="rt-col rt-num">km²</span>
 				<span class="rt-col rt-actions"></span>
 			</div>
@@ -139,13 +139,13 @@
 					<span class="rt-col rt-actions">
 						<button
 							class="r-dl-btn"
-							title="Datos del radio (CSV)"
+							title={i18n.t('export.radioCsv')}
 							onclick={() => onDownloadRadioCsv?.(entry.redcode)}
 							disabled={!onDownloadRadioCsv}
 						>csv</button>
 						<button
 							class="r-dl-btn"
-							title="Polígono del radio (GeoJSON)"
+							title={i18n.t('export.radioGeojson')}
 							onclick={() => onDownloadRadioGeoJson?.(entry.redcode, entry.data.enriched ?? {})}
 							disabled={!onDownloadRadioGeoJson}
 						>geo</button>

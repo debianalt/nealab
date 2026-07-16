@@ -756,7 +756,7 @@
 							</div>
 						</button>
 					{:else}
-						<div class="dept-row" style="color: var(--text-secondary); font-style: italic;">Sin coincidencias</div>
+						<div class="dept-row" style="color: var(--text-secondary); font-style: italic;">{i18n.t('common.noMatches')}</div>
 					{/each}
 				</div>
 			{/if}
