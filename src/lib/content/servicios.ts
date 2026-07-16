@@ -239,8 +239,13 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 	gn: {
 		pageTitle: 'nealab — análisis geoespacial abierto noreste argentino ha ñembyatyrã rehegua',
 		metaDesc: 'nealab oñemboguapy análisis geoespacial abierto-pe, noreste argentino ha ñembyatyrã oñondivekuéra rehegua. Oñembyatyrõ mbovymi análisis satelital, censal ha ambiental investigación, gestión pública ha cooperación internacional hag̃ua.',
-		ogTitle: 'nealab — servicios de análisis geoespacial',
-		ogDesc: 'Plataforma pública de análisis geoespacial abierto. Análisis reproducible, acceso abierto, ciencia ciudadana. Hospedado spatia.ar-pe.',
+		// Both were the Spanish strings verbatim — ogTitle byte-identical to `es`, ogDesc
+		// with only "Hospedado en spatia.ar." changed. Rebuilt from this block's own
+		// pageTitle/metaDesc above (jopara, authored here) rather than newly written
+		// Guaraní. Longer than the short og pattern the other locales use; that is the
+		// cost of not inventing the language.
+		ogTitle: 'nealab — análisis geoespacial abierto noreste argentino ha ñembyatyrã rehegua',
+		ogDesc: 'nealab oñemboguapy análisis geoespacial abierto-pe, noreste argentino ha ñembyatyrã oñondivekuéra rehegua.',
 		kicker: 'Análisis geoespacial abierto · Noreste argentino ha ñembyatyrã',
 		subtitle: 'Plataforma de análisis geoespacial noreste argentino ha ñembyatyrã oñondivekuéra rehegua. Mba\'ekuaa, método ha código ojejapóva oñembyaikuaáva. Oñepytyvõ <a href="/">spatia.ar</a>-pe.',
 		queEsTitle: 'Mba\'épa nealab',

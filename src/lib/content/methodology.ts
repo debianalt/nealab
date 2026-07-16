@@ -341,6 +341,22 @@ export function getMethodologyContent(analysisId: string): LocalizedMethodologyC
 	return ANALYSIS_CONTENT[analysisId] ?? null;
 }
 
+/**
+ * `method` exists only in es/en — see LocalizedMethodologyContent above.
+ *
+ * Returns the text plus the locale it fell back *from*, so the render site can say so
+ * rather than silently serving Spanish inside a Portuguese page. Keeping the asymmetry
+ * here means the four render sites don't each encode it: once `method` gains pt/gn,
+ * `fallbackFrom` goes null everywhere and the notices disappear on their own.
+ */
+export function resolveMethod(
+	method: LocalizedMethodologyContent['method'],
+	locale: Locale
+): { text: string; fallbackFrom: Locale | null } {
+	if (locale === 'es' || locale === 'en') return { text: method[locale], fallbackFrom: null };
+	return { text: method.es, fallbackFrom: locale };
+}
+
 export function listMethodologyIds(): string[] {
 	return Object.keys(ANALYSIS_CONTENT);
 }

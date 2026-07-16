@@ -104,6 +104,17 @@ const dict: Record<string, Record<Locale, string>> = {
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
+	// Shown when resolveMethod() falls back — `method` is authored in es/en only, so a pt
+	// or gn reader gets Spanish here and should be told rather than left guessing.
+	// `gn` is the Spanish string on purpose: a notice saying "this section is in Spanish"
+	// reads coherently in Spanish, and the alternative was inventing Guaraní that nobody
+	// here can verify. Omitting gn is not an option — t() would fall back to English.
+	'section.method_es_only': {
+		es: 'Esta sección solo está disponible en español.',
+		en: 'This section is only available in Spanish.',
+		gn: 'Esta sección solo está disponible en español.',
+		pt: 'Esta seção está disponível apenas em espanhol.',
+	},
 	'section.typeDistribution': { es: 'Distribución de tipos', en: 'Type distribution', gn: 'Laja papapy', pt: 'Distribuição de tipos' },
 	'section.territorialProfile': { es: 'Perfil geoespacial', en: 'Geospatial profile', gn: "Yvy rekokatu", pt: 'Perfil geoespacial' },
 	'section.zonesAnalyzed': { es: 'Zonas analizadas', en: 'Zones analysed', gn: "Zona ojestudiáva", pt: 'Zonas analisadas' },

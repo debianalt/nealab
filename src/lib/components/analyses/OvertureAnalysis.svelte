@@ -11,7 +11,7 @@
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
-	import { ANALYSIS_CONTENT } from '$lib/content/methodology';
+	import { ANALYSIS_CONTENT, resolveMethod } from '$lib/content/methodology';
 
 	let {
 		analysis,
@@ -662,7 +662,10 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.methodology')}</summary>
 				<div class="method-body">
-					<p class="explain-text">{content.method[i18n.locale === 'pt' || i18n.locale === 'gn' ? 'es' : i18n.locale] ?? content.method.es}</p>
+					{#if resolveMethod(content.method, i18n.locale).fallbackFrom}
+						<p class="method-notice">{i18n.t('section.method_es_only')}</p>
+					{/if}
+					<p class="explain-text">{resolveMethod(content.method, i18n.locale).text}</p>
 				</div>
 			</details>
 		{/if}
@@ -804,7 +807,10 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.methodology')}</summary>
 				<div class="method-body">
-					<p class="explain-text">{content.method[i18n.locale === 'pt' || i18n.locale === 'gn' ? 'es' : i18n.locale] ?? content.method.es}</p>
+					{#if resolveMethod(content.method, i18n.locale).fallbackFrom}
+						<p class="method-notice">{i18n.t('section.method_es_only')}</p>
+					{/if}
+					<p class="explain-text">{resolveMethod(content.method, i18n.locale).text}</p>
 					<div class="method-components">
 						{#each componentVars as v}
 							<div class="method-item">
@@ -909,7 +915,10 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.methodology')}</summary>
 				<div class="method-body">
-					<p class="explain-text">{content.method[i18n.locale === 'pt' || i18n.locale === 'gn' ? 'es' : i18n.locale] ?? content.method.es}</p>
+					{#if resolveMethod(content.method, i18n.locale).fallbackFrom}
+						<p class="method-notice">{i18n.t('section.method_es_only')}</p>
+					{/if}
+					<p class="explain-text">{resolveMethod(content.method, i18n.locale).text}</p>
 				</div>
 			</details>
 		{/if}
@@ -1026,6 +1035,7 @@
 	.method-item { margin-bottom: 4px; }
 	.method-term { font-size: 9px; font-weight: 600; color: #cbd5e1; }
 	.explain-text { font-size: 9px; color: #a3a3a3; line-height: 1.5; margin: 2px 0 0; }
+	.method-notice { font-size: 9px; color: #7b8794; font-style: italic; line-height: 1.5; margin: 2px 0 0; padding-left: 6px; border-left: 2px solid #3a4553; }
 	.mini-legend { margin-top: 6px; }
 	.method-components { margin-top: 6px; }
 

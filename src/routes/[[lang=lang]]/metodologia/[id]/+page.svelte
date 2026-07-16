@@ -3,11 +3,13 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import { resolveMethod } from '$lib/content/methodology';
 
 	let { data } = $props();
 	const title = $derived(i18n.t(data.titleKey));
 	const description = $derived(data.descKey ? i18n.t(data.descKey) : null);
 	const locale = $derived(i18n.locale);
+	const method = $derived(resolveMethod(data.content.method, locale));
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
@@ -64,7 +66,10 @@
 
 	<section class="section">
 		<h2>{i18n.t('section.methodology')}</h2>
-		<p>{@html data.content.method[locale === 'pt' || locale === 'gn' ? 'es' : locale] ?? data.content.method.es}</p>
+		{#if method.fallbackFrom}
+			<p class="method-notice">{i18n.t('section.method_es_only')}</p>
+		{/if}
+		<p>{@html method.text}</p>
 	</section>
 
 	{#if data.variables.length > 0}
@@ -177,6 +182,14 @@
 	.section p {
 		color: #cbd5e1;
 		margin: 0 0 10px;
+	}
+	.section p.method-notice {
+		font-size: 12px;
+		color: #94a3b8;
+		font-style: italic;
+		padding: 6px 10px;
+		border-left: 2px solid #334155;
+		background: rgba(30, 41, 59, 0.4);
 	}
 	.vars {
 		list-style: none;
