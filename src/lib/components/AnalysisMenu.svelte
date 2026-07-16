@@ -43,6 +43,14 @@
 		powerline_density: 'menu.sub.infrastructure',
 	};
 
+	// Keyed off the closed rigorBadge union (config.ts:1002). Was an inline ternary
+	// duplicated across both group blocks, each with the Spanish text baked in.
+	const RIGOR_KEYS: Record<NonNullable<AnalysisConfig['rigorBadge']>, string> = {
+		physical: 'analysis.rigor.physical',
+		modeled: 'analysis.rigor.modeled',
+		census: 'analysis.rigor.census',
+	};
+
 	function getCoverage(analysis: AnalysisConfig): 'available' | 'pending' | 'unavailable' {
 		if (!activeTerritory) return 'available';
 		if (!analysis.coverage) {
@@ -97,9 +105,7 @@
 									class:rigor-physical={analysis.rigorBadge === 'physical'}
 									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
 									class:rigor-census={analysis.rigorBadge === 'census'}>
-									{analysis.rigorBadge === 'physical' ? '🛰 Medición satelital'
-										: analysis.rigorBadge === 'modeled' ? '📐 Aptitud modelada'
-										: '🏛 Indicador censal'}
+									{i18n.t(RIGOR_KEYS[analysis.rigorBadge])}
 								</span>
 							{/if}
 							{#if analysis.status === 'coming_soon'}
@@ -139,9 +145,7 @@
 									class:rigor-physical={analysis.rigorBadge === 'physical'}
 									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
 									class:rigor-census={analysis.rigorBadge === 'census'}>
-									{analysis.rigorBadge === 'physical' ? '🛰 Medición satelital'
-										: analysis.rigorBadge === 'modeled' ? '📐 Aptitud modelada'
-										: '🏛 Indicador censal'}
+									{i18n.t(RIGOR_KEYS[analysis.rigorBadge])}
 								</span>
 							{/if}
 							{#if analysis.status === 'coming_soon'}

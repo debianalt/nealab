@@ -127,6 +127,11 @@ const dict: Record<string, Record<Locale, string>> = {
 	'menu.sub.trade': { es: 'Comercio (EUDR)', en: 'Trade (EUDR)', gn: 'Comercio (EUDR)', pt: 'Comércio (EUDR)' }, // gn: pendiente
 	'menu.sub.infrastructure': { es: 'Infraestructura', en: 'Infrastructure', gn: 'Infraestructura', pt: 'Infraestrutura' }, // gn: pendiente
 	'menu.sub.other': { es: 'Otros', en: 'Other', gn: 'Otros', pt: 'Outros' }, // gn: pendiente
+	// Rigor badges under every analysis in the menu. Emoji stays in the value — it is
+	// part of the badge, not decoration around it.
+	'analysis.rigor.physical': { es: '🛰 Medición satelital', en: '🛰 Satellite measurement', gn: '🛰 Medición satelital', pt: '🛰 Medição por satélite' }, // gn: pendiente
+	'analysis.rigor.modeled': { es: '📐 Aptitud modelada', en: '📐 Modelled suitability', gn: '📐 Aptitud modelada', pt: '📐 Aptidão modelada' }, // gn: pendiente
+	'analysis.rigor.census': { es: '🏛 Indicador censal', en: '🏛 Census indicator', gn: '🏛 Indicador censal', pt: '🏛 Indicador censitário' }, // gn: pendiente
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
