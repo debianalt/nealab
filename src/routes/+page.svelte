@@ -1934,11 +1934,7 @@
 			<!-- Regional/compare viewport too wide: neighbor-territory hexes load on zoom-in (B) -->
 			{#if regionalViewportTooWide}
 				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] text-white/80 shadow-lg pointer-events-none">
-					🔍 {i18n.locale === 'es'
-						? 'Acercá para ver los hexágonos de los territorios vecinos'
-						: i18n.locale === 'pt'
-						? 'Aproxime para ver os hexágonos dos territórios vizinhos'
-						: 'Zoom in to load neighbouring territories'}
+					🔍 {i18n.t('map.hint.zoomNeighbours')}
 				</div>
 			{/if}
 
@@ -1954,17 +1950,17 @@
 						<button
 							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'map' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
 							onclick={() => { mapStore.basemapMode = 'map'; mapComponent?.setSatellite(false); }}>
-							{i18n.locale === 'en' ? 'Map' : 'Mapa'}
+							{i18n.t('map.basemap.map')}
 						</button>
 						<button
 							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'satellite' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
 							onclick={() => { mapStore.basemapMode = 'satellite'; mapComponent?.setSatellite(true); }}>
-							{i18n.locale === 'pt' ? 'Satélite' : i18n.locale === 'en' ? 'Satellite' : 'Satélite'}
+							{i18n.t('map.basemap.satellite')}
 						</button>
 					</div>
 					{#if hexStore.activeLayer}
 						<label class="flex items-center gap-2">
-							<span class="opacity-70">{i18n.locale === 'en' ? 'Opacity' : i18n.locale === 'pt' ? 'Opacidade' : 'Opacidad'}</span>
+							<span class="opacity-70">{i18n.t('map.opacity')}</span>
 							<input type="range" min="0.3" max="0.9" step="0.05"
 								bind:value={mapStore.hexOpacity}
 								oninput={() => mapComponent?.applyHexOpacity()}
@@ -1977,11 +1973,7 @@
 			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
 			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}
 				<div class="absolute bottom-28 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
-					🔬 {i18n.locale === 'es'
-						? 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono'
-						: i18n.locale === 'pt'
-						? 'Vista agregada — médias espaciais · aproxime para ver o detalhe por hexágono'
-						: 'Aggregated overview — spatial means · zoom in for per-hex detail'}
+					🔬 {i18n.t('map.hint.aggregated')}
 				</div>
 			{/if}
 

@@ -733,7 +733,7 @@
 			<div class="section-title">{i18n.t('analysis.flood.topDepts')}</div>
 			{#if deptList.length === 0 && isPerDept}
 				<div class="dept-row" style="color: var(--text-secondary); font-style: italic; padding: 8px 0;">
-					{hexStore.territoryPrefix ? 'No hay datos departamentales para este territorio.' : 'Cargando…'}
+					{hexStore.territoryPrefix ? i18n.t('analysis.noDeptData') : i18n.t('common.loading')}
 				</div>
 			{:else}
 				{#if !selectedDpto}
@@ -764,7 +764,7 @@
 
 		{#if analysis.comparable}
 			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
-				<summary class="method-summary">Distribución por territorio /100</summary>
+				<summary class="method-summary">{i18n.t('analysis.distByTerritory')}</summary>
 				<div class="method-body">
 					{#if calibrationLoading}
 						<p class="explain-text">{i18n.t('common.loading')}</p>

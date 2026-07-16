@@ -132,6 +132,20 @@ const dict: Record<string, Record<Locale, string>> = {
 	'analysis.rigor.physical': { es: '🛰 Medición satelital', en: '🛰 Satellite measurement', gn: '🛰 Medición satelital', pt: '🛰 Medição por satélite' }, // gn: pendiente
 	'analysis.rigor.modeled': { es: '📐 Aptitud modelada', en: '📐 Modelled suitability', gn: '📐 Aptitud modelada', pt: '📐 Aptidão modelada' }, // gn: pendiente
 	'analysis.rigor.census': { es: '🏛 Indicador censal', en: '🏛 Census indicator', gn: '🏛 Indicador censal', pt: '🏛 Indicador censitário' }, // gn: pendiente
+
+	// ── Map chrome ──
+	// Were inline locale ternaries in +page.svelte. None of them had a gn branch, so a
+	// Guaraní reader hit the English default on the two hints below — English was never
+	// the right fallback for a reader in the NEA. Spanish is, until these are translated.
+	'map.hint.zoomNeighbours': { es: 'Acercá para ver los hexágonos de los territorios vecinos', en: 'Zoom in to load neighbouring territories', gn: 'Acercá para ver los hexágonos de los territorios vecinos', pt: 'Aproxime para ver os hexágonos dos territórios vizinhos' }, // gn: pendiente
+	'map.hint.aggregated': { es: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', en: 'Aggregated overview — spatial means · zoom in for per-hex detail', gn: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', pt: 'Vista agregada — médias espaciais · aproxime para ver o detalhe por hexágono' }, // gn: pendiente
+	'map.basemap.map': { es: 'Mapa', en: 'Map', gn: 'Mapa', pt: 'Mapa' }, // gn: pendiente
+	'map.basemap.satellite': { es: 'Satélite', en: 'Satellite', gn: 'Satélite', pt: 'Satélite' }, // gn: pendiente
+	'map.opacity': { es: 'Opacidad', en: 'Opacity', gn: 'Opacidad', pt: 'Opacidade' }, // gn: pendiente
+
+	// ── Analysis panel ──
+	'analysis.noDeptData': { es: 'No hay datos departamentales para este territorio.', en: 'No department-level data for this territory.', gn: 'No hay datos departamentales para este territorio.', pt: 'Não há dados departamentais para este território.' }, // gn: pendiente
+	'analysis.distByTerritory': { es: 'Distribución por territorio /100', en: 'Distribution by territory /100', gn: 'Distribución por territorio /100', pt: 'Distribuição por território /100' }, // gn: pendiente
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
