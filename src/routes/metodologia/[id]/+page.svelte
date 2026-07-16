@@ -1,30 +1,33 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data } = $props();
 	const title = $derived(i18n.t(data.titleKey));
 	const description = $derived(data.descKey ? i18n.t(data.descKey) : null);
 	const locale = $derived(i18n.locale);
 
-	const today = new Date().toLocaleDateString('es-AR', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+	// Stamps the printout, so it must be the reader's date — computed client-side only,
+	// since prerendering would otherwise freeze the build date into the HTML.
+	const today = browser
+		? new Date().toLocaleDateString('es-AR', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			})
+		: '';
 
 	function handlePrint() {
 		if (typeof window !== 'undefined') window.print();
 	}
 </script>
 
-<svelte:head>
-	<title>{title} · Metodología · nealab</title>
-	<meta name="description" content="Metodología del análisis {title} en nealab" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</svelte:head>
+<Seo
+	title="{title} · Metodología · nealab"
+	description={description ?? `Metodología del análisis ${title} en nealab`}
+/>
 
 <div class="page">
 	<!-- Print-only brand header -->

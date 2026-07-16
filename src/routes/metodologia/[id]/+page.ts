@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import { getMethodologyContent, listMethodologyIds } from '$lib/content/methodology';
 import { HEX_LAYER_REGISTRY, getAnalysisById } from '$lib/config';
 
-export const ssr = false;
+export const ssr = true;
 export const prerender = true;
 
 export function entries() {

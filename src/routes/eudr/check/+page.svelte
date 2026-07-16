@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 	import EudrMap from '$lib/components/EudrMap.svelte';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
 	import { getEudrHiresUrl, getEudrPlantationUrl, getEudrMetaUrl } from '$lib/config';
@@ -688,15 +689,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>EUDR Check &mdash; nealab</title>
-	<meta name="description" content={i18n.t('eudr.check.empty_desc')} />
-	<meta property="og:title" content="EUDR Check — nealab" />
-	<meta property="og:description" content={i18n.t('eudr.check.empty_desc')} />
-	<meta property="og:image" content="https://spatia.ar/og-image.png" />
-	<meta property="og:url" content="https://spatia.ar/eudr/check" />
-	<meta property="og:type" content="website" />
-</svelte:head>
+<Seo title="EUDR Check — nealab" description={i18n.t('eudr.check.empty_desc')} />
 
 {#if !eudrDisclaimerAccepted}
 <div class="eudr-gate">

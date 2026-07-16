@@ -4,13 +4,17 @@
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
 	import { updated } from '$app/state';
+	import { browser } from '$app/environment';
 	let { children } = $props();
 
 	const EXCLUDED = ['/terminos', '/servicios'];
 </script>
 
 <div class="relative w-full min-h-screen bg-bg">
-	{#if !terms.accepted && !EXCLUDED.includes($page.url.pathname)}
+	<!-- `browser &&`: terms.accepted is false server-side (the store guards its localStorage
+	     read), so without this the modal's blocking overlay gets baked into the prerendered
+	     HTML of every non-EXCLUDED route and is what crawlers see. -->
+	{#if browser && !terms.accepted && !EXCLUDED.includes($page.url.pathname)}
 		<TermsModal />
 	{/if}
 	{@render children()}

@@ -1,4 +1,4 @@
-export const ssr = false;
+export const ssr = true;
 export const prerender = true;
 
 import { listMethodologyIds } from '$lib/content/methodology';

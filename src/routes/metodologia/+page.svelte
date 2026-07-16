@@ -1,27 +1,30 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data } = $props();
 
-	const today = new Date().toLocaleDateString('es-AR', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+	// Stamps the printout, so it must be the reader's date — computed client-side only,
+	// since prerendering would otherwise freeze the build date into the HTML.
+	const today = browser
+		? new Date().toLocaleDateString('es-AR', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			})
+		: '';
 
 	function handlePrint() {
 		if (typeof window !== 'undefined') window.print();
 	}
 </script>
 
-<svelte:head>
-	<title>Metodología e indicadores · nealab</title>
-	<meta name="description" content="Metodología de los indicadores geoespaciales de nealab — fuentes, variables y métodos de cada análisis." />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</svelte:head>
+<Seo
+	title="Metodología e indicadores · nealab"
+	description="Metodología de los indicadores geoespaciales de nealab — fuentes, variables y métodos de cada análisis."
+/>
 
 <div class="page">
 	<div class="print-brand">

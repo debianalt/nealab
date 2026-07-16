@@ -1,15 +1,21 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { terms } from '$lib/stores/terms.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 	import { TERMINOS } from '$lib/content/terminos';
 
-	const today = new Date().toLocaleDateString('es-AR', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+	// Stamps the printout, so it must be the reader's date — computed client-side only,
+	// since prerendering would otherwise freeze the build date into the HTML.
+	const today = browser
+		? new Date().toLocaleDateString('es-AR', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+			})
+		: '';
 
 	const c = $derived(TERMINOS[i18n.locale] ?? TERMINOS.es);
 
@@ -19,11 +25,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{c.pageTitle}</title>
-	<meta name="description" content={c.metaDesc} />
-	<meta name="robots" content="noindex" />
-</svelte:head>
+<Seo title={c.pageTitle} description={c.metaDesc} noindex />
 
 <div class="page">
 	<div class="content">
