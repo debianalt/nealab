@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import EudrMap from '$lib/components/EudrMap.svelte';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
 	import { getEudrHiresUrl, getEudrPlantationUrl, getEudrMetaUrl } from '$lib/config';
@@ -727,7 +728,7 @@
 		<button class="eudr-gate-btn" onclick={() => eudrDisclaimerAccepted = true}>
 			Entendido — continuar con el análisis
 		</button>
-		<a class="eudr-gate-link" href="/terminos">Ver términos y condiciones completos →</a>
+		<a class="eudr-gate-link" href={lp('/terminos', i18n.locale)}>Ver términos y condiciones completos →</a>
 	</div>
 </div>
 {:else}
@@ -1035,7 +1036,7 @@
 					<div class="mt-4 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
-					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
+					<a href={lp('/metodologia/eudr', i18n.locale)} class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
 						{i18n.t('eudr.check.methodology_link')}
 					</a>
 				</div>
@@ -1138,7 +1139,7 @@
 					<div class="mt-3 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
-					<a href="/metodologia/eudr" class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
+					<a href={lp('/metodologia/eudr', i18n.locale)} class="mt-2 inline-block text-[11px] text-yellow-400 hover:text-white underline transition-colors">
 						{i18n.t('eudr.check.methodology_link')}
 					</a>
 				</div>

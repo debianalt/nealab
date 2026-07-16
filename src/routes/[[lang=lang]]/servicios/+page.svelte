@@ -3,6 +3,7 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import { SERVICIOS } from '$lib/content/servicios';
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
@@ -39,7 +40,7 @@
 		<div class="hdr-actions no-print">
 			<a class="back-link" href="/">{i18n.t('nav.backToMap')}</a>
 			<div class="hdr-right">
-				<LangSwitcher variant="mono" />
+				<LangSwitcher />
 				<button class="print-btn" type="button" onclick={handlePrint}>
 					{i18n.t('nav.printSave')}
 				</button>
@@ -111,7 +112,7 @@
 		<p>{@html c.limitesP5}</p>
 		<div class="liability-block">
 			<p class="liability-text">{@html c.liabilityText}</p>
-			<a class="terms-link" href="/terminos">{c.termsLink}</a>
+			<a class="terms-link" href={lp('/terminos', i18n.locale)}>{c.termsLink}</a>
 		</div>
 	</section>
 

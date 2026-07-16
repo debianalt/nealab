@@ -39,7 +39,7 @@
 		<div class="hdr-actions no-print">
 			<a class="back-link" href="/?a={data.id}">{i18n.t('nav.backToMap')}</a>
 			<div class="hdr-right">
-				<LangSwitcher variant="mono" />
+				<LangSwitcher />
 				<button class="print-btn" onclick={handlePrint} type="button">
 					{i18n.t('nav.printSave')}
 				</button>

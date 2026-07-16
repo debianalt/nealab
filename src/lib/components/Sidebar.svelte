@@ -18,6 +18,7 @@
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { LENS_CONFIG, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
@@ -185,11 +186,11 @@
 				<div>{i18n.t('side.welcome.footer.affiliation')}</div>
 				<div>{i18n.t('side.welcome.footer.partner')}</div>
 				<div class="welcome-links">
-					<a href="/servicios" class="welcome-link">Ver servicios →</a>
+					<a href={lp('/servicios', i18n.locale)} class="welcome-link">Ver servicios →</a>
 					<span class="welcome-link-sep">·</span>
-					<a href="/metodologia" class="welcome-link">Metodología e indicadores →</a>
+					<a href={lp('/metodologia', i18n.locale)} class="welcome-link">Metodología e indicadores →</a>
 					<span class="welcome-link-sep">·</span>
-					<a href="/terminos" class="welcome-link">Términos →</a>
+					<a href={lp('/terminos', i18n.locale)} class="welcome-link">Términos →</a>
 				</div>
 			</div>
 

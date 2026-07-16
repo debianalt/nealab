@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { terms } from '$lib/stores/terms.svelte';
+	import { i18n } from '$lib/stores/i18n.svelte';
+	import { lp } from '$lib/utils/locale-path';
 </script>
 
 <div class="overlay">
@@ -52,7 +54,7 @@
 		</ul>
 
 		<div class="actions">
-			<a class="btn-secondary" href="/terminos">Leer términos completos →</a>
+			<a class="btn-secondary" href={lp('/terminos', i18n.locale)}>Leer términos completos →</a>
 			<button class="btn-primary" onclick={() => terms.accept()}>
 				Acepto, quiero explorar
 			</button>

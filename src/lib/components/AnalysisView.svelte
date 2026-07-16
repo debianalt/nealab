@@ -5,6 +5,7 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import OvertureAnalysis from './analyses/OvertureAnalysis.svelte';
 	import CatastroAnalysis from './analyses/CatastroAnalysis.svelte';
 
@@ -65,7 +66,7 @@
 
 		{#if analysis.id === 'eudr'}
 			<p class="mb-2 text-[10px] text-white/40 leading-relaxed">{i18n.t('eudr.layer_hint')}</p>
-			<a href="/eudr/check" class="block mb-3 px-4 py-3 rounded-lg border border-yellow-400/70 bg-yellow-400/15 text-[13px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors leading-snug shadow-[0_0_18px_rgba(250,204,21,0.18)]">
+			<a href={lp('/eudr/check', i18n.locale)} class="block mb-3 px-4 py-3 rounded-lg border border-yellow-400/70 bg-yellow-400/15 text-[13px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors leading-snug shadow-[0_0_18px_rgba(250,204,21,0.18)]">
 				{i18n.t('eudr.check.cta_from_layer')}
 			</a>
 		{/if}

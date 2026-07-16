@@ -5,16 +5,20 @@
 	import { page } from '$app/stores';
 	import { updated } from '$app/state';
 	import { browser } from '$app/environment';
+	import { stripLocale } from '$lib/utils/locale-path';
 	let { children } = $props();
 
 	const EXCLUDED = ['/terminos', '/servicios'];
+	// Matched on the unprefixed path, or /en/terminos would miss and the modal would
+	// cover the very pages it is meant to leave alone.
+	const basePath = $derived(stripLocale($page.url.pathname));
 </script>
 
 <div class="relative w-full min-h-screen bg-bg">
 	<!-- `browser &&`: terms.accepted is false server-side (the store guards its localStorage
 	     read), so without this the modal's blocking overlay gets baked into the prerendered
 	     HTML of every non-EXCLUDED route and is what crawlers see. -->
-	{#if browser && !terms.accepted && !EXCLUDED.includes($page.url.pathname)}
+	{#if browser && !terms.accepted && !EXCLUDED.includes(basePath)}
 		<TermsModal />
 	{/if}
 	{@render children()}

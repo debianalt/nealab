@@ -1,31 +1,22 @@
 <script lang="ts">
-	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
+	// Links, not buttons: on [[lang=lang]] routes the URL carries the locale, so
+	// switching language is a navigation. The map has its own inline switcher that
+	// still mutates i18n directly — it lives outside [[lang]] and has no URL to go to.
+	import { page } from '$app/state';
+	import { LOCALES, lp, stripLocale } from '$lib/utils/locale-path';
+	import type { Locale } from '$lib/stores/i18n.svelte';
 
-	let { variant = 'map' }: { variant: 'map' | 'mono' } = $props();
-	const langs: Locale[] = ['es', 'en', 'gn', 'pt'];
+	const basePath = $derived(stripLocale(page.url.pathname));
+	const current = $derived((page.params.lang ?? 'es') as Locale);
 </script>
 
-{#if variant === 'map'}
-	<div class="flex items-center gap-0.5">
-		{#each langs as lang}
-			<button
-				class="px-2.5 py-1 text-[11px] font-semibold rounded-full cursor-pointer border transition-all {i18n.locale === lang ? 'bg-white/10 text-white border-white/30' : 'bg-transparent text-white/50 border-transparent hover:text-white'}"
-				onclick={() => i18n.setLocale(lang)}>
-				{lang === 'pt' ? 'BR' : lang.toUpperCase()}
-			</button>
-		{/each}
-	</div>
-{:else}
-	<div class="lang-switcher">
-		{#each langs as lang}
-			<button
-				class:active={i18n.locale === lang}
-				onclick={() => i18n.setLocale(lang)}>
-				{lang === 'pt' ? 'BR' : lang.toUpperCase()}
-			</button>
-		{/each}
-	</div>
-{/if}
+<div class="lang-switcher">
+	{#each LOCALES as lang}
+		<a class:active={current === lang} href={lp(basePath, lang)} hreflang={lang}>
+			{lang === 'pt' ? 'BR' : lang.toUpperCase()}
+		</a>
+	{/each}
+</div>
 
 <style>
 	.lang-switcher {
@@ -33,7 +24,7 @@
 		align-items: center;
 		gap: 2px;
 	}
-	.lang-switcher button {
+	.lang-switcher a {
 		padding: 4px 8px;
 		font-size: 10px;
 		font-weight: 600;
@@ -44,12 +35,13 @@
 		color: rgba(255, 255, 255, 0.4);
 		cursor: pointer;
 		font-family: inherit;
+		text-decoration: none;
 		transition: all 0.15s;
 	}
-	.lang-switcher button:hover {
+	.lang-switcher a:hover {
 		color: rgba(255, 255, 255, 0.8);
 	}
-	.lang-switcher button.active {
+	.lang-switcher a.active {
 		background: rgba(255, 255, 255, 0.08);
 		border-color: rgba(255, 255, 255, 0.2);
 		color: rgba(255, 255, 255, 0.9);

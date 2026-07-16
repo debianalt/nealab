@@ -34,7 +34,7 @@
 		<header class="hdr">
 			<div class="hdr-actions no-print">
 				<a class="back-link" href="/">{i18n.t('nav.backToMap')}</a>
-				<LangSwitcher variant="mono" />
+				<LangSwitcher />
 			</div>
 			<div class="kicker">{c.kicker}</div>
 			<h1 class="title">{c.title}</h1>

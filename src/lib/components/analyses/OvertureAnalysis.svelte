@@ -2,6 +2,7 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import { formatDept } from '$lib/utils/format';
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
@@ -612,7 +613,7 @@
 		{/if}
 
 		{#if content}
-			<a class="methodology-link" href="/metodologia/{analysis.id}" target="_blank" rel="noopener">
+			<a class="methodology-link" href={lp(`/metodologia/${analysis.id}`, i18n.locale)} target="_blank" rel="noopener">
 				¿Cómo se calcula? →
 			</a>
 		{/if}
@@ -890,7 +891,7 @@
 		{/if}
 
 		{#if content}
-			<a class="methodology-link" href="/metodologia/{analysis.id}" target="_blank" rel="noopener">
+			<a class="methodology-link" href={lp(`/metodologia/${analysis.id}`, i18n.locale)} target="_blank" rel="noopener">
 				¿Cómo se calcula? →
 			</a>
 			<details class="method-details">

@@ -3,6 +3,7 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import LangSwitcher from '$lib/components/LangSwitcher.svelte';
 	import Seo from '$lib/components/Seo.svelte';
+	import { lp } from '$lib/utils/locale-path';
 
 	let { data } = $props();
 
@@ -35,7 +36,7 @@
 		<div class="hdr-actions no-print">
 			<a class="back-link" href="/">{i18n.t('nav.backToMap')}</a>
 			<div class="hdr-right">
-				<LangSwitcher variant="mono" />
+				<LangSwitcher />
 				<button class="print-btn" onclick={handlePrint} type="button">
 					{i18n.t('nav.printSave')}
 				</button>
@@ -54,7 +55,7 @@
 			<ul class="analysis-list">
 				{#each group.analyses as analysis}
 					<li class="analysis-item">
-						<a href="/metodologia/{analysis.id}" class="analysis-link">
+						<a href={lp(`/metodologia/${analysis.id}`, i18n.locale)} class="analysis-link">
 							<span class="analysis-name">{i18n.t(analysis.titleKey)}</span>
 							{#if analysis.descKey}
 								<span class="analysis-desc">{i18n.t(analysis.descKey)}</span>
