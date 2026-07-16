@@ -47,9 +47,13 @@ SCAN_DIRS = ("src", "pipeline", "functions", "db", ".github")
 SCAN_EXTS = {".ts", ".svelte", ".js", ".mjs", ".py", ".yml", ".yaml", ".json", ".toml", ".sh"}
 
 BUILDING_RE = re.compile(r"^(data/)?tiles/.*\.pmtiles$")
-FREE_TIER_GB = 10
-GB = 1000**3   # decimal — Cloudflare bills GB = 10^9, not GiB
-MB = 1000**2
+FREE_TIER = 10
+# Cloudflare never documents whether its "10 GB-month" tier is decimal or binary, and the
+# API only returns bytes. Observed: at 10.745e9 the dashboard projects $0.00 with R2 in the
+# filter — consistent with GiB, not with decimal. Reported both ways in r2_inventory.py;
+# here it is only context for a size line, so binary (the conservative, lower reading).
+GiB = 1024**3
+MB = 1024**2
 
 
 def repo_blob() -> str:
@@ -186,9 +190,10 @@ def main():
         for m in sorted(missing):
             print("   ", m)
 
-    over = total / GB - FREE_TIER_GB
-    print(f"\nCurrent: {len(keys):,} objects  {total/GB:.3f} GB (decimal, as billed)"
-          f"  [{'+' if over > 0 else ''}{over:.3f} GB vs free tier]")
+    over = total / GiB - FREE_TIER
+    print(f"\nCurrent: {len(keys):,} objects  {total/GiB:.3f} GiB"
+          f"  [{'+' if over > 0 else ''}{over:.3f} vs a 10-GiB tier; see r2_inventory.py"
+          f" for both readings]")
     if not todel:
         print("\nNothing to delete.")
         return
@@ -201,7 +206,7 @@ def main():
     print(f"\n=== TO DELETE: {len(todel):,} objects  {sum(s for _, s, _ in todel)/MB:.1f} MB ===")
     for r, (c, b) in sorted(by_cat.items(), key=lambda x: -x[1][1]):
         print(f"  {r:48s} {c:6,d} obj  {b/MB:9.1f} MB")
-    print(f"\nProjected after: {(total - sum(s for _, s, _ in todel))/GB:.3f} GB")
+    print(f"\nProjected after: {(total - sum(s for _, s, _ in todel))/GiB:.3f} GiB")
 
     print("\n=== non-archive deletions (review individually) ===")
     shown = [t for t in sorted(todel) if not t[2].startswith("archive dir")]

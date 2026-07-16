@@ -82,23 +82,34 @@ def main():
             break
         print(f"  ...{total_n} objects so far", file=sys.stderr)
 
-    # Decimal, not binary: Cloudflare bills R2 in GB = 10^9 and the free tier is 10 GB.
-    # This used to be 1024**3 (a GiB) while still printing "GB", which under-reported by
-    # 7.4% — enough to read 10.01 "GB" while actually sitting at 10.75 GB billable.
-    GB = 1000**3
-    MB = 1000**2
-    FREE_TIER_GB = 10
-    over = total_b / GB - FREE_TIER_GB
-    print(f"\n=== TOTAL: {total_n:,} objects  {total_b/GB:.2f} GB (decimal, as billed) ===")
-    if over > 0:
-        print(f"    {over:.3f} GB over the {FREE_TIER_GB} GB free tier "
-              f"→ ~${over * 0.015:.3f}/month")
-    else:
-        print(f"    {-over:.3f} GB of headroom under the {FREE_TIER_GB} GB free tier")
+    # Is the "10 GB-month" free tier decimal or binary? Cloudflare's pricing page states
+    # "10 GB-month / month" and "$0.015 / GB-month" and never defines GB; the API only
+    # ever returns bytes. The observable evidence favours binary: at 10.745e9 bytes the
+    # dashboard projects $0.00 with R2 inside the product filter, which fits a GiB tier
+    # (0.007 over → $0.0001/mo) and not a decimal one (0.745 over → $0.011/mo, which
+    # would render as $0.01).
+    #
+    # So print both and let Billing be the authority. Do NOT encode a guess: a previous
+    # pass rewrote this to decimal on assumption alone and reported an overage 100x the
+    # bill. Whichever it is, the number here is ~1 cent — this script is for spotting
+    # junk, not for costing.
+    GiB = 1024**3
+    GBd = 1000**3
+    MB = 1024**2
+    FREE_TIER = 10
+    ovr_bin = max(total_b / GiB - FREE_TIER, 0)
+    ovr_dec = max(total_b / GBd - FREE_TIER, 0)
+    # ASCII only: this runs in a cp1252 console on Windows, where a stray arrow or em
+    # dash raises UnicodeEncodeError and kills the report mid-print.
+    print(f"\n=== TOTAL: {total_n:,} objects ===")
+    print(f"    {total_b/GiB:7.3f} GiB binary   -> {ovr_bin:5.3f} over a 10-GiB tier = ${ovr_bin*0.015:.4f}/mo")
+    print(f"    {total_b/GBd:7.3f} GB  decimal  -> {ovr_dec:5.3f} over a 10-GB  tier = ${ovr_dec*0.015:.4f}/mo")
+    print("    Unit undocumented; dashboard Billing decides. Billing basis is the average")
+    print("    of PEAK DAILY storage across the cycle, not this snapshot.")
     print()
     print("=== by top-level prefix ===")
     for p, (c, b) in sorted(by_prefix.items(), key=lambda x: -x[1][1]):
-        print(f"  {p:30s} {c:8,d} obj  {b/GB:7.3f} GB")
+        print(f"  {p:30s} {c:8,d} obj  {b/GiB:7.3f} GiB")
     print("\n=== by 2-level dir (top 40 by size) ===")
     for p, (c, b) in sorted(by_dir.items(), key=lambda x: -x[1][1])[:40]:
         print(f"  {p:45s} {c:7,d} obj  {b/MB:9.1f} MB")
@@ -121,7 +132,7 @@ def main():
             waste += sb
             print(f"  {base_k}: versions {[v[0] for v in vs]} keep v{keep[0]} "
                   f"| stale {sb/MB:.1f} MB")
-    print(f"\n  >>> reclaimable from stale versioned files: {waste/MB:.1f} MB ({waste/GB:.3f} GB)")
+    print(f"\n  >>> reclaimable from stale versioned files: {waste/MB:.1f} MB ({waste/GiB:.3f} GiB)")
 
 
 if __name__ == "__main__":
