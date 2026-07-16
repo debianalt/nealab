@@ -22,24 +22,25 @@
 	const comparableGroup = $derived(analyses.filter(a => a.comparable));
 	const localGroup = $derived(analyses.filter(a => !a.comparable));
 
-	// Sub-theme grouping within each domain.
+	// Sub-theme grouping within each domain. Values are dict keys, not text — these
+	// headers render on every menu open and used to be Spanish in all four locales.
 	const SUBGROUPS: Record<string, string> = {
 		// Ambiente y riesgo
-		flood_risk: 'Riesgo hídrico',
-		deforestation_dynamics: 'Cobertura natural', carbon_stock: 'Cobertura natural',
-		pm25_drivers: 'Calidad del aire',
+		flood_risk: 'menu.sub.waterRisk',
+		deforestation_dynamics: 'menu.sub.naturalCover', carbon_stock: 'menu.sub.naturalCover',
+		pm25_drivers: 'menu.sub.airQuality',
 		// Producción y suelo
-		agri_potential: 'Suelos', forestry_aptitude: 'Suelos',
-		land_use: 'Uso del suelo',
+		agri_potential: 'menu.sub.soils', forestry_aptitude: 'menu.sub.soils',
+		land_use: 'menu.sub.landUse',
 		// Población y servicios
-		accessibility: 'Accesibilidad',
-		sociodemographic: 'Población', censo_temporal: 'Población',
-		service_deprivation: 'Servicios básicos', health_access: 'Servicios básicos',
-		education_capital: 'Educación', education_flow: 'Educación',
+		accessibility: 'menu.sub.accessibility',
+		sociodemographic: 'menu.sub.population', censo_temporal: 'menu.sub.population',
+		service_deprivation: 'menu.sub.basicServices', health_access: 'menu.sub.basicServices',
+		education_capital: 'menu.sub.education', education_flow: 'menu.sub.education',
 		// Economía e infraestructura
-		economic_activity: 'Actividad',
-		eudr: 'Comercio (EUDR)',
-		powerline_density: 'Infraestructura',
+		economic_activity: 'menu.sub.activity',
+		eudr: 'menu.sub.trade',
+		powerline_density: 'menu.sub.infrastructure',
 	};
 
 	function getCoverage(analysis: AnalysisConfig): 'available' | 'pending' | 'unavailable' {
@@ -53,15 +54,16 @@
 
 	// Group a list of analyses by sub-theme while preserving original order
 	// of first appearance per sub-theme (more predictable than alphabetical).
-	function groupBySubtheme(list: AnalysisConfig[]): Array<{ label: string; items: AnalysisConfig[] }> {
+	// Buckets are keyed by dict key; the markup resolves it through t().
+	function groupBySubtheme(list: AnalysisConfig[]): Array<{ labelKey: string; items: AnalysisConfig[] }> {
 		const order: string[] = [];
 		const buckets: Record<string, AnalysisConfig[]> = {};
 		for (const a of list) {
-			const label = SUBGROUPS[a.id] ?? 'Otros';
-			if (!(label in buckets)) { buckets[label] = []; order.push(label); }
-			buckets[label].push(a);
+			const labelKey = SUBGROUPS[a.id] ?? 'menu.sub.other';
+			if (!(labelKey in buckets)) { buckets[labelKey] = []; order.push(labelKey); }
+			buckets[labelKey].push(a);
 		}
-		return order.map(label => ({ label, items: buckets[label] }));
+		return order.map(labelKey => ({ labelKey, items: buckets[labelKey] }));
 	}
 
 	const comparableBuckets = $derived(groupBySubtheme(comparableGroup));
@@ -76,9 +78,9 @@
 
 		<div class="analysis-list">
 			{#if comparableGroup.length > 0}
-				<div class="group-label">↔ Comparables entre territorios</div>
+				<div class="group-label">{i18n.t('menu.group.comparable')}</div>
 				{#each comparableBuckets as bucket}
-					<div class="subgroup-label">{bucket.label}</div>
+					<div class="subgroup-label">{i18n.t(bucket.labelKey)}</div>
 					{#each bucket.items as analysis}
 						{@const coverage = getCoverage(analysis)}
 						<button
@@ -114,10 +116,13 @@
 
 			{#if localGroup.length > 0}
 				<div class="group-label local">
-					{activeTerritory?.flag ?? ''} Solo {activeTerritory?.label ?? 'este territorio'}
+					{activeTerritory?.flag ?? ''}
+					{i18n
+						.t('menu.group.localOnly')
+						.replace('{territory}', activeTerritory?.label ?? i18n.t('menu.group.thisTerritory'))}
 				</div>
 				{#each localBuckets as bucket}
-					<div class="subgroup-label">{bucket.label}</div>
+					<div class="subgroup-label">{i18n.t(bucket.labelKey)}</div>
 					{#each bucket.items as analysis}
 						{@const coverage = getCoverage(analysis)}
 						<button

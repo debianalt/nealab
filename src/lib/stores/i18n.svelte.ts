@@ -105,6 +105,28 @@ const dict: Record<string, Record<Locale, string>> = {
 	// Values lifted verbatim from side.censoTemporal.loading — no new copy, just a key
 	// whose name doesn't tie it to one panel.
 	'common.loading': { es: 'Cargando…', en: 'Loading…', gn: 'Oñembohasahína…', pt: 'Carregando…' },
+
+	// ── Analysis menu group headers ──
+	// Were a Spanish-only lookup table in AnalysisMenu.svelte, rendered to all four
+	// locales. `gn` here is the Spanish string — a declared fallback, not Guaraní: the
+	// map's gn readers already saw exactly this text, so nothing regresses, and English
+	// was never the right fallback for them. Grep `gn: pendiente` for the full list.
+	'menu.group.comparable': { es: '↔ Comparables entre territorios', en: '↔ Comparable across territories', gn: '↔ Comparables entre territorios', pt: '↔ Comparáveis entre territórios' }, // gn: pendiente
+	'menu.group.localOnly': { es: 'Solo {territory}', en: 'Only {territory}', gn: 'Solo {territory}', pt: 'Apenas {territory}' }, // gn: pendiente
+	'menu.group.thisTerritory': { es: 'este territorio', en: 'this territory', gn: 'este territorio', pt: 'este território' }, // gn: pendiente
+	'menu.sub.waterRisk': { es: 'Riesgo hídrico', en: 'Water risk', gn: 'Riesgo hídrico', pt: 'Risco hídrico' }, // gn: pendiente
+	'menu.sub.naturalCover': { es: 'Cobertura natural', en: 'Natural cover', gn: 'Cobertura natural', pt: 'Cobertura natural' }, // gn: pendiente
+	'menu.sub.airQuality': { es: 'Calidad del aire', en: 'Air quality', gn: 'Calidad del aire', pt: 'Qualidade do ar' }, // gn: pendiente
+	'menu.sub.soils': { es: 'Suelos', en: 'Soils', gn: 'Suelos', pt: 'Solos' }, // gn: pendiente
+	'menu.sub.landUse': { es: 'Uso del suelo', en: 'Land use', gn: 'Uso del suelo', pt: 'Uso do solo' }, // gn: pendiente
+	'menu.sub.accessibility': { es: 'Accesibilidad', en: 'Accessibility', gn: 'Accesibilidad', pt: 'Acessibilidade' }, // gn: pendiente
+	'menu.sub.population': { es: 'Población', en: 'Population', gn: 'Población', pt: 'População' }, // gn: pendiente
+	'menu.sub.basicServices': { es: 'Servicios básicos', en: 'Basic services', gn: 'Servicios básicos', pt: 'Serviços básicos' }, // gn: pendiente
+	'menu.sub.education': { es: 'Educación', en: 'Education', gn: 'Educación', pt: 'Educação' }, // gn: pendiente
+	'menu.sub.activity': { es: 'Actividad', en: 'Activity', gn: 'Actividad', pt: 'Atividade' }, // gn: pendiente
+	'menu.sub.trade': { es: 'Comercio (EUDR)', en: 'Trade (EUDR)', gn: 'Comercio (EUDR)', pt: 'Comércio (EUDR)' }, // gn: pendiente
+	'menu.sub.infrastructure': { es: 'Infraestructura', en: 'Infrastructure', gn: 'Infraestructura', pt: 'Infraestrutura' }, // gn: pendiente
+	'menu.sub.other': { es: 'Otros', en: 'Other', gn: 'Otros', pt: 'Outros' }, // gn: pendiente
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
