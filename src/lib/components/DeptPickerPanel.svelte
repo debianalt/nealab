@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import { loadDeptList, type DeptItem } from '$lib/utils/deptSummaries';
 
 	interface Props {
@@ -53,7 +54,7 @@
 
 	<div class="dept-list">
 		{#if loading}
-			<div class="hint">Cargando...</div>
+			<div class="hint">{i18n.t('common.loading')}</div>
 		{:else if filtered.length === 0}
 			<div class="hint">Sin resultados</div>
 		{:else}

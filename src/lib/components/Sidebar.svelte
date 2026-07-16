@@ -184,7 +184,6 @@
 			<div class="welcome-footer">
 				<div>{i18n.t('side.welcome.footer.author')}</div>
 				<div>{i18n.t('side.welcome.footer.affiliation')}</div>
-				<div>{i18n.t('side.welcome.footer.partner')}</div>
 				<div class="welcome-links">
 					<a href={lp('/servicios', i18n.locale)} class="welcome-link">Ver servicios →</a>
 					<span class="welcome-link-sep">·</span>

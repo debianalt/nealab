@@ -351,7 +351,7 @@
 			<div><strong>Última revisión:</strong> {DATA_FRESHNESS.hex_flood_risk.processedDate} · Imágenes SAR disponibles cada ~12 días</div>
 		</div>
 
-		<CTADiagnostic analysisName={i18n.t('analysis.flood.title')} />
+		<CTADiagnostic analysisName={i18n.t('analysis.floodRisk.title')} />
 	</div>
 {/if}
 

@@ -101,6 +101,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.range': { es: 'Score 0–100', en: 'Score 0–100', gn: 'Score 0–100', pt: 'Score 0–100' },
 	'legend.noData': { es: 'Sin cobertura', en: 'No data', gn: "Ndaipóri dato", pt: 'Sem cobertura' },
 	// ── Analysis section headings ──
+	// Generic spinner label for panels that had 'Cargando…' hardcoded in all four locales.
+	// Values lifted verbatim from side.censoTemporal.loading — no new copy, just a key
+	// whose name doesn't tie it to one panel.
+	'common.loading': { es: 'Cargando…', en: 'Loading…', gn: 'Oñembohasahína…', pt: 'Carregando…' },
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
@@ -717,7 +721,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	},
 	'side.welcome.footer.author': { es: 'Raimundo Elías Gómez', en: 'Raimundo Elías Gómez', gn: 'Raimundo Elías Gómez', pt: 'Raimundo Elías Gómez' },
 	'side.welcome.footer.affiliation': { es: 'CONICET / FHyCS-UNaM / GEE Partner', en: 'CONICET / FHyCS-UNaM / GEE Partner', gn: 'CONICET / FHyCS-UNaM / GEE Partner', pt: 'CONICET / FHyCS-UNaM / GEE Partner' },
-	'side.welcome.footer.partner': { es: '', en: '', gn: '', pt: '' },
 	'side.welcome.hidePanel': { es: 'Ocultar panel', en: 'Hide panel', gn: 'Emokañy panel', pt: 'Ocultar painel' },
 	'side.welcome.showPanel': { es: 'Mostrar panel', en: 'Show panel', gn: 'Ehechauka panel', pt: 'Mostrar painel' },
 

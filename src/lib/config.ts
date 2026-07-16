@@ -1230,28 +1230,6 @@ export const TERRITORIAL_SCORE_COLS = [
 	'urbanization', 'water_exposure',
 ] as const;
 
-export const TERRITORIAL_SCORE_LABELS: Record<string, { es: string; en: string }> = {
-	paving_index:         { es: 'Pavimentación',    en: 'Paving' },
-	urban_consolidation:  { es: 'Consolidación',    en: 'Consolidation' },
-	service_access:       { es: 'Servicios',        en: 'Services' },
-	commercial_vitality:  { es: 'Comercio',         en: 'Commerce' },
-	road_connectivity:    { es: 'Conectividad',     en: 'Connectivity' },
-	building_mix:         { es: 'Mix tipológico',   en: 'Building Mix' },
-	urbanization:         { es: 'Urbanización',     en: 'Urbanisation' },
-	water_exposure:       { es: 'Exp. hídrica',     en: 'Water Exp.' },
-};
-
-export const TERRITORIAL_SCORE_DESCS: Record<string, { es: string; en: string }> = {
-	paving_index:         { es: '% de calles pavimentadas en radio de 3 km', en: '% paved roads within 3 km' },
-	urban_consolidation:  { es: 'Densidad edilicia + residencial + pavimentación + red vial', en: 'Building density + residential + paving + road network' },
-	service_access:       { es: 'Salud, educación, farmacia y combustible en radio de 5 km', en: 'Health, education, pharmacy and fuel within 5 km' },
-	commercial_vitality:  { es: 'Diversidad y densidad de comercios y servicios en 3 km', en: 'Diversity and density of commerce and services within 3 km' },
-	road_connectivity:    { es: 'Jerarquía vial + densidad de segmentos + puentes', en: 'Road hierarchy + segment density + bridges' },
-	building_mix:         { es: 'Diversidad de tipos: residencial, comercial, educativo, salud', en: 'Building type diversity: residential, commercial, education, health' },
-	urbanization:         { es: 'Grado de desarrollo urbano (densidad edilicia + uso del suelo)', en: 'Degree of urban development (building density + land use)' },
-	water_exposure:       { es: 'Densidad de ríos y arroyos en radio de 3 km', en: 'River and stream density within 3 km' },
-};
-
 export const TERRITORIAL_COMPONENT_COLS = [
 	'building_count', 'n_paved', 'n_unpaved', 'place_count',
 	'segment_count', 'water_kring_total',

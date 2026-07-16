@@ -295,7 +295,7 @@
 				</div>
 
 				{#if loading}
-					<p class="hint">Cargando datos…</p>
+					<p class="hint">{i18n.t('analysis.loading')}</p>
 				{:else if stats.length === 2}
 					{@const dpto = hexStore.selectedDpto}
 					{@const compareDpto = hexStore.compareDpto}

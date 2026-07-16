@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DistrictData } from '$lib/stores/map.svelte';
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import PetalChart from './PetalChart.svelte';
 	import { formatDept } from '$lib/utils/format';
 	import { downloadCsvFromRows } from '$lib/utils/data-export';
@@ -124,7 +125,7 @@
 	</div>
 
 	{#if pendingDistricts.length > 0}
-		<p class="loading-note">Cargando datos...</p>
+		<p class="loading-note">{i18n.t('analysis.loading')}</p>
 	{/if}
 
 	<!-- Petal chart -->

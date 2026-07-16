@@ -26,7 +26,11 @@
 		deptCentroids[d.dpto] = d.centroid;
 	}
 
-	const locale = $derived(i18n.locale as 'es' | 'en');
+	// RADIO_ANALYSIS_REGISTRY is authored in es/en only (config.ts:1262). The cast this
+	// replaced — `i18n.locale as 'es' | 'en'` — was type-correct and runtime-false: for a
+	// gn or pt reader every lookup below came back undefined and Svelte rendered blank,
+	// not Spanish. Resolve the fallback instead of laundering it through a cast.
+	const locale = $derived(i18n.locale === 'en' ? 'en' : 'es');
 
 	const selectedParcels = $derived(mapStore.selectedScoresParcels);
 	const hasParcels = $derived(selectedParcels.length > 0);
@@ -204,7 +208,7 @@
 	<!-- ═══════ DEPARTMENT LIST ═══════ -->
 	<div class="view">
 		{#if deptLoading}
-			<div class="loading">Cargando datos...</div>
+			<div class="loading">{i18n.t('analysis.loading')}</div>
 		{:else if loadError}
 			<p class="text-white/30 text-xs text-center py-6">{i18n.t('error.dataLoadFailed')}</p>
 		{:else}

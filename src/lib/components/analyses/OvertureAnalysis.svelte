@@ -767,7 +767,7 @@
 				<summary class="method-summary">Distribución por territorio /100</summary>
 				<div class="method-body">
 					{#if calibrationLoading}
-						<p class="explain-text">Cargando…</p>
+						<p class="explain-text">{i18n.t('common.loading')}</p>
 					{:else if calibrationData.length > 0}
 						<table class="calib-table">
 							<thead><tr><th>Territorio</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
