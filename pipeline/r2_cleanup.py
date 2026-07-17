@@ -35,6 +35,7 @@ import re
 import sys
 import json
 import pathlib
+import collections
 import urllib.request
 import urllib.parse
 
@@ -103,6 +104,90 @@ def reason(key: str, blob: str):
     if BUILDING_RE.match(key):
         return "unreferenced tile"
     return None
+
+
+# ── Unserved parquets: report, never delete ─────────────────────────────────
+# reason() only ever classifies .pmtiles as unreferenced; for a parquet it returns
+# None. That is deliberate — per-department parquets are never named literally
+# (config.ts builds them as `sat_${analysisId}_${dept}.parquet`), so a naive
+# "unreferenced parquet" rule would propose deleting ~12.7k LIVE files.
+#
+# The cost of that silence: the 5 composites pruned on 2026-05-31 sat in R2 for six
+# weeks (1.002 objs, 362 MB) while this script printed "Nothing to delete".
+#
+# So we judge parquets by a different question — not "does any file name it?" but
+# "does the SITE build a URL for it?" — and we only REPORT the answer. These are not
+# auto-deletable: some unserved parquets are CI inputs that workflows fetch from R2 by
+# shell-variable name (`r2 object get "neahub/data/${f}.parquet"`), which no literal
+# scan can see. Deleting those breaks the pipeline. A human decides; this just points.
+
+SITE_DIR = "src"
+
+# Per-department URL shapes, straight from config.ts:116/120/124.
+DEPT_DIRS = {"flood_dpto": "hex_flood_", "scores_dpto": "overture_scores_", "sat_dpto": "sat_"}
+
+
+def site_blob() -> str:
+    """Only src/ — the serving surface. A name that lives solely in pipeline/ means
+    'we can generate it', not 'we serve it'; that is the whole distinction here."""
+    parts = []
+    for p in (REPO / SITE_DIR).rglob("*"):
+        if p.is_file() and p.suffix in SCAN_EXTS:
+            try:
+                parts.append(p.read_text(encoding="utf-8", errors="ignore"))
+            except OSError:
+                pass
+    if not parts:
+        raise SystemExit("refusing to run: scanned no src/ files")
+    return "\n".join(parts)
+
+
+def served_stems(sblob: str) -> set:
+    """Parquet stems the site builds a URL for: getParquetUrl('x') -> /data/x.parquet,
+    the registry's `parquet:` field (also the sat_dpto prefix), and literal /data/x.parquet."""
+    out = set()
+    out |= set(re.findall(r"getParquetUrl\('([a-z0-9_]+)'\)", sblob))
+    out |= set(re.findall(r"parquet:\s*'([a-z0-9_]+)'", sblob))
+    out |= set(re.findall(r"/data/([a-z0-9_]+)\.parquet", sblob))
+    return {s for s in out if s}
+
+
+def served(key: str, stems: set) -> bool:
+    parts = key.split("/")
+    stem = parts[-1][: -len(".parquet")]
+    if stem in stems:
+        return True
+    d = parts[-2] if len(parts) > 1 else ""
+    if d in DEPT_DIRS and stem.startswith(DEPT_DIRS[d]):
+        # sat_dpto is layer-scoped: sat_<layer>_<dept> is live only if <layer> is served.
+        # flood_dpto/scores_dpto are whole-surface: the dir itself is what the site asks for.
+        if d == "sat_dpto":
+            return any(stem.startswith(s + "_") for s in stems)
+        return True
+    return any(stem.startswith(s + "_") for s in stems)
+
+
+def report_unserved(keys, stems, blob):
+    fam = collections.defaultdict(lambda: [0, 0, False])
+    for k, s in keys:
+        if not k.endswith(".parquet") or "/archive/" in k:
+            continue
+        if served(k, stems):
+            continue
+        stem = k.split("/")[-1][: -len(".parquet")]
+        f = "_".join(stem.split("_")[:3])
+        fam[f][0] += 1
+        fam[f][1] += s
+        fam[f][2] = fam[f][2] or referenced(k, blob)  # named outside src/ => maybe a CI input
+    if not fam:
+        print("\nUnserved parquets: none — every parquet in R2 maps to a URL src/ builds.")
+        return
+    tot = sum(v[1] for v in fam.values())
+    print(f"\n!! {sum(v[0] for v in fam.values()):,} parquet(s) that src/ never builds a URL for"
+          f"  ({tot/MB:.1f} MB) — REVIEW BY HAND, not deleted by this script:")
+    for f, (c, b, ci) in sorted(fam.items(), key=lambda x: -x[1][1]):
+        note = "pipeline/CI names it -> may be a CI input, check before deleting" if ci else "nothing names it"
+        print(f"   {f:34s} {c:5,d} obj  {b/MB:8.1f} MB   [{note}]")
 
 
 def assert_safe(todel, blob):
@@ -194,8 +279,11 @@ def main():
     print(f"\nCurrent: {len(keys):,} objects  {total/GiB:.3f} GiB"
           f"  [{'+' if over > 0 else ''}{over:.3f} vs a 10-GiB tier; see r2_inventory.py"
           f" for both readings]")
+    # Before any early return: "nothing to delete" must never again mean "nothing to see".
+    report_unserved(keys, served_stems(site_blob()), blob)
+
     if not todel:
-        print("\nNothing to delete.")
+        print("\nNothing to delete (in the categories this script deletes).")
         return
 
     by_cat = {}
