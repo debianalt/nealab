@@ -40,7 +40,6 @@
 		// Economía e infraestructura
 		economic_activity: 'menu.sub.activity',
 		eudr: 'menu.sub.trade',
-		powerline_density: 'menu.sub.infrastructure',
 	};
 
 	// Keyed off the closed rigorBadge union (config.ts:1002). Was an inline ternary

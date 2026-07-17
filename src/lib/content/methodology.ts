@@ -191,24 +191,6 @@ export const ANALYSIS_CONTENT: Record<string, LocalizedMethodologyContent> = {
 			en: 'Source: Dynamic World V1 (Google / World Resources Institute), 10 m land-cover classification derived from Sentinel-2 via deep learning (near-real-time). Each H3 res-9 hexagon receives the mean fraction [0–1] of the 9 classes: water, trees, grass, flooded vegetation, crops, shrub, built, bare soil and snow/ice. Map colour uses the tree fraction (frac_trees). A global product with an identical method across Argentina, Paraguay and Brazil → directly comparable across territories, without the discontinuities of national MapBiomas collections.',
 		},
 	},
-	powerline_density: {
-		howToRead: {
-			es: 'Mapa de densidad de líneas de media y alta tensión. Hexágonos más claros = mayor densidad de infraestructura eléctrica. Score basado en longitud total y cantidad de líneas dentro de cada hexágono.',
-			en: 'Map of medium and high-voltage transmission line density. Lighter hexagons = higher electrical infrastructure density. Score based on total length and number of lines within each hexagon.',
-			gn: "Mapa línea eléctrica densidad. Hexágono sovy = yvate densidad eléctrica. Score oñemboguapýva longitud ha papapy línea ndive.",
-			pt: 'Mapa de densidade de linhas de média e alta tensão. Hexágonos mais claros = maior densidade de infraestrutura elétrica. Score baseado no comprimento total e na quantidade de linhas dentro de cada hexágono.',
-		},
-		implications: {
-			es: 'La cobertura eléctrica condiciona toda actividad productiva y residencial. Zonas con baja densidad de líneas requieren extensión de red para habilitar nuevos emprendimientos. La distancia a líneas existentes es el principal factor de costo de electrificación rural.',
-			en: 'Electrical coverage conditions all productive and residential activity. Zones with low line density require network extension to enable new enterprises. Distance to existing lines is the main cost factor for rural electrification.',
-			gn: "Cobertura eléctrica ohechauka opaichagua tembiapo. Yvy michĩ densidadháva ikuai oguereko red pyahu. Mombyry línea = yvate costo electrificación rural.",
-			pt: 'A cobertura elétrica condiciona toda atividade produtiva e residencial. Zonas com baixa densidade de linhas requerem extensão de rede para viabilizar novos empreendimentos. A distância às linhas existentes é o principal fator de custo da eletrificação rural.',
-		},
-		method: {
-			es: `Fuente: EMSA (Secretaría de Energía, datos.energia.gob.ar, abril 2024). Líneas de media y alta tensión georreferenciadas, intersectadas con grilla H3 resolución 9. Score = longitud total de líneas / área del hexágono, normalizado 0-100.`,
-			en: `Source: EMSA (Secretaría de Energía, datos.energia.gob.ar, April 2024). Medium and high-voltage transmission lines georeferenced, intersected with H3 resolution 9 grid. Score = total line length / hexagon area, normalised 0–100.`,
-		},
-	},
 	sociodemographic: {
 		howToRead: {
 			es: 'El color del mapa representa el porcentaje de hogares con NBI de cada hexágono, la variable principal; la leyenda va de bajo a alto NBI. Al hacer click se ve el perfil completo (densidad poblacional, NBI, hacinamiento, tenencia de vivienda, tamaño del hogar y acceso digital) y el tipo sociodemográfico asignado por la clasificación multivariada (PCA + k-means).',

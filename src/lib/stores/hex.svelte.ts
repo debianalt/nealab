@@ -318,7 +318,7 @@ export class HexStore {
 	private layerGlobalUrl(layer: HexLayerConfig): string | undefined {
 		const url = PARQUETS[layer.parquet as keyof typeof PARQUETS];
 		if (!url) return undefined;
-		// Only sat_* parquets are territory-specific; EUDR, emsa, etc. use a fixed global URL
+		// Only sat_* parquets are territory-specific; EUDR etc. use a fixed global URL
 		if (!this.territoryPrefix || !layer.parquet?.startsWith('sat_')) return url;
 		return url.replace('/data/', `/data/${this.territoryPrefix}`);
 	}

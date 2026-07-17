@@ -103,7 +103,6 @@ export function getParquetUrl(name: string): string {
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=5',
 		sat_censo_temporal: '?v=1',
-		emsa_powerlines: '?v=20',
 	};
 	const bust = busts[name] || '';
 	return `${getBase()}/data/${name}.parquet${bust}`;
@@ -223,8 +222,6 @@ export const PARQUETS = {
 	get radio_stats_parana_br()         { return `${getBase()}/data/setores_stats_parana_br.parquet`; },
 	get radio_stats_santa_catarina_br() { return `${getBase()}/data/setores_stats_santa_catarina_br.parquet`; },
 	get radio_stats_rio_grande_sul_br() { return `${getBase()}/data/setores_stats_rio_grande_sul_br.parquet`; },
-	// Public infrastructure (datos.gob.ar)
-	get emsa_powerlines() { return getParquetUrl('emsa_powerlines'); },
 	// EUDR deforestation (H3 res-7, 10 provinces)
 	get eudr_deforestation() { return getEudrParquetUrl('eudr_deforestation'); },
 	// Itapua district-level satellite scores
@@ -563,29 +560,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendLowKey: 'legend.flood.low',
 		legendHighKey: 'legend.flood.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
-	},
-	// ── EMSA: Infraestructura eléctrica ──
-	powerline_density: {
-		id: 'powerline_density',
-		parquet: 'emsa_powerlines',
-		variables: [
-			{ col: 'score', labelKey: 'emsa.score', aggregation: 'mean' },
-			{ col: 'line_length_m', labelKey: 'emsa.lineLength', aggregation: 'sum', unit: 'm' },
-			{ col: 'line_count', labelKey: 'emsa.lineCount', aggregation: 'sum', unit: 'líneas' },
-		],
-		primaryVariable: 'line_length_m',
-		colorScale: 'warm',
-		aggregation: 'mean',
-		petalVars: [
-			{ col: 'score', labelKey: 'emsa.score', aggregation: 'mean' },
-			{ col: 'line_length_m', labelKey: 'emsa.lineLength', aggregation: 'sum', unit: 'm' },
-			{ col: 'line_count', labelKey: 'emsa.lineCount', aggregation: 'sum', unit: 'líneas' },
-		],
-		titleKey: 'emsa.title',
-		perDepartment: false,
-		legendLowKey: 'legend.powerline.low',
-		legendHighKey: 'legend.powerline.high',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 	// ── Satellite composite scores ──
 	agri_potential: {
@@ -1193,16 +1167,6 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	{
-		id: 'powerline_density',
-		lensId: 'economia',
-		titleKey: 'emsa.title',
-		descKey: 'emsa.desc',
-		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
-		rigorBadge: 'physical',
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
 ];
 
 // ── Dev-only invariant: HEX_LAYER_REGISTRY and ANALYSIS_REGISTRY each carry a
@@ -1442,7 +1406,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_health_access: { dataDate: 'Oxford MAP 2019 + Censo 2022', processedDate: '02/04/2026', sourceKey: 'data.source.satellite' },
 	sat_education_capital: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
 	sat_education_flow: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
-	emsa_powerlines: { dataDate: 'EMSA abril 2024', processedDate: '27/03/2026', sourceKey: 'data.source.emsa' },
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '29/03/2026', sourceKey: 'data.source.censo' },
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'data.source.censo' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },

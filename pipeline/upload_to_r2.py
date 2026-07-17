@@ -29,7 +29,6 @@ UPLOAD_MAP = {
     "overture_transportation.parquet": "data/overture_transportation.parquet",
     "overture_places.parquet": "data/overture_places.parquet",
     "overture_base.parquet": "data/overture_base.parquet",
-    "emsa_powerlines.parquet": "data/emsa_powerlines.parquet",
 }
 
 

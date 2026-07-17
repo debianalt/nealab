@@ -86,8 +86,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.eduCap.high': { es: 'Bajo capital', en: 'Low capital', gn: 'Michĩ capital', pt: 'Baixo capital' },
 	'legend.eduFlow.low': { es: 'Buen desempeño', en: 'Good performance', gn: 'Porã', pt: 'Bom desempenho' },
 	'legend.eduFlow.high': { es: 'Mal desempeño', en: 'Poor performance', gn: 'Vai', pt: 'Mau desempenho' },
-	'legend.powerline.low': { es: 'Baja densidad', en: 'Low density', gn: 'Michĩ', pt: 'Baixa densidade' },
-	'legend.powerline.high': { es: 'Alta densidad', en: 'High density', gn: 'Tuicha', pt: 'Alta densidade' },
 	'legend.eudr.low': { es: 'Bajo riesgo EUDR', en: 'Low EUDR risk', gn: 'Michĩ EUDR', pt: 'Baixo risco EUDR' },
 	'legend.eudr.high': { es: 'Alto riesgo EUDR', en: 'High EUDR risk', gn: 'Yvate EUDR', pt: 'Alto risco EUDR' },
 	'legend.accessibility.low': { es: 'Cerca del capital', en: 'Near capital', gn: 'Peteĩ', pt: 'Perto da capital' },
@@ -125,7 +123,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'menu.sub.education': { es: 'Educación', en: 'Education', gn: 'Educación', pt: 'Educação' }, // gn: pendiente
 	'menu.sub.activity': { es: 'Actividad', en: 'Activity', gn: 'Actividad', pt: 'Atividade' }, // gn: pendiente
 	'menu.sub.trade': { es: 'Comercio (EUDR)', en: 'Trade (EUDR)', gn: 'Comercio (EUDR)', pt: 'Comércio (EUDR)' }, // gn: pendiente
-	'menu.sub.infrastructure': { es: 'Infraestructura', en: 'Infrastructure', gn: 'Infraestructura', pt: 'Infraestrutura' }, // gn: pendiente
 	'menu.sub.other': { es: 'Otros', en: 'Other', gn: 'Otros', pt: 'Outros' }, // gn: pendiente
 	// Rigor badges under every analysis in the menu. Emoji stays in the value — it is
 	// part of the badge, not decoration around it.
@@ -298,14 +295,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'data.source.catastro': { es: 'Fuente: Dirección General de Catastro, Misiones', en: 'Source: Dirección General de Catastro, Misiones', gn: "Moñe'ẽha: Catastro, Misiones", pt: 'Fonte: Dirección General de Catastro, Misiones' },
 	'data.source.overture': { es: 'Fuente: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', en: 'Source: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', gn: "Moñe'ẽha: Overture Maps Foundation (CC BY 4.0)", pt: 'Fonte: Overture Maps Foundation via walkthru.earth (CC BY 4.0)' },
 	'data.source.satellite': { es: 'Fuente: MODIS, Landsat, ERA5, SoilGrids, VIIRS, Hansen GFC', en: 'Source: MODIS, Landsat, ERA5, SoilGrids, VIIRS, Hansen GFC', gn: "Moñe'ẽha: MODIS, Landsat, VIIRS", pt: 'Fonte: MODIS, Landsat, ERA5, SoilGrids, VIIRS, Hansen GFC' },
-	'data.source.emsa': { es: 'Fuente: EMSA — Secretaría de Energía, datos.energia.gob.ar', en: 'Source: EMSA — Secretaría de Energía, datos.energia.gob.ar', gn: "Moñe'ẽha: EMSA — Secretaría de Energía", pt: 'Fonte: EMSA — Secretaría de Energía, datos.energia.gob.ar' },
-
-	// ── EMSA powerlines ──
-	'emsa.title': { es: '¿Dónde llega la red eléctrica?', en: 'Where does the power grid reach?', gn: "Moõpa oguahẽ corriente?", pt: 'Onde chega a rede elétrica?' },
-	'emsa.desc': { es: 'Densidad de líneas de media y alta tensión por hexágono (EMSA, datos.energia.gob.ar)', en: 'Medium and high voltage powerline density per hexagon (EMSA, datos.energia.gob.ar)', gn: "Corriente tape hexágono rupi", pt: 'Densidade de linhas de média e alta tensão por hexágono (EMSA, datos.energia.gob.ar)' },
-	'emsa.score': { es: 'Score electrificación', en: 'Electrification score', gn: "Score corriente", pt: 'Score de eletrificação' },
-	'emsa.lineLength': { es: 'Longitud de líneas (m)', en: 'Line length (m)', gn: "Tape puku (m)", pt: 'Comprimento das linhas (m)' },
-	'emsa.lineCount': { es: 'Cantidad de líneas', en: 'Line count', gn: "Tape papapy", pt: 'Quantidade de linhas' },
 
 	// ── EUDR variables ──
 	'eudr.riskScore': { es: 'Score de riesgo EUDR', en: 'EUDR risk score', gn: 'EUDR riesgo', pt: 'Score de risco EUDR' },
