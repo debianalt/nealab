@@ -11,8 +11,8 @@ authors:
 repository-code: "https://github.com/debianalt/nealab"
 url: "https://www.spatia.ar"
 license: AGPL-3.0-only
-version: 2.3.0
-date-released: "2026-06-19"
+version: 2.3.1
+date-released: "2026-07-18"
 doi: "10.5281/zenodo.19483040"
 keywords:
   - geospatial analysis
@@ -32,7 +32,8 @@ abstract: >-
   Google Earth Engine, processes rasters into H3 zonal statistics, computes
   scores using geometric means validated by KMO/Bartlett/PCA diagnostics
   (OECD Handbook / UNDP HDI methodology), and serves results via DuckDB-WASM
-  on Cloudflare Pages. Applied to the NEA (northeast Argentina) and its
-  cross-border regions (Paraguay, southern Brazil), with ~320,000 hexagons
-  per territory and 27 analyses across four thematic
-  lenses: investment, production, services, and housing.
+  on Cloudflare Pages. Applied to 24 subnational territories across the NEA
+  (northeast Argentina) and its cross-border regions (Paraguay, southern
+  Brazil), ranging from ~320,000 hexagons for Misiones to ~1.1 million for
+  Chaco, with 16 hexagon-level analyses and 8 census-tract-level analyses
+  across four thematic lenses: investment, production, services, and housing.
