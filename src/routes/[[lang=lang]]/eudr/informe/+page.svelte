@@ -180,9 +180,10 @@
 	<!-- Sources -->
 	<footer class="sources">
 		<h2 class="src-h">{tr('Fuentes y cita', 'Sources and citation')}</h2>
-		<p class="cite">{CITA_MAPBIOMAS} <span class="cc">CC-BY</span></p>
 		<ul>
-			<li>Hansen Global Forest Change (UMD / Google) · MODIS MCD64A1</li>
+			<li class="src-cite">{CITA_MAPBIOMAS} <span class="cc">CC-BY</span></li>
+			<li>Hansen Global Forest Change v1.13 — {tr('pérdida de cobertura arbórea', 'tree-cover loss')} (UMD / Google Earth Engine)</li>
+			<li>MODIS MCD64A1 — {tr('área quemada', 'burned area')} (NASA)</li>
 			<li>
 				{tr('Código', 'Code')}:
 				<a href="https://github.com/debianalt/nealab" target="_blank" rel="noopener">github.com/debianalt/nealab</a>
@@ -524,28 +525,24 @@
 		padding-bottom: 0.5rem;
 		border-bottom: 1px solid #24252b;
 	}
-	.cite {
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.8rem;
-		line-height: 1.55;
-		color: #c3c2b7;
-		background: rgba(57, 135, 229, 0.06);
-		border-left: 2px solid #199e70;
-		padding: 0.8rem 1rem;
-		border-radius: 0 5px 5px 0;
-	}
-	.cite .cc {
-		color: #22c39a;
-		font-weight: 700;
-	}
 	.sources ul {
 		list-style: none;
 		padding: 0;
 		margin: 1.25rem 0;
 	}
 	.sources li {
-		margin: 0.45rem 0;
+		margin: 0.55rem 0;
 		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+	/* MapBiomas is the one required (CC-BY) citation — same list format as the
+	   other sources, only a touch brighter to mark it as the cited source. */
+	.src-cite {
+		color: #c3c2b7;
+	}
+	.cc {
+		color: #22c39a;
+		font-weight: 700;
 	}
 	.sources a {
 		color: #22c39a;
