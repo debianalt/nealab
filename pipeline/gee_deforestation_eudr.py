@@ -88,13 +88,19 @@ def build_eudr_deforestation(bbox):
     # monthly CI refresh actually picks up new MODIS months (MCD64A1 lags ~1-2
     # months; a fixed end date silently froze the fire signal).
     fire_end = time.strftime("%Y-%m-%d")
+    # Unmask AFTER the temporal reduction, not per-image. Doing .unmask(0) inside
+    # the map (before .mean()) masks the entire reduction over regions where MODIS
+    # monthly coverage is sparse — the whole NEA came out masked (→ NaN → fire=0
+    # in the parquet, silently zeroing the 20% fire term of the risk score).
+    # .mean().unmask(0) = fraction of observed months burned, 0 where never burned.
     fire_post_2020 = (
         ee.ImageCollection("MODIS/061/MCD64A1")
         .filterDate("2021-01-01", fire_end)
         .filterBounds(bbox)
         .select("BurnDate")
-        .map(lambda img: img.gt(0).unmask(0))
+        .map(lambda img: img.gt(0))
         .mean()
+        .unmask(0)
     )
 
     composite = (

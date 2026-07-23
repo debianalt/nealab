@@ -65,6 +65,9 @@
 		</div>
 
 		{#if analysis.id === 'eudr'}
+			<a href={lp('/eudr/informe', i18n.locale)} class="block mb-3 px-4 py-3 rounded-lg border border-emerald-400/60 bg-emerald-400/15 text-[13px] font-semibold text-emerald-100 hover:bg-emerald-400/25 hover:border-emerald-400 hover:text-white transition-colors leading-snug shadow-[0_0_18px_rgba(52,211,153,0.18)]">
+				{i18n.t('eudr.informe.cta_from_layer')}
+			</a>
 			<p class="mb-2 text-[10px] text-white/40 leading-relaxed">{i18n.t('eudr.layer_hint')}</p>
 			<a href={lp('/eudr/check', i18n.locale)} class="block mb-3 px-4 py-3 rounded-lg border border-yellow-400/70 bg-yellow-400/15 text-[13px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors leading-snug shadow-[0_0_18px_rgba(250,204,21,0.18)]">
 				{i18n.t('eudr.check.cta_from_layer')}

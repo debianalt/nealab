@@ -7,9 +7,13 @@
 		onCellClick?: (lat: number, lon: number, h3index: string) => void;
 		onPolygonDrawn?: (rings: number[][][]) => void;
 		onDrawModeChange?: (active: boolean) => void;
+		/** When false, all gesture handlers and zoom controls are disabled and the
+		 *  camera moves only programmatically (flyTo/showCells). Used by the guided
+		 *  storymap so the wheel scrolls the page instead of zooming the map. */
+		interactive?: boolean;
 	}
 
-	let { onCellClick, onPolygonDrawn, onDrawModeChange }: Props = $props();
+	let { onCellClick, onPolygonDrawn, onDrawModeChange, interactive = true }: Props = $props();
 
 	let mapContainer: HTMLDivElement;
 	let map: maplibregl.Map;
@@ -145,9 +149,12 @@
 			minZoom: 4,
 			maxZoom: 14,
 			attributionControl: false,
+			interactive,
 		});
 
-		map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+		if (interactive) {
+			map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+		}
 
 		map.on('load', () => {
 			// Hide the basemap's own admin/boundary lines so they don't compete
@@ -287,7 +294,7 @@
 
 		// Click handler — runs only when NOT in lasso mode (lasso swallows the gesture)
 		map.on('click', (e) => {
-			if (lassoActive) return;
+			if (!interactive || lassoActive) return;
 			const lat = e.lngLat.lat;
 			const lon = e.lngLat.lng;
 			setMarker(lat, lon);

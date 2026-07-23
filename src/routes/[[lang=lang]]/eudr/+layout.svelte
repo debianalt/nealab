@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../../../app.css';
+	import { i18n } from '$lib/stores/i18n.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	let { children } = $props();
 </script>
 
@@ -9,6 +11,8 @@
 			<a href="/" class="text-[17px] font-bold text-white tracking-wide hover:text-white/80 transition-colors">nealab</a>
 			<span class="text-white/20">&middot;</span>
 			<a href="/" class="text-[13px] text-white/40 hover:text-white transition-colors">&larr; Mapa</a>
+			<span class="text-white/20">&middot;</span>
+			<a href={lp('/eudr/informe', i18n.locale)} class="text-[13px] text-white/40 hover:text-white transition-colors">Informe EUDR</a>
 		</div>
 	</header>
 	<main class="max-w-6xl mx-auto px-6">

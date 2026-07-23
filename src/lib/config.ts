@@ -139,7 +139,8 @@ export function getEudrMetaUrl(): string {
 // h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
 // v=3: Hansen v1.13 (loss through 2025, adds loss_2025_pct) + ZSTD compression.
 export function getEudrHiresUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=3`;
+	// v=4: Hansen 2025 + MODIS fire loaded (AR res-9 fire was silently 0).
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=4`;
 }
 
 // Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
@@ -1426,8 +1427,9 @@ export const MAP_EUDR = {
 const R2_EUDR_BASE = `${R2_PROD}/data/eudr`;
 
 export function getEudrParquetUrl(name: string): string {
-	// v=26: Hansen v1.13 (loss through 2025) + ZSTD.
-	return `${R2_EUDR_BASE}/${name}.parquet?v=26`;
+	// v=27: Hansen v1.13 (loss through 2025) + MODIS fire loaded (MCD64A1 masking
+	// fix — AR fire was silently 0, zeroing the 20% fire term) + ZSTD.
+	return `${R2_EUDR_BASE}/${name}.parquet?v=27`;
 }
 
 export const EUDR_RISK_COLORS = {

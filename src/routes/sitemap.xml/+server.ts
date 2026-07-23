@@ -11,7 +11,7 @@ const ORIGIN = 'https://spatia.ar';
 const MAP_PATH = '/';
 
 // One entry per path; each expands to its 4 locale variants below.
-const LOCALIZED_PATHS = ['/servicios', '/eudr/check', '/metodologia'];
+const LOCALIZED_PATHS = ['/servicios', '/eudr/informe', '/eudr/check', '/metodologia'];
 
 // No lastmod/changefreq/priority: Google ignores the latter two, and a lastmod it
 // learns not to trust is worse than none. The methodology ids come from the same
