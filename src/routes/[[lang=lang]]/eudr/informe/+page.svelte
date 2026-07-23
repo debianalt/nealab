@@ -182,10 +182,13 @@
 		<h2 class="src-h">{tr('Fuentes y cita', 'Sources and citation')}</h2>
 		<p class="cite">{CITA_MAPBIOMAS} <span class="cc">CC-BY</span></p>
 		<ul>
-			<li>Hansen Global Forest Change (UMD / Google) · MODIS MCD64A1 · MapBiomas Argentina</li>
+			<li>Hansen Global Forest Change (UMD / Google) · MODIS MCD64A1</li>
 			<li>
 				{tr('Código', 'Code')}:
 				<a href="https://github.com/debianalt/nealab" target="_blank" rel="noopener">github.com/debianalt/nealab</a>
+			</li>
+			<li>
+				DOI: <a href="https://doi.org/10.5281/zenodo.19483040" target="_blank" rel="noopener">10.5281/zenodo.19483040</a>
 			</li>
 		</ul>
 		<p class="disclaimer">

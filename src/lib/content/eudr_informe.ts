@@ -128,4 +128,4 @@ export const INFORME: Record<string, Block> = {
 
 // MapBiomas citation (CC-BY) — the plantation baseline uses Collection 1.
 export const CITA_MAPBIOMAS =
-	'MapBiomas – Colección 1 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada a través de https://argentina.mapbiomas.org';
+	'MapBiomas – Colección 1 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 22 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';
