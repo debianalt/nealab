@@ -77,20 +77,23 @@
 	// screens so the province sits fully in the open right area.
 	export function fitBounds(bounds: [[number, number], [number, number]]) {
 		if (!map) return;
+		// The sticky scrolly container can leave the canvas a stale size; sync it to
+		// the current container before measuring/fitting.
+		map.resize();
 		const w = map.getContainer().clientWidth;
-		let left = 30;
-		let right = 30;
-		if (w >= 820) {
-			const trackLeft = Math.max(0, (w - 1200) / 2);
-			left = trackLeft + 500; // clear the ~500px text card
-			right = 48;
-		}
-		// Bottom padding >> top so the frame sits higher: it both zooms out for a
-		// margin and biases the province upward, keeping the southern edge clear of
-		// the viewport bottom (the previous framing clipped it).
+		const h = map.getContainer().clientHeight;
+		const wide = w >= 820;
+		// left clears the text column on wide screens so the province sits in the
+		// open right area; padding as fractions of the real size stays within bounds.
+		const left = wide ? Math.min(Math.round(w * 0.42), 520) : 24;
+		const right = wide ? 48 : 24;
+		// bottom >> top biases the frame upward, keeping the southern edge clear of
+		// the viewport bottom.
+		const top = Math.round(h * 0.07);
+		const bottom = Math.round(h * 0.24);
 		map.fitBounds(bounds as maplibregl.LngLatBoundsLike, {
-			padding: { top: 56, bottom: 200, left, right },
-			duration: 1500,
+			padding: { top, bottom, left, right },
+			duration: 1200,
 			maxZoom: 8.5,
 		});
 	}

@@ -151,7 +151,11 @@
 		top: 0;
 		width: 100%;
 		height: 100vh;
-		min-height: var(--vh);
+		/* NOT min-height:var(--vh): --vh defaults to 800 until the parent onMount
+		   measures innerHeight, which inflates the sticky container above the real
+		   viewport while the map initialises — the canvas then ends up taller than
+		   what's visible and the framed content is clipped at the bottom. */
+		min-height: 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
