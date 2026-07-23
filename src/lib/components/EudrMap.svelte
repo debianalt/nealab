@@ -89,7 +89,7 @@
 		// margin and biases the province upward, keeping the southern edge clear of
 		// the viewport bottom (the previous framing clipped it).
 		map.fitBounds(bounds as maplibregl.LngLatBoundsLike, {
-			padding: { top: 56, bottom: 150, left, right },
+			padding: { top: 56, bottom: 200, left, right },
 			duration: 1500,
 			maxZoom: 8.5,
 		});
