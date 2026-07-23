@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * EudrStoryMap — sticky media for the EUDR storymap. Wraps EudrMap and drives it
-	 * per scroll step (flyTo + showCells). Guided-only: the map is non-interactive
+	 * per scroll step (fitBounds + showCells). Guided-only: the map is non-interactive
 	 * (no scroll-zoom, pan or click), so the wheel always advances the story and the
 	 * narrative fully controls the camera. Per-parcel inspection lives in the
 	 * dedicated interactive tool at /eudr/check.
@@ -14,9 +14,7 @@
 
 	export interface StepView {
 		province: string | null;
-		lat: number;
-		lon: number;
-		zoom: number;
+		bounds: [[number, number], [number, number]];
 	}
 
 	interface Props {
@@ -62,7 +60,7 @@
 	function applyStep(i: number) {
 		const v = views[i];
 		if (!v || !mapRef) return;
-		mapRef.flyTo(v.lat, v.lon, v.zoom);
+		mapRef.fitBounds(v.bounds);
 		if (v.province) paint(v.province);
 		else mapRef.clearPolygon?.();
 	}

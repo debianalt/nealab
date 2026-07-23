@@ -18,13 +18,16 @@
 	let mapStep = $state(0);
 	let progress = $state(0);
 
+	// Real province bounding boxes (from eudr_provinces_boundary.json). The map
+	// fits each with padding so the full extent — including the southern edge that
+	// a fixed-zoom flyTo used to clip — stays visible beside the text column.
 	const views = [
-		{ province: 'ALL' as string | null, lat: -26.5, lon: -58.5, zoom: 5.3 },
-		{ province: 'ar_misiones', lat: -26.9, lon: -54.5, zoom: 6.8 },
-		{ province: 'ar_corrientes', lat: -28.8, lon: -57.8, zoom: 6.4 },
-		{ province: 'ar_chaco', lat: -26.4, lon: -60.5, zoom: 6.2 },
-		{ province: 'ar_formosa', lat: -24.8, lon: -59.6, zoom: 6.3 }
-	];
+		{ province: 'ALL', bounds: [[-63.428, -30.755], [-53.592, -22.462]] },
+		{ province: 'ar_misiones', bounds: [[-56.06, -28.164], [-53.592, -25.502]] },
+		{ province: 'ar_corrientes', bounds: [[-59.689, -30.755], [-55.616, -27.248]] },
+		{ province: 'ar_chaco', bounds: [[-63.428, -27.999], [-58.364, -24.093]] },
+		{ province: 'ar_formosa', bounds: [[-62.348, -26.872], [-57.554, -22.462]] }
+	] as { province: string | null; bounds: [[number, number], [number, number]] }[];
 
 	const stepDefs = [
 		{ key: 'stepOverview', title: { es: 'El territorio', en: 'The territory' } },

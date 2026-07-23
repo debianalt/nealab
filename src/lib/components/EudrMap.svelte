@@ -71,6 +71,27 @@
 		map?.flyTo({ center: [lon, lat], zoom, duration: 1500 });
 	}
 
+	// Frame a bounding box so the whole extent stays visible. Generous top/bottom
+	// padding keeps the full N-S extent in view (a fixed-zoom flyTo clipped the
+	// southern edge); left padding clears the storymap's text column on wide
+	// screens so the province sits fully in the open right area.
+	export function fitBounds(bounds: [[number, number], [number, number]]) {
+		if (!map) return;
+		const w = map.getContainer().clientWidth;
+		let left = 30;
+		let right = 30;
+		if (w >= 820) {
+			const trackLeft = Math.max(0, (w - 1200) / 2);
+			left = trackLeft + 500; // clear the ~500px text card
+			right = 48;
+		}
+		map.fitBounds(bounds as maplibregl.LngLatBoundsLike, {
+			padding: { top: 58, bottom: 70, left, right },
+			duration: 1500,
+			maxZoom: 8.5,
+		});
+	}
+
 	export function setMarker(lat: number, lon: number) {
 		marker?.remove();
 		marker = new maplibregl.Marker({ color: '#ec4899' })
