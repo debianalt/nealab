@@ -139,8 +139,9 @@ export function getEudrMetaUrl(): string {
 // h3index with row-group stats so DuckDB-WASM range-reads only the matching group.
 // v=3: Hansen v1.13 (loss through 2025, adds loss_2025_pct) + ZSTD compression.
 export function getEudrHiresUrl(): string {
-	// v=4: Hansen 2025 + MODIS fire loaded (AR res-9 fire was silently 0).
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=4`;
+	// v=5: adds loss_2025_pct (AR) so the check page's LOSS_YEARS query binds; v=4
+	// had Hansen 2025 + fire but the yearly column was dropped in the combine.
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=5`;
 }
 
 // Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
