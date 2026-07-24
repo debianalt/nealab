@@ -64,11 +64,23 @@ export const INFORME: Record<string, Block> = {
 		en: `<p>In Corrientes, more than nine of every ten hectares lost were over pre-existing plantation. Without the MapBiomas baseline, that loss would count as deforestation and inflate the risk assigned to the forestry sector. In Chaco and Formosa, by contrast, almost all the loss falls on native vegetation.</p>`
 	},
 
+	fuegoLead: {
+		es: `<p>El índice pondera también el área quemada, bajo el supuesto de que el fuego acompaña a la conversión de bosque. En el nordeste argentino ese supuesto se sostiene mal: buena parte del fuego regional ocurre sobre pastizal y humedal, donde es régimen natural. La misma línea base de cobertura que separa cosecha de conversión permite filtrarlo.</p>`,
+		en: `<p>The index also weights burned area, on the assumption that fire tracks forest conversion. In north-eastern Argentina that assumption holds poorly: much of the regional fire occurs over grassland and wetland, where it is a natural regime. The same cover baseline that separates harvest from conversion can filter it.</p>`
+	},
+
+	fuegoAfter: {
+		es: `<p>El filtro no baja todo por igual: reordena. Antes del filtro, Corrientes y Formosa parecían casi equivalentes, con 18,3 % y 20,4 % de su superficie quemada. Contando sólo lo que ardió sobre bosque o monte nativo, Formosa queda en 15,5 % y Corrientes cae a 1,0 %, quince veces menos. Corrientes tenía la mayor área quemada de la región y a la vez la mayor proporción de pérdida explicada por cosecha; el fuego era del Iberá y sus pastizales, no de un frente de deforestación.</p>
+<p>El score de riesgo pondera ahora esa fracción filtrada. Con el cambio, el riesgo medio regional baja de 11,4 a 9,8 y Formosa pasa a ser la provincia de mayor riesgo.</p>`,
+		en: `<p>The filter does not lower everything equally: it reorders. Before filtering, Corrientes and Formosa looked almost equivalent, at 18.3% and 20.4% of their area burned. Counting only what burned over native forest or woodland, Formosa stays at 15.5% and Corrientes falls to 1.0%, fifteen times less. Corrientes had the largest burned area in the region and also the highest share of loss explained by harvest; its fire came from the Iberá wetlands and their grasslands, not from a deforestation frontier.</p>
+<p>The risk score now weights that filtered fraction. With the change, mean regional risk falls from 11.4 to 9.8 and Formosa becomes the highest-risk province.</p>`
+	},
+
 	limitaciones: {
 		es: `<p>La señal de pérdida indica desaparición de cobertura, no su causa: la atribución final requiere verificación documental o de campo. El desglose por tipo de cobertura hereda la exactitud de la clasificación de MapBiomas a 30 m y solo cubre el territorio argentino. La verificación formal bajo el reglamento exige geometría parcelaria oficial, trazabilidad documental y debida diligencia profesional independiente.</p>
-<p>El componente de área quemada (MODIS) no separa el fuego de origen antrópico del natural. En Corrientes y Formosa predominan los incendios de pastizal y humedal, que elevan el riesgo sin implicar deforestación; en esas provincias el peso del fuego debe leerse con esa salvedad.</p>`,
+<p>El filtro de fuego separa la cobertura sobre la que ocurre la quema, no su causa: un incendio sobre monte nativo puede ser accidental y uno sobre pastizal puede preceder a un desmonte. Fuera de las cuatro provincias argentinas no hay línea base de cobertura cargada, de modo que allí el score sigue ponderando el área quemada total.</p>`,
 		en: `<p>The loss signal indicates the disappearance of cover, not its cause: final attribution requires documentary or field verification. The cover-type breakdown inherits the accuracy of the MapBiomas classification at 30 m and covers Argentine territory only. Formal verification under the regulation requires official parcel geometry, documentary traceability and independent professional due diligence.</p>
-<p>The burned-area component (MODIS) does not separate anthropogenic from natural fire. In Corrientes and Formosa, grassland and wetland fires predominate and raise the risk score without implying deforestation; in those provinces the weight of fire should be read with that caveat.</p>`
+<p>The fire filter separates the cover on which burning occurs, not its cause: a fire over native woodland may be accidental, and one over grassland may precede clearing. Outside the four Argentine provinces there is no cover baseline loaded, so the score there still weights total burned area.</p>`
 	},
 
 	cta: {

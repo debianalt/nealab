@@ -5,6 +5,7 @@
 	import EudrStoryMap from '$lib/components/scrolly/EudrStoryMap.svelte';
 	import PlantationSplitChart from '$lib/components/scrolly/PlantationSplitChart.svelte';
 	import EudrLossExtentChart from '$lib/components/scrolly/EudrLossExtentChart.svelte';
+	import FireFilterChart from '$lib/components/scrolly/FireFilterChart.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { lp } from '$lib/utils/locale-path';
 	import { INFORME, pick, CITA_MAPBIOMAS } from '$lib/content/eudr_informe';
@@ -160,6 +161,11 @@
 		<div class="chart-card">
 			<EudrLossExtentChart {locale} />
 		</div>
+		<div class="prose" lang={locale}>{@html t('fuegoLead')}</div>
+		<div class="chart-card">
+			<FireFilterChart {locale} />
+		</div>
+		<div class="prose" lang={locale}>{@html t('fuegoAfter')}</div>
 	</section>
 
 	<!-- Limitations -->

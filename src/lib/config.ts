@@ -141,7 +141,7 @@ export function getEudrMetaUrl(): string {
 export function getEudrHiresUrl(): string {
 	// v=5: adds loss_2025_pct (AR) so the check page's LOSS_YEARS query binds; v=4
 	// had Hansen 2025 + fire but the yearly column was dropped in the combine.
-	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=5`;
+	return `${getBase()}/data/eudr/hires/eudr_res9_combined.parquet?v=6`;
 }
 
 // Plantation vs native-forest fraction per res-9 hex (MapBiomas class 9 / 3-6).
@@ -943,6 +943,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		variables: [
 			{ col: 'risk_score', labelKey: 'eudr.riskScore', aggregation: 'mean' },
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean', unit: '%' },
+			{ col: 'fire_native_post_2020_pct', labelKey: 'eudr.fireNativePost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'fire_post_2020_pct', labelKey: 'eudr.firePost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'forest_cover_2020', labelKey: 'eudr.forest2020', aggregation: 'mean', unit: '%' },
 			{ col: 'forest_cover_current', labelKey: 'eudr.forestCurrent', aggregation: 'mean', unit: '%' },
@@ -953,7 +954,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		petalVars: [
 			{ col: 'risk_score', labelKey: 'eudr.riskScore', aggregation: 'mean' },
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean' },
-			{ col: 'fire_post_2020_pct', labelKey: 'eudr.firePost2020', aggregation: 'mean' },
+			{ col: 'fire_native_post_2020_pct', labelKey: 'eudr.fireNativePost2020', aggregation: 'mean' },
 			{ col: 'forest_cover_2020', labelKey: 'eudr.forest2020', aggregation: 'mean' },
 		],
 		titleKey: 'trade.eudr.analysis_title',
@@ -1430,9 +1431,10 @@ export const MAP_EUDR = {
 const R2_EUDR_BASE = `${R2_PROD}/data/eudr`;
 
 export function getEudrParquetUrl(name: string): string {
-	// v=27: Hansen v1.13 (loss through 2025) + MODIS fire loaded (MCD64A1 masking
-	// fix — AR fire was silently 0, zeroing the 20% fire term) + ZSTD.
-	return `${R2_EUDR_BASE}/${name}.parquet?v=27`;
+	// v=28: el termino de fuego del score pasa a contar solo el area quemada sobre
+	// vegetacion nativa lenosa (MapBiomas clases 3/4/5/6). El fuego crudo se conserva
+	// como columna para poder contrastarlos.
+	return `${R2_EUDR_BASE}/${name}.parquet?v=28`;
 }
 
 export const EUDR_RISK_COLORS = {

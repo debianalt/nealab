@@ -299,7 +299,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	// ── EUDR variables ──
 	'eudr.riskScore': { es: 'Score de riesgo EUDR', en: 'EUDR risk score', gn: 'EUDR riesgo', pt: 'Score de risco EUDR' },
 	'eudr.lossPost2020': { es: 'Pérdida post-2020 (%)', en: 'Post-2020 loss (%)', gn: 'Pérdida post-2020', pt: 'Perda pós-2020 (%)' },
-	'eudr.firePost2020': { es: 'Fuego post-2020 (%)', en: 'Post-2020 fire (%)', gn: 'Fuego post-2020', pt: 'Fogo pós-2020 (%)' },
+	'eudr.firePost2020': { es: 'Fuego post-2020, total (%)', en: 'Post-2020 fire, total (%)', gn: 'Fuego post-2020, opavave', pt: 'Fogo pós-2020, total (%)' },
+	'eudr.fireNativePost2020': { es: 'Fuego sobre nativa leñosa (%)', en: 'Fire on native woody cover (%)', gn: 'Fuego ka’aguy ypykuére (%)', pt: 'Fogo sobre nativa lenhosa (%)' },
 	'eudr.forest2020': { es: 'Cobertura forestal 2020 (%)', en: 'Forest cover 2020 (%)', gn: "Ka'aguy 2020 (%)", pt: 'Cobertura florestal 2020 (%)' },
 	'eudr.forestCurrent': { es: 'Cobertura forestal actual (%)', en: 'Current forest cover (%)', gn: "Ka'aguy ko'ãga (%)", pt: 'Cobertura florestal atual (%)' },
 
@@ -879,7 +880,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.forest_2020': { es: 'Cobertura forestal 2020', en: 'Forest cover 2020', gn: 'Forest', pt: 'Cobertura florestal 2020' },
 	'eudr.check.forest_current': { es: 'Cobertura actual', en: 'Current cover', gn: 'Forest', pt: 'Cobertura atual' },
 	'eudr.check.loss_post_2020': { es: 'Pérdida post-2020', en: 'Loss post-2020', gn: 'Loss', pt: 'Perda pós-2020' },
-	'eudr.check.fire_post_2020': { es: 'Fuego post-2020', en: 'Fire post-2020', gn: 'Fire', pt: 'Fogo pós-2020' },
+	'eudr.check.fire_post_2020': { es: 'Fuego s/ nativa', en: 'Fire on native', gn: 'Tata ka’aguýre', pt: 'Fogo s/ nativa' },
+	'eudr.check.fire_total': { es: 'total', en: 'total', gn: 'opavave', pt: 'total' },
 	'eudr.check.province': { es: 'Provincia', en: 'Province', gn: 'Province', pt: 'Província' },
 	'eudr.check.coordinates': { es: 'Coordenadas', en: 'Coordinates', gn: 'Coordinates', pt: 'Coordenadas' },
 	'eudr.check.empty_title': { es: 'Seleccioná una ubicación', en: 'Select a location', gn: 'Select', pt: 'Selecione uma localização' },

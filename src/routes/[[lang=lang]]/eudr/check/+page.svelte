@@ -59,6 +59,7 @@
 		forest_cover_current_pct: number | null;
 		loss_post_2020_pct: number | null;
 		fire_post_2020_pct: number | null;
+		fire_native_post_2020_pct: number | null;
 		risk_score: number | null;
 		risk_level: string;
 		deforestation_post_2020: boolean;
@@ -227,7 +228,7 @@
 				result = {
 					id: 'manual', lat, lon, h3_cell: cell, province: '',
 					forest_cover_2020_pct: null, forest_cover_current_pct: null,
-					loss_post_2020_pct: null, fire_post_2020_pct: null,
+					loss_post_2020_pct: null, fire_post_2020_pct: null, fire_native_post_2020_pct: null,
 					risk_score: null, risk_level: 'outside_coverage',
 					deforestation_post_2020: false, eudr_assessment: 'OUTSIDE_COVERAGE',
 					data_vintage: dataVintage,
@@ -250,6 +251,8 @@
 				forest_cover_current_pct: r.forest_cover_current === null ? null : Number(r.forest_cover_current),
 				loss_post_2020_pct: r.loss_post_2020_pct === null ? null : Number(r.loss_post_2020_pct),
 				fire_post_2020_pct: r.fire_post_2020_pct === null ? null : Number(r.fire_post_2020_pct),
+				fire_native_post_2020_pct:
+					r.fire_native_post_2020_pct == null ? null : Number(r.fire_native_post_2020_pct),
 				risk_score: score,
 				risk_level: riskLevel(score),
 				deforestation_post_2020: deforested,
@@ -439,7 +442,8 @@
 			const uniqueCells = [...new Set(rows.map((r) => r.cell))];
 			const inList = uniqueCells.map((c) => `'${c}'`).join(',');
 			const sql = `SELECT e.h3index, e.province, e.forest_cover_2020, e.forest_cover_current,
-				e.loss_post_2020_pct, e.fire_post_2020_pct, e.risk_score, e.deforestation_post_2020,
+				e.loss_post_2020_pct, e.fire_post_2020_pct, e.fire_native_post_2020_pct,
+				e.risk_score, e.deforestation_post_2020,
 				${LOSS_YEAR_COLS}, p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
@@ -451,7 +455,7 @@
 			const outHeaders = [
 				'id', 'lat', 'lon', 'h3_cell', 'in_coverage', 'province',
 				'forest_cover_2020', 'forest_cover_current',
-				'loss_post_2020_pct', 'fire_post_2020_pct', 'risk_score',
+				'loss_post_2020_pct', 'fire_post_2020_pct', 'fire_native_post_2020_pct', 'risk_score',
 				'deforestation_post_2020', 'eudr_assessment',
 				...LOSS_YEARS.map((y) => `loss_${y}_pct`),
 				'plantation_pct', 'loss_context',
@@ -466,7 +470,7 @@
 				const d = byCell.get(r.cell);
 				if (!d) {
 					outside++;
-					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', ...LOSS_YEARS.map(() => ''), '', ''].map(esc).join(','));
+					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', ...LOSS_YEARS.map(() => ''), '', ''].map(esc).join(','));
 					continue;
 				}
 				const score = d.risk_score === null ? null : Number(d.risk_score);
@@ -489,7 +493,8 @@
 				csv.push([
 					r.id, r.lat, r.lon, r.cell, 'yes',
 					d.province ?? '', d.forest_cover_2020 ?? '', d.forest_cover_current ?? '',
-					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '', score ?? '',
+					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '',
+					d.fire_native_post_2020_pct ?? '', score ?? '',
 					def ? 1 : 0, assessment(def, score),
 					...LOSS_YEARS.map((y) => d[`loss_${y}_pct`] ?? ''),
 					plant ?? '', lossCtx,
@@ -937,11 +942,22 @@
 								{fmt(result.loss_post_2020_pct)}%
 							</div>
 						</div>
+						<!-- El score pondera el fuego SOBRE NATIVA LENOSA; el total se muestra al lado
+						     porque en pastizal y humedal el fuego es regimen natural, no conversion. -->
 						<div class="bg-white/[0.03] rounded p-3">
 							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.fire_post_2020')}</div>
-							<div class="text-lg font-bold" style="color: {(result.fire_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#9ca3af'};">
-								{fmt(result.fire_post_2020_pct)}%
-							</div>
+							{#if result.fire_native_post_2020_pct !== null}
+								<div class="text-lg font-bold" style="color: {(result.fire_native_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#9ca3af'};">
+									{fmt(result.fire_native_post_2020_pct)}%
+								</div>
+								<div class="text-[10px] text-white/35 mt-0.5">
+									{i18n.t('eudr.check.fire_total')}: {fmt(result.fire_post_2020_pct)}%
+								</div>
+							{:else}
+								<div class="text-lg font-bold" style="color: {(result.fire_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#9ca3af'};">
+									{fmt(result.fire_post_2020_pct)}%
+								</div>
+							{/if}
 						</div>
 					</div>
 
