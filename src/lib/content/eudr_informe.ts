@@ -138,6 +138,6 @@ export const INFORME: Record<string, Block> = {
 	}
 };
 
-// MapBiomas citation (CC-BY) — the plantation baseline uses Collection 1.
+// MapBiomas citation (CC-BY) — the plantation baseline uses Collection 2 (2020 and 2024).
 export const CITA_MAPBIOMAS =
 	'MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 23 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';

@@ -1417,7 +1417,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
 	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
 	// EUDR: fecha real de refresh viene de data/eudr/meta.json (getEudrMetaUrl) — esto es fallback.
-	eudr_deforestation: { dataDate: 'Hansen GFC v1.13 + MODIS MCD64A1 (cutoff 31/12/2020)', processedDate: '08/07/2026', sourceKey: 'data.source.satellite' },
+	eudr_deforestation: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '24/07/2026', sourceKey: 'data.source.satellite' },
 };
 
 // ── EUDR Configuration ──────────────────────────────────────────────────
