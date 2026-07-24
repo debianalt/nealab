@@ -92,14 +92,14 @@
 				onmousemove={(e) => onMove(e, i)}
 			>
 				<div class="rl">{r.name}</div>
+				<!-- el marcador de plantacion nula va en su propia columna: dentro de la
+				     barra caia sobre el segmento violeta, que ya lleva su propio valor -->
+				<div class="zerocol">{#if r.plant < 4}≈ 0{/if}</div>
 				<div class="bar" style={`--plant:${r.plant}%; --nat:${100 - r.plant}%`}>
 					{#if r.plant >= 4}
 						<div class="seg plant"><span>{fmt(r.plant)}</span></div>
 					{/if}
 					<div class="seg nat"><span>{fmt(100 - r.plant)}</span></div>
-					{#if r.plant < 4}
-						<span class="zero">plant. ≈ 0</span>
-					{/if}
 				</div>
 			</div>
 		{/each}
@@ -176,10 +176,17 @@
 	}
 	.row {
 		display: grid;
-		grid-template-columns: 108px 1fr;
+		grid-template-columns: 108px 34px 1fr;
 		align-items: center;
-		gap: 0.85rem;
+		gap: 0.5rem;
 		transition: opacity 0.18s ease;
+	}
+	.zerocol {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.72rem;
+		text-align: right;
+		color: #898781;
+		white-space: nowrap;
 	}
 	.row.dim {
 		opacity: 0.38;
@@ -235,16 +242,6 @@
 	.pc.shown .seg.nat {
 		width: var(--nat);
 	}
-	.zero {
-		position: absolute;
-		left: 0.55rem;
-		top: 50%;
-		transform: translateY(-50%);
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.7rem;
-		color: rgba(255, 255, 255, 0.55);
-		pointer-events: none;
-	}
 	figcaption {
 		margin-top: 1.2rem;
 		font-size: 0.78rem;
@@ -285,8 +282,11 @@
 
 	@media (max-width: 560px) {
 		.row {
-			grid-template-columns: 76px 1fr;
-			gap: 0.55rem;
+			grid-template-columns: 76px 26px 1fr;
+			gap: 0.4rem;
+		}
+		.zerocol {
+			font-size: 0.64rem;
 		}
 		.rl {
 			font-size: 0.72rem;

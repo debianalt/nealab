@@ -43,10 +43,10 @@ export const INFORME: Record<string, Block> = {
 	},
 
 	metodo: {
-		es: `<p>El pre-diagnóstico combina la pérdida forestal (Hansen), el área quemada (MODIS) y la pérdida previa en un score de riesgo por hexágono, y lo cruza con la cobertura MapBiomas de 2020. La pérdida sobre lo que ya era plantación es compatible con un ciclo de cosecha; la pérdida sobre bosque o monte nativo es la señal de riesgo relevante.</p>
-<p>Son señales indicativas, no veredictos de cumplimiento.</p>`,
-		en: `<p>The pre-diagnosis combines forest loss (Hansen), burned area (MODIS) and prior loss into a per-hexagon risk score, and cross-references it with the 2020 MapBiomas cover. Loss over what was already plantation is consistent with a harvest cycle; loss over native forest or woodland is the relevant risk signal.</p>
-<p>These are indicative signals, not compliance verdicts.</p>`
+		es: `<p>El pre-diagnóstico cruza tres fuentes sobre una grilla hexagonal. La cobertura sale de la <strong>Colección 2</strong> de MapBiomas Argentina, serie 1985–2024, leída en el año de corte, <strong>2020</strong>, y en el último año disponible, <strong>2024</strong>. La pérdida forestal es de Hansen Global Forest Change v1.13, acumulada entre <strong>2021 y 2025</strong>. El área quemada es de MODIS MCD64A1, en ese mismo período.</p>
+<p>La pérdida sobre lo que ya era plantación en 2020 es compatible con un ciclo de cosecha; la pérdida sobre bosque o monte nativo es la señal de riesgo relevante. Son señales indicativas, no veredictos de cumplimiento.</p>`,
+		en: `<p>The pre-diagnosis crosses three sources on a hexagonal grid. Land cover comes from <strong>Collection 2</strong> of MapBiomas Argentina, series 1985–2024, read at the cut-off year, <strong>2020</strong>, and at the latest available year, <strong>2024</strong>. Forest loss is from Hansen Global Forest Change v1.13, accumulated between <strong>2021 and 2025</strong>. Burned area is from MODIS MCD64A1 over the same period.</p>
+<p>Loss over what was already plantation in 2020 is consistent with a harvest cycle; loss over native forest or woodland is the relevant risk signal. These are indicative signals, not compliance verdicts.</p>`
 	},
 
 	hallazgosLead: {
@@ -65,15 +65,15 @@ export const INFORME: Record<string, Block> = {
 	},
 
 	fuegoLead: {
-		es: `<p>El índice pondera también el área quemada, bajo el supuesto de que el fuego acompaña a la conversión de bosque. En el nordeste argentino ese supuesto se sostiene mal: buena parte del fuego regional ocurre sobre pastizal y humedal, donde es régimen natural. La misma línea base de cobertura que separa cosecha de conversión permite filtrarlo.</p>`,
-		en: `<p>The index also weights burned area, on the assumption that fire tracks forest conversion. In north-eastern Argentina that assumption holds poorly: much of the regional fire occurs over grassland and wetland, where it is a natural regime. The same cover baseline that separates harvest from conversion can filter it.</p>`
+		es: `<p>El índice pondera también el área quemada, bajo el supuesto de que el fuego acompaña a la conversión de bosque. En el nordeste argentino ese supuesto se sostiene mal: buena parte del fuego regional ocurre sobre pastizal y humedal, donde pertenece al régimen natural del ecosistema. La misma lectura de cobertura que separa cosecha de conversión dice sobre qué ardió cada incendio.</p>`,
+		en: `<p>The index also weights burned area, on the assumption that fire tracks forest conversion. In north-eastern Argentina that assumption holds poorly: much of the regional fire occurs over grassland and wetland, where it belongs to the natural regime of the ecosystem. The same cover reading that separates harvest from conversion tells what each fire burned.</p>`
 	},
 
 	fuegoAfter: {
-		es: `<p>El filtro no baja todo por igual: reordena. Antes del filtro, Corrientes y Formosa parecían casi equivalentes, con 18,3 % y 20,4 % de su superficie quemada. Contando sólo lo que ardió sobre bosque o monte nativo, Formosa queda en 15,5 % y Corrientes cae a 1,0 %, quince veces menos. Corrientes tenía la mayor área quemada de la región y a la vez la mayor proporción de pérdida explicada por cosecha; el fuego era del Iberá y sus pastizales, no de un frente de deforestación.</p>
-<p>El score de riesgo pondera ahora esa fracción filtrada. Con el cambio, el riesgo medio regional baja de 11,4 a 9,8 y Formosa pasa a ser la provincia de mayor riesgo.</p>`,
-		en: `<p>The filter does not lower everything equally: it reorders. Before filtering, Corrientes and Formosa looked almost equivalent, at 18.3% and 20.4% of their area burned. Counting only what burned over native forest or woodland, Formosa stays at 15.5% and Corrientes falls to 1.0%, fifteen times less. Corrientes had the largest burned area in the region and also the highest share of loss explained by harvest; its fire came from the Iberá wetlands and their grasslands, not from a deforestation frontier.</p>
-<p>The risk score now weights that filtered fraction. With the change, mean regional risk falls from 11.4 to 9.8 and Formosa becomes the highest-risk province.</p>`
+		es: `<p>Formosa y Corrientes tienen una superficie quemada semejante, cercana al 20 % y al 18 %. La diferencia está en qué ardió. En Formosa, donde el monte chaqueño cubre el 79 % del territorio, 15,5 puntos de esa quema ocurrieron sobre vegetación nativa leñosa. En Corrientes, cubierta en un 10 % por monte y en el resto por los esteros y pastizales del Iberá, sólo 1,0 punto. El fuego correntino es del humedal.</p>
+<p>Por eso el score cuenta únicamente la fracción que ardió sobre vegetación nativa leñosa: en la región equivale al 5,3 % de la superficie, frente al 13,4 % del área quemada total. Formosa encabeza el riesgo regional; Corrientes, a la que la quema total situaba a la par, queda por debajo.</p>`,
+		en: `<p>Formosa and Corrientes have a similar share of their surface burned, close to 20% and 18%. The difference lies in what burned. In Formosa, where Chaco woodland covers 79% of the territory, 15.5 points of that burning fell on native woody vegetation. In Corrientes, 10% woodland and otherwise the marshes and grasslands of the Iberá, only 1.0 point. Corrientes fire is wetland fire.</p>
+<p>The score therefore counts only the fraction that burned over native woody vegetation: across the region that is 5.3% of the surface, against 13.4% for total burned area. Formosa leads regional risk; Corrientes, which total burning placed alongside it, falls below.</p>`
 	},
 
 	limitaciones: {
