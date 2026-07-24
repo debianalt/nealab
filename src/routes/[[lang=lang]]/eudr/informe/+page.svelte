@@ -93,11 +93,11 @@
 			<p class="hero-sub">{t('subtitle')}</p>
 			<div class="hero-stats">
 				<div class="stat">
-					<span class="sv">{tr('82,6 %', '82.6%')}</span>
+					<span class="sv">{tr('77,2 %', '77.2%')}</span>
 					<span class="sl">{tr('de la pérdida sobre nativo', 'of loss on native')}</span>
 				</div>
 				<div class="stat">
-					<span class="sv">68.084</span>
+					<span class="sv">68.517</span>
 					<span class="sl">{tr('hexágonos analizados', 'hexagons analysed')}</span>
 				</div>
 				<div class="stat">

@@ -29,31 +29,31 @@
 	}
 
 	let rows = $derived([
-		{ name: 'Misiones', plant: 19.4 },
-		{ name: 'Corrientes', plant: 68.3, key: true },
+		{ name: 'Misiones', plant: 28.9 },
+		{ name: 'Corrientes', plant: 91.2, key: true },
 		{ name: 'Chaco', plant: 0.0 },
 		{ name: 'Formosa', plant: 0.0 },
-		{ name: locale === 'en' ? '4 provinces' : '4 provincias', plant: 17.4, total: true }
+		{ name: locale === 'en' ? '4 provinces' : '4 provincias', plant: 22.8, total: true }
 	]);
 
 	const T = {
 		es: {
 			plant: 'plantación (cosecha)',
 			native: 'vegetación nativa',
-			heroNum: '82,6 %',
+			heroNum: '77,2 %',
 			heroLabel: 'de la pérdida forestal posterior al corte recae sobre vegetación nativa; el resto es cosecha de plantación preexistente.',
 			caption:
-				'Reparto de la pérdida posterior al corte EUDR (31 dic 2020) según la cobertura de 2020. Grilla H3-7, 68.084 hexágonos.',
+				'Reparto de la pérdida posterior al corte EUDR (31 dic 2020) según la cobertura de 2020. Atribución a nivel de píxel (30 m) sobre MapBiomas Colección 2.',
 			tipPlant: 'Plantación',
 			tipNative: 'Nativo'
 		},
 		en: {
 			plant: 'plantation (harvest)',
 			native: 'native vegetation',
-			heroNum: '82.6%',
+			heroNum: '77.2%',
 			heroLabel: 'of post-cutoff forest loss falls on native vegetation; the rest is harvest of pre-existing plantation.',
 			caption:
-				'Split of post-cutoff loss (EUDR, 31 Dec 2020) by 2020 land cover. H3-7 grid, 68,084 hexagons.',
+				'Split of post-cutoff loss (EUDR, 31 Dec 2020) by 2020 land cover. Pixel-level attribution (30 m) over MapBiomas Collection 2.',
 			tipPlant: 'Plantation',
 			tipNative: 'Native'
 		}

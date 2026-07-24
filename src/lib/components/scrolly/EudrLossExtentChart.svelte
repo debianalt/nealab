@@ -29,10 +29,10 @@
 
 	// share of hexagons with post-2020 loss, sorted desc
 	const rows = [
-		{ name: 'Misiones', v: 76.1 },
-		{ name: 'Formosa', v: 44.1 },
-		{ name: 'Chaco', v: 43.5 },
-		{ name: 'Corrientes', v: 23.1 }
+		{ name: 'Misiones', v: 78.0 },
+		{ name: 'Chaco', v: 47.5 },
+		{ name: 'Formosa', v: 47.1 },
+		{ name: 'Corrientes', v: 24.8 }
 	];
 	const max = 80;
 

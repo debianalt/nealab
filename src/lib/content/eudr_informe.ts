@@ -55,19 +55,19 @@ export const INFORME: Record<string, Block> = {
 	},
 
 	chartLead: {
-		es: `<p>Al atribuir la pérdida posterior al corte a la cobertura registrada en 2020, el <strong>17,4 %</strong> de la pérdida de las cuatro provincias recae sobre superficie que ya era plantación, y el <strong>82,6 %</strong> sobre vegetación nativa. El peso de esta corrección es muy desigual entre provincias.</p>`,
-		en: `<p>Attributing post-cut-off loss to the cover recorded in 2020, <strong>17.4%</strong> of the loss across the four provinces falls on land that was already plantation, and <strong>82.6%</strong> on native vegetation. The weight of this correction is very uneven across provinces.</p>`
+		es: `<p>Al atribuir la pérdida posterior al corte a la cobertura registrada en 2020, el <strong>22,8 %</strong> de la pérdida de las cuatro provincias recae sobre superficie que ya era plantación, y el <strong>77,2 %</strong> sobre vegetación nativa. El peso de esta corrección es muy desigual entre provincias.</p>`,
+		en: `<p>Attributing post-cut-off loss to the cover recorded in 2020, <strong>22.8%</strong> of the loss across the four provinces falls on land that was already plantation, and <strong>77.2%</strong> on native vegetation. The weight of this correction is very uneven across provinces.</p>`
 	},
 
 	chartAfter: {
-		es: `<p>En Corrientes, dos de cada tres hectáreas perdidas estaban sobre plantación preexistente. Sin la línea base de MapBiomas, esa pérdida se contaría como deforestación y elevaría el riesgo asignado al sector forestal. En Chaco y Formosa, en cambio, casi toda la pérdida ocurre sobre vegetación nativa.</p>`,
-		en: `<p>In Corrientes, two of every three hectares lost were over pre-existing plantation. Without the MapBiomas baseline, that loss would count as deforestation and inflate the risk assigned to the forestry sector. In Chaco and Formosa, by contrast, almost all the loss falls on native vegetation.</p>`
+		es: `<p>En Corrientes, más de nueve de cada diez hectáreas perdidas estaban sobre plantación preexistente. Sin la línea base de MapBiomas, esa pérdida se contaría como deforestación y elevaría el riesgo asignado al sector forestal. En Chaco y Formosa, en cambio, casi toda la pérdida ocurre sobre vegetación nativa.</p>`,
+		en: `<p>In Corrientes, more than nine of every ten hectares lost were over pre-existing plantation. Without the MapBiomas baseline, that loss would count as deforestation and inflate the risk assigned to the forestry sector. In Chaco and Formosa, by contrast, almost all the loss falls on native vegetation.</p>`
 	},
 
 	limitaciones: {
-		es: `<p>La señal de pérdida indica desaparición de cobertura, no su causa: la atribución final requiere verificación documental o de campo. La distinción por tipo de cobertura opera a nivel de hexágono, no de parcela, y solo cubre el territorio argentino. La verificación formal bajo el reglamento exige geometría parcelaria oficial, trazabilidad documental y debida diligencia profesional independiente.</p>
+		es: `<p>La señal de pérdida indica desaparición de cobertura, no su causa: la atribución final requiere verificación documental o de campo. El desglose por tipo de cobertura hereda la exactitud de la clasificación de MapBiomas a 30 m y solo cubre el territorio argentino. La verificación formal bajo el reglamento exige geometría parcelaria oficial, trazabilidad documental y debida diligencia profesional independiente.</p>
 <p>El componente de área quemada (MODIS) no separa el fuego de origen antrópico del natural. En Corrientes y Formosa predominan los incendios de pastizal y humedal, que elevan el riesgo sin implicar deforestación; en esas provincias el peso del fuego debe leerse con esa salvedad.</p>`,
-		en: `<p>The loss signal indicates the disappearance of cover, not its cause: final attribution requires documentary or field verification. The cover-type distinction works at the hexagon level, not the parcel level, and covers Argentine territory only. Formal verification under the regulation requires official parcel geometry, documentary traceability and independent professional due diligence.</p>
+		en: `<p>The loss signal indicates the disappearance of cover, not its cause: final attribution requires documentary or field verification. The cover-type breakdown inherits the accuracy of the MapBiomas classification at 30 m and covers Argentine territory only. Formal verification under the regulation requires official parcel geometry, documentary traceability and independent professional due diligence.</p>
 <p>The burned-area component (MODIS) does not separate anthropogenic from natural fire. In Corrientes and Formosa, grassland and wetland fires predominate and raise the risk score without implying deforestation; in those provinces the weight of fire should be read with that caveat.</p>`
 	},
 
@@ -83,30 +83,30 @@ export const INFORME: Record<string, Block> = {
 	// Map scrolly step boxes. Each carries a mini split-bar (plantation vs native)
 	// styled by ScrollyTextBox; .num highlights figures.
 	stepOverview: {
-		es: `<p>Cuatro provincias del nordeste: <span class="num">68.084</span> hexágonos de unos 5&nbsp;km². El color marca el riesgo de pérdida posterior a 2020; el riesgo alto se concentra en una porción pequeña del territorio.</p>
-<div class="stepbar" role="img" aria-label="17% cosecha, 83% nativo"><span class="sbp" style="width:17.4%"></span><span class="sbn" style="width:82.6%"></span></div>
-<div class="sbl"><span class="lp">17&nbsp;% cosecha</span><span class="ln">83&nbsp;% nativo</span></div>
+		es: `<p>Cuatro provincias del nordeste: <span class="num">68.517</span> hexágonos de unos 5&nbsp;km². El color marca el riesgo de pérdida posterior a 2020; el riesgo alto se concentra en una porción pequeña del territorio.</p>
+<div class="stepbar" role="img" aria-label="23% cosecha, 77% nativo"><span class="sbp" style="width:22.8%"></span><span class="sbn" style="width:77.2%"></span></div>
+<div class="sbl"><span class="lp">23&nbsp;% cosecha</span><span class="ln">77&nbsp;% nativo</span></div>
 <div class="sbcap">reparto de la pérdida en las cuatro provincias</div>`,
-		en: `<p>Four north-eastern provinces: <span class="num">68,084</span> hexagons of about 5&nbsp;km². Colour marks the risk of post-2020 loss; high risk sits in a small share of the territory.</p>
-<div class="stepbar" role="img" aria-label="17% harvest, 83% native"><span class="sbp" style="width:17.4%"></span><span class="sbn" style="width:82.6%"></span></div>
-<div class="sbl"><span class="lp">17% harvest</span><span class="ln">83% native</span></div>
+		en: `<p>Four north-eastern provinces: <span class="num">68,517</span> hexagons of about 5&nbsp;km². Colour marks the risk of post-2020 loss; high risk sits in a small share of the territory.</p>
+<div class="stepbar" role="img" aria-label="23% harvest, 77% native"><span class="sbp" style="width:22.8%"></span><span class="sbn" style="width:77.2%"></span></div>
+<div class="sbl"><span class="lp">23% harvest</span><span class="ln">77% native</span></div>
 <div class="sbcap">split of the loss across the four provinces</div>`
 	},
 	stepMisiones: {
-		es: `<p>La pérdida aparece en el <span class="num">76&nbsp;%</span> de los hexágonos, pero de baja intensidad por hexágono. De esa pérdida, un <span class="num">19&nbsp;%</span> cae sobre plantación que ya existía en 2020.</p>
-<div class="stepbar"><span class="sbp" style="width:19.4%"></span><span class="sbn" style="width:80.6%"></span></div>
-<div class="sbl"><span class="lp">19&nbsp;% cosecha</span><span class="ln">81&nbsp;% nativo</span></div>`,
-		en: `<p>Loss appears in <span class="num">76%</span> of hexagons, but at low intensity per hexagon. Of that loss, <span class="num">19%</span> falls on plantation that already existed in 2020.</p>
-<div class="stepbar"><span class="sbp" style="width:19.4%"></span><span class="sbn" style="width:80.6%"></span></div>
-<div class="sbl"><span class="lp">19% harvest</span><span class="ln">81% native</span></div>`
+		es: `<p>La pérdida aparece en el <span class="num">78&nbsp;%</span> de los hexágonos, pero de baja intensidad por hexágono. De esa pérdida, un <span class="num">29&nbsp;%</span> cae sobre plantación que ya existía en 2020.</p>
+<div class="stepbar"><span class="sbp" style="width:28.9%"></span><span class="sbn" style="width:71.1%"></span></div>
+<div class="sbl"><span class="lp">29&nbsp;% cosecha</span><span class="ln">71&nbsp;% nativo</span></div>`,
+		en: `<p>Loss appears in <span class="num">78%</span> of hexagons, but at low intensity per hexagon. Of that loss, <span class="num">29%</span> falls on plantation that already existed in 2020.</p>
+<div class="stepbar"><span class="sbp" style="width:28.9%"></span><span class="sbn" style="width:71.1%"></span></div>
+<div class="sbl"><span class="lp">29% harvest</span><span class="ln">71% native</span></div>`
 	},
 	stepCorrientes: {
-		es: `<p>El caso extremo. El <span class="num">68&nbsp;%</span> de la pérdida ocurre sobre plantación que ya existía en 2020: un ciclo de cosecha, no deforestación. Sin la línea base de MapBiomas, un producto global la contaría como pérdida de bosque nativo.</p>
-<div class="stepbar"><span class="sbp" style="width:68.3%"></span><span class="sbn" style="width:31.7%"></span></div>
-<div class="sbl"><span class="lp">68&nbsp;% cosecha</span><span class="ln">32&nbsp;% nativo</span></div>`,
-		en: `<p>The extreme case. <span class="num">68%</span> of the loss occurs over plantation that already existed in 2020: a harvest cycle, not deforestation. Without the MapBiomas baseline, a global product would count it as native-forest loss.</p>
-<div class="stepbar"><span class="sbp" style="width:68.3%"></span><span class="sbn" style="width:31.7%"></span></div>
-<div class="sbl"><span class="lp">68% harvest</span><span class="ln">32% native</span></div>`
+		es: `<p>El caso extremo. El <span class="num">91&nbsp;%</span> de la pérdida ocurre sobre plantación que ya existía en 2020: un ciclo de cosecha, no deforestación. Sin la línea base de MapBiomas, un producto global la contaría como pérdida de bosque nativo.</p>
+<div class="stepbar"><span class="sbp" style="width:91.2%"></span><span class="sbn" style="width:8.8%"></span></div>
+<div class="sbl"><span class="lp">91&nbsp;% cosecha</span><span class="ln">9&nbsp;% nativo</span></div>`,
+		en: `<p>The extreme case. <span class="num">91%</span> of the loss occurs over plantation that already existed in 2020: a harvest cycle, not deforestation. Without the MapBiomas baseline, a global product would count it as native-forest loss.</p>
+<div class="stepbar"><span class="sbp" style="width:91.2%"></span><span class="sbn" style="width:8.8%"></span></div>
+<div class="sbl"><span class="lp">91% harvest</span><span class="ln">9% native</span></div>`
 	},
 	stepChaco: {
 		es: `<p>Casi el <span class="num">100&nbsp;%</span> de la pérdida es sobre vegetación nativa. No hay plantación comercial que confunda la señal: acá la pérdida posterior al corte recae, casi toda, sobre monte y bosque nativo.</p>
@@ -128,4 +128,4 @@ export const INFORME: Record<string, Block> = {
 
 // MapBiomas citation (CC-BY) — the plantation baseline uses Collection 1.
 export const CITA_MAPBIOMAS =
-	'MapBiomas – Colección 1 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 22 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';
+	'MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 23 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';
