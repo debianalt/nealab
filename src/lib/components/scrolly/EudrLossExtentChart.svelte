@@ -27,13 +27,15 @@
 		return { destroy: () => io.disconnect() };
 	}
 
-	// share of hexagons with post-2020 loss, sorted desc
-	const rows = [
-		{ name: 'Misiones', v: 78.0 },
-		{ name: 'Chaco', v: 47.5 },
-		{ name: 'Formosa', v: 47.1 },
-		{ name: 'Corrientes', v: 24.8 }
-	];
+	// Share of hexagons with post-2020 loss. Mismo orden de provincias que
+	// PlantationSplitChart y FireFilterChart, y misma fila de total al pie.
+	let rows = $derived([
+		{ name: 'Misiones', v: 77.7 },
+		{ name: 'Corrientes', v: 24.8 },
+		{ name: 'Chaco', v: 47.1 },
+		{ name: 'Formosa', v: 46.4 },
+		{ name: locale === 'en' ? '4 provinces' : '4 provincias', v: 43.0, total: true }
+	]);
 	const max = 80;
 
 	const T = {
@@ -41,13 +43,13 @@
 			title: 'Hexágonos con pérdida forestal posterior al corte',
 			unit: '% de los hexágonos de la provincia',
 			caption:
-				'Presencia de pérdida (al menos un píxel) por hexágono H3-7. En Misiones es frecuente pero de baja intensidad por hexágono.'
+				'Presencia de pérdida (al menos un píxel) por hexágono H3-7. En Misiones la pérdida es a la vez la más extendida y la más intensa: aparece en cuatro de cada cinco hexágonos y afecta al 5,5 % de la superficie de cada uno, contra el 1,8 % de Corrientes.'
 		},
 		en: {
 			title: 'Hexagons with post-cutoff forest loss',
 			unit: '% of the province’s hexagons',
 			caption:
-				'Presence of loss (at least one pixel) per H3-7 hexagon. In Misiones it is frequent but low-intensity per hexagon.'
+				'Presence of loss (at least one pixel) per H3-7 hexagon. In Misiones the loss is both the most widespread and the most intense: it appears in four of every five hexagons and affects 5.5% of each one’s surface, against 1.8% in Corrientes.'
 		}
 	} as const;
 	const t = $derived((T as any)[locale] ?? T.es);
@@ -63,6 +65,7 @@
 			<div
 				class="row"
 				class:dim={hovered !== null && hovered !== i}
+				class:total={r.total}
 				role="listitem"
 				onmouseenter={() => (hovered = i)}
 			>
@@ -123,10 +126,20 @@
 		align-items: center;
 		height: 26px;
 	}
+	.row.total .rl {
+		color: #fff;
+		font-weight: 700;
+	}
+	.row.total .track {
+		height: 34px;
+	}
 	.fill {
 		height: 100%;
 		width: 0;
-		background: #199e70;
+		/* Magnitud de una sola serie, no una categoria de cobertura: azul, que en
+		   esta historia no significa ninguna otra cosa. El aqua #199e70 esta
+		   reservado a plantacion/cosecha en los demas graficos. */
+		background: #5b7fd4;
 		border-radius: 3px;
 		transition: width 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
 	}

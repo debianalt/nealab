@@ -3,7 +3,9 @@
 	 * PlantationSplitChart — of the post-2020 forest loss in each NEA province, how
 	 * much fell on land that was already plantation in 2020 (compatible with harvest)
 	 * vs on native vegetation. Figures are the computed res-7 results (see A_02).
-	 * Palette validated (dataviz): plantation blue #199e70 / native orange #9085e9.
+	 * Palette validated (dataviz, dark mode on #0a0a0a): plantation aqua #199e70 /
+	 * native violet #9085e9. One colour per CONCEPT across the whole story — the
+	 * same violet marks native vegetation in FireFilterChart.
 	 */
 	import type { Locale } from '$lib/stores/i18n.svelte';
 

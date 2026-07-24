@@ -15,6 +15,10 @@
 	let locale = $derived(i18n.locale);
 	const t = (block: keyof typeof INFORME) => pick(INFORME[block], locale);
 	const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+	// Solo es y en estan redactados: gn y pt caen a castellano via pick()/tr(). El
+	// atributo lang tiene que declarar el idioma que el lector realmente ve, no el
+	// que eligio, porque de eso dependen los lectores de pantalla y la silabacion.
+	let contentLang = $derived(locale === 'en' ? 'en' : 'es');
 
 	let mapStep = $state(0);
 	let progress = $state(0);
@@ -85,7 +89,7 @@
 
 <div class="progress" style={`transform:scaleX(${progress})`}></div>
 
-<article class="informe" lang={locale}>
+<article class="informe" lang={contentLang}>
 	<!-- Hero -->
 	<header class="hero fullbleed">
 		<div class="hero-inner">
@@ -107,7 +111,7 @@
 				</div>
 			</div>
 			<div class="hero-meta">
-				<span>Reglamento (UE) 2023/1115</span>
+				<span>{tr('Reglamento (UE) 2023/1115', 'Regulation (EU) 2023/1115')}</span>
 				{#if stamp}<span class="dot">·</span><span>{stamp}</span>{/if}
 			</div>
 			<div class="scroll-hint">{tr('desplazá para explorar', 'scroll to explore')} <span class="arw">↓</span></div>
@@ -116,7 +120,7 @@
 
 	<!-- Lead -->
 	<section class="lead" use:reveal>
-		<div class="prose lead-prose" lang={locale}>{@html t('intro')}</div>
+		<div class="prose lead-prose" lang={contentLang}>{@html t('intro')}</div>
 	</section>
 
 	<!-- Numbered framing sections -->
@@ -125,7 +129,7 @@
 			<div class="sec-num">{s.n}</div>
 			<div class="sec-body">
 				<h2 class="sec-h">{s.h}</h2>
-				<div class="prose" lang={locale}>{@html t(s.body)}</div>
+				<div class="prose" lang={contentLang}>{@html t(s.body)}</div>
 			</div>
 		</section>
 	{/each}
@@ -153,19 +157,19 @@
 
 	<!-- Charts -->
 	<section class="charts" use:reveal>
-		<div class="prose" lang={locale}>{@html t('chartLead')}</div>
+		<div class="prose" lang={contentLang}>{@html t('chartLead')}</div>
 		<div class="chart-card">
 			<PlantationSplitChart {locale} />
 		</div>
-		<div class="prose" lang={locale}>{@html t('chartAfter')}</div>
+		<div class="prose" lang={contentLang}>{@html t('chartAfter')}</div>
 		<div class="chart-card">
 			<EudrLossExtentChart {locale} />
 		</div>
-		<div class="prose" lang={locale}>{@html t('fuegoLead')}</div>
+		<div class="prose" lang={contentLang}>{@html t('fuegoLead')}</div>
 		<div class="chart-card">
 			<FireFilterChart {locale} />
 		</div>
-		<div class="prose" lang={locale}>{@html t('fuegoAfter')}</div>
+		<div class="prose" lang={contentLang}>{@html t('fuegoAfter')}</div>
 	</section>
 
 	<!-- Limitations -->
@@ -173,7 +177,7 @@
 		<div class="sec-num">04</div>
 		<div class="sec-body">
 			<h2 class="sec-h">{tr('Limitaciones', 'Limitations')}</h2>
-			<div class="prose" lang={locale}>{@html t('limitaciones')}</div>
+			<div class="prose" lang={contentLang}>{@html t('limitaciones')}</div>
 		</div>
 	</section>
 
@@ -181,7 +185,7 @@
 	<section class="cta fullbleed" use:reveal>
 		<div class="cta-inner">
 			<h2 class="cta-h">{tr('Cómo usarlo', 'How to use it')}</h2>
-			<div class="prose" lang={locale}>{@html t('cta')}</div>
+			<div class="prose" lang={contentLang}>{@html t('cta')}</div>
 			<a class="cta-btn" href={lp('/eudr/check', locale)}>{t('ctaButton')}</a>
 		</div>
 	</section>

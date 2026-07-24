@@ -99,20 +99,20 @@ export const INFORME: Record<string, Block> = {
 	// Map scrolly step boxes. Each carries a mini split-bar (plantation vs native)
 	// styled by ScrollyTextBox; .num highlights figures.
 	stepOverview: {
-		es: `<p>Cuatro provincias del nordeste: <span class="num">68.517</span> hexágonos de unos 5&nbsp;km². El color marca el riesgo de pérdida posterior a 2020; el riesgo alto se concentra en una porción pequeña del territorio.</p>
+		es: `<p>Cuatro provincias del nordeste: <span class="num">68.517</span> hexágonos de unos 5&nbsp;km². El color marca el riesgo de pérdida posterior a 2020; el mapa destaca los de mayor riesgo, que ocupan una porción pequeña del territorio.</p>
 <div class="stepbar" role="img" aria-label="23% cosecha, 77% nativo"><span class="sbp" style="width:22.8%"></span><span class="sbn" style="width:77.2%"></span></div>
 <div class="sbl"><span class="lp">23&nbsp;% cosecha</span><span class="ln">77&nbsp;% nativo</span></div>
 <div class="sbcap">reparto de la pérdida en las cuatro provincias</div>`,
-		en: `<p>Four north-eastern provinces: <span class="num">68,517</span> hexagons of about 5&nbsp;km². Colour marks the risk of post-2020 loss; high risk sits in a small share of the territory.</p>
+		en: `<p>Four north-eastern provinces: <span class="num">68,517</span> hexagons of about 5&nbsp;km². Colour marks the risk of post-2020 loss; the map highlights the highest-risk cells, which cover a small share of the territory.</p>
 <div class="stepbar" role="img" aria-label="23% harvest, 77% native"><span class="sbp" style="width:22.8%"></span><span class="sbn" style="width:77.2%"></span></div>
 <div class="sbl"><span class="lp">23% harvest</span><span class="ln">77% native</span></div>
 <div class="sbcap">split of the loss across the four provinces</div>`
 	},
 	stepMisiones: {
-		es: `<p>La pérdida aparece en el <span class="num">78&nbsp;%</span> de los hexágonos, pero de baja intensidad por hexágono. De esa pérdida, un <span class="num">29&nbsp;%</span> cae sobre plantación que ya existía en 2020.</p>
+		es: `<p>La pérdida aparece en el <span class="num">78&nbsp;%</span> de los hexágonos, y es además la más intensa de las cuatro provincias. De esa pérdida, un <span class="num">29&nbsp;%</span> cae sobre plantación que ya existía en 2020.</p>
 <div class="stepbar"><span class="sbp" style="width:28.9%"></span><span class="sbn" style="width:71.1%"></span></div>
 <div class="sbl"><span class="lp">29&nbsp;% cosecha</span><span class="ln">71&nbsp;% nativo</span></div>`,
-		en: `<p>Loss appears in <span class="num">78%</span> of hexagons, but at low intensity per hexagon. Of that loss, <span class="num">29%</span> falls on plantation that already existed in 2020.</p>
+		en: `<p>Loss appears in <span class="num">78%</span> of hexagons, and is also the most intense of the four provinces. Of that loss, <span class="num">29%</span> falls on plantation that already existed in 2020.</p>
 <div class="stepbar"><span class="sbp" style="width:28.9%"></span><span class="sbn" style="width:71.1%"></span></div>
 <div class="sbl"><span class="lp">29% harvest</span><span class="ln">71% native</span></div>`
 	},
@@ -144,4 +144,4 @@ export const INFORME: Record<string, Block> = {
 
 // MapBiomas citation (CC-BY) — the plantation baseline uses Collection 2 (2020 and 2024).
 export const CITA_MAPBIOMAS =
-	'MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 23 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';
+	'MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 24 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org';

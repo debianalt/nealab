@@ -8,8 +8,11 @@
 	 * porcentaje del total de cada provincia: si se normalizara, Misiones -que casi no
 	 * se quema- luciria igual que Formosa.
 	 *
-	 * Paleta validada con scripts/validate_palette.js --mode dark (los 5 chequeos):
-	 * nativa lenosa #d9772e / pastizal y humedal #5b7fd4.
+	 * Paleta: un color por CONCEPTO en toda la historia, no uno por grafico. La
+	 * vegetacion nativa es violeta #9085e9 aca y en PlantationSplitChart, porque es
+	 * la misma categoria; el pastizal y humedal es ocre #b08d3f. Validada con el
+	 * validador del skill dataviz --mode dark sobre la superficie #0a0a0a: los
+	 * cuatro colores de la historia pasan los seis chequeos.
 	 */
 	import type { Locale } from '$lib/stores/i18n.svelte';
 
@@ -34,17 +37,19 @@
 		return { destroy: () => io.disconnect() };
 	}
 
-	// res-7, 68.517 hexagonos (ver A_02). total = fuego crudo, nat = sobre nativa lenosa
+	// res-7, 68.517 hexagonos (ver A_02). crudo = area quemada total, nat = la que
+	// ocurre sobre nativa lenosa. `total` marca la fila de resumen, como en los
+	// otros dos graficos; por eso el dato no puede llamarse igual.
 	let rows = $derived([
-		{ name: 'Misiones', total: 0.5, nat: 0.3 },
-		{ name: 'Corrientes', total: 18.34, nat: 1.03, key: true },
-		{ name: 'Chaco', total: 7.54, nat: 3.37 },
-		{ name: 'Formosa', total: 20.36, nat: 15.54 },
+		{ name: 'Misiones', crudo: 0.5, nat: 0.3 },
+		{ name: 'Corrientes', crudo: 18.34, nat: 1.03, key: true },
+		{ name: 'Chaco', crudo: 7.54, nat: 3.37 },
+		{ name: 'Formosa', crudo: 20.36, nat: 15.54 },
 		{
 			name: locale === 'en' ? '4 provinces' : '4 provincias',
-			total: 13.4,
+			crudo: 13.4,
 			nat: 5.34,
-			total_row: true
+			total: true
 		}
 	]);
 
@@ -101,7 +106,7 @@
 		{#each rows as r, i}
 			<div
 				class="row"
-				class:total={r.total_row}
+				class:total={r.total}
 				class:keyrow={r.key}
 				class:dim={hovered !== null && hovered !== i}
 				role="listitem"
@@ -111,11 +116,11 @@
 				<div class="track">
 					<div
 						class="bar"
-						style={`--nat:${(r.nat / SCALE) * 100}%; --oth:${((r.total - r.nat) / SCALE) * 100}%`}
+						style={`--nat:${(r.nat / SCALE) * 100}%; --oth:${((r.crudo - r.nat) / SCALE) * 100}%`}
 					>
 						<div class="seg nat"></div>
 						<div class="seg other"></div>
-						<span class="val">{fmt(r.nat)} / {fmt(r.total)}</span>
+						<span class="val">{fmt(r.nat)} / {fmt(r.crudo)}</span>
 					</div>
 				</div>
 			</div>
@@ -130,7 +135,7 @@
 		<strong>{rows[tip.i].name}</strong>
 		<span><i class="d nat"></i>{t.tipNat} {fmt(rows[tip.i].nat)} %</span>
 		<span
-			><i class="d other"></i>{t.tipOther} {fmt(rows[tip.i].total - rows[tip.i].nat)} %</span
+			><i class="d other"></i>{t.tipOther} {fmt(rows[tip.i].crudo - rows[tip.i].nat)} %</span
 		>
 	</div>
 {/if}
@@ -153,7 +158,7 @@
 		font-size: clamp(2.6rem, 7vw, 4rem);
 		font-weight: 700;
 		line-height: 1;
-		color: #5b7fd4;
+		color: #b08d3f;
 		letter-spacing: -0.02em;
 	}
 	.hero-label {
@@ -182,11 +187,11 @@
 	}
 	.sw.nat,
 	.d.nat {
-		background: #d9772e;
+		background: #9085e9;
 	}
 	.sw.other,
 	.d.other {
-		background: #5b7fd4;
+		background: #b08d3f;
 	}
 	.rows {
 		display: flex;
@@ -233,10 +238,10 @@
 		transition: width 1s cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 	.seg.nat {
-		background: #d9772e;
+		background: #9085e9;
 	}
 	.seg.other {
-		background: #5b7fd4;
+		background: #b08d3f;
 	}
 	.fc.shown .seg.nat {
 		width: var(--nat);
