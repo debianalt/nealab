@@ -26,6 +26,22 @@ python pipeline/eudr_subcategorias_nativo.py
 python pipeline/eudr_validacion_modulo_mapbiomas.py
 ```
 
+A fourth one needs no Earth Engine account at all: it reads the served layer.
+
+| Script | Published figures it produces |
+|---|---|
+| `orden_sin_tercer_termino.py` | Weight of the third score term (69.0 % of the mean score against a nominal 10 %) and the provincial ordering once it is excluded: Misiones 4th→2nd, Corrientes 2nd→4th, Formosa 1st in both |
+
+```bash
+python pipeline/orden_sin_tercer_termino.py
+```
+
+It prefers the local res-7 parquet and falls back to downloading
+`cdn.spatia.ar/data/eudr/eudr_deforestation.parquet` — the same layer the viewer
+reads — so it runs from a clean clone. Both paths were checked to give identical
+provincial means. It refuses to report anything unless the published `risk_score`
+is first reproduced from the weights in `config_eudr.py`.
+
 ### Requires local intermediates (NOT reproducible from a clean clone)
 
 These two operate on rasters and parquets produced earlier in the pipeline and
