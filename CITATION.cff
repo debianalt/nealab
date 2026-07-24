@@ -11,8 +11,8 @@ authors:
 repository-code: "https://github.com/debianalt/nealab"
 url: "https://www.spatia.ar"
 license: AGPL-3.0-only
-version: 2.4.0
-date-released: "2026-07-23"
+version: 2.4.1
+date-released: "2026-07-24"
 doi: "10.5281/zenodo.19483040"
 keywords:
   - geospatial analysis

@@ -7,10 +7,10 @@
   "codeRepository": "https://github.com/debianalt/nealab",
   "url": "https://www.spatia.ar",
   "license": "https://spdx.org/licenses/AGPL-3.0-only",
-  "version": "2.3.0",
+  "version": "2.4.1",
   "dateCreated": "2025-01-01",
   "datePublished": "2026-06-15",
-  "dateModified": "2026-06-19",
+  "dateModified": "2026-07-24",
   "author": [
     {
       "@type": "Person",
