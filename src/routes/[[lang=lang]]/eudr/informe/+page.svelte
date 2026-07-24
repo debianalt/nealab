@@ -8,7 +8,7 @@
 	import FireFilterChart from '$lib/components/scrolly/FireFilterChart.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { lp } from '$lib/utils/locale-path';
-	import { INFORME, pick, CITA_MAPBIOMAS } from '$lib/content/eudr_informe';
+	import { INFORME, pick } from '$lib/content/eudr_informe';
 	import { getEudrMetaUrl } from '$lib/config';
 	import { reveal } from '$lib/actions/reveal';
 
@@ -102,7 +102,7 @@
 					<span class="sl">{tr('de la pérdida sobre nativo', 'of loss on native')}</span>
 				</div>
 				<div class="stat">
-					<span class="sv">68.517</span>
+					<span class="sv">{tr('68.517', '68,517')}</span>
 					<span class="sl">{tr('hexágonos analizados', 'hexagons analysed')}</span>
 				</div>
 				<div class="stat">
@@ -194,7 +194,11 @@
 	<footer class="sources">
 		<h2 class="src-h">{tr('Fuentes y cita', 'Sources and citation')}</h2>
 		<ul>
-			<li class="src-cite">{CITA_MAPBIOMAS} <span class="cc">CC-BY</span></li>
+			<li class="src-cite">
+				MapBiomas – {tr('Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 24 de julio de 2026 a través del enlace', 'Collection 2 of the Annual Series of Land Cover and Land Use Maps of Argentina, accessed 24 July 2026 via the link')}:
+				<a href="https://argentina.mapbiomas.org" target="_blank" rel="noopener">argentina.mapbiomas.org</a>
+				<a class="cc" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY</a>
+			</li>
 			<li>Hansen Global Forest Change v1.13 — {tr('pérdida de cobertura arbórea', 'tree-cover loss')} (UMD / Google Earth Engine)</li>
 			<li>MODIS MCD64A1 — {tr('área quemada', 'burned area')} (NASA)</li>
 			<li>

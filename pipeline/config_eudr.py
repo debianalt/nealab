@@ -58,12 +58,25 @@ MAPBIOMAS_C2_DEFOR_ASSET = ("projects/mapbiomas-public/assets/argentina/lulc/"
 MAPBIOMAS_C2_FIRST_YEAR = 1985
 MAPBIOMAS_C2_LAST_YEAR = 2024
 
-# Land-cover class codes (identical in Collections 1 and 2, verified on the raster)
-MB_CLASS_FORESTRY = 9        # silvicultura / forestry plantation
-MB_CLASS_FOREST = 3          # formacion forestal (native forest, incl. dry Chaco)
-MB_CLASSES_SAVANNA = (4, 6)  # formacion sabanica
-# Class 5 (mangrove) has zero pixels in Argentina, so {3,4,5,6} == {3,4,6}.
-MB_CLASSES_NATIVE = (3, 4, 6)
+# Land-cover class codes, per the official Collection 2 legend for ARGENTINA:
+# https://argentina.mapbiomas.org/wp-content/uploads/sites/12/2025/09/Leyenda_Code.pdf
+#
+# NOTE: do NOT use the Brazilian names here ("formacion forestal", "formacion
+# sabanica"). Those belong to MapBiomas Brasil. In the Argentine legend classes
+# 3, 4 and 6 are all sub-classes of category "1. Bosques":
+#   3 = Bosques cerrados  (closed forests)
+#   4 = Bosques abiertos  (open forests)
+#   6 = Bosques inundables (flooded forests)
+# and class 5 (mangrove) does not exist in the Argentine legend at all.
+MB_CLASS_FORESTRY = 9            # 3.3 Silvicultura (forest plantation)
+MB_CLASS_CLOSED_FOREST = 3       # 1.1 Bosques cerrados (incl. dry Chaco, Paranaense)
+MB_CLASSES_OPEN_FOREST = (4, 6)  # 1.2 Bosques abiertos + 1.3 Bosques inundables
+MB_CLASSES_NATIVE = (3, 4, 6)    # native woody vegetation = the whole "Bosques" category
+
+# Backwards-compatible aliases. Kept so existing imports do not break, but the
+# "SAVANNA"/"FOREST" spellings are misnomers under the Argentine legend.
+MB_CLASS_FOREST = MB_CLASS_CLOSED_FOREST
+MB_CLASSES_SAVANNA = MB_CLASSES_OPEN_FOREST
 
 # ── GEE Export ───────────────────────────────────────────────────────────
 EXPORT_SCALE = 100       # metres per pixel (Hansen native 30m, 100m for efficiency)

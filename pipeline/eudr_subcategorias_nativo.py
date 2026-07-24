@@ -6,18 +6,23 @@ de 2020.
 Por que existe este script
 --------------------------
 Decir que el 77,2 % de la perdida cae sobre "vegetacion nativa" deja abierta la
-pregunta de que vegetacion es. MapBiomas la separa en formacion forestal y
-formacion sabanica, y la distincion importa: el Gran Chaco combina bosque seco
-denso con formaciones abiertas, y una caracterizacion que circulaba como obvia
--que Chaco y Corrientes son mayormente monte o sabana- no resiste el dato.
-MapBiomas clasifica el bosque seco chaqueno como forestal, y Corrientes no es
-monte sino humedal y pastizal.
+pregunta de que vegetacion es. La leyenda de la Coleccion 2 de MapBiomas
+ARGENTINA la separa en tres clases, y la distincion importa: el Gran Chaco
+combina bosque seco denso con formaciones abiertas, y una caracterizacion que
+circulaba como obvia -que Chaco y Corrientes son mayormente monte o sabana- no
+resiste el dato. MapBiomas clasifica el bosque seco chaqueno como bosque
+cerrado, y Corrientes no es monte sino humedal y pastizal.
 
-  clase 3   = formacion forestal (bosque y selva, incluido el chaqueno seco)
-  clases 4+6 = formacion sabanica (monte, bosque inundable)
+  clase 3   = bosques cerrados   (selva paranaense y chaqueno seco denso)
+  clase 4   = bosques abiertos
+  clase 6   = bosques inundables
 
-La clase 5 (manglar) no tiene presencia en Argentina -cero pixeles, verificado
-sobre el raster-, de modo que el conjunto nativo {3,4,6} equivale a {3,4,5,6}.
+Las tres son subclases de la categoria "1. Bosques" de la leyenda argentina, de
+modo que toda la perdida sobre nativo recae sobre clases de bosque. NO usar los
+nombres brasilenos ("formacion forestal", "formacion sabanica"): pertenecen a
+MapBiomas Brasil y no existen en la leyenda argentina, donde ademas la clase 5
+(manglar) directamente no figura. Leyenda oficial:
+https://argentina.mapbiomas.org/wp-content/uploads/sites/12/2025/09/Leyenda_Code.pdf
 
 Metodo
 ------
@@ -67,7 +72,7 @@ def build_stack():
 
 
 def forest_share(values):
-    """Share de la perdida NATIVA que recae sobre formacion forestal."""
+    """Share de la perdida NATIVA que recae sobre bosque cerrado (clase 3)."""
     native = values["l_for"] + values["l_sav"]
     return 100.0 * values["l_for"] / native if native else 0.0
 
@@ -97,7 +102,7 @@ def main():
     print("%-12s | %-30s | %-21s"
           % ("", "PERDIDA sobre nativo (2021-25)", "COBERTURA nativa 2020"))
     header = "%-12s %10s %10s %8s | %10s %10s" % (
-        "provincia", "forestal", "sabanica", "%forest", "forestal", "sabanica")
+        "provincia", "b.cerrado", "b.ab/inun", "%cerrado", "b.cerrado", "b.ab/inun")
     print(header)
     print("-" * len(header), flush=True)
 
@@ -118,7 +123,7 @@ def main():
     print("-" * len(header))
     emit("TOTAL", totals)
     print()
-    print("Hectareas. %forest = share de la perdida NATIVA sobre formacion forestal.")
+    print("Hectareas. %cerrado = share de la perdida NATIVA sobre bosque cerrado (clase 3).")
     return 0
 
 

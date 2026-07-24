@@ -43,7 +43,7 @@
 			title: 'Hexágonos con pérdida forestal posterior al corte',
 			unit: '% de los hexágonos de la provincia',
 			caption:
-				'Presencia de pérdida (al menos un píxel) por hexágono H3-7. En Misiones la pérdida es a la vez la más extendida y la más intensa: aparece en cuatro de cada cinco hexágonos y afecta al 5,5 % de la superficie de cada uno, contra el 1,8 % de Corrientes.'
+				'Presencia de pérdida (al menos un píxel) por hexágono H3-7. En Misiones la pérdida es a la vez la más extendida y la más intensa: aparece en cuatro de cada cinco hexágonos y alcanza al 5,5 % de la superficie provincial, contra el 1,8 % de Corrientes. Las dos cifras miden cosas distintas y no se multiplican entre sí.'
 		},
 		en: {
 			title: 'Hexagons with post-cutoff forest loss',

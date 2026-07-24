@@ -7,30 +7,55 @@ it produces.
 
 ## EUDR — which script produces which published figure
 
-Every script here reads only public Earth Engine assets (MapBiomas Argentina
+### Reproducible with only an Earth Engine account
+
+These three read **only public Earth Engine assets** (MapBiomas Argentina
 Collection 2 and Hansen GFC) plus `src/lib/data/eudr_provinces_boundary.json`,
-which is versioned in this repository. No local raster or credential beyond an
+which is versioned here. No local raster and no credential beyond a registered
 Earth Engine account is needed, so a third party can reproduce the numbers.
 
 | Script | Published figures it produces |
 |---|---|
 | `eudr_split_cosecha_nativo.py` | Split of post-cutoff loss into harvest vs native conversion (22.8 % overall; 91.2 % Corrientes, 28.9 % Misiones), stability against the final year of the series (22.9 % to 2024), native→plantation conversion (34,907 ha) and 2020 plantation area (864,957 ha) |
-| `eudr_subcategorias_nativo.py` | Breakdown of the 539,741 ha lost over native cover into forest formation (97.2 %) and savanna formation, plus 2020 native cover composition |
+| `eudr_subcategorias_nativo.py` | Breakdown of the 539,741 ha lost over native cover into closed forest (97.2 %) and open/flooded forest, plus 2020 native cover composition |
 | `eudr_validacion_modulo_mapbiomas.py` | Hansen vs MapBiomas Vegetation Loss module contrast, 2021–2024, per province |
-| `aggregate_fire_native.py` | Burned area restricted to native woody cover (`fire_native_post_2020_pct`) |
-| `apply_fire_native_to_risk.py` | Substitutes filtered fire for raw fire inside `risk_score` |
-
-Shared constants — Hansen vintage, MapBiomas assets, class codes, boundary path —
-live in `config_eudr.py`. Import them rather than redefining them: several of the
-published numbers depend on using the *same* boundary file and the same tie-break
-rule for border cells, and a different one shifted a result by 98 percentage
-points once.
 
 ```bash
 python pipeline/eudr_split_cosecha_nativo.py
 python pipeline/eudr_subcategorias_nativo.py
 python pipeline/eudr_validacion_modulo_mapbiomas.py
 ```
+
+### Requires local intermediates (NOT reproducible from a clean clone)
+
+These two operate on rasters and parquets produced earlier in the pipeline and
+living under `pipeline/output/`, which is gitignored. They are listed for
+traceability, not as a one-command reproduction path.
+
+| Script | What it does | Inputs it needs |
+|---|---|---|
+| `aggregate_fire_native.py` | Burned area restricted to native woody cover (`fire_native_post_2020_pct`) | `eudr_deforestation_combined_2025*.tif` shards, `mapbiomas_col2_nea.tif`, `pipeline/data/ar_eudr_provinces.geojson` (derivable from GADM 4.1 — see `.github/workflows/eudr-update.yml`) |
+| `apply_fire_native_to_risk.py` | Substitutes filtered fire for raw fire inside `risk_score` | the res-7/res-9 parquets under `pipeline/output/eudr/` |
+
+> The fire filter is currently a **manual local step**: it is not invoked by
+> `run_eudr_update.py` nor by the CI workflow. The monthly cron in
+> `.github/workflows/eudr-update.yml` is suspended for that reason — an
+> automatic run would republish the layers with raw fire and contradict the
+> published methodology. See the comment at the top of that workflow.
+
+### Shared constants
+
+Hansen vintage, MapBiomas assets, class codes and boundary path live in
+`config_eudr.py`. Import them rather than redefining them: several of the
+published numbers depend on using the *same* boundary file and the same tie-break
+rule for border cells, and a different one shifted a result by 98 percentage
+points once.
+
+On class names: this analysis uses the **Argentine** Collection 2 legend, where
+classes 3, 4 and 6 are *bosques cerrados*, *bosques abiertos* and *bosques
+inundables* — all three inside the "Bosques" category — and class 5 does not
+exist. The Brazilian names ("formação florestal", "formação savânica") do not
+apply to Argentine products.
 
 ---
 

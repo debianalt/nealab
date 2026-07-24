@@ -101,6 +101,11 @@
 		<span class="lg-ramp"></span>
 		<span class="lg-lo">{locale === 'en' ? 'low' : 'bajo'}</span>
 		<span class="lg-hi">{locale === 'en' ? 'high' : 'alto'}</span>
+		<span class="lg-note">
+			{locale === 'en'
+				? 'only the highest-risk cells are drawn; blank does not mean zero loss'
+				: 'sólo se dibujan las celdas de mayor riesgo; el vacío no significa pérdida cero'}
+		</span>
 	</div>
 </div>
 
@@ -175,5 +180,16 @@
 	}
 	.lg-hi {
 		justify-self: end;
+	}
+	.lg-note {
+		grid-column: 1 / -1;
+		max-width: 150px;
+		margin-top: 3px;
+		padding-top: 3px;
+		border-top: 1px solid #1e293b;
+		font-size: 9px;
+		line-height: 1.35;
+		color: rgba(255, 255, 255, 0.45);
+		text-wrap: pretty;
 	}
 </style>

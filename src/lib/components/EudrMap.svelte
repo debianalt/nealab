@@ -176,6 +176,20 @@
 			interactive,
 		});
 
+		// Atribucion explicita: la licencia del basemap la exige, y los terminos de
+		// uso de MapBiomas piden que la cita acompane a la visualizacion del dato.
+		map.addControl(
+			new maplibregl.AttributionControl({
+				compact: true,
+				customAttribution: [
+					'<a href="https://argentina.mapbiomas.org" target="_blank" rel="noopener">MapBiomas Argentina — Colección 2 (CC-BY)</a>',
+					'Hansen/UMD Global Forest Change v1.13',
+					'NASA MODIS MCD64A1',
+				],
+			}),
+			'bottom-right',
+		);
+
 		if (interactive) {
 			map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 		}

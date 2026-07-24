@@ -569,13 +569,14 @@
 			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
 			`Pérdida anual ${LOSS_YEARS[0]}–${LOSS_YEARS[LOSS_YEARS.length - 1]}: ${LOSS_YEARS.map((y) => `${yr(y)}%`).join(' / ')}`,
 			r.plantation_data_cells > 0
-				? `Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea: ${r.deforested_harvest} sobre plantación forestal · ${r.deforested_forest} sobre bosque (formación forestal) · ${r.deforested_savanna} sobre monte/sabana nativa · ${r.deforested_other} sobre otra cobertura (agro/pasturas/mosaico) · ${r.deforested_conversion} eran bosque en 2020 y hoy figuran como plantación (posible conversión, a verificar). Señal indicativa — no determina causa de la pérdida ni cumplimiento EUDR.`
+				? `Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea: ${r.deforested_harvest} sobre plantación forestal · ${r.deforested_forest} sobre bosque cerrado · ${r.deforested_savanna} sobre bosque abierto o inundable · ${r.deforested_other} sobre otra cobertura (agro/pasturas/mosaico) · ${r.deforested_conversion} eran bosque en 2020 y hoy figuran como plantación (posible conversión, a verificar). Señal indicativa — no determina causa de la pérdida ni cumplimiento EUDR.`
 				: 'Plantación vs nativo: SIN dato de plantación para esta zona (Paraguay/Brasil — MapBiomas no clasifica silvicultura). La pérdida no pudo distinguirse entre cosecha de plantación y deforestación de bosque nativo; si hay forestación, posible falso positivo (verificar en terreno o catastro).',
 			'',
 			'-- METODOLOGÍA --',
-			`Hansen GFC ${hansenVersion} + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²) sobre dato 100 m. Datos al ${dataVintage}.`,
-			'Score 0-100 = 70% pérdida post-2020 + 20% fuego post-2020 + 10% pérdida previa.',
-			'Plantación vs bosque nativo: MapBiomas Argentina Col.1 (clase 9 = silvicultura).',
+			`Hansen GFC ${hansenVersion} + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²). Señal de pérdida a 100 m; área quemada MODIS a 500 m. Datos al ${dataVintage}.`,
+			'Score 0-100 = 70% pérdida post-2020 + 20% fuego sobre nativa leñosa + 10% ausencia de cobertura arbórea en la línea base Hansen (treecover2000).',
+			'Plantación vs bosque nativo: MapBiomas Argentina Colección 2 (clase 9 = silvicultura), leída en 2020 y 2024.',
+			'Cita: MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 24 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org (licencia CC-BY).',
 			'',
 			'(Adjunto el GeoJSON del polígono.)',
 			'',
@@ -709,7 +710,7 @@
 				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino
 				(Misiones, Corrientes, Chaco y Formosa), departamentos paraguayos y estados del sur de Brasil. Sirve para
 				screening de riesgo EUDR, due-diligence preliminar y soporte técnico de informes.
-				En Argentina (Misiones y Corrientes) distingue además la pérdida sobre <b>plantación forestal</b>
+				En Argentina (Misiones, Corrientes, Chaco y Formosa) distingue además la pérdida sobre <b>plantación forestal</b>
 				(ciclo de cosecha, conforme) de la <b>deforestación de bosque nativo</b>, cruzando con MapBiomas
 				y un baseline al corte 2020.
 			</li>
@@ -721,8 +722,9 @@
 			</li>
 			<li>
 				<span class="eudr-gate-label">Resolución del dato.</span>
-				El dato satelital subyacente está a 100 m. El resultado refleja el hexágono evaluado,
-				no la parcela exacta — usalo como señal espacial robusta, no como medición catastral.
+				La señal de pérdida está a 100 m y el área quemada proviene de un producto de 500 m,
+				mayor que la celda evaluada. El resultado refleja el hexágono, no la parcela exacta —
+				usalo como señal espacial robusta, no como medición catastral.
 			</li>
 			<li>
 				<span class="eudr-gate-label">Responsabilidad.</span>
@@ -733,6 +735,15 @@
 		<button class="eudr-gate-btn" onclick={() => eudrDisclaimerAccepted = true}>
 			Entendido — continuar con el análisis
 		</button>
+		<p class="eudr-gate-cite">
+			<span class="eudr-gate-label">Fuente de cobertura.</span>
+			MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de
+			Argentina, consultada el 24 de julio de 2026 a través del enlace:
+			<a href="https://argentina.mapbiomas.org" target="_blank" rel="noopener">argentina.mapbiomas.org</a>
+			<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY</a>.
+			Pérdida de cobertura arbórea: Hansen/UMD Global Forest Change v1.13. Área quemada:
+			NASA MODIS MCD64A1.
+		</p>
 		<a class="eudr-gate-link" href={lp('/terminos', i18n.locale)}>Ver términos y condiciones completos →</a>
 	</div>
 </div>
@@ -1284,6 +1295,20 @@
 
 	.eudr-gate-btn:hover { opacity: 0.85; }
 
+	.eudr-gate-cite {
+		margin: 14px 0 10px;
+		padding-top: 12px;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		font-size: 10.5px;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.42);
+		text-wrap: pretty;
+	}
+	.eudr-gate-cite a {
+		color: rgba(255, 255, 255, 0.6);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
 	.eudr-gate-link {
 		display: block;
 		text-align: center;

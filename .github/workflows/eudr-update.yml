@@ -1,8 +1,23 @@
 name: Update EUDR Deforestation Layer
 
 on:
-  schedule:
-    - cron: '0 7 1 * *'  # 1st of each month, 07:00 UTC
+  # El cron mensual esta SUSPENDIDO hasta el 2026-10-01.
+  #
+  # Motivo: este workflow regenera y sube eudr_deforestation.parquet y
+  # eudr_res9_combined.parquet, pero NO invoca aggregate_fire_native.py ni
+  # apply_fire_native_to_risk.py, que son los pasos que restringen el area
+  # quemada a vegetacion nativa lenosa. Una corrida automatica volveria a
+  # publicar el score con fuego crudo y dejaria las capas servidas en
+  # desacuerdo con la metodologia declarada en methodology.ts, en el informe
+  # de /eudr/informe y en el trabajo con DOI 10.5281/zenodo.19483040.
+  #
+  # Reactivar recien cuando el filtro de fuego este dentro del pipeline
+  # automatico (hoy es un paso manual local porque depende de rasters que no
+  # estan versionados). Mientras tanto, correr a mano con workflow_dispatch y
+  # aplicar los dos scripts de fuego antes de subir a R2.
+  #
+  # schedule:
+  #   - cron: '0 7 1 * *'  # 1st of each month, 07:00 UTC
   workflow_dispatch:       # manual trigger
 
 jobs:

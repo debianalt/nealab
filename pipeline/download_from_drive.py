@@ -86,11 +86,21 @@ def get_drive_service():
     from google.oauth2.credentials import Credentials
     from googleapiclient.discovery import build
 
+    # Installed-app OAuth values of the earthengine-api client. They are public
+    # by design, but hardcoding a literal named *_SECRET in a public repo trips
+    # secret scanners and reads badly, so the fallback comes from the env.
     try:
         from ee.oauth import CLIENT_ID as EE_CLIENT_ID, CLIENT_SECRET as EE_CLIENT_SECRET
     except ImportError:
-        EE_CLIENT_ID = '517222506229-vsmmajv00ul0bs7p89v5m89qs8eb9359.apps.googleusercontent.com'
-        EE_CLIENT_SECRET = 'RUP0RZ6e0pPhDzsqIJ7KlNd1'
+        EE_CLIENT_ID = os.environ.get('EE_OAUTH_CLIENT_ID', '')
+        EE_CLIENT_SECRET = os.environ.get('EE_OAUTH_CLIENT_SECRET', '')
+        if not EE_CLIENT_ID or not EE_CLIENT_SECRET:
+            raise SystemExit(
+                'earthengine-api no esta instalado y no hay EE_OAUTH_CLIENT_ID / '
+                'EE_OAUTH_CLIENT_SECRET en el entorno. Instala earthengine-api '
+                '(pip install -r pipeline/requirements.txt) o exporta esas dos '
+                'variables con los valores de tu cliente OAuth.'
+            )
 
     creds_path = os.path.expanduser('~/.config/earthengine/credentials')
     with open(creds_path) as f:
