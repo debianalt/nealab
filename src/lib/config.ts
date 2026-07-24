@@ -149,14 +149,16 @@ export function getEudrHiresUrl(): string {
 // mislabels as deforestation. AR-only for now (MapBiomas AR Collection 1);
 // PY/BR have no usable plantation class → those hexes are simply absent (sin dato).
 export function getEudrPlantationUrl(): string {
-	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=3`;
+	// v=4: MapBiomas Coleccion 2 (lectura 2020 y 2024), reagregado a 30 m.
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res9.parquet?v=4`;
 }
 
 // res-7 plantation (matches the main-map EUDR layer's res-7 grid) — used to show
 // the plantation/native breakdown when an admin-2 unit is selected on the main map.
 // v=2: split bosque (clase 3) vs monte/sabana (clase 4+6) + 4 NEA provincias.
 export function getEudrPlantationRes7Url(): string {
-	return `${getBase()}/data/eudr/hires/eudr_plantation_res7.parquet?v=3`;
+	// v=4: MapBiomas Coleccion 2 (lectura 2020 y 2024), reagregado a 30 m.
+	return `${getBase()}/data/eudr/hires/eudr_plantation_res7.parquet?v=4`;
 }
 
 export function getSatGlobalUrl(analysisId: string, territoryPrefix = ''): string {
