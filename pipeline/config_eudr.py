@@ -44,6 +44,27 @@ HANSEN_ASSET = "UMD/hansen/global_forest_change_2025_v1_13"
 HANSEN_VERSION = "v1.13"
 HANSEN_MAX_YEAR = 2025   # last loss year in the asset (lossyear code 25)
 
+# ── MapBiomas Argentina ──────────────────────────────────────────────────
+# Collection 2 (1985-2024, 18 classes) is the current one; Collection 1 covered
+# 1998-2022 and is superseded. Collections lag one year, so there is no 2025.
+# Public assets: no Earth Engine permissions needed beyond a registered account.
+MAPBIOMAS_C2_ASSET = ("projects/mapbiomas-public/assets/argentina/lulc/"
+                      "collection2/mapbiomas_argentina_collection2_"
+                      "integration_v3")
+# Vegetation-loss / secondary-vegetation module built on the same collection.
+MAPBIOMAS_C2_DEFOR_ASSET = ("projects/mapbiomas-public/assets/argentina/lulc/"
+                            "collection2/mapbiomas_argentina_collection2_"
+                            "deforestation_secondary_vegetation_v1")
+MAPBIOMAS_C2_FIRST_YEAR = 1985
+MAPBIOMAS_C2_LAST_YEAR = 2024
+
+# Land-cover class codes (identical in Collections 1 and 2, verified on the raster)
+MB_CLASS_FORESTRY = 9        # silvicultura / forestry plantation
+MB_CLASS_FOREST = 3          # formacion forestal (native forest, incl. dry Chaco)
+MB_CLASSES_SAVANNA = (4, 6)  # formacion sabanica
+# Class 5 (mangrove) has zero pixels in Argentina, so {3,4,5,6} == {3,4,6}.
+MB_CLASSES_NATIVE = (3, 4, 6)
+
 # ── GEE Export ───────────────────────────────────────────────────────────
 EXPORT_SCALE = 100       # metres per pixel (Hansen native 30m, 100m for efficiency)
 DRIVE_FOLDER = "spatia-eudr"

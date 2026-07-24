@@ -1,3 +1,39 @@
+# Pipelines
+
+This directory holds two unrelated pipelines. The **flood risk** one is documented
+below; the **EUDR / MapBiomas** analysis scripts are indexed first, because they
+back figures published in a report and each one has to be traceable to the number
+it produces.
+
+## EUDR — which script produces which published figure
+
+Every script here reads only public Earth Engine assets (MapBiomas Argentina
+Collection 2 and Hansen GFC) plus `src/lib/data/eudr_provinces_boundary.json`,
+which is versioned in this repository. No local raster or credential beyond an
+Earth Engine account is needed, so a third party can reproduce the numbers.
+
+| Script | Published figures it produces |
+|---|---|
+| `eudr_split_cosecha_nativo.py` | Split of post-cutoff loss into harvest vs native conversion (22.8 % overall; 91.2 % Corrientes, 28.9 % Misiones), stability against the final year of the series (22.9 % to 2024), native→plantation conversion (34,907 ha) and 2020 plantation area (864,957 ha) |
+| `eudr_subcategorias_nativo.py` | Breakdown of the 539,741 ha lost over native cover into forest formation (97.2 %) and savanna formation, plus 2020 native cover composition |
+| `eudr_validacion_modulo_mapbiomas.py` | Hansen vs MapBiomas Vegetation Loss module contrast, 2021–2024, per province |
+| `aggregate_fire_native.py` | Burned area restricted to native woody cover (`fire_native_post_2020_pct`) |
+| `apply_fire_native_to_risk.py` | Substitutes filtered fire for raw fire inside `risk_score` |
+
+Shared constants — Hansen vintage, MapBiomas assets, class codes, boundary path —
+live in `config_eudr.py`. Import them rather than redefining them: several of the
+published numbers depend on using the *same* boundary file and the same tie-break
+rule for border cells, and a different one shifted a result by 98 percentage
+points once.
+
+```bash
+python pipeline/eudr_split_cosecha_nativo.py
+python pipeline/eudr_subcategorias_nativo.py
+python pipeline/eudr_validacion_modulo_mapbiomas.py
+```
+
+---
+
 # Flood Risk Pipeline
 
 Automated pipeline: Sentinel-1 SAR → GEE export → GCS → H3 zonal stats → R2.
