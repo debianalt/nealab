@@ -29,6 +29,7 @@ from shapely.ops import unary_union
 from shapely.prepared import prep
 
 from config import get_territory
+from parquet_io import write_h3_parquet
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
@@ -249,7 +250,7 @@ def main():
 
         safe_name = safe_filename(dpto)
         parquet_path = os.path.join(output_dir, f"hex_flood_{safe_name}.parquet")
-        hex_data.to_parquet(parquet_path, index=False)
+        write_h3_parquet(hex_data, parquet_path)
         size_kb = os.path.getsize(parquet_path) / 1024
 
         centroid = compute_centroid(hex_data)

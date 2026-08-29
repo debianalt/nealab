@@ -120,7 +120,7 @@ def main():
           FROM read_parquet('{layer}') e
           LEFT JOIN read_parquet('{fire}') f USING (h3index)
           ORDER BY e.h3index
-        ) TO '{tmp}' (FORMAT parquet, ROW_GROUP_SIZE 50000)
+        ) TO '{tmp}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 50000)
         """)
         os.replace(tmp, layer)
 

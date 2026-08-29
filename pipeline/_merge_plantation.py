@@ -36,7 +36,7 @@ COPY (
         ) WHERE rn = 1
     ) c{join_2020}
     ORDER BY c.h3index
-) TO '{OUT}' (FORMAT parquet, ROW_GROUP_SIZE 50000)
+) TO '{OUT}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 50000)
 """)
 
 r = con.execute(f"""SELECT province, count(*) n,
