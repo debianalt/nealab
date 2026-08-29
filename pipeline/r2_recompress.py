@@ -49,7 +49,8 @@ lock = threading.Lock()
 # The first run of this script hit that wall at ~2,000 files and the remaining
 # 9,400 cascaded into 429s, so every request now goes through a global throttle
 # (spacing request starts across all threads) and retries 429/5xx with backoff.
-MIN_INTERVAL = 0.30  # seconds between request starts (~3.3 req/s)
+MIN_INTERVAL = 0.40  # seconds between request starts (~2.5 req/s; the 4/s cap
+                     # must also absorb retries, so leave real headroom)
 _rate_lock = threading.Lock()
 _next_slot = [0.0]
 
@@ -82,7 +83,7 @@ def http(method: str, key: str, tok: str, body: bytes = None) -> bytes:
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503, 504) and attempt < 5:
                 ra = e.headers.get("Retry-After", "")
-                time.sleep(float(ra) if ra.replace(".", "", 1).isdigit()
+                time.sleep(min(120.0, float(ra)) if ra.replace(".", "", 1).isdigit()
                            else min(60, 5 * 2 ** attempt))
                 continue
             raise
