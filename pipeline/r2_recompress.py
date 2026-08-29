@@ -145,7 +145,18 @@ def main():
     args = ap.parse_args()
 
     tok = token()
-    keys = [(k, s) for k, s in list_all(tok) if in_scope(k)]
+    # list_all (r2_cleanup) has no retry of its own; right after a 429 storm the
+    # 5-minute window is still exhausted, so wait it out instead of dying at boot.
+    for attempt in range(10):
+        try:
+            keys = [(k, s) for k, s in list_all(tok) if in_scope(k)]
+            break
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 9:
+                print(f"  429 listing bucket, retry {attempt + 1}/9 in 60s")
+                time.sleep(60)
+                continue
+            raise
     os.makedirs(args.backup_dir, exist_ok=True)
     done_path = os.path.join(args.backup_dir, "_done.jsonl")
     done = set()
