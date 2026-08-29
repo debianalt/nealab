@@ -19,6 +19,7 @@ Usage:
   python pipeline/r2_recompress.py [--dry-run] [--workers 6] [--backup-dir DIR]
 """
 import argparse
+import http.client
 import io
 import json
 import os
@@ -113,7 +114,8 @@ def http(method: str, key: str, body: bytes = None) -> bytes:
                            else min(60, 5 * 2 ** attempt))
                 continue
             raise
-        except (urllib.error.URLError, TimeoutError):
+        except (urllib.error.URLError, TimeoutError, http.client.HTTPException):
+            # HTTPException covers IncompleteRead: a dropped connection mid-body.
             if attempt < 5:
                 time.sleep(5 * 2 ** attempt)
                 continue
