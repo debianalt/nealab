@@ -24,6 +24,8 @@ import json
 import os
 import sys
 import threading
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -43,6 +45,23 @@ EUDR_KEYS = {
 
 lock = threading.Lock()
 
+# Cloudflare's client API is limited to 1,200 requests / 5 min (4/s) per user.
+# The first run of this script hit that wall at ~2,000 files and the remaining
+# 9,400 cascaded into 429s, so every request now goes through a global throttle
+# (spacing request starts across all threads) and retries 429/5xx with backoff.
+MIN_INTERVAL = 0.30  # seconds between request starts (~3.3 req/s)
+_rate_lock = threading.Lock()
+_next_slot = [0.0]
+
+
+def _throttle():
+    with _rate_lock:
+        now = time.monotonic()
+        t = max(_next_slot[0], now)
+        _next_slot[0] = t + MIN_INTERVAL
+    if t > now:
+        time.sleep(t - now)
+
 
 def in_scope(key: str) -> bool:
     if key in EUDR_KEYS:
@@ -51,12 +70,27 @@ def in_scope(key: str) -> bool:
 
 
 def http(method: str, key: str, tok: str, body: bytes = None) -> bytes:
-    req = urllib.request.Request(
-        API + urllib.parse.quote(key), method=method, data=body,
-        headers={"Authorization": f"Bearer {tok}",
-                 **({"Content-Type": "application/octet-stream"} if body else {})})
-    with urllib.request.urlopen(req, timeout=300) as r:
-        return r.read()
+    for attempt in range(6):
+        _throttle()
+        req = urllib.request.Request(
+            API + urllib.parse.quote(key), method=method, data=body,
+            headers={"Authorization": f"Bearer {tok}",
+                     **({"Content-Type": "application/octet-stream"} if body else {})})
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 502, 503, 504) and attempt < 5:
+                ra = e.headers.get("Retry-After", "")
+                time.sleep(float(ra) if ra.replace(".", "", 1).isdigit()
+                           else min(60, 5 * 2 ** attempt))
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt < 5:
+                time.sleep(5 * 2 ** attempt)
+                continue
+            raise
 
 
 def recompress(raw: bytes):
@@ -96,13 +130,7 @@ def process(key: str, size: int, tok: str, backup_dir: str, dry: bool):
         if len(new) >= len(raw):
             return (key, "not-smaller", size, size, "")
         if not dry:
-            for attempt in range(3):
-                try:
-                    http("PUT", key, tok, new)
-                    break
-                except Exception as e:
-                    if attempt == 2:
-                        raise RuntimeError(f"PUT failed 3x: {e}")
+            http("PUT", key, tok, new)
         return (key, "dry-run" if dry else "ok", size, len(new), "")
     except Exception as e:
         return (key, "error", size, size, str(e)[:200])
