@@ -22,6 +22,7 @@ import argparse
 import io
 import json
 import os
+import subprocess
 import sys
 import threading
 import time
@@ -54,6 +55,27 @@ MIN_INTERVAL = 0.40  # seconds between request starts (~2.5 req/s; the 4/s cap
 _rate_lock = threading.Lock()
 _next_slot = [0.0]
 
+# The wrangler OAuth token lives ~1h and a full run is longer, so every request
+# reads the current token from here and a 401 triggers one serialized refresh:
+# `npx wrangler whoami` makes wrangler renew + persist the token, token() re-reads it.
+TOK = {"v": None}
+_refresh_lock = threading.Lock()
+PIPE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def _refresh_token(failed: str):
+    with _refresh_lock:
+        if TOK["v"] != failed:
+            return  # another thread already refreshed
+        try:
+            subprocess.run("npx wrangler whoami", shell=True, capture_output=True,
+                           timeout=180, cwd=PIPE_DIR)
+            fresh = token()
+            if fresh != failed:
+                TOK["v"] = fresh
+        except Exception:
+            pass
+
 
 def _throttle():
     with _rate_lock:
@@ -70,9 +92,10 @@ def in_scope(key: str) -> bool:
     return key.endswith(".parquet") and ("/sat_dpto/" in key or "/flood_dpto/" in key)
 
 
-def http(method: str, key: str, tok: str, body: bytes = None) -> bytes:
+def http(method: str, key: str, body: bytes = None) -> bytes:
     for attempt in range(6):
         _throttle()
+        tok = TOK["v"]
         req = urllib.request.Request(
             API + urllib.parse.quote(key), method=method, data=body,
             headers={"Authorization": f"Bearer {tok}",
@@ -81,6 +104,9 @@ def http(method: str, key: str, tok: str, body: bytes = None) -> bytes:
             with urllib.request.urlopen(req, timeout=300) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
+            if e.code == 401 and attempt < 5:
+                _refresh_token(tok)
+                continue
             if e.code in (429, 500, 502, 503, 504) and attempt < 5:
                 ra = e.headers.get("Retry-After", "")
                 time.sleep(min(120.0, float(ra)) if ra.replace(".", "", 1).isdigit()
@@ -115,9 +141,9 @@ def recompress(raw: bytes):
     return out, table.num_rows
 
 
-def process(key: str, size: int, tok: str, backup_dir: str, dry: bool):
+def process(key: str, size: int, backup_dir: str, dry: bool):
     try:
-        raw = http("GET", key, tok)
+        raw = http("GET", key)
         if len(raw) != size:
             return (key, "error", 0, 0, f"size mismatch on GET ({len(raw)} vs {size})")
         bak = os.path.join(backup_dir, key.replace("/", os.sep))
@@ -131,7 +157,7 @@ def process(key: str, size: int, tok: str, backup_dir: str, dry: bool):
         if len(new) >= len(raw):
             return (key, "not-smaller", size, size, "")
         if not dry:
-            http("PUT", key, tok, new)
+            http("PUT", key, new)
         return (key, "dry-run" if dry else "ok", size, len(new), "")
     except Exception as e:
         return (key, "error", size, size, str(e)[:200])
@@ -144,19 +170,22 @@ def main():
     ap.add_argument("--backup-dir", default=DEFAULT_BACKUP)
     args = ap.parse_args()
 
-    tok = token()
+    TOK["v"] = token()
     # list_all (r2_cleanup) has no retry of its own; right after a 429 storm the
     # 5-minute window is still exhausted, so wait it out instead of dying at boot.
     for attempt in range(10):
         try:
-            keys = [(k, s) for k, s in list_all(tok) if in_scope(k)]
+            keys = [(k, s) for k, s in list_all(TOK["v"]) if in_scope(k)]
             break
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt < 9:
+            if e.code not in (429, 401) or attempt == 9:
+                raise
+            if e.code == 401:
+                print(f"  401 listing bucket, refreshing token ({attempt + 1}/9)")
+                _refresh_token(TOK["v"])
+            else:
                 print(f"  429 listing bucket, retry {attempt + 1}/9 in 60s")
                 time.sleep(60)
-                continue
-            raise
     os.makedirs(args.backup_dir, exist_ok=True)
     done_path = os.path.join(args.backup_dir, "_done.jsonl")
     done = set()
@@ -173,7 +202,7 @@ def main():
     stats = {"before": 0, "after": 0, "n": 0, "err": 0}
     with open(done_path, "a", encoding="utf-8") as log, \
             ThreadPoolExecutor(max_workers=args.workers) as ex:
-        futs = [ex.submit(process, k, s, tok, args.backup_dir, args.dry_run)
+        futs = [ex.submit(process, k, s, args.backup_dir, args.dry_run)
                 for k, s in todo]
         for i, fut in enumerate(futs, 1):
             key, status, before, after, err = fut.result()
