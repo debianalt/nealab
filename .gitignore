@@ -66,3 +66,6 @@ pipeline/**/*_PLAN.md
 # Dev/preview server logs and throwaway orchestrator scripts (repo root)
 *.log
 /pipeline/_orchestrate_*.py
+
+# Claves API locales (variantes tipo copia.env)
+*.env
