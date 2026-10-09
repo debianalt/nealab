@@ -2,7 +2,9 @@
 Upload pipeline outputs to Cloudflare R2.
 
 Uses wrangler CLI for R2 uploads. Requires CLOUDFLARE_API_TOKEN in environment.
-Uploads with versioning: archive/{date}/ + latest path.
+Overwrites the latest path. Archiving a dated copy to archive/{date}/ is opt-in
+(versioned=True / --versioned): the R2 free tier is capped at 10 GB and scheduled
+runs were piling up archive copies every month.
 
 Usage:
   python pipeline/upload_to_r2.py --file pipeline/output/hex_flood_risk.parquet --dest data/hex_flood_risk.parquet
@@ -82,7 +84,7 @@ def _run_wrangler_upload(local_path: str, r2_key: str) -> bool:
         return False
 
 
-def upload_file(local_path: str, r2_key: str, versioned: bool = True) -> bool:
+def upload_file(local_path: str, r2_key: str, versioned: bool = False) -> bool:
     """
     Upload a single file to R2 using wrangler.
 
@@ -133,13 +135,13 @@ def main():
     parser.add_argument("--file", help="Specific file to upload")
     parser.add_argument("--dest", help="R2 destination key (used with --file)")
     parser.add_argument("--all", action="store_true", help="Upload all known outputs")
-    parser.add_argument("--no-version", action="store_true",
-                        help="Skip archive versioning")
+    parser.add_argument("--versioned", action="store_true",
+                        help="Also archive a dated copy under archive/{date}/")
     args = parser.parse_args()
 
     if args.file:
         dest = args.dest or os.path.basename(args.file)
-        success = upload_file(args.file, dest, versioned=not args.no_version)
+        success = upload_file(args.file, dest, versioned=args.versioned)
         sys.exit(0 if success else 1)
 
     if args.all:
@@ -148,7 +150,7 @@ def main():
         for filename, r2_key in UPLOAD_MAP.items():
             local_path = os.path.join(OUTPUT_DIR, filename)
             if os.path.exists(local_path):
-                if upload_file(local_path, r2_key, versioned=not args.no_version):
+                if upload_file(local_path, r2_key, versioned=args.versioned):
                     successes += 1
                 else:
                     failures += 1

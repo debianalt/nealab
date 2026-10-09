@@ -7,6 +7,8 @@ on:
 
 jobs:
   update:
+    # Solo en el repo privado: el mirror publico (debianalt/nealab) no tiene secrets.
+    if: github.repository == 'debianalt/spatia-dev'
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:

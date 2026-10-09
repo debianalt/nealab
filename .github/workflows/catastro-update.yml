@@ -1,12 +1,15 @@
 name: Update Catastro Layer
-# Runs monthly: 1st of every month at 08:00 UTC (~05:00 ART)
+# Manual-only desde 2026-10-09. El analisis catastro salio del menu (1c14b02) y la
+# capa queda congelada: tiles/catastro.pmtiles y catastro_by_radio siguen sirviendo
+# los overlays de parcelas, pero no se regeneran. El cron mensual fallaba
+# (ValueError en run_catastro_update.py) y cada corrida buena archivaba ~50 MB en R2.
 on:
-  schedule:
-    - cron: '0 8 1 * *'  # First day of each month, 08:00 UTC
   workflow_dispatch:       # manual trigger
 
 jobs:
   update:
+    # Solo en el repo privado: el mirror publico (debianalt/nealab) no tiene secrets.
+    if: github.repository == 'debianalt/spatia-dev'
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
