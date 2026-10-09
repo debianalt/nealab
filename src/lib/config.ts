@@ -98,7 +98,6 @@ export function getParquetUrl(name: string): string {
 		sat_sociodemographic: '?v=24',
 		sat_economic_activity: '?v=28',
 		sat_accessibility: '?v=27',
-		sat_carbon_stock: '?v=20',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=5',
@@ -220,7 +219,6 @@ export const PARQUETS = {
 	get sat_sociodemographic() { return getParquetUrl('sat_sociodemographic'); },
 	get sat_economic_activity() { return getParquetUrl('sat_economic_activity'); },
 	get sat_accessibility() { return getParquetUrl('sat_accessibility'); },
-	get sat_carbon_stock() { return getParquetUrl('sat_carbon_stock'); },
 	get sat_censo_temporal() { return getParquetUrl('sat_censo_temporal'); },
 	// Brazil IBGE Censo 2022 setor-level stats
 	get radio_stats_parana_br()         { return `${getBase()}/data/setores_stats_parana_br.parquet`; },
@@ -816,47 +814,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendHighKey: 'legend.accessibility.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', central_py: 'available', neembucu_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available', misiones_py: 'available', paraguari_py: 'available', amambay_py: 'available'},
 	},
-	// ── Carbon Stock & Balance ──
-	carbon_stock: {
-		id: 'carbon_stock',
-		parquet: 'sat_carbon_stock',
-		variables: [
-			{ col: 'type', labelKey: 'sat.carbon.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.carbon.typeLabel', aggregation: 'mean' },
-			{ col: 'c_agb_cci', rawCol: 'c_agb_raw', unit: 'Mg/ha', labelKey: 'sat.carbon.agbCci', aggregation: 'mean' },
-			{ col: 'c_agb_gedi', rawCol: 'c_agb_gedi_raw', unit: 'Mg/ha', labelKey: 'sat.carbon.agbGedi', aggregation: 'mean' },
-			{ col: 'c_total_carbon', rawCol: 'c_total_carbon_raw', unit: 'tC/ha', labelKey: 'sat.carbon.totalCarbon', aggregation: 'mean' },
-			{ col: 'c_soc', rawCol: 'c_soc_tcha', unit: 'tC/ha', labelKey: 'sat.carbon.soc', aggregation: 'mean' },
-			{ col: 'c_gross_emissions', rawCol: 'c_emissions_raw', unit: 'MgCO₂/ha', labelKey: 'sat.carbon.emissions', aggregation: 'mean' },
-			{ col: 'c_gross_removals', rawCol: 'c_removals_raw', unit: 'MgCO₂/ha', labelKey: 'sat.carbon.removals', aggregation: 'mean' },
-			{ col: 'c_net_flux', rawCol: 'c_net_flux_raw', unit: 'MgCO₂/ha', labelKey: 'sat.carbon.netFlux', aggregation: 'mean' },
-			{ col: 'c_npp', rawCol: 'c_npp_raw', unit: 'gC/m²/yr', labelKey: 'sat.carbon.npp', aggregation: 'mean' },
-			{ col: 'c_economic_value', labelKey: 'sat.carbon.economicValue', aggregation: 'mean' },
-		],
-		primaryVariable: 'c_total_carbon_raw',
-		colorScale: 'sequential',
-		aggregation: 'mean',
-		// P2/P98 of c_total_carbon_raw (tC/ha) over the global pooled parquet. Fixed so
-		// the color scale is identical across territories AND so ensureColorDomain skips
-		// the slow MIN/MAX scan of the 2.7 MB single-row-group column (was ~3.6 s/activation).
-		fixedColorDomain: [165, 316],
-		petalVars: [
-			{ col: 'c_agb_cci', labelKey: 'sat.carbon.agbCci', aggregation: 'mean' },
-			{ col: 'c_total_carbon', labelKey: 'sat.carbon.totalCarbon', aggregation: 'mean' },
-			{ col: 'c_soc', labelKey: 'sat.carbon.soc', aggregation: 'mean' },
-			{ col: 'c_gross_emissions', labelKey: 'sat.carbon.emissions', aggregation: 'mean' },
-			{ col: 'c_gross_removals', labelKey: 'sat.carbon.removals', aggregation: 'mean' },
-			{ col: 'c_net_flux', labelKey: 'sat.carbon.netFlux', aggregation: 'mean' },
-			{ col: 'c_npp', labelKey: 'sat.carbon.npp', aggregation: 'mean' },
-		],
-		titleKey: 'sat.carbon.title',
-		perDepartment: true,
-		temporal: true,
-		temporalPeriods: { current: '2022–2024', baseline: '2018–2020', source: 'ESA CCI · MODIS · Hansen' },
-		legendLowKey: 'legend.carbon.low',
-		legendHighKey: 'legend.carbon.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
-	},
 	// ── PM2.5 Drivers (25-year ML decomposition) ──
 	pm25_drivers: {
 		id: 'pm25_drivers',
@@ -1020,17 +977,6 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'ambiente',
 		titleKey: 'sat.pm25.title',
 		descKey: 'sat.pm25.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
-		comparable: true,
-		rigorBadge: 'physical',
-		status: 'available',
-		spatialUnit: 'hexagon',
-	},
-	{
-		id: 'carbon_stock',
-		lensId: 'ambiente',
-		titleKey: 'sat.carbon.title',
-		descKey: 'sat.carbon.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 		comparable: true,
 		rigorBadge: 'physical',
@@ -1415,7 +1361,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'data.source.censo' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
-	sat_carbon_stock: { dataDate: 'ESA CCI Biomass / GEDI / SoilGrids / MODIS NPP', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
 	// EUDR: fecha real de refresh viene de data/eudr/meta.json (getEudrMetaUrl) — esto es fallback.
 	eudr_deforestation: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '24/07/2026', sourceKey: 'data.source.satellite' },
 };

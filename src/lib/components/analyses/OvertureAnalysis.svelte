@@ -38,7 +38,7 @@
 	});
 
 	// Census-based analyses: hide petals (radio-level data → identical within radio, not informative)
-	const CENSUS_ANALYSES = new Set(['service_deprivation', 'health_access', 'education_capital', 'education_flow', 'economic_activity', 'accessibility', 'carbon_stock']);
+	const CENSUS_ANALYSES = new Set(['service_deprivation', 'health_access', 'education_capital', 'education_flow', 'economic_activity', 'accessibility']);
 
 	// Department summaries for perDepartment layers
 	let deptSummary = $state<any>(null);
@@ -288,7 +288,7 @@
 	});
 
 	// ── Cross-analysis profile for selected hex ──
-	const CROSS_ANALYSIS_IDS = ['carbon_stock', 'agri_potential', 'accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
+	const CROSS_ANALYSIS_IDS = ['agri_potential', 'accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
 	const CROSS_TITLE_KEYS: Record<string, string> = { land_use: 'sat.landUse.title' };
 	const CROSS_ANALYSES = $derived(
 		CROSS_ANALYSIS_IDS.map(id => {

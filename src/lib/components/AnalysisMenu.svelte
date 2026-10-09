@@ -27,7 +27,7 @@
 	const SUBGROUPS: Record<string, string> = {
 		// Ambiente y riesgo
 		flood_risk: 'menu.sub.waterRisk',
-		deforestation_dynamics: 'menu.sub.naturalCover', carbon_stock: 'menu.sub.naturalCover',
+		deforestation_dynamics: 'menu.sub.naturalCover',
 		pm25_drivers: 'menu.sub.airQuality',
 		// Producción y suelo
 		agri_potential: 'menu.sub.soils', forestry_aptitude: 'menu.sub.soils',

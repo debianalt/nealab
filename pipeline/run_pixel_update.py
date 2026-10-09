@@ -18,7 +18,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR
 
 PIXEL_ANALYSES = [
-    "agri_potential", "carbon_stock", "forestry_aptitude",
+    "agri_potential", "forestry_aptitude",
 ]
 GCS_BUCKET = "spatia-satellite"
 GCS_PREFIX = "satellite"

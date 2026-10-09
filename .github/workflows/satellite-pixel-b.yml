@@ -1,6 +1,6 @@
 name: Update Satellite Analyses (Group B)
 # Retired: all original Group B analyses removed from catalog (2026-05-31).
-# Kept as workflow_dispatch for manual one-off re-processing of agri/carbon/forestry.
+# Kept as workflow_dispatch for manual one-off re-processing of agri/forestry.
 # Schedule disabled — trigger manually when a re-export from GEE is needed.
 
 on:

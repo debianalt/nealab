@@ -65,7 +65,7 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 		queOfreceTitle: 'Qué ofrece',
 		queOfreceIntro: 'nealab organiza sus análisis en cuatro grandes preguntas o "lentes", que pueden combinarse entre sí:',
 		queOfrece: [
-			'<strong>Ambiente y riesgo.</strong> Riesgo de inundación (JRC Global Surface Water + Sentinel-1 SAR — radar de apertura sintética, satélites de la Agencia Espacial Europea — ESA), dinámica de deforestación, stock de carbono y balance de emisiones, y calidad del aire (PM2.5 — material particulado fino de diámetro ≤ 2,5 micrómetros).',
+			'<strong>Ambiente y riesgo.</strong> Riesgo de inundación (JRC Global Surface Water + Sentinel-1 SAR — radar de apertura sintética, satélites de la Agencia Espacial Europea — ESA), dinámica de deforestación, y calidad del aire (PM2.5 — material particulado fino de diámetro ≤ 2,5 micrómetros).',
 			'<strong>Producción y suelo.</strong> Aptitud edafoclimática agrícola, aptitud forestal comercial y uso y cobertura del suelo.',
 			'<strong>Población y servicios.</strong> Carencia de servicios básicos (censo 2022), accesibilidad a salud y educación, acceso a salud, capital educativo, flujo del sistema educativo, perfil sociodemográfico y dinámica censal, con crosswalk dasimétrico a hexágonos H3.',
 			'<strong>Economía e infraestructura.</strong> Actividad económica y valor posicional, infraestructura eléctrica y cumplimiento del Reglamento de Deforestación de la Unión Europea (EUDR, por sus siglas en inglés) para commodities.',
@@ -130,7 +130,7 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 		queOfreceTitle: 'What it offers',
 		queOfreceIntro: 'nealab organises its analyses around four broad questions or "lenses", which can be combined:',
 		queOfrece: [
-			'<strong>Environment & risk.</strong> Flood risk (JRC Global Surface Water + Sentinel-1 SAR — synthetic aperture radar, satellites of the European Space Agency — ESA), deforestation dynamics, carbon stock and emissions balance, and air quality (PM2.5 — fine particulate matter ≤ 2.5 microns in diameter).',
+			'<strong>Environment & risk.</strong> Flood risk (JRC Global Surface Water + Sentinel-1 SAR — synthetic aperture radar, satellites of the European Space Agency — ESA), deforestation dynamics, and air quality (PM2.5 — fine particulate matter ≤ 2.5 microns in diameter).',
 			'<strong>Production & land.</strong> Agricultural agro-climatic suitability, commercial forestry suitability, and land use and cover.',
 			'<strong>Population & services.</strong> Basic service deprivation (2022 census), health and education accessibility, health access, educational capital, educational system flow, sociodemographic profile and census dynamics, with dasymetric crosswalk to H3 hexagons.',
 			'<strong>Economy & infrastructure.</strong> Economic activity and locational value, electrical infrastructure, and EU Deforestation Regulation (EUDR) compliance for commodities.',
@@ -195,7 +195,7 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 		queOfreceTitle: 'O que oferece',
 		queOfreceIntro: 'nealab organiza suas análises em quatro grandes questões ou "lentes", que podem ser combinadas entre si:',
 		queOfrece: [
-			'<strong>Ambiente e risco.</strong> Risco de inundação (JRC Global Surface Water + Sentinel-1 SAR — radar de abertura sintética, satélites da Agência Espacial Europeia — ESA), dinâmica de desmatamento, estoque de carbono e balanço de emissões, e qualidade do ar (PM2,5 — material particulado fino com diâmetro ≤ 2,5 micrômetros).',
+			'<strong>Ambiente e risco.</strong> Risco de inundação (JRC Global Surface Water + Sentinel-1 SAR — radar de abertura sintética, satélites da Agência Espacial Europeia — ESA), dinâmica de desmatamento, e qualidade do ar (PM2,5 — material particulado fino com diâmetro ≤ 2,5 micrômetros).',
 			'<strong>Produção e solo.</strong> Aptidão edafoclimática agrícola, aptidão florestal comercial e uso e cobertura do solo.',
 			'<strong>População e serviços.</strong> Carência de serviços básicos (censo 2022), acessibilidade à saúde e educação, acesso à saúde, capital educacional, fluxo do sistema educacional, perfil sociodemográfico e dinâmica censitária, com crosswalk dassimétrico para hexágonos H3.',
 			'<strong>Economia e infraestrutura.</strong> Atividade econômica e valor locacional, infraestrutura elétrica e conformidade com o Regulamento de Desmatamento da União Europeia (EUDR) para commodities.',
@@ -265,7 +265,7 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 		queOfreceTitle: 'Mba\'épa ofrece',
 		queOfreceIntro: 'nealab oñemboguapy análisis-kuéra mba\'e ñepyrũ ára peteĩ "lentes" irundy reheve, oñemboikuaa jey:',
 		queOfrece: [
-			'<strong>Yvypóra (ambiente ha riesgo).</strong> Riesgo de inundación (JRC + Sentinel-1 SAR), deforestación dinámica, stock de carbono ha balance de emisiones, ha calidad del aire (PM2,5).',
+			'<strong>Yvypóra (ambiente ha riesgo).</strong> Riesgo de inundación (JRC + Sentinel-1 SAR), deforestación dinámica, ha calidad del aire (PM2,5).',
 			'<strong>Mba\'apo (producción ha suelo).</strong> Aptitud agrícola edafoclimática, aptitud forestal ha uso del suelo.',
 			'<strong>Tetã kuéra (población ha servicios).</strong> Carencia de servicios básicos (censo 2022), accesibilidad a salud ha educación, acceso a salud, capital educativo, sistema educativo flujo, perfil sociodemográfico ha dinámica censal, crosswalk dasimétrico H3 hexágonos-pe.',
 			'<strong>Moĩ viru (economía ha infraestructura).</strong> Actividad económica ha valor posicional, infraestructura eléctrica ha cumplimiento EUDR commodities rehegua.',
