@@ -538,10 +538,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.pm25.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
 	'sat.pm25.typeLabel': { es: 'Clasificación OMS', en: 'WHO classification', gn: 'OMS', pt: 'Classificação OMS' },
 	'sat.pm25.pm25Mean': { es: 'PM2.5 medio (µg/m³)', en: 'Mean PM2.5 (µg/m³)', gn: 'PM2.5', pt: 'PM2.5 médio (µg/m³)' },
-	'sat.pm25.fire': { es: 'Contribución del fuego', en: 'Fire contribution', gn: 'Tata', pt: 'Contribuição do fogo' },
-	'sat.pm25.climate': { es: 'Contribución del clima', en: 'Climate contribution', gn: 'Ára', pt: 'Contribuição do clima' },
-	'sat.pm25.terrain': { es: 'Contribución del terreno', en: 'Terrain contribution', gn: 'Yvy', pt: 'Contribuição do terreno' },
-	'sat.pm25.vegetation': { es: 'Contribución de la vegetación', en: 'Vegetation contribution', gn: "Ka'a", pt: 'Contribuição da vegetação' },
 	'legend.pm25.low': { es: 'Baja exposición a PM2.5', en: 'Low PM2.5 exposure', gn: "Michĩ", pt: 'Baixa exposição ao PM2.5' },
 	'legend.pm25.high': { es: 'Alta exposición a PM2.5', en: 'High PM2.5 exposure', gn: "Tuicha", pt: 'Alta exposição ao PM2.5' },
 
