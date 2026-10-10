@@ -644,7 +644,7 @@
 		{#if loading}
 			<div class="loading">{i18n.t('analysis.loading')}</div>
 		{:else}
-			<div class="hint">{i18n.t('analysis.flood.clickHint')}</div>
+			<div class="hint">{i18n.t('analysis.hex.clickHint')}</div>
 		{/if}
 
 		{#if typeDistribution.length > 0}
