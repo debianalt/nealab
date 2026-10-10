@@ -202,6 +202,24 @@
 		colorScale === 'flood' ? 'danger' : isCategorical ? 'categorical' : 'good'
 	);
 
+	// Range shown in the score box. Same rule as MapLegend's badge: the colour comes
+	// from the layer's primary variable, which is often a physical unit (µg/m³, min,
+	// hab/km²…), not a 0–100 score. Only score/percentile units read "Score 0–100".
+	const SCORE_UNITS = new Set(['/100', 'percentil', 'pctl']);
+	const scoreRangeLabel = $derived.by(() => {
+		const pv = hexStore.effectivePrimary;
+		const v = layerCfg?.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		const u = v?.unit;
+		if (!u || SCORE_UNITS.has(u)) return i18n.t('legend.range');
+		if (u === '%') return '0–100 %';
+		return u;
+	});
+	const highValueLabel = $derived(
+		layerCfg?.legendHighKey
+			? `${i18n.t('legend.highValue')}: ${i18n.t(layerCfg.legendHighKey)}`
+			: i18n.t(scoreDirection === 'danger' ? 'legend.highMeansDanger' : 'legend.highMeansGood')
+	);
+
 	// Auto-select top department on first load
 	// Department list loads, user picks manually
 
@@ -686,12 +704,8 @@
 
 		{#if !isCategorical}
 			<div class="score-info-box">
-				<span class="score-range">{i18n.t('legend.range')}</span>
-				{#if scoreDirection === 'danger'}
-					<span class="score-dir score-dir-danger">{i18n.t('legend.highMeansDanger')}</span>
-				{:else}
-					<span class="score-dir score-dir-good">{i18n.t('legend.highMeansGood')}</span>
-				{/if}
+				<span class="score-range">{scoreRangeLabel}</span>
+				<span class="score-dir {scoreDirection === 'danger' ? 'score-dir-danger' : 'score-dir-good'}">{highValueLabel}</span>
 			</div>
 		{/if}
 
