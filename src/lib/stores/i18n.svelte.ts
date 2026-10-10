@@ -522,19 +522,9 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.deforest.high': { es: 'Alta presión de deforestación', en: 'High deforestation pressure', gn: "Tuicha", pt: 'Alta pressão de desmatamento' },
 	'legend.landUse.low': { es: 'Poca cobertura nativa', en: 'Low native cover', gn: "Michĩ ka'aguy", pt: 'Pouca cobertura nativa' },
 	'legend.landUse.high': { es: 'Alta cobertura nativa', en: 'High native cover', gn: "Tuicha ka'aguy", pt: 'Alta cobertura nativa' },
-	// ── PM2.5 Predicted ──
-	'sat.pm25pred.title': { es: '¿Cuál es la calidad del aire predicha?', en: 'What is the predicted air quality?', gn: "Mba'eichapa tataendy?", pt: 'Qual é a qualidade do ar prevista?' },
-	'sat.pm25pred.desc': { es: 'PM2.5 predicho por machine learning en µg/m³ con escenarios de fuego. Modelo entrenado con 25 años de datos satelitales (ACAG V6). Incluye bandas de excedencia OMS.', en: 'ML-predicted PM2.5 in ug/m3 with fire scenarios. Model trained on 25 years of satellite data (ACAG V6). Includes WHO exceedance bands.', gn: 'PM2.5 predicho', pt: 'PM2.5 previsto por machine learning em µg/m³ com cenários de fogo. Modelo treinado com 25 anos de dados satelitais (ACAG V6). Inclui bandas de excedência OMS.' },
-	'sat.pm25pred.type': { es: 'Banda OMS', en: 'WHO band', gn: 'OMS', pt: 'Banda OMS' },
-	'sat.pm25pred.typeLabel': { es: 'Clasificación OMS', en: 'WHO classification', gn: 'OMS', pt: 'Classificação OMS' },
-	'sat.pm25pred.pm25': { es: 'PM2.5 predicho (ug/m3)', en: 'Predicted PM2.5 (ug/m3)', gn: 'PM2.5', pt: 'PM2.5 previsto (µg/m³)' },
-	'sat.pm25pred.fireHigh': { es: 'PM2.5 escenario fuego alto (ug/m3)', en: 'PM2.5 high-fire scenario (ug/m3)', gn: 'PM2.5 tata', pt: 'PM2.5 cenário fogo alto (µg/m³)' },
-	'sat.pm25pred.whoBand': { es: 'Banda de excedencia OMS', en: 'WHO exceedance band', gn: 'OMS banda', pt: 'Banda de excedência OMS' },
-	'legend.pm25pred.low': { es: 'Aire mas limpio', en: 'Cleaner air', gn: "Pora", pt: 'Ar mais limpo' },
-	'legend.pm25pred.high': { es: 'Mayor contaminacion', en: 'More polluted', gn: "Vai", pt: 'Maior contaminação' },
-	// ── PM2.5 Drivers ──
+	// ── PM2.5 (concentracion ACAG + bandas OMS) ──
 	'sat.pm25.title': { es: '¿Qué nivel de exposición a PM2.5 hay?', en: 'What level of PM2.5 exposure is there?', gn: "Mba'eichagua PM2.5 oĩ?", pt: 'Qual nível de exposição ao PM2.5 existe?' },
-	'sat.pm25.desc': { es: 'Drivers de PM2.5 identificados por machine learning: intensidad de fuego regional, clima, terreno y vegetación. Panel de 25 años (ACAG V6, 1998-2022).', en: 'PM2.5 drivers identified by machine learning: regional fire intensity, climate, terrain and vegetation. 25-year panel (ACAG V6, 1998-2022).', gn: 'PM2.5 drivers', pt: 'Drivers de PM2.5 identificados por machine learning: intensidade de fogo regional, clima, terreno e vegetação. Painel de 25 anos (ACAG V6, 1998-2022).' },
+	'sat.pm25.desc': { es: 'Concentración media anual de PM2.5 (ACAG V6, ~1 km, 1998-2022) clasificada según la guía OMS 2021, con comparación 2001-2010 vs 2013-2022.', en: 'Annual mean PM2.5 concentration (ACAG V6, ~1 km, 1998-2022) classified against the WHO 2021 guideline, comparing 2001-2010 with 2013-2022.', gn: 'PM2.5 ary pukukue (ACAG V6) ha OMS 2021', pt: 'Concentração média anual de PM2.5 (ACAG V6, ~1 km, 1998-2022) classificada segundo a diretriz OMS 2021, com comparação 2001-2010 vs 2013-2022.' },
 	'sat.pm25.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
 	'sat.pm25.typeLabel': { es: 'Clasificación OMS', en: 'WHO classification', gn: 'OMS', pt: 'Classificação OMS' },
 	'sat.pm25.pm25Mean': { es: 'PM2.5 medio (µg/m³)', en: 'Mean PM2.5 (µg/m³)', gn: 'PM2.5', pt: 'PM2.5 médio (µg/m³)' },
