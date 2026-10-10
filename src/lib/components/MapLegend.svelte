@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 
 	let { hexStore }: { hexStore: HexStore } = $props();
 
@@ -35,7 +36,7 @@
 		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
 		const u = v?.unit;
 		if (!u || SCORE_UNITS.has(u)) return '0–100';
-		return u;
+		return unitLabel(u);
 	});
 
 	// Extract unique type labels from visible data (categorical)

@@ -18,6 +18,7 @@
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { LENS_CONFIG, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
@@ -38,8 +39,8 @@
 		if (!layer) return 'score /100';
 		const col = pv ?? layer.primaryVariable;
 		const v = layer.variables?.find((x: any) => x.col === col || x.rawCol === col);
-		if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
-		if (layer.variables?.some((x: any) => x.unit === 'percentil')) return 'percentil prov.';
+		if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return unitLabel(v.unit);
+		if (layer.variables?.some((x: any) => x.unit === 'percentil')) return i18n.t('unit.pctlProv');
 		return 'score /100';
 	}
 

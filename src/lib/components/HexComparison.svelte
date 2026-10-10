@@ -3,6 +3,7 @@
 	import PetalChart from './PetalChart.svelte';
 	import { ANALYSIS_REGISTRY } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
 
 	let {
@@ -155,7 +156,7 @@
 						{#if !hasData}
 							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
 						{:else}
-							<span class="cd-val-data">{isStr ? val : fmtSmart(displayVal * (v.scale ?? 1)) + (v.unit ? ` ${v.unit}` : ' /100')}</span>
+							<span class="cd-val-data">{isStr ? val : fmtSmart(displayVal * (v.scale ?? 1)) + (v.unit ? ` ${unitLabel(v.unit)}` : ' /100')}</span>
 						{/if}
 					</div>
 				{/each}

@@ -55,7 +55,7 @@ FEATURE_GROUPS = {
     "socioeconomic": ["pct_nbi", "pct_sin_instruccion", "pct_hacinamiento_critico",
                        "tasa_empleo", "pct_cobertura_salud", "tamano_medio_hogar",
                        "pct_originarios", "densidad_hab_km2",
-                       "pct_jefatura_femenina", "pct_combustible_precario"],
+                       "pct_jefatura_femenina", "pct_sin_gas_red_elec"],
     "land_tenure": ["area_media_rural", "n_parcelas_rural", "pct_propietario"],
     "accessibility": ["dist_primary_m", "road_density", "travel_posadas", "travel_cabecera"],
     "institutional": ["otbn_frac_i", "otbn_frac_ii", "inside_anp",
@@ -212,7 +212,7 @@ def build_panel():
     census = _sql("""SELECT redcode, pct_nbi, pct_sin_instruccion, pct_hacinamiento_critico,
                             tasa_empleo, pct_cobertura_salud, tamano_medio_hogar,
                             pct_originarios, densidad_hab_km2,
-                            pct_jefatura_femenina, pct_combustible_precario, pct_propietario
+                            pct_jefatura_femenina, pct_sin_gas_red_elec, pct_propietario
                      FROM censo2022_variables""")
     panel = panel.merge(census, on='redcode', how='left')
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HexStore, HexZone } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 	import {
 		downloadCsvFromRows,
 		downloadGeoJsonFromPolygon,
@@ -138,7 +139,7 @@
 					{@const rv = zone.stats.rawValues[vi]}
 					<div class="cd-row">
 						<span class="cd-label">{i18n.t(v.labelKey)}</span>
-						<span class="cd-val">{fmtSmart(rv)}{v.unit ? ` ${v.unit}` : ' /100'}</span>
+						<span class="cd-val">{fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
 					</div>
 				{/each}
 				<div class="zone-dl">

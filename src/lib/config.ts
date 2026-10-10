@@ -1,3 +1,5 @@
+import { unitLabel } from '$lib/utils/units';
+import { i18n } from '$lib/stores/i18n.svelte';
 const R2_PROD = 'https://cdn.spatia.ar';
 
 function getBase(): string {
@@ -523,8 +525,8 @@ export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined, col?
 	if (!layer) return '';
 	const pv = col ?? layer.primaryVariable;
 	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
-	if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return v.unit;
-	if (layer.variables?.some((x) => x.unit === 'percentil')) return 'percentil prov.';
+	if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return unitLabel(v.unit);
+	if (layer.variables?.some((x) => x.unit === 'percentil')) return i18n.t('unit.pctlProv');
 	// Genuine 0-100 composite score (eudr risk_score, agri c_ph_optimal) → '/100'.
 	// Anything else with no declared unit (e.g. a raw 0-1 fraction) → no suffix,
 	// so we never re-introduce a fake '/100' on a raw value.

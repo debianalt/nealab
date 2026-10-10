@@ -117,8 +117,8 @@ def main():
             ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM read_parquet('{OUTPUT_DIR}/sat_service_deprivation.parquet')), 1) AS pct,
             ROUND(AVG(c_nbi), 1) AS avg_nbi,
             ROUND(AVG(c_hacinamiento), 1) AS avg_hacinamiento,
-            ROUND(AVG(c_combustible), 1) AS avg_combustible,
-            ROUND(AVG(c_sin_techo), 1) AS avg_sin_techo
+            ROUND(AVG(c_sin_cloacas), 1) AS avg_sin_cloacas,
+            ROUND(AVG(c_piso), 1) AS avg_piso
         FROM read_parquet('{OUTPUT_DIR}/sat_service_deprivation.parquet')
         GROUP BY categoria
         ORDER BY categoria DESC
@@ -128,7 +128,7 @@ def main():
     severe = depriv[depriv['categoria'] == 'Severa (>=70)']
     if len(severe) > 0:
         print(f"\nHexagonos con privacion severa: {severe['n_hex'].values[0]:,} ({severe['pct'].values[0]}%)")
-        print(f"En estas zonas: NBI promedio {severe['avg_nbi'].values[0]}%, hacinamiento {severe['avg_hacinamiento'].values[0]}%, combustible precario {severe['avg_combustible'].values[0]}%")
+        print(f"En estas zonas: NBI promedio {severe['avg_nbi'].values[0]}%, hacinamiento {severe['avg_hacinamiento'].values[0]}%, sin cloacas {severe['avg_sin_cloacas'].values[0]}, piso inadecuado {severe['avg_piso'].values[0]} (percentiles)")
 
     # ── Finding 4: Deforestation vs agricultural potential ───────────────
     print("\n\n### FINDING 4: CONFLICTO DEFORESTACION - POTENCIAL AGRICOLA")

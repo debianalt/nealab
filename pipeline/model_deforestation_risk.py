@@ -50,7 +50,7 @@ FEATURE_GROUPS = {
     "socioeconomic": ["pct_nbi", "pct_sin_instruccion", "pct_hacinamiento_critico",
                        "tasa_empleo", "pct_cobertura_salud", "tamano_medio_hogar",
                        "pct_originarios", "densidad_hab_km2",
-                       "pct_jefatura_femenina", "pct_combustible_precario"],
+                       "pct_jefatura_femenina", "pct_sin_gas_red_elec"],
     "land_tenure": ["area_media_rural", "n_parcelas_rural", "pct_propietario"],
     "accessibility": ["dist_primary_m", "road_density", "travel_posadas",
                        "travel_cabecera"],
@@ -209,7 +209,7 @@ def build_panel():
     socio_cols = ['pct_nbi', 'pct_sin_instruccion', 'pct_hacinamiento_critico',
                   'tasa_empleo', 'pct_cobertura_salud', 'tamano_medio_hogar',
                   'pct_originarios', 'densidad_hab_km2', 'pct_jefatura_femenina',
-                  'pct_combustible_precario', 'pct_propietario']
+                  'pct_sin_gas_red_elec', 'pct_propietario']
     panel = panel.merge(_aggregate_radio_to_r7(census, socio_cols, xw, parents),
                         on='h3index', how='left')
 

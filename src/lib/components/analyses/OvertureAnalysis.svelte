@@ -2,6 +2,7 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 	import { lp } from '$lib/utils/locale-path';
 	import { formatDept } from '$lib/utils/format';
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
@@ -212,7 +213,7 @@
 		const u = v?.unit;
 		if (!u || SCORE_UNITS.has(u)) return i18n.t('legend.range');
 		if (u === '%') return '0–100 %';
-		return u;
+		return unitLabel(u);
 	});
 	const highValueLabel = $derived(
 		layerCfg?.legendHighKey
@@ -564,7 +565,7 @@
 					     (stale cache / schema drift). A real 0 still shows as 0. -->
 					<div class="cd-row">
 						<span class="cd-label">{i18n.t(v.labelKey)}</span>
-						<span class="cd-val-data">{fmtSmart(displayVal)}{v.unit ? ` ${v.unit}` : ' /100'}</span>
+						<span class="cd-val-data">{fmtSmart(displayVal)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
 					</div>
 				{/each}
 			</div>

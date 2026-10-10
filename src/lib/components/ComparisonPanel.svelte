@@ -5,6 +5,7 @@
 	import type { LensStore } from '$lib/stores/lens.svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { unitLabel } from '$lib/utils/units';
 	import { formatDept } from '$lib/utils/format';
 	import { loadDeptList, type DeptItem } from '$lib/utils/deptSummaries';
 	import PetalChart from './PetalChart.svelte';
@@ -331,8 +332,8 @@
 								{@const b = (rawB != null && typeof rawB === 'number') ? rawB : stats[1].values[v.col]}
 								<tr>
 									<td class="col-var">{i18n.t(v.labelKey)}</td>
-									<td class="col-val">{fmt(a)}{v.unit ? ` ${v.unit}` : ''}</td>
-									<td class="col-val">{fmt(b)}{v.unit ? ` ${v.unit}` : ''}</td>
+									<td class="col-val">{fmt(a)}{v.unit ? ` ${unitLabel(v.unit)}` : ''}</td>
+									<td class="col-val">{fmt(b)}{v.unit ? ` ${unitLabel(v.unit)}` : ''}</td>
 									<td class="col-diff {diffClass(a, b)}">{diff(a, b)}</td>
 								</tr>
 							{/each}
