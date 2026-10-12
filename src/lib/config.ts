@@ -125,10 +125,6 @@ export function getSatDptoUrl(analysisId: string, parquetKey: string, territoryP
 	return `${getBase()}/data/${territoryPrefix}sat_dpto/sat_${analysisId}_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
-export function getReportUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}reports/sat_${analysisId}_${parquetKey}.pdf`;
-}
-
 // EUDR refresh manifest — written by pipeline/combine_eudr_parquets.py on each
 // monthly CI run ({refreshed, hansen_version, vintage, units}). Daily cache-buster:
 // the manifest must track the refresh, not sit in the edge cache.

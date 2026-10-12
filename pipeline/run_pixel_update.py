@@ -1,10 +1,10 @@
 """
-CI orchestrator: GEE export → download GCS → H3 zonal stats → split → R2 upload → PDFs.
+CI orchestrator: GEE reduceRegions → H3 parquet → split by department → R2 upload.
 
 Usage:
-  python pipeline/run_pixel_update.py --analyses environmental_risk,climate_comfort,green_capital
+  python pipeline/run_pixel_update.py --analyses agri_potential
   python pipeline/run_pixel_update.py --analyses all
-  python pipeline/run_pixel_update.py --analyses green_capital --skip-gee  # use local rasters
+  python pipeline/run_pixel_update.py --analyses agri_potential --skip-gee  # use local rasters
 """
 
 import argparse
@@ -18,7 +18,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR
 
 PIXEL_ANALYSES = [
-    "agri_potential", "forestry_aptitude",
+    "agri_potential",
 ]
 GCS_BUCKET = "spatia-satellite"
 GCS_PREFIX = "satellite"
@@ -97,7 +97,7 @@ def download_static_from_gcs():
 
 
 def upload_to_r2(analyses):
-    """Upload parquets + PDFs to R2."""
+    """Upload parquets to R2."""
     count = 0
     for aid in analyses:
         # Main parquet
@@ -117,17 +117,6 @@ def upload_to_r2(analyses):
                               f"neahub/data/sat_dpto/{f}", "--file", fpath, "--remote"],
                              capture_output=True)
                 count += 1
-
-        # PDFs
-        report_dir = os.path.join(OUTPUT_DIR, "reports")
-        if os.path.isdir(report_dir):
-            for f in os.listdir(report_dir):
-                if f.startswith(f"sat_{aid}_") and f.endswith(".pdf"):
-                    fpath = os.path.join(report_dir, f)
-                    subprocess.run(["npx", "wrangler", "r2", "object", "put",
-                                  f"neahub/data/reports/{f}", "--file", fpath, "--remote"],
-                                 capture_output=True)
-                    count += 1
 
     print(f"  Uploaded {count} files to R2")
     return True
@@ -192,14 +181,9 @@ def main():
                 "--only", ",".join(analyses)]):
         return 1
 
-    # Step 5: Generate PDFs
-    run("Step 5: Generate PDF reports",
-        [sys.executable, os.path.join(SCRIPT_DIR, "generate_dept_report.py"),
-         "--only", ",".join(analyses)])
-
-    # Step 6: Upload to R2
+    # Step 5: Upload to R2
     if not args.skip_upload:
-        print(f"\n{'─' * 50}\n  Step 6: Upload to R2\n{'─' * 50}")
+        print(f"\n{'─' * 50}\n  Step 5: Upload to R2\n{'─' * 50}")
         upload_to_r2(analyses)
 
     elapsed = time.time() - t0

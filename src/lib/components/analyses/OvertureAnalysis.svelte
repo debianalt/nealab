@@ -8,7 +8,7 @@
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
-	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getReportUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
+	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
@@ -417,14 +417,6 @@
 
 		diagnosticData = results;
 	}
-
-	// PDF report URL for selected department
-	const reportUrl = $derived.by(() => {
-		if (!selectedDpto || !layerCfg || !deptList.length) return null;
-		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
-		if (!dept) return null;
-		return getReportUrl(layerCfg.id, dept.parquetKey);
-	});
 
 	const content = $derived(ANALYSIS_CONTENT[analysis.id] ?? null);
 
