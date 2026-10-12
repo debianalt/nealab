@@ -1,7 +1,6 @@
 name: Update Satellite Analyses (Group B)
-# Retired: all original Group B analyses removed from catalog (2026-05-31).
-# Kept as workflow_dispatch for manual one-off re-processing of agri/forestry.
-# Schedule disabled — trigger manually when a re-export from GEE is needed.
+# agri_potential (Misiones). forestry_aptitude sale de compute_forestry_sdm.py.
+# Manual: trigger via workflow_dispatch when a GEE refresh is needed.
 
 on:
   workflow_dispatch:

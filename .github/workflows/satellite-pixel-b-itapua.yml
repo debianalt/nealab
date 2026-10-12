@@ -1,5 +1,5 @@
 name: Update Satellite Analyses (Itapúa — Group B)
-# agri_potential (change_pressure + forest_health were pruned 31-may — dead layers) for Itapúa (PY)
+# agri_potential for Itapúa (PY)
 
 on:
   schedule:
@@ -69,9 +69,7 @@ jobs:
         with:
           name: satellite-pixel-b-itapua
           path: |
-            pipeline/output/itapua_py/sat_change_pressure.parquet
             pipeline/output/itapua_py/sat_agri_potential.parquet
-            pipeline/output/itapua_py/sat_forest_health.parquet
           retention-days: 30
 
       - name: Notify on failure

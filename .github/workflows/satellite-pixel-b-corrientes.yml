@@ -1,5 +1,5 @@
 name: Update Satellite Analyses (Corrientes — Group B)
-# agri_potential (change_pressure + forest_health were pruned 31-may — dead layers) for Corrientes (AR)
+# agri_potential for Corrientes (AR)
 
 on:
   schedule:
@@ -69,9 +69,7 @@ jobs:
         with:
           name: satellite-pixel-b-corrientes
           path: |
-            pipeline/output/corrientes/sat_change_pressure.parquet
             pipeline/output/corrientes/sat_agri_potential.parquet
-            pipeline/output/corrientes/sat_forest_health.parquet
           retention-days: 30
 
       - name: Notify on failure

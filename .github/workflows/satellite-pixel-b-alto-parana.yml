@@ -1,5 +1,5 @@
 name: Update Satellite Analyses (Alto Paraná — Group B)
-# agri_potential (change_pressure + forest_health were pruned 31-may — dead layers) for Alto Paraná (PY)
+# agri_potential for Alto Paraná (PY)
 
 on:
   schedule:
@@ -69,9 +69,7 @@ jobs:
         with:
           name: satellite-pixel-b-alto-parana
           path: |
-            pipeline/output/alto_parana_py/sat_change_pressure.parquet
             pipeline/output/alto_parana_py/sat_agri_potential.parquet
-            pipeline/output/alto_parana_py/sat_forest_health.parquet
           retention-days: 30
 
       - name: Notify on failure
