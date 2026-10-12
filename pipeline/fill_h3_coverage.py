@@ -18,7 +18,7 @@ import pandas as pd
 from config import OUTPUT_DIR
 
 # Any full-coverage parquet to extract the complete H3 index
-REFERENCE_PARQUET = os.path.join(OUTPUT_DIR, "sat_green_capital.parquet")
+REFERENCE_PARQUET = os.path.join(OUTPUT_DIR, "sat_agri_potential.parquet")
 
 LIMITED_ANALYSES = ["accessibility", "economic_activity", "sociodemographic"]
 

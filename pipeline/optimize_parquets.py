@@ -41,10 +41,8 @@ TERRITORIES = ['misiones', 'corrientes', 'itapua_py', 'alto_parana_py',
                'rio_grande_sul_br']
 
 LAYERS = [
-    'carbon_stock', 'pm25_drivers', 'productive_activity',
-    'climate_vulnerability', 'soil_water', 'deforestation_dynamics',
-    'environmental_risk', 'climate_comfort', 'green_capital',
-    'change_pressure', 'forest_health',
+    'pm25_drivers',
+    'deforestation_dynamics',
 ]
 
 

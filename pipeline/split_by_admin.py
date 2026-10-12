@@ -8,11 +8,11 @@ For other territories: uses h3_admin_crosswalk.parquet built by build_admin_cros
 Usage:
   # Misiones (backwards compat):
   python pipeline/split_by_admin.py --territory misiones
-  python pipeline/split_by_admin.py --territory misiones --only environmental_risk,green_capital
+  python pipeline/split_by_admin.py --territory misiones --only agri_potential,land_use
 
   # Itapúa (after build_admin_crosswalk.py is run):
   python pipeline/split_by_admin.py --territory itapua_py
-  python pipeline/split_by_admin.py --territory itapua_py --only environmental_risk
+  python pipeline/split_by_admin.py --territory itapua_py --only agri_potential
 
 Output:
   pipeline/output/{prefix}sat_dpto/sat_{ID}_{ADMIN}.parquet
@@ -42,20 +42,15 @@ SUMMARY_METRIC = {
 
 # Analyses that have GEE-based parquets (all territories)
 SAT_ANALYSES = [
-    "environmental_risk", "climate_comfort", "green_capital",
-    "change_pressure", "agri_potential", "forest_health", "forestry_aptitude",
-    "carbon_stock", "pm25_drivers", "deforestation_dynamics",
-    "climate_vulnerability", "productive_activity", "location_value",
-    "land_use", "accessibility", "soil_water",
-    # territorial_types is satellite-based (PCA+k-means on sat parquets), not census-limited
-    "territorial_types",
+    "agri_potential", "forestry_aptitude",
+    "pm25_drivers", "deforestation_dynamics",
+    "land_use", "accessibility",
 ]
 
 # Analyses based on AR census data (Misiones + Corrientes + other AR provinces)
 AR_CENSUS_ANALYSES = {
-    "service_deprivation", "territorial_isolation",
+    "service_deprivation",
     "health_access", "education_capital", "education_flow",
-    "territorial_gap", "education_gap",
     "sociodemographic", "economic_activity",
 }
 

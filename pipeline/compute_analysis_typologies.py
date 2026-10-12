@@ -1,15 +1,14 @@
 """
 PCA + k-means typology for each satellite analysis.
 
-Same methodology as compute_territorial_classification.py but applied
-per-analysis: each of the 13 satellite analyses gets its own PCA + k-means
-clustering on its 5-9 component variables.
+Per-analysis: each analysis in ALL_ANALYSES gets its own PCA + k-means
+clustering on its component variables.
 
 Replaces score (0-100) with type (categorical 1-k) + type_label (string).
 
 Usage:
   python pipeline/compute_analysis_typologies.py
-  python pipeline/compute_analysis_typologies.py --only environmental_risk,green_capital
+  python pipeline/compute_analysis_typologies.py --only agri_potential,land_use
   python pipeline/compute_analysis_typologies.py --k 4
 """
 
@@ -31,11 +30,10 @@ sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR
 
 ALL_ANALYSES = [
-    "environmental_risk", "climate_comfort", "green_capital",
-    "change_pressure", "location_value", "agri_potential",
-    "forest_health", "forestry_aptitude",
-    "territorial_gap", "health_access", "education_gap", "land_use",
-    "territorial_scores", "soil_water",
+    "agri_potential",
+    "forestry_aptitude",
+    "health_access", "land_use",
+    "territorial_scores",
 ]
 
 

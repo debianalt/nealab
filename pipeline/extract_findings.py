@@ -130,43 +130,11 @@ def main():
         print(f"\nHexagonos con privacion severa: {severe['n_hex'].values[0]:,} ({severe['pct'].values[0]}%)")
         print(f"En estas zonas: NBI promedio {severe['avg_nbi'].values[0]}%, hacinamiento {severe['avg_hacinamiento'].values[0]}%, sin cloacas {severe['avg_sin_cloacas'].values[0]}, piso inadecuado {severe['avg_piso'].values[0]} (percentiles)")
 
-    # ── Finding 4: Deforestation vs agricultural potential ───────────────
-    print("\n\n### FINDING 4: CONFLICTO DEFORESTACION - POTENCIAL AGRICOLA")
+    # ── Finding 4: Deforestation by department ─────────────────────────
+    print("\n\n### FINDING 4: DEFORESTACION POR DEPARTAMENTO")
     print("-" * 50)
 
-    conflict = conn.execute(f"""
-        WITH joined AS (
-            SELECT
-                a.h3index,
-                a.score AS agri_score,
-                e.score AS envr_score,
-                e.c_fire,
-                e.c_deforest
-            FROM read_parquet('{OUTPUT_DIR}/sat_agri_potential.parquet') a
-            JOIN read_parquet('{OUTPUT_DIR}/sat_environmental_risk.parquet') e
-                ON a.h3index = e.h3index
-        )
-        SELECT
-            COUNT(*) AS total_hex,
-            COUNT(*) FILTER (WHERE agri_score >= 60) AS high_agri,
-            COUNT(*) FILTER (WHERE envr_score >= 60) AS high_risk,
-            COUNT(*) FILTER (WHERE agri_score >= 60 AND envr_score >= 60) AS conflict_zone,
-            ROUND(COUNT(*) FILTER (WHERE agri_score >= 60 AND envr_score >= 60) * 100.0 /
-                  NULLIF(COUNT(*) FILTER (WHERE agri_score >= 60), 0), 1) AS pct_conflict,
-            ROUND(COUNT(*) FILTER (WHERE agri_score >= 60 AND envr_score >= 60) * 0.153, 0) AS conflict_km2,
-            ROUND(AVG(c_deforest) FILTER (WHERE agri_score >= 60 AND envr_score >= 60), 3) AS avg_deforest_conflict,
-            ROUND(AVG(c_fire) FILTER (WHERE agri_score >= 60 AND envr_score >= 60), 3) AS avg_fire_conflict
-        FROM joined
-    """).fetchone()
-    print(f"Total hexagonos analizados: {conflict[0]:,}")
-    print(f"Alto potencial agricola (score >= 60): {conflict[1]:,}")
-    print(f"Alto riesgo ambiental (score >= 60): {conflict[2]:,}")
-    print(f"ZONA DE CONFLICTO (ambos >= 60): {conflict[3]:,} hexagonos ({conflict[4]}% del alto potencial)")
-    print(f"Area en conflicto: ~{conflict[5]:,.0f} km2")
-    print(f"Deforestacion promedio en zona de conflicto: {conflict[6]}")
-    print(f"Incidencia de fuego promedio en zona de conflicto: {conflict[7]}")
-
-    # Also get department-level deforestation from radio_stats_master
+    # Department-level deforestation from radio_stats_master
     defor_dept = conn.execute(f"""
         WITH dept AS (
             SELECT

@@ -17,7 +17,7 @@ Usage:
   python pipeline/run_corrientes_pipeline.py                       # default: corrientes
   python pipeline/run_corrientes_pipeline.py --territory chaco
   python pipeline/run_corrientes_pipeline.py --territory formosa
-  python pipeline/run_corrientes_pipeline.py --only environmental_risk,forest_health
+  python pipeline/run_corrientes_pipeline.py --only agri_potential
   python pipeline/run_corrientes_pipeline.py --skip-gee
   python pipeline/run_corrientes_pipeline.py --upload
   python pipeline/run_corrientes_pipeline.py --dry-run
@@ -30,15 +30,11 @@ Analyses NOT in this orchestrator (require separate scripts):
   carbon_stock         -> gee_export_carbon_stock.py --territory corrientes --gcs
   pm25_drivers         -> gee_export_pm25_annual.py --territory corrientes --gcs
   productive_activity  -> gee_export_activity_rasters.py --territory corrientes --gcs
-  soil_water           -> gee_export_soil_water.py --territory corrientes --gcs
   deforestation_dynamics -> included in gee_export_analysis.py
   forestry_aptitude    -> compute_forestry_sdm.py --territory corrientes
   flood_risk           -> run_flood_update.py --territory corrientes
 
-GEE analysis order (estimated export time at 100m, Corrientes bbox ~88k km²):
-  Fast  (<5 min):  environmental_risk, climate_comfort, green_capital, change_pressure,
-                   forest_health
-  Medium (5-15m):  agri_potential, land_use (MapBiomas AR)
+GEE export time at 100m (Corrientes bbox ~88k km²): agri_potential, land_use 5-15 min.
 """
 
 import argparse
@@ -54,10 +50,6 @@ DEFAULT_TERRITORY = 'corrientes'
 
 # Analyses routed through gee_export_analysis.py (ANALYSIS_BUILDERS must have them)
 ALL_SAT_ANALYSES = [
-    # Fast batch
-    "environmental_risk", "climate_comfort", "green_capital",
-    "change_pressure", "forest_health",
-    # Medium batch
     "agri_potential",
     # MapBiomas AR covers all of Argentina (Chaco/Formosa included)
     "land_use",
@@ -78,13 +70,9 @@ def step_gee_export(territory_id: str, analyses: list[str], dry_run: bool) -> bo
     print("\n" + "=" * 60)
     print("  STEP 1: GEE Exports")
     print("=" * 60)
-    fast = [a for a in analyses if a in {
-        "environmental_risk", "climate_comfort", "green_capital",
-        "change_pressure", "forest_health",
-    }]
     medium = [a for a in analyses if a in {"agri_potential", "land_use"}]
 
-    for batch_name, batch in [("fast", fast), ("medium", medium)]:
+    for batch_name, batch in [("medium", medium)]:
         if not batch:
             continue
         ids = ",".join(batch)

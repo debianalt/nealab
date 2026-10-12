@@ -50,9 +50,10 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 ## Scoring Methodology
 - **All composite scores** use PCA-validated geometric mean (OECD Handbook / UNDP HDI style)
 - **Pipeline**: percentile rank → correlation diagnostics → KMO/Bartlett → PCA (varimax) → select variables (drop |r|>0.70) → geometric mean (floor=1.0)
+- **Sin pesos**: los componentes retenidos pesan igual. No hay promedio ponderado en ningún score (el modo `--legacy` y los pesos por componente se borraron el 12-oct-2026).
 - **Shared module**: `pipeline/scoring.py` — all diagnostics and scoring functions
 - **Diagnostics**: `--diagnostics` flag on `compute_satellite_scores.py` emits `*_diagnostics.json` per analysis
-- **Legacy comparison**: `--legacy` flag emits `score_legacy` column with old weighted arithmetic mean
+- **Scripts**: `compute_satellite_scores.py` = 4 capas censales (service_deprivation, health_access, education_capital, education_flow). `process_raster_to_h3.py` / `gee_reduce_analysis.py` = agri_potential.
 
 ## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
 nealab has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.

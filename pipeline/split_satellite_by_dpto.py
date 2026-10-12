@@ -7,7 +7,7 @@ point-in-polygon, splits each of the 10 satellite analyses.
 
 Usage:
   python pipeline/split_satellite_by_dpto.py
-  python pipeline/split_satellite_by_dpto.py --only environmental_risk,green_capital
+  python pipeline/split_satellite_by_dpto.py --only agri_potential,land_use
 
 Output:
   pipeline/output/sat_dpto/sat_{ID}_{DPTO}.parquet  (x17 per analysis)
@@ -32,20 +32,14 @@ RADIO_STATS_PATH = os.path.join(OUTPUT_DIR, "radio_stats_master.parquet")
 AREAL_CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk_areal.parquet")
 
 ALL_ANALYSES = [
-    "environmental_risk", "climate_comfort", "green_capital",
-    "change_pressure", "location_value", "agri_potential",
-    "forest_health", "forestry_aptitude",
-    "service_deprivation", "territorial_isolation",
+    "agri_potential",
+    "forestry_aptitude",
+    "service_deprivation",
     "health_access", "education_capital", "education_flow",
-    "territorial_gap", "education_gap", "land_use",
-    "territorial_types", "sociodemographic", "economic_activity", "accessibility",
-    "climate_vulnerability",
-    "carbon_stock",
+    "land_use",
+    "sociodemographic", "economic_activity", "accessibility",
     "pm25_drivers",
-    "pm25_predicted",
     "deforestation_dynamics",
-    "productive_activity",
-    "soil_water",
 ]
 
 # avg_score in summary JSONs reports the raw physical variable where one

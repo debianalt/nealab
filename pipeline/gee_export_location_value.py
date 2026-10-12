@@ -1,12 +1,16 @@
 """
-Export location_value component rasters for a territory from GEE.
+Export friction, city-access, VIIRS and slope rasters for a territory from GEE.
+
+Consumers: compute_accessibility_h3.py (lv_friction, lv_cities_access) and
+process_sdm_covariates_h3.py (lv_cities_access). The "lv_" prefix and the file
+name come from the retired location_value analysis; the rasters are still live.
 
 Rasters exported:
   1. lv_cities_access  — Oxford MAP accessibility to cities (Nelson 2019 methodology)
                          GEE: Oxford/MAP/accessibility_to_cities_2015_v1_0, band: accessibility
   2. lv_friction       — Oxford MAP friction surface 2019 (minutes per meter, motorized travel)
                          GEE: projects/malariaatlasproject/assets/.../friction_surface/2019_v5_1
-                         cumulativeCost is computed LOCALLY in process_location_value_h3.py using
+                         cumulativeCost is computed LOCALLY in compute_accessibility_h3.py using
                          skimage.graph.MCP_Geometric (same algorithm as GEE cumulativeCost, but
                          GEE batch cumulativeCost consistently fails for this territory).
   3. lv_viirs_annual   — VIIRS DNB 2022-2024 annual mean radiance (avg_rad)
@@ -21,7 +25,6 @@ Note on sources vs Misiones:
   - Healthcare: same Oxford MAP friction 2019 source; MCP computed locally
   - VIIRS: same GEE collection
   - Slope: Copernicus DEM GLO-30 (FABDEM input; equivalent for slope in low-vegetation areas)
-  Road distance (5th component) is computed locally from OSM in process_location_value_h3.py.
 
 Output: gs://spatia-satellite/satellite/{territory}/lv_{name}.tif
 """
@@ -59,7 +62,7 @@ def authenticate():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Export location_value rasters from GEE")
+    parser = argparse.ArgumentParser(description="Export friction/access/VIIRS/slope rasters from GEE")
     parser.add_argument("--territory", default="misiones")
     parser.add_argument("--gcs", action="store_true")
     parser.add_argument("--no-wait", action="store_true")
@@ -86,7 +89,7 @@ def main():
 
     # ── 2. Oxford MAP friction surface 2019 (exported as-is; MCP computed locally) ──
     # GEE cumulativeCost fails in batch mode for this region (4 confirmed attempts).
-    # Solution: export the raw friction raster and compute MCP in process_location_value_h3.py
+    # Solution: export the raw friction raster and compute MCP in compute_accessibility_h3.py
     # using skimage.graph.MCP_Geometric — identical algorithm, reliable execution.
     friction_img = ee.Image(
         'projects/malariaatlasproject/assets/accessibility/friction_surface/2019_v5_1'
