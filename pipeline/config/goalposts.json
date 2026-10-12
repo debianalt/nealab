@@ -351,40 +351,6 @@
       "c_recurrence",
       "c_extent"
     ],
-    "environmental_risk": [
-      "c_fire",
-      "c_deforest",
-      "c_thermal_amp",
-      "c_slope",
-      "c_hand"
-    ],
-    "climate_comfort": [
-      "c_heat_day",
-      "c_heat_night",
-      "c_precipitation",
-      "c_frost",
-      "c_water_stress"
-    ],
-    "green_capital": [
-      "c_ndvi",
-      "c_treecover",
-      "c_npp",
-      "c_lai",
-      "c_vcf"
-    ],
-    "change_pressure": [
-      "c_viirs_trend",
-      "c_ghsl_change",
-      "c_hansen_loss",
-      "c_ndvi_trend",
-      "c_fire_count"
-    ],
-    "location_value": [
-      "c_access_20k",
-      "c_nightlights",
-      "c_slope",
-      "c_road_dist"
-    ],
     "agri_potential": [
       "c_soc",
       "c_ph_optimal",
@@ -392,13 +358,6 @@
       "c_precipitation",
       "c_gdd",
       "c_slope"
-    ],
-    "forest_health": [
-      "c_ndvi_trend",
-      "c_loss_ratio",
-      "c_fire",
-      "c_gpp",
-      "c_et"
     ],
     "carbon_stock": [
       "c_agb_cci",
@@ -416,11 +375,6 @@
       "c_loss_rate",
       "c_cumulative"
     ],
-    "air_quality": [
-      "c_pm25",
-      "c_no2",
-      "c_aod"
-    ],
     "accessibility": [
       "travel_min_capital",
       "travel_min_cabecera",
@@ -435,12 +389,6 @@
       "road_connectivity",
       "building_mix",
       "water_exposure"
-    ],
-    "soil_water": [
-      "c_soil_moisture",
-      "c_dry_season",
-      "c_precipitation",
-      "c_actual_et"
     ]
   },
   "territories_included_v1_1": [

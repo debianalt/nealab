@@ -4,12 +4,13 @@ Process multi-band GeoTIFF rasters to H3 res-9 parquets with pixel-level zonal s
 Each band becomes a component column. Percentile rank normalisation (0-100)
 is applied per band, then a PCA-validated geometric mean score is computed
 (OECD Handbook / UNDP HDI methodology, consistent with compute_satellite_scores.py).
+All retained components weigh the same: there are no per-component weights.
 
 This REPLACES the radio-level crosswalk approach for analyses where
 GEE rasters are available — each hexagon gets its own pixel-averaged value.
 
 Usage:
-  python pipeline/process_raster_to_h3.py --analysis green_capital
+  python pipeline/process_raster_to_h3.py --analysis agri_potential
   python pipeline/process_raster_to_h3.py --analysis all
 """
 
@@ -26,92 +27,20 @@ from rasterio.features import geometry_mask
 from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
-import duckdb
-
 from config import OUTPUT_DIR, H3_RESOLUTION, get_territory
 from parquet_io import write_h3_parquet
 from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, score_with_goalposts
 
 HEXAGONS_PATH = os.path.join(OUTPUT_DIR, "hexagons-lite.geojson")
-AREAL_CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk_areal.parquet")
-RADIO_DATA_DIR = os.path.join(OUTPUT_DIR, "radio_data")
-
-# Radio-level fallback queries for bands with no raster data
-RADIO_FALLBACK = {
-    'c_fire': {
-        'table': 'fire_annual',
-        'sql': "SELECT redcode, AVG(burned_fraction) AS value FROM fire_annual WHERE year >= 2019 GROUP BY redcode",
-        'invert': False,
-    },
-    'c_fire_count': {
-        'table': 'fire_annual',
-        'sql': "SELECT redcode, SUM(burn_count) AS value FROM fire_annual WHERE year >= 2019 GROUP BY redcode",
-        'invert': False,
-    },
-}
-
-H3_FALLBACK = {
-    'c_fire': 'fire_h3.parquet',
-    'c_fire_count': 'fire_h3.parquet',
-}
-
-# Component definitions per analysis: (band_name, output_col, weight, invert)
+# Component definitions per analysis: (band_name, output_col, invert)
 ANALYSIS_COMPONENTS = {
-    'environmental_risk': [
-        ('c_fire', 'c_fire', 0.25, False),
-        ('c_deforest', 'c_deforest', 0.25, False),
-        ('c_thermal_amp', 'c_thermal_amp', 0.20, False),
-        ('c_slope', 'c_slope', 0.15, False),
-        ('c_hand', 'c_hand', 0.15, True),       # low HAND = more risk
-    ],
-    'climate_comfort': [
-        ('c_heat_day', 'c_heat_day', 0.25, True),       # less heat = more comfort
-        ('c_heat_night', 'c_heat_night', 0.20, True),
-        ('c_precipitation', 'c_precipitation', 0.20, False),
-        ('c_frost', 'c_frost', 0.15, True),              # less frost = more comfort
-        ('c_water_stress', 'c_water_stress', 0.20, False),
-    ],
-    'green_capital': [
-        ('c_ndvi', 'c_ndvi', 0.25, False),
-        ('c_treecover', 'c_treecover', 0.20, False),
-        ('c_npp', 'c_npp', 0.20, False),
-        ('c_lai', 'c_lai', 0.15, False),
-        ('c_vcf', 'c_vcf', 0.20, False),
-    ],
-    'change_pressure': [
-        ('c_viirs_trend', 'c_viirs_trend', 0.25, False),
-        ('c_ghsl_change', 'c_ghsl_change', 0.25, False),
-        ('c_hansen_loss', 'c_hansen_loss', 0.20, False),
-        ('c_ndvi_trend', 'c_ndvi_trend', 0.15, True),   # declining = more change
-        ('c_fire_count', 'c_fire_count', 0.15, False),
-    ],
     'agri_potential': [
-        ('c_soc', 'c_soc', 0.20, False),
-        ('c_ph_optimal', 'c_ph_optimal', 0.15, False),
-        ('c_clay', 'c_clay', 0.15, False),
-        ('c_precipitation', 'c_precipitation', 0.20, False),
-        ('c_gdd', 'c_gdd', 0.15, False),
-        ('c_slope', 'c_slope', 0.15, True),
-    ],
-    'forest_health': [
-        ('c_ndvi_trend', 'c_ndvi_trend', 0.25, False),
-        ('c_loss_ratio', 'c_loss_ratio', 0.25, True),
-        ('c_fire', 'c_fire', 0.20, True),
-        ('c_gpp', 'c_gpp', 0.15, False),
-        ('c_et', 'c_et', 0.15, False),
-    ],
-    # forestry_aptitude: DEPRECATED path. Replaced by compute_forestry_sdm.py
-    # (SDM entrenado sobre plantaciones existentes + mascara satelital).
-    'air_quality': [
-        ('c_pm25', 'c_pm25', 0.40, False),    # PM2.5 µg/m³ — higher = worse
-        ('c_no2', 'c_no2', 0.35, False),       # NO2 mol/m² — higher = worse
-        ('c_aod', 'c_aod', 0.25, False),       # AOD 470nm — higher = worse
-    ],
-    'soil_water': [
-        ('c_soil_moisture', 'c_soil_moisture', 0.30, False),  # ERA5 annual mean root-zone
-        ('c_dry_season',    'c_dry_season',    0.25, False),  # ERA5 Jun-Aug mean
-        ('c_precipitation',  'c_precipitation',  0.25, False),  # CHIRPS annual mean (mm/yr)
-        ('c_actual_et',     'c_actual_et',     0.20, False),  # MODIS MOD16 mean actual ET
+        ('c_soc', 'c_soc', False),
+        ('c_ph_optimal', 'c_ph_optimal', False),
+        ('c_clay', 'c_clay', False),
+        ('c_precipitation', 'c_precipitation', False),
+        ('c_gdd', 'c_gdd', False),
+        ('c_slope', 'c_slope', True),
     ],
 }
 
@@ -147,89 +76,6 @@ def percentile_rank(series):
     if valid.sum() > 1:
         result[valid] = series[valid].rank(pct=True) * 100.0
     return result
-
-
-def inject_radio_fallback(df: pd.DataFrame, nan_cols: list[str],
-                          components: list) -> pd.DataFrame:
-    """Inject radio-level data for columns where raster had no data.
-
-    Uses areal crosswalk + radio parquets to fill NaN columns with
-    percentile-ranked radio data projected to H3.
-    """
-    if not os.path.exists(AREAL_CROSSWALK_PATH):
-        print(f"    No areal crosswalk found — skipping fallback")
-        return df
-
-    xw = pd.read_parquet(AREAL_CROSSWALK_PATH)
-    conn = duckdb.connect()
-
-    for col in nan_cols:
-        fb = RADIO_FALLBACK.get(col)
-        if not fb:
-            print(f"    No fallback defined for {col}")
-            continue
-
-        table_path = os.path.join(RADIO_DATA_DIR, f"{fb['table']}.parquet")
-        if not os.path.exists(table_path):
-            print(f"    Missing {table_path} — skipping {col}")
-            continue
-
-        conn.execute(f"CREATE OR REPLACE TABLE {fb['table']} AS SELECT * FROM read_parquet('{table_path}')")
-        radio_df = conn.execute(fb['sql']).fetchdf()
-        print(f"    Radio fallback {col}: {len(radio_df)} radios with data")
-
-        # Join radio → H3 via areal crosswalk (max-overlap)
-        merged = xw.merge(radio_df, on="redcode", how="inner")
-        idx = merged.groupby("h3index")["weight"].idxmax()
-        h3_vals = merged.loc[idx][["h3index", "value"]].set_index("h3index")
-
-        # Map to df and percentile rank
-        raw = df["h3index"].map(h3_vals["value"]).astype(float)
-        # Find invert flag for this component
-        invert = any(c[3] for c in components if c[1] == col)
-        if invert:
-            raw = -raw
-        df[col] = percentile_rank(raw).round(1)
-        injected = df[col].notna().sum()
-        print(f"    Injected {col}: {injected:,} hexagons with data")
-
-    conn.close()
-    return df
-
-
-def inject_h3_fallback(df: pd.DataFrame, nan_cols: list[str],
-                       components: list, territory_dir: str) -> pd.DataFrame:
-    """Inject H3-level data for columns where raster had no data.
-
-    Uses pre-computed H3 parquets (e.g. fire_h3.parquet) as fallback
-    for non-Misiones territories that lack radio-level data.
-    Always uses percentile_rank (matching inject_radio_fallback behavior).
-    """
-    for col in nan_cols:
-        fname = H3_FALLBACK.get(col)
-        if not fname:
-            print(f"    No H3 fallback defined for {col}")
-            continue
-
-        path = os.path.join(territory_dir, fname)
-        if not os.path.exists(path):
-            print(f"    Missing {path} — skipping {col}")
-            continue
-
-        fb = pd.read_parquet(path, columns=['h3index', col])
-        df = df.drop(columns=[col], errors='ignore')
-        df = df.merge(fb, on='h3index', how='left')
-
-        invert = any(c[3] for c in components if c[1] == col)
-        raw = df[col].astype(float)
-        if invert:
-            raw = -raw
-        df[col] = percentile_rank(raw).round(1)
-
-        injected = df[col].notna().sum()
-        print(f"    H3 fallback {col}: {injected:,} hexagons with data")
-
-    return df
 
 
 def process_analysis(analysis_id, raster_path, hexgrid_features, output_path,
@@ -280,7 +126,7 @@ def process_analysis(analysis_id, raster_path, hexgrid_features, output_path,
 
     # Normalise: goalpost (comparable mode) or percentile rank (local mode)
     gp_indicators = goalposts['indicators'] if goalposts else {}
-    for band_name, out_col, weight, invert in components:
+    for band_name, out_col, invert in components:
         raw = df[band_name].astype(float)
         if mode == 'comparable' and out_col in gp_indicators:
             gp = gp_indicators[out_col]
@@ -294,23 +140,7 @@ def process_analysis(analysis_id, raster_path, hexgrid_features, output_path,
     # PCA-validated geometric mean score (OECD/HDI methodology)
     comp_cols = [c[1] for c in components]
 
-    # Inject fallback for columns with no usable data (all-NaN or all-zero with fallback available)
-    nan_cols = [c for c in comp_cols if df[c].isna().all()]
-    # Detect raster bands that produced all-zeros (possibly inverted to constant by goalposts)
-    no_variation_cols = [c for c in comp_cols
-                         if c not in nan_cols and c in H3_FALLBACK
-                         and df[c].notna().any() and df[c].std() < 0.01]
-    fallback_cols = nan_cols + no_variation_cols
-    if fallback_cols:
-        print(f"  Fallback needed: {fallback_cols}")
-        if territory_id == 'misiones':
-            print(f"  Attempting radio fallback...")
-            df = inject_radio_fallback(df, fallback_cols, components)
-        else:
-            territory_dir = os.path.dirname(output_path)
-            df = inject_h3_fallback(df, fallback_cols, components, territory_dir)
-
-    # Exclude remaining 100% NaN columns (no fallback available)
+    # Exclude 100% NaN columns
     valid_cols = [c for c in comp_cols if not df[c].isna().all()]
     dropped_nan = set(comp_cols) - set(valid_cols)
     if dropped_nan:

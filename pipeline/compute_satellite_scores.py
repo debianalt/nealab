@@ -1,30 +1,26 @@
 """
-Compute 11 composite satellite/census scores at H3 res-9 for Spatia.
+Compute the census composite scores at H3 res-9 for Spatia.
 
 Methodology: PCA-validated geometric mean (OECD Handbook / UNDP HDI).
-  1. Reads radio-level data from PostGIS, projects onto H3 via areal crosswalk
-  2. Normalizes each component via percentile rank (0-100)
+  1. Reads radio-level census data, projects onto H3 via the dasymetric crosswalk
+  2. Normalizes each component via percentile rank (0-100) or fixed goalposts
   3. Runs PCA diagnostics (correlation matrix, KMO, Bartlett's, varimax)
   4. Selects variables by dropping redundant pairs (|r| > 0.70)
-  5. Computes geometric mean of retained components (floor=1.0, HDI-style)
+  5. Computes the geometric mean of retained components (floor=1.0, HDI-style).
+     All retained components weigh the same: there are no per-component weights.
 
-Analyses:
-  1. environmental_risk  — Fire, deforestation, thermal amplitude, slope, HAND
-  2. climate_comfort     — LST day/night, precipitation, frost, water stress
-  3. green_capital       — NDVI, tree cover, NPP, LAI, VCF
-  4. change_pressure     — VIIRS trend, GHSL change, Hansen loss, NDVI trend, fire
-  5. location_value      — Accessibility, healthcare, nightlights, slope, roads
-  6. agri_potential      — SOC, pH, clay, precipitation, GDD, slope
-  7. forest_health       — NDVI trend, loss ratio, fire, GPP, ET
-  8. forestry_aptitude   — pH, clay, precipitation, slope, road dist, accessibility
-  9. territorial_gap     — Nightlights vs NBI, water access, sewage, isolation
- 10. health_access       — Healthcare time, walk, population, coverage, NBI
- 11. education_gap       — No instruction, dropout, primary only, university, isolation
+Analyses (census, served by spatia.ar):
+  service_deprivation  — NBI, sewage, floor, overcrowding, computer access
+  health_access        — Healthcare time, coverage, NBI, age structure, density
+  education_capital    — No schooling, secondary, tertiary, university
+  education_flow       — School non-attendance 6-12 / 13-18, teen pregnancy
+
+Raster-based analyses (agri_potential) run in process_raster_to_h3.py.
 
 Usage:
   python pipeline/compute_satellite_scores.py
-  python pipeline/compute_satellite_scores.py --only environmental_risk,green_capital
-  python pipeline/compute_satellite_scores.py --diagnostics --legacy
+  python pipeline/compute_satellite_scores.py --only health_access --territory corrientes
+  python pipeline/compute_satellite_scores.py --diagnostics
 """
 
 import argparse
@@ -47,268 +43,17 @@ from scoring import (
 )
 
 CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk.parquet")
-AREAL_CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk_areal.parquet")
 RADIO_DATA_DIR = os.path.join(OUTPUT_DIR, "radio_data")
 
 # Tables used by analysis queries — loaded from parquets
-RADIO_TABLES = [
-    "radios_misiones", "fire_annual", "hansen_baseline", "lst_annual",
-    "fabdem_terrain", "merit_hydro", "chirps_annual", "era5_annual",
-    "et_annual", "ndvi_annual_mean", "npp_annual", "lai_annual", "vcf_annual",
-    "viirs_annual", "ghsl_built_surface", "gpp_annual", "soilgrids",
-    "nelson_accessibility", "oxford_accessibility", "road_access",
-    "censo2022_variables",
-]
+RADIO_TABLES = ["radios_misiones", "oxford_accessibility", "censo2022_variables"]
 
 # ── Analysis definitions ─────────────────────────────────────────────────────
 # Each analysis: id, sql (returns redcode + component columns), components
-# Components: (output_col, sql_col, weight, invert)
+# Components: (output_col, sql_col, invert)
 #   invert=True means lower raw value = higher score
 
 ANALYSIS_DEFS = [
-    # ── VIVIR ─────────────────────────────────────────────────────────────
-    {
-        "id": "environmental_risk",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(f.burned_fraction, 0) AS c_fire,
-                COALESCE(h.total_loss, 0) AS c_deforest,
-                COALESCE(l.amplitude, 0) AS c_thermal_amp,
-                COALESCE(t.slope_mean, 0) AS c_slope,
-                COALESCE(m.hand_mean, 100) AS c_hand
-            FROM radios_misiones r
-            LEFT JOIN (
-                SELECT redcode, AVG(burned_fraction) AS burned_fraction
-                FROM fire_annual WHERE year >= 2019 GROUP BY redcode
-            ) f ON r.redcode = f.redcode
-            LEFT JOIN hansen_baseline h ON r.redcode = h.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(amplitude) AS amplitude
-                FROM lst_annual WHERE year >= 2019 GROUP BY redcode
-            ) l ON r.redcode = l.redcode
-            LEFT JOIN fabdem_terrain t ON r.redcode = t.redcode
-            LEFT JOIN merit_hydro m ON r.redcode = m.redcode
-        """,
-        "components": [
-            ("c_fire", "c_fire", 0.25, False),
-            ("c_deforest", "c_deforest", 0.25, False),
-            ("c_thermal_amp", "c_thermal_amp", 0.20, False),
-            ("c_slope", "c_slope", 0.15, False),
-            ("c_hand", "c_hand", 0.15, True),  # low HAND = more flood risk
-        ],
-    },
-    {
-        "id": "climate_comfort",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(l.mean_lst_day, 25) AS c_heat_day,
-                COALESCE(l.mean_lst_night, 15) AS c_heat_night,
-                COALESCE(c.total_mm, 1500) AS c_precipitation,
-                COALESCE(e.frost_days, 0) AS c_frost,
-                COALESCE(et.et_pet_ratio, 0.7) AS c_water_stress
-            FROM radios_misiones r
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_lst_day) AS mean_lst_day,
-                       AVG(mean_lst_night) AS mean_lst_night
-                FROM lst_annual WHERE year >= 2019 GROUP BY redcode
-            ) l ON r.redcode = l.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(total_mm) AS total_mm
-                FROM chirps_annual WHERE year >= 2019 GROUP BY redcode
-            ) c ON r.redcode = c.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(frost_days) AS frost_days
-                FROM era5_annual WHERE year >= 2019 GROUP BY redcode
-            ) e ON r.redcode = e.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(et_pet_ratio) AS et_pet_ratio
-                FROM et_annual WHERE year >= 2019 GROUP BY redcode
-            ) et ON r.redcode = et.redcode
-        """,
-        "components": [
-            ("c_heat_day", "c_heat_day", 0.25, True),      # less heat = more comfort
-            ("c_heat_night", "c_heat_night", 0.20, True),   # less heat = more comfort
-            ("c_precipitation", "c_precipitation", 0.20, False),  # more rain = better (subtropical)
-            ("c_frost", "c_frost", 0.15, True),             # less frost = more comfort
-            ("c_water_stress", "c_water_stress", 0.20, False),   # higher ET/PET = less stress
-        ],
-    },
-    {
-        "id": "green_capital",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(n.mean_ndvi, 0) AS c_ndvi,
-                COALESCE(h.treecover2000, 0) AS c_treecover,
-                COALESCE(np.mean_npp, 0) AS c_npp,
-                COALESCE(la.mean_lai, 0) AS c_lai,
-                COALESCE(v.tree_cover, 0) AS c_vcf
-            FROM radios_misiones r
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_ndvi) AS mean_ndvi
-                FROM ndvi_annual_mean WHERE year >= 2019 GROUP BY redcode
-            ) n ON r.redcode = n.redcode
-            LEFT JOIN hansen_baseline h ON r.redcode = h.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_npp) AS mean_npp
-                FROM npp_annual WHERE year >= 2019 GROUP BY redcode
-            ) np ON r.redcode = np.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_lai) AS mean_lai
-                FROM lai_annual WHERE year >= 2019 GROUP BY redcode
-            ) la ON r.redcode = la.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(tree_cover) AS tree_cover
-                FROM vcf_annual WHERE year >= 2019 GROUP BY redcode
-            ) v ON r.redcode = v.redcode
-        """,
-        "components": [
-            ("c_ndvi", "c_ndvi", 0.25, False),
-            ("c_treecover", "c_treecover", 0.20, False),
-            ("c_npp", "c_npp", 0.20, False),
-            ("c_lai", "c_lai", 0.15, False),
-            ("c_vcf", "c_vcf", 0.20, False),
-        ],
-    },
-    # ── INVERTIR ──────────────────────────────────────────────────────────
-    {
-        "id": "change_pressure",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(vt.viirs_slope, 0) AS c_viirs_trend,
-                COALESCE(g2.built_fraction - g1.built_fraction, 0) AS c_ghsl_change,
-                COALESCE(h.total_loss, 0) AS c_hansen_loss,
-                COALESCE(nt.ndvi_slope, 0) AS c_ndvi_trend,
-                COALESCE(f.burn_sum, 0) AS c_fire_count
-            FROM radios_misiones r
-            LEFT JOIN (
-                SELECT redcode, regr_slope(mean_radiance, year) AS viirs_slope
-                FROM viirs_annual WHERE year >= 2016 GROUP BY redcode
-            ) vt ON r.redcode = vt.redcode
-            LEFT JOIN (
-                SELECT redcode, built_fraction FROM ghsl_built_surface WHERE epoch = 2020
-            ) g2 ON r.redcode = g2.redcode
-            LEFT JOIN (
-                SELECT redcode, built_fraction FROM ghsl_built_surface WHERE epoch = 2000
-            ) g1 ON r.redcode = g1.redcode
-            LEFT JOIN hansen_baseline h ON r.redcode = h.redcode
-            LEFT JOIN (
-                SELECT redcode, regr_slope(mean_ndvi, year) AS ndvi_slope
-                FROM ndvi_annual_mean WHERE year >= 2019 GROUP BY redcode
-            ) nt ON r.redcode = nt.redcode
-            LEFT JOIN (
-                SELECT redcode, SUM(burn_count) AS burn_sum
-                FROM fire_annual WHERE year >= 2019 GROUP BY redcode
-            ) f ON r.redcode = f.redcode
-        """,
-        "components": [
-            ("c_viirs_trend", "c_viirs_trend", 0.25, False),  # rising lights = change
-            ("c_ghsl_change", "c_ghsl_change", 0.25, False),  # built-up growth
-            ("c_hansen_loss", "c_hansen_loss", 0.20, False),   # forest loss
-            ("c_ndvi_trend", "c_ndvi_trend", 0.15, True),     # declining NDVI = transformation
-            ("c_fire_count", "c_fire_count", 0.15, False),    # fire activity
-        ],
-    },
-    {
-        "id": "location_value",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(n.tt_cities_20k_min, 300) AS c_access_20k,
-                COALESCE(o.accessibility_healthcare_min, 300) AS c_healthcare,
-                COALESCE(v.mean_radiance, 0) AS c_nightlights,
-                COALESCE(t.slope_mean, 0) AS c_slope,
-                COALESCE(rd.dist_primary_m, 50000) AS c_road_dist
-            FROM radios_misiones r
-            LEFT JOIN nelson_accessibility n ON r.redcode = n.redcode
-            LEFT JOIN oxford_accessibility o ON r.redcode = o.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_radiance) AS mean_radiance
-                FROM viirs_annual WHERE year >= 2022 GROUP BY redcode
-            ) v ON r.redcode = v.redcode
-            LEFT JOIN fabdem_terrain t ON r.redcode = t.redcode
-            LEFT JOIN road_access rd ON r.redcode = rd.redcode
-        """,
-        "components": [
-            ("c_access_20k", "c_access_20k", 0.25, True),    # less time = better
-            ("c_healthcare", "c_healthcare", 0.20, True),     # less time = better
-            ("c_nightlights", "c_nightlights", 0.25, False),  # more light = more value
-            ("c_slope", "c_slope", 0.15, True),               # flatter = better
-            ("c_road_dist", "c_road_dist", 0.15, True),       # closer = better
-        ],
-    },
-    # ── PRODUCIR ──────────────────────────────────────────────────────────
-    {
-        "id": "agri_potential",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(s.soc, 0) AS c_soc,
-                1.0 - LEAST(1.0, ABS(COALESCE(s.ph, 50) / 10.0 - 6.25) / 4.0) AS c_ph_optimal,
-                COALESCE(s.clay, 0) AS c_clay,
-                COALESCE(c.total_mm, 0) AS c_precipitation,
-                COALESCE(e.gdd_base10, 0) AS c_gdd,
-                COALESCE(t.slope_mean, 0) AS c_slope
-            FROM radios_misiones r
-            LEFT JOIN soilgrids s ON r.redcode = s.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(total_mm) AS total_mm
-                FROM chirps_annual WHERE year >= 2019 GROUP BY redcode
-            ) c ON r.redcode = c.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(gdd_base10) AS gdd_base10
-                FROM era5_annual WHERE year >= 2019 GROUP BY redcode
-            ) e ON r.redcode = e.redcode
-            LEFT JOIN fabdem_terrain t ON r.redcode = t.redcode
-        """,
-        "components": [
-            ("c_soc", "c_soc", 0.20, False),            # more organic carbon = better
-            ("c_ph_optimal", "c_ph_optimal", 0.15, False),  # already 0-1 distance to optimal
-            ("c_clay", "c_clay", 0.15, False),           # more clay = better water retention
-            ("c_precipitation", "c_precipitation", 0.20, False),
-            ("c_gdd", "c_gdd", 0.15, False),            # more heat units = more growth
-            ("c_slope", "c_slope", 0.15, True),          # flatter = easier mechanization
-        ],
-    },
-    {
-        "id": "forest_health",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(nt.ndvi_slope, 0) AS c_ndvi_trend,
-                CASE WHEN COALESCE(h.treecover2000, 0) > 0
-                     THEN COALESCE(h.total_loss, 0) / h.treecover2000
-                     ELSE 0 END AS c_loss_ratio,
-                COALESCE(f.burned_fraction, 0) AS c_fire,
-                COALESCE(g.mean_gpp, 0) AS c_gpp,
-                COALESCE(et.mean_et, 0) AS c_et
-            FROM radios_misiones r
-            LEFT JOIN (
-                SELECT redcode, regr_slope(mean_ndvi, year) AS ndvi_slope
-                FROM ndvi_annual_mean WHERE year >= 2019 GROUP BY redcode
-            ) nt ON r.redcode = nt.redcode
-            LEFT JOIN hansen_baseline h ON r.redcode = h.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(burned_fraction) AS burned_fraction
-                FROM fire_annual WHERE year >= 2019 GROUP BY redcode
-            ) f ON r.redcode = f.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_gpp) AS mean_gpp
-                FROM gpp_annual WHERE year >= 2019 GROUP BY redcode
-            ) g ON r.redcode = g.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_et) AS mean_et
-                FROM et_annual WHERE year >= 2019 GROUP BY redcode
-            ) et ON r.redcode = et.redcode
-        """,
-        "components": [
-            ("c_ndvi_trend", "c_ndvi_trend", 0.25, False),  # positive trend = healthier
-            ("c_loss_ratio", "c_loss_ratio", 0.25, True),    # less loss = healthier
-            ("c_fire", "c_fire", 0.20, True),                # less fire = healthier
-            ("c_gpp", "c_gpp", 0.15, False),                 # more productivity = healthier
-            ("c_et", "c_et", 0.15, False),                   # more transpiration = active forest
-        ],
-    },
-    # forestry_aptitude: DEPRECATED. Reemplazado por pipeline/compute_forestry_sdm.py
-    # (species distribution model sobre MapBiomas silvicultura + mascara satelital).
-    # Ya no se recomputa aqui ni en process_raster_to_h3.py.
-    # ── SERVIR ────────────────────────────────────────────────────────────
     {
         "id": "service_deprivation",
         "sql": """
@@ -326,40 +71,12 @@ ANALYSIS_DEFS = [
             LEFT JOIN censo2022_variables ce ON r.redcode = ce.redcode
         """,
         "components": [
-            ("c_nbi", "c_nbi", 0.20, False),
-            ("c_sin_cloacas", "c_sin_cloacas", 0.20, False),
-            ("c_piso", "c_piso", 0.15, False),
-            ("c_hacinamiento", "c_hacinamiento", 0.15, False),
-            ("c_hacinamiento_crit", "c_hacinamiento_crit", 0.10, False),
-            ("c_sin_computadora", "c_sin_computadora", 0.20, False),
-        ],
-    },
-    {
-        "id": "territorial_isolation",
-        "sql": """
-            SELECT r.redcode,
-                COALESCE(o.accessibility_cities_min, 300) AS c_access_cities,
-                COALESCE(o.accessibility_healthcare_min, 300) AS c_access_health,
-                COALESCE(rd.dist_primary_m, 50000) AS c_road_dist,
-                COALESCE(rd.road_density_km_per_km2, 0) AS c_road_density,
-                COALESCE(v.mean_radiance, 0) AS c_nightlights,
-                COALESCE(ce.densidad_hab_km2, 0) AS c_pop_density
-            FROM radios_misiones r
-            LEFT JOIN oxford_accessibility o ON r.redcode = o.redcode
-            LEFT JOIN road_access rd ON r.redcode = rd.redcode
-            LEFT JOIN (
-                SELECT redcode, AVG(mean_radiance) AS mean_radiance
-                FROM viirs_annual WHERE year >= 2022 GROUP BY redcode
-            ) v ON r.redcode = v.redcode
-            LEFT JOIN censo2022_variables ce ON r.redcode = ce.redcode
-        """,
-        "components": [
-            ("c_access_cities", "c_access_cities", 0.20, False),      # more time = more isolated
-            ("c_access_health", "c_access_health", 0.20, False),      # more time = more isolated
-            ("c_road_dist", "c_road_dist", 0.15, False),              # farther from road = more isolated
-            ("c_road_density", "c_road_density", 0.15, True),         # less roads = more isolated
-            ("c_nightlights", "c_nightlights", 0.15, True),           # less light = more isolated
-            ("c_pop_density", "c_pop_density", 0.15, True),           # less people = more isolated
+            ("c_nbi", "c_nbi", False),
+            ("c_sin_cloacas", "c_sin_cloacas", False),
+            ("c_piso", "c_piso", False),
+            ("c_hacinamiento", "c_hacinamiento", False),
+            ("c_hacinamiento_crit", "c_hacinamiento_crit", False),
+            ("c_sin_computadora", "c_sin_computadora", False),
         ],
     },
     {
@@ -377,12 +94,12 @@ ANALYSIS_DEFS = [
             LEFT JOIN censo2022_variables ce ON r.redcode = ce.redcode
         """,
         "components": [
-            ("c_healthcare_time", "c_healthcare_time", 0.25, False),   # more time = worse access
-            ("c_health_coverage", "c_health_coverage", 0.15, True),    # more coverage = less gap
-            ("c_nbi", "c_nbi", 0.20, False),                           # more NBI = more vulnerability
-            ("c_elderly", "c_elderly", 0.15, False),                    # more elderly = more demand
-            ("c_children", "c_children", 0.10, False),                  # more children = more demand
-            ("c_pop_density", "c_pop_density", 0.15, False),            # more density = more demand
+            ("c_healthcare_time", "c_healthcare_time", False),   # more time = worse access
+            ("c_health_coverage", "c_health_coverage", True),    # more coverage = less gap
+            ("c_nbi", "c_nbi", False),                           # more NBI = more vulnerability
+            ("c_elderly", "c_elderly", False),                    # more elderly = more demand
+            ("c_children", "c_children", False),                  # more children = more demand
+            ("c_pop_density", "c_pop_density", False),            # more density = more demand
         ],
     },
     {
@@ -397,10 +114,10 @@ ANALYSIS_DEFS = [
             LEFT JOIN censo2022_variables ce ON r.redcode = ce.redcode
         """,
         "components": [
-            ("c_no_schooling", "c_no_schooling", 0.25, False),      # more = less capital
-            ("c_secondary_plus", "c_secondary_plus", 0.30, True),   # more secondary+ = more capital (invert)
-            ("c_higher_edu", "c_higher_edu", 0.25, True),           # more higher edu = more capital (invert)
-            ("c_university", "c_university", 0.20, True),           # more university = more capital (invert)
+            ("c_no_schooling", "c_no_schooling", False),      # more = less capital
+            ("c_secondary_plus", "c_secondary_plus", True),   # more secondary+ = more capital (invert)
+            ("c_higher_edu", "c_higher_edu", True),           # more higher edu = more capital (invert)
+            ("c_university", "c_university", True),           # more university = more capital (invert)
         ],
     },
     {
@@ -414,9 +131,9 @@ ANALYSIS_DEFS = [
             LEFT JOIN censo2022_variables ce ON r.redcode = ce.redcode
         """,
         "components": [
-            ("c_dropout_primary", "c_dropout_primary", 0.35, False),       # more = worse flow
-            ("c_dropout_secondary", "c_dropout_secondary", 0.35, False),   # more = worse flow
-            ("c_teen_pregnancy", "c_teen_pregnancy", 0.30, False),          # more = worse flow
+            ("c_dropout_primary", "c_dropout_primary", False),       # more = worse flow
+            ("c_dropout_secondary", "c_dropout_secondary", False),   # more = worse flow
+            ("c_teen_pregnancy", "c_teen_pregnancy", False),          # more = worse flow
         ],
     },
 ]
@@ -452,14 +169,11 @@ def fetch_radio_data(conn, sql: str) -> pd.DataFrame:
     return conn.execute(sql).fetchdf()
 
 
-def join_to_h3(radio_df: pd.DataFrame, crosswalk: pd.DataFrame,
-               areal_crosswalk: pd.DataFrame | None = None) -> pd.DataFrame:
-    """Project radio-level data onto H3 hexagons via dasymetric crosswalk.
+def join_to_h3(radio_df: pd.DataFrame, crosswalk: pd.DataFrame) -> pd.DataFrame:
+    """Project radio-level data onto H3 hexagons via the dasymetric crosswalk.
 
-    Building-weighted average where buildings exist (~69K hex).
-    If areal_crosswalk is provided, adds areal fallback for remaining hex
-    (used for satellite analyses measuring environmental conditions).
-    Census-based analyses should NOT pass areal_crosswalk — data only where people live.
+    Building-weighted average where buildings exist (~69K hex in Misiones).
+    Hexagons without buildings get no value: census data only where people live.
     """
     value_cols = [c for c in radio_df.columns if c != "redcode"]
 
@@ -470,28 +184,10 @@ def join_to_h3(radio_df: pd.DataFrame, crosswalk: pd.DataFrame,
             return pd.Series({c: np.nan for c in value_cols})
         return pd.Series({c: np.average(g[c].values, weights=w) for c in value_cols})
 
-    # Step 1: Dasymetric weighted average
     merged_dasy = crosswalk.merge(radio_df, on="redcode", how="inner")
-    hex_dasy = merged_dasy.groupby("h3index", group_keys=False).apply(
+    return merged_dasy.groupby("h3index", group_keys=False).apply(
         weighted_avg, include_groups=False
     ).reset_index()
-
-    # Step 2: Areal fallback for hex without buildings
-    if areal_crosswalk is not None:
-        dasy_hex_set = set(hex_dasy["h3index"])
-        areal_missing = areal_crosswalk[~areal_crosswalk["h3index"].isin(dasy_hex_set)]
-        if len(areal_missing) > 0:
-            merged_areal = areal_missing.merge(radio_df, on="redcode", how="inner")
-            # Max-overlap assignment for areal (same as original approach)
-            idx = merged_areal.groupby("h3index")["weight"].idxmax()
-            hex_areal = merged_areal.loc[idx].drop(
-                columns=["redcode", "weight"]
-            ).reset_index(drop=True)
-            hex_combined = pd.concat([hex_dasy, hex_areal], ignore_index=True)
-            print(f"    Hybrid: {len(hex_dasy):,} dasymetric + {len(hex_areal):,} areal = {len(hex_combined):,}")
-            return hex_combined
-
-    return hex_dasy
 
 
 def normalize_percentile(series: pd.Series) -> pd.Series:
@@ -507,9 +203,7 @@ def compute_analysis(
     conn,
     crosswalk: pd.DataFrame,
     analysis_def: dict,
-    areal_crosswalk: pd.DataFrame | None = None,
     emit_diagnostics: bool = False,
-    emit_legacy: bool = False,
     output_dir: str = OUTPUT_DIR,
     mode: str = 'local',
     goalposts: dict | None = None,
@@ -527,13 +221,13 @@ def compute_analysis(
     print(f"    Radio data: {len(radio_data)} rows, "
           f"cols: {[c for c in radio_data.columns if c != 'redcode']}")
 
-    # Project to H3 (hybrid: dasymetric + areal fallback)
-    hex_data = join_to_h3(radio_data, crosswalk, areal_crosswalk)
+    # Project to H3 (dasymetric only: census data exists where people live)
+    hex_data = join_to_h3(radio_data, crosswalk)
     print(f"    H3 hexagons: {len(hex_data):,}")
 
     # Normalize each component
     gp_indicators = goalposts.get('indicators', {}) if goalposts else {}
-    for out_col, sql_col, _weight, invert in components:
+    for out_col, sql_col, invert in components:
         raw = hex_data[sql_col].astype(float)
         # Preserve the dasymetric (building-weighted) physical value before it is
         # overwritten by the percentile/goalpost score. For census layers this is
@@ -581,22 +275,12 @@ def compute_analysis(
     # ── Geometric mean score (HDI-style, floor=1.0) ─────────────────────
     hex_data["score"] = geometric_mean_score(hex_data, retained, floor=1.0).round(1)
 
-    # ── Legacy weighted arithmetic mean (for validation) ─────────────────
-    if emit_legacy:
-        legacy = pd.Series(0.0, index=hex_data.index)
-        total_weight = 0.0
-        for out_col, _, weight, _ in components:
-            valid = hex_data[out_col].notna()
-            legacy[valid] += hex_data.loc[valid, out_col] * weight
-            total_weight += weight
-        hex_data["score_legacy"] = (legacy / total_weight).round(1)
-
     # ── Diagnostics report ───────────────────────────────────────────────
     if emit_diagnostics:
         generate_report(analysis_id, diagnostics, output_dir=output_dir)
 
     # Round component columns
-    for out_col, _, _, _ in components:
+    for out_col, _, _ in components:
         hex_data[out_col] = hex_data[out_col].round(1)
 
     # Per-hexagon magnitude from the dasymetric crosswalk (mass-preserving):
@@ -619,8 +303,6 @@ def compute_analysis(
     # Select output columns (percentile components + preserved _raw + magnitude)
     raw_cols = [f"{c}_raw" for c in comp_cols if f"{c}_raw" in hex_data.columns]
     out_cols = ["h3index", "score"] + comp_cols + raw_cols + mag_cols
-    if emit_legacy:
-        out_cols.append("score_legacy")
     result = hex_data[out_cols].copy()
 
     # Stats
@@ -628,9 +310,6 @@ def compute_analysis(
     avg = result["score"].mean()
     median = result["score"].median()
     print(f"    Score (geometric mean): n={non_null:,}, avg={avg:.1f}, median={median:.1f}")
-    if emit_legacy:
-        avg_leg = result["score_legacy"].mean()
-        print(f"    Score (legacy arith.):  avg={avg_leg:.1f}")
 
     return result
 
@@ -656,10 +335,6 @@ def main():
         help="Emit PCA/KMO/correlation diagnostic JSON per analysis"
     )
     parser.add_argument(
-        "--legacy", action="store_true",
-        help="Include score_legacy column (old weighted arithmetic mean) for validation"
-    )
-    parser.add_argument(
         "--mode", choices=["comparable", "local"], default="local",
         help="comparable: fixed goalpost normalization (cross-territory). local: percentile rank within territory (default)."
     )
@@ -671,15 +346,12 @@ def main():
 
     if territory_id == 'misiones':
         crosswalk_path = CROSSWALK_PATH
-        areal_crosswalk_path = AREAL_CROSSWALK_PATH
         output_dir = args.output_dir or OUTPUT_DIR
         radio_data_overrides = {}
     else:
         t_dir = os.path.join(OUTPUT_DIR, territory_id)
         # Crosswalk naming convention: h3_radio_crosswalk_{territory_id}.parquet
         crosswalk_path = os.path.join(t_dir, f"h3_radio_crosswalk_{territory_id}.parquet")
-        # No separate areal crosswalk for non-Misiones territories; use dasymetric for fallback
-        areal_crosswalk_path = crosswalk_path
         output_dir = args.output_dir or t_dir
         # Override paths for files that live in t_dir, not radio_data/
         radio_data_overrides = {
@@ -690,7 +362,6 @@ def main():
             "oxford_accessibility": os.path.join(
                 t_dir, f"oxford_accessibility_{territory_id}.parquet"
             ),
-            "road_access": os.path.join(t_dir, f"road_access_{territory_id}.parquet"),
         }
 
     # Patch SQL strings and radio table list for this territory
@@ -710,14 +381,12 @@ def main():
         print(f"  Loaded goalposts v{goalposts.get('version', '?')} "
               f"({goalposts.get('computed', '?')})")
 
-    # These analyses have direct raster pipelines in process_raster_to_h3.py
-    # (hex-level zonal stats over multi-band GEE exports). Keep their definitions
-    # here for documentation but do NOT re-run them via the radio-based pipeline —
-    # that would overwrite the hex-level parquets with radio-aggregated blobs.
-    RASTER_BASED = {"environmental_risk", "climate_comfort", "agri_potential", "forest_health", "change_pressure"}
+    # agri_potential runs in process_raster_to_h3.py (hex-level zonal stats over a
+    # GEE raster). Point there instead of failing with "no matching analyses".
+    RASTER_BASED = {"agri_potential"}
 
     # Filter analyses if --only specified
-    analyses = [a for a in ANALYSIS_DEFS if a["id"] not in RASTER_BASED]
+    analyses = list(ANALYSIS_DEFS)
     if args.only:
         only_ids = set(args.only.split(","))
         overlap = only_ids & RASTER_BASED
@@ -740,8 +409,6 @@ def main():
     print("\nLoading crosswalks...")
     crosswalk = pd.read_parquet(crosswalk_path)
     print(f"  Dasymetric: {len(crosswalk):,} rows, {crosswalk['h3index'].nunique():,} unique hexagons")
-    areal_crosswalk = pd.read_parquet(areal_crosswalk_path)
-    print(f"  Areal: {len(areal_crosswalk):,} rows, {areal_crosswalk['h3index'].nunique():,} unique hexagons")
 
     # Load radio data tables into DuckDB
     print("Loading radio tables into DuckDB...")
@@ -755,23 +422,11 @@ def main():
         print(f"\n[{i}/{len(analyses)}] Computing {aid}...")
 
         try:
-            # Default: dasymetric only — radio data projected to hex without buildings
-            # creates artifacts for human/settlement analyses (rivers, forests).
-            # Exception: environmental analyses (soil/climate/terrain) are valid everywhere,
-            # so they use the areal crosswalk as fallback to cover all ~320K hexagons.
-            ENVIRONMENTAL_ANALYSES = {
-                "forestry_aptitude",
-                "agri_potential",
-                "environmental_risk",
-                "climate_comfort",
-                "forest_health",
-            }
-            use_areal_fallback = aid in ENVIRONMENTAL_ANALYSES
+            # Dasymetric only: projecting census radios onto hexagons without
+            # buildings creates artifacts (rivers, forests).
             result = compute_analysis(
                 conn, crosswalk, analysis_def,
-                areal_crosswalk=areal_crosswalk if use_areal_fallback else None,
                 emit_diagnostics=args.diagnostics,
-                emit_legacy=args.legacy,
                 output_dir=output_dir,
                 mode=args.mode,
                 goalposts=goalposts,

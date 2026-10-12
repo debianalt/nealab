@@ -7,9 +7,8 @@ with a single script that runs reduceRegions server-side in GEE, eliminating Geo
 Output is identical: sat_{aid}.parquet with h3index, score, and component columns.
 
 Usage:
-  python pipeline/gee_reduce_analysis.py --analysis green_capital
+  python pipeline/gee_reduce_analysis.py --analysis agri_potential
   python pipeline/gee_reduce_analysis.py --analysis all
-  python pipeline/gee_reduce_analysis.py --analysis environmental_risk,agri_potential
 """
 
 import argparse
@@ -33,70 +32,15 @@ EXPORT_SCALE = 100
 # ── Component definitions (from process_raster_to_h3.py) ──
 
 ANALYSIS_COMPONENTS = {
-    'environmental_risk': [
-        ('c_fire', 'c_fire', 0.25, False),
-        ('c_deforest', 'c_deforest', 0.25, False),
-        ('c_thermal_amp', 'c_thermal_amp', 0.20, False),
-        ('c_slope', 'c_slope', 0.15, False),
-        ('c_hand', 'c_hand', 0.15, True),
-    ],
-    'climate_comfort': [
-        ('c_heat_day', 'c_heat_day', 0.25, True),
-        ('c_heat_night', 'c_heat_night', 0.20, True),
-        ('c_precipitation', 'c_precipitation', 0.20, False),
-        ('c_frost', 'c_frost', 0.15, True),
-        ('c_water_stress', 'c_water_stress', 0.20, False),
-    ],
-    'green_capital': [
-        ('c_ndvi', 'c_ndvi', 0.25, False),
-        ('c_treecover', 'c_treecover', 0.20, False),
-        ('c_npp', 'c_npp', 0.20, False),
-        ('c_lai', 'c_lai', 0.15, False),
-        ('c_vcf', 'c_vcf', 0.20, False),
-    ],
-    'change_pressure': [
-        ('c_viirs_trend', 'c_viirs_trend', 0.25, False),
-        ('c_ghsl_change', 'c_ghsl_change', 0.25, False),
-        ('c_hansen_loss', 'c_hansen_loss', 0.20, False),
-        ('c_ndvi_trend', 'c_ndvi_trend', 0.15, True),
-        ('c_fire_count', 'c_fire_count', 0.15, False),
-    ],
     'agri_potential': [
-        ('c_soc', 'c_soc', 0.20, False),
-        ('c_ph_optimal', 'c_ph_optimal', 0.15, False),
-        ('c_clay', 'c_clay', 0.15, False),
-        ('c_precipitation', 'c_precipitation', 0.20, False),
-        ('c_gdd', 'c_gdd', 0.15, False),
-        ('c_slope', 'c_slope', 0.15, True),
-    ],
-    'forest_health': [
-        ('c_ndvi_trend', 'c_ndvi_trend', 0.25, False),
-        ('c_loss_ratio', 'c_loss_ratio', 0.25, True),
-        ('c_fire', 'c_fire', 0.20, True),
-        ('c_gpp', 'c_gpp', 0.15, False),
-        ('c_et', 'c_et', 0.15, False),
-    ],
-    'air_quality': [
-        ('c_pm25', 'c_pm25', 0.40, False),
-        ('c_no2', 'c_no2', 0.35, False),
-        ('c_aod', 'c_aod', 0.25, False),
+        ('c_soc', 'c_soc', False),
+        ('c_ph_optimal', 'c_ph_optimal', False),
+        ('c_clay', 'c_clay', False),
+        ('c_precipitation', 'c_precipitation', False),
+        ('c_gdd', 'c_gdd', False),
+        ('c_slope', 'c_slope', True),
     ],
 }
-
-# Radio-level fallback for 100% NaN bands
-RADIO_FALLBACK = {
-    'c_fire': {
-        'table': 'fire_annual',
-        'sql': "SELECT redcode, AVG(burned_fraction) AS value FROM fire_annual WHERE year >= 2019 GROUP BY redcode",
-    },
-    'c_fire_count': {
-        'table': 'fire_annual',
-        'sql': "SELECT redcode, SUM(burn_count) AS value FROM fire_annual WHERE year >= 2019 GROUP BY redcode",
-    },
-}
-
-AREAL_CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk_areal.parquet")
-RADIO_DATA_DIR = os.path.join(OUTPUT_DIR, "radio_data")
 
 
 def percentile_rank(series):
@@ -106,47 +50,6 @@ def percentile_rank(series):
     if valid.sum() > 1:
         result[valid] = series[valid].rank(pct=True) * 100.0
     return result
-
-
-def inject_radio_fallback(df, nan_cols, components):
-    """Fill 100% NaN columns from radio-level data via areal crosswalk."""
-    if not os.path.exists(AREAL_CROSSWALK_PATH):
-        print(f"    No areal crosswalk found — skipping fallback")
-        return df
-
-    import duckdb
-    xw = pd.read_parquet(AREAL_CROSSWALK_PATH)
-    conn = duckdb.connect()
-
-    for col in nan_cols:
-        fb = RADIO_FALLBACK.get(col)
-        if not fb:
-            print(f"    No fallback defined for {col}")
-            continue
-
-        table_path = os.path.join(RADIO_DATA_DIR, f"{fb['table']}.parquet")
-        if not os.path.exists(table_path):
-            print(f"    Missing {table_path} — skipping {col}")
-            continue
-
-        conn.execute(f"CREATE OR REPLACE TABLE {fb['table']} AS SELECT * FROM read_parquet('{table_path}')")
-        radio_df = conn.execute(fb['sql']).fetchdf()
-        print(f"    Radio fallback {col}: {len(radio_df)} radios with data")
-
-        merged = xw.merge(radio_df, on="redcode", how="inner")
-        idx = merged.groupby("h3index")["weight"].idxmax()
-        h3_vals = merged.loc[idx][["h3index", "value"]].set_index("h3index")
-
-        raw = df["h3index"].map(h3_vals["value"]).astype(float)
-        invert = any(c[3] for c in components if c[1] == col)
-        if invert:
-            raw = -raw
-        df[col] = percentile_rank(raw).round(1)
-        injected = df[col].notna().sum()
-        print(f"    Injected {col}: {injected:,} hexagons with data")
-
-    conn.close()
-    return df
 
 
 def get_gcs_client():
@@ -254,7 +157,7 @@ def process_analysis(analysis_id, df):
                 df = df.rename(columns={col: bn})
 
     # Percentile rank per component
-    for band_name, out_col, weight, invert in components:
+    for band_name, out_col, invert in components:
         if band_name not in df.columns:
             df[out_col] = np.nan
             continue
@@ -263,14 +166,8 @@ def process_analysis(analysis_id, df):
             raw = -raw
         df[out_col] = percentile_rank(raw).round(1)
 
-    # Radio fallback for 100% NaN columns
+    # Exclude 100% NaN columns
     comp_cols = [c[1] for c in components]
-    nan_cols = [c for c in comp_cols if df[c].isna().all()]
-    if nan_cols:
-        print(f"    100% NaN columns: {nan_cols} — attempting radio fallback")
-        df = inject_radio_fallback(df, nan_cols, components)
-
-    # Exclude remaining 100% NaN columns
     valid_cols = [c for c in comp_cols if not df[c].isna().all()]
     dropped_nan = set(comp_cols) - set(valid_cols)
     if dropped_nan:

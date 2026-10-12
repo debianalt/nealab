@@ -28,13 +28,7 @@ GOALPOSTS_PATH = os.path.join(os.path.dirname(__file__), 'config', 'goalposts.js
 # Comparable analyses: parquet filename stem → list of c_* columns to pool
 # Maps sat_*.parquet columns that appear in goalposts.json indicators
 COMPARABLE_PARQUETS = {
-    'sat_environmental_risk':    ['c_fire', 'c_deforest', 'c_thermal_amp', 'c_slope', 'c_hand'],
-    'sat_climate_comfort':       ['c_heat_day', 'c_heat_night', 'c_precipitation', 'c_frost', 'c_water_stress'],
-    'sat_green_capital':         ['c_ndvi', 'c_treecover', 'c_npp', 'c_lai', 'c_vcf'],
-    'sat_change_pressure':       ['c_viirs_trend', 'c_ghsl_change', 'c_hansen_loss', 'c_ndvi_trend', 'c_fire_count'],
-    'sat_location_value':        ['c_access_20k', 'c_healthcare', 'c_nightlights', 'c_slope', 'c_road_dist'],
-    'sat_agri_potential':        ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd'],
-    'sat_forest_health':         ['c_ndvi_trend', 'c_loss_ratio', 'c_gpp', 'c_et'],
+    'sat_agri_potential':        ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd', 'c_slope'],
     'sat_carbon_stock':          ['c_agb_cci', 'c_total_carbon', 'c_soc', 'c_net_flux'],
     'sat_productive_activity':   ['c_viirs', 'c_npp', 'c_ndvi', 'c_built', 'c_forest_loss', 'c_lst'],
     'sat_deforestation_dynamics':['c_loss_rate', 'c_cumulative'],
@@ -46,13 +40,7 @@ PARQUET_TO_ANALYSIS = {k: k.replace('sat_', '') for k in COMPARABLE_PARQUETS}
 
 # PCA variable selection analysis-to-component mapping (for re-validation)
 ANALYSIS_COMPONENTS = {
-    'environmental_risk':     ['c_fire', 'c_deforest', 'c_thermal_amp', 'c_slope', 'c_hand'],
-    'climate_comfort':        ['c_heat_day', 'c_heat_night', 'c_precipitation', 'c_frost', 'c_water_stress'],
-    'green_capital':          ['c_ndvi', 'c_treecover', 'c_npp', 'c_lai', 'c_vcf'],
-    'change_pressure':        ['c_viirs_trend', 'c_ghsl_change', 'c_hansen_loss', 'c_ndvi_trend', 'c_fire_count'],
-    'location_value':         ['c_access_20k', 'c_healthcare', 'c_nightlights', 'c_slope', 'c_road_dist'],
-    'agri_potential':         ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd'],
-    'forest_health':          ['c_ndvi_trend', 'c_loss_ratio', 'c_gpp', 'c_et'],
+    'agri_potential':         ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd', 'c_slope'],
     'carbon_stock':           ['c_agb_cci', 'c_total_carbon', 'c_soc', 'c_net_flux'],
     'productive_activity':    ['c_viirs', 'c_npp', 'c_ndvi', 'c_built', 'c_forest_loss', 'c_lst'],
     'deforestation_dynamics': ['c_loss_rate', 'c_cumulative'],
