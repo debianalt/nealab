@@ -18,7 +18,6 @@
 	import { pointInPolygon } from '$lib/utils/geometry';
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
-	const GAUGE: [number, number] = [-54.199, -27.298];
 	const TOWN_WIDE = { center: [-54.2035, -27.2965] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
 	const TOWN_NARROW = { center: [-54.1995, -27.2975] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
 	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
@@ -27,8 +26,8 @@
 
 	const PRIO = [
 		{ id: 'vigilar ya', label: 'Vigilar ya', color: '#ef4444' },
-		{ id: 'vigilar', label: 'Vigilar', color: '#f97316' },
-		{ id: 'atento', label: 'Atento', color: '#facc15' },
+		{ id: 'vigilar', label: 'Vigilar', color: '#f59e0b' },
+		{ id: 'atento', label: 'Atento', color: '#fef08a' },
 		{ id: 'sin prioridad', label: 'Sin prioridad', color: '#64748b' }
 	];
 	const TIPOS = [
@@ -56,13 +55,24 @@
 		{ lim: 1.25, color: '#f97316', label: '1,25 a 1,75 veces' },
 		{ lim: 1.75, color: '#dc2626', label: 'más de 1,75 veces' }
 	];
-	const DEPTH = [
-		{ max: 0.5, rgba: [186, 230, 253, 190], label: 'hasta 0,5 m' },
-		{ max: 1.5, rgba: [125, 211, 252, 200], label: '0,5 a 1,5 m' },
-		{ max: 3, rgba: [56, 189, 248, 210], label: '1,5 a 3 m' },
-		{ max: 6, rgba: [2, 132, 199, 215], label: '3 a 6 m' },
-		{ max: 1e9, rgba: [7, 89, 133, 220], label: 'más de 6 m' }
-	];
+	// continuous water-depth scale: colour interpolated between stops that the legend shows evenly spaced
+	const WSTOPS: [number, number[]][] = [[0, [224, 247, 255, 175]], [0.5, [158, 230, 255, 190]], [1.5, [76, 195, 255, 205]],
+		[3, [31, 143, 224, 215]], [6, [20, 83, 168, 225]], [10, [11, 42, 107, 235]]];
+	const LUT_STEP = 0.05;
+	const WLUT = (() => {
+		const n = Math.round(10 / LUT_STEP) + 1, out = new Uint8ClampedArray(n * 4);
+		for (let i = 0; i < n; i++) {
+			const d = i * LUT_STEP;
+			let k = 0;
+			while (k < WSTOPS.length - 2 && d > WSTOPS[k + 1][0]) k++;
+			const [a, ca] = WSTOPS[k], [b, cb] = WSTOPS[k + 1];
+			const t = Math.min(Math.max((d - a) / (b - a), 0), 1);
+			for (let j = 0; j < 4; j++) out[i * 4 + j] = ca[j] + (cb[j] - ca[j]) * t;
+		}
+		return out;
+	})();
+	const WLUT_N = WLUT.length / 4;
+	const WGRAD = `linear-gradient(to right, ${WSTOPS.map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS.length - 1)) * 100}%`).join(', ')})`;
 	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#7f1d1d']];
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
@@ -191,11 +201,9 @@
 		for (let k = 0; k < wet.length; k++) {
 			const i = wet[k], v = vals[i];
 			if (v > st4) continue;
-			const depth = stage - v / 4;
-			let c = DEPTH[DEPTH.length - 1].rgba;
-			for (const b of DEPTH) if (depth <= b.max) { c = b.rgba; break; }
+			const li = Math.min(Math.round((stage - v / 4) / LUT_STEP), WLUT_N - 1) * 4;
 			const o = i * 4;
-			d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = c[3];
+			d[o] = WLUT[li]; d[o + 1] = WLUT[li + 1]; d[o + 2] = WLUT[li + 2]; d[o + 3] = WLUT[li + 3];
 		}
 		// paint on a scratch canvas, then draw it blurred by ~1 px so 20 m pixels do not show as blocks
 		wraw.putImageData(wimg, 0, 0);
@@ -411,9 +419,6 @@
 					paint: { 'fill-color': '#22d3ee', 'fill-opacity': 0.12 } });
 				map.addLayer({ id: 'lasso-line', type: 'line', source: 'lasso',
 					paint: { 'line-color': '#22d3ee', 'line-width': 2.5, 'line-dasharray': [3, 1.5] } });
-				new maplibregl.Marker({ color: '#22d3ee', scale: 0.75 }).setLngLat(GAUGE)
-					.setPopup(new maplibregl.Popup({ offset: 18 }).setText('Hidrómetro de El Soberbio (INA / Prefectura)'))
-					.addTo(map);
 
 				const tip = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 10, maxWidth: '340px', className: 'demo-tip' });
 				map.on('mousemove', (e: any) => {
@@ -617,9 +622,11 @@
 				<p class="note">Altura a partir de la cual el agua llega a las viviendas de cada radio: propuesta técnica de umbral de aviso, no umbral oficial.</p>
 			</section>
 
-			<section class="legend">
-				{#each DEPTH as d}<span><i style:background={`rgba(${d.rgba.slice(0, 3).join(',')},0.95)`}></i>Agua {d.label}</span>{/each}
-				<span><i class="dot"></i>Escuela o centro de salud</span>
+			<section>
+				<h2>Profundidad del agua sobre el terreno</h2>
+				<div class="wbar" style:background={WGRAD}></div>
+				<div class="wticks">{#each WSTOPS as [d], i}<span style:left={`${(i / (WSTOPS.length - 1)) * 100}%`}>{i === WSTOPS.length - 1 ? '10+ m' : `${dec(d).replace(',0', '')} m`}</span>{/each}</div>
+				<div class="legend"><span><i class="dot"></i>Escuela o centro de salud (roja si queda bajo el agua)</span></div>
 			</section>
 
 			<footer>
@@ -694,6 +701,11 @@
 	.track .z { position: absolute; left: 0; top: 0; bottom: 0; background: #60a5fa; border-radius: 4px; }
 	.track .z.hi { background: #f97316; }
 	.track .pv { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #fff; }
+	.wbar { height: 10px; border-radius: 5px; }
+	.wticks { position: relative; height: 16px; font-size: 10.5px; color: #a3a3a3; }
+	.wticks span { position: absolute; top: 2px; transform: translateX(-50%); white-space: nowrap; }
+	.wticks span:first-child { transform: none; }
+	.wticks span:last-child { transform: translateX(-100%); }
 	.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; color: #d4d4d4; font-size: 11.5px; margin-top: 6px; }
 	.legend span { display: flex; align-items: center; gap: 5px; }
 	footer { display: flex; flex-direction: column; gap: 6px; color: #a3a3a3; font-size: 11px; line-height: 1.4; }
