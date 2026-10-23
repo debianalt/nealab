@@ -2,11 +2,15 @@
 	// Demo «El Niño: dónde mirar primero» — El Soberbio, crecida del Uruguay por altura del hidrómetro.
 	// Unlisted page with its own map: it does not touch Map.svelte or the analysis registry.
 	// Data are precomputed outside this repo and served from R2 under data/demo/el_nino/:
-	//   agua.png        one band, value = gauge height (x4) at which water reaches each 20 m pixel, 0 = never
-	//   edificios.geojson  buildings near the water (3D + lasso); persons per building are only ever summed
-	//   microzonas.geojson census radios / riverside strips with priority, census profile, housing type
-	//   puntos.geojson  schools and health centres from the provincial emergency viewer
-	//   tabla_altura.json  totals per 0.5 m step, scenarios, thresholds, provincial averages, raster corners
+	//   agua.png            one band, value = gauge height (x4) at which water reaches each 20 m pixel, 0 = never
+	//   edificios.pmtiles   every building of the municipality: s impact height (-1 never), a area, h height,
+	//                       p persons and v dwellings (census radio totals spread by area over probable dwellings),
+	//                       c condition by size (0 small annex, 1 probable dwelling, 2 probable non-residential),
+	//                       r in a RENABAP neighbourhood, z census radio
+	//   edificios_pts.json  the same buildings as flat arrays, for the lasso
+	//   radios.geojson      the 36 census radios with census profile, housing type, priority and scenario totals
+	//   puntos.geojson      schools and health centres from the provincial emergency viewer
+	//   tabla_altura.json   totals per 0.5 m step, scenarios, annual peaks, thresholds, provincial averages, raster
 	import { onMount } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { page } from '$app/state';
@@ -17,9 +21,9 @@
 	const GAUGE: [number, number] = [-54.199, -27.298];
 	const TOWN_WIDE = { center: [-54.2035, -27.2965] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
 	const TOWN_NARROW = { center: [-54.1995, -27.2975] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
+	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
 	// phones get a wider town view so the river stays in frame
 	const town = () => (typeof window !== 'undefined' && window.innerWidth < 760 ? TOWN_NARROW : TOWN_WIDE);
-	const MUNI = { center: [-54.12, -27.22] as [number, number], zoom: 11.2, pitch: 0, bearing: 0 };
 
 	const PRIO = [
 		{ id: 'vigilar ya', label: 'Vigilar ya', color: '#ef4444' },
@@ -34,7 +38,7 @@
 		{ id: 'dependientes', label: 'Hogares que no se evacúan solos', color: '#34d399', def: 'niños de 0 a 5 y mayores de 65 por encima del promedio' },
 		{ id: 'consolidada', label: 'Consolidada', color: '#94a3b8', def: 'ninguno de los rasgos anteriores' }
 	];
-	// census layers: zone share vs. provincial share (key in tabla.provincia)
+	// census layers: radio share vs. provincial share (key in tabla.provincia)
 	const CENSO = [
 		{ id: 'c_nbi', prov: 'nbi', label: 'Hogares con NBI' },
 		{ id: 'c_piso', prov: 'piso', label: 'Piso de baja calidad' },
@@ -46,11 +50,11 @@
 		{ id: 'c_dep', prov: 'dep', label: 'Niños 0-5 y mayores 65+' }
 	];
 	const RATIO = [
-		{ lim: 0, color: '#1d4ed8', label: 'menos de ¾ del promedio' },
-		{ lim: 0.75, color: '#93c5fd', label: '¾ a 1 vez' },
-		{ lim: 1, color: '#fde68a', label: '1 a 1¼ veces' },
-		{ lim: 1.25, color: '#f97316', label: '1¼ a 1¾ veces' },
-		{ lim: 1.75, color: '#dc2626', label: 'más de 1¾ veces' }
+		{ lim: 0, color: '#16a34a', label: 'menos de 0,75 veces el promedio' },
+		{ lim: 0.75, color: '#86efac', label: '0,75 a 1 vez' },
+		{ lim: 1, color: '#fde68a', label: '1 a 1,25 veces' },
+		{ lim: 1.25, color: '#f97316', label: '1,25 a 1,75 veces' },
+		{ lim: 1.75, color: '#dc2626', label: 'más de 1,75 veces' }
 	];
 	const DEPTH = [
 		{ max: 0.5, rgba: [186, 230, 253, 190], label: 'hasta 0,5 m' },
@@ -59,6 +63,8 @@
 		{ max: 6, rgba: [2, 132, 199, 215], label: '3 a 6 m' },
 		{ max: 1e9, rgba: [7, 89, 133, 220], label: 'más de 6 m' }
 	];
+	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#7f1d1d']];
+	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
 		{ id: '2015', label: 'Como 2015' },
 		{ id: '2023', label: 'Como 2023' },
@@ -72,14 +78,15 @@
 	];
 
 	interface Paso {
-		altura: number; viviendas: number; personas: number; ninos: number; mayores: number;
-		hog_nbi: number; viv_renabap: number; escuelas: number; salud: number; comunidades: number; microzonas: number;
+		altura: number; viviendas: number; personas: number; ninos: number; mayores: number; hog_nbi: number;
+		viv_renabap: number; escuelas: number; escuelas_secas: number; salud: number; comunidades: number; microzonas: number;
 	}
 	interface Tabla {
 		escenarios: Record<string, { fecha: string; altura_m: number }>;
 		s_ref: number;
 		pasos: Paso[];
-		umbrales: { altura: number; microzona: string; prioridad: string }[];
+		picos: { anio: number; altura: number }[];
+		umbrales: { altura: number; microzona: string; id: string; prioridad: string }[];
 		provincia: Record<string, number>;
 		raster: { ancho: number; alto: number; res_m: number; esquinas: [number, number][] };
 	}
@@ -91,16 +98,16 @@
 	let stage = $state(19);
 	let selected = $state<Record<string, any> | null>(null);
 	let error = $state('');
-	let capa = $state('prioridad');
+	let capa = $state('agua');
 	let lassoOn = $state(false);
 	let lassoPts = $state<[number, number][]>([]);
 	let lassoPoly = $state<[number, number][] | null>(null);
-	let zonas: any = null;
+	let radios: any = null;
+	let radioById = new Map<string, any>();
 	let puntos: any = null;
 	// buildings as flat arrays for the lasso
-	let B = { x: new Float64Array(0), y: new Float64Array(0), s: new Float32Array(0), v: new Int32Array(0),
-		p: new Int32Array(0), r: new Uint8Array(0), z: [] as string[] };
-	let zshare = new Map<string, { s05: number; s65: number }>();
+	let B = { x: [] as number[], y: [] as number[], s: [] as (number | null)[], v: [] as number[], p: [] as number[],
+		r: [] as number[], z: [] as number[], radios: [] as string[] };
 	// water raster
 	let vals: Uint8Array | null = null;
 	let wet: Int32Array | null = null;
@@ -108,31 +115,38 @@
 	let wraw: CanvasRenderingContext2D | null = null;
 	let wimg: ImageData | null = null;
 
-	const pasoActual = $derived.by(() => {
+	const pasoAt = (h: number) => {
 		if (!tabla) return null;
 		let best = tabla.pasos[0];
-		for (const p of tabla.pasos) if (p.altura <= stage + 1e-6) best = p;
+		for (const p of tabla.pasos) if (p.altura <= h + 1e-6) best = p;
 		return best;
-	});
+	};
+	const pasoActual = $derived(tabla ? pasoAt(stage) : null);
+	const pasoMenos = $derived(tabla ? pasoAt(stage - 1) : null);
+	const pasoMas = $derived(tabla ? pasoAt(stage + 1) : null);
 	const minStage = $derived(tabla ? tabla.pasos[0].altura : 2.5);
 	const maxStage = $derived(tabla ? tabla.pasos[tabla.pasos.length - 1].altura : 28);
 	const alcanzadas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura <= stage + 1e-6) : []);
 	const proximas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura > stage + 1e-6).slice(0, 3) : []);
+	const aniosSobre = $derived(tabla ? tabla.picos.filter((p) => p.altura >= stage - 1e-6).length : 0);
 	const censoSel = $derived(CENSO.find((c) => c.id === capa));
 	const lassoRes = $derived.by(() => {
 		if (!lassoPoly || !tabla) return null;
 		const alturas = [stage, ...SCEN.map((s) => tabla!.escenarios[s.id].altura_m)];
 		const out: Lasso[] = alturas.map(() => ({ viv: 0, pers: 0, ninos: 0, mayores: 0, ren: 0, esc: 0 }));
+		const total = { viv: 0, pers: 0, n: 0 };
 		const bb = bbox(lassoPoly);
 		for (let i = 0; i < B.x.length; i++) {
-			if (!(B.s[i] < 99)) continue;
 			const x = B.x[i], y = B.y[i];
 			if (x < bb[0] || x > bb[2] || y < bb[1] || y > bb[3] || !pointInPolygon([x, y], lassoPoly)) continue;
-			const zs = zshare.get(B.z[i]) ?? { s05: 0, s65: 0 };
+			total.viv += B.v[i]; total.pers += B.p[i]; total.n++;
+			const s = B.s[i];
+			if (s == null) continue;
+			const rp = radioById.get(B.radios[B.z[i]])?.properties ?? { s05: 0, s65: 0 };
 			alturas.forEach((h, k) => {
-				if (B.s[i] <= h + 1e-6) {
+				if (s <= h + 1e-6) {
 					const o = out[k];
-					o.viv += B.v[i]; o.pers += B.p[i]; o.ninos += B.p[i] * zs.s05; o.mayores += B.p[i] * zs.s65;
+					o.viv += B.v[i]; o.pers += B.p[i]; o.ninos += B.p[i] * rp.s05; o.mayores += B.p[i] * rp.s65;
 					if (B.r[i]) o.ren += B.v[i];
 				}
 			});
@@ -143,17 +157,18 @@
 			if (!pointInPolygon(f.geometry.coordinates, lassoPoly)) continue;
 			alturas.forEach((h, k) => { if (pi <= h + 1e-6) out[k].esc += 1; });
 		}
-		return out;
+		return { out, total };
 	});
 
 	const fmt = (n: number) => Math.round(n).toLocaleString('es-AR');
 	const approx = (n: number) => (n < 20 ? fmt(n) : '≈ ' + fmt(Math.round(n / 10) * 10));
 	const m = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' m';
+	const dec = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const pct = (x: number) => (x * 100).toLocaleString('es-AR', { maximumFractionDigits: 0 }) + ' %';
 	const colorOf = (p: string) => PRIO.find((x) => x.id === p)?.color ?? '#64748b';
 	const tipoOf = (t: string) => TIPOS.find((x) => x.id === t);
 	const fecha = (iso: string) => { const [y, mo, d] = iso.split('-'); return `${+d}/${+mo}/${y}`; };
-	const num = (v: any) => (v === null || v === undefined || v === 'null' ? null : +v);
+	const num = (v: any) => (v === null || v === undefined || v === 'null' || +v < 0 ? null : +v);
 
 	function bbox(poly: [number, number][]) {
 		let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
@@ -169,7 +184,7 @@
 
 	// ── water: recolour the canvas by depth = stage − height at which water arrives ──────
 	function paintWater() {
-		if (!vals || !wet || !wctx || !wimg) return;
+		if (!vals || !wet || !wctx || !wraw || !wimg) return;
 		const d = wimg.data;
 		d.fill(0);
 		const st4 = stage * 4 + 1e-6;
@@ -183,10 +198,10 @@
 			d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = c[3];
 		}
 		// paint on a scratch canvas, then draw it blurred by ~1 px so 20 m pixels do not show as blocks
-		wraw!.putImageData(wimg, 0, 0);
+		wraw.putImageData(wimg, 0, 0);
 		wctx.clearRect(0, 0, wimg.width, wimg.height);
 		wctx.filter = 'blur(1px)';
-		wctx.drawImage(wraw!.canvas, 0, 0);
+		wctx.drawImage(wraw.canvas, 0, 0);
 		wctx.filter = 'none';
 		const src = map?.getSource('agua');
 		if (src) { src.play(); map.triggerRepaint(); setTimeout(() => src.pause(), 60); }
@@ -203,38 +218,46 @@
 		return { depth: stage - v / 4, desde: v / 4 };
 	}
 
-	function zoneColorExpr(): any {
-		if (capa === 'prioridad') return ['match', ['get', 'prioridad'], ...PRIO.flatMap((p) => [p.id, p.color]), '#64748b'];
-		if (capa === 'tipo') return ['match', ['get', 'tipo_vivienda'], ...TIPOS.flatMap((p) => [p.id, p.color]), '#94a3b8'];
+	// colour of a radio under the current layer (used for radios and, through `z`, for buildings)
+	function radioColor(p: any): string {
+		if (capa === 'prioridad' || capa === 'agua') return colorOf(p.prioridad);
+		if (capa === 'tipo') return tipoOf(p.tipo_vivienda)?.color ?? '#94a3b8';
 		const c = CENSO.find((x) => x.id === capa)!;
-		const prov = tabla?.provincia[c.prov] ?? 1;
-		return ['step', ['/', ['get', c.id], prov], RATIO[0].color, ...RATIO.slice(1).flatMap((r) => [r.lim, r.color])];
+		const ratio = p[c.id] / (tabla?.provincia[c.prov] ?? 1);
+		let col = RATIO[0].color;
+		for (const r of RATIO) if (ratio >= r.lim) col = r.color;
+		return col;
+	}
+	function colorPairs(): string[] {
+		return (radios?.features ?? []).flatMap((f: any) => [f.properties.id, radioColor(f.properties)]);
+	}
+	function buildingColor(): any {
+		const st = stage + 1e-6;
+		const flooded = ['all', ['>=', ['get', 's'], 0], ['<=', ['get', 's'], st]];
+		const depthRamp = ['interpolate', ['linear'], ['-', st, ['get', 's']], ...BDEPTH.flat()];
+		if (capa === 'agua') return ['case', flooded, depthRamp, '#cbd5e1'];
+		return ['match', ['get', 'z'], ...colorPairs(), '#64748b'];
 	}
 
-	function applyStage() {
-		if (!map || !map.getLayer('zonas-fill')) return;
+	function applyLayers() {
+		if (!map || !map.getLayer('radios-fill') || !radios) return;
 		const st = stage + 1e-6;
 		const reached = ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st];
-		map.setPaintProperty('zonas-fill', 'fill-opacity', ['case', reached, 0.26, 0.06]);
-		map.setPaintProperty('zonas-line', 'line-width', ['case', reached, 2.4, 0.8]);
-		map.setPaintProperty('exp-3d', 'fill-extrusion-color', [
-			'case', ['<=', ['coalesce', ['get', 's'], 99], st],
-			['interpolate', ['linear'], ['-', st, ['coalesce', ['get', 's'], 99]], 0, '#fdba74', 1, '#f97316', 2.5, '#dc2626', 5, '#7f1d1d'],
-			'#e2e8f0'
-		]);
+		const col = ['match', ['get', 'id'], ...colorPairs(), '#64748b'];
+		map.setPaintProperty('radios-fill', 'fill-color', col);
+		map.setPaintProperty('radios-fill', 'fill-opacity', capa === 'agua' ? 0 : ['case', reached, 0.2, 0.08]);
+		map.setPaintProperty('radios-line', 'line-color', col);
+		map.setPaintProperty('radios-line', 'line-width', ['case', reached, 2.2, 0.8]);
+		map.setPaintProperty('eb-3d', 'fill-extrusion-color', buildingColor());
 		map.setPaintProperty('puntos', 'circle-color',
 			['case', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st], '#ef4444', '#f8fafc']);
-		paintWater();
 	}
 
-	$effect(() => { stage; applyStage(); });
+	$effect(() => { stage; capa; applyLayers(); });
+	$effect(() => { stage; paintWater(); });
 	$effect(() => {
-		capa;
-		if (map?.getLayer('zonas-fill')) {
-			const e = zoneColorExpr();
-			map.setPaintProperty('zonas-fill', 'fill-color', e);
-			map.setPaintProperty('zonas-line', 'line-color', e);
-		}
+		const id = selected?.id ?? '';
+		if (map?.getLayer('radio-sel')) map.setFilter('radio-sel', ['==', ['get', 'id'], id]);
 	});
 	$effect(() => {
 		const pts = lassoPoly ?? lassoPts;
@@ -258,31 +281,34 @@
 	}
 	function clearLasso() { lassoPoly = null; lassoPts = []; }
 
-	function flyTo(nombre: string) {
-		const f = zonas?.features.find((x: any) => x.properties.nombre === nombre);
+	function flyToRadio(id: string) {
+		const f = radioById.get(id);
 		if (!f || !map) return;
 		const xs: number[] = [], ys: number[] = [];
 		const walk = (c: any) => (typeof c[0] === 'number' ? (xs.push(c[0]), ys.push(c[1])) : c.forEach(walk));
 		walk(f.geometry.coordinates);
-		map.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]],
-			{ padding: 80, maxZoom: 16, pitch: 50 });
+		map.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: 80, maxZoom: 16, pitch: 50 });
 		selected = f.properties;
 	}
 	function view(v: typeof TOWN_WIDE) { map?.flyTo({ ...v, duration: 1200 }); }
 
 	function tooltipHtml(e: any): string | null {
-		const feats = map.queryRenderedFeatures(e.point, { layers: ['puntos', 'exp-3d', 'zonas-fill'] });
+		const feats = map.queryRenderedFeatures(e.point, { layers: ['puntos', 'eb-3d', 'radios-fill'] });
 		const lines: string[] = [];
 		const pt = feats.find((f: any) => f.layer.id === 'puntos');
-		const b = feats.find((f: any) => f.layer.id === 'exp-3d');
-		const z = feats.find((f: any) => f.layer.id === 'zonas-fill');
+		const b = feats.find((f: any) => f.layer.id === 'eb-3d');
+		let z = feats.find((f: any) => f.layer.id === 'radios-fill')?.properties;
 		if (pt) {
 			const s = num(pt.properties.primer_impacto);
 			lines.push(`<b>${pt.properties.nombre}</b>`,
-				s == null ? 'Fuera del alcance de los escenarios' : `El agua llega con ${m(s)}` + (s <= stage + 1e-6 ? ` · <span class="r">bajo ${m(stage - s)} de agua</span>` : ''));
+				s == null ? 'Fuera del alcance de los escenarios' : `El agua llega con ${m(s)}` + (s <= stage + 1e-6 ? ` · <span class="r">bajo ${m(stage - s)} de agua</span>` : ' · seca a esta altura'));
 		} else if (b) {
 			const p = b.properties, s = num(p.s);
-			lines.push(`<b>Construcción de ${fmt(+p.a)} m²</b> · ${+p.v > 0 ? 'vivienda estimada' : 'sin vivienda estimada (galpón u otra)'}${+p.r ? ' · barrio popular' : ''}`);
+			z = radioById.get(p.z)?.properties ?? z;
+			lines.push(`<b>${COND[+p.c]}</b>${+p.r ? ' · barrio popular' : ''}`);
+			lines.push(`${fmt(+p.a)} m² · ${dec(+p.h)} m de alto · ${+p.c === 1 ? `<b>≈ ${dec(+p.p)} personas</b> (estimado por tamaño)` : 'sin personas asignadas'}`);
+			if (+p.c === 1 && z && +z.c_hogares > 0)
+				lines.push(`<span class="dim">En su radio hay 1 hogar cada ${dec(+z.viv_probables / +z.c_hogares)} construcciones de este tamaño: muchas son galpones o anexos</span>`);
 			lines.push(s == null ? 'El agua no llega en ningún escenario' : `El agua llega con ${m(s)} en el hidrómetro`
 				+ (s <= stage + 1e-6 ? ` · <span class="r">con el río a ${m(stage)}: ≈ ${m(stage - s)} de agua</span>` : ''));
 		} else {
@@ -292,9 +318,9 @@
 				: `<b>Agua: ≈ ${m(w.depth)} sobre el terreno</b><br>Aquí el agua llega desde ${m(w.desde)} en el hidrómetro`);
 		}
 		if (z) {
-			const p = z.properties, s = num(p.primer_impacto), t = tipoOf(p.tipo_vivienda);
-			lines.push(`<span class="dim">${p.nombre} · ${PRIO.find((x) => x.id === p.prioridad)?.label ?? ''} · ${t?.label ?? ''}</span>`);
-			if (!pt && !b && s != null) lines.push(`<span class="dim">El agua llega a sus viviendas con ${m(s)}; el río superó esa altura ${p.anios_alcanzada} ${+p.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980</span>`);
+			const t = tipoOf(z.tipo_vivienda);
+			lines.push(`<span class="dim">Radio ${z.id} · ${z.nombre}</span>`,
+				`<span class="dim">${PRIO.find((x) => x.id === z.prioridad)?.label ?? ''} · ${t?.label ?? ''} · NBI ${pct(+z.c_nbi)} (Misiones ${pct(tabla?.provincia.nbi ?? 0)})</span>`);
 		}
 		return lines.length ? lines.join('<br>') : null;
 	}
@@ -306,16 +332,19 @@
 			const [{ default: maplibregl }, { Protocol }] = await Promise.all([import('maplibre-gl'), import('pmtiles')]);
 			if (cancelled) return;
 			maplibregl.addProtocol('pmtiles', new Protocol().tile);
-			let t: Tabla, edif: any;
+			let t: Tabla;
 			try {
 				const get = async (f: string) => {
 					const r = await fetch(`${base}/${f}`);
 					if (!r.ok) throw new Error(`${f}: ${r.status}`);
 					return r.json();
 				};
-				[t, edif, zonas, puntos] = await Promise.all([
-					get('tabla_altura.json'), get('edificios.geojson'), get('microzonas.geojson'), get('puntos.geojson')
+				let pts: any;
+				[t, pts, radios, puntos] = await Promise.all([
+					get('tabla_altura.json'), get('edificios_pts.json'), get('radios.geojson'), get('puntos.geojson')
 				]);
+				B = pts;
+				for (const f of radios.features) radioById.set(f.properties.id, f);
 				const img = new Image();
 				img.crossOrigin = 'anonymous';
 				img.src = `${base}/agua.png`;
@@ -335,14 +364,6 @@
 				error = 'No se pudieron cargar los datos de la demo.';
 				return;
 			}
-			const F = edif.features;
-			B = { x: new Float64Array(F.length), y: new Float64Array(F.length), s: new Float32Array(F.length),
-				v: new Int32Array(F.length), p: new Int32Array(F.length), r: new Uint8Array(F.length), z: new Array(F.length) };
-			F.forEach((f: any, i: number) => {
-				const p = f.properties;
-				B.x[i] = p.x; B.y[i] = p.y; B.s[i] = p.s ?? 99; B.v[i] = p.v; B.p[i] = p.p; B.r[i] = p.r; B.z[i] = p.z;
-			});
-			for (const f of zonas.features) zshare.set(f.properties.id, { s05: f.properties.s05, s65: f.properties.s65 });
 			tabla = t;
 			setStage(t.escenarios['2023'].altura_m, true);
 
@@ -359,26 +380,25 @@
 			if (import.meta.env.DEV) (window as any).__demo = map;   // for the local Playwright check
 			map.on('load', () => {
 				const firstSymbol = map.getStyle().layers.find((l: any) => l.type === 'symbol')?.id;
-				map.addSource('zonas', { type: 'geojson', data: zonas });
-				map.addLayer({ id: 'zonas-fill', type: 'fill', source: 'zonas',
-					paint: { 'fill-color': zoneColorExpr(), 'fill-opacity': 0.2 } }, firstSymbol);
+				map.addSource('radios', { type: 'geojson', data: radios });
+				map.addLayer({ id: 'radios-fill', type: 'fill', source: 'radios', paint: { 'fill-color': '#64748b', 'fill-opacity': 0 } }, firstSymbol);
 				map.addSource('agua', { type: 'canvas', canvas: wc, coordinates: t.raster.esquinas, animate: false });
 				map.addLayer({ id: 'agua', type: 'raster', source: 'agua',
 					paint: { 'raster-resampling': 'linear', 'raster-opacity': 0.9, 'raster-fade-duration': 0 } }, firstSymbol);
-				map.addLayer({ id: 'zonas-line', type: 'line', source: 'zonas',
-					paint: { 'line-color': zoneColorExpr(), 'line-width': 1 } });
+				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': '#64748b', 'line-width': 1 } });
+				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], ''],
+					paint: { 'line-color': '#22d3ee', 'line-width': 4.5 } });
+				// context: the site's building tiles outside the municipality only
 				map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
 				map.addLayer({ id: 'ctx-3d', type: 'fill-extrusion', source: 'buildings', 'source-layer': 'buildings', minzoom: 12,
+					filter: ['!', ['in', ['get', 'redcode'], ['literal', B.radios]]],
 					paint: {
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
 						'fill-extrusion-color': '#475569', 'fill-extrusion-opacity': 0.75
 					} });
-				map.addSource('edificios', { type: 'geojson', data: edif });
-				map.addLayer({ id: 'exp-3d', type: 'fill-extrusion', source: 'edificios', minzoom: 11,
-					paint: {
-						'fill-extrusion-height': ['+', ['get', 'h'], 0.4],
-						'fill-extrusion-color': '#e2e8f0', 'fill-extrusion-opacity': 0.95
-					} });
+				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios.pmtiles` });
+				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
+					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': '#cbd5e1', 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
 				map.addLayer({ id: 'puntos', type: 'circle', source: 'puntos', minzoom: 11,
 					paint: {
@@ -395,7 +415,7 @@
 					.setPopup(new maplibregl.Popup({ offset: 18 }).setText('Hidrómetro de El Soberbio (INA / Prefectura)'))
 					.addTo(map);
 
-				const tip = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 10, maxWidth: '320px', className: 'demo-tip' });
+				const tip = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 10, maxWidth: '340px', className: 'demo-tip' });
 				map.on('mousemove', (e: any) => {
 					if (lassoOn) { tip.remove(); return; }
 					const html = tooltipHtml(e);
@@ -403,13 +423,16 @@
 					else { tip.remove(); map.getCanvas().style.cursor = ''; }
 				});
 				map.on('mouseout', () => tip.remove());
+				// click on a building or on empty ground: highlight its census radio and open the radio card
 				map.on('click', (e: any) => {
 					if (lassoOn) { lassoPts = [...lassoPts, [e.lngLat.lng, e.lngLat.lat]]; return; }
-					const z = map.queryRenderedFeatures(e.point, { layers: ['zonas-fill'] })[0];
-					if (z) selected = z.properties;
+					const b = map.queryRenderedFeatures(e.point, { layers: ['eb-3d'] })[0];
+					const id = b?.properties.z ?? map.queryRenderedFeatures(e.point, { layers: ['radios-fill'] })[0]?.properties.id;
+					if (id && radioById.has(id)) selected = radioById.get(id).properties;
 				});
 				map.on('dblclick', (e: any) => { if (lassoOn) { e.preventDefault(); endLasso(true); } });
-				applyStage();
+				applyLayers();
+				paintWater();
 			});
 		})();
 		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && lassoOn) endLasso(false); };
@@ -453,8 +476,14 @@
 				<span class="big">{m(stage)}</span>
 				<span class="dim">en el hidrómetro de El Soberbio</span>
 			</div>
-			<input type="range" min={minStage} max={maxStage} step="0.5" value={stage}
-				oninput={(e) => setStage(+(e.currentTarget as HTMLInputElement).value)} aria-label="Altura del río" />
+			<div class="slider">
+				<input type="range" min={minStage} max={maxStage} step="0.5" value={stage}
+					oninput={(e) => setStage(+(e.currentTarget as HTMLInputElement).value)} aria-label="Altura del río" />
+				{#each SCEN as s}
+					{@const f = (tabla.escenarios[s.id].altura_m - minStage) / (maxStage - minStage)}
+					<span class="tick" style:left={`calc(${f * 100}% + ${8 - f * 16}px)`}>{s.id}</span>
+				{/each}
+			</div>
 			<div class="scen">
 				{#each SCEN as s}
 					{@const e = tabla.escenarios[s.id]}
@@ -464,6 +493,21 @@
 				{/each}
 			</div>
 
+			<!-- annual peaks 1980-2026 with the chosen height -->
+			<section class="peaks">
+				<svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-label="Picos anuales del hidrómetro">
+					{#each tabla.picos as p, i}
+						{@const w = 300 / tabla.picos.length}
+						{@const h = (p.altura / 30) * 56}
+						<rect x={i * w + 0.5} y={60 - h} width={Math.max(w - 1, 1)} height={h} fill={p.altura >= stage - 1e-6 ? '#38bdf8' : '#334155'}>
+							<title>{p.anio}: {m(p.altura)}</title>
+						</rect>
+					{/each}
+					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke="#f8fafc" stroke-width="1" stroke-dasharray="3 2" />
+				</svg>
+				<p class="dim">Picos anuales 1980-2026: el río superó {m(stage)} en <b class="w">{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
+			</section>
+
 			<div class="grid">
 				<div><b>{fmt(pasoActual.viviendas)}</b><span>viviendas bajo el agua</span></div>
 				<div><b>{approx(pasoActual.personas)}</b><span>personas</span></div>
@@ -472,34 +516,42 @@
 				<div><b>{fmt(pasoActual.viv_renabap)}</b><span>viviendas en barrios populares</span></div>
 				<div><b>{fmt(pasoActual.escuelas)}</b><span>escuelas bajo el agua</span></div>
 			</div>
+			{#if pasoMenos && pasoMas}
+				<p class="note">Si el terreno tuviera 1 m de error: entre {fmt(pasoMenos.viviendas)} y {fmt(pasoMas.viviendas)} viviendas. Quedan secas {pasoActual.escuelas_secas} escuelas del municipio que pueden servir de refugio.</p>
+			{/if}
 
 			{#if lassoRes}
 				<section class="ficha">
 					<button class="close" onclick={clearLasso} aria-label="Borrar área">×</button>
 					<h2>Área seleccionada</h2>
+					<p class="dim">{fmt(lassoRes.total.n)} construcciones · {fmt(lassoRes.total.viv)} viviendas · {approx(lassoRes.total.pers)} personas en total</p>
 					<table>
-						<thead><tr><th></th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
+						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
 						<tbody>
 							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'En barrio popular'], ['esc', 'Escuelas']] as [k, l]}
-								<tr><td>{l}</td>{#each lassoRes as r, i}<td class:cur={i === 0}>{k === 'pers' || k === 'ninos' || k === 'mayores' ? approx(r[k as keyof Lasso]) : fmt(r[k as keyof Lasso])}</td>{/each}</tr>
+								<tr><td>{l}</td>{#each lassoRes.out as r, i}<td class:cur={i === 0}>{k === 'pers' || k === 'ninos' || k === 'mayores' ? approx(r[k as keyof Lasso]) : fmt(r[k as keyof Lasso])}</td>{/each}</tr>
 							{/each}
 						</tbody>
 					</table>
-					<p class="dim">Edificios a menos de 500 m del agua del escenario 1983. Personas: reparto del censo por edificio, sólo sumado.</p>
 				</section>
 			{/if}
 
 			<section>
-				<h2>Qué se pinta en las zonas</h2>
-				<select bind:value={capa} aria-label="Capa de las zonas">
-					<option value="prioridad">Prioridad (agua × vulnerabilidad)</option>
+				<h2>Qué se pinta en el mapa</h2>
+				<select bind:value={capa} aria-label="Capa">
+					<option value="agua">Agua sobre cada construcción</option>
+					<option value="prioridad">Prioridad del radio (agua × vulnerabilidad)</option>
 					<option value="tipo">Tipo de vulnerabilidad de la vivienda</option>
-					<optgroup label="Censo 2022, contra el promedio de Misiones">
+					<optgroup label="Censo 2022 por radio, contra el promedio de Misiones">
 						{#each CENSO as c}<option value={c.id}>{c.label}</option>{/each}
 					</optgroup>
 				</select>
 				<div class="legend">
-					{#if capa === 'prioridad'}
+					{#if capa === 'agua'}
+						{#each BDEPTH as [d, c], i}<span><i style:background={c}></i>{i === 0 ? 'apenas alcanzada' : `≈ ${dec(d)} m de agua`}</span>{/each}
+						<span><i style:background="#cbd5e1"></i>Seca</span>
+						<span class="dim">Contorno de cada radio: su prioridad</span>
+					{:else if capa === 'prioridad'}
 						{#each PRIO as p}<span><i style:background={p.color}></i>{p.label}</span>{/each}
 					{:else if capa === 'tipo'}
 						{#each TIPOS as p}<span title={p.def}><i style:background={p.color}></i>{p.label}</span>{/each}
@@ -508,7 +560,7 @@
 						{#each RATIO as r}<span><i style:background={r.color}></i>{r.label}</span>{/each}
 					{/if}
 				</div>
-				{#if capa === 'tipo'}<p class="note">Tipología por zona censal: el censo no permite clasificar cada casa.</p>{/if}
+				<p class="note">{capa === 'agua' ? 'Cada construcción según cuánta agua tendría con esta altura.' : 'Cada construcción toma el valor de su radio censal: el censo no clasifica cada casa.'} Clic en una construcción: su radio y sus datos.</p>
 			</section>
 
 			{#if selected}
@@ -516,22 +568,25 @@
 				{@const tv = tipoOf(selected.tipo_vivienda)}
 				<section class="ficha">
 					<button class="close" onclick={() => (selected = null)} aria-label="Cerrar">×</button>
-					<h2>{selected.nombre}</h2>
+					<h2>Radio {selected.id} · {selected.nombre}</h2>
+					<p class="dim">{selected.tipo === 'rural' ? 'Rural' : 'Urbano'} · {dec(+selected.km2)} km² · {fmt(+selected.c_personas)} personas · {fmt(+selected.c_hogares)} hogares · {fmt(+selected.construcciones)} construcciones</p>
 					<p><i style:background={colorOf(selected.prioridad)}></i> <b>{PRIO.find((p) => p.id === selected?.prioridad)?.label}</b>
-						{#if s0 != null}· el agua llega a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980{/if}</p>
+						{#if s0 != null}· el agua llega a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980{:else}· el agua no llega a sus viviendas en los escenarios{/if}</p>
 					<p><i style:background={tv?.color}></i> <b>{tv?.label}</b>
-						{#if selected.rasgos && selected.rasgos !== 'consolidada' && String(selected.rasgos).includes(',')}
+						{#if String(selected.rasgos).includes(',')}
 							<span class="dim">· también: {String(selected.rasgos).split(',').filter((r) => r !== selected?.tipo_vivienda).map((r) => tipoOf(r)?.label.toLowerCase()).join(', ')}</span>
 						{/if}</p>
-					<table>
-						<thead><tr><th></th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
-						<tbody>
-							{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'En barrio popular']] as [k, l]}
-								<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
-							{/each}
-						</tbody>
-					</table>
-					<h2>Censo 2022 · {fmt(+selected.c_hogares)} hogares</h2>
+					{#if s0 != null}
+						<table>
+							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
+							<tbody>
+								{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'En barrio popular']] as [k, l]}
+									<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
+								{/each}
+							</tbody>
+						</table>
+					{/if}
+					<h2>Censo 2022</h2>
 					<div class="bars">
 						{#each CENSO as c}
 							{@const z = +selected[c.id]}
@@ -553,26 +608,25 @@
 				{#if alcanzadas.length === 0}<p class="dim">Con esta altura el agua no llega a viviendas.</p>{/if}
 				<ul class="umbrales">
 					{#each alcanzadas as u}
-						<li><button onclick={() => flyTo(u.microzona)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
+						<li><button onclick={() => flyToRadio(u.id)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
 					{/each}
 					{#each proximas as u}
-						<li class="next"><button onclick={() => flyTo(u.microzona)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
+						<li class="next"><button onclick={() => flyToRadio(u.id)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
 					{/each}
 				</ul>
-				<p class="note">Altura a partir de la cual el agua llega a las viviendas de cada zona: propuesta técnica de umbral de aviso, no umbral oficial.</p>
+				<p class="note">Altura a partir de la cual el agua llega a las viviendas de cada radio: propuesta técnica de umbral de aviso, no umbral oficial.</p>
 			</section>
 
 			<section class="legend">
-				{#each DEPTH as d}<span><i style:background={`rgba(${d.rgba.slice(0, 3).join(',')},0.95)`}></i>{d.label}</span>{/each}
-				<span><i style:background="#f97316"></i>Construcción bajo el agua</span>
-				<span><i style:background="#e2e8f0"></i>Construcción seca</span>
+				{#each DEPTH as d}<span><i style:background={`rgba(${d.rgba.slice(0, 3).join(',')},0.95)`}></i>Agua {d.label}</span>{/each}
 				<span><i class="dot"></i>Escuela o centro de salud</span>
 			</section>
 
 			<footer>
 				<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Crecida del Uruguay únicamente: no incluye lluvia ni arroyos.</p>
 				<p><b>Sin calibrar con marcas de crecida:</b> sirve para comparar zonas entre sí; las cifras son estimaciones. Con las marcas de crecida y los registros de evacuados de la provincia se ajusta a lo que ya pasó.</p>
-				<p class="src">Fuentes: hidrómetro INA (serie 1980-2026), FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, inventario del Mapa para la Gestión de la Emergencia. Población por edificio: reparto modelado, publicado sólo agregado.</p>
+				<p><b>Personas por construcción:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m², o etiquetadas como vivienda en OpenStreetMap).</p>
+				<p class="src">Fuentes: hidrómetro INA (serie 1980-2026), FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, inventario del Mapa para la Gestión de la Emergencia.</p>
 				<p class="credit">CONICET / FHyCS-UNaM · Spatia</p>
 			</footer>
 		{:else}
@@ -599,13 +653,19 @@
 	.stage { display: flex; align-items: baseline; gap: 8px; }
 	.big { white-space: nowrap; font-size: 34px; font-weight: 700; color: #38bdf8; font-variant-numeric: tabular-nums; }
 	.dim { color: #a3a3a3; }
-	input[type='range'] { width: 100%; accent-color: #38bdf8; }
+	.w { color: #fff; }
+	.slider { position: relative; padding-bottom: 14px; }
+	.slider input[type='range'] { width: 100%; accent-color: #38bdf8; margin: 0; }
+	.tick { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: #a3a3a3; }
+	.tick::before { content: ''; position: absolute; left: 50%; top: -6px; width: 1px; height: 5px; background: #64748b; }
 	select { width: 100%; padding: 6px 8px; border-radius: 8px; background: #111827; color: #fff; border: 1px solid #334155; font-size: 12.5px; }
 	.scen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 	.scen button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 7px 8px; border-radius: 8px;
 		background: rgba(255, 255, 255, 0.06); border: 1px solid #334155; color: #fff; cursor: pointer; text-align: left; }
 	.scen button span { color: #a3a3a3; font-size: 11px; }
 	.scen button.on { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+	.peaks svg { width: 100%; height: 64px; display: block; }
+	.peaks p { margin: 4px 0 0; font-size: 11.5px; }
 	.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 	.grid div { display: flex; flex-direction: column; padding: 8px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); }
 	.grid b { font-size: 20px; font-variant-numeric: tabular-nums; }
