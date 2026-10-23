@@ -114,6 +114,8 @@
 	let lassoPoly = $state<[number, number][] | null>(null);
 	let radios: any = null;
 	let radioById = new Map<string, any>();
+	// where water first reaches each listed radio: mean position of its first-reached buildings
+	let starPos = new Map<string, [number, number]>();
 	let puntos: any = null;
 	// buildings as flat arrays for the lasso
 	let B = { x: [] as number[], y: [] as number[], s: [] as (number | null)[], v: [] as number[], p: [] as number[],
@@ -138,6 +140,9 @@
 	const maxStage = $derived(tabla ? tabla.pasos[tabla.pasos.length - 1].altura : 28);
 	const alcanzadas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura <= stage + 1e-6) : []);
 	const proximas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura > stage + 1e-6).slice(0, 3) : []);
+	// numbered stars: the number is the position in the full threshold list, so it does not change with the slider
+	const numOf = $derived(new Map((tabla?.umbrales ?? []).map((u, i) => [u.id, i + 1])));
+	let starHover = $state('');
 	const aniosSobre = $derived(tabla ? tabla.picos.filter((p) => p.altura >= stage - 1e-6).length : 0);
 	const censoSel = $derived(CENSO.find((c) => c.id === capa));
 	const lassoRes = $derived.by(() => {
@@ -169,6 +174,36 @@
 		}
 		return { out, total };
 	});
+
+	const STAR = Array.from({ length: 10 }, (_, k) => {
+		const r = k % 2 ? 6.6 : 11.6, a = -Math.PI / 2 + (k * Math.PI) / 5;
+		return [12 + r * Math.cos(a), 12.8 + r * Math.sin(a)];
+	});
+	const STAR_PATH = 'M' + STAR.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join('L') + 'Z';
+	const starText = (c: string) => (c === '#ef4444' || c === '#64748b' ? '#fff' : '#0a0a0a');
+	function starImage(n: number, color: string) {
+		const S = 80, k = S / 24, cv = document.createElement('canvas');
+		cv.width = cv.height = S;
+		const g = cv.getContext('2d')!;
+		g.beginPath();
+		STAR.forEach(([x, y], i) => (i ? g.lineTo(x * k, y * k) : g.moveTo(x * k, y * k)));
+		g.closePath();
+		g.fillStyle = color; g.fill();
+		g.lineWidth = 3; g.strokeStyle = '#0a0a0a'; g.stroke();
+		g.fillStyle = starText(color);
+		g.font = `800 ${n > 9 ? 22 : 27}px sans-serif`;
+		g.textAlign = 'center'; g.textBaseline = 'middle';
+		g.fillText(String(n), 12 * k, 13.9 * k);
+		return g.getImageData(0, 0, S, S);
+	}
+	function starData() {
+		const feats = [...alcanzadas.map((u) => [u, false]), ...proximas.map((u) => [u, true])].flatMap(([u, next]: any) => {
+			const pos = starPos.get(u.id);
+			return pos ? [{ type: 'Feature', geometry: { type: 'Point', coordinates: pos },
+				properties: { id: u.id, n: numOf.get(u.id) ?? 0, next } }] : [];
+		});
+		return { type: 'FeatureCollection', features: feats };
+	}
 
 	const fmt = (n: number) => Math.round(n).toLocaleString('es-AR');
 	const approx = (n: number) => (n < 20 ? fmt(n) : '≈ ' + fmt(Math.round(n / 10) * 10));
@@ -264,6 +299,15 @@
 	$effect(() => { stage; capa; applyLayers(); });
 	$effect(() => { stage; paintWater(); });
 	$effect(() => {
+		const data = starData();
+		const src = map?.getSource('stars');
+		if (src) src.setData(data);
+	});
+	$effect(() => {
+		const h = starHover;
+		if (map?.getLayer('stars')) map.setLayoutProperty('stars', 'icon-size', ['case', ['==', ['get', 'id'], h], 1.45, 1]);
+	});
+	$effect(() => {
 		const id = selected?.id ?? '';
 		if (map?.getLayer('radio-sel')) map.setFilter('radio-sel', ['==', ['get', 'id'], id]);
 	});
@@ -353,6 +397,16 @@
 				]);
 				B = pts;
 				for (const f of radios.features) radioById.set(f.properties.id, f);
+				const zi = new Map(B.radios.map((id: string, i: number) => [id, i]));
+				for (const u of t.umbrales) {
+					const k = zi.get(u.id);
+					let sx = 0, sy = 0, n = 0;
+					for (let i = 0; i < B.x.length; i++) {
+						const s = B.s[i];
+						if (B.z[i] === k && s != null && s <= u.altura + 1e-6) { sx += B.x[i]; sy += B.y[i]; n++; }
+					}
+					if (n) starPos.set(u.id, [sx / n, sy / n]);
+				}
 				const img = new Image();
 				img.crossOrigin = 'anonymous';
 				img.src = `${base}/agua.png`;
@@ -414,6 +468,18 @@
 						'circle-color': '#f8fafc', 'circle-stroke-color': '#0a0a0a', 'circle-stroke-width': 1.5,
 						'circle-pitch-alignment': 'map'
 					} });
+				// numbered stars for "Dónde llega primero"
+				t.umbrales.forEach((u, i) => {
+					if (!map.hasImage(`star-${i + 1}`)) map.addImage(`star-${i + 1}`, starImage(i + 1, colorOf(u.prioridad)), { pixelRatio: 2 });
+				});
+				map.addSource('stars', { type: 'geojson', data: starData() });
+				map.addLayer({ id: 'stars', type: 'symbol', source: 'stars',
+					layout: {
+						'icon-image': ['concat', 'star-', ['to-string', ['get', 'n']]],
+						'icon-allow-overlap': true, 'icon-ignore-placement': true,
+						'symbol-sort-key': ['-', 0, ['get', 'n']]
+					},
+					paint: { 'icon-opacity': ['case', ['get', 'next'], 0.45, 1] } });
 				map.addSource('lasso', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', '$type', 'Polygon'],
 					paint: { 'fill-color': '#22d3ee', 'fill-opacity': 0.12 } });
@@ -613,10 +679,10 @@
 				{#if alcanzadas.length === 0}<p class="dim">Con esta altura el agua no llega a viviendas.</p>{/if}
 				<ul class="umbrales">
 					{#each alcanzadas as u}
-						<li><button onclick={() => flyToRadio(u.id)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
+						<li><button onclick={() => flyToRadio(u.id)} onmouseenter={() => (starHover = u.id)} onmouseleave={() => (starHover = '')}><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d={STAR_PATH} fill={colorOf(u.prioridad)} stroke="#0a0a0a" stroke-width="1.1" /><text x="12" y="13.9" text-anchor="middle" dominant-baseline="middle" font-size={(numOf.get(u.id) ?? 0) > 9 ? 7.6 : 9.2} font-weight="800" fill={starText(colorOf(u.prioridad))}>{numOf.get(u.id)}</text></svg><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
 					{/each}
 					{#each proximas as u}
-						<li class="next"><button onclick={() => flyToRadio(u.id)}><i style:background={colorOf(u.prioridad)}></i><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
+						<li class="next"><button onclick={() => flyToRadio(u.id)} onmouseenter={() => (starHover = u.id)} onmouseleave={() => (starHover = '')}><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d={STAR_PATH} fill={colorOf(u.prioridad)} stroke="#0a0a0a" stroke-width="1.1" /><text x="12" y="13.9" text-anchor="middle" dominant-baseline="middle" font-size={(numOf.get(u.id) ?? 0) > 9 ? 7.6 : 9.2} font-weight="800" fill={starText(colorOf(u.prioridad))}>{numOf.get(u.id)}</text></svg><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
 					{/each}
 				</ul>
 				<p class="note">Altura a partir de la cual el agua llega a las viviendas de cada radio: propuesta técnica de umbral de aviso, no umbral oficial.</p>
@@ -682,6 +748,8 @@
 		color: #fff; cursor: pointer; text-align: left; font-size: 12.5px; }
 	.umbrales button:hover { background: rgba(255, 255, 255, 0.05); }
 	.umbrales .next button { color: #a3a3a3; }
+	.umbrales .star { width: 26px; height: 26px; flex: none; }
+	.umbrales .next .star { opacity: 0.55; }
 	.umbrales .h { width: 48px; flex: none; font-variant-numeric: tabular-nums; }
 	i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
 	i.dot { border-radius: 50%; background: #f8fafc; border: 1px solid #0a0a0a; }
