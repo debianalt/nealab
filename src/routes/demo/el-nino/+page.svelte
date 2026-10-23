@@ -18,8 +18,8 @@
 	import { pointInPolygon } from '$lib/utils/geometry';
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
-	const TOWN_WIDE = { center: [-54.2035, -27.2965] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
-	const TOWN_NARROW = { center: [-54.1995, -27.2975] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
+	const TOWN_WIDE = { center: [-54.2025, -27.2995] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
+	const TOWN_NARROW = { center: [-54.1995, -27.3005] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
 	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
 	// phones get a wider town view so the river stays in frame
 	const town = () => (typeof window !== 'undefined' && window.innerWidth < 760 ? TOWN_NARROW : TOWN_WIDE);
@@ -73,24 +73,9 @@
 	})();
 	const WLUT_N = WLUT.length / 4;
 	const WGRAD = `linear-gradient(to right, ${WSTOPS.map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS.length - 1)) * 100}%`).join(', ')})`;
-	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#7f1d1d']];
+	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#991b1b']];
+	const DRY = '#4b5563';
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
-	// press reports with a river level at El Soberbio and what happened (relevamiento 23-oct-2026;
-	// levels as printed, read on the local/Prefectura gauge, which runs 0.5-2 m above the INA series)
-	const PRENSA = [
-		{ fecha: '31/5/2017', h: 12.9, hecho: 'Chivilcoy y Maracaná: 15 familias evacuadas', fuente: 'El Territorio',
-			url: 'https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay' },
-		{ fecha: '30/6/2025', h: 13.1, hecho: 'Cota oficial de evacuación: 13 m; Maracaná, Chivilcoy y Unión', fuente: 'Canal 12',
-			url: 'https://www.canal12misiones.com/?p=530388' },
-		{ fecha: '18/10/2023', h: 16.1, hecho: '85 familias evacuadas en Chivilcoy y Unión', fuente: 'La Voz de Misiones',
-			url: 'https://lavozdemisiones.com/provinciales/evacuan-a-mas-dee-100-familias-de-el-soberbio-por-crecida-del-rio-uruguay' },
-		{ fecha: '26/6/2014', h: 18, hecho: 'Más de 50 casas bajo agua en barrio Unión', fuente: 'El Territorio (copia en blog)',
-			url: 'https://noqueremosinundarnos.blogspot.com/2014/06/en-el-soberbio-hay-400-personas.html' },
-		{ fecha: '18/11/2023', h: 19.75, hecho: 'Más de 200 familias evacuadas; el polideportivo se inunda', fuente: 'Misiones Online',
-			url: 'https://misionesonline.net/2023/11/17/alrededor-de-250-familias-de-seran-evacuadas-en-el-soberbio/' },
-		{ fecha: '27/6/2014', h: 22.6, hecho: '250 a 350 casas bajo agua: Unión, Maracaná, Chivilcoy, Santa María, Galiano', fuente: 'El Territorio (copia en blog)',
-			url: 'https://fmguarani.blogspot.com/2014/06/en-el-soberbio-el-rio-uruguay-supera.html' }
-	];
 	const SCEN = [
 		{ id: '2015', label: 'Como 2015' },
 		{ id: '2023', label: 'Como 2023' },
@@ -155,7 +140,9 @@
 	const minStage = $derived(tabla ? tabla.pasos[0].altura : 2.5);
 	const maxStage = $derived(tabla ? tabla.pasos[tabla.pasos.length - 1].altura : 28);
 	const alcanzadas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura <= stage + 1e-6) : []);
-	const proximas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura > stage + 1e-6).slice(0, 3) : []);
+	const proximas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura > stage + 1e-6).slice(0, 2) : []);
+	// map view: water (default), priority, housing type, or one census variable
+	const tab = $derived(capa === 'agua' || capa === 'prioridad' || capa === 'tipo' ? capa : 'censo');
 	// numbered stars: the number is the position in the full threshold list, so it does not change with the slider
 	const numOf = $derived(new Map((tabla?.umbrales ?? []).map((u, i) => [u.id, i + 1])));
 	let starHover = $state('');
@@ -213,10 +200,10 @@
 		return g.getImageData(0, 0, S, S);
 	}
 	function starData() {
-		const feats = [...alcanzadas.map((u) => [u, false]), ...proximas.map((u) => [u, true])].flatMap(([u, next]: any) => {
+		const feats = alcanzadas.flatMap((u) => {
 			const pos = starPos.get(u.id);
 			return pos ? [{ type: 'Feature', geometry: { type: 'Point', coordinates: pos },
-				properties: { id: u.id, n: numOf.get(u.id) ?? 0, next } }] : [];
+				properties: { id: u.id, n: numOf.get(u.id) ?? 0 } }] : [];
 		});
 		return { type: 'FeatureCollection', features: feats };
 	}
@@ -294,7 +281,7 @@
 		const st = stage + 1e-6;
 		const flooded = ['all', ['>=', ['get', 's'], 0], ['<=', ['get', 's'], st]];
 		const depthRamp = ['interpolate', ['linear'], ['-', st, ['get', 's']], ...BDEPTH.flat()];
-		if (capa === 'agua') return ['case', flooded, depthRamp, '#cbd5e1'];
+		if (capa === 'agua') return ['case', flooded, depthRamp, DRY];
 		return ['match', ['get', 'z'], ...colorPairs(), '#64748b'];
 	}
 
@@ -303,13 +290,16 @@
 		const st = stage + 1e-6;
 		const reached = ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st];
 		const col = ['match', ['get', 'id'], ...colorPairs(), '#64748b'];
+		const water = capa === 'agua';
 		map.setPaintProperty('radios-fill', 'fill-color', col);
-		map.setPaintProperty('radios-fill', 'fill-opacity', capa === 'agua' ? 0 : ['case', reached, 0.2, 0.08]);
-		map.setPaintProperty('radios-line', 'line-color', col);
-		map.setPaintProperty('radios-line', 'line-width', ['case', reached, 2.2, 0.8]);
+		map.setPaintProperty('radios-fill', 'fill-opacity', water ? 0 : 0.16);
+		map.setPaintProperty('radios-line', 'line-color', '#e2e8f0');
+		map.setPaintProperty('radios-line', 'line-opacity', water ? ['case', reached, 0.6, 0] : 0.28);
+		map.setPaintProperty('radios-line', 'line-width', water ? 1.3 : 0.8);
+		map.setPaintProperty('radios-line', 'line-dasharray', water ? [2, 2] : [1, 0]);
 		map.setPaintProperty('eb-3d', 'fill-extrusion-color', buildingColor());
-		map.setPaintProperty('puntos', 'circle-color',
-			['case', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st], '#ef4444', '#f8fafc']);
+		// schools and health centres only when they end up under water
+		map.setFilter('puntos', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st]);
 	}
 
 	$effect(() => { stage; capa; applyLayers(); });
@@ -321,10 +311,10 @@
 	});
 	$effect(() => {
 		const h = starHover;
-		if (map?.getLayer('stars')) map.setLayoutProperty('stars', 'icon-size', ['case', ['==', ['get', 'id'], h], 1.45, 1]);
+		if (map?.getLayer('stars')) map.setLayoutProperty('stars', 'icon-size', ['case', ['==', ['get', 'id'], h], 1.2, 0.85]);
 	});
 	$effect(() => {
-		const id = selected?.id ?? '';
+		const id = selected?.id ?? starHover ?? '';
 		if (map?.getLayer('radio-sel')) map.setFilter('radio-sel', ['==', ['get', 'id'], id]);
 	});
 	$effect(() => {
@@ -463,25 +453,25 @@
 				map.addSource('agua', { type: 'canvas', canvas: wc, coordinates: t.raster.esquinas, animate: false });
 				map.addLayer({ id: 'agua', type: 'raster', source: 'agua',
 					paint: { 'raster-resampling': 'linear', 'raster-opacity': 0.9, 'raster-fade-duration': 0 } }, firstSymbol);
-				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': '#64748b', 'line-width': 1 } });
+				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': '#e2e8f0', 'line-width': 1, 'line-opacity': 0 } });
 				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], ''],
-					paint: { 'line-color': '#22d3ee', 'line-width': 4.5 } });
+					paint: { 'line-color': '#22d3ee', 'line-width': 3 } });
 				// context: the site's building tiles outside the municipality only
 				map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
 				map.addLayer({ id: 'ctx-3d', type: 'fill-extrusion', source: 'buildings', 'source-layer': 'buildings', minzoom: 12,
 					filter: ['!', ['in', ['get', 'redcode'], ['literal', B.radios]]],
 					paint: {
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
-						'fill-extrusion-color': '#475569', 'fill-extrusion-opacity': 0.75
+						'fill-extrusion-color': '#2b313b', 'fill-extrusion-opacity': 0.8
 					} });
 				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
-					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': '#cbd5e1', 'fill-extrusion-opacity': 0.95 } });
+					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': DRY, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
 				map.addLayer({ id: 'puntos', type: 'circle', source: 'puntos', minzoom: 11,
 					paint: {
-						'circle-radius': ['interpolate', ['linear'], ['zoom'], 11, 3, 16, 7],
-						'circle-color': '#f8fafc', 'circle-stroke-color': '#0a0a0a', 'circle-stroke-width': 1.5,
+						'circle-radius': ['interpolate', ['linear'], ['zoom'], 11, 3.5, 16, 7],
+						'circle-color': '#ef4444', 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 1.5,
 						'circle-pitch-alignment': 'map'
 					} });
 				// numbered stars for "Dónde llega primero"
@@ -492,10 +482,9 @@
 				map.addLayer({ id: 'stars', type: 'symbol', source: 'stars',
 					layout: {
 						'icon-image': ['concat', 'star-', ['to-string', ['get', 'n']]],
-						'icon-allow-overlap': true, 'icon-ignore-placement': true,
+						'icon-allow-overlap': true, 'icon-ignore-placement': true, 'icon-size': 0.85,
 						'symbol-sort-key': ['-', 0, ['get', 'n']]
-					},
-					paint: { 'icon-opacity': ['case', ['get', 'next'], 0.45, 1] } });
+					} });
 				map.addSource('lasso', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', '$type', 'Polygon'],
 					paint: { 'fill-color': '#22d3ee', 'fill-opacity': 0.12 } });
@@ -537,85 +526,69 @@
 	<div class="mapwrap">
 		<div class="map" bind:this={container}></div>
 		<div class="tools">
-			<button onclick={() => view(town())}>El pueblo en 3D</button>
-			<button onclick={() => view(MUNI)}>Todo el municipio</button>
+			<button onclick={() => view(town())}>Pueblo 3D</button>
+			<button onclick={() => view(MUNI)}>Municipio</button>
 			{#if lassoOn}
-				<button class="on" onclick={() => endLasso(true)}>Cerrar área ({lassoPts.length} puntos)</button>
+				<button class="on" onclick={() => endLasso(true)}>Cerrar área · {lassoPts.length}</button>
 			{:else}
-				<button onclick={startLasso}>Seleccionar un área</button>
+				<button onclick={startLasso}>Medir un área</button>
 			{/if}
 		</div>
 		{#if lassoOn}
-			<div class="hint">Hacé clic para marcar los vértices; doble clic para cerrar; Esc para cancelar.</div>
+			<div class="hint">Clic para marcar los vértices · doble clic para cerrar · Esc para cancelar</div>
 		{/if}
 	</div>
 
 	<aside class="panel">
 		<header>
-			<p class="kicker">El Niño 2026-2027 · Escenarios de impacto social</p>
-			<h1>El Soberbio: si el Uruguay llega a…</h1>
+			<p class="kicker">Río Uruguay · El Soberbio · El Niño 2026-27</p>
+			<h1>Si el río llega a…</h1>
 		</header>
 
 		{#if error}
 			<p class="warn">{error}</p>
 		{:else if tabla && pasoActual}
-			<div class="stage">
-				<span class="big">{m(stage)}</span>
-				<span class="dim">en el hidrómetro de El Soberbio</span>
-			</div>
-			<div class="slider">
-				<input type="range" min={minStage} max={maxStage} step="0.5" value={stage}
-					oninput={(e) => setStage(+(e.currentTarget as HTMLInputElement).value)} aria-label="Altura del río" />
-				{#each SCEN as s}
-					{@const f = (tabla.escenarios[s.id].altura_m - minStage) / (maxStage - minStage)}
-					<span class="tick" style:left={`calc(${f * 100}% + ${8 - f * 16}px)`}>{s.id}</span>
-				{/each}
-			</div>
-			<div class="scen">
-				{#each SCEN as s}
-					{@const e = tabla.escenarios[s.id]}
-					<button class:on={Math.abs(stage - e.altura_m) < 0.01} onclick={() => setStage(e.altura_m, true)} title={`Pico del ${fecha(e.fecha)}`}>
-						<b>{s.label}</b><span>{m(e.altura_m)}{s.note ? ` · ${s.note}` : ''}</span>
-					</button>
-				{/each}
-			</div>
-
-			<!-- annual peaks 1980-2026 with the chosen height -->
-			<section class="peaks">
-				<svg viewBox="0 0 300 64" preserveAspectRatio="none" aria-label="Picos anuales del hidrómetro">
-					{#each tabla.picos as p, i}
-						{@const w = 300 / tabla.picos.length}
-						{@const h = (p.altura / 30) * 56}
-						<rect x={i * w + 0.5} y={60 - h} width={Math.max(w - 1, 1)} height={h} fill={p.altura >= stage - 1e-6 ? '#38bdf8' : '#334155'}>
-							<title>{p.anio}: {m(p.altura)}</title>
-						</rect>
+			<section class="control">
+				<div class="stage"><span class="big">{m(stage)}</span><span class="dim">en el hidrómetro de El Soberbio</span></div>
+				<div class="slider">
+					<input type="range" min={minStage} max={maxStage} step="0.5" value={stage}
+						oninput={(e) => setStage(+(e.currentTarget as HTMLInputElement).value)} aria-label="Altura del río" />
+					{#each SCEN as s}
+						{@const f = (tabla.escenarios[s.id].altura_m - minStage) / (maxStage - minStage)}
+						<span class="tick" style:left={`calc(${f * 100}% + ${8 - f * 16}px)`}></span>
 					{/each}
-					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke="#f8fafc" stroke-width="1" stroke-dasharray="3 2" />
-				</svg>
-				<p class="dim">Picos anuales 1980-2026: el río superó {m(stage)} en <b class="w">{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
+				</div>
+				<div class="scen">
+					{#each SCEN as s}
+						{@const e = tabla.escenarios[s.id]}
+						<button class:on={Math.abs(stage - e.altura_m) < 0.01} onclick={() => setStage(e.altura_m, true)} title={`Pico del ${fecha(e.fecha)}`}>
+							<b>{s.label}</b><span>{m(e.altura_m)}{s.note ? ` · ${s.note}` : ''}</span>
+						</button>
+					{/each}
+				</div>
 			</section>
 
-			<div class="grid">
-				<div><b>{fmt(pasoActual.viviendas)}</b><span>viviendas bajo el agua</span></div>
-				<div><b>{approx(pasoActual.personas)}</b><span>personas</span></div>
-				<div><b>{approx(pasoActual.ninos)}</b><span>niños de 0 a 5 años</span></div>
-				<div><b>{approx(pasoActual.mayores)}</b><span>mayores de 65</span></div>
-				<div><b>{fmt(pasoActual.viv_renabap)}</b><span>viviendas en barrios populares</span></div>
-				<div><b>{fmt(pasoActual.escuelas)}</b><span>escuelas bajo el agua</span></div>
-			</div>
-			{#if pasoMenos && pasoMas}
-				<p class="note">Si el terreno tuviera 1 m de error: entre {fmt(pasoMenos.viviendas)} y {fmt(pasoMas.viviendas)} viviendas. Quedan secas {pasoActual.escuelas_secas} escuelas del municipio que pueden servir de refugio.</p>
-			{/if}
+			<section class="impact">
+				{#if pasoActual.viviendas < 1}
+					<p class="lead">A esta altura el agua no llega a viviendas.</p>
+				{:else}
+					<p class="lead"><b>{fmt(pasoActual.viviendas)} viviendas</b> y <b>{approx(pasoActual.personas)} personas</b> quedarían bajo el agua, entre ellas {approx(pasoActual.ninos)} niños de 0 a 5 años y {approx(pasoActual.mayores)} mayores de 65.</p>
+				{/if}
+				<p class="sub">
+					{fmt(pasoActual.viv_renabap)} en barrios populares · {pasoActual.escuelas} {pasoActual.escuelas === 1 ? 'escuela' : 'escuelas'} bajo el agua, {pasoActual.escuelas_secas} secas para refugio
+					{#if pasoMenos && pasoMas}· con ±1 m de error del terreno, entre {fmt(pasoMenos.viviendas)} y {fmt(pasoMas.viviendas)} viviendas{/if}
+				</p>
+			</section>
 
 			{#if lassoRes}
-				<section class="ficha">
+				<section class="card">
 					<button class="close" onclick={clearLasso} aria-label="Borrar área">×</button>
-					<h2>Área seleccionada</h2>
-					<p class="dim">{fmt(lassoRes.total.n)} construcciones · {fmt(lassoRes.total.viv)} viviendas · {approx(lassoRes.total.pers)} personas en total</p>
+					<h2>Área medida</h2>
+					<p class="sub">{fmt(lassoRes.total.n)} construcciones · {fmt(lassoRes.total.viv)} viviendas · {approx(lassoRes.total.pers)} personas</p>
 					<table>
 						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
 						<tbody>
-							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'En barrio popular'], ['esc', 'Escuelas']] as [k, l]}
+							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'Barrio popular'], ['esc', 'Escuelas']] as [k, l]}
 								<tr><td>{l}</td>{#each lassoRes.out as r, i}<td class:cur={i === 0}>{k === 'pers' || k === 'ninos' || k === 'mayores' ? approx(r[k as keyof Lasso]) : fmt(r[k as keyof Lasso])}</td>{/each}</tr>
 							{/each}
 						</tbody>
@@ -624,56 +597,76 @@
 			{/if}
 
 			<section>
-				<h2>Qué se pinta en el mapa</h2>
-				<select bind:value={capa} aria-label="Capa">
-					<option value="agua">Agua sobre cada construcción</option>
-					<option value="prioridad">Prioridad del radio (agua × vulnerabilidad)</option>
-					<option value="tipo">Tipo de vulnerabilidad de la vivienda</option>
-					<optgroup label="Censo 2022 por radio, contra el promedio de Misiones">
+				<h2>Dónde llega primero</h2>
+				<ul class="umbrales">
+					{#each alcanzadas as u}
+						<li><button onclick={() => flyToRadio(u.id)} onmouseenter={() => (starHover = u.id)} onmouseleave={() => (starHover = '')}>
+							<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d={STAR_PATH} fill={colorOf(u.prioridad)} stroke="#0a0a0a" stroke-width="1.1" /><text x="12" y="13.9" text-anchor="middle" dominant-baseline="middle" font-size={(numOf.get(u.id) ?? 0) > 9 ? 7.6 : 9.2} font-weight="800" fill={starText(colorOf(u.prioridad))}>{numOf.get(u.id)}</text></svg>
+							<span class="nm">{u.microzona}</span><span class="h">{m(u.altura)}</span>
+						</button></li>
+					{/each}
+					{#each proximas as u}
+						<li class="next"><button onclick={() => flyToRadio(u.id)}>
+							<span class="dot-next"></span><span class="nm">{u.microzona}</span><span class="h">{m(u.altura)}</span>
+						</button></li>
+					{/each}
+				</ul>
+				{#if alcanzadas.length === 0}<p class="sub">Todavía no llega a ningún barrio.</p>{/if}
+				<p class="note">Altura desde la que el agua entra a las viviendas de cada radio censal: propuesta de umbral de aviso, no oficial.</p>
+			</section>
+
+			<section>
+				<h2>Ver en el mapa</h2>
+				<div class="tabs" role="tablist">
+					{#each [['agua', 'Agua'], ['prioridad', 'Prioridad'], ['tipo', 'Vivienda'], ['censo', 'Censo']] as [k, l]}
+						<button role="tab" aria-selected={tab === k} class:on={tab === k} onclick={() => (capa = k === 'censo' ? (tab === 'censo' ? capa : 'c_nbi') : k)}>{l}</button>
+					{/each}
+				</div>
+				{#if tab === 'censo'}
+					<select bind:value={capa} aria-label="Variable del censo">
 						{#each CENSO as c}<option value={c.id}>{c.label}</option>{/each}
-					</optgroup>
-				</select>
+					</select>
+				{/if}
 				<div class="legend">
-					{#if capa === 'agua'}
-						{#each BDEPTH as [d, c], i}<span><i style:background={c}></i>{i === 0 ? 'apenas alcanzada' : `≈ ${dec(d)} m de agua`}</span>{/each}
-						<span><i style:background="#cbd5e1"></i>Seca</span>
-						<span class="dim">Contorno de cada radio: su prioridad</span>
-					{:else if capa === 'prioridad'}
-						{#each PRIO as p}<span><i style:background={p.color}></i>{p.label}</span>{/each}
-					{:else if capa === 'tipo'}
-						{#each TIPOS as p}<span title={p.def}><i style:background={p.color}></i>{p.label}</span>{/each}
+					{#if tab === 'agua'}
+						<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
+						<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
+						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
+					{:else if tab === 'prioridad'}
+						<div class="keys">{#each PRIO as p}<span><i style:background={p.color}></i>{p.label}</span>{/each}</div>
+						<p class="note">Combina cuán pronto llega el agua con cuántas privaciones tiene el radio.</p>
+					{:else if tab === 'tipo'}
+						<div class="keys">{#each TIPOS as p}<span title={p.def}><i style:background={p.color}></i>{p.label}</span>{/each}</div>
+						<p class="note">Tipo de vulnerabilidad de la vivienda por radio censal (censo 2022, contra el promedio de Misiones).</p>
 					{:else if censoSel}
-						<span class="dim">Misiones: {pct(tabla.provincia[censoSel.prov])} de los {censoSel.id === 'c_dep' ? 'habitantes' : 'hogares'}</span>
-						{#each RATIO as r}<span><i style:background={r.color}></i>{r.label}</span>{/each}
+						<div class="keys">{#each RATIO as r}<span><i style:background={r.color}></i>{r.label}</span>{/each}</div>
+						<p class="note">Misiones: {pct(tabla.provincia[censoSel.prov])} de los {censoSel.id === 'c_dep' ? 'habitantes' : 'hogares'}. Cada casa toma el valor de su radio.</p>
 					{/if}
 				</div>
-				<p class="note">{capa === 'agua' ? 'Cada construcción según cuánta agua tendría con esta altura.' : 'Cada construcción toma el valor de su radio censal: el censo no clasifica cada casa.'} Clic en una construcción: su radio y sus datos.</p>
 			</section>
 
 			{#if selected}
 				{@const s0 = num(selected.primer_impacto)}
 				{@const tv = tipoOf(selected.tipo_vivienda)}
-				<section class="ficha">
+				<section class="card">
 					<button class="close" onclick={() => (selected = null)} aria-label="Cerrar">×</button>
-					<h2>Radio {selected.id} · {selected.nombre}</h2>
-					<p class="dim">{selected.tipo === 'rural' ? 'Rural' : 'Urbano'} · {dec(+selected.km2)} km² · {fmt(+selected.c_personas)} personas · {fmt(+selected.c_hogares)} hogares · {fmt(+selected.construcciones)} construcciones</p>
-					<p><i style:background={colorOf(selected.prioridad)}></i> <b>{PRIO.find((p) => p.id === selected?.prioridad)?.label}</b>
-						{#if s0 != null}· el agua llega a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980{:else}· el agua no llega a sus viviendas en los escenarios{/if}</p>
-					<p><i style:background={tv?.color}></i> <b>{tv?.label}</b>
-						{#if String(selected.rasgos).includes(',')}
-							<span class="dim">· también: {String(selected.rasgos).split(',').filter((r) => r !== selected?.tipo_vivienda).map((r) => tipoOf(r)?.label.toLowerCase()).join(', ')}</span>
-						{/if}</p>
+					<h2>{selected.nombre}</h2>
+					<p class="sub">Radio censal {selected.id} · {selected.tipo === 'rural' ? 'rural' : 'urbano'} · {fmt(+selected.c_personas)} personas · {fmt(+selected.c_hogares)} hogares</p>
+					<p class="tags">
+						<span><i style:background={colorOf(selected.prioridad)}></i>{PRIO.find((p) => p.id === selected?.prioridad)?.label}</span>
+						<span><i style:background={tv?.color}></i>{tv?.label}</span>
+					</p>
+					<p>{#if s0 != null}El agua entra a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980.{:else}El agua no llega a sus viviendas en los escenarios.{/if}</p>
 					{#if s0 != null}
 						<table>
 							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
 							<tbody>
-								{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'En barrio popular']] as [k, l]}
+								{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'Barrio popular']] as [k, l]}
 									<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
 								{/each}
 							</tbody>
 						</table>
 					{/if}
-					<h2>Censo 2022</h2>
 					<div class="bars">
 						{#each CENSO as c}
 							{@const z = +selected[c.id]}
@@ -681,61 +674,40 @@
 							<!-- fixed scale: the provincial average sits at the middle, the end of the track is twice it -->
 							<div class="bar">
 								<span class="bl">{c.label}</span>
-								<span class="track"><span class="z" class:hi={z > pr} style:width={`${Math.min(z / (2 * pr), 1) * 100}%`}></span><span class="pv" style:left="50%"></span></span>
+								<span class="track"><span class="z" class:hi={z > pr} style:width={`${Math.min(z / (2 * pr), 1) * 100}%`}></span><span class="pv"></span></span>
 								<span class="bv">{pct(z)}</span>
 							</div>
 						{/each}
 					</div>
-					<p class="dim">La marca blanca es el promedio de Misiones; la barra llena, el doble. Vulnerable en {selected.privaciones} de 4 dimensiones{#if +selected.privaciones > 0}: {DIMS.filter(([k]) => +selected?.[k] === 1).map(([, l]) => l).join('; ')}{/if}.</p>
+					<p class="note">Censo 2022. La marca blanca es el promedio de Misiones; la barra llena, el doble.</p>
 				</section>
 			{/if}
 
-			<section>
-				<h2>Dónde llega primero</h2>
-				{#if alcanzadas.length === 0}<p class="dim">Con esta altura el agua no llega a viviendas.</p>{/if}
-				<ul class="umbrales">
-					{#each alcanzadas as u}
-						<li><button onclick={() => flyToRadio(u.id)} onmouseenter={() => (starHover = u.id)} onmouseleave={() => (starHover = '')}><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d={STAR_PATH} fill={colorOf(u.prioridad)} stroke="#0a0a0a" stroke-width="1.1" /><text x="12" y="13.9" text-anchor="middle" dominant-baseline="middle" font-size={(numOf.get(u.id) ?? 0) > 9 ? 7.6 : 9.2} font-weight="800" fill={starText(colorOf(u.prioridad))}>{numOf.get(u.id)}</text></svg><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
+			<details>
+				<summary>El río desde 1980</summary>
+				<svg class="peaks" viewBox="0 0 300 64" preserveAspectRatio="none" aria-label="Picos anuales del hidrómetro">
+					{#each tabla.picos as p, i}
+						{@const w = 300 / tabla.picos.length}
+						{@const h = (p.altura / 30) * 56}
+						<rect x={i * w + 0.5} y={60 - h} width={Math.max(w - 1, 1)} height={h} fill={p.altura >= stage - 1e-6 ? '#38bdf8' : '#334155'}><title>{p.anio}: {m(p.altura)}</title></rect>
 					{/each}
-					{#each proximas as u}
-						<li class="next"><button onclick={() => flyToRadio(u.id)} onmouseenter={() => (starHover = u.id)} onmouseleave={() => (starHover = '')}><svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d={STAR_PATH} fill={colorOf(u.prioridad)} stroke="#0a0a0a" stroke-width="1.1" /><text x="12" y="13.9" text-anchor="middle" dominant-baseline="middle" font-size={(numOf.get(u.id) ?? 0) > 9 ? 7.6 : 9.2} font-weight="800" fill={starText(colorOf(u.prioridad))}>{numOf.get(u.id)}</text></svg><span class="h">{m(u.altura)}</span><span>{u.microzona}</span></button></li>
-					{/each}
-				</ul>
-				<p class="note">Altura a partir de la cual el agua llega a las viviendas de cada radio: propuesta técnica de umbral de aviso, no umbral oficial.</p>
-			</section>
+					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke="#f8fafc" stroke-width="1" stroke-dasharray="3 2" />
+				</svg>
+				<p class="sub">Picos anuales del hidrómetro: el río superó {m(stage)} en <b>{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
+			</details>
 
-			<section>
-				<h2>Lo que registró la prensa</h2>
-				<ul class="prensa">
-					{#each PRENSA as r}
-						{@const d = pasoAt(r.h)}
-						<li>
-							<button onclick={() => setStage(r.h, true)} class:on={Math.abs(stage - r.h) < 0.01}>
-								<span class="h">{r.h.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} m</span>
-								<span class="t"><b>{r.fecha}</b> · {r.hecho}<br /><span class="dim">La demo a esa altura: {fmt(d?.viviendas ?? 0)} viviendas bajo el agua</span></span>
-							</button>
-							<a href={r.url} target="_blank" rel="noopener noreferrer" title={r.fuente}>{r.fuente}</a>
-						</li>
-					{/each}
-				</ul>
-				<p class="note">Coincide qué barrios se inundan primero. Entre 12 y 14 m el agua ya entra a casas de Maracaná y Chivilcoy, y la demo lo marca recién desde 15 m: el terreno satelital deja la costa algo más alta de lo que es. Las marcas de crecida de la provincia corrigen esto. Las alturas de la prensa son las de Prefectura o la escala local, que en las crecidas recientes dan entre 0,5 y 2 m más que la serie del INA que usa la demo.</p>
-			</section>
+			<details>
+				<summary>Cómo leer esta demo</summary>
+				<div class="fine">
+					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Sólo crecida del Uruguay: no incluye lluvia ni arroyos.</p>
+					<p><b>Sin calibrar con marcas de crecida:</b> compara zonas entre sí; las cifras son estimaciones.</p>
+					<p><b>Hidrómetro:</b> alturas del INA (serie diaria 1980-2026).</p>
+					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
+					<p><b>Fuentes:</b> INA, FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
+				</div>
+			</details>
 
-			<section>
-				<h2>Profundidad del agua sobre el terreno</h2>
-				<div class="wbar" style:background={WGRAD}></div>
-				<div class="wticks">{#each WSTOPS as [d], i}<span style:left={`${(i / (WSTOPS.length - 1)) * 100}%`}>{i === WSTOPS.length - 1 ? '10+ m' : `${dec(d).replace(',0', '')} m`}</span>{/each}</div>
-				<div class="legend"><span><i class="dot"></i>Escuela o centro de salud (roja si queda bajo el agua)</span></div>
-			</section>
-
-			<footer>
-				<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Crecida del Uruguay únicamente: no incluye lluvia ni arroyos.</p>
-				<p><b>Sin calibrar con marcas de crecida:</b> sirve para comparar zonas entre sí; las cifras son estimaciones. Con las marcas de crecida y los registros de evacuados de la provincia se ajusta a lo que ya pasó.</p>
-				<p><b>Personas por construcción:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m², o etiquetadas como vivienda en OpenStreetMap).</p>
-				<p><b>Hidrómetro:</b> las alturas son las del INA (serie diaria); Prefectura y la prensa dan entre 0,5 y 2 m más en las crecidas recientes.</p>
-				<p class="src">Fuentes: hidrómetro INA (serie 1980-2026), FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, inventario del Mapa para la Gestión de la Emergencia.</p>
-				<p class="credit">CONICET / FHyCS-UNaM · Spatia</p>
-			</footer>
+			<footer>CONICET / FHyCS-UNaM · Spatia</footer>
 		{:else}
 			<p class="dim">Cargando…</p>
 		{/if}
@@ -743,94 +715,111 @@
 </div>
 
 <style>
-	.demo { position: fixed; inset: 0; display: flex; background: #0a0a0a; color: #fff; font-size: 13px; }
+	.demo { position: fixed; inset: 0; display: flex; background: #0b0d12; color: #e5e7eb; font-size: 13.5px;
+		font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
 	.mapwrap { flex: 1; min-width: 0; position: relative; }
 	.map { position: absolute; inset: 0; }
-	.tools { position: absolute; top: 10px; left: 50px; display: flex; flex-wrap: wrap; gap: 6px; z-index: 2; }
-	.tools button { padding: 6px 10px; border-radius: 8px; background: rgba(10, 12, 18, 0.88); border: 1px solid #334155;
-		color: #fff; cursor: pointer; font-size: 12px; }
+	.tools { position: absolute; top: 12px; left: 52px; display: flex; gap: 4px; z-index: 2; }
+	.tools button { padding: 5px 10px; border-radius: 999px; background: rgba(11, 13, 18, 0.78); border: 1px solid rgba(148, 163, 184, 0.25);
+		color: #cbd5e1; cursor: pointer; font: inherit; font-size: 12px; backdrop-filter: blur(6px); }
+	.tools button:hover { color: #fff; border-color: rgba(148, 163, 184, 0.5); }
 	.tools button.on { border-color: #22d3ee; color: #22d3ee; }
-	.hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); padding: 6px 12px; border-radius: 8px;
-		background: rgba(10, 12, 18, 0.9); border: 1px solid #22d3ee; font-size: 12px; z-index: 2; }
-	.panel { width: 400px; max-width: 100%; overflow-y: auto; padding: 18px 18px 24px; background: rgba(10, 12, 18, 0.96);
-		border-left: 1px solid #1e293b; display: flex; flex-direction: column; gap: 14px; }
-	.kicker { margin: 0; color: #22d3ee; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
-	h1 { margin: 4px 0 0; font-size: 19px; line-height: 1.25; }
-	h2 { margin: 0 0 6px; font-size: 13px; color: #d4d4d4; }
-	.stage { display: flex; align-items: baseline; gap: 8px; }
-	.big { white-space: nowrap; font-size: 34px; font-weight: 700; color: #38bdf8; font-variant-numeric: tabular-nums; }
-	.dim { color: #a3a3a3; }
-	.w { color: #fff; }
-	.slider { position: relative; padding-bottom: 14px; }
+	.hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); padding: 6px 14px; border-radius: 999px;
+		background: rgba(11, 13, 18, 0.9); border: 1px solid #22d3ee; font-size: 12px; z-index: 2; }
+
+	.panel { width: 380px; max-width: 100%; overflow-y: auto; padding: 22px 22px 28px; background: #0f1218;
+		border-left: 1px solid #1c2230; display: flex; flex-direction: column; gap: 20px; }
+	.kicker { margin: 0; color: #7dd3fc; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+	h1 { margin: 6px 0 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
+	h2 { margin: 0 0 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+	b { color: #fff; font-weight: 600; }
+	.dim, .sub { color: #94a3b8; }
+	.sub { margin: 6px 0 0; font-size: 12.5px; line-height: 1.5; }
+	.note { margin: 8px 0 0; color: #7c8798; font-size: 11.5px; line-height: 1.45; }
+
+	.control { display: flex; flex-direction: column; gap: 10px; }
+	.stage { display: flex; align-items: baseline; gap: 10px; }
+	.big { white-space: nowrap; font-size: 40px; font-weight: 600; letter-spacing: -0.02em; color: #38bdf8; font-variant-numeric: tabular-nums; }
+	.slider { position: relative; }
 	.slider input[type='range'] { width: 100%; accent-color: #38bdf8; margin: 0; }
-	.tick { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: #a3a3a3; }
-	.tick::before { content: ''; position: absolute; left: 50%; top: -6px; width: 1px; height: 5px; background: #64748b; }
-	select { width: 100%; padding: 6px 8px; border-radius: 8px; background: #111827; color: #fff; border: 1px solid #334155; font-size: 12.5px; }
+	.tick { position: absolute; top: -3px; width: 2px; height: 8px; margin-left: -1px; background: #64748b; border-radius: 1px; pointer-events: none; }
 	.scen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-	.scen button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 7px 8px; border-radius: 8px;
-		background: rgba(255, 255, 255, 0.06); border: 1px solid #334155; color: #fff; cursor: pointer; text-align: left; }
-	.scen button span { color: #a3a3a3; font-size: 11px; }
-	.scen button.on { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
-	.peaks svg { width: 100%; height: 64px; display: block; }
-	.peaks p { margin: 4px 0 0; font-size: 11.5px; }
-	.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-	.grid div { display: flex; flex-direction: column; padding: 8px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); }
-	.grid b { font-size: 20px; font-variant-numeric: tabular-nums; }
-	.grid span { color: #a3a3a3; font-size: 11.5px; }
-	.umbrales { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-	.umbrales button { display: flex; gap: 8px; align-items: center; width: 100%; padding: 4px 2px; background: none; border: 0;
-		color: #fff; cursor: pointer; text-align: left; font-size: 12.5px; }
-	.umbrales button:hover { background: rgba(255, 255, 255, 0.05); }
-	.umbrales .next button { color: #a3a3a3; }
-	.prensa { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-	.prensa li { display: flex; flex-direction: column; gap: 1px; }
-	.prensa button { display: flex; gap: 8px; align-items: flex-start; width: 100%; padding: 4px 2px; background: none; border: 0;
-		color: #fff; cursor: pointer; text-align: left; font-size: 12px; line-height: 1.35; border-radius: 6px; }
-	.prensa button:hover, .prensa button.on { background: rgba(56, 189, 248, 0.12); }
-	.prensa .h { width: 52px; flex: none; color: #38bdf8; font-variant-numeric: tabular-nums; }
-	.prensa a { margin-left: 62px; font-size: 10.5px; color: #93c5fd; }
-	.umbrales .star { width: 26px; height: 26px; flex: none; }
-	.umbrales .next .star { opacity: 0.55; }
-	.umbrales .h { width: 48px; flex: none; font-variant-numeric: tabular-nums; }
-	i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
-	i.dot { border-radius: 50%; background: #f8fafc; border: 1px solid #0a0a0a; }
-	.note { margin: 6px 0 0; color: #a3a3a3; font-size: 11px; }
-	.ficha { position: relative; padding: 10px 12px; border: 1px solid #334155; border-radius: 8px; background: rgba(255, 255, 255, 0.03); }
-	.ficha p { margin: 4px 0; }
-	.ficha table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-variant-numeric: tabular-nums; }
-	.ficha th, .ficha td { padding: 2px 4px; text-align: right; }
-	.ficha th:first-child, .ficha td:first-child { text-align: left; color: #a3a3a3; }
-	.ficha td.cur { color: #38bdf8; font-weight: 700; }
-	.close { position: absolute; top: 4px; right: 8px; background: none; border: 0; color: #a3a3a3; font-size: 18px; cursor: pointer; }
-	.bars { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
-	.bar { display: grid; grid-template-columns: 150px 1fr 40px; gap: 6px; align-items: center; font-size: 11.5px; }
-	.bl { color: #d4d4d4; }
-	.bv { text-align: right; font-variant-numeric: tabular-nums; }
-	.track { position: relative; height: 8px; background: rgba(255, 255, 255, 0.06); border-radius: 4px; }
-	.track .z { position: absolute; left: 0; top: 0; bottom: 0; background: #60a5fa; border-radius: 4px; }
-	.track .z.hi { background: #f97316; }
-	.track .pv { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #fff; }
-	.wbar { height: 10px; border-radius: 5px; }
-	.wticks { position: relative; height: 16px; font-size: 10.5px; color: #a3a3a3; }
-	.wticks span { position: absolute; top: 2px; transform: translateX(-50%); white-space: nowrap; }
-	.wticks span:first-child { transform: none; }
-	.wticks span:last-child { transform: translateX(-100%); }
-	.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; color: #d4d4d4; font-size: 11.5px; margin-top: 6px; }
-	.legend span { display: flex; align-items: center; gap: 5px; }
-	footer { display: flex; flex-direction: column; gap: 6px; color: #a3a3a3; font-size: 11px; line-height: 1.4; }
-	footer p { margin: 0; }
-	footer b { color: #d4d4d4; }
-	.credit { color: #d4d4d4; }
+	.scen button { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 9px; border-radius: 10px;
+		background: transparent; border: 1px solid #263042; color: #e5e7eb; cursor: pointer; text-align: left; font: inherit; }
+	.scen button b { font-size: 12.5px; }
+	.scen button span { color: #94a3b8; font-size: 11px; font-variant-numeric: tabular-nums; }
+	.scen button.on { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+
+	.impact .lead { margin: 0; font-size: 17px; line-height: 1.45; color: #cbd5e1; }
+	.impact .lead b { color: #fdba74; }
+
+	.umbrales { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+	.umbrales button { display: flex; gap: 10px; align-items: center; width: 100%; padding: 5px 4px; background: none; border: 0;
+		border-radius: 8px; color: #e5e7eb; cursor: pointer; text-align: left; font: inherit; font-size: 13px; }
+	.umbrales button:hover { background: rgba(148, 163, 184, 0.08); }
+	.umbrales .nm { flex: 1; }
+	.umbrales .h { color: #94a3b8; font-size: 12px; font-variant-numeric: tabular-nums; }
+	.umbrales .next button { color: #7c8798; }
+	.umbrales .star { width: 24px; height: 24px; flex: none; }
+	.dot-next { width: 24px; flex: none; display: flex; justify-content: center; }
+	.dot-next::before { content: ''; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #64748b; }
+
+	.tabs { display: flex; padding: 3px; gap: 2px; border-radius: 10px; background: #161b24; }
+	.tabs button { flex: 1; padding: 6px 4px; border: 0; border-radius: 8px; background: none; color: #94a3b8; cursor: pointer; font: inherit; font-size: 12.5px; }
+	.tabs button.on { background: #263042; color: #fff; }
+	select { width: 100%; margin-top: 8px; padding: 6px 8px; border-radius: 8px; background: #161b24; color: #e5e7eb; border: 1px solid #263042; font: inherit; font-size: 12.5px; }
+	.legend { margin-top: 10px; }
+	.ramp { display: grid; grid-template-columns: 44px 1fr 46px; gap: 8px; align-items: center; font-size: 11.5px; color: #cbd5e1; margin-bottom: 6px; }
+	.ramp .bar { height: 8px; border-radius: 4px; width: auto; }
+	.keys { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; color: #cbd5e1; }
+	.keys span, .tags span { display: inline-flex; align-items: center; gap: 6px; }
+	i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; font-style: normal; }
+
+	.card { position: relative; padding: 14px 14px 12px; border: 1px solid #263042; border-radius: 12px; background: #131822; }
+	.card h2 { text-transform: none; letter-spacing: 0; font-size: 15px; color: #fff; padding-right: 20px; }
+	.card p { margin: 6px 0; line-height: 1.45; }
+	.tags { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; }
+	.card table { width: 100%; border-collapse: collapse; margin: 8px 0 10px; font-variant-numeric: tabular-nums; font-size: 12.5px; }
+	.card th, .card td { padding: 3px 4px; text-align: right; }
+	.card th { color: #7c8798; font-weight: 500; }
+	.card th:first-child, .card td:first-child { text-align: left; color: #94a3b8; }
+	.card td.cur { color: #38bdf8; font-weight: 600; }
+	.close { position: absolute; top: 6px; right: 10px; background: none; border: 0; color: #7c8798; font-size: 18px; cursor: pointer; }
+	.bars { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
+	.bar { display: grid; grid-template-columns: 140px 1fr 38px; gap: 8px; align-items: center; font-size: 11.5px; }
+	.bl { color: #cbd5e1; }
+	.bv { text-align: right; font-variant-numeric: tabular-nums; color: #cbd5e1; }
+	.track { position: relative; height: 6px; background: #1c2230; border-radius: 3px; }
+	.track .z { position: absolute; left: 0; top: 0; bottom: 0; background: #60a5fa; border-radius: 3px; }
+	.track .z.hi { background: #f59e0b; }
+	.track .pv { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: #e5e7eb; }
+
+	details { border-top: 1px solid #1c2230; padding-top: 12px; }
+	summary { cursor: pointer; list-style: none; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+	summary::-webkit-details-marker { display: none; }
+	summary::before { content: '+'; display: inline-block; width: 14px; color: #64748b; }
+	details[open] summary::before { content: '−'; }
+	details > :not(summary) { margin-top: 10px; }
+	.peaks { width: 100%; height: 64px; display: block; }
+	.fine p { margin: 0 0 6px; font-size: 12px; line-height: 1.5; color: #94a3b8; }
+	footer { color: #64748b; font-size: 11.5px; }
 	.warn { color: #fca5a5; }
-	:global(.demo-tip .maplibregl-popup-content) { background: rgba(10, 12, 18, 0.95); color: #fff; border: 1px solid #334155;
-		border-radius: 8px; padding: 8px 10px; font-size: 12px; line-height: 1.45; }
+
+	:global(.demo-tip .maplibregl-popup-content) { background: rgba(15, 18, 24, 0.96); color: #e5e7eb; border: 1px solid #263042;
+		border-radius: 10px; padding: 9px 11px; font: 12.5px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
 	:global(.demo-tip .maplibregl-popup-tip) { display: none; }
-	:global(.demo-tip .dim) { color: #a3a3a3; }
+	:global(.demo-tip b) { color: #fff; font-weight: 600; }
+	:global(.demo-tip .dim) { color: #94a3b8; }
 	:global(.demo-tip .r) { color: #fca5a5; }
+
 	@media (max-width: 760px) {
 		.demo { flex-direction: column; }
 		.mapwrap { flex: none; height: 52vh; }
-		.panel { width: 100%; border-left: 0; border-top: 1px solid #1e293b; padding: 14px 16px 24px; flex: 1; }
-		.bar { grid-template-columns: 120px 1fr 36px; }
+		.panel { width: 100%; border-left: 0; border-top: 1px solid #1c2230; padding: 16px 16px 24px; flex: 1; gap: 16px; }
+		.big { font-size: 34px; }
+		.impact .lead { font-size: 15.5px; }
+		.bar { grid-template-columns: 116px 1fr 34px; }
+		.tools { left: 48px; }
 	}
 </style>
