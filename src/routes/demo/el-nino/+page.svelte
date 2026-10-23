@@ -75,6 +75,22 @@
 	const WGRAD = `linear-gradient(to right, ${WSTOPS.map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS.length - 1)) * 100}%`).join(', ')})`;
 	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#7f1d1d']];
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
+	// press reports with a river level at El Soberbio and what happened (relevamiento 23-oct-2026;
+	// levels as printed, read on the local/Prefectura gauge, which runs 0.5-2 m above the INA series)
+	const PRENSA = [
+		{ fecha: '31/5/2017', h: 12.9, hecho: 'Chivilcoy y Maracaná: 15 familias evacuadas', fuente: 'El Territorio',
+			url: 'https://www.elterritorio.com.ar/noticias/2017/05/31/531654-el-soberbio-15-familias-evacuadas-por-la-crecida-del-rio-uruguay' },
+		{ fecha: '30/6/2025', h: 13.1, hecho: 'Cota oficial de evacuación: 13 m; Maracaná, Chivilcoy y Unión', fuente: 'Canal 12',
+			url: 'https://www.canal12misiones.com/?p=530388' },
+		{ fecha: '18/10/2023', h: 16.1, hecho: '85 familias evacuadas en Chivilcoy y Unión', fuente: 'La Voz de Misiones',
+			url: 'https://lavozdemisiones.com/provinciales/evacuan-a-mas-dee-100-familias-de-el-soberbio-por-crecida-del-rio-uruguay' },
+		{ fecha: '26/6/2014', h: 18, hecho: 'Más de 50 casas bajo agua en barrio Unión', fuente: 'El Territorio (copia en blog)',
+			url: 'https://noqueremosinundarnos.blogspot.com/2014/06/en-el-soberbio-hay-400-personas.html' },
+		{ fecha: '18/11/2023', h: 19.75, hecho: 'Más de 200 familias evacuadas; el polideportivo se inunda', fuente: 'Misiones Online',
+			url: 'https://misionesonline.net/2023/11/17/alrededor-de-250-familias-de-seran-evacuadas-en-el-soberbio/' },
+		{ fecha: '27/6/2014', h: 22.6, hecho: '250 a 350 casas bajo agua: Unión, Maracaná, Chivilcoy, Santa María, Galiano', fuente: 'El Territorio (copia en blog)',
+			url: 'https://fmguarani.blogspot.com/2014/06/en-el-soberbio-el-rio-uruguay-supera.html' }
+	];
 	const SCEN = [
 		{ id: '2015', label: 'Como 2015' },
 		{ id: '2023', label: 'Como 2023' },
@@ -689,6 +705,23 @@
 			</section>
 
 			<section>
+				<h2>Lo que registró la prensa</h2>
+				<ul class="prensa">
+					{#each PRENSA as r}
+						{@const d = pasoAt(r.h)}
+						<li>
+							<button onclick={() => setStage(r.h, true)} class:on={Math.abs(stage - r.h) < 0.01}>
+								<span class="h">{r.h.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} m</span>
+								<span class="t"><b>{r.fecha}</b> · {r.hecho}<br /><span class="dim">La demo a esa altura: {fmt(d?.viviendas ?? 0)} viviendas bajo el agua</span></span>
+							</button>
+							<a href={r.url} target="_blank" rel="noopener noreferrer" title={r.fuente}>{r.fuente}</a>
+						</li>
+					{/each}
+				</ul>
+				<p class="note">Coincide qué barrios se inundan primero. Entre 12 y 14 m el agua ya entra a casas de Maracaná y Chivilcoy, y la demo lo marca recién desde 15 m: el terreno satelital deja la costa algo más alta de lo que es. Las marcas de crecida de la provincia corrigen esto. Las alturas de la prensa son las de Prefectura o la escala local, que en las crecidas recientes dan entre 0,5 y 2 m más que la serie del INA que usa la demo.</p>
+			</section>
+
+			<section>
 				<h2>Profundidad del agua sobre el terreno</h2>
 				<div class="wbar" style:background={WGRAD}></div>
 				<div class="wticks">{#each WSTOPS as [d], i}<span style:left={`${(i / (WSTOPS.length - 1)) * 100}%`}>{i === WSTOPS.length - 1 ? '10+ m' : `${dec(d).replace(',0', '')} m`}</span>{/each}</div>
@@ -699,6 +732,7 @@
 				<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Crecida del Uruguay únicamente: no incluye lluvia ni arroyos.</p>
 				<p><b>Sin calibrar con marcas de crecida:</b> sirve para comparar zonas entre sí; las cifras son estimaciones. Con las marcas de crecida y los registros de evacuados de la provincia se ajusta a lo que ya pasó.</p>
 				<p><b>Personas por construcción:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m², o etiquetadas como vivienda en OpenStreetMap).</p>
+				<p><b>Hidrómetro:</b> las alturas son las del INA (serie diaria); Prefectura y la prensa dan entre 0,5 y 2 m más en las crecidas recientes.</p>
 				<p class="src">Fuentes: hidrómetro INA (serie 1980-2026), FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, inventario del Mapa para la Gestión de la Emergencia.</p>
 				<p class="credit">CONICET / FHyCS-UNaM · Spatia</p>
 			</footer>
@@ -748,6 +782,13 @@
 		color: #fff; cursor: pointer; text-align: left; font-size: 12.5px; }
 	.umbrales button:hover { background: rgba(255, 255, 255, 0.05); }
 	.umbrales .next button { color: #a3a3a3; }
+	.prensa { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+	.prensa li { display: flex; flex-direction: column; gap: 1px; }
+	.prensa button { display: flex; gap: 8px; align-items: flex-start; width: 100%; padding: 4px 2px; background: none; border: 0;
+		color: #fff; cursor: pointer; text-align: left; font-size: 12px; line-height: 1.35; border-radius: 6px; }
+	.prensa button:hover, .prensa button.on { background: rgba(56, 189, 248, 0.12); }
+	.prensa .h { width: 52px; flex: none; color: #38bdf8; font-variant-numeric: tabular-nums; }
+	.prensa a { margin-left: 62px; font-size: 10.5px; color: #93c5fd; }
 	.umbrales .star { width: 26px; height: 26px; flex: none; }
 	.umbrales .next .star { opacity: 0.55; }
 	.umbrales .h { width: 48px; flex: none; font-variant-numeric: tabular-nums; }
