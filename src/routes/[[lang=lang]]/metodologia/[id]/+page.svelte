@@ -10,6 +10,10 @@
 	const description = $derived(data.descKey ? i18n.t(data.descKey) : null);
 	const locale = $derived(i18n.locale);
 	const method = $derived(resolveMethod(data.content.method, locale));
+	// label for the page title in the route's language (gn keeps the Spanish loanword)
+	const METOD = { es: ['Metodología', 'Metodología del análisis'], gn: ['Metodología', 'Metodología del análisis'],
+		en: ['Methodology', 'Methodology of the analysis'], pt: ['Metodologia', 'Metodologia da análise'] } as const;
+	const metod = $derived(METOD[(locale as keyof typeof METOD)] ?? METOD.es);
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
@@ -27,8 +31,8 @@
 </script>
 
 <Seo
-	title="{title} · Metodología · Spatia"
-	description={description ?? `Metodología del análisis ${title} en Spatia`}
+	title="{title} · {metod[0]} · Spatia"
+	description={description ?? `${metod[1]} ${title} · Spatia`}
 />
 
 <div class="page">

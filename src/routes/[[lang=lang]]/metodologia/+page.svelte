@@ -7,6 +7,15 @@
 
 	let { data } = $props();
 
+	// page title in the route's language (gn keeps the Spanish loanword, as in page.metodologia.kicker)
+	const SEO = {
+		es: ['Metodología e indicadores · Spatia', 'Metodología de los indicadores geoespaciales de Spatia — fuentes, variables y métodos de cada análisis.'],
+		gn: ['Metodología e indicadores · Spatia', 'Metodología de los indicadores geoespaciales de Spatia — fuentes, variables y métodos de cada análisis.'],
+		en: ['Methodology and indicators · Spatia', 'Methodology of the Spatia geospatial indicators: sources, variables and methods of each analysis.'],
+		pt: ['Metodologia e indicadores · Spatia', 'Metodologia dos indicadores geoespaciais do Spatia: fontes, variáveis e métodos de cada análise.']
+	} as const;
+	const seo = $derived(SEO[(i18n.locale as keyof typeof SEO)] ?? SEO.es);
+
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
 	const today = browser
@@ -23,8 +32,8 @@
 </script>
 
 <Seo
-	title="Metodología e indicadores · Spatia"
-	description="Metodología de los indicadores geoespaciales de Spatia — fuentes, variables y métodos de cada análisis."
+	title={seo[0]}
+	description={seo[1]}
 />
 
 <div class="page">

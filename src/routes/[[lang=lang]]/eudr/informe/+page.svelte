@@ -80,10 +80,12 @@
 </script>
 
 <Seo
-	title={tr(
-		'Cosecha o deforestación · pre-diagnóstico EUDR con MapBiomas — Spatia',
-		'Harvest or deforestation · EUDR pre-diagnosis with MapBiomas — Spatia'
-	)}
+	title={locale === 'pt'
+		? 'Colheita ou desmatamento · pré-diagnóstico EUDR com MapBiomas — Spatia'
+		: tr(
+				'Cosecha o deforestación · pre-diagnóstico EUDR con MapBiomas — Spatia',
+				'Harvest or deforestation · EUDR pre-diagnosis with MapBiomas — Spatia'
+			)}
 	description={t('subtitle')}
 />
 
