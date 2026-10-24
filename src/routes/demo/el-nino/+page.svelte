@@ -10,7 +10,10 @@
 	//   edificios_pts.json  the same buildings as flat arrays, for the lasso
 	//   radios.geojson      the 36 census radios with census profile, housing type, priority and scenario totals
 	//   puntos.geojson      schools and health centres from the provincial emergency viewer
-	//   tabla_altura.json   totals per 0.5 m step, scenarios, annual peaks, thresholds, provincial averages, raster
+	//   tabla_altura.json   totals per 0.5 m step, scenarios, annual peaks, thresholds, provincial averages, raster,
+	//                       and (optional) the arroyo summary with its own raster corners and the rain context
+	//   arroyos.png         one band, arroyo susceptibility class per 20 m pixel of the municipality: 3 high, 2 medium,
+	//                       1 low, 0 outside (terrain height above the nearest stream, not a scenario)
 	import { onMount } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { page } from '$app/state';
@@ -18,6 +21,8 @@
 	import { pointInPolygon } from '$lib/utils/geometry';
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
+	// cache buster for the JSON and PNG files (the CDN keeps files with ?v as immutable)
+	const VER = '6';
 	const TOWN_WIDE = { center: [-54.2025, -27.2995] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
 	const TOWN_NARROW = { center: [-54.1995, -27.3005] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
 	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
@@ -89,6 +94,15 @@
 	const WGRAD = `linear-gradient(to right, ${WSTOPS.map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS.length - 1)) * 100}%`).join(', ')})`;
 	const BDEPTH: [number, string][] = [[0, '#fdba74'], [1, '#f97316'], [2.5, '#dc2626'], [5, '#991b1b']];
 	const DRY = '#4b5563';
+	// arroyo susceptibility: class 3 high, 2 medium (low is not drawn)
+	const ARR = [{ k: 3, label: 'Alta', color: '#f43f5e', rgb: [244, 63, 94] }, { k: 2, label: 'Media', color: '#fbbf24', rgb: [251, 191, 36] }];
+	// how often the river reached a place since 1980: years whose annual peak was at or above its first-impact height
+	const FREQ = [
+		{ min: 10, label: '10 años o más', color: '#ef4444', rgb: [239, 68, 68] },
+		{ min: 3, label: '3 a 9 años', color: '#f97316', rgb: [249, 115, 22] },
+		{ min: 1, label: '1 o 2 años', color: '#facc15', rgb: [250, 204, 21] },
+		{ min: 0, label: 'Nunca registrado', color: '#94a3b8', rgb: [148, 163, 184] }
+	];
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
 		{ id: '2026', label: 'Jul. 2026', short: '2026' },
@@ -123,6 +137,16 @@
 		umbrales: { altura: number; microzona: string; id: string; prioridad: string }[];
 		provincia: Record<string, number>;
 		raster: { ancho: number; alto: number; res_m: number; esquinas: [number, number][] };
+		arroyos?: {
+			alta: { viviendas: number; personas: number; ninos: number; mayores: number };
+			media: { viviendas: number; personas: number; ninos: number; mayores: number };
+			h_alta_m: number; h_media_m: number; a_grande_km2: number; a_media_km2: number;
+			raster: { ancho: number; alto: number; res_m: number; esquinas: [number, number][] };
+		};
+		lluvia?: {
+			umbral: { desbordes_urbanos: number; chirps_72h_min: number; chirps_72h_max: number; episodios_por_anio: number } | null;
+			coincide_rio_alto: string[];
+		};
 	}
 	interface Lasso { viv: number; pers: number; ninos: number; mayores: number; ren: number; esc: number }
 
@@ -133,6 +157,8 @@
 	let selected = $state<Record<string, any> | null>(null);
 	let error = $state('');
 	let capa = $state('agua');
+	// river colour: depth at the chosen height, or how many years since 1980 the river got there
+	let aguaModo = $state<'profundidad' | 'frecuencia'>('profundidad');
 	let lassoOn = $state(false);
 	let lassoPts = $state<[number, number][]>([]);
 	let lassoPoly = $state<[number, number][] | null>(null);
@@ -151,6 +177,9 @@
 	let wctx: CanvasRenderingContext2D | null = null;
 	let wraw: CanvasRenderingContext2D | null = null;
 	let wimg: ImageData | null = null;
+	// arroyo raster (class per pixel) and its canvas
+	let avals: Uint8Array | null = null;
+	let actx: CanvasRenderingContext2D | null = null;
 
 	const pasoAt = (h: number) => {
 		if (!tabla) return null;
@@ -166,7 +195,11 @@
 	const alcanzadas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura <= stage + 1e-6) : []);
 	const proximas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura > stage + 1e-6).slice(0, 2) : []);
 	// map view: water (default), priority, housing type, or one census variable
-	const tab = $derived(capa === 'agua' || capa === 'prioridad' || capa === 'tipo' ? capa : 'censo');
+	const tab = $derived(capa === 'agua' || capa === 'arroyos' || capa === 'prioridad' || capa === 'tipo' ? capa : 'censo');
+	// annual peaks sorted high to low: a height h was reached in n years iff h <= the n-th highest peak
+	const picosDesc = $derived(tabla ? tabla.picos.map((p) => p.altura).sort((a, b) => b - a) : []);
+	const aniosHasta = (h: number) => { let n = 0; for (const p of picosDesc) if (p >= h - 1e-6) n++; return n; };
+	const freqOf = (n: number) => FREQ.find((f) => n >= f.min)!;
 	// numbered stars: the number is the position in the full threshold list, so it does not change with the slider
 	const numOf = $derived(new Map((tabla?.umbrales ?? []).map((u, i) => [u.id, i + 1])));
 	let starHover = $state('');
@@ -271,11 +304,21 @@
 		const d = wimg.data;
 		d.fill(0);
 		const st4 = stage * 4 + 1e-6;
+		const freq = aguaModo === 'frecuencia' && capa === 'agua';
+		// frequency classes by height code (x4): one lookup per code instead of per pixel
+		const fcol = freq ? Array.from({ length: 256 }, (_, v) => freqOf(aniosHasta(v / 4)).rgb) : null;
+		const riverCode = ((tabla?.s_ref ?? 2.1) + 0.3) * 4;
 		for (let k = 0; k < wet.length; k++) {
 			const i = wet[k], v = vals[i];
 			if (v > st4) continue;
-			const li = Math.min(Math.round((stage - v / 4) / LUT_STEP), WLUT_N - 1) * 4;
 			const o = i * 4;
+			// the river bed itself stays blue: "always under water" is not a flood frequency
+			if (fcol && v > riverCode) {
+				const c = fcol[v];
+				d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 200;
+				continue;
+			}
+			const li = Math.min(Math.round((stage - v / 4) / LUT_STEP), WLUT_N - 1) * 4;
 			d[o] = WLUT[li]; d[o + 1] = WLUT[li + 1]; d[o + 2] = WLUT[li + 2]; d[o + 3] = WLUT[li + 3];
 		}
 		// paint on a scratch canvas, then draw it blurred by ~1 px so 20 m pixels do not show as blocks
@@ -299,9 +342,18 @@
 		return { depth: stage - v / 4, desde: v / 4 };
 	}
 
+	function arroyoAt(lng: number, lat: number): number {
+		const r0 = tabla?.arroyos?.raster;
+		if (!avals || !r0) return 0;
+		const [[w, n], [e], [, s]] = [r0.esquinas[0], r0.esquinas[1], r0.esquinas[2]];
+		const c = Math.floor(((lng - w) / (e - w)) * r0.ancho), r = Math.floor(((n - lat) / (n - s)) * r0.alto);
+		if (c < 0 || r < 0 || c >= r0.ancho || r >= r0.alto) return 0;
+		return avals[r * r0.ancho + c];
+	}
+
 	// colour of a radio under the current layer (used for radios and, through `z`, for buildings)
 	function radioColor(p: any): string {
-		if (capa === 'prioridad' || capa === 'agua') return colorOf(p.prioridad);
+		if (capa === 'prioridad' || capa === 'agua' || capa === 'arroyos') return colorOf(p.prioridad);
 		if (capa === 'tipo') return tipoOf(p.tipo_vivienda)?.color ?? '#94a3b8';
 		const c = CENSO.find((x) => x.id === capa)!;
 		const b = breaksFor(c), cols = PLASMA.slice(PLASMA.length - (b.length + 1)), n = countOf(c, p);
@@ -317,7 +369,14 @@
 		const flooded = ['all', ['>=', ['get', 's'], 0], ['<=', ['get', 's'], st]];
 		const depthRamp = ['interpolate', ['linear'], ['-', st, ['get', 's']], ...BDEPTH.flat()];
 		const isolated = ['all', ['>=', ['get', 'i'], 0], ['<=', ['get', 'i'], st]];
+		if (capa === 'agua' && aguaModo === 'frecuencia' && picosDesc.length >= 10) {
+			// step on the impact height: at or below the 10th highest peak = 10 years or more, and so on
+			const freqRamp = ['step', ['get', 's'], FREQ[0].color, picosDesc[9] + 1e-6, FREQ[1].color, picosDesc[2] + 1e-6,
+				FREQ[2].color, picosDesc[0] + 1e-6, FREQ[3].color];
+			return ['case', flooded, freqRamp, isolated, ISO, DRY];
+		}
 		if (capa === 'agua') return ['case', flooded, depthRamp, isolated, ISO, DRY];
+		if (capa === 'arroyos') return ['match', ['coalesce', ['get', 'k'], 0], 3, ARR[0].color, 2, ARR[1].color, DRY];
 		return ['match', ['get', 'z'], ...colorPairs(), '#64748b'];
 	}
 
@@ -326,7 +385,9 @@
 		const st = stage + 1e-6;
 		const reached = ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st];
 		const col = ['match', ['get', 'id'], ...colorPairs(), '#64748b'];
-		const water = capa === 'agua';
+		const water = capa === 'agua' || capa === 'arroyos';
+		if (map.getLayer('arroyos')) map.setLayoutProperty('arroyos', 'visibility', capa === 'arroyos' ? 'visible' : 'none');
+		map.setPaintProperty('agua', 'raster-opacity', capa === 'arroyos' ? 0.35 : 0.9);
 		map.setPaintProperty('radios-fill', 'fill-color', col);
 		map.setPaintProperty('radios-fill', 'fill-opacity', water ? 0 : 0.16);
 		map.setPaintProperty('radios-line', 'line-color', '#e2e8f0');
@@ -336,7 +397,7 @@
 		map.setPaintProperty('eb-3d', 'fill-extrusion-color', buildingColor());
 		if (map.getLayer('aisl-pts')) {
 			map.setFilter('aisl-pts', ['all', ['<=', ['get', 'i'], st], ['any', ['<', ['get', 's'], 0], ['>', ['get', 's'], st]]]);
-			map.setLayoutProperty('aisl-pts', 'visibility', water ? 'visible' : 'none');
+			map.setLayoutProperty('aisl-pts', 'visibility', capa === 'agua' ? 'visible' : 'none');
 		}
 		if (map.getLayer('cortes')) {
 			map.setFilter('cortes', ['<=', ['get', 's'], st]);
@@ -346,8 +407,8 @@
 		map.setFilter('puntos', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st]);
 	}
 
-	$effect(() => { stage; capa; applyLayers(); });
-	$effect(() => { stage; paintWater(); });
+	$effect(() => { stage; capa; aguaModo; applyLayers(); });
+	$effect(() => { stage; capa; aguaModo; paintWater(); });
 	$effect(() => {
 		const data = starData();
 		const src = map?.getSource('stars');
@@ -413,9 +474,14 @@
 				lines.push(`<span class="dim">En su radio hay 1 hogar cada ${dec(+z.viv_probables / +z.c_hogares)} construcciones de este tamaño: muchas son galpones o anexos</span>`);
 			lines.push(s == null ? 'El agua no llega en ningún escenario' : `El agua llega con ${m(s)} en el hidrómetro`
 				+ (s <= stage + 1e-6 ? ` · <span class="r">con el río a ${m(stage)}: ≈ ${m(stage - s)} de agua</span>` : ''));
+			if (s != null) { const n = aniosHasta(s); lines.push(`<span class="dim">El río llegó a esa altura ${n} ${n === 1 ? 'año' : 'años'} desde 1980</span>`); }
+			const k = +(p.k ?? 0);
+			if (k >= 2) lines.push(`Junto a un arroyo: <b>susceptibilidad ${k === 3 ? 'alta' : 'media'}</b> con lluvia fuerte`);
 		} else {
 			const w = depthAt(e.lngLat.lng, e.lngLat.lat);
-			if (w) lines.push(w.desde <= (tabla?.s_ref ?? 2.5) + 0.3
+			const ka = capa === 'arroyos' ? arroyoAt(e.lngLat.lng, e.lngLat.lat) : 0;
+			if (ka >= 2) lines.push(`<b>Susceptibilidad ${ka === 3 ? 'alta' : 'media'} por arroyo</b><br><span class="dim">Terreno bajo junto a un arroyo: se anega con lluvia fuerte</span>`);
+			else if (w) lines.push(w.desde <= (tabla?.s_ref ?? 2.5) + 0.3
 				? `<b>Cauce del río</b><br>≈ ${m(stage - (tabla?.s_ref ?? 2.1))} por encima de su nivel habitual`
 				: `<b>Agua: ≈ ${m(w.depth)} sobre el terreno</b><br>Aquí el agua llega desde ${m(w.desde)} en el hidrómetro`);
 		}
@@ -438,7 +504,7 @@
 			let t: Tabla;
 			try {
 				const get = async (f: string) => {
-					const r = await fetch(`${base}/${f}`);
+					const r = await fetch(`${base}/${f}${base === CDN ? `?v=${VER}` : ''}`);
 					if (!r.ok) throw new Error(`${f}: ${r.status}`);
 					return r.json();
 				};
@@ -460,7 +526,7 @@
 				}
 				const img = new Image();
 				img.crossOrigin = 'anonymous';
-				img.src = `${base}/agua.png`;
+				img.src = `${base}/agua.png${base === CDN ? `?v=${VER}` : ''}`;
 				await img.decode();
 				const { ancho, alto } = t.raster;
 				const tmp = document.createElement('canvas');
@@ -473,6 +539,30 @@
 				for (let i = 0; i < vals.length; i++) { vals[i] = px[i * 4]; if (vals[i]) n++; }
 				wet = new Int32Array(n);
 				for (let i = 0, k = 0; i < vals.length; i++) if (vals[i]) wet[k++] = i;
+				if (t.arroyos) {
+					const ai = new Image();
+					ai.crossOrigin = 'anonymous';
+					ai.src = `${base}/arroyos.png${base === CDN ? `?v=${VER}` : ''}`;
+					await ai.decode();
+					const { ancho: aw, alto: ah } = t.arroyos.raster;
+					const ac = document.createElement('canvas');
+					ac.width = aw; ac.height = ah;
+					const ax = ac.getContext('2d', { willReadFrequently: true })!;
+					ax.drawImage(ai, 0, 0);
+					const apx = ax.getImageData(0, 0, aw, ah).data;
+					avals = new Uint8Array(aw * ah);
+					for (let i = 0; i < avals.length; i++) avals[i] = apx[i * 4];
+					// coloured once: the arroyo layer does not depend on the river height
+					const out = ax.createImageData(aw, ah);
+					for (let i = 0; i < avals.length; i++) {
+						const a = ARR.find((x) => x.k === avals![i]);
+						if (a) out.data.set([...a.rgb, 185], i * 4);
+					}
+					const cv = document.createElement('canvas');
+					cv.width = aw; cv.height = ah;
+					actx = cv.getContext('2d')!;
+					actx.putImageData(out, 0, 0);
+				}
 			} catch (e) {
 				error = 'No se pudieron cargar los datos de la demo.';
 				return;
@@ -498,6 +588,11 @@
 				map.addSource('agua', { type: 'canvas', canvas: wc, coordinates: t.raster.esquinas, animate: false });
 				map.addLayer({ id: 'agua', type: 'raster', source: 'agua',
 					paint: { 'raster-resampling': 'linear', 'raster-opacity': 0.9, 'raster-fade-duration': 0 } }, firstSymbol);
+				if (actx && t.arroyos) {
+					map.addSource('arroyos', { type: 'canvas', canvas: actx.canvas, coordinates: t.arroyos.raster.esquinas, animate: false });
+					map.addLayer({ id: 'arroyos', type: 'raster', source: 'arroyos', layout: { visibility: 'none' },
+						paint: { 'raster-resampling': 'linear', 'raster-opacity': 0.85, 'raster-fade-duration': 0 } }, firstSymbol);
+				}
 				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': '#e2e8f0', 'line-width': 1, 'line-opacity': 0 } });
 				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], ''],
 					paint: { 'line-color': '#22d3ee', 'line-width': 3 } });
@@ -522,7 +617,7 @@
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
 						'fill-extrusion-color': '#2b313b', 'fill-extrusion-opacity': 0.8
 					} });
-				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v5.pmtiles` });
+				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v6.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
 					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': DRY, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
@@ -695,7 +790,7 @@
 			<section>
 				<h2>Ver en el mapa</h2>
 				<div class="tabs" role="tablist">
-					{#each [['agua', 'Agua'], ['prioridad', 'Prioridad'], ['tipo', 'Vivienda'], ['censo', 'Censo']] as [k, l]}
+					{#each [['agua', 'Río'], ...(tabla.arroyos ? [['arroyos', 'Arroyos']] : []), ['prioridad', 'Prioridad'], ['tipo', 'Vivienda'], ['censo', 'Censo']] as [k, l]}
 						<button role="tab" aria-selected={tab === k} class:on={tab === k} onclick={() => (capa = k === 'censo' ? (tab === 'censo' ? capa : 'mayores') : k)}>{l}</button>
 					{/each}
 				</div>
@@ -706,10 +801,28 @@
 				{/if}
 				<div class="legend">
 					{#if tab === 'agua'}
-						<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
-						<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
+						<div class="seg" role="radiogroup" aria-label="Color del agua">
+							<button role="radio" aria-checked={aguaModo === 'profundidad'} class:on={aguaModo === 'profundidad'} onclick={() => (aguaModo = 'profundidad')}>Profundidad</button>
+							<button role="radio" aria-checked={aguaModo === 'frecuencia'} class:on={aguaModo === 'frecuencia'} onclick={() => (aguaModo = 'frecuencia')}>Cuántas veces llegó</button>
+						</div>
+						{#if aguaModo === 'frecuencia'}
+							<div class="keys">{#each FREQ as f}<span><i style:background={f.color}></i>{f.label}</span>{/each}</div>
+							<p class="note">Años desde 1980 en que el río llegó a cada lugar (agua y casas), con la lectura diaria de Prefectura. El pico del día puede ser mayor: la cuenta es un mínimo. Lo que llegó 10 años o más se inunda de nuevo con casi cualquier crecida grande.</p>
+						{:else}
+							<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
+							<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
+						{/if}
 						<div class="keys"><span><i style:background={ISO}></i>Aislada: seca, sin camino al hospital</span><span><i class="road"></i>Camino posiblemente cortado</span></div>
 						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
+					{:else if tab === 'arroyos' && tabla.arroyos}
+						{@const A = tabla.arroyos}
+						<div class="keys">{#each ARR as a}<span><i style:background={a.color}></i>{a.label}</span>{/each}</div>
+						<p class="sub"><b>{fmt(A.alta.viviendas)} viviendas</b> ({approx(A.alta.personas)} personas) en terreno bajo junto a un arroyo: susceptibilidad alta. Otras {fmt(A.media.viviendas)} en media.</p>
+						<p class="note">No depende de la altura del río: es dónde se junta el agua cuando llueve fuerte. Alta: menos de {dec(A.h_alta_m)} m por encima de un arroyo con cuenca de {dec(A.a_grande_km2)} km² o más; media: menos de {dec(A.h_media_m)} m. En el centro coincide con el desborde de 2009; el arroyo del Hospital sale en media. No ve alcantarillas ni desagües: el anegamiento de Cerro Bonito (julio 2026, un desagüe) no aparece.</p>
+						{#if tabla.lluvia?.umbral}
+							{@const U = tabla.lluvia.umbral}
+							<p class="note"><b>Lluvia.</b> En los {U.desbordes_urbanos} desbordes urbanos documentados (2009, junio y julio 2026) la lluvia satelital marcó entre {fmt(U.chirps_72h_min)} y {fmt(U.chirps_72h_max)} mm en 3 días, pero eso pasa unas {dec(U.episodios_por_anio)} veces por año: el satélite no ve los aguaceros de pocas horas (julio 2026: 190 mm según el municipio, 99 mm en el satélite). Para fijar un umbral de aviso hace falta un pluviómetro local. Lo peor es la lluvia fuerte con el río alto, porque el arroyo no desagua: pasó {tabla.lluvia.coincide_rio_alto.length} veces desde 1981 ({[...new Set(tabla.lluvia.coincide_rio_alto.map((d) => d.slice(0, 4)))].join(', ')}).</p>
+						{/if}
 					{:else if tab === 'prioridad'}
 						<div class="keys">{#each PRIO as p}<span><i style:background={p.color}></i>{p.label}</span>{/each}</div>
 						<p class="note">Combina cuán pronto llega el agua con cuántas privaciones tiene el radio.</p>
@@ -736,6 +849,9 @@
 						<span><i style:background={tv?.color}></i>{tv?.label}</span>
 					</p>
 					<p>{#if s0 != null}El agua entra a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980.{:else}El agua no llega a sus viviendas en los escenarios.{/if}</p>
+					{#if selected.arr_alta_viviendas != null && (+selected.arr_alta_viviendas > 0 || +selected.arr_media_viviendas > 0)}
+						<p>Junto a arroyos, con lluvia fuerte: <b>{fmt(+selected.arr_alta_viviendas)}</b> {+selected.arr_alta_viviendas === 1 ? 'vivienda' : 'viviendas'} en susceptibilidad alta y {fmt(+selected.arr_media_viviendas)} en media.</p>
+					{/if}
 					{#if s0 != null}
 						<table>
 							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
@@ -785,13 +901,14 @@
 			<details>
 				<summary>Cómo leer esta demo</summary>
 				<div class="fine">
-					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Sólo crecida del Uruguay: no incluye lluvia ni arroyos.</p>
+					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el Uruguay llega a esa altura. Los arroyos van aparte, en su pestaña: no dependen de la altura del río.</p>
 					<p><b>Calibrado con siete crecidas documentadas (2014-2026):</b> el terreno satelital se ajustó {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (por ejemplo, Maracaná y Chivilcoy desde 13 m). Las marcas de crecida de la provincia lo vuelven exacto.</p>
 					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
 					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte».</p>
+					<p><b>Arroyos:</b> altura de cada lugar sobre el arroyo más cercano siguiendo la pendiente, con el mismo terreno satelital (30 m) que el río; la red de arroyos calculada coincide con la de OpenStreetMap en el 89 % de su largo. Susceptibilidad sin calibrar: no ve alcantarillas, entubados ni rellenos. Lluvia: CHIRPS y ERA5-Land diarios desde 1981.</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
-					<p><b>Fuentes:</b> INA, FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
+					<p><b>Fuentes:</b> INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
 				</div>
 			</details>
 
@@ -872,6 +989,9 @@
 	.tabs { display: flex; padding: 3px; gap: 2px; border-radius: 10px; background: #161b24; }
 	.tabs button { flex: 1; padding: 6px 4px; border: 0; border-radius: 8px; background: none; color: #94a3b8; cursor: pointer; font: inherit; font-size: 12.5px; }
 	.tabs button.on { background: #263042; color: #fff; }
+	.seg { display: flex; gap: 4px; margin-bottom: 8px; }
+	.seg button { flex: 1; padding: 4px 6px; border: 1px solid #263042; border-radius: 8px; background: none; color: #94a3b8; cursor: pointer; font: inherit; font-size: 12px; }
+	.seg button.on { border-color: #38bdf8; color: #e5e7eb; background: rgba(56, 189, 248, 0.1); }
 	select { width: 100%; margin-top: 8px; padding: 6px 8px; border-radius: 8px; background: #161b24; color: #e5e7eb; border: 1px solid #263042; font: inherit; font-size: 12.5px; }
 	.legend { margin-top: 10px; }
 	.ramp { display: grid; grid-template-columns: 44px 1fr 46px; gap: 8px; align-items: center; font-size: 11.5px; color: #cbd5e1; margin-bottom: 6px; }
