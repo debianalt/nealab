@@ -203,7 +203,7 @@
 		const feats = alcanzadas.flatMap((u) => {
 			const pos = starPos.get(u.id);
 			return pos ? [{ type: 'Feature', geometry: { type: 'Point', coordinates: pos },
-				properties: { id: u.id, n: numOf.get(u.id) ?? 0 } }] : [];
+				properties: { id: u.id, n: numOf.get(u.id) ?? 0, nombre: u.microzona.startsWith('cerca de') ? '' : u.microzona.split(',')[0].trim() } }] : [];
 		});
 		return { type: 'FeatureCollection', features: feats };
 	}
@@ -377,7 +377,7 @@
 		}
 		if (z) {
 			const t = tipoOf(z.tipo_vivienda);
-			lines.push(`<span class="dim">Radio ${z.id} · ${z.nombre}</span>`,
+			lines.push(`${z.nombre} <span class="dim">· radio censal ${z.id}</span>`,
 				`<span class="dim">${PRIO.find((x) => x.id === z.prioridad)?.label ?? ''} · ${t?.label ?? ''} · NBI ${pct(+z.c_nbi)} (Misiones ${pct(tabla?.provincia.nbi ?? 0)})</span>`);
 		}
 		return lines.length ? lines.join('<br>') : null;
@@ -485,6 +485,14 @@
 						'icon-allow-overlap': true, 'icon-ignore-placement': true, 'icon-size': 0.85,
 						'symbol-sort-key': ['-', 0, ['get', 'n']]
 					} });
+				// barrio name next to each star, only when zoomed in; labels that would collide are dropped
+				map.addLayer({ id: 'star-labels', type: 'symbol', source: 'stars', minzoom: 13.5,
+					layout: {
+						'text-field': ['get', 'nombre'], 'text-font': ['Montserrat Medium'], 'text-size': 11.5,
+						'text-anchor': 'left', 'text-offset': [1.15, 0], 'text-max-width': 12,
+						'symbol-sort-key': ['get', 'n']
+					},
+					paint: { 'text-color': '#f1f5f9', 'text-halo-color': 'rgba(11, 13, 18, 0.92)', 'text-halo-width': 1.6 } });
 				map.addSource('lasso', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', '$type', 'Polygon'],
 					paint: { 'fill-color': '#22d3ee', 'fill-opacity': 0.12 } });
@@ -642,6 +650,7 @@
 						<div class="keys">{#each RATIO as r}<span><i style:background={r.color}></i>{r.label}</span>{/each}</div>
 						<p class="note">Misiones: {pct(tabla.provincia[censoSel.prov])} de los {censoSel.id === 'c_dep' ? 'habitantes' : 'hogares'}. Cada casa toma el valor de su radio.</p>
 					{/if}
+					<p class="note radio-def">Cada zona es un radio censal del INDEC (en el pueblo, unas 200 a 300 viviendas) y lleva el nombre de los barrios que contiene.</p>
 				</div>
 			</section>
 
