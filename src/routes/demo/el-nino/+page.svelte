@@ -22,7 +22,7 @@
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
 	// cache buster for the JSON and PNG files (the CDN keeps files with ?v as immutable)
-	const VER = '6';
+	const VER = '7';
 	const TOWN_WIDE = { center: [-54.2025, -27.2995] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
 	const TOWN_NARROW = { center: [-54.1995, -27.3005] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
 	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
@@ -125,7 +125,7 @@
 	interface Paso {
 		altura: number; viviendas: number; personas: number; ninos: number; mayores: number; hog_nbi: number;
 		viv_renabap: number; escuelas: number; escuelas_secas: number; salud: number; comunidades: number; microzonas: number;
-		aisladas_viv: number; aisladas_pers: number;
+		aisladas_viv: number; aisladas_pers: number; sin_hosp_viv?: number; sin_hosp_pers?: number;
 	}
 	interface Tabla {
 		escenarios: Record<string, { fecha: string; altura_m: number; fuente?: string }>;
@@ -617,7 +617,7 @@
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
 						'fill-extrusion-color': '#2b313b', 'fill-extrusion-opacity': 0.8
 					} });
-				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v6.pmtiles` });
+				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v7.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
 					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': DRY, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
@@ -740,7 +740,10 @@
 					<p class="lead"><b>{fmt(pasoActual.viviendas)} viviendas</b> y <b>{approx(pasoActual.personas)} personas</b> quedarían bajo el agua, entre ellas {approx(pasoActual.ninos)} niños de 0 a 5 años y {approx(pasoActual.mayores)} mayores de 65.</p>
 				{/if}
 				{#if pasoActual.aisladas_viv > 0}
-					<p class="iso">Además, <b>{fmt(pasoActual.aisladas_viv)} viviendas</b> quedarían aisladas: secas, pero sin camino al hospital de El Soberbio. <button class="lnk" onclick={() => { capa = 'agua'; view(MUNI); }}>Ver en el mapa</button></p>
+					<p class="iso">Además, <b>{fmt(pasoActual.aisladas_viv)} viviendas</b> quedarían aisladas: secas, pero sin camino seco ni al hospital de El Soberbio ni a las rutas que salen del municipio. <button class="lnk" onclick={() => { capa = 'agua'; view(MUNI); }}>Ver en el mapa</button></p>
+				{/if}
+				{#if (pasoActual.sin_hosp_viv ?? 0) > 0}
+					<p class="sub">Otras {fmt(pasoActual.sin_hosp_viv ?? 0)} pierden el camino al hospital de El Soberbio, pero pueden salir por ruta (RP 13, 15 o 21, o picadas) hacia hospitales de municipios vecinos.</p>
 				{/if}
 				<p class="roads">
 					{#if cortados.length}<span class="rl"></span>Posible corte de {[...rutasCortadas.map((c) => `${c.nombre.replace(' (RP2)', '')} (${m(c.altura)})`), ...(callesCortadas.length ? [`${callesCortadas.length} ${callesCortadas.length === 1 ? 'calle' : 'calles'} del pueblo`] : [])].join(' · ')}.
@@ -812,7 +815,7 @@
 							<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
 							<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
 						{/if}
-						<div class="keys"><span><i style:background={ISO}></i>Aislada: seca, sin camino al hospital</span><span><i class="road"></i>Camino posiblemente cortado</span></div>
+						<div class="keys"><span><i style:background={ISO}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span></div>
 						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
 					{:else if tab === 'arroyos' && tabla.arroyos}
 						{@const A = tabla.arroyos}
@@ -905,7 +908,7 @@
 					<p><b>Calibrado con siete crecidas documentadas (2014-2026):</b> el terreno satelital se ajustó {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (por ejemplo, Maracaná y Chivilcoy desde 13 m). Las marcas de crecida de la provincia lo vuelven exacto.</p>
 					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
-					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte».</p>
+					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte». Una vivienda queda aislada cuando no llega en seco ni al hospital de El Soberbio ni a una salida del municipio (RP 13, 15, 21 y picadas hacia las colonias vecinas); fuera del municipio esos caminos se suponen transitables. La RP 2 no cuenta como salida: va a Moconá o corre junto al río.</p>
 					<p><b>Arroyos:</b> altura de cada lugar sobre el arroyo más cercano siguiendo la pendiente, con el mismo terreno satelital (30 m) que el río; la red de arroyos calculada coincide con la de OpenStreetMap en el 89 % de su largo. Susceptibilidad sin calibrar: no ve alcantarillas, entubados ni rellenos. Lluvia: CHIRPS y ERA5-Land diarios desde 1981.</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
 					<p><b>Fuentes:</b> INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
