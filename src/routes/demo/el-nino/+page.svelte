@@ -37,24 +37,38 @@
 		{ id: 'dependientes', label: 'Hogares que no se evacúan solos', color: '#34d399', def: 'niños de 0 a 5 y mayores de 65 por encima del promedio' },
 		{ id: 'consolidada', label: 'Consolidada', color: '#94a3b8', def: 'ninguno de los rasgos anteriores' }
 	];
-	// census layers: radio share vs. provincial share (key in tabla.provincia)
+	// census layers as raw counts per radio: share in the radio x its persons or households.
+	// prov = Misiones share (tabla.provincia key, or a number: 0-5 and 65+ from the 2022 census, all radios 54*)
 	const CENSO = [
-		{ id: 'c_nbi', prov: 'nbi', label: 'Hogares con NBI' },
-		{ id: 'c_piso', prov: 'piso', label: 'Piso de baja calidad' },
-		{ id: 'c_cielo', prov: 'cielo', label: 'Sin cielorraso' },
-		{ id: 'c_pozo', prov: 'pozo', label: 'Desagüe a pozo sin cámara' },
-		{ id: 'c_canieria', prov: 'canieria', label: 'Sin agua por cañería' },
-		{ id: 'c_hacin', prov: 'hacin', label: 'Hacinamiento' },
-		{ id: 'c_tenencia', prov: 'tenencia', label: 'Ni propietarios ni inquilinos' },
-		{ id: 'c_dep', prov: 'dep', label: 'Niños 0-5 y mayores 65+' }
+		{ id: 'mayores', share: 's65', base: 'c_personas', unit: 'personas', prov: 0.0827 as number | string, label: 'Personas de 65 años y más' },
+		{ id: 'ninos', share: 's05', base: 'c_personas', unit: 'niños', prov: 0.0982 as number | string, label: 'Niños de 0 a 5 años' },
+		{ id: 'c_nbi', share: 'c_nbi', base: 'c_hogares', unit: 'hogares', prov: 'nbi' as number | string, label: 'Hogares con NBI' },
+		{ id: 'c_piso', share: 'c_piso', base: 'c_hogares', unit: 'hogares', prov: 'piso' as number | string, label: 'Hogares con piso de baja calidad' },
+		{ id: 'c_cielo', share: 'c_cielo', base: 'c_hogares', unit: 'hogares', prov: 'cielo' as number | string, label: 'Hogares sin cielorraso' },
+		{ id: 'c_pozo', share: 'c_pozo', base: 'c_hogares', unit: 'hogares', prov: 'pozo' as number | string, label: 'Hogares con pozo sin cámara' },
+		{ id: 'c_canieria', share: 'c_canieria', base: 'c_hogares', unit: 'hogares', prov: 'canieria' as number | string, label: 'Hogares sin agua por cañería' },
+		{ id: 'c_hacin', share: 'c_hacin', base: 'c_hogares', unit: 'hogares', prov: 'hacin' as number | string, label: 'Hogares con hacinamiento' },
+		{ id: 'c_tenencia', share: 'c_tenencia', base: 'c_hogares', unit: 'hogares', prov: 'tenencia' as number | string, label: 'Hogares ni propietarios ni inquilinos' }
 	];
-	const RATIO = [
-		{ lim: 0, color: '#16a34a', label: 'menos de 0,75 veces el promedio' },
-		{ lim: 0.75, color: '#86efac', label: '0,75 a 1 vez' },
-		{ lim: 1, color: '#fde68a', label: '1 a 1,25 veces' },
-		{ lim: 1.25, color: '#f97316', label: '1,25 a 1,75 veces' },
-		{ lim: 1.75, color: '#dc2626', label: 'más de 1,75 veces' }
-	];
+	type CVar = (typeof CENSO)[number];
+	const shareOf = (c: CVar, p: any) => +p[c.share] || 0;
+	const countOf = (c: CVar, p: any) => shareOf(c, p) * (+p[c.base] || 0);
+	const provOf = (c: CVar) => (typeof c.prov === 'number' ? c.prov : (tabla?.provincia[c.prov] ?? 1));
+	// sequential plasma scale: reads well on the dark basemap and does not mix with the water blues
+	const PLASMA = ['#3b1f6b', '#7b2f8c', '#c13e75', '#f0624b', '#fca636'];
+	// round to half the order of magnitude: 23 -> 25, 38 -> 40, 140 -> 150
+	const niceNum = (x: number) => {
+		if (x <= 0) return 0;
+		const step = Math.max(10 ** Math.floor(Math.log10(x)) / 2, 1);
+		return Math.max(Math.round(x / step) * step, step);
+	};
+	// class breaks: quintiles of the 36 radios rounded to clean numbers
+	function breaksFor(c: CVar): number[] {
+		const v = (radios?.features ?? []).map((f: any) => countOf(c, f.properties)).sort((a: number, b: number) => a - b);
+		if (!v.length) return [];
+		const q = [0.2, 0.4, 0.6, 0.8].map((t) => niceNum(v[Math.floor(t * (v.length - 1))]));
+		return [...new Set(q)].filter((x) => x > 0).sort((a, b) => a - b);
+	}
 	// continuous water-depth scale: colour interpolated between stops that the legend shows evenly spaced
 	const WSTOPS: [number, number[]][] = [[0, [224, 247, 255, 175]], [0.5, [158, 230, 255, 190]], [1.5, [76, 195, 255, 205]],
 		[3, [31, 143, 224, 215]], [6, [20, 83, 168, 225]], [10, [11, 42, 107, 235]]];
@@ -148,6 +162,12 @@
 	let starHover = $state('');
 	const aniosSobre = $derived(tabla ? tabla.picos.filter((p) => p.altura >= stage - 1e-6).length : 0);
 	const censoSel = $derived(CENSO.find((c) => c.id === capa));
+	const censoKeys = $derived.by(() => {
+		if (!censoSel || !tabla) return [];
+		const b = breaksFor(censoSel), cols = PLASMA.slice(PLASMA.length - (b.length + 1));
+		return cols.map((color, i) => ({ color,
+			label: i === 0 ? `menos de ${fmt(b[0])}` : i === b.length ? `${fmt(b[i - 1])} o más` : `${fmt(b[i - 1])} a ${fmt(b[i])}` }));
+	});
 	const lassoRes = $derived.by(() => {
 		if (!lassoPoly || !tabla) return null;
 		const alturas = [stage, ...SCEN.map((s) => tabla!.escenarios[s.id].altura_m)];
@@ -269,10 +289,10 @@
 		if (capa === 'prioridad' || capa === 'agua') return colorOf(p.prioridad);
 		if (capa === 'tipo') return tipoOf(p.tipo_vivienda)?.color ?? '#94a3b8';
 		const c = CENSO.find((x) => x.id === capa)!;
-		const ratio = p[c.id] / (tabla?.provincia[c.prov] ?? 1);
-		let col = RATIO[0].color;
-		for (const r of RATIO) if (ratio >= r.lim) col = r.color;
-		return col;
+		const b = breaksFor(c), cols = PLASMA.slice(PLASMA.length - (b.length + 1)), n = countOf(c, p);
+		let k = 0;
+		while (k < b.length && n >= b[k]) k++;
+		return cols[k];
 	}
 	function colorPairs(): string[] {
 		return (radios?.features ?? []).flatMap((f: any) => [f.properties.id, radioColor(f.properties)]);
@@ -379,6 +399,7 @@
 			const t = tipoOf(z.tipo_vivienda);
 			lines.push(`${z.nombre} <span class="dim">· radio censal ${z.id}</span>`,
 				`<span class="dim">${PRIO.find((x) => x.id === z.prioridad)?.label ?? ''} · ${t?.label ?? ''} · NBI ${pct(+z.c_nbi)} (Misiones ${pct(tabla?.provincia.nbi ?? 0)})</span>`);
+			if (censoSel) lines.push(`${censoSel.label}: <b>${fmt(countOf(censoSel, z))}</b> <span class="dim">(${pct(shareOf(censoSel, z))})</span>`);
 		}
 		return lines.length ? lines.join('<br>') : null;
 	}
@@ -627,7 +648,7 @@
 				<h2>Ver en el mapa</h2>
 				<div class="tabs" role="tablist">
 					{#each [['agua', 'Agua'], ['prioridad', 'Prioridad'], ['tipo', 'Vivienda'], ['censo', 'Censo']] as [k, l]}
-						<button role="tab" aria-selected={tab === k} class:on={tab === k} onclick={() => (capa = k === 'censo' ? (tab === 'censo' ? capa : 'c_nbi') : k)}>{l}</button>
+						<button role="tab" aria-selected={tab === k} class:on={tab === k} onclick={() => (capa = k === 'censo' ? (tab === 'censo' ? capa : 'mayores') : k)}>{l}</button>
 					{/each}
 				</div>
 				{#if tab === 'censo'}
@@ -647,8 +668,8 @@
 						<div class="keys">{#each TIPOS as p}<span title={p.def}><i style:background={p.color}></i>{p.label}</span>{/each}</div>
 						<p class="note">Tipo de vulnerabilidad de la vivienda por radio censal (censo 2022, contra el promedio de Misiones).</p>
 					{:else if censoSel}
-						<div class="keys">{#each RATIO as r}<span><i style:background={r.color}></i>{r.label}</span>{/each}</div>
-						<p class="note">Misiones: {pct(tabla.provincia[censoSel.prov])} de los {censoSel.id === 'c_dep' ? 'habitantes' : 'hogares'}. Cada casa toma el valor de su radio.</p>
+						<div class="keys">{#each censoKeys as r}<span><i style:background={r.color}></i>{r.label} {censoSel.unit}</span>{/each}</div>
+						<p class="note">Cantidad por radio censal (censo 2022). Los radios rurales grandes suman más porque tienen más gente: la ficha da también el porcentaje.</p>
 					{/if}
 					<p class="note radio-def">Cada zona es un radio censal del INDEC (en el pueblo, unas 200 a 300 viviendas) y lleva el nombre de los barrios que contiene.</p>
 				</div>
@@ -678,17 +699,17 @@
 					{/if}
 					<div class="bars">
 						{#each CENSO as c}
-							{@const z = +selected[c.id]}
-							{@const pr = tabla.provincia[c.prov]}
+							{@const z = shareOf(c, selected)}
+							{@const pr = provOf(c)}
 							<!-- fixed scale: the provincial average sits at the middle, the end of the track is twice it -->
 							<div class="bar">
-								<span class="bl">{c.label}</span>
+								<span class="bl">{c.label.replace('Hogares ', '').replace('Personas de ', '').replace(/^con /, '')}</span>
 								<span class="track"><span class="z" class:hi={z > pr} style:width={`${Math.min(z / (2 * pr), 1) * 100}%`}></span><span class="pv"></span></span>
-								<span class="bv">{pct(z)}</span>
+								<span class="bv"><b>{fmt(countOf(c, selected))}</b> · {pct(z)}</span>
 							</div>
 						{/each}
 					</div>
-					<p class="note">Censo 2022. La marca blanca es el promedio de Misiones; la barra llena, el doble.</p>
+					<p class="note">Censo 2022: cantidad en el radio y porcentaje. La marca blanca es el promedio de Misiones; la barra llena, el doble.</p>
 				</section>
 			{/if}
 
@@ -795,7 +816,7 @@
 	.card td.cur { color: #38bdf8; font-weight: 600; }
 	.close { position: absolute; top: 6px; right: 10px; background: none; border: 0; color: #7c8798; font-size: 18px; cursor: pointer; }
 	.bars { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
-	.bar { display: grid; grid-template-columns: 140px 1fr 38px; gap: 8px; align-items: center; font-size: 11.5px; }
+	.bar { display: grid; grid-template-columns: 128px 1fr 74px; gap: 8px; align-items: center; font-size: 11.5px; }
 	.bl { color: #cbd5e1; }
 	.bv { text-align: right; font-variant-numeric: tabular-nums; color: #cbd5e1; }
 	.track { position: relative; height: 6px; background: #1c2230; border-radius: 3px; }
@@ -828,7 +849,7 @@
 		.panel { width: 100%; border-left: 0; border-top: 1px solid #1c2230; padding: 16px 16px 24px; flex: 1; gap: 16px; }
 		.big { font-size: 34px; }
 		.impact .lead { font-size: 15.5px; }
-		.bar { grid-template-columns: 116px 1fr 34px; }
+		.bar { grid-template-columns: 104px 1fr 70px; }
 		.tools { left: 48px; }
 	}
 </style>
