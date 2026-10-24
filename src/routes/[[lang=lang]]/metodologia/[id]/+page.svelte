@@ -27,14 +27,14 @@
 </script>
 
 <Seo
-	title="{title} · Metodología · nealab"
-	description={description ?? `Metodología del análisis ${title} en nealab`}
+	title="{title} · Metodología · Spatia"
+	description={description ?? `Metodología del análisis ${title} en Spatia`}
 />
 
 <div class="page">
 	<!-- Print-only brand header -->
 	<div class="print-brand">
-		<strong>nealab</strong> · análisis geoespacial abierto · spatia.ar
+		<strong>Spatia</strong> · análisis geoespacial abierto · spatia.ar
 	</div>
 
 	<header class="hdr">
@@ -92,7 +92,7 @@
 
 	<footer class="footer">
 		<p>
-			{i18n.t('section.citation')}: Gomez, R. E. (2026). nealab: A Reproducible Platform for Subnational Geospatial Analysis (Version v2.3). Zenodo. <a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
+			{i18n.t('section.citation')}: Gomez, R. E. (2026). Spatia: A Reproducible Platform for Subnational Geospatial Analysis (Version v2.3). Zenodo. <a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>
 		<p class="affil">CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier</p>
 		<p class="print-only generated">Documento generado el {today} desde spatia.ar/metodologia/{data.id}</p>

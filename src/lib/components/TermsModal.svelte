@@ -43,7 +43,7 @@
 			</li>
 			<li>
 				<span class="label">Responsabilidad del usuario.</span>
-				Quien use nealab en decisiones de gestión, inversión, investigación o política pública
+				Quien use Spatia en decisiones de gestión, inversión, investigación o política pública
 				asume la responsabilidad de ese uso y debe complementarlo con validación independiente.
 			</li>
 			<li>

@@ -2,7 +2,7 @@ export type Locale = 'es' | 'en' | 'gn' | 'pt';
 
 const dict: Record<string, Record<Locale, string>> = {
 	// Header
-	'header.title': { es: 'nealab', en: 'nealab', gn: 'nealab', pt: 'nealab' },
+	'header.title': { es: 'Spatia', en: 'Spatia', gn: 'Spatia', pt: 'Spatia' },
 	'header.whatIsThis': { es: '¿Qué es esto?', en: 'What is this?', gn: "Mba'épa ko?", pt: 'O que é isso?' },
 	'header.subtitle': { es: 'Análisis geoespacial', en: 'Geospatial analysis', gn: "Yvy Rekokatu", pt: 'Análise geoespacial' },
 	'header.nav.map': { es: 'Mapa', en: 'Map', gn: 'Mapa', pt: 'Mapa' },
@@ -785,7 +785,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'trade.risk.card_title': { es: 'Riesgo Ambiental', en: 'Environmental Risk', gn: 'Risk', pt: 'Risco Ambiental' },
 	'trade.risk.card_desc': { es: 'Evaluación de riesgo climático, hídrico y de incendios para inversiones y seguros en regiones específicas.', en: 'Climate, water, and fire risk assessment for investments and insurance in specific regions.', gn: 'Risk', pt: 'Avaliação de risco climático, hídrico e de incêndios para investimentos e seguros em regiões específicas.' },
 	'trade.trust.title': { es: 'Fuentes de datos', en: 'Data sources', gn: 'Data', pt: 'Fontes de dados' },
-	'trade.footer.tagline': { es: 'Análisis geoespacial desde el borde', en: 'Geospatial analysis from the edge', gn: 'nealab', pt: 'Análise geoespacial desde a borda' },
+	'trade.footer.tagline': { es: 'Análisis geoespacial desde el borde', en: 'Geospatial analysis from the edge', gn: 'Spatia', pt: 'Análise geoespacial desde a borda' },
 	'trade.footer.data': { es: 'Datos satelitales: MODIS, Landsat, Sentinel, VIIRS — servidos desde Cloudflare', en: 'Satellite data: MODIS, Landsat, Sentinel, VIIRS — served from Cloudflare', gn: 'Data', pt: 'Dados satelitais: MODIS, Landsat, Sentinel, VIIRS — servidos do Cloudflare' },
 
 	// ── EUDR product page ─────────────────────────────────────────────────
@@ -915,10 +915,10 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── Metodología pages ─────────────────────────────────────────────────
 	'page.metodologia.title': { es: 'Metodología e indicadores', en: 'Methodology & indicators', gn: "Metodología ha indicadores", pt: 'Metodologia e indicadores' },
-	'page.metodologia.kicker': { es: 'nealab · noreste argentino y regiones transfronterizas', en: 'nealab · northeast Argentina & cross-border regions', gn: "nealab · noreste ha ñembyatyrã", pt: 'nealab · nordeste argentino e regiões transfronteiriças' },
+	'page.metodologia.kicker': { es: 'Spatia · noreste argentino y regiones transfronterizas', en: 'Spatia · northeast Argentina & cross-border regions', gn: "Spatia · noreste ha ñembyatyrã", pt: 'Spatia · nordeste argentino e regiões transfronteiriças' },
 	'page.metodologia.desc': { es: 'Documentación metodológica de cada indicador: fuentes de datos, variables incluidas, método de normalización y limitaciones conocidas. Todos los análisis son reproducibles y auditables.', en: 'Methodological documentation for each indicator: data sources, included variables, normalisation method and known limitations. All analyses are reproducible and auditable.', gn: "Documentación metodológica ojeporúva: fuentes, variables ha limitaciones. Análisis oñemboguapýva ha ojapohápe.", pt: 'Documentação metodológica de cada indicador: fontes de dados, variáveis incluídas, método de normalização e limitações conhecidas. Todas as análises são reproduzíveis e auditáveis.' },
 	'page.metodologia.arrowLink': { es: 'Ver metodología →', en: 'View methodology →', gn: "Ehecha metodología →", pt: 'Ver metodologia →' },
-	'page.metodologia.kicker.detail': { es: 'Metodología · nealab · análisis geoespacial abierto', en: 'Methodology · nealab · open geospatial analysis', gn: "Metodología · nealab · yvy rekokatu", pt: 'Metodologia · nealab · análise geoespacial aberta' },
+	'page.metodologia.kicker.detail': { es: 'Metodología · Spatia · análisis geoespacial abierto', en: 'Methodology · Spatia · open geospatial analysis', gn: "Metodología · Spatia · yvy rekokatu", pt: 'Metodologia · Spatia · análise geoespacial aberta' },
 	'page.metodologia.downloadsText': { es: 'Los datos crudos de este análisis pueden descargarse en CSV o GeoJSON desde el panel lateral del mapa una vez seleccionado un departamento.', en: "The raw data for this analysis can be downloaded as CSV or GeoJSON from the map's side panel once a department is selected.", gn: "Mba'ekuaa opyta CSV o GeoJSON-pe oñemosẽ hag̃ua mapa-pe peteĩ departamento oiporávova guive.", pt: 'Os dados brutos desta análise podem ser baixados em CSV ou GeoJSON no painel lateral do mapa após a seleção de um departamento.' },
 	'section.variables': { es: 'Variables incluidas', en: 'Variables included', gn: "Variables oñemboguapýva", pt: 'Variáveis incluídas' },
 	'section.downloads': { es: 'Datos descargables', en: 'Downloadable data', gn: "Mba'ekuaa oñemosẽ hag̃ua", pt: 'Dados para download' },

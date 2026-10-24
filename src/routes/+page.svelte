@@ -1846,6 +1846,12 @@
 
 </script>
 
+<!-- Canonical for the map only: app.html is shared by every route, and a second canonical
+     there would contradict the one each prerendered page sets through <Seo>. -->
+<svelte:head>
+	<link rel="canonical" href="https://spatia.ar/" />
+</svelte:head>
+
 <div class="flex h-screen w-full">
 	<!-- Map + overlays -->
 	<div class="flex-1 flex flex-col relative min-w-0">

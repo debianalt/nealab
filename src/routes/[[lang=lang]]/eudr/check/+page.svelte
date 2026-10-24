@@ -696,12 +696,12 @@
 	}
 </script>
 
-<Seo title="EUDR Check — nealab" description={i18n.t('eudr.check.empty_desc')} />
+<Seo title="EUDR Check — Spatia" description={i18n.t('eudr.check.empty_desc')} />
 
 {#if !eudrDisclaimerAccepted}
 <div class="eudr-gate">
 	<div class="eudr-gate-card">
-		<div class="eudr-gate-kicker">EUDR Check · nealab</div>
+		<div class="eudr-gate-kicker">EUDR Check · Spatia</div>
 		<h1 class="eudr-gate-title">Aviso importante antes de usar esta herramienta</h1>
 		<ul class="eudr-gate-points">
 			<li>
@@ -728,7 +728,7 @@
 			</li>
 			<li>
 				<span class="eudr-gate-label">Responsabilidad.</span>
-				Al continuar, aceptás que nealab, su autor, CONICET y UNaM no asumen responsabilidad
+				Al continuar, aceptás que Spatia, su autor, CONICET y UNaM no asumen responsabilidad
 				por decisiones comerciales o regulatorias basadas exclusivamente en este análisis.
 			</li>
 		</ul>

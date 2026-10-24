@@ -33,7 +33,7 @@
 <div class="page">
 	<div class="content">
 	<div class="print-brand">
-		nealab · análisis geoespacial abierto · spatia.ar
+		Spatia · análisis geoespacial abierto · spatia.ar
 	</div>
 
 	<header class="hdr">
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="kicker">{c.kicker}</div>
-		<h1 class="title"><a class="title-link" href="/">nealab</a></h1>
+		<h1 class="title"><a class="title-link" href="/">Spatia</a></h1>
 		<p class="subtitle">
 			{@html c.subtitle}
 		</p>
@@ -128,7 +128,7 @@
 
 	<footer class="footer">
 		<p>
-			{c.citationLabel}: Gomez, R. E. (2026). nealab: A Reproducible Platform for Subnational
+			{c.citationLabel}: Gomez, R. E. (2026). Spatia: A Reproducible Platform for Subnational
 			Geospatial Analysis (Version v2.3). Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>

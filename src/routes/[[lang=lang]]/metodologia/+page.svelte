@@ -23,13 +23,13 @@
 </script>
 
 <Seo
-	title="Metodología e indicadores · nealab"
-	description="Metodología de los indicadores geoespaciales de nealab — fuentes, variables y métodos de cada análisis."
+	title="Metodología e indicadores · Spatia"
+	description="Metodología de los indicadores geoespaciales de Spatia — fuentes, variables y métodos de cada análisis."
 />
 
 <div class="page">
 	<div class="print-brand">
-		<strong>nealab</strong> · análisis geoespacial abierto · spatia.ar
+		<strong>Spatia</strong> · análisis geoespacial abierto · spatia.ar
 	</div>
 
 	<header class="hdr">
@@ -70,7 +70,7 @@
 
 	<footer class="footer">
 		<p>
-			Citación sugerida: Gomez, R. E. (2026). nealab: A Reproducible Platform for Subnational Geospatial
+			Citación sugerida: Gomez, R. E. (2026). Spatia: A Reproducible Platform for Subnational Geospatial
 			Analysis (Version v2.3). Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>

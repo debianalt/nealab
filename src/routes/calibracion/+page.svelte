@@ -146,7 +146,7 @@
 </script>
 
 <svelte:head>
-	<title>Calibración · nealab</title>
+	<title>Calibración · Spatia</title>
 </svelte:head>
 
 <div class="page">
