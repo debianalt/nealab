@@ -1,0 +1,5 @@
+name = "spatia-www-redirect"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+routes = [{ pattern = "www.spatia.ar/*", zone_name = "spatia.ar" }]
