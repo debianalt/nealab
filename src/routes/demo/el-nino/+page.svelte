@@ -14,7 +14,7 @@
 	//                       and (optional) the arroyo summary with its own raster corners and the rain context
 	//   arroyos.png         one band, arroyo susceptibility class per 20 m pixel of the municipality: 3 high, 2 medium,
 	//                       1 low, 0 outside (terrain height above the nearest stream, not a scenario)
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { page } from '$app/state';
 	import { BASEMAP, getTilesUrl } from '$lib/config';
@@ -455,6 +455,28 @@
 	}
 	function view(v: typeof TOWN_WIDE) { map?.flyTo({ ...v, duration: 1200 }); }
 
+	// printable one-page sheet of the selected radio: the map is captured right after a repaint (no
+	// preserveDrawingBuffer on the live map), then the print dialog saves it as PDF
+	let fichaImg = $state('');
+	let copiado = $state(false);
+	const zonaUrl = (id: string) => `${page.url.origin}${page.url.pathname}?zona=${id}`;
+	async function imprimirFicha() {
+		if (!selected || !map) return;
+		const f = radioById.get(selected.id);
+		const xs: number[] = [], ys: number[] = [];
+		const walk = (c: any) => (typeof c[0] === 'number' ? (xs.push(c[0]), ys.push(c[1])) : c.forEach(walk));
+		walk(f.geometry.coordinates);
+		map.fitBounds([[Math.min(...xs), Math.min(...ys)], [Math.max(...xs), Math.max(...ys)]], { padding: 40, maxZoom: 16, pitch: 0, bearing: 0, duration: 0 });
+		await new Promise((r) => { map.once('idle', r); map.triggerRepaint(); });
+		fichaImg = await new Promise<string>((r) => { map.once('render', () => r(map.getCanvas().toDataURL('image/jpeg', 0.85))); map.triggerRepaint(); });
+		await tick();
+		window.print();
+	}
+	async function copiarLink() {
+		if (!selected) return;
+		try { await navigator.clipboard.writeText(zonaUrl(selected.id)); copiado = true; setTimeout(() => (copiado = false), 2000); } catch {}
+	}
+
 	function tooltipHtml(e: any): string | null {
 		const feats = map.queryRenderedFeatures(e.point, { layers: ['puntos', 'eb-3d', 'radios-fill'] });
 		const lines: string[] = [];
@@ -670,6 +692,9 @@
 				map.on('dblclick', (e: any) => { if (lassoOn) { e.preventDefault(); endLasso(true); } });
 				applyLayers();
 				paintWater();
+				// deep link to one radio: ?zona=<radio id>
+				const zq = page.url.searchParams.get('zona');
+				if (zq && radioById.has(zq)) flyToRadio(zq);
 			});
 		})();
 		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && lassoOn) endLasso(false); };
@@ -885,6 +910,7 @@
 						{/each}
 					</div>
 					<p class="note">Censo 2022: cantidad en el radio y porcentaje. La marca blanca es el promedio de Misiones; la barra llena, el doble.</p>
+					<p class="acc"><button class="lnk" onclick={imprimirFicha}>Ficha para imprimir (PDF)</button> · <button class="lnk" onclick={copiarLink}>{copiado ? 'Link copiado' : 'Copiar link de esta zona'}</button></p>
 				</section>
 			{/if}
 
@@ -909,7 +935,7 @@
 					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
 					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte». Una vivienda queda aislada cuando no llega en seco ni al hospital de El Soberbio ni a una salida del municipio (RP 13, 15, 21 y picadas hacia las colonias vecinas); fuera del municipio esos caminos se suponen transitables. La RP 2 no cuenta como salida: va a Moconá o corre junto al río.</p>
-					<p><b>Arroyos:</b> altura de cada lugar sobre el arroyo más cercano siguiendo la pendiente, con el mismo terreno satelital (30 m) que el río; la red de arroyos calculada coincide con la de OpenStreetMap en el 89 % de su largo. Susceptibilidad sin calibrar: no ve alcantarillas, entubados ni rellenos. Lluvia: CHIRPS y ERA5-Land diarios desde 1981.</p>
+					<p><b>Arroyos:</b> altura de cada lugar sobre el arroyo más cercano siguiendo la pendiente, con el mismo terreno satelital (30 m) que el río; la red de arroyos calculada coincide con la de OpenStreetMap en el 89 % de su largo. Susceptibilidad sin calibrar: no ve alcantarillas, entubados ni rellenos. Tampoco ve desagües pluviales: se probó marcar las calles donde se concentra la escorrentía y con terreno de 30 m no discrimina (marca una de cada cuatro viviendas del pueblo, en Cerro Bonito igual que en el resto); hace falta el relevamiento de desagües o un terreno más fino. Lluvia: CHIRPS y ERA5-Land diarios desde 1981.</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
 					<p><b>Fuentes:</b> INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
 				</div>
@@ -921,6 +947,48 @@
 		{/if}
 	</aside>
 </div>
+
+{#if selected && tabla}
+	{@const s0 = num(selected.primer_impacto)}
+	{@const tv = tipoOf(selected.tipo_vivienda)}
+	{@const refs = SCEN.filter((s) => +selected?.[`esc${s.id}_viviendas`] > 0)}
+	<section class="ficha">
+		<p class="fk">El Niño 2026-27 · Río Uruguay y arroyos · El Soberbio, Misiones</p>
+		<h1>{selected.nombre}</h1>
+		<p class="fs">Radio censal {selected.id} · {selected.tipo === 'rural' ? 'rural' : 'urbano'} · {fmt(+selected.c_personas)} personas · {fmt(+selected.c_hogares)} hogares (Censo 2022)
+			· Prioridad: <b>{PRIO.find((p) => p.id === selected?.prioridad)?.label}</b> · Vivienda: <b>{tv?.label}</b></p>
+		{#if fichaImg}
+			<img src={fichaImg} alt="Mapa de la zona" />
+			<p class="fn">Mapa con el río a {m(stage)} en la escala de Prefectura{tab === 'arroyos' ? ' y susceptibilidad por arroyos' : ''}. Contorno celeste: la zona.</p>
+		{/if}
+		<p>{#if s0 != null}<b>El agua del río entra a sus viviendas con {m(s0)}</b> en el hidrómetro del puerto; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980.{:else}El agua del río no llega a sus viviendas en los escenarios.{/if}
+			{#if +selected.arr_alta_viviendas > 0 || +selected.arr_media_viviendas > 0}Junto a arroyos, con lluvia fuerte: <b>{fmt(+selected.arr_alta_viviendas)}</b> {+selected.arr_alta_viviendas === 1 ? 'vivienda' : 'viviendas'} en susceptibilidad alta y {fmt(+selected.arr_media_viviendas)} en media.{/if}</p>
+		{#if s0 != null}
+			<table>
+				<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.label}<br /><span>{m(tabla.escenarios[s.id].altura_m)}</span></th>{/each}</tr></thead>
+				<tbody>
+					{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'En barrio popular']] as [k, l]}
+						<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
+					{/each}
+					{#if refs.length}
+						<tr><td>Refugio seco más cercano</td>{#each SCEN as s}<td class="rf">{+selected[`esc${s.id}_viviendas`] > 0 ? (selected[`esc${s.id}_refugio`] && selected[`esc${s.id}_refugio`] !== 'null' ? `${selected[`esc${s.id}_refugio`]} (${dec(+selected[`esc${s.id}_refugio_km`])} km)` : 'ninguno accesible') : '—'}</td>{/each}</tr>
+					{/if}
+				</tbody>
+			</table>
+		{/if}
+		<h2>Hogares y personas (Censo 2022)</h2>
+		<table class="cz">
+			<tbody>
+				{#each CENSO as c}
+					<tr><td>{c.label}</td><td>{fmt(countOf(c, selected))}</td><td>{pct(shareOf(c, selected))}</td><td class="mis">Misiones {pct(provOf(c))}</td></tr>
+				{/each}
+			</tbody>
+		</table>
+		<p class="fn"><b>Escenarios, no pronóstico:</b> qué pasaría si el Uruguay llega a esa altura, con el terreno calibrado con siete crecidas documentadas (±1 m). Los arroyos son susceptibilidad por terreno, sin calibrar: no ven alcantarillas, entubados ni desagües pluviales. Capacidad de los refugios: dato a pedir a Defensa Civil.
+			Fuentes: INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
+		<p class="fp">{zonaUrl(selected.id)} · {new Date().toLocaleDateString('es-AR')} · CONICET / FHyCS-UNaM · Spatia</p>
+	</section>
+{/if}
 
 <style>
 	.demo { position: fixed; inset: 0; display: flex; background: #0b0d12; color: #e5e7eb; font-size: 13.5px;
@@ -1040,6 +1108,35 @@
 	:global(.demo-tip b) { color: #fff; font-weight: 600; }
 	:global(.demo-tip .dim) { color: #94a3b8; }
 	:global(.demo-tip .r) { color: #fca5a5; }
+
+	.acc { font-size: 12.5px; }
+	/* one-page sheet: hidden on screen, the only thing printed */
+	.ficha { display: none; }
+	@media print {
+		@page { size: A4 portrait; margin: 12mm; }
+		:global(html), :global(body) { background: #fff !important; }
+		/* the site layout (dark full-height wrapper, terms modal) stays out of the sheet */
+		:global(body *:not(:has(.ficha)):not(.ficha):not(.ficha *)) { display: none !important; }
+		:global(body *:has(.ficha)) { background: none !important; min-height: 0 !important; border: 0 !important; box-shadow: none !important; }
+		.demo { display: none; }
+		.ficha { display: block; color: #111827; background: #fff; font: 10.5px/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+		.ficha b { color: #111827; }
+		.ficha .fk { margin: 0; color: #0369a1; font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+		.ficha h1 { margin: 2px 0 2px; font-size: 19px; color: #111827; }
+		.ficha h2 { margin: 8px 0 3px; font-size: 10px; color: #374151; }
+		.ficha .fs { margin: 0 0 6px; color: #374151; }
+		.ficha img { display: block; width: 100%; max-height: 92mm; object-fit: cover; border-radius: 4px; }
+		.ficha p { margin: 5px 0; }
+		.ficha .fn { color: #4b5563; font-size: 9px; }
+		.ficha .fp { margin-top: 6px; color: #6b7280; font-size: 8.5px; border-top: 1px solid #e5e7eb; padding-top: 4px; }
+		.ficha table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+		.ficha th, .ficha td { padding: 2px 4px; text-align: right; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+		.ficha th { color: #374151; font-weight: 600; }
+		.ficha th span { color: #6b7280; font-weight: 400; }
+		.ficha th:first-child, .ficha td:first-child { text-align: left; color: #374151; }
+		.ficha td.rf { font-size: 8.5px; }
+		.ficha td.mis { color: #6b7280; }
+	}
 
 	@media (max-width: 760px) {
 		.scen { grid-template-columns: repeat(6, 1fr); }
