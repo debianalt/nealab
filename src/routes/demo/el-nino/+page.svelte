@@ -91,10 +91,14 @@
 	const DRY = '#4b5563';
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
-		{ id: '2015', label: 'Como 2015' },
-		{ id: '2023', label: 'Como 2023' },
-		{ id: '1983', label: 'Como 1983', note: 'récord' }
+		{ id: '2026', label: 'Jul. 2026' },
+		{ id: '2023', label: 'Nov. 2023' },
+		{ id: '2014', label: 'Jun. 2014' },
+		{ id: '1983', label: '1983', note: 'récord' }
 	];
+	// official levels at the El Soberbio gauge (cited by the municipality and Protección Civil, 2025-2026)
+	const COTAS = [{ h: 11, label: 'alerta', side: 'left' }, { h: 13, label: 'evacuación', side: 'right' }];
+	const ISO = '#a78bfa';
 	const DIMS: [string, string][] = [
 		['dim_material', 'vivienda precaria o hacinamiento'],
 		['dim_recuperacion', 'hogares con NBI'],
@@ -105,9 +109,12 @@
 	interface Paso {
 		altura: number; viviendas: number; personas: number; ninos: number; mayores: number; hog_nbi: number;
 		viv_renabap: number; escuelas: number; escuelas_secas: number; salud: number; comunidades: number; microzonas: number;
+		aisladas_viv: number; aisladas_pers: number;
 	}
 	interface Tabla {
-		escenarios: Record<string, { fecha: string; altura_m: number }>;
+		escenarios: Record<string, { fecha: string; altura_m: number; fuente?: string }>;
+		cortes: { nombre: string; altura: number }[];
+		calibracion_delta: number;
 		s_ref: number;
 		pasos: Paso[];
 		picos: { anio: number; altura: number }[];
@@ -132,9 +139,10 @@
 	// where water first reaches each listed radio: mean position of its first-reached buildings
 	let starPos = new Map<string, [number, number]>();
 	let puntos: any = null;
+	let caminos: any = null;
 	// buildings as flat arrays for the lasso
 	let B = { x: [] as number[], y: [] as number[], s: [] as (number | null)[], v: [] as number[], p: [] as number[],
-		r: [] as number[], z: [] as number[], radios: [] as string[] };
+		r: [] as number[], z: [] as number[], i: [] as number[], radios: [] as string[] };
 	// water raster
 	let vals: Uint8Array | null = null;
 	let wet: Int32Array | null = null;
@@ -162,6 +170,11 @@
 	let starHover = $state('');
 	const aniosSobre = $derived(tabla ? tabla.picos.filter((p) => p.altura >= stage - 1e-6).length : 0);
 	const censoSel = $derived(CENSO.find((c) => c.id === capa));
+	const esRuta = (n: string) => /ruta|RP|RN/i.test(n);
+	const cortados = $derived(tabla ? (tabla.cortes ?? []).filter((c) => c.altura <= stage + 1e-6) : []);
+	const rutasCortadas = $derived(cortados.filter((c) => esRuta(c.nombre)));
+	const callesCortadas = $derived(cortados.filter((c) => !esRuta(c.nombre)));
+	const proximoCorte = $derived(tabla ? (tabla.cortes ?? []).find((c) => c.altura > stage + 1e-6) : undefined);
 	const censoKeys = $derived.by(() => {
 		if (!censoSel || !tabla) return [];
 		const b = breaksFor(censoSel), cols = PLASMA.slice(PLASMA.length - (b.length + 1));
@@ -230,7 +243,7 @@
 
 	const fmt = (n: number) => Math.round(n).toLocaleString('es-AR');
 	const approx = (n: number) => (n < 20 ? fmt(n) : '≈ ' + fmt(Math.round(n / 10) * 10));
-	const m = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' m';
+	const m = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + ' m';
 	const dec = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const pct = (x: number) => (x * 100).toLocaleString('es-AR', { maximumFractionDigits: 0 }) + ' %';
 	const colorOf = (p: string) => PRIO.find((x) => x.id === p)?.color ?? '#64748b';
@@ -301,7 +314,8 @@
 		const st = stage + 1e-6;
 		const flooded = ['all', ['>=', ['get', 's'], 0], ['<=', ['get', 's'], st]];
 		const depthRamp = ['interpolate', ['linear'], ['-', st, ['get', 's']], ...BDEPTH.flat()];
-		if (capa === 'agua') return ['case', flooded, depthRamp, DRY];
+		const isolated = ['all', ['>=', ['get', 'i'], 0], ['<=', ['get', 'i'], st]];
+		if (capa === 'agua') return ['case', flooded, depthRamp, isolated, ISO, DRY];
 		return ['match', ['get', 'z'], ...colorPairs(), '#64748b'];
 	}
 
@@ -318,6 +332,14 @@
 		map.setPaintProperty('radios-line', 'line-width', water ? 1.3 : 0.8);
 		map.setPaintProperty('radios-line', 'line-dasharray', water ? [2, 2] : [1, 0]);
 		map.setPaintProperty('eb-3d', 'fill-extrusion-color', buildingColor());
+		if (map.getLayer('aisl-pts')) {
+			map.setFilter('aisl-pts', ['all', ['<=', ['get', 'i'], st], ['any', ['<', ['get', 's'], 0], ['>', ['get', 's'], st]]]);
+			map.setLayoutProperty('aisl-pts', 'visibility', water ? 'visible' : 'none');
+		}
+		if (map.getLayer('cortes')) {
+			map.setFilter('cortes', ['<=', ['get', 's'], st]);
+			map.setFilter('cortes-casing', ['<=', ['get', 's'], st]);
+		}
 		// schools and health centres only when they end up under water
 		map.setFilter('puntos', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st]);
 	}
@@ -419,8 +441,8 @@
 					return r.json();
 				};
 				let pts: any;
-				[t, pts, radios, puntos] = await Promise.all([
-					get('tabla_altura.json'), get('edificios_pts.json'), get('radios.geojson'), get('puntos.geojson')
+				[t, pts, radios, puntos, caminos] = await Promise.all([
+					get('tabla_altura.json'), get('edificios_pts.json'), get('radios.geojson'), get('puntos.geojson'), get('caminos.geojson')
 				]);
 				B = pts;
 				for (const f of radios.features) radioById.set(f.properties.id, f);
@@ -478,6 +500,19 @@
 				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], ''],
 					paint: { 'line-color': '#22d3ee', 'line-width': 3 } });
 				// context: the site's building tiles outside the municipality only
+				// at low zoom (municipality view) the 3D tiles are not loaded: buildings that can be isolated as points
+				const aisl = { type: 'FeatureCollection', features: (B.i ?? []).flatMap((iv: number, k: number) => iv >= 0
+					? [{ type: 'Feature', geometry: { type: 'Point', coordinates: [B.x[k], B.y[k]] }, properties: { i: iv, s: B.s[k] ?? -1 } }] : []) };
+				map.addSource('aisl', { type: 'geojson', data: aisl });
+				map.addLayer({ id: 'aisl-pts', type: 'circle', source: 'aisl', maxzoom: 12.5, filter: ['<=', ['get', 'i'], 0],
+					paint: { 'circle-color': ISO, 'circle-opacity': 0.6,
+						'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 0.9, 12, 2.2] } });
+				// roads the model cuts at the chosen height ("posible corte"): only those are drawn
+				map.addSource('caminos', { type: 'geojson', data: caminos });
+				map.addLayer({ id: 'cortes-casing', type: 'line', source: 'caminos', filter: ['<=', ['get', 's'], 0],
+					layout: { 'line-cap': 'round' }, paint: { 'line-color': '#0b0d12', 'line-width': 6 } });
+				map.addLayer({ id: 'cortes', type: 'line', source: 'caminos', filter: ['<=', ['get', 's'], 0],
+					layout: { 'line-cap': 'round' }, paint: { 'line-color': '#ef4444', 'line-width': 3 } });
 				map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
 				map.addLayer({ id: 'ctx-3d', type: 'fill-extrusion', source: 'buildings', 'source-layer': 'buildings', minzoom: 12,
 					filter: ['!', ['in', ['get', 'redcode'], ['literal', B.radios]]],
@@ -485,7 +520,7 @@
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
 						'fill-extrusion-color': '#2b313b', 'fill-extrusion-opacity': 0.8
 					} });
-				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios.pmtiles` });
+				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v5.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
 					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': DRY, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
@@ -578,7 +613,7 @@
 			<p class="warn">{error}</p>
 		{:else if tabla && pasoActual}
 			<section class="control">
-				<div class="stage"><span class="big">{m(stage)}</span><span class="dim">en el hidrómetro de El Soberbio</span></div>
+				<div class="stage"><span class="big">{m(stage)}</span><span class="dim">en la escala de Prefectura del puerto de El Soberbio</span></div>
 				<div class="slider">
 					<input type="range" min={minStage} max={maxStage} step="0.5" value={stage}
 						oninput={(e) => setStage(+(e.currentTarget as HTMLInputElement).value)} aria-label="Altura del río" />
@@ -586,11 +621,15 @@
 						{@const f = (tabla.escenarios[s.id].altura_m - minStage) / (maxStage - minStage)}
 						<span class="tick" style:left={`calc(${f * 100}% + ${8 - f * 16}px)`}></span>
 					{/each}
+					{#each COTAS as c}
+						{@const f = (c.h - minStage) / (maxStage - minStage)}
+						<span class="cota {c.side}" style:left={`calc(${f * 100}% + ${8 - f * 16}px)`}>{c.label} {c.h}</span>
+					{/each}
 				</div>
 				<div class="scen">
 					{#each SCEN as s}
 						{@const e = tabla.escenarios[s.id]}
-						<button class:on={Math.abs(stage - e.altura_m) < 0.01} onclick={() => setStage(e.altura_m, true)} title={`Pico del ${fecha(e.fecha)}`}>
+						<button class:on={Math.abs(stage - e.altura_m) < 0.01} onclick={() => setStage(e.altura_m, true)} title={`${fecha(e.fecha)} · ${e.fuente ?? ''}`}>
 							<b>{s.label}</b><span>{m(e.altura_m)}{s.note ? ` · ${s.note}` : ''}</span>
 						</button>
 					{/each}
@@ -603,6 +642,13 @@
 				{:else}
 					<p class="lead"><b>{fmt(pasoActual.viviendas)} viviendas</b> y <b>{approx(pasoActual.personas)} personas</b> quedarían bajo el agua, entre ellas {approx(pasoActual.ninos)} niños de 0 a 5 años y {approx(pasoActual.mayores)} mayores de 65.</p>
 				{/if}
+				{#if pasoActual.aisladas_viv > 0}
+					<p class="iso">Además, <b>{fmt(pasoActual.aisladas_viv)} viviendas</b> quedarían aisladas: secas, pero sin camino al hospital de El Soberbio. <button class="lnk" onclick={() => { capa = 'agua'; view(MUNI); }}>Ver en el mapa</button></p>
+				{/if}
+				<p class="roads">
+					{#if cortados.length}<span class="rl"></span>Posible corte de {[...rutasCortadas.map((c) => `${c.nombre.replace(' (RP2)', '')} (${m(c.altura)})`), ...(callesCortadas.length ? [`${callesCortadas.length} ${callesCortadas.length === 1 ? 'calle' : 'calles'} del pueblo`] : [])].join(' · ')}.
+					{:else if proximoCorte}Primer corte de camino: {proximoCorte.nombre}, con {m(proximoCorte.altura)}.{/if}
+				</p>
 				<p class="sub">
 					{fmt(pasoActual.viv_renabap)} en barrios populares · {pasoActual.escuelas} {pasoActual.escuelas === 1 ? 'escuela' : 'escuelas'} bajo el agua, {pasoActual.escuelas_secas} secas para refugio
 					{#if pasoMenos && pasoMas}· con ±1 m de error del terreno, entre {fmt(pasoMenos.viviendas)} y {fmt(pasoMas.viviendas)} viviendas{/if}
@@ -660,6 +706,7 @@
 					{#if tab === 'agua'}
 						<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
 						<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
+						<div class="keys"><span><i style:background={ISO}></i>Aislada: seca, sin camino al hospital</span><span><i class="road"></i>Camino posiblemente cortado</span></div>
 						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
 					{:else if tab === 'prioridad'}
 						<div class="keys">{#each PRIO as p}<span><i style:background={p.color}></i>{p.label}</span>{/each}</div>
@@ -696,6 +743,13 @@
 								{/each}
 							</tbody>
 						</table>
+						{@const refs = SCEN.filter((s) => +selected?.[`esc${s.id}_viviendas`] > 0)}
+						{#if refs.length}
+							<p class="ref"><b>Refugio seco más cercano por camino</b>
+								{#each refs as s}<br /><span class="dim">{s.label}:</span> {selected[`esc${s.id}_refugio`] && selected[`esc${s.id}_refugio`] !== 'null' ? `${selected[`esc${s.id}_refugio`]}, a ${dec(+selected[`esc${s.id}_refugio_km`])} km` : 'ninguna escuela seca accesible'}{/each}
+							</p>
+							<p class="note">Capacidad de los refugios: dato a pedir a Defensa Civil.</p>
+						{/if}
 					{/if}
 					<div class="bars">
 						{#each CENSO as c}
@@ -723,15 +777,16 @@
 					{/each}
 					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke="#f8fafc" stroke-width="1" stroke-dasharray="3 2" />
 				</svg>
-				<p class="sub">Picos anuales del hidrómetro: el río superó {m(stage)} en <b>{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
+				<p class="sub">Lectura diaria de Prefectura: el río superó {m(stage)} en <b>{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
 			</details>
 
 			<details>
 				<summary>Cómo leer esta demo</summary>
 				<div class="fine">
 					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Sólo crecida del Uruguay: no incluye lluvia ni arroyos.</p>
-					<p><b>Sin calibrar con marcas de crecida:</b> compara zonas entre sí; las cifras son estimaciones.</p>
-					<p><b>Hidrómetro:</b> alturas del INA (serie diaria 1980-2026).</p>
+					<p><b>Calibrado con siete crecidas documentadas (2014-2026):</b> el terreno satelital se ajustó {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (por ejemplo, Maracaná y Chivilcoy desde 13 m). Las marcas de crecida de la provincia lo vuelven exacto.</p>
+					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
+					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte».</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
 					<p><b>Fuentes:</b> INA, FABDEM, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
 				</div>
@@ -773,7 +828,7 @@
 	.slider { position: relative; }
 	.slider input[type='range'] { width: 100%; accent-color: #38bdf8; margin: 0; }
 	.tick { position: absolute; top: -3px; width: 2px; height: 8px; margin-left: -1px; background: #64748b; border-radius: 1px; pointer-events: none; }
-	.scen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+	.scen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
 	.scen button { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 9px; border-radius: 10px;
 		background: transparent; border: 1px solid #263042; color: #e5e7eb; cursor: pointer; text-align: left; font: inherit; }
 	.scen button b { font-size: 12.5px; }
@@ -782,6 +837,20 @@
 
 	.impact .lead { margin: 0; font-size: 17px; line-height: 1.45; color: #cbd5e1; }
 	.impact .lead b { color: #fdba74; }
+	.impact .iso { margin: 8px 0 0; font-size: 14px; line-height: 1.45; color: #cbd5e1; }
+	.impact .iso b { color: #c4b5fd; }
+	.impact .roads { margin: 6px 0 0; font-size: 12.5px; line-height: 1.45; color: #cbd5e1; }
+	.impact .roads:empty { display: none; }
+	.rl, i.road { display: inline-block; width: 14px; height: 3px; border-radius: 2px; background: #ef4444; vertical-align: middle; margin-right: 6px; }
+	.slider { padding-bottom: 14px; }
+	.cota { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: #fca5a5; white-space: nowrap; pointer-events: none; }
+	.cota.left { transform: translateX(calc(-100% + 1px)); padding-right: 3px; }
+	.cota.right { transform: none; padding-left: 3px; }
+	.cota::before { content: ''; position: absolute; top: -8px; width: 1px; height: 14px; background: #fca5a5; }
+	.cota.left::before { right: 0; }
+	.cota.right::before { left: 0; }
+	.lnk { background: none; border: 0; padding: 0; color: #c4b5fd; text-decoration: underline; cursor: pointer; font: inherit; }
+	.ref { font-size: 12.5px; }
 
 	.umbrales { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 	.umbrales button { display: flex; gap: 10px; align-items: center; width: 100%; padding: 5px 4px; background: none; border: 0;
