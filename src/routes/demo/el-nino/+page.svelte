@@ -91,11 +91,13 @@
 	const DRY = '#4b5563';
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
-		{ id: '2026', label: 'Jul. 2026' },
-		{ id: '2023', label: 'Nov. 2023' },
-		{ id: '2014', label: 'Jun. 2014' },
-		{ id: '1983', label: '1983', note: 'récord' }
-	];
+		{ id: '2026', label: 'Jul. 2026', short: '2026' },
+		{ id: '2023', label: 'Nov. 2023', short: '2023' },
+		{ id: '2014', label: 'Jun. 2014', short: '2014' },
+		{ id: '1983', label: '1983', short: '1983', note: 'récord' },
+		// beyond the record: 1983 + 3 m (200-year flood by Gumbel on the 1980-2025 annual peaks: 29.3 m)
+		{ id: 'extremo', label: 'Extremo', short: '30 m', note: '1983 + 3 m', extra: true }
+	] as { id: string; label: string; short: string; note?: string; extra?: boolean }[];
 	// official levels at the El Soberbio gauge (cited by the municipality and Protección Civil, 2025-2026)
 	const COTAS = [{ h: 11, label: 'alerta', side: 'left' }, { h: 13, label: 'evacuación', side: 'right' }];
 	const ISO = '#a78bfa';
@@ -629,7 +631,7 @@
 				<div class="scen">
 					{#each SCEN as s}
 						{@const e = tabla.escenarios[s.id]}
-						<button class:on={Math.abs(stage - e.altura_m) < 0.01} onclick={() => setStage(e.altura_m, true)} title={`${fecha(e.fecha)} · ${e.fuente ?? ''}`}>
+						<button class:on={Math.abs(stage - e.altura_m) < 0.01} class:extra={s.extra} onclick={() => setStage(e.altura_m, true)} title={e.fecha ? `${fecha(e.fecha)} · ${e.fuente ?? ''}` : (e.fuente ?? '')}>
 							<b>{s.label}</b><span>{m(e.altura_m)}{s.note ? ` · ${s.note}` : ''}</span>
 						</button>
 					{/each}
@@ -661,7 +663,7 @@
 					<h2>Área medida</h2>
 					<p class="sub">{fmt(lassoRes.total.n)} construcciones · {fmt(lassoRes.total.viv)} viviendas · {approx(lassoRes.total.pers)} personas</p>
 					<table>
-						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
+						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
 						<tbody>
 							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'Barrio popular'], ['esc', 'Escuelas']] as [k, l]}
 								<tr><td>{l}</td>{#each lassoRes.out as r, i}<td class:cur={i === 0}>{k === 'pers' || k === 'ninos' || k === 'mayores' ? approx(r[k as keyof Lasso]) : fmt(r[k as keyof Lasso])}</td>{/each}</tr>
@@ -736,7 +738,7 @@
 					<p>{#if s0 != null}El agua entra a sus viviendas con {m(s0)}; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980.{:else}El agua no llega a sus viviendas en los escenarios.{/if}</p>
 					{#if s0 != null}
 						<table>
-							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.id}</th>{/each}</tr></thead>
+							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
 							<tbody>
 								{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'Barrio popular']] as [k, l]}
 									<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
@@ -785,6 +787,7 @@
 				<div class="fine">
 					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el río llega a esa altura. Sólo crecida del Uruguay: no incluye lluvia ni arroyos.</p>
 					<p><b>Calibrado con siete crecidas documentadas (2014-2026):</b> el terreno satelital se ajustó {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (por ejemplo, Maracaná y Chivilcoy desde 13 m). Las marcas de crecida de la provincia lo vuelven exacto.</p>
+					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
 					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte».</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
@@ -828,7 +831,10 @@
 	.slider { position: relative; }
 	.slider input[type='range'] { width: 100%; accent-color: #38bdf8; margin: 0; }
 	.tick { position: absolute; top: -3px; width: 2px; height: 8px; margin-left: -1px; background: #64748b; border-radius: 1px; pointer-events: none; }
-	.scen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+	.scen { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+	.scen button.extra { border-style: dashed; border-color: #7f1d1d; }
+	.scen button.extra b { color: #fca5a5; }
+	.scen button.extra.on { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 	.scen button { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 9px; border-radius: 10px;
 		background: transparent; border: 1px solid #263042; color: #e5e7eb; cursor: pointer; text-align: left; font: inherit; }
 	.scen button b { font-size: 12.5px; }
@@ -913,6 +919,9 @@
 	:global(.demo-tip .r) { color: #fca5a5; }
 
 	@media (max-width: 760px) {
+		.scen { grid-template-columns: repeat(6, 1fr); }
+		.scen button { grid-column: span 2; }
+		.scen button:nth-child(4), .scen button:nth-child(5) { grid-column: span 3; }
 		.demo { flex-direction: column; }
 		.mapwrap { flex: none; height: 52vh; }
 		.panel { width: 100%; border-left: 0; border-top: 1px solid #1c2230; padding: 16px 16px 24px; flex: 1; gap: 16px; }
