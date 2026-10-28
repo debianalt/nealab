@@ -509,12 +509,15 @@ export interface ColorClasses {
 	// value === 0 is a measured value with its own class, not "Sin cobertura".
 	zero?: { color: string; labelKey: string };
 	steps: ColorClass[];
+	// true → a cut belongs to the class below (value > from), matching FlowChart
+	// bands; default → to the class above (value >= from).
+	upperInclusive?: boolean;
 }
 
 export function colorForClass(value: number, classes: ColorClasses): string {
 	if (value === 0 && classes.zero) return classes.zero.color;
 	let color = classes.steps[0].color;
-	for (const s of classes.steps) if (value >= s.from) color = s.color;
+	for (const s of classes.steps) if (classes.upperInclusive ? value > s.from : value >= s.from) color = s.color;
 	return color;
 }
 
@@ -529,6 +532,20 @@ export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
 		{ from: 5, color: '#eab308', labelKey: 'legend.flood.mid' },
 		{ from: 20, color: '#dc2626', labelKey: 'legend.flood.high' },
 	],
+};
+
+// Hansen loss rate (%/yr, 2015–2024). Same cuts and colors as the layer's
+// flowBands so map and flow chart classify a hexagon alike. 0 = no loss
+// detected — in Eldorado half the hexagons, median tree cover 98 %: standing
+// forest, previously painted "Sin cobertura".
+export const DEFOREST_LOSS_CLASSES: ColorClasses = {
+	zero: { color: '#1e293b', labelKey: 'legend.deforest.none' },
+	steps: [
+		{ from: 0, color: '#22d3ee', labelKey: 'legend.deforest.low' },
+		{ from: 0.5, color: '#f59e0b', labelKey: 'legend.deforest.mid' },
+		{ from: 2, color: '#f87171', labelKey: 'legend.deforest.high' },
+	],
+	upperInclusive: true,
 };
 
 export interface FlowBands {
@@ -906,8 +923,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			higherIsWorse: true,
 			note: 'Bandas de pérdida forestal (%/año, Hansen): Baja (≤0.5) · Media (0.5–2) · Alta (>2) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
 		},
-		legendLowKey: 'legend.deforest.low',
-		legendHighKey: 'legend.deforest.high',
+		colorClasses: DEFOREST_LOSS_CLASSES,
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
 	// ── EUDR deforestation risk (H3 res-7, 31 units: AR 10 prov + PY 18 deptos + BR 3 estados) ──

@@ -26,6 +26,11 @@
 	// Discrete classes replace the gradient (flood: JRC occurrence %). Not in delta
 	// mode: the change ramp is diverging, not a level.
 	const classes = $derived(!isDiverging ? layer?.colorClasses : undefined);
+	const classUnit = $derived.by(() => {
+		const pv = hexStore.effectivePrimary;
+		const v = layer?.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		return unitLabel(v?.unit);
+	});
 
 	// Range badge next to the title. The gradient is colored by the layer's primary
 	// variable, which is NOT always a 0–100 score: physical-unit layers (precipitation
@@ -111,7 +116,7 @@
 	</div>
 {:else if layer && classes}
 	<div class="legend">
-		<div class="legend-title">{title} <span class="legend-range">%</span></div>
+		<div class="legend-title">{title} {#if classUnit}<span class="legend-range">{classUnit}</span>{/if}</div>
 		<div class="legend-items">
 			{#if classes.zero}
 				<div class="legend-item">

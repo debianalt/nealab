@@ -517,8 +517,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.deforest.typeLabel': { es: 'Nivel de presión', en: 'Pressure level', gn: 'Presión', pt: 'Nível de pressão' },
 	'sat.deforest.lossRate': { es: 'Tasa de pérdida (%/año)', en: 'Loss rate (%/yr)', gn: "Okany (%/ary)", pt: 'Taxa de perda (%/ano)' },
 	'sat.deforest.cumulative': { es: 'Pérdida acumulada (%)', en: 'Cumulative loss (%)', gn: "Opavave okany (%)", pt: 'Perda acumulada (%)' },
-	'legend.deforest.low': { es: 'Baja presión de deforestación', en: 'Low deforestation pressure', gn: "Michimi", pt: 'Baixa pressão de desmatamento' },
-	'legend.deforest.high': { es: 'Alta presión de deforestación', en: 'High deforestation pressure', gn: "Tuicha", pt: 'Alta pressão de desmatamento' },
+	'legend.deforest.none': { es: 'Sin pérdida detectada (0)', en: 'No loss detected (0)', gn: "Ndaipóri pérdida ojehecháva (0)", pt: 'Sem perda detectada (0)' },
+	'legend.deforest.low': { es: 'Baja (≤0,5)', en: 'Low (≤0.5)', gn: "Michĩ (≤0,5)", pt: 'Baixa (≤0,5)' },
+	'legend.deforest.mid': { es: 'Media (0,5–2)', en: 'Medium (0.5–2)', gn: "Mbyte (0,5–2)", pt: 'Média (0,5–2)' },
+	'legend.deforest.high': { es: 'Alta (>2)', en: 'High (>2)', gn: "Guasu (>2)", pt: 'Alta (>2)' },
 	'legend.landUse.low': { es: 'Poca cobertura nativa', en: 'Low native cover', gn: "Michĩ ka'aguy", pt: 'Pouca cobertura nativa' },
 	'legend.landUse.high': { es: 'Alta cobertura nativa', en: 'High native cover', gn: "Tuicha ka'aguy", pt: 'Alta cobertura nativa' },
 	// ── PM2.5 (concentracion ACAG + bandas OMS) ──
