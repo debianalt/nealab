@@ -30,11 +30,14 @@
 	const cfg = $derived(bands ?? SCORE_BANDS);
 	const N = $derived(cfg.labels.length);
 
-	const SVG_W = 260, SVG_H = 164;
-	const BAND_W = 40, PAD_T = 22, PAD_B = 22;
+	// Extra bottom room for the magnitude line (only when bands declare a unit).
+	const MAG_H = $derived(bands?.unit ? 8 : 0);
+	const SVG_W = 260;
+	const SVG_H = $derived(164 + MAG_H);
+	const BAND_W = 40, PAD_T = 22;
 	const LEFT_X = 18, RIGHT_X = SVG_W - 18 - BAND_W;
 	const MID_X = SVG_W / 2;
-	const plotH = SVG_H - PAD_T - PAD_B;
+	const plotH = 164 - PAD_T - 22; // fixed: the magnitude line only adds room below
 
 	// pd.cut semantics (right-closed): value lands in the lowest band whose
 	// upper break it does not exceed — keeps chart bands == parquet typology.
@@ -75,6 +78,29 @@
 	const improved   = $derived(entries.filter(e => isBetter(e.to, e.from)).length);
 	const worsened   = $derived(entries.filter(e => e.to !== e.from && !isBetter(e.to, e.from)).length);
 	const stable     = $derived(entries.filter(e => e.to === e.from).length);
+
+	// Magnitude on the raw values, independent of the bands.
+	const fmt1 = (v: number) => v.toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	const signed = (v: number) => (v < 0 ? '−' : '+') + fmt1(Math.abs(v));
+	const magnitude = $derived.by(() => {
+		if (!cfg.unit) return '';
+		let sb = 0, s = 0, n = 0, down = 0, up = 0;
+		for (const row of data.values()) {
+			const c = Number(row[cfg.col]);
+			const b = Number(row[cfg.baselineCol]);
+			if (!isFinite(c) || !isFinite(b)) continue;
+			sb += b; s += c; n++;
+			if (c < b) down++; else if (c > b) up++;
+		}
+		if (n === 0) return '';
+		const mb = sb / n, mc = s / n, d = mc - mb;
+		const pct = mb !== 0 ? `; ${signed((d / mb) * 100)} %` : '';
+		const moves = [
+			down > 0 ? `bajó en ${fmt1((down / n) * 100)} %` : '',
+			up > 0 ? `subió en ${fmt1((up / n) * 100)} %` : '',
+		].filter(Boolean).join(' y ');
+		return `media ${fmt1(mb)} → ${fmt1(mc)} ${cfg.unit} (${signed(d)}${pct})${moves ? ` · ${moves} de los hexágonos` : ''}`;
+	});
 
 	// Band Y positions: highest band index at top, stacked downward
 	function bandYs(totals: number[]): number[] {
@@ -293,6 +319,11 @@
 			>{temporalPeriods?.current ?? 'Actual'}</text>
 
 			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
+			{#if magnitude}
+				<text x={SVG_W / 2} y={SVG_H - 15} text-anchor="middle"
+					font-size="5.5" font-family="system-ui,sans-serif" fill="rgba(226,232,240,0.85)"
+				>{magnitude}</text>
+			{/if}
 			<text x={SVG_W / 2} y={SVG_H - 6} text-anchor="middle"
 				font-size="5.5" font-family="system-ui,sans-serif"
 			><tspan fill="#22d3ee">↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>

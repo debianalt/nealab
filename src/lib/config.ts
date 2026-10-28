@@ -578,6 +578,10 @@ export interface FlowBands {
 	note?: string;        // footnote describing the cuts + source
 	// Direction words for the summary line. Defaults: mejoraron/empeoraron.
 	// Use neutral terms when the variable is not normative (e.g. density).
+	// Physical unit of col/baselineCol. When set, the chart adds a magnitude line
+	// (mean baseline → current, change, share of hexagons that went down/up):
+	// bands of a few units hide uniform changes that never cross a cut.
+	unit?: string;
 	upLabel?: string;     // moved toward the "better" end (per higherIsWorse)
 	downLabel?: string;
 }
@@ -908,6 +912,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			labels: ['Muy baja', 'Baja', 'Moderada', 'Alta', 'Muy alta'],
 			colors: ['#22d3ee', '#a3e635', '#f59e0b', '#fb923c', '#f87171'],
 			higherIsWorse: true,
+			unit: 'µg/m³',
 			note: 'Bandas de PM2.5 (µg/m³, media anual) según metas intermedias OMS 2021: ≤10 · 10–15 · 15–25 · 25–35 · >35 · Clic en un flujo o banda para ver esos hexágonos en el mapa',
 		},
 		// Regional range covers every territory (7.4–19.2 µg/m³ in pm25_scale.json).
@@ -942,6 +947,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			labels: ['Baja', 'Media', 'Alta'],
 			colors: ['#22d3ee', '#f59e0b', '#f87171'],
 			higherIsWorse: true,
+			unit: '%/año',
 			note: 'Bandas de pérdida forestal (%/año, Hansen): Baja (≤0.5) · Media (0.5–2) · Alta (>2) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
 		},
 		colorClasses: DEFOREST_LOSS_CLASSES,
