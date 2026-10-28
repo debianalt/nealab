@@ -529,8 +529,11 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.pm25.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
 	'sat.pm25.typeLabel': { es: 'Clasificación OMS', en: 'WHO classification', gn: 'OMS', pt: 'Classificação OMS' },
 	'sat.pm25.pm25Mean': { es: 'PM2.5 medio (µg/m³)', en: 'Mean PM2.5 (µg/m³)', gn: 'PM2.5', pt: 'PM2.5 médio (µg/m³)' },
-	'legend.pm25.low': { es: 'Baja exposición a PM2.5', en: 'Low PM2.5 exposure', gn: "Michĩ", pt: 'Baixa exposição ao PM2.5' },
-	'legend.pm25.high': { es: 'Alta exposición a PM2.5', en: 'High PM2.5 exposure', gn: "Tuicha", pt: 'Alta exposição ao PM2.5' },
+	'legend.scale.provincial': { es: 'Provincial', en: 'Provincial', gn: 'Tetãvore', pt: 'Provincial' },
+	'legend.scale.regional': { es: 'Regional', en: 'Regional', gn: 'Región', pt: 'Regional' },
+	'legend.scale.provincialNote': { es: 'Escala de {t} (P2–P98): colores relativos a la provincia', en: '{t} scale (P2–P98): colours relative to the province', gn: '{t} escala (P2–P98): sa\'y tetãvore rehegua', pt: 'Escala de {t} (P2–P98): cores relativas à província' },
+	'legend.scale.minmaxNote': { es: 'Escala de {t} (mín–máx): colores relativos a la provincia', en: '{t} scale (min–max): colours relative to the province', gn: '{t} escala (mín–máx)', pt: 'Escala de {t} (mín–máx): cores relativas à província' },
+	'legend.scale.regionalNote': { es: 'Escala regional fija: el mismo color es el mismo valor en todos los territorios', en: 'Fixed regional scale: same colour = same value in every territory', gn: 'Escala región: peteĩ sa\'y = peteĩ valor opaite tetãme', pt: 'Escala regional fixa: a mesma cor é o mesmo valor em todos os territórios' },
 
 	'sat.landUse.title': { es: '¿Qué uso de suelo tiene esta zona?', en: 'What land use does this area have?', gn: "Mba'éichapa ojepuru ko yvy?", pt: 'Qual o uso do solo nesta zona?' },
 	'sat.landUse.desc': { es: 'Composición de cobertura del suelo por hexágono (color = fracción arbórea): árboles, cultivos, pasturas, arbustos, construido, agua (Dynamic World 10m, Google/WRI — comparable entre territorios)', en: 'Land-cover composition per hexagon (colour = tree fraction): trees, crops, grass, shrub, built, water (Dynamic World 10m, Google/WRI — cross-territory comparable)', gn: "Yvy jepuru: ka'aguy, temity, pasto, ka'avo, táva, y (Dynamic World 10m)", pt: 'Composição da cobertura do solo por hexágono (cor = fração arbórea): árvores, cultivos, pastagem, arbustos, construído, água (Dynamic World 10m, Google/WRI — comparável entre territórios)' },

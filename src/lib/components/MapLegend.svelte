@@ -26,6 +26,21 @@
 	// Discrete classes replace the gradient (flood: JRC occurrence %). Not in delta
 	// mode: the change ramp is diverging, not a level.
 	const classes = $derived(!isDiverging ? layer?.colorClasses : undefined);
+
+	// Two-scale layers (PM2.5): provincial P2–P98 ↔ fixed regional range. The ends
+	// show the real values of the active domain so the colors carry their numbers.
+	const hasScales = $derived(!!layer?.regionalColorDomain && !isDiverging);
+	const scaleStats = $derived(layer?.scaleStats?.territories[hexStore.territoryId]);
+	const fmt = (v: number) => v.toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	const scaleNote = $derived.by(() => {
+		if (hexStore.scaleMode === 'regional') return i18n.t('legend.scale.regionalNote');
+		const name = scaleStats?.label ?? '';
+		return i18n.t(scaleStats ? 'legend.scale.provincialNote' : 'legend.scale.minmaxNote').replace('{t}', name);
+	});
+	const scaleUnit = $derived.by(() => {
+		const v = layer?.variables?.find((x: any) => x.col === layer?.primaryVariable);
+		return unitLabel(v?.unit);
+	});
 	const classUnit = $derived.by(() => {
 		const pv = hexStore.effectivePrimary;
 		const v = layer?.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
@@ -136,6 +151,24 @@
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
+{:else if layer && hasScales}
+	<div class="legend">
+		<div class="legend-title">{title} {#if scaleUnit}<span class="legend-range">{scaleUnit}</span>{/if}</div>
+		<div class="scale-toggle" role="group">
+			<button class:active={hexStore.scaleMode === 'provincial'} onclick={() => hexStore.setScaleMode('provincial')}>{i18n.t('legend.scale.provincial')}</button>
+			<button class:active={hexStore.scaleMode === 'regional'} onclick={() => hexStore.setScaleMode('regional')}>{i18n.t('legend.scale.regional')}</button>
+		</div>
+		<div class="gradient-bar" style:background={gradient}></div>
+		<div class="gradient-labels">
+			<span>{hexStore.colorDomain ? fmt(hexStore.colorDomain[0]) : ''}</span>
+			<span>{hexStore.colorDomain ? `${fmt(hexStore.colorDomain[1])} ${scaleUnit}` : ''}</span>
+		</div>
+		<div class="scale-note">{scaleNote}</div>
+		<div class="nodata-row">
+			<span class="nodata-swatch"></span>
+			<span class="nodata-label">{i18n.t('legend.noData')}</span>
+		</div>
+	</div>
 {:else if layer && isGradient}
 	<div class="legend">
 		<div class="legend-title">{title} {#if rangeLabel}<span class="legend-range">{rangeLabel}</span>{/if}</div>
@@ -202,6 +235,31 @@
 		height: 10px;
 		border-radius: 2px;
 		flex-shrink: 0;
+	}
+	.scale-toggle {
+		display: flex;
+		gap: 2px;
+		margin-bottom: 6px;
+	}
+	.scale-toggle button {
+		flex: 1;
+		font-size: 8.5px;
+		padding: 2px 6px;
+		border-radius: 3px;
+		border: 1px solid rgba(255,255,255,0.12);
+		background: transparent;
+		color: rgba(255,255,255,0.55);
+		cursor: pointer;
+	}
+	.scale-toggle button.active {
+		background: rgba(255,255,255,0.12);
+		color: #e5e7eb;
+	}
+	.scale-note {
+		font-size: 7.5px;
+		color: rgba(255,255,255,0.45);
+		margin-top: 4px;
+		line-height: 1.35;
 	}
 	.legend-swatch.outlined {
 		box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);

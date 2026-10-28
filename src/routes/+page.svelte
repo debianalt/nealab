@@ -65,6 +65,7 @@
 		if (lensStore.activeAnalysis) params.set('a', lensStore.activeAnalysis.id);
 		if (hexStore.selectedDpto) params.set('dept', hexStore.selectedDpto);
 		if (hexStore.temporalMode !== 'current') params.set('tm', hexStore.temporalMode);
+		if (hexStore.scaleMode !== 'provincial') params.set('escala', hexStore.scaleMode);
 		if (territoryStore.countryFilter && territoryStore.countryFilter !== 'ar') params.set('cf', territoryStore.countryFilter);
 		const qs = params.toString();
 		window.history.replaceState({}, '', qs ? `?${qs}` : window.location.pathname);
@@ -77,6 +78,7 @@
 		const _analysis = lensStore.activeAnalysis;
 		const _dept = hexStore.selectedDpto;
 		const _tm = hexStore.temporalMode;
+		const _escala = hexStore.scaleMode;
 		if (typeof window !== 'undefined') updateUrlState();
 	});
 
@@ -228,6 +230,8 @@
 			// After tick: the analysis $effect calls setLayer, which resets
 			// temporalMode to 'current' — setting tm before the flush gets wiped.
 			if (tm === 'baseline' || tm === 'delta') tick().then(() => hexStore.setTemporalMode(tm));
+			// Same reason as tm: setLayer resets scaleMode to 'provincial'.
+			if (params.get('escala') === 'regional') tick().then(() => hexStore.setScaleMode('regional'));
 			// Dept restore: after tick so the analysis/territory effects flushed
 			// (setLayer and the territory effect both clear selectedDpto). The
 			// dept summary gives back the parquetKey + centroid the click flow
@@ -1222,6 +1226,38 @@
 		if (mode === 'delta') colorScale = 'diverging';
 		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 	});
+
+	// ── Scale toggle (provincial P2–P98 ↔ regional fixed): new domain, re-render ──
+	let prevScaleMode: string = 'provincial';
+	$effect(() => {
+		const mode = hexStore.scaleMode;
+		if (mode === prevScaleMode) return;
+		prevScaleMode = mode;
+		untrack(() => rerenderForScale());
+	});
+
+	async function rerenderForScale() {
+		const layer = hexStore.activeLayer;
+		if (!layer?.regionalColorDomain) return;
+		await hexStore.ensureColorDomain();
+		let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer.colorScale ?? 'flood';
+		if (layer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
+		const domain = hexStore.colorDomain ?? undefined;
+		// Same province-bounding as the dept render (Misiones needs PIP).
+		const all = hexStore.choroplethEntries;
+		const entries = hexStore.territoryPrefix === ''
+			? all.filter((e) => {
+				if (e.nodata) return true;
+				const [lat, lng] = cellToLatLng(e.h3index);
+				return isInsideActiveTerritory(lat, lng, hexStore.territoryPrefix);
+			})
+			: all;
+		if (entries.length > 0) mapComponent?.setHexChoropleth(entries, cs, domain, colorClassesFor(cs));
+		const cmp = hexStore.compareChoroplethEntries;
+		if (cmp.length > 0) mapComponent?.setCompareHexChoropleth(cmp, cs, domain, colorClassesFor(cs));
+		const reg = hexStore.regionalChoroplethEntries;
+		if (reg.length > 0) mapComponent?.setRegionalHexChoropleth(reg, cs, domain, colorClassesFor(cs));
+	}
 
 	async function loadAnalysisChoropleth(analysis: AnalysisConfig) {
 		if (!analysis.choropleth || !isReady()) return;

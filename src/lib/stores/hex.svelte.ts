@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -184,6 +184,20 @@ export class HexStore {
 	centroidCache: Map<string, [number, number]> = new Map(); // h3index → [lng, lat]
 	boundaryCache: Map<string, number[][]> = new Map(); // h3index → [[lng, lat], ...]
 
+	// Color scale for layers with regionalColorDomain (see HexLayerConfig).
+	scaleMode: 'provincial' | 'regional' = $state('provincial');
+
+	setScaleMode(mode: 'provincial' | 'regional') {
+		if (this.scaleMode === mode) return;
+		this.scaleMode = mode;
+		this.colorDomain = null; // recomputed by ensureColorDomain for the new scale
+	}
+
+	/** Territory id of the active parquet prefix ('' = misiones). */
+	get territoryId(): string {
+		return Object.values(TERRITORY_REGISTRY).find((t) => t.parquetPrefix === this.territoryPrefix)?.id ?? 'misiones';
+	}
+
 	setTemporalMode(mode: TemporalMode) {
 		this.temporalMode = mode;
 		this.dataVersion++;
@@ -213,6 +227,7 @@ export class HexStore {
 		if (!cfg) return;
 		this.activeLayer = cfg;
 		this.temporalMode = 'current';
+		this.scaleMode = 'provincial';
 		this.selectedDpto = null;
 		this.selectedParquetKey = null;
 		this.selectedHexResLevel = null;
@@ -1430,6 +1445,20 @@ export class HexStore {
 		if (layer.fixedColorDomain) {
 			this.colorDomain = layer.fixedColorDomain;
 			return this.colorDomain;
+		}
+
+		// Two-scale layers: frozen per-territory P2–P98 (provincial) or the fixed
+		// regional range. No stats for this territory → fall through to MIN/MAX.
+		if (layer.regionalColorDomain) {
+			if (this.scaleMode === 'regional') {
+				this.colorDomain = layer.regionalColorDomain;
+				return this.colorDomain;
+			}
+			const stats = layer.scaleStats?.territories[this.territoryId];
+			if (stats) {
+				this.colorDomain = [stats.p2, stats.p98];
+				return this.colorDomain;
+			}
 		}
 
 		const dataUrl = this.layerGlobalUrl(layer);

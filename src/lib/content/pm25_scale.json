@@ -1,0 +1,397 @@
+{
+	"generated": "2026-10-28",
+	"source": "ACAG V6 (2013–2022 annual mean), sat_pm25_drivers parquets served by the CDN",
+	"column": "c_pm25_mean",
+	"bands": [
+		10,
+		15,
+		25,
+		35
+	],
+	"territories": {
+		"misiones": {
+			"label": "Misiones",
+			"country": "ar",
+			"n": 319871,
+			"min": 9.9,
+			"p2": 10.3,
+			"p98": 13.0,
+			"max": 14.1,
+			"bandsPct": [
+				0.1,
+				99.9,
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"itapua_py": {
+			"label": "Itapúa",
+			"country": "py",
+			"n": 173021,
+			"min": 10.4,
+			"p2": 11.7,
+			"p98": 13.5,
+			"max": 14.6,
+			"bandsPct": [
+				0.0,
+				100.0,
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"corrientes": {
+			"label": "Corrientes",
+			"country": "ar",
+			"n": 1033548,
+			"min": 7.7,
+			"p2": 8.4,
+			"p98": 13.5,
+			"max": 16.2,
+			"bandsPct": [
+				39.8,
+				60.2,
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"alto_parana_py": {
+			"label": "Alto Paraná",
+			"country": "py",
+			"n": 147913,
+			"min": 11.6,
+			"p2": 12.4,
+			"p98": 14.3,
+			"max": 15.6,
+			"bandsPct": [
+				0.0,
+				99.9,
+				0.1,
+				0.0,
+				0.0
+			]
+		},
+		"chaco": {
+			"label": "Chaco",
+			"country": "ar",
+			"n": 1047355,
+			"min": 11.4,
+			"p2": 11.9,
+			"p98": 15.6,
+			"max": 16.9,
+			"bandsPct": [
+				0.0,
+				89.3,
+				10.7,
+				0.0,
+				0.0
+			]
+		},
+		"formosa": {
+			"label": "Formosa",
+			"country": "ar",
+			"n": 796121,
+			"min": 13.8,
+			"p2": 14.3,
+			"p98": 17.9,
+			"max": 18.8,
+			"bandsPct": [
+				0.0,
+				15.4,
+				84.6,
+				0.0,
+				0.0
+			]
+		},
+		"parana_br": {
+			"label": "Paraná",
+			"country": "br",
+			"n": 1980144,
+			"min": 8.4,
+			"p2": 10.7,
+			"p98": 16.4,
+			"max": 18.4,
+			"bandsPct": [
+				0.5,
+				93.0,
+				6.4,
+				0.0,
+				0.0
+			]
+		},
+		"santa_catarina_br": {
+			"label": "Santa Catarina",
+			"country": "br",
+			"n": 992395,
+			"min": 8.1,
+			"p2": 10.0,
+			"p98": 17.7,
+			"max": 18.9,
+			"bandsPct": [
+				2.1,
+				78.9,
+				19.0,
+				0.0,
+				0.0
+			]
+		},
+		"rio_grande_sul_br": {
+			"label": "Rio Grande do Sul",
+			"country": "br",
+			"n": 3178961,
+			"min": 7.4,
+			"p2": 8.2,
+			"p98": 15.0,
+			"max": 18.1,
+			"bandsPct": [
+				34.2,
+				63.8,
+				2.0,
+				0.0,
+				0.0
+			]
+		},
+		"concepcion_py": {
+			"label": "Concepción",
+			"country": "py",
+			"n": 191663,
+			"min": 13.5,
+			"p2": 13.8,
+			"p98": 16.2,
+			"max": 17.1,
+			"bandsPct": [
+				0.0,
+				60.6,
+				39.4,
+				0.0,
+				0.0
+			]
+		},
+		"san_pedro_py": {
+			"label": "San Pedro",
+			"country": "py",
+			"n": 216922,
+			"min": 12.9,
+			"p2": 13.8,
+			"p98": 16.7,
+			"max": 18.0,
+			"bandsPct": [
+				0.0,
+				26.5,
+				73.5,
+				0.0,
+				0.0
+			]
+		},
+		"cordillera_py": {
+			"label": "Cordillera",
+			"country": "py",
+			"n": 42837,
+			"min": 14.9,
+			"p2": 15.1,
+			"p98": 18.1,
+			"max": 18.9,
+			"bandsPct": [
+				0.0,
+				0.3,
+				99.7,
+				0.0,
+				0.0
+			]
+		},
+		"guaira_py": {
+			"label": "Guairá",
+			"country": "py",
+			"n": 39103,
+			"min": 13.9,
+			"p2": 14.2,
+			"p98": 15.9,
+			"max": 16.3,
+			"bandsPct": [
+				0.0,
+				41.7,
+				58.3,
+				0.0,
+				0.0
+			]
+		},
+		"caaguazu_py": {
+			"label": "Caaguazú",
+			"country": "py",
+			"n": 133406,
+			"min": 12.1,
+			"p2": 13.2,
+			"p98": 16.4,
+			"max": 16.9,
+			"bandsPct": [
+				0.0,
+				45.9,
+				54.1,
+				0.0,
+				0.0
+			]
+		},
+		"caazapa_py": {
+			"label": "Caazapá",
+			"country": "py",
+			"n": 99106,
+			"min": 12.5,
+			"p2": 12.8,
+			"p98": 14.6,
+			"max": 15.2,
+			"bandsPct": [
+				0.0,
+				99.8,
+				0.2,
+				0.0,
+				0.0
+			]
+		},
+		"misiones_py": {
+			"label": "Misiones",
+			"country": "py",
+			"n": 54663,
+			"min": 12.4,
+			"p2": 12.8,
+			"p98": 14.5,
+			"max": 15.3,
+			"bandsPct": [
+				0.0,
+				99.7,
+				0.3,
+				0.0,
+				0.0
+			]
+		},
+		"paraguari_py": {
+			"label": "Paraguarí",
+			"country": "py",
+			"n": 94348,
+			"min": 13.4,
+			"p2": 14.1,
+			"p98": 17.4,
+			"max": 18.2,
+			"bandsPct": [
+				0.0,
+				43.0,
+				57.0,
+				0.0,
+				0.0
+			]
+		},
+		"central_py": {
+			"label": "Central",
+			"country": "py",
+			"n": 23767,
+			"min": 15.6,
+			"p2": 16.2,
+			"p98": 18.4,
+			"max": 19.2,
+			"bandsPct": [
+				0.0,
+				0.0,
+				100.0,
+				0.0,
+				0.0
+			]
+		},
+		"neembucu_py": {
+			"label": "Ñeembucú",
+			"country": "py",
+			"n": 100485,
+			"min": 11.2,
+			"p2": 13.1,
+			"p98": 15.5,
+			"max": 16.0,
+			"bandsPct": [
+				0.0,
+				75.0,
+				25.0,
+				0.0,
+				0.0
+			]
+		},
+		"amambay_py": {
+			"label": "Amambay",
+			"country": "py",
+			"n": 81889,
+			"min": 12.9,
+			"p2": 13.3,
+			"p98": 14.6,
+			"max": 15.1,
+			"bandsPct": [
+				0.0,
+				100.0,
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"canindeyu_py": {
+			"label": "Canindeyú",
+			"country": "py",
+			"n": 110939,
+			"min": 10.6,
+			"p2": 11.4,
+			"p98": 13.7,
+			"max": 14.1,
+			"bandsPct": [
+				0.0,
+				100.0,
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"presidente_hayes_py": {
+			"label": "Presidente Hayes",
+			"country": "py",
+			"n": 749576,
+			"min": 15.1,
+			"p2": 15.6,
+			"p98": 17.7,
+			"max": 18.8,
+			"bandsPct": [
+				0.0,
+				0.0,
+				100.0,
+				0.0,
+				0.0
+			]
+		},
+		"boqueron_py": {
+			"label": "Boquerón",
+			"country": "py",
+			"n": 853850,
+			"min": 13.8,
+			"p2": 14.4,
+			"p98": 16.8,
+			"max": 17.6,
+			"bandsPct": [
+				0.0,
+				21.5,
+				78.5,
+				0.0,
+				0.0
+			]
+		},
+		"alto_paraguay_py": {
+			"label": "Alto Paraguay",
+			"country": "py",
+			"n": 749940,
+			"min": 14.2,
+			"p2": 15.0,
+			"p98": 17.5,
+			"max": 18.9,
+			"bandsPct": [
+				0.0,
+				1.9,
+				98.1,
+				0.0,
+				0.0
+			]
+		}
+	}
+}

@@ -25,5 +25,7 @@ export function load({ params }: { params: { id: string } }) {
 		descKey: analysis?.descKey,
 		variables: layerCfg?.variables ?? [],
 		colorScale: layerCfg?.colorScale,
+		scaleStats: layerCfg?.scaleStats ?? null,
+		regionalColorDomain: layerCfg?.regionalColorDomain ?? null,
 	};
 }
