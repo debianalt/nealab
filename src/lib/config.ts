@@ -504,6 +504,21 @@ export interface HexLayerConfig {
 	// FlowChart banding over a RAW variable (raw-data-first convention). When
 	// absent, FlowChart falls back to score/score_baseline with 33/67 cuts.
 	flowBands?: FlowBands;
+	// Department ranking shown first at province level: bars over a physical
+	// metric read from each department's `rank` block in the dept summary JSON
+	// (written by the pipeline), highest first. Absent → plain department list.
+	deptRank?: DeptRank;
+}
+
+export interface DeptRank {
+	field: string;        // key inside dept.rank (e.g. 'flood20_pct')
+	unit: string;         // shown after the value
+	decimals: number;
+	titleKey: string;     // the question the ranking answers
+	noteKey: string;      // one-line definition of the metric
+	extraField?: string;  // optional second value (e.g. hectares), shown dimmed
+	extraUnitKey?: string; // i18n key
+	extraDecimals?: number;
 }
 
 export interface ColorClass {
@@ -634,6 +649,14 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		titleKey: 'analysis.floodRisk.title',
 		perDepartment: true,
 		colorClasses: FLOOD_OCCURRENCE_CLASSES,
+		// Exposure by terrain (HAND < 5 m), not JRC: JRC occurrence ranks river and
+		// reservoir shores (Capital on Yacyretá, Iguazú on Urugua-í) and misses the
+		// short floods of the plateau. pipeline/build_flood_rank.py.
+		deptRank: {
+			field: 'bld_hand5_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.flood.title', noteKey: 'rank.flood.note',
+			extraField: 'land_hand5_pct', extraUnitKey: 'rank.unit.land', extraDecimals: 1,
+		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
 	// ── Satellite composite scores ──

@@ -285,6 +285,17 @@ def main():
 
     os.makedirs(SRC_DATA_DIR, exist_ok=True)
     summary_path = os.path.join(SRC_DATA_DIR, summary_name)
+    # Keep the floodable-land ranking written by build_flood_rank.py: it
+    # comes from JRC transition rasters this script does not read.
+    if os.path.exists(summary_path):
+        with open(summary_path, encoding="utf-8") as f:
+            previous = json.load(f)
+        prev_rank = {d["parquetKey"]: d["rank"] for d in previous.get("departments", []) if "rank" in d}
+        for d in summary:
+            if d["parquetKey"] in prev_rank:
+                d["rank"] = prev_rank[d["parquetKey"]]
+        if "rank" in previous.get("metadata", {}):
+            summary_with_totals["metadata"]["rank"] = previous["metadata"]["rank"]
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(summary_with_totals, f, ensure_ascii=False, indent=2)
 

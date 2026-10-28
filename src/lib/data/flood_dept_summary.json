@@ -1,7 +1,11 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (y de la tierra, sin agua permanente) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)"
+    }
   },
   "province": {
     "total_hexes": 319871,
@@ -18,7 +22,13 @@
       "centroid": [
         -54.6349,
         -27.3788
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.2,
+        "bld_hand5_n": 2783,
+        "bld_total": 33864,
+        "land_hand5_pct": 11.0
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -29,7 +39,13 @@
       "centroid": [
         -55.6789,
         -27.889
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.8,
+        "bld_hand5_n": 3799,
+        "bld_total": 43160,
+        "land_hand5_pct": 21.5
+      }
     },
     {
       "dpto": "Cainguás",
@@ -40,7 +56,13 @@
       "centroid": [
         -54.8028,
         -27.1478
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.8,
+        "bld_hand5_n": 2255,
+        "bld_total": 59009,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Candelaria",
@@ -51,7 +73,13 @@
       "centroid": [
         -55.5843,
         -27.4614
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.0,
+        "bld_hand5_n": 4106,
+        "bld_total": 31556,
+        "land_hand5_pct": 20.5
+      }
     },
     {
       "dpto": "Capital",
@@ -62,7 +90,13 @@
       "centroid": [
         -55.857,
         -27.551
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.6,
+        "bld_hand5_n": 34883,
+        "bld_total": 224137,
+        "land_hand5_pct": 24.6
+      }
     },
     {
       "dpto": "Concepción",
@@ -73,7 +107,13 @@
       "centroid": [
         -55.4698,
         -27.9327
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.0,
+        "bld_hand5_n": 741,
+        "bld_total": 10525,
+        "land_hand5_pct": 21.9
+      }
     },
     {
       "dpto": "Eldorado",
@@ -84,7 +124,13 @@
       "centroid": [
         -54.4442,
         -26.3158
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.3,
+        "bld_hand5_n": 4540,
+        "bld_total": 62392,
+        "land_hand5_pct": 12.9
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -95,7 +141,13 @@
       "centroid": [
         -53.9605,
         -25.99
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.8,
+        "bld_hand5_n": 5064,
+        "bld_total": 46702,
+        "land_hand5_pct": 11.8
+      }
     },
     {
       "dpto": "Guaraní",
@@ -106,7 +158,13 @@
       "centroid": [
         -54.2696,
         -27.0261
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.6,
+        "bld_hand5_n": 7214,
+        "bld_total": 108788,
+        "land_hand5_pct": 9.8
+      }
     },
     {
       "dpto": "Iguazú",
@@ -117,7 +175,13 @@
       "centroid": [
         -54.4004,
         -25.8747
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.6,
+        "bld_hand5_n": 8724,
+        "bld_total": 69276,
+        "land_hand5_pct": 14.1
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -128,7 +192,13 @@
       "centroid": [
         -55.3896,
         -27.6306
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.9,
+        "bld_hand5_n": 7162,
+        "bld_total": 90676,
+        "land_hand5_pct": 15.7
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -139,7 +209,13 @@
       "centroid": [
         -54.9237,
         -26.8934
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.1,
+        "bld_hand5_n": 6741,
+        "bld_total": 83464,
+        "land_hand5_pct": 14.4
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -150,7 +226,13 @@
       "centroid": [
         -54.5654,
         -26.6591
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.5,
+        "bld_hand5_n": 2746,
+        "bld_total": 28841,
+        "land_hand5_pct": 12.4
+      }
     },
     {
       "dpto": "Oberá",
@@ -161,7 +243,13 @@
       "centroid": [
         -55.0716,
         -27.4769
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.5,
+        "bld_hand5_n": 15433,
+        "bld_total": 182366,
+        "land_hand5_pct": 12.1
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -172,7 +260,13 @@
       "centroid": [
         -55.3396,
         -27.177
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.1,
+        "bld_hand5_n": 10611,
+        "bld_total": 95468,
+        "land_hand5_pct": 15.9
+      }
     },
     {
       "dpto": "San Javier",
@@ -183,7 +277,13 @@
       "centroid": [
         -55.1714,
         -27.7779
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.6,
+        "bld_hand5_n": 3883,
+        "bld_total": 45129,
+        "land_hand5_pct": 19.9
+      }
     },
     {
       "dpto": "San Pedro",
@@ -194,7 +294,13 @@
       "centroid": [
         -53.967,
         -26.6388
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.3,
+        "bld_hand5_n": 2494,
+        "bld_total": 34199,
+        "land_hand5_pct": 9.6
+      }
     }
   ]
 }

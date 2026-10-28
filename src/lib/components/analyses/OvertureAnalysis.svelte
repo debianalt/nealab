@@ -122,10 +122,33 @@
 		return m ? `${m[3]}/${m[2]}/${m[1]}` : sarDate;
 	});
 
+	// Department ranking (layerCfg.deptRank): physical metric per department from
+	// the summary's `rank` block. Only when the active territory's summary has it.
+	const rankCfg = $derived(layerCfg?.deptRank ?? null);
+	const hasRank = $derived.by(() => {
+		if (!rankCfg) return false;
+		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
+		return !!summary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null);
+	});
+
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
 		if (!summary?.departments) return [];
+		if (hasRank) {
+			const f = rankCfg!.field;
+			return [...summary.departments].sort((a: any, b: any) => (b.rank?.[f] ?? -1) - (a.rank?.[f] ?? -1));
+		}
 		return [...summary.departments].sort((a: any, b: any) => b.avg_score - a.avg_score);
+	});
+
+
+	const rankMax = $derived(hasRank ? Math.max(...deptList.map((d: any) => d.rank?.[rankCfg!.field] ?? 0), 1e-9) : 1);
+	const fmtRank = (v: number | null | undefined, decimals: number) =>
+		v == null ? '—' : v.toLocaleString(i18n.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+	const selectedRankPos = $derived.by(() => {
+		if (!hasRank || !selectedDpto) return null;
+		const i = deptList.findIndex((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
+		return i < 0 ? null : { pos: i + 1, total: deptList.length, dept: deptList[i] };
 	});
 
 	// Dept filter — BR states list 300-500 municipalities; without a filter the
@@ -602,6 +625,15 @@
 
 		<div class="dept-active-title">{formatDept(selectedDpto)}</div>
 
+		{#if selectedRankPos && rankCfg}
+			<div class="rank-selected">
+				<span class="rank-selected-pos">{selectedRankPos.pos}.º {i18n.t('rank.of')} {selectedRankPos.total}</span>
+				· {fmtRank(selectedRankPos.dept.rank?.[rankCfg.field], rankCfg.decimals)} {rankCfg.unit}
+				{#if rankCfg.extraField}({fmtRank(selectedRankPos.dept.rank?.[rankCfg.extraField], rankCfg.extraDecimals ?? 0)} {i18n.t(rankCfg.extraUnitKey ?? '')}){/if}
+				<div class="rank-selected-q">{i18n.t(rankCfg.titleKey)}</div>
+			</div>
+		{/if}
+
 		{#if dataUrl}
 			<div class="download-row">
 				<button
@@ -695,6 +727,39 @@
 	<div class="view">
 		<p class="desc">{i18n.t(analysis.descKey)}</p>
 
+		{#if hasRank && rankCfg}
+			<div class="dept-section rank-section">
+				<div class="rank-title">{i18n.t(rankCfg.titleKey)}</div>
+				{#if deptList.length > 12}
+					<input
+						class="dept-filter"
+						type="search"
+						placeholder="Filtrar entre {deptList.length}…"
+						bind:value={deptFilter}
+					/>
+				{/if}
+				<div class="dept-list-scroll rank-scroll">
+					{#each filteredDeptList as dept}
+						{@const v = dept.rank?.[rankCfg.field]}
+						<button class="dept-row dept-clickable rank-row" onclick={() => handleDptoClick(dept)}>
+							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
+							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
+							<div class="dept-bar-wrap rank-bar-wrap">
+								<div class="dept-bar" style:width="{100 * (v ?? 0) / rankMax}%" style:background="#dc2626"></div>
+							</div>
+							<div class="rank-value">{fmtRank(v, rankCfg.decimals)} {rankCfg.unit}</div>
+							{#if rankCfg.extraField}
+								<div class="rank-extra">{fmtRank(dept.rank?.[rankCfg.extraField], rankCfg.extraDecimals ?? 0)} {i18n.t(rankCfg.extraUnitKey ?? '')}</div>
+							{/if}
+						</button>
+					{:else}
+						<div class="dept-row" style="color: var(--text-secondary); font-style: italic;">{i18n.t('common.noMatches')}</div>
+					{/each}
+				</div>
+				<p class="rank-note">{i18n.t(rankCfg.noteKey)}</p>
+			</div>
+		{/if}
+
 		{#if !isCategorical}
 			<div class="score-info-box">
 				<span class="score-range">{scoreRangeLabel}</span>
@@ -736,6 +801,7 @@
 			</div>
 		{/if}
 
+		{#if !hasRank}
 		<div class="dept-section">
 			<div class="section-title">{i18n.t('analysis.flood.topDepts')}</div>
 			{#if deptList.length === 0 && isPerDept}
@@ -768,6 +834,7 @@
 				</div>
 			{/if}
 		</div>
+		{/if}
 
 		{#if analysis.comparable}
 			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
@@ -987,6 +1054,21 @@
 	.dept-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.dept-score { font-size: 9px; font-weight: 600; min-width: 24px; text-align: right; }
 	.dept-active-title { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+
+	/* ── Department ranking (layerCfg.deptRank) ── */
+	.rank-section { margin-bottom: 12px; }
+	.rank-title { font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+	.rank-scroll { max-height: 340px; }
+	.rank-row { gap: 5px; margin-bottom: 1px; padding: 3px 2px; }
+	.rank-pos { font-size: 9px; color: #64748b; width: 14px; text-align: right; flex-shrink: 0; }
+	.rank-name { width: 84px; }
+	.rank-bar-wrap { height: 6px; }
+	.rank-value { font-size: 10px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; }
+	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; }
+	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
+	.rank-selected { font-size: 11px; color: #cbd5e1; margin: -4px 0 10px; }
+	.rank-selected-pos { font-weight: 700; color: #f87171; }
+	.rank-selected-q { font-size: 9px; color: #64748b; margin-top: 2px; }
 
 	/* ── Navigation ── */
 	.back-btn { background: none; border: none; color: #60a5fa; font-size: 10px; cursor: pointer; padding: 0; margin-bottom: 8px; }

@@ -24,7 +24,6 @@
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
-	import BumpChart from './BumpChart.svelte';
 	import ParallelCoords from './ParallelCoords.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
@@ -275,11 +274,6 @@
 						analysisId={hexStore.activeLayer.id}
 						territoryPrefix={hexStore.territoryPrefix}
 						onBrushSelect={onBivariateBrush ?? (() => {})}
-					/>
-					<BumpChart
-						activeAnalysisId={hexStore.activeLayer.id}
-						selectedDept={hexStore.selectedDpto}
-						territoryPrefix={hexStore.territoryPrefix}
 					/>
 					<ParallelCoords
 						data={hexStore.visibleData}
