@@ -491,10 +491,45 @@ export interface HexLayerConfig {
 	// the global parquet — avoids a slow remote scan (carbon: 1 row-group, 2.7 MB
 	// column = 3.6 s) AND makes colors identical cross-territory (more comparable).
 	fixedColorDomain?: [number, number];
+	// Discrete color classes on the primaryVariable, replacing the continuous ramp
+	// (map, legend and catastro parcels). Ignored in temporal delta mode.
+	colorClasses?: ColorClasses;
 	// FlowChart banding over a RAW variable (raw-data-first convention). When
 	// absent, FlowChart falls back to score/score_baseline with 33/67 cuts.
 	flowBands?: FlowBands;
 }
+
+export interface ColorClass {
+	from: number;      // class applies to value >= from (ascending; first class is the floor)
+	color: string;
+	labelKey: string;
+}
+
+export interface ColorClasses {
+	// value === 0 is a measured value with its own class, not "Sin cobertura".
+	zero?: { color: string; labelKey: string };
+	steps: ColorClass[];
+}
+
+export function colorForClass(value: number, classes: ColorClasses): string {
+	if (value === 0 && classes.zero) return classes.zero.color;
+	let color = classes.steps[0].color;
+	for (const s of classes.steps) if (value >= s.from) color = s.color;
+	return color;
+}
+
+// JRC occurrence (% of 1984–2021 with water). Cuts match the methodology text
+// (<5 / 5–20 / >20). 0 % = Landsat never saw water there — a real reading, not a
+// coverage gap: it was painted "Sin cobertura" (97 % of Eldorado) by the legacy
+// value-0-as-nodata rule in Map.computeHexColor.
+export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
+	zero: { color: '#1e293b', labelKey: 'legend.flood.none' },
+	steps: [
+		{ from: 0, color: '#3b82f6', labelKey: 'legend.flood.low' },
+		{ from: 5, color: '#eab308', labelKey: 'legend.flood.mid' },
+		{ from: 20, color: '#dc2626', labelKey: 'legend.flood.high' },
+	],
+};
 
 export interface FlowBands {
 	col: string;          // current-period column in visibleData
@@ -557,8 +592,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		],
 		titleKey: 'analysis.floodRisk.title',
 		perDepartment: true,
-		legendLowKey: 'legend.flood.low',
-		legendHighKey: 'legend.flood.high',
+		colorClasses: FLOOD_OCCURRENCE_CLASSES,
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
 	// ── Satellite composite scores ──

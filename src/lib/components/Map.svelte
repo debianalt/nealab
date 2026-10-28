@@ -3,7 +3,7 @@
 	import maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG } from '$lib/config';
+	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, colorForClass, type ColorClasses } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -2526,7 +2526,7 @@
 		}
 	}
 
-	export function setCatastroFloodChoropleth(h3ScoreMap: Map<string, number>) {
+	export function setCatastroFloodChoropleth(h3ScoreMap: Map<string, number>, classes?: ColorClasses) {
 		if (!map) return;
 
 		function apply() {
@@ -2537,11 +2537,18 @@
 			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
 			matchExpr.push(0);
 
-			applyCatastroChoropleth([
-				'interpolate', ['linear'], matchExpr,
-				0, '#0d1b2a', 10, '#1b3a5f', 25, '#2a6f97',
-				40, '#eab308', 60, '#f97316', 80, '#dc2626', 100, '#7f1d1d'
-			]);
+			// Same classes as the hex map, so a parcel and its hexagon read alike.
+			// Parcels with no matched hex fall to 0 → the zero class.
+			applyCatastroChoropleth(classes
+				? ['let', 'v', matchExpr,
+					['case', ['==', ['var', 'v'], 0], classes.zero?.color ?? classes.steps[0].color,
+						['step', ['var', 'v'], classes.steps[0].color,
+							...classes.steps.slice(1).flatMap((c) => [c.from, c.color])]]]
+				: [
+					'interpolate', ['linear'], matchExpr,
+					0, '#0d1b2a', 10, '#1b3a5f', 25, '#2a6f97',
+					40, '#eab308', 60, '#f97316', 80, '#dc2626', 100, '#7f1d1d'
+				]);
 			bindCatastroClick();
 		}
 
@@ -2835,7 +2842,7 @@
 	// Track last state to avoid redundant setPaintProperty calls
 	let _hexLayerInitialized = false;
 
-	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' = 'flood', domain?: [number, number]) {
+	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' = 'flood', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -2867,7 +2874,7 @@
 		}
 		const range = maxVal - minVal || 1;
 
-		const getColor = (value: number) => computeHexColor(value, colorScale, minVal, maxVal, range);
+		const getColor = (value: number) => classes ? colorForClass(value, classes) : computeHexColor(value, colorScale, minVal, maxVal, range);
 
 		// Pre-allocate to avoid dynamic resizing (measurable on 30K+ hex sets)
 		const features = new Array(entries.length);
@@ -2935,7 +2942,7 @@
 		if (bgSrc) bgSrc.setData({ type: 'FeatureCollection', features: [] });
 	}
 
-	export function setCompareHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number]) {
+	export function setCompareHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
 		const src = map.getSource('compare-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -2964,7 +2971,7 @@
 			if (!Number.isFinite(minVal)) { minVal = 0; maxVal = 1; }
 		}
 		const range = maxVal - minVal || 1;
-		const getColor = (v: number) => computeHexColor(v, colorScale, minVal, maxVal, range);
+		const getColor = (v: number) => classes ? colorForClass(v, classes) : computeHexColor(v, colorScale, minVal, maxVal, range);
 
 		const features = new Array(entries.length);
 		let fi = 0;
@@ -3003,7 +3010,7 @@
 		if (map.getLayer('compare-hex-selected')) map.setFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
 	}
 
-	export function setRegionalHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number]) {
+	export function setRegionalHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
 		const src = map.getSource('regional-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -3032,7 +3039,7 @@
 			if (!Number.isFinite(minVal)) { minVal = 0; maxVal = 1; }
 		}
 		const range = maxVal - minVal || 1;
-		const getColor = (v: number) => computeHexColor(v, colorScale, minVal, maxVal, range);
+		const getColor = (v: number) => classes ? colorForClass(v, classes) : computeHexColor(v, colorScale, minVal, maxVal, range);
 
 		const features: any[] = [];
 		for (const entry of entries) {

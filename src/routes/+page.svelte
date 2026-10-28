@@ -716,7 +716,7 @@
 
 		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'flood';
 		if (layer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
-		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 		analysisDataLoaded = true;
 	});
 
@@ -920,7 +920,7 @@
 			if (cEntries.length === 0) { mapComponent?.clearHexChoropleth(); return; }
 			let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'flood';
 			if (layer?.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
-			mapComponent?.setHexChoropleth(cEntries, cs, hexStore.colorDomain ?? undefined);
+			mapComponent?.setHexChoropleth(cEntries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
 			return;
 		}
 		mapComponent?.setHexChoropleth(entries, 'lisa');
@@ -1012,7 +1012,7 @@
 			return;
 		}
 		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'sequential';
-		mapComponent?.setCompareHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+		mapComponent?.setCompareHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 	});
 
 	// ── Regional choropleth: render 3rd territory hexes when regionalDataVersion changes ──
@@ -1027,7 +1027,7 @@
 			return;
 		}
 		const colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer?.colorScale ?? 'sequential';
-		mapComponent?.setRegionalHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+		mapComponent?.setRegionalHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 	});
 
 	// ── Regional/compare viewport loading (B): refresh the neighbor-territory slots on
@@ -1109,7 +1109,7 @@
 				if (entries.length === 0) return;
 				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer.colorScale ?? 'flood';
 				if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
-				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined);
+				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
 			}).catch(() => {});
 		};
 
@@ -1220,7 +1220,7 @@
 		if (entries.length === 0) return;
 		let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer.colorScale ?? 'flood';
 		if (mode === 'delta') colorScale = 'diverging';
-		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+		mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 	});
 
 	async function loadAnalysisChoropleth(analysis: AnalysisConfig) {
@@ -1625,7 +1625,7 @@
 			}
 
 			mapStore.setFloodH3Data(h3FullData);
-			mapComponent?.setCatastroFloodChoropleth(h3ScoreMap);
+			mapComponent?.setCatastroFloodChoropleth(h3ScoreMap, HEX_LAYER_REGISTRY.flood_risk.colorClasses);
 			if (floodLats.length > 0) {
 				mapComponent?.fitBoundsDept([Math.min(...floodLngs), Math.min(...floodLats), Math.max(...floodLngs), Math.max(...floodLats)]);
 			} else {
@@ -1761,6 +1761,13 @@
 	// Debounce timer: rapid clicks collapse into a single load after 80ms of inactivity.
 	let _deptDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+	// Discrete classes of the active layer (flood: JRC occurrence). Delta mode
+	// renders a signed change, so the level classes don't apply there.
+	function colorClassesFor(colorScale: string) {
+		const layer = hexStore.activeLayer;
+		return layer && colorScale === layer.colorScale ? layer.colorClasses : undefined;
+	}
+
 	function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
 		if (_deptDebounceTimer) clearTimeout(_deptDebounceTimer);
 		_deptDebounceTimer = setTimeout(() => {
@@ -1806,7 +1813,7 @@
 			if (entries.length > 0) {
 				let colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer?.colorScale ?? 'flood';
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
-				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined);
+				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 				analysisDataLoaded = true;
 				if (hexStore.deptBbox) mapComponent?.fitBoundsDept(hexStore.deptBbox);
 			} else {

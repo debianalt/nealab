@@ -68,8 +68,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.lowRisk': { es: 'Bajo riesgo', en: 'Low risk', gn: 'Michĩ riesgo', pt: 'Baixo risco' },
 	'legend.highRisk': { es: 'Alto riesgo', en: 'High risk', gn: 'Yvate riesgo', pt: 'Alto risco' },
 	// Per-analysis legend labels
-	'legend.flood.low': { es: 'Baja presencia histórica', en: 'Low historical presence', gn: 'Michĩ y historia rehegua', pt: 'Baixa presença histórica' },
-	'legend.flood.high': { es: 'Alta presencia histórica', en: 'High historical presence', gn: 'Yvate y historia rehegua', pt: 'Alta presença histórica' },
+	'legend.flood.none': { es: 'Sin agua detectada (0 %)', en: 'No water detected (0%)', gn: 'Ndaipóri y ojehecháva (0 %)', pt: 'Sem água detectada (0 %)' },
+	'legend.flood.low': { es: 'Baja (<5 %)', en: 'Low (<5%)', gn: 'Michĩ (<5 %)', pt: 'Baixa (<5 %)' },
+	'legend.flood.mid': { es: 'Moderada (5–20 %)', en: 'Moderate (5–20%)', gn: 'Mbyte (5–20 %)', pt: 'Moderada (5–20 %)' },
+	'legend.flood.high': { es: 'Alta (>20 %)', en: 'High (>20%)', gn: 'Guasu (>20 %)', pt: 'Alta (>20 %)' },
 	'legend.locValue.low': { es: 'Peor ubicación', en: 'Worse location', gn: 'Michĩ valor', pt: 'Pior localização' },
 	'legend.locValue.high': { es: 'Mejor ubicación', en: 'Better location', gn: 'Tuicha valor', pt: 'Melhor localização' },
 	'legend.agri.low': { es: 'Menor aptitud', en: 'Less suitable', gn: 'Michĩ aptitud', pt: 'Menor aptidão' },
@@ -665,10 +667,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	// Explanatory panels — flood risk
 	'analysis.flood.howToReadTitle': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ejapokuaa ko mapa", pt: 'Como ler este mapa' },
 	'analysis.flood.howToReadBody': {
-		es: 'Los colores representan la presencia histórica de agua en cada zona (JRC Global Surface Water, Landsat 1984–2021). Verde = baja presencia (<5%); amarillo = presencia moderada (5–20%); rojo = alta presencia (>20%). Seleccioná un departamento para ver el detalle a nivel de parcela catastral.',
-		en: 'Colours represent historical water presence per area (JRC Global Surface Water, Landsat 1984–2021). Green = low presence (<5%); yellow = moderate presence (5–20%); red = high presence (>20%). Select a department to view parcel-level detail.',
-		gn: "Sa'y ohechauka y rehegua historia yvy peteĩ-pe (JRC, Landsat 1984–2021). Hovyũ = michĩ (<5%); sa'yju = mbyte (5–20%); pytã = guasu (>20%). Eiporavo departamento ehecha hag̃ua yvy peteĩteĩ.",
-		pt: 'As cores representam a presença histórica de água em cada zona (JRC Global Surface Water, Landsat 1984–2021). Verde = baixa presença (<5%); amarelo = presença moderada (5–20%); vermelho = alta presença (>20%). Selecione um departamento para ver o detalhe.',
+		es: 'Los colores representan la presencia histórica de agua en cada zona (JRC Global Surface Water, Landsat 1984–2021). Oscuro = sin agua detectada en todo el período (0%); azul = baja presencia (<5%); amarillo = presencia moderada (5–20%); rojo = alta presencia (>20%). Seleccioná un departamento para ver el detalle a nivel de parcela catastral.',
+		en: 'Colours represent historical water presence per area (JRC Global Surface Water, Landsat 1984–2021). Dark = no water detected in the whole period (0%); blue = low presence (<5%); yellow = moderate presence (5–20%); red = high presence (>20%). Select a department to view parcel-level detail.',
+		gn: "Sa'y ohechauka y rehegua historia yvy peteĩ-pe (JRC, Landsat 1984–2021). Hũ = ndaipóri y ojehecháva (0%); hovy = michĩ (<5%); sa'yju = mbyte (5–20%); pytã = guasu (>20%). Eiporavo departamento ehecha hag̃ua yvy peteĩteĩ.",
+		pt: 'As cores representam a presença histórica de água em cada zona (JRC Global Surface Water, Landsat 1984–2021). Escuro = sem água detectada em todo o período (0%); azul = baixa presença (<5%); amarelo = presença moderada (5–20%); vermelho = alta presença (>20%). Selecione um departamento para ver o detalhe.',
 	},
 	'analysis.flood.keyFindingsTitle': { es: 'Hallazgos clave', en: 'Key findings', gn: 'Ojejuhúva guasu', pt: 'Principais achados' },
 	'analysis.flood.implicationsTitle': { es: 'Implicancias', en: 'Implications', gn: "Mba'e he'ise", pt: 'Implicações' },

@@ -23,6 +23,10 @@
 
 	const title = $derived(layer ? i18n.t(layer.titleKey) : '');
 
+	// Discrete classes replace the gradient (flood: JRC occurrence %). Not in delta
+	// mode: the change ramp is diverging, not a level.
+	const classes = $derived(!isDiverging ? layer?.colorClasses : undefined);
+
 	// Range badge next to the title. The gradient is colored by the layer's primary
 	// variable, which is NOT always a 0–100 score: physical-unit layers (precipitation
 	// mm, carbon tC/ha, travel min, density hab/km²) were mislabeled "0–100". Show the
@@ -105,6 +109,28 @@
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
+{:else if layer && classes}
+	<div class="legend">
+		<div class="legend-title">{title} <span class="legend-range">%</span></div>
+		<div class="legend-items">
+			{#if classes.zero}
+				<div class="legend-item">
+					<span class="legend-swatch outlined" style:background={classes.zero.color}></span>
+					<span class="legend-label">{i18n.t(classes.zero.labelKey)}</span>
+				</div>
+			{/if}
+			{#each classes.steps as step}
+				<div class="legend-item">
+					<span class="legend-swatch" style:background={step.color}></span>
+					<span class="legend-label">{i18n.t(step.labelKey)}</span>
+				</div>
+			{/each}
+		</div>
+		<div class="nodata-row">
+			<span class="nodata-swatch"></span>
+			<span class="nodata-label">{i18n.t('legend.noData')}</span>
+		</div>
+	</div>
 {:else if layer && isGradient}
 	<div class="legend">
 		<div class="legend-title">{title} {#if rangeLabel}<span class="legend-range">{rangeLabel}</span>{/if}</div>
@@ -171,6 +197,9 @@
 		height: 10px;
 		border-radius: 2px;
 		flex-shrink: 0;
+	}
+	.legend-swatch.outlined {
+		box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
 	}
 	.legend-label {
 		font-size: 9px;
