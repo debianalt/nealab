@@ -144,8 +144,6 @@
 	let batchError = $state('');
 	let batchResult: { processed: number; outside: number; csvUrl: string } | null = $state(null);
 
-	// Last analyzed polygon (rings) — used to hash the input for the report
-	let lastPolygonRings: number[][][] | null = null;
 
 	// Warm-only risk ramp — no green/blue (matches platform aesthetic on EUDR)
 	function getRiskColor(level: string): string {
@@ -315,7 +313,6 @@
 		polygonError = '';
 		polygonResult = null;
 		result = null; // clear point result when switching to polygon mode
-		lastPolygonRings = rings;
 
 		try {
 			// isGeoJson=true → coords are [lng,lat] loops
@@ -509,101 +506,6 @@
 			batchLoading = false;
 			input.value = '';
 		}
-	}
-
-	// Report request flow (Alternativa A: lead-gen + entrega humana del informe
-	// firmado). No PDF self-service público con branding CONICET hasta que el
-	// STAN esté aprobado. El formulario arma un mailto a nealab@spatia.ar con
-	// los datos del análisis; el usuario lo envía con su cliente de mail y, en
-	// paralelo, se descarga el polígono en GeoJSON para que pueda adjuntarlo.
-	let reportModalOpen = $state(false);
-	let reqName = $state('');
-	let reqEmail = $state('');
-	let reqCompany = $state('');
-	let reqPurpose = $state('');
-	let reqHash = $state('');
-
-	async function openReportRequest() {
-		if (!polygonResult || !lastPolygonRings) return;
-		const ringsText = JSON.stringify(lastPolygonRings);
-		const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ringsText));
-		reqHash = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, '0')).join('');
-		reportModalOpen = true;
-	}
-
-	function closeReportModal() {
-		reportModalOpen = false;
-	}
-
-	function submitReportRequest() {
-		if (!polygonResult || !lastPolygonRings) return;
-		if (!reqEmail.trim() || !reqName.trim()) {
-			polygonError = i18n.t('eudr.check.req_err_fields');
-			return;
-		}
-		const r = polygonResult;
-		const yr = (y: number) => (r.loss_by_year[y] || 0).toFixed(3);
-		const body = [
-			'Hola,',
-			'',
-			'Solicito un informe técnico firmado sobre el siguiente análisis EUDR.',
-			'',
-			'-- SOLICITANTE --',
-			`Nombre: ${reqName}`,
-			`Email: ${reqEmail}`,
-			reqCompany ? `Organización: ${reqCompany}` : '',
-			reqPurpose ? `Propósito del informe: ${reqPurpose}` : '',
-			'',
-			'-- POLÍGONO ANALIZADO --',
-			`Identificador: ${polygonName || '(dibujado en el mapa)'}`,
-			`Hash SHA-256 (geometría): ${reqHash}`,
-			`Provincias/unidades: ${r.provinces.map(prettyProvince).join(', ') || '—'}`,
-			`Área en cobertura: ${r.area_ha.toLocaleString(undefined, { maximumFractionDigits: 0 })} ha`,
-			`Cobertura del polígono: ${r.coverage_pct.toFixed(1)}%`,
-			`Celdas evaluadas: ${r.cells_in_coverage.toLocaleString()} de ${r.cells_requested.toLocaleString()}`,
-			'',
-			'-- RESULTADOS --',
-			`Pérdida forestal post-2020: ${r.deforested_pct.toFixed(2)}% del polígono`,
-			`Riesgo máximo (0-100): ${r.max_risk.toFixed(0)}`,
-			`Riesgo medio (0-100): ${r.mean_risk.toFixed(1)}`,
-			`Celdas con pérdida post-2020: ${r.deforested_cells.toLocaleString()}`,
-			`Pérdida anual ${LOSS_YEARS[0]}–${LOSS_YEARS[LOSS_YEARS.length - 1]}: ${LOSS_YEARS.map((y) => `${yr(y)}%`).join(' / ')}`,
-			r.plantation_data_cells > 0
-				? `Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea: ${r.deforested_harvest} sobre plantación forestal · ${r.deforested_forest} sobre bosque cerrado · ${r.deforested_savanna} sobre bosque abierto o inundable · ${r.deforested_other} sobre otra cobertura (agro/pasturas/mosaico) · ${r.deforested_conversion} eran bosque en 2020 y hoy figuran como plantación (posible conversión, a verificar). Señal indicativa — no determina causa de la pérdida ni cumplimiento EUDR.`
-				: 'Plantación vs nativo: SIN dato de plantación para esta zona (Paraguay/Brasil — MapBiomas no clasifica silvicultura). La pérdida no pudo distinguirse entre cosecha de plantación y deforestación de bosque nativo; si hay forestación, posible falso positivo (verificar en terreno o catastro).',
-			'',
-			'-- METODOLOGÍA --',
-			`Hansen GFC ${hansenVersion} + MODIS MCD64A1, cutoff 31/12/2020, H3 res-9 (~0,1 km²). Señal de pérdida a 100 m; área quemada MODIS a 500 m. Datos al ${dataVintage}.`,
-			'Score 0-100 = 70% pérdida post-2020 + 20% fuego sobre nativa leñosa + 10% ausencia de cobertura arbórea en la línea base Hansen (treecover2000).',
-			'Plantación vs bosque nativo: MapBiomas Argentina Colección 2 (clase 9 = silvicultura), leída en 2020 y 2024.',
-			'Cita: MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de Argentina, consultada el 24 de julio de 2026 a través del enlace: https://argentina.mapbiomas.org (licencia CC-BY).',
-			'',
-			'(Adjunto el GeoJSON del polígono.)',
-			'',
-			'Gracias.',
-		].filter(Boolean).join('\n');
-		const subject = `[Solicitud informe EUDR] ${polygonName || 'polígono'} — ${reqHash.slice(0, 8)}`;
-		const mailto = `mailto:nealab@spatia.ar?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-		// Trigger GeoJSON download so the user can attach it to the email
-		const gj = {
-			type: 'Feature',
-			properties: { name: polygonName || 'polygon', hash: reqHash, requested_by: reqEmail },
-			geometry: { type: 'Polygon', coordinates: lastPolygonRings },
-		};
-		const blob = new Blob([JSON.stringify(gj)], { type: 'application/geo+json' });
-		const blobUrl = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = blobUrl;
-		a.download = `eudr_request_${reqHash.slice(0, 8)}.geojson`;
-		document.body.appendChild(a);
-		a.click();
-		document.body.removeChild(a);
-		URL.revokeObjectURL(blobUrl);
-
-		// Open the mail client with the prefilled body
-		window.location.href = mailto;
-		closeReportModal();
 	}
 
 	function handleSubmit() {
@@ -1158,11 +1060,6 @@
 						</div>
 					</div>
 
-					<button onclick={openReportRequest}
-						class="mt-4 w-full py-2 rounded border border-yellow-400/60 bg-yellow-400/15 text-[12px] font-semibold text-yellow-100 hover:bg-yellow-400/25 hover:border-yellow-400 hover:text-white transition-colors cursor-pointer">
-						{i18n.t('eudr.check.poly_report')}
-					</button>
-
 					<div class="mt-3 pt-3 border-t border-border text-[10px] text-white/25 leading-relaxed">
 						{i18n.t('eudr.disclaimer_short')}
 					</div>
@@ -1172,37 +1069,6 @@
 				</div>
 			{/if}
 	</div>
-
-	<!-- Report-request modal (lead-gen — STAN-CONICET emite el informe humano) -->
-	{#if reportModalOpen}
-		<div class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onclick={closeReportModal} role="presentation">
-			<div class="border border-yellow-400/40 rounded-lg p-6 max-w-md w-full max-h-[calc(100vh-32px)] overflow-y-auto" style="background: var(--color-bg);" onclick={(e: MouseEvent) => e.stopPropagation()} role="dialog">
-				<h3 class="text-base font-bold text-white mb-2">{i18n.t('eudr.check.req_title')}</h3>
-				<p class="text-[11px] text-white/60 mb-4 leading-relaxed">{i18n.t('eudr.check.req_intro')}</p>
-				<div class="space-y-2">
-					<input type="text" placeholder={i18n.t('eudr.check.req_name')} bind:value={reqName}
-						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
-					<input type="email" placeholder={i18n.t('eudr.check.req_email')} bind:value={reqEmail}
-						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
-					<input type="text" placeholder={i18n.t('eudr.check.req_company')} bind:value={reqCompany}
-						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60" />
-					<textarea placeholder={i18n.t('eudr.check.req_purpose')} bind:value={reqPurpose} rows="3"
-						class="w-full bg-white/5 border border-border rounded px-3 py-2 text-[13px] text-white placeholder-white/30 focus:outline-none focus:border-yellow-400/60 resize-none"></textarea>
-				</div>
-				<p class="mt-3 text-[10px] text-white/40 leading-relaxed">{i18n.t('eudr.check.req_note')}</p>
-				<div class="mt-4 flex gap-2">
-					<button onclick={closeReportModal}
-						class="flex-1 py-2 border border-white/20 rounded text-[12px] text-white/60 hover:border-white/40 hover:text-white transition-colors cursor-pointer bg-transparent">
-						{i18n.t('eudr.check.req_cancel')}
-					</button>
-					<button onclick={submitReportRequest}
-						class="flex-1 py-2 rounded bg-yellow-400 text-black font-bold text-[12px] hover:bg-yellow-400/85 transition-colors cursor-pointer">
-						{i18n.t('eudr.check.req_send')}
-					</button>
-				</div>
-			</div>
-		</div>
-	{/if}
 </div>
 {/if}
 
