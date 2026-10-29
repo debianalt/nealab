@@ -133,6 +133,7 @@
 	});
 	// The pipeline flags territories where the metric does not separate departments
 	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %) — say so instead of bars.
+	const activeTerritoryLabel = $derived(TERRITORY_REGISTRY[activeTab]?.label ?? '');
 	const rankSaturated = $derived.by(() => {
 		if (!rankCfg?.saturatedKey) return false;
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
@@ -735,9 +736,30 @@
 	<div class="view">
 		<p class="desc">{i18n.t(analysis.descKey)}</p>
 
+		{#if tabTerritories.length > 1}
+			<div class="territory-tabs-wrapper">
+				{#each COUNTRY_ORDER as country}
+					{#if tabsByCountry.has(country)}
+						<div class="territory-country-row">
+							<span class="country-flag">{COUNTRY_FLAGS[country]}</span>
+							<div class="territory-tabs">
+								{#each tabsByCountry.get(country)! as t}
+									<button
+										class="territory-tab"
+										class:active={activeTab === t.id}
+										onclick={() => handleTabClick(t.id)}
+									>{t.shortLabel}</button>
+								{/each}
+							</div>
+						</div>
+					{/if}
+				{/each}
+			</div>
+		{/if}
+
 		{#if hasRank && rankCfg}
 			<div class="dept-section rank-section">
-				<div class="rank-title">{i18n.t(rankCfg.titleKey)}</div>
+				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
 				{#if deptList.length > 12}
 					<input
 						class="dept-filter"
@@ -769,8 +791,13 @@
 		{/if}
 
 		{#if rankSaturated && rankCfg?.saturatedKey}
-			<p class="rank-note rank-saturated">{i18n.t(rankCfg.saturatedKey)}</p>
+			<div class="dept-section rank-section rank-saturated">
+				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
+				<div class="rank-saturated-head">{i18n.t('rank.saturated.head')}</div>
+				<p class="rank-note">{i18n.t(rankCfg.saturatedKey)}</p>
+			</div>
 		{/if}
+
 
 		{#if !isCategorical}
 			<div class="score-info-box">
@@ -792,26 +819,6 @@
 			<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
 		{/if}
 
-		{#if tabTerritories.length > 1}
-			<div class="territory-tabs-wrapper">
-				{#each COUNTRY_ORDER as country}
-					{#if tabsByCountry.has(country)}
-						<div class="territory-country-row">
-							<span class="country-flag">{COUNTRY_FLAGS[country]}</span>
-							<div class="territory-tabs">
-								{#each tabsByCountry.get(country)! as t}
-									<button
-										class="territory-tab"
-										class:active={activeTab === t.id}
-										onclick={() => handleTabClick(t.id)}
-									>{t.shortLabel}</button>
-								{/each}
-							</div>
-						</div>
-					{/if}
-				{/each}
-			</div>
-		{/if}
 
 		{#if !hasRank}
 		<div class="dept-section">
@@ -1078,7 +1085,10 @@
 	.rank-value { font-size: 10px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; }
 	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; }
 	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
-	.rank-saturated { font-size: 10px; margin: 0 0 12px; padding: 8px; border: 1px solid rgba(148,163,184,0.2); border-radius: 4px; }
+	.rank-territory { font-weight: 400; color: #94a3b8; }
+	.rank-saturated { padding: 10px; border: 1px solid rgba(148,163,184,0.25); border-radius: 6px; background: rgba(148,163,184,0.06); }
+	.rank-saturated-head { font-size: 11px; font-weight: 600; color: #fbbf24; margin-bottom: 4px; }
+	.rank-saturated .rank-note { font-size: 10px; color: #cbd5e1; margin: 0; }
 	.rank-selected { font-size: 11px; color: #cbd5e1; margin: -4px 0 10px; }
 	.rank-selected-pos { font-weight: 700; color: #f87171; }
 	.rank-selected-q { font-size: 9px; color: #64748b; margin-top: 2px; }
