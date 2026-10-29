@@ -157,7 +157,11 @@
 	const rankMetrics = $derived.by(() => {
 		const base = layerCfg?.deptRank;
 		if (!base?.metrics) return [];
-		return base.metrics.filter(m => rankSummary?.departments?.some((d: any) => d.rank?.[m.field ?? base.field] != null));
+		// A reading also gets a tab when only its territory-wide block exists
+		// (deptRank.province): the change tab where the department order is not stable.
+		return base.metrics.filter(m =>
+			rankSummary?.departments?.some((d: any) => d.rank?.[m.field ?? base.field] != null)
+			|| (!!(m.province ?? base.province) && !!rankSummary?.metadata?.rank?.[(m.province ?? base.province)!]?.province?.label));
 	});
 	$effect(() => { if (rankMetricIdx >= rankMetrics.length) rankMetricIdx = 0; });
 	const rankCfg = $derived.by(() => {
@@ -168,10 +172,18 @@
 		return m ? { ...base, ...m } : base;
 	});
 	const rankUnit = $derived(rankCfg ? (rankCfg.unitKey ? i18n.t(rankCfg.unitKey) : rankCfg.unit) : '');
+	// rankBars: departments with a value for the active reading. rankProvince: the
+	// territory-wide block (deptRank.province), shown above the bars or instead of them.
+	const rankBars = $derived(!!rankCfg && !!rankSummary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null));
+	const rankProvince = $derived.by(() => {
+		const key = rankCfg?.province;
+		const p = key ? rankSummary?.metadata?.rank?.[key]?.province : null;
+		return p?.label ? p : null;
+	});
 	const hasRank = $derived.by(() => {
 		if (!rankCfg) return false;
 		if (rankSaturatedRaw && !rankPlain) return false;
-		return !!rankSummary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null);
+		return rankBars || !!rankProvince;
 	});
 	const activeTerritoryLabel = $derived(TERRITORY_REGISTRY[activeTab]?.label ?? '');
 	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw && !rankPlain);
@@ -179,7 +191,7 @@
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
 		if (!summary?.departments) return [];
-		if (hasRank) {
+		if (hasRank && rankBars) {
 			const f = rankCfg!.field;
 			const missing = rankCfg!.signed ? -Infinity : -1;   // no value → bottom of the list
 			return [...summary.departments].sort((a: any, b: any) => (b.rank?.[f] ?? missing) - (a.rank?.[f] ?? missing));
@@ -188,11 +200,11 @@
 	});
 
 
-	const rankMax = $derived(hasRank ? Math.max(...deptList.map((d: any) => Math.abs(d.rank?.[rankCfg!.field] ?? 0)), 1e-9) : 1);
+	const rankMax = $derived(hasRank && rankBars ? Math.max(...deptList.map((d: any) => Math.abs(d.rank?.[rankCfg!.field] ?? 0)), 1e-9) : 1);
 	const fmtRank = (v: number | null | undefined, decimals: number, signed = false) =>
 		v == null ? '—' : (signed && v > 0 ? '+' : '') + v.toLocaleString(i18n.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 	const selectedRankPos = $derived.by(() => {
-		if (!hasRank || !selectedDpto) return null;
+		if (!hasRank || !rankBars || !selectedDpto) return null;
 		const i = deptList.findIndex((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
 		return i < 0 ? null : { pos: i + 1, total: deptList.length, dept: deptList[i] };
 	});
@@ -804,6 +816,15 @@
 						{/each}
 					</div>
 				{/if}
+				{#if rankProvince}
+					<div class="rank-province" class:rank-province-toward={rankProvince.label === 'toward'} class:rank-province-away={rankProvince.label === 'away'}>
+						<div class="rank-province-head"><span class="rank-province-val">{fmtRank(rankProvince.tilt_pts, rankCfg.decimals, rankCfg.signed)} {rankUnit}</span> · {i18n.t(`rank.change.label.${rankProvince.label}`)}</div>
+						{#if rankProvince.share_new_pct != null && rankProvince.share16_pct != null}
+							<div class="rank-province-detail">{i18n.t('rank.change.prov.whole')} {activeTerritoryLabel}, {fmtRank(rankProvince.share_new_pct, 1)} % {i18n.t('rank.change.prov.built')} {fmtRank(rankProvince.share16_pct, 1)} % {i18n.t('rank.change.prov.stock')}</div>
+						{/if}
+					</div>
+				{/if}
+				{#if rankBars}
 				{#if deptList.length > 12}
 					<input
 						class="dept-filter"
@@ -830,6 +851,9 @@
 						<div class="dept-row" style="color: var(--text-secondary); font-style: italic;">{i18n.t('common.noMatches')}</div>
 					{/each}
 				</div>
+				{:else}
+					<p class="rank-nobars">{i18n.t('rank.change.noBars')}</p>
+				{/if}
 				<p class="rank-note">{i18n.t(rankCfg.noteKey)}</p>
 			</div>
 		{/if}
@@ -864,7 +888,7 @@
 		{/if}
 
 
-		{#if !hasRank}
+		{#if !hasRank || !rankBars}
 		<div class="dept-section">
 			<div class="section-title">{i18n.t('analysis.flood.topDepts')}</div>
 			{#if deptList.length === 0 && isPerDept}
@@ -1129,6 +1153,15 @@
 	.rank-value { font-size: 10px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; }
 	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; }
 	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
+	.rank-province { border-left: 3px solid #64748b; background: rgba(148,163,184,0.08); border-radius: 4px; padding: 6px 8px; margin: 0 0 8px; }
+	.rank-province-toward { border-left-color: #dc2626; }
+	.rank-province-away { border-left-color: #22c55e; }
+	.rank-province-head { font-size: 11px; color: #e2e8f0; line-height: 1.35; }
+	.rank-province-val { font-weight: 600; }
+	.rank-province-toward .rank-province-val { color: #f87171; }
+	.rank-province-away .rank-province-val { color: #4ade80; }
+	.rank-province-detail { font-size: 10px; color: #94a3b8; line-height: 1.4; margin-top: 3px; }
+	.rank-nobars { font-size: 10px; color: #cbd5e1; line-height: 1.4; margin: 0 0 4px; }
 	.rank-territory { font-weight: 400; color: #94a3b8; }
 	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
 	.rank-tab { font-size: 10px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: #94a3b8; cursor: pointer; }

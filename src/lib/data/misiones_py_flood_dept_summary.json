@@ -6,7 +6,56 @@
       "metric": "bld_hand5_pct",
       "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
       "median": 17.4,
-      "saturated": false
+      "saturated": false,
+      "change": {
+        "metric": "low_tilt_pts",
+        "years": "2016–2023",
+        "min_low_new": 200,
+        "rho": null,
+        "n_ranked": 4,
+        "shown": false,
+        "province": {
+          "low_share_by_year": [
+            20.33,
+            19.73,
+            19.79,
+            19.58,
+            19.78,
+            20.51,
+            21.16,
+            20.84
+          ],
+          "bld_by_year": [
+            96854,
+            96545,
+            102187,
+            104104,
+            106438,
+            114804,
+            120260,
+            122827
+          ],
+          "low_new_n": 7002,
+          "bld_new_n": 28381,
+          "share_new_pct": 24.7,
+          "share16_pct": 20.3,
+          "windows": [
+            2.4,
+            7.3,
+            -6.1,
+            8.2
+          ],
+          "label": "unclear",
+          "tilt_pts": 4.34,
+          "monotonic": false,
+          "dept_tilt_p25_p75": [
+            0.2,
+            4.0
+          ],
+          "sign_flips": 1
+        },
+        "definition": "% de los edificios agregados 2016–2023 (Google Open Buildings Temporal, tendencia anual) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro) menos el % del parque de 2016 en esa franja, en puntos"
+      }
     }
   },
   "province": {
@@ -29,7 +78,13 @@
         "bld_hand5_pct": 47.4,
         "bld_hand5_n": 8783,
         "bld_total": 18526,
-        "land_hand5_pct": 92.4
+        "land_hand5_pct": 92.4,
+        "low_new_n": 2906,
+        "bld_new_n": 5713,
+        "low_new_share_pct": 50.9,
+        "low_stock16_pct": 46.4,
+        "low_tilt_pts": null,
+        "low_tilt_all": 4.5
       }
     },
     {
@@ -46,7 +101,13 @@
         "bld_hand5_pct": 18.9,
         "bld_hand5_n": 5910,
         "bld_total": 31341,
-        "land_hand5_pct": 70.1
+        "land_hand5_pct": 70.1,
+        "low_new_n": 1415,
+        "bld_new_n": 7122,
+        "low_new_share_pct": 19.9,
+        "low_stock16_pct": 18.8,
+        "low_tilt_pts": null,
+        "low_tilt_all": 1.0
       }
     },
     {
@@ -63,7 +124,13 @@
         "bld_hand5_pct": 14.4,
         "bld_hand5_n": 3187,
         "bld_total": 22097,
-        "land_hand5_pct": 87.9
+        "land_hand5_pct": 87.9,
+        "low_new_n": 762,
+        "bld_new_n": 5131,
+        "low_new_share_pct": 14.8,
+        "low_stock16_pct": 15.4,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.5
       }
     },
     {
@@ -80,7 +147,13 @@
         "bld_hand5_pct": 17.4,
         "bld_hand5_n": 1047,
         "bld_total": 6001,
-        "land_hand5_pct": 69.5
+        "land_hand5_pct": 69.5,
+        "low_new_n": 246,
+        "bld_new_n": 1216,
+        "low_new_share_pct": 20.3,
+        "low_stock16_pct": 16.8,
+        "low_tilt_pts": null,
+        "low_tilt_all": 3.4
       }
     },
     {
@@ -97,7 +170,13 @@
         "bld_hand5_pct": 8.8,
         "bld_hand5_n": 317,
         "bld_total": 3595,
-        "land_hand5_pct": 29.8
+        "land_hand5_pct": 29.8,
+        "low_new_n": 108,
+        "bld_new_n": 625,
+        "low_new_share_pct": 17.2,
+        "low_stock16_pct": 7.2,
+        "low_tilt_pts": null,
+        "low_tilt_all": null
       }
     },
     {
@@ -114,7 +193,13 @@
         "bld_hand5_pct": 8.3,
         "bld_hand5_n": 682,
         "bld_total": 8262,
-        "land_hand5_pct": 64.9
+        "land_hand5_pct": 64.9,
+        "low_new_n": 216,
+        "bld_new_n": 2084,
+        "low_new_share_pct": 10.4,
+        "low_stock16_pct": 7.8,
+        "low_tilt_pts": null,
+        "low_tilt_all": 2.5
       }
     },
     {
@@ -131,7 +216,13 @@
         "bld_hand5_pct": 7.2,
         "bld_hand5_n": 1291,
         "bld_total": 17829,
-        "land_hand5_pct": 61.4
+        "land_hand5_pct": 61.4,
+        "low_new_n": 208,
+        "bld_new_n": 3277,
+        "low_new_share_pct": 6.3,
+        "low_stock16_pct": 7.6,
+        "low_tilt_pts": null,
+        "low_tilt_all": -1.2
       }
     },
     {
@@ -148,7 +239,13 @@
         "bld_hand5_pct": 9.9,
         "bld_hand5_n": 771,
         "bld_total": 7745,
-        "land_hand5_pct": 69.2
+        "land_hand5_pct": 69.2,
+        "low_new_n": 135,
+        "bld_new_n": 1109,
+        "low_new_share_pct": 12.1,
+        "low_stock16_pct": 10.2,
+        "low_tilt_pts": null,
+        "low_tilt_all": null
       }
     },
     {
@@ -165,7 +262,13 @@
         "bld_hand5_pct": 29.2,
         "bld_hand5_n": 1461,
         "bld_total": 5000,
-        "land_hand5_pct": 80.5
+        "land_hand5_pct": 80.5,
+        "low_new_n": 508,
+        "bld_new_n": 1526,
+        "low_new_share_pct": 33.3,
+        "low_stock16_pct": 28.5,
+        "low_tilt_pts": null,
+        "low_tilt_all": 4.7
       }
     },
     {
@@ -182,7 +285,13 @@
         "bld_hand5_pct": 88.4,
         "bld_hand5_n": 2149,
         "bld_total": 2432,
-        "land_hand5_pct": 98.8
+        "land_hand5_pct": 98.8,
+        "low_new_n": 500,
+        "bld_new_n": 579,
+        "low_new_share_pct": 86.3,
+        "low_stock16_pct": 90.3,
+        "low_tilt_pts": null,
+        "low_tilt_all": null
       }
     }
   ]

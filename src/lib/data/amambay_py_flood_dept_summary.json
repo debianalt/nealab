@@ -6,7 +6,56 @@
       "metric": "bld_hand5_pct",
       "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
       "median": 20.6,
-      "saturated": false
+      "saturated": false,
+      "change": {
+        "metric": "low_tilt_pts",
+        "years": "2016–2023",
+        "min_low_new": 200,
+        "rho": null,
+        "n_ranked": 2,
+        "shown": false,
+        "province": {
+          "low_share_by_year": [
+            13.01,
+            13.09,
+            12.99,
+            13.05,
+            13.01,
+            13.09,
+            13.16,
+            12.94
+          ],
+          "bld_by_year": [
+            107777,
+            109679,
+            113863,
+            118711,
+            123106,
+            129411,
+            133187,
+            137467
+          ],
+          "low_new_n": 4102,
+          "bld_new_n": 31367,
+          "share_new_pct": 13.1,
+          "share16_pct": 13.0,
+          "windows": [
+            -0.3,
+            0.4,
+            0.0,
+            -0.8
+          ],
+          "label": "none",
+          "tilt_pts": 0.07,
+          "monotonic": false,
+          "dept_tilt_p25_p75": [
+            -3.1,
+            -0.4
+          ],
+          "sign_flips": 0
+        },
+        "definition": "% de los edificios agregados 2016–2023 (Google Open Buildings Temporal, tendencia anual) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro) menos el % del parque de 2016 en esa franja, en puntos"
+      }
     }
   },
   "province": {
@@ -29,7 +78,13 @@
         "bld_hand5_pct": 20.6,
         "bld_hand5_n": 3021,
         "bld_total": 14641,
-        "land_hand5_pct": 36.7
+        "land_hand5_pct": 36.7,
+        "low_new_n": 364,
+        "bld_new_n": 2116,
+        "low_new_share_pct": 17.2,
+        "low_stock16_pct": 21.6,
+        "low_tilt_pts": null,
+        "low_tilt_all": -4.4
       }
     },
     {
@@ -46,7 +101,13 @@
         "bld_hand5_pct": 12.0,
         "bld_hand5_n": 14768,
         "bld_total": 122826,
-        "land_hand5_pct": 14.4
+        "land_hand5_pct": 14.4,
+        "low_new_n": 3738,
+        "bld_new_n": 29252,
+        "low_new_share_pct": 12.8,
+        "low_stock16_pct": 11.8,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.9
       }
     }
   ]

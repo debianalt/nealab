@@ -46,13 +46,37 @@ VV < −15 dB flags the plain's smooth, saline soils as water. --plain still
 computes s1_land_pct but writes shown=False; publishing it needs a method that
 survives that check (e.g. change detection against a dry baseline, or S1 ∧ S2).
 
-Writes a `rank` block into each department of the flood dept summary JSON;
+Change (`--change`, 4th tab): has new construction moved to low ground?
+Google Open Buildings Temporal v1 has eight annual epochs (30 June 2016…2023).
+One 90 m export per territory with bld_YYYY / low_YYYY (low = HAND < 5 m) and,
+per department, linear trends over the eight epochs × 7 years (one bad epoch
+does not move them; 2023 ≈ 2022 in Misiones):
+  low_new_n    = buildings added on low ground 2016–2023
+  bld_new_n    = buildings added in total
+  low_tilt_pts = % of the added buildings on low ground − % of the 2016 stock
+                 there (points; > 0 = growth drifting to low ground)  ← ranking
+None where fewer than MIN_LOW_NEW buildings were added on low ground or fewer
+than MIN_BLD_NEW in total. Department bars are published only if their order is
+stable between the 2016→2023 and 2017→2022 endpoints (Spearman ≥ CHANGE_MIN_RHO,
+≥ CHANGE_MIN_N departments); otherwise low_tilt_pts is None everywhere.
+The territory as a whole (metadata.rank.change.province) is always written: share
+of the added buildings on low ground vs the 2016 stock, and a label from the four
+PROV_WINDOWS pairs — 'toward' (all > +1 pt), 'away' (all < −1), 'none' (all within
+±1) or 'unclear'. The UI shows it above the bars, or instead of them.
+Misiones check (29-oct-2026): new buildings vs new dwellings of the 2010→2022
+census by department, Pearson 0.99 / Spearman 0.91; province +25 % in 7 years
+(≈ census pace); low-ground share of the stock rises every year 9.30 → 9.80 %;
+tilt order Spearman 0.79–0.99 across 2016–23, 2017–22, 2016–20, 2019–23.
+
+Writes a `rank` block into each department of the flood dept summary JSON
+(merging, so the HAND, plain and change runs keep each other's fields);
 split_flood_by_dpto.py keeps it when it rewrites the summary.
 
     python pipeline/build_flood_rank.py --export --all     # launch GEE exports, wait, download
     python pipeline/build_flood_rank.py --all              # tifs → JSON
     python pipeline/build_flood_rank.py --territory corrientes
     python pipeline/build_flood_rank.py --plain --export      # saturated territories, Sentinel-1
+    python pipeline/build_flood_rank.py --change --export --all   # 4th tab, Open Buildings Temporal
 """
 
 import argparse
@@ -79,6 +103,28 @@ SATURATED_MEDIAN = 80   # % — at or above, HAND < 5 m does not separate depart
 PLAIN_NAME = 'flood_rank_s1'
 S1_MIN_MONTHS = 0.10    # share of months with water
 PLAIN_MIN_SPREAD = 3    # points between the wettest and driest department
+CHANGE_NAME = 'flood_rank_change'
+OBT_EPOCHS = {           # Open Buildings Temporal inference_time_epoch_s (read from GEE, 29-oct-2026)
+    2016: 1467270000, 2017: 1498806000, 2018: 1530342000, 2019: 1561878000,
+    2020: 1593500400, 2021: 1625036400, 2022: 1656572400, 2023: 1688108400,
+}
+CHANGE_YEARS = sorted(OBT_EPOCHS)
+CHANGE_BANDS = [f'{k}_{y}' for y in CHANGE_YEARS for k in ('bld', 'low')]
+MIN_LOW_NEW = 200       # buildings added on low ground; below, the tilt is noise (Concepción: 121)
+CHANGE_MIN_RHO = 0.7    # Spearman of the tilt, 2016→2023 vs 2017→2022 endpoints
+MIN_BLD_NEW = 1000      # buildings added in total; below, a few hundred detections swing the tilt
+                        # tens of points (Dr. Moisés Bertoni, 497 new: +35)
+CHANGE_MIN_N = 8        # departments for the order check; with 5, ρ = 0.7 proves nothing
+PROV_WINDOWS = [(2016, 2023), (2017, 2022), (2016, 2020), (2019, 2023)]
+PROV_BAND = 1.0         # points: territory label 'none' when every window is within ±PROV_BAND
+
+
+def write_summary(path: str, summary: dict) -> None:
+    """Serialize first, then write: a failed dump must not leave a truncated JSON
+    (numpy scalars are not JSON-serializable)."""
+    text = json.dumps(summary, ensure_ascii=False, indent=2)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(text)
 
 
 def territory_paths(tid: str):
@@ -86,6 +132,16 @@ def territory_paths(tid: str):
     t_dir = os.path.join(OUTPUT_DIR, prefix.rstrip('/')) if prefix else OUTPUT_DIR
     summary = 'flood_dept_summary.json' if tid == 'misiones' else f'{tid}_flood_dept_summary.json'
     return prefix, t_dir, os.path.join(SRC_DATA_DIR, summary)
+
+
+def obt_buildings(epoch: int):
+    """Buildings per pixel from Open Buildings Temporal: fractional count density
+    (per 0.5 m pixel) × pixel area, so a later reproject to 90 m sums counts."""
+    import ee
+    dens = (ee.ImageCollection('GOOGLE/Research/open-buildings-temporal/v1')
+            .filter(ee.Filter.eq('inference_time_epoch_s', epoch)).mosaic()
+            .select('building_fractional_count').unmask(0).divide(0.25))  # per m² (0.5 m px)
+    return dens.multiply(ee.Image.pixelArea())
 
 
 def launch(tid: str):
@@ -98,10 +154,7 @@ def launch(tid: str):
     perm = (ee.Image('JRC/GSW1_4/GlobalSurfaceWater').select('transition')
             .remap(PERMANENT, [1] * len(PERMANENT), 0).unmask(0))
     land = ee.Image.pixelArea().multiply(perm.Not())
-    dens = (ee.ImageCollection('GOOGLE/Research/open-buildings-temporal/v1')
-            .filter(ee.Filter.eq('inference_time_epoch_s', OB_EPOCH)).mosaic()
-            .select('building_fractional_count').unmask(0).divide(0.25))  # per m² (0.5 m px)
-    bld = dens.multiply(ee.Image.pixelArea())
+    bld = obt_buildings(OB_EPOCH)
     img = ee.Image.cat([
         land.rename('land_m2'), land.multiply(low).rename('low_land_m2'),
         bld.rename('bld'), bld.multiply(low).rename('bld_low'),
@@ -117,17 +170,17 @@ def launch(tid: str):
     return task
 
 
-def download(tid: str, t_dir: str) -> None:
+def download(tid: str, t_dir: str, name: str = NAME) -> None:
     os.makedirs(t_dir, exist_ok=True)
-    for old in glob.glob(os.path.join(t_dir, f'{NAME}*.tif')):
+    for old in glob.glob(os.path.join(t_dir, f'{name}*.tif')):
         os.remove(old)
-    src = f'gs://{GCS_BUCKET}/{EXPORT_PREFIX}/{tid}/{NAME}*.tif'
+    src = f'gs://{GCS_BUCKET}/{EXPORT_PREFIX}/{tid}/{name}*.tif'
     subprocess.run(['gcloud', 'storage', 'cp', src, t_dir], check=True, shell=(os.name == 'nt'))
 
 
 def hex_sums(tifs: list, bands: list = BANDS) -> pd.DataFrame:
-    """Sum the bands per H3 res-9 cell (pixel centre), block by block. Pixels with
-    no land and no buildings (first band and 'bld', when present) are skipped."""
+    """Sum the bands per H3 res-9 cell (pixel centre), block by block. Pixels where
+    every band is 0 (no land, no buildings in any year) are skipped."""
     import duckdb
     import rasterio
     con = duckdb.connect()
@@ -137,9 +190,7 @@ def hex_sums(tifs: list, bands: list = BANDS) -> pd.DataFrame:
         with rasterio.open(tif) as src:
             for _, win in src.block_windows(1):
                 a = src.read(window=win).astype(np.float64)        # (bands, h, w)
-                keep = a[0] > 0
-                if 'bld' in bands:
-                    keep |= a[bands.index('bld')] > 0
+                keep = (a > 0).any(axis=0)
                 if not keep.any():
                     continue
                 rows, cols = np.nonzero(keep)
@@ -184,28 +235,29 @@ def process(tid: str) -> None:
             continue
         r = by.loc[k]
         d['rank'] = {
-            'bld_hand5_pct': round(100 * r.bld_low / r.bld, 1) if r.bld >= 1 else None,
+            **(d.get('rank') or {}),   # keep plain/change fields from the other runs
+            'bld_hand5_pct': round(float(100 * r.bld_low / r.bld), 1) if r.bld >= 1 else None,
             'bld_hand5_n': int(round(r.bld_low)),
             'bld_total': int(round(r.bld)),
-            'land_hand5_pct': round(100 * r.low_land_m2 / r.land_m2, 1) if r.land_m2 > 0 else None,
+            'land_hand5_pct': round(float(100 * r.low_land_m2 / r.land_m2), 1) if r.land_m2 > 0 else None,
         }
     # On a plain nearly everything is < 5 m above some channel: Chaco, Boquerón,
     # Formosa, Ñeembucú, Pdte. Hayes and Alto Paraguay gave medians of 85–100 %
     # (Boquerón, the dry Chaco, 99.6 %). There the bars would all read ~100 % and
     # rank noise, so the UI hides them and says why.
     vals = sorted(d['rank']['bld_hand5_pct'] for d in summary['departments']
-                  if d.get('rank') and d['rank']['bld_hand5_pct'] is not None)
+                  if d.get('rank') and d['rank'].get('bld_hand5_pct') is not None)
     median = vals[len(vals) // 2] if vals else None
     summary.setdefault('metadata', {})['rank'] = {
+        **summary['metadata'].get('rank', {}),   # keep 'plain' and 'change'
         'metric': 'bld_hand5_pct',
         'definition': f'% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) '
                       f'a menos de {HAND_CUT} m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)',
         'median': median,
-        'saturated': median is not None and median >= SATURATED_MEDIAN,
+        'saturated': bool(median is not None and median >= SATURATED_MEDIAN),
     }
-    with open(summary_path, 'w', encoding='utf-8') as f:
-        json.dump(summary, f, ensure_ascii=False, indent=2)
-    ranked = sorted((d for d in summary['departments'] if d.get('rank') and d['rank']['bld_hand5_pct'] is not None),
+    write_summary(summary_path, summary)
+    ranked = sorted((d for d in summary['departments'] if d.get('rank') and d['rank'].get('bld_hand5_pct') is not None),
                     key=lambda d: -d['rank']['bld_hand5_pct'])
     missing = sum(1 for d in summary['departments'] if not d.get('rank'))
     top = ', '.join(f"{d['dpto']} {d['rank']['bld_hand5_pct']}%" for d in ranked[:3])
@@ -258,9 +310,128 @@ def process_plain(tid: str) -> None:
         'definition': '% de la tierra (sin agua permanente JRC) con agua en al menos el 10 % de los meses '
                       '2015–2026 (Sentinel-1, VV < −15 dB, mediana mensual)',
     }
-    with open(summary_path, 'w', encoding='utf-8') as f:
-        json.dump(summary, f, ensure_ascii=False, indent=2)
+    write_summary(summary_path, summary)
     print(f'{tid} (plain): spread {spread:.1f} -> {"shown" if spread >= PLAIN_MIN_SPREAD else "note only"}')
+
+
+def launch_change(tid: str):
+    import ee
+    from gee_flood_detection import get_territory_aoi
+    aoi = get_territory_aoi(tid)
+    merit = ee.Image('MERIT/Hydro/v1_0_1').select('hnd')
+    proj = merit.projection()
+    low = merit.lt(HAND_CUT)
+    bands = []
+    for y in CHANGE_YEARS:
+        bld = obt_buildings(OBT_EPOCHS[y])
+        bands += [bld.rename(f'bld_{y}'), bld.multiply(low).rename(f'low_{y}')]
+    img = ee.Image.cat(bands).reproject(proj).toFloat()
+    task = ee.batch.Export.image.toCloudStorage(
+        image=img, description=f'{CHANGE_NAME}_{tid}', bucket=GCS_BUCKET,
+        fileNamePrefix=f'{EXPORT_PREFIX}/{tid}/{CHANGE_NAME}', region=aoi,
+        crs='EPSG:4326', crsTransform=proj.getInfo()['transform'],
+        maxPixels=1e11, fileFormat='GeoTIFF',
+    )
+    task.start()
+    print(f'  -> {tid} (change): {task.id}')
+    return task
+
+
+def _tilt(r, a: int, b: int):
+    """Endpoint tilt between years a and b (points), None on a small or negative base."""
+    d_bld, d_low = r[f'bld_{b}'] - r[f'bld_{a}'], r[f'low_{b}'] - r[f'low_{a}']
+    if d_low < MIN_LOW_NEW or d_bld < MIN_BLD_NEW or r[f'bld_{a}'] < 1:
+        return None
+    return 100 * d_low / d_bld - 100 * r[f'low_{a}'] / r[f'bld_{a}']
+
+
+def process_change(tid: str) -> None:
+    prefix, t_dir, summary_path = territory_paths(tid)
+    tifs = sorted(glob.glob(os.path.join(t_dir, f'{CHANGE_NAME}*.tif')))
+    if not tifs:
+        sys.exit(f'{tid}: no {CHANGE_NAME}*.tif in {t_dir} — run with --change --export')
+    with open(summary_path, encoding='utf-8') as f:
+        summary = json.load(f)
+    hexes = hex_sums(tifs, CHANGE_BANDS).merge(dept_assignment(prefix, summary['departments']), on='h3index', how='inner')
+    by = hexes.groupby('parquetKey')[CHANGE_BANDS].sum()
+    span = CHANGE_YEARS[-1] - CHANGE_YEARS[0]
+    t = np.array(CHANGE_YEARS, dtype=float)
+    vals, ep_a, ep_b = {}, {}, {}
+    for d in summary['departments']:
+        k = d['parquetKey']
+        if k not in by.index:
+            continue
+        r = by.loc[k]
+        bld_new = float(np.polyfit(t, r[[f'bld_{y}' for y in CHANGE_YEARS]].values.astype(float), 1)[0] * span)
+        low_new = float(np.polyfit(t, r[[f'low_{y}' for y in CHANGE_YEARS]].values.astype(float), 1)[0] * span)
+        b16, l16 = float(r[f'bld_{CHANGE_YEARS[0]}']), float(r[f'low_{CHANGE_YEARS[0]}'])
+        tilt = None
+        if low_new >= MIN_LOW_NEW and bld_new >= MIN_BLD_NEW and b16 >= 1:
+            tilt = 100 * low_new / bld_new - 100 * l16 / b16
+        vals[k] = {'low_new_n': int(round(low_new)), 'bld_new_n': int(round(bld_new)),
+                   'low_new_share_pct': round(100 * low_new / bld_new, 1) if bld_new > 0 else None,
+                   'low_stock16_pct': round(100 * l16 / b16, 1) if b16 >= 1 else None,
+                   'low_tilt_pts': round(tilt, 1) if tilt is not None else None,
+                   'low_tilt_all': round(tilt, 1) if tilt is not None else None}  # kept when hidden
+        ep_a[k], ep_b[k] = _tilt(r, 2016, 2023), _tilt(r, 2017, 2022)
+    both = [k for k in vals if ep_a[k] is not None and ep_b[k] is not None]
+    rho = (float(pd.Series([ep_a[k] for k in both]).corr(pd.Series([ep_b[k] for k in both]), method='spearman'))
+           if len(both) >= CHANGE_MIN_N else None)
+    shown = rho is not None and rho >= CHANGE_MIN_RHO
+    # Territory as a whole: the share of the stock on low ground year by year, and the
+    # trend tilt. Robust even where the department order is not (few depts, small gaps).
+    tot = by[[f'bld_{y}' for y in CHANGE_YEARS]].sum().values.astype(float)
+    lowt = by[[f'low_{y}' for y in CHANGE_YEARS]].sum().values.astype(float)
+    share = 100 * lowt / tot
+    p_bld, p_low = np.polyfit(t, tot, 1)[0] * span, np.polyfit(t, lowt, 1)[0] * span
+    flips = sum(1 for k in both if (ep_a[k] > 0) != (ep_b[k] > 0))
+    # Label from four pairs of years, so one odd epoch cannot set it.
+    yi = {y: i for i, y in enumerate(CHANGE_YEARS)}
+    windows = [float(100 * (lowt[yi[b]] - lowt[yi[a]]) / (tot[yi[b]] - tot[yi[a]]) - share[yi[a]])
+               for a, b in PROV_WINDOWS]
+    if all(w > PROV_BAND for w in windows):
+        label = 'toward'
+    elif all(w < -PROV_BAND for w in windows):
+        label = 'away'
+    elif all(abs(w) <= PROV_BAND for w in windows):
+        label = 'none'
+    else:
+        label = 'unclear'
+    tilts = [v['low_tilt_all'] for v in vals.values() if v['low_tilt_all'] is not None]
+    province = {
+        'low_share_by_year': [round(float(s), 2) for s in share],
+        'bld_by_year': [int(round(x)) for x in tot],
+        'low_new_n': int(round(p_low)), 'bld_new_n': int(round(p_bld)),
+        'share_new_pct': round(float(100 * p_low / p_bld), 1) if p_bld > 0 else None,
+        'share16_pct': round(float(share[0]), 1),
+        'windows': [round(w, 1) for w in windows], 'label': label,
+        'tilt_pts': round(float(100 * p_low / p_bld - share[0]), 2) if p_bld > 0 else None,
+        'monotonic': bool(np.all(np.diff(share) >= -0.02) or np.all(np.diff(share) <= 0.02)),
+        'dept_tilt_p25_p75': [round(float(np.percentile(tilts, 25)), 1), round(float(np.percentile(tilts, 75)), 1)] if tilts else None,
+        'sign_flips': flips,
+    }
+    for d in summary['departments']:
+        v = vals.get(d['parquetKey'])
+        if v is None:
+            continue
+        if not shown:
+            v['low_tilt_pts'] = None
+        d['rank'] = {**(d.get('rank') or {}), **v}
+    summary.setdefault('metadata', {}).setdefault('rank', {})['change'] = {
+        'metric': 'low_tilt_pts', 'years': f'{CHANGE_YEARS[0]}–{CHANGE_YEARS[-1]}',
+        'min_low_new': MIN_LOW_NEW, 'rho': None if rho is None else round(rho, 2),
+        'n_ranked': len(both), 'shown': shown, 'province': province,
+        'definition': '% de los edificios agregados 2016–2023 (Google Open Buildings Temporal, tendencia anual) '
+                      f'a menos de {HAND_CUT} m sobre el curso de agua más cercano (HAND, MERIT Hydro) '
+                      'menos el % del parque de 2016 en esa franja, en puntos',
+    }
+    write_summary(summary_path, summary)
+    names = {d['parquetKey']: d.get('dpto') or d.get('distrito') or d.get('municipio') for d in summary['departments']}
+    ranked = sorted((k for k in vals if vals[k]['low_tilt_pts'] is not None), key=lambda k: -vals[k]['low_tilt_pts'])
+    top = ', '.join(f"{names[k]} {vals[k]['low_tilt_pts']:+.1f}" for k in ranked[:3])
+    print(f"{tid} (change): rho={rho if rho is None else round(rho, 2)} n={len(both)} "
+          f"{'SHOWN' if shown else 'hidden'} · buildings {tot[0]:,.0f}→{tot[-1]:,.0f} · "
+          f"low share {share[0]:.2f}→{share[-1]:.2f}% tilt {province['tilt_pts']} {label} {province['windows']} flips {flips}/{len(both)} · top: {top}")
 
 
 def main() -> None:
@@ -269,6 +440,7 @@ def main() -> None:
     ap.add_argument('--all', action='store_true')
     ap.add_argument('--export', action='store_true', help='Launch the GEE exports, wait and download first')
     ap.add_argument('--plain', action='store_true', help='Sentinel-1 ranking for the saturated (plain) territories')
+    ap.add_argument('--change', action='store_true', help='4th tab: new buildings on low ground 2016–2023')
     args = ap.parse_args()
     if args.plain:
         tids = [t for t in TERRITORY_CONFIGS
@@ -287,6 +459,17 @@ def main() -> None:
             process_plain(t)
         return
     tids = list(TERRITORY_CONFIGS) if args.all else [args.territory]
+
+    if args.change:
+        if args.export:
+            from gee_flood_detection import authenticate, wait_for_tasks
+            authenticate()
+            wait_for_tasks([launch_change(t) for t in tids], timeout=8 * 3600)
+            for t in tids:
+                download(t, territory_paths(t)[1], CHANGE_NAME)
+        for t in tids:
+            process_change(t)
+        return
 
     if args.export:
         from gee_flood_detection import authenticate, wait_for_tasks

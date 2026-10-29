@@ -527,6 +527,10 @@ export interface DeptRank {
 	// Several readings of the same layer, switched from tabs above the ranking; each
 	// entry overrides the base fields. The base itself is the first reading.
 	metrics?: Array<Partial<Omit<DeptRank, 'metrics'>> & { tabKey: string }>;
+	// Key inside the summary's metadata.rank whose `province` block (territory-wide
+	// value + label) is shown above the bars, or instead of them when no department
+	// has a value (order not stable). Change tab: 'change'.
+	province?: string;
 }
 
 export interface ColorClass {
@@ -677,6 +681,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				{ tabKey: 'rank.flood.tab.land', field: 'land_hand5_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 1,
 				  titleKey: 'rank.flood.title.land', noteKey: 'rank.flood.note.land',
 				  extraField: 'bld_hand5_pct', extraUnitKey: 'rank.unit.bldPct', extraDecimals: 1 },
+				// Has new construction drifted to low ground? Open Buildings Temporal 2016–2023,
+				// only where the department order is stable (build_flood_rank.py --change).
+				{ tabKey: 'rank.flood.tab.change', field: 'low_tilt_pts', unit: 'pts', unitKey: 'rank.unit.pts', decimals: 1, signed: true,
+				  titleKey: 'rank.flood.title.change', noteKey: 'rank.flood.note.change',
+				  extraField: 'low_new_n', extraUnitKey: 'rank.unit.newLow', extraDecimals: 0, province: 'change' },
 			],
 		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
