@@ -2112,9 +2112,12 @@
 	};
 	const AR_CODPROV: Record<string, string> = { misiones: '54', corrientes: '18', chaco: '22', formosa: '34' };
 	function styleActiveTerritory() {
-		if (!map) return;
+		// Called from setActiveTerritory, which can run before the style loads (territory
+		// restored from the URL); the map 'load' handler calls it again.
+		const style = map?.getStyle();
+		if (!map || !style) return;
 		const active = BORDER_LAYER[activeTerritoryId] ?? `${activeTerritoryId}-border`;
-		for (const l of map.getStyle().layers ?? []) {
+		for (const l of style.layers ?? []) {
 			if (l.type !== 'line' || !l.id.endsWith('-border') || l.id.startsWith('eudr')) continue;
 			const on = l.id === active;
 			map.setPaintProperty(l.id, 'line-opacity', on
