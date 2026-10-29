@@ -14,7 +14,13 @@
       "centroid": [
         -56.3101,
         -25.9052
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 41,
+        "loss_pct_forest": 0.93,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 21
+      }
     },
     {
       "distrito": "Capitan Troche",
@@ -24,7 +30,13 @@
       "centroid": [
         -56.2055,
         -25.6088
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": -36,
+        "loss_base_ha_yr": 71
+      }
     },
     {
       "distrito": "Colonia Independencia",
@@ -34,7 +46,13 @@
       "centroid": [
         -56.0671,
         -25.7311
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 381,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": -33,
+        "loss_base_ha_yr": 572
+      }
     },
     {
       "distrito": "Jose Fassardi",
@@ -44,7 +62,13 @@
       "centroid": [
         -55.9221,
         -25.8245
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 143,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": -40,
+        "loss_base_ha_yr": 240
+      }
     },
     {
       "distrito": "Gral Garay",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.1916,
         -25.9353
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 84,
+        "loss_pct_forest": 0.48,
+        "loss_change_pct": 33,
+        "loss_base_ha_yr": 64
+      }
     },
     {
       "distrito": "Itape",
@@ -64,7 +94,13 @@
       "centroid": [
         -56.561,
         -25.8515
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 197,
+        "loss_pct_forest": 4.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "distrito": "Villarica",
@@ -74,7 +110,13 @@
       "centroid": [
         -56.4107,
         -25.8273
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 151,
+        "loss_pct_forest": 1.38,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "distrito": "San Salvador",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 1.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "distrito": "Borja",
@@ -94,7 +142,13 @@
       "centroid": [
         -56.609,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 232,
+        "loss_pct_forest": 1.7,
+        "loss_change_pct": 105,
+        "loss_base_ha_yr": 113
+      }
     },
     {
       "distrito": "Natalicio Talavera",
@@ -104,7 +158,13 @@
       "centroid": [
         -56.2826,
         -25.6601
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "distrito": "Mbocayati",
@@ -114,7 +174,13 @@
       "centroid": [
         -56.3632,
         -25.7041
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 44,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 44
+      }
     },
     {
       "distrito": "Yataity",
@@ -124,7 +190,13 @@
       "centroid": [
         -56.501,
         -25.6879
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 36,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 26
+      }
     },
     {
       "distrito": "Dr. Bottrell",
@@ -134,7 +206,13 @@
       "centroid": [
         -56.3675,
         -25.5987
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "Iturbe",
@@ -144,7 +222,13 @@
       "centroid": [
         -56.4662,
         -26.0627
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 60,
+        "loss_pct_forest": 0.84,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "distrito": "Cnel Martinez",
@@ -154,7 +238,19 @@
       "centroid": [
         -56.648,
         -25.7972
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

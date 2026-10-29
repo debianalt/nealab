@@ -14,7 +14,13 @@
       "centroid": [
         -56.3726,
         -23.0159
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2976,
+        "loss_pct_forest": 3.11,
+        "loss_change_pct": 88,
+        "loss_base_ha_yr": 1583
+      }
     },
     {
       "distrito": "Horqueta",
@@ -24,7 +30,13 @@
       "centroid": [
         -56.7402,
         -23.283
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2023,
+        "loss_pct_forest": 1.8,
+        "loss_change_pct": -46,
+        "loss_base_ha_yr": 3743
+      }
     },
     {
       "distrito": "San Carlos",
@@ -34,7 +46,13 @@
       "centroid": [
         -57.3306,
         -22.3583
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 734,
+        "loss_pct_forest": 0.78,
+        "loss_change_pct": 127,
+        "loss_base_ha_yr": 323
+      }
     },
     {
       "distrito": "Concepcion",
@@ -44,7 +62,13 @@
       "centroid": [
         -57.2752,
         -22.8011
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5670,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": 40,
+        "loss_base_ha_yr": 4051
+      }
     },
     {
       "distrito": "Belen",
@@ -54,7 +78,13 @@
       "centroid": [
         -57.2183,
         -23.4372
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 48,
+        "loss_pct_forest": 1.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "distrito": "Loreto",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.1715,
         -23.2161
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 357,
+        "loss_pct_forest": 1.41,
+        "loss_change_pct": 14,
+        "loss_base_ha_yr": 314
+      }
     },
     {
       "distrito": "San Lazaro",
@@ -74,7 +110,19 @@
       "centroid": [
         -57.7533,
         -22.2364
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 264,
+        "loss_pct_forest": 0.47,
+        "loss_change_pct": -23,
+        "loss_base_ha_yr": 342
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

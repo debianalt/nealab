@@ -14,7 +14,13 @@
       "centroid": [
         -58.8214,
         -23.1741
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 17272,
+        "loss_pct_forest": 1.51,
+        "loss_change_pct": -38,
+        "loss_base_ha_yr": 27668
+      }
     },
     {
       "distrito": "Puerto Pinasco",
@@ -24,7 +30,13 @@
       "centroid": [
         -58.3619,
         -22.6175
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3969,
+        "loss_pct_forest": 0.67,
+        "loss_change_pct": -32,
+        "loss_base_ha_yr": 5822
+      }
     },
     {
       "distrito": "Villa Hayes",
@@ -34,7 +46,13 @@
       "centroid": [
         -58.6721,
         -24.2215
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11009,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": -24,
+        "loss_base_ha_yr": 14421
+      }
     },
     {
       "distrito": "Benjamin Aceval",
@@ -44,7 +62,19 @@
       "centroid": [
         -57.6409,
         -24.821
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 190,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": 156,
+        "loss_base_ha_yr": 74
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

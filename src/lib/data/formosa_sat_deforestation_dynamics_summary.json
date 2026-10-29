@@ -14,7 +14,13 @@
       "centroid": [
         -60.0089,
         -24.8951
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22966,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": 4,
+        "loss_base_ha_yr": 22038
+      }
     },
     {
       "dpto": "Bermejo",
@@ -24,7 +30,13 @@
       "centroid": [
         -61.2886,
         -24.027
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11250,
+        "loss_pct_forest": 1.72,
+        "loss_change_pct": 101,
+        "loss_base_ha_yr": 5593
+      }
     },
     {
       "dpto": "Ramón Lista",
@@ -34,7 +46,13 @@
       "centroid": [
         -62.1413,
         -23.111
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 785,
+        "loss_pct_forest": 1.12,
+        "loss_change_pct": 11,
+        "loss_base_ha_yr": 707
+      }
     },
     {
       "dpto": "Pirané",
@@ -44,7 +62,13 @@
       "centroid": [
         -59.1628,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2663,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": -4,
+        "loss_base_ha_yr": 2765
+      }
     },
     {
       "dpto": "Pilagás",
@@ -54,7 +78,13 @@
       "centroid": [
         -58.6711,
         -25.1016
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 880,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": 105,
+        "loss_base_ha_yr": 429
+      }
     },
     {
       "dpto": "Matacos",
@@ -64,7 +94,13 @@
       "centroid": [
         -62.0811,
         -23.8673
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 582,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": 168,
+        "loss_base_ha_yr": 217
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -74,7 +110,13 @@
       "centroid": [
         -58.0456,
         -25.3808
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 128,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": -5,
+        "loss_base_ha_yr": 135
+      }
     },
     {
       "dpto": "Laishi",
@@ -84,7 +126,13 @@
       "centroid": [
         -58.5513,
         -26.4647
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 109,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": -27,
+        "loss_base_ha_yr": 149
+      }
     },
     {
       "dpto": "Formosa",
@@ -94,7 +142,19 @@
       "centroid": [
         -58.3872,
         -25.9345
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 167,
+        "loss_pct_forest": 0.1,
+        "loss_change_pct": -50,
+        "loss_base_ha_yr": 333
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

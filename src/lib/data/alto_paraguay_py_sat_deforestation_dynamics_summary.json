@@ -14,7 +14,13 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29368,
+        "loss_pct_forest": 2.0,
+        "loss_change_pct": 13,
+        "loss_base_ha_yr": 26102
+      }
     },
     {
       "distrito": "Mayor Pablo La Gerenza",
@@ -24,7 +30,13 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 36529,
+        "loss_pct_forest": 1.8,
+        "loss_change_pct": 81,
+        "loss_base_ha_yr": 20154
+      }
     },
     {
       "distrito": "La Victoria",
@@ -34,7 +46,19 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 16888,
+        "loss_pct_forest": 1.44,
+        "loss_change_pct": -56,
+        "loss_base_ha_yr": 38133
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

@@ -149,11 +149,17 @@
 	const rankSummary = $derived(allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary);
 	const rankSaturatedRaw = $derived(!!rankSummary?.metadata?.rank?.saturated);
 	const rankPlain = $derived(rankSaturatedRaw && !!rankSummary?.metadata?.rank?.plain?.shown && !!layerCfg?.deptRank?.plain);
+	// deptRank.metrics: several readings of the layer, switched from tabs.
+	let rankMetricIdx = $state(0);
+	$effect(() => { layerCfg?.id; rankMetricIdx = 0; });
 	const rankCfg = $derived.by(() => {
 		const base = layerCfg?.deptRank ?? null;
-		if (!base || !rankPlain) return base;
-		return { ...base, ...base.plain!, extraField: undefined, extraUnitKey: undefined };
+		if (!base) return null;
+		if (rankPlain) return { ...base, ...base.plain!, extraField: undefined, extraUnitKey: undefined };
+		const m = base.metrics?.[rankMetricIdx];
+		return m ? { ...base, ...m } : base;
 	});
+	const rankUnit = $derived(rankCfg ? (rankCfg.unitKey ? i18n.t(rankCfg.unitKey) : rankCfg.unit) : '');
 	const hasRank = $derived.by(() => {
 		if (!rankCfg) return false;
 		if (rankSaturatedRaw && !rankPlain) return false;
@@ -167,15 +173,16 @@
 		if (!summary?.departments) return [];
 		if (hasRank) {
 			const f = rankCfg!.field;
-			return [...summary.departments].sort((a: any, b: any) => (b.rank?.[f] ?? -1) - (a.rank?.[f] ?? -1));
+			const missing = rankCfg!.signed ? -Infinity : -1;   // no value → bottom of the list
+			return [...summary.departments].sort((a: any, b: any) => (b.rank?.[f] ?? missing) - (a.rank?.[f] ?? missing));
 		}
 		return [...summary.departments].sort((a: any, b: any) => b.avg_score - a.avg_score);
 	});
 
 
-	const rankMax = $derived(hasRank ? Math.max(...deptList.map((d: any) => d.rank?.[rankCfg!.field] ?? 0), 1e-9) : 1);
-	const fmtRank = (v: number | null | undefined, decimals: number) =>
-		v == null ? '—' : v.toLocaleString(i18n.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+	const rankMax = $derived(hasRank ? Math.max(...deptList.map((d: any) => Math.abs(d.rank?.[rankCfg!.field] ?? 0)), 1e-9) : 1);
+	const fmtRank = (v: number | null | undefined, decimals: number, signed = false) =>
+		v == null ? '—' : (signed && v > 0 ? '+' : '') + v.toLocaleString(i18n.locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 	const selectedRankPos = $derived.by(() => {
 		if (!hasRank || !selectedDpto) return null;
 		const i = deptList.findIndex((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
@@ -659,7 +666,7 @@
 		{#if selectedRankPos && rankCfg}
 			<div class="rank-selected">
 				<span class="rank-selected-pos">{selectedRankPos.pos}.º {i18n.t('rank.of')} {selectedRankPos.total}</span>
-				· {fmtRank(selectedRankPos.dept.rank?.[rankCfg.field], rankCfg.decimals)} {rankCfg.unit}
+				· {fmtRank(selectedRankPos.dept.rank?.[rankCfg.field], rankCfg.decimals, rankCfg.signed)} {rankUnit}
 				{#if rankCfg.extraField}({fmtRank(selectedRankPos.dept.rank?.[rankCfg.extraField], rankCfg.extraDecimals ?? 0)} {i18n.t(rankCfg.extraUnitKey ?? '')}){/if}
 				<div class="rank-selected-q">{i18n.t(rankCfg.titleKey)}</div>
 			</div>
@@ -782,6 +789,13 @@
 		{#if hasRank && rankCfg}
 			<div class="dept-section rank-section">
 				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
+				{#if layerCfg?.deptRank?.metrics && !rankPlain}
+					<div class="rank-tabs">
+						{#each layerCfg.deptRank.metrics as m, i}
+							<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
+						{/each}
+					</div>
+				{/if}
 				{#if deptList.length > 12}
 					<input
 						class="dept-filter"
@@ -797,9 +811,9 @@
 							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
 							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 							<div class="dept-bar-wrap rank-bar-wrap">
-								<div class="dept-bar" style:width="{100 * (v ?? 0) / rankMax}%" style:background="#dc2626"></div>
+								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? '#22c55e' : '#dc2626'}></div>
 							</div>
-							<div class="rank-value">{fmtRank(v, rankCfg.decimals)} {rankCfg.unit}</div>
+							<div class="rank-value">{fmtRank(v, rankCfg.decimals, rankCfg.signed)} {v == null ? '' : rankUnit}</div>
 							{#if rankCfg.extraField}
 								<div class="rank-extra">{fmtRank(dept.rank?.[rankCfg.extraField], rankCfg.extraDecimals ?? 0)} {i18n.t(rankCfg.extraUnitKey ?? '')}</div>
 							{/if}
@@ -1108,6 +1122,9 @@
 	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; }
 	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
 	.rank-territory { font-weight: 400; color: #94a3b8; }
+	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
+	.rank-tab { font-size: 10px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: #94a3b8; cursor: pointer; }
+	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: #fecaca; }
 	.rank-saturated { padding: 10px; border: 1px solid rgba(148,163,184,0.25); border-radius: 6px; background: rgba(148,163,184,0.06); }
 	.rank-saturated-head { font-size: 11px; font-weight: 600; color: #fbbf24; margin-bottom: 4px; }
 	.rank-saturated .rank-note { font-size: 10px; color: #cbd5e1; margin: 0; }

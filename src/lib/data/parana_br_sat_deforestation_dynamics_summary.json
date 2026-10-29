@@ -14,7 +14,13 @@
       "centroid": [
         -50.7433,
         -24.437
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 801,
+        "loss_pct_forest": 3.98,
+        "loss_change_pct": 69,
+        "loss_base_ha_yr": 473
+      }
     },
     {
       "municipio": "Telêmaco Borba",
@@ -24,7 +30,13 @@
       "centroid": [
         -50.525,
         -24.2499
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1995,
+        "loss_pct_forest": 1.58,
+        "loss_change_pct": -58,
+        "loss_base_ha_yr": 4725
+      }
     },
     {
       "municipio": "Agudos do Sul",
@@ -34,7 +46,13 @@
       "centroid": [
         -49.3089,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 265,
+        "loss_pct_forest": 2.08,
+        "loss_change_pct": 109,
+        "loss_base_ha_yr": 127
+      }
     },
     {
       "municipio": "Itaperuçu",
@@ -44,7 +62,13 @@
       "centroid": [
         -49.4882,
         -25.1288
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 485,
+        "loss_pct_forest": 1.91,
+        "loss_change_pct": 24,
+        "loss_base_ha_yr": 391
+      }
     },
     {
       "municipio": "Rio Negro",
@@ -54,7 +78,13 @@
       "centroid": [
         -49.6898,
         -26.0908
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1010,
+        "loss_pct_forest": 2.3,
+        "loss_change_pct": 2,
+        "loss_base_ha_yr": 993
+      }
     },
     {
       "municipio": "Figueira",
@@ -64,7 +94,13 @@
       "centroid": [
         -50.4296,
         -23.8767
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 186,
+        "loss_pct_forest": 4.5,
+        "loss_change_pct": 252,
+        "loss_base_ha_yr": 53
+      }
     },
     {
       "municipio": "Reserva",
@@ -74,7 +110,13 @@
       "centroid": [
         -50.9581,
         -24.59
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3008,
+        "loss_pct_forest": 3.65,
+        "loss_change_pct": 360,
+        "loss_base_ha_yr": 654
+      }
     },
     {
       "municipio": "Piên",
@@ -84,7 +126,13 @@
       "centroid": [
         -49.4542,
         -26.0909
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 310,
+        "loss_pct_forest": 2.03,
+        "loss_change_pct": 110,
+        "loss_base_ha_yr": 147
+      }
     },
     {
       "municipio": "Sengés",
@@ -94,7 +142,13 @@
       "centroid": [
         -49.4625,
         -24.2437
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2054,
+        "loss_pct_forest": 2.5,
+        "loss_change_pct": -39,
+        "loss_base_ha_yr": 3380
+      }
     },
     {
       "municipio": "Antônio Olinto",
@@ -104,7 +158,13 @@
       "centroid": [
         -50.1296,
         -25.9638
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 619,
+        "loss_pct_forest": 2.15,
+        "loss_change_pct": 57,
+        "loss_base_ha_yr": 394
+      }
     },
     {
       "municipio": "Ventania",
@@ -114,7 +174,13 @@
       "centroid": [
         -50.239,
         -24.1831
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 990,
+        "loss_pct_forest": 2.45,
+        "loss_change_pct": 0,
+        "loss_base_ha_yr": 991
+      }
     },
     {
       "municipio": "Cruz Machado",
@@ -124,7 +190,13 @@
       "centroid": [
         -51.2347,
         -25.9242
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1879,
+        "loss_pct_forest": 1.61,
+        "loss_change_pct": 103,
+        "loss_base_ha_yr": 928
+      }
     },
     {
       "municipio": "Ivaí",
@@ -134,7 +206,13 @@
       "centroid": [
         -50.8518,
         -24.9888
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 635,
+        "loss_pct_forest": 2.08,
+        "loss_change_pct": 91,
+        "loss_base_ha_yr": 333
+      }
     },
     {
       "municipio": "Mandirituba",
@@ -144,7 +222,13 @@
       "centroid": [
         -49.3268,
         -25.8411
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 437,
+        "loss_pct_forest": 1.78,
+        "loss_change_pct": 137,
+        "loss_base_ha_yr": 184
+      }
     },
     {
       "municipio": "Doutor Ulysses",
@@ -154,7 +238,13 @@
       "centroid": [
         -49.3974,
         -24.6273
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1318,
+        "loss_pct_forest": 2.17,
+        "loss_change_pct": 75,
+        "loss_base_ha_yr": 753
+      }
     },
     {
       "municipio": "Jaguariaíva",
@@ -164,7 +254,13 @@
       "centroid": [
         -49.7127,
         -24.3313
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2123,
+        "loss_pct_forest": 2.81,
+        "loss_change_pct": 27,
+        "loss_base_ha_yr": 1674
+      }
     },
     {
       "municipio": "Curiúva",
@@ -174,7 +270,13 @@
       "centroid": [
         -50.46,
         -24.0112
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 783,
+        "loss_pct_forest": 3.45,
+        "loss_change_pct": 74,
+        "loss_base_ha_yr": 449
+      }
     },
     {
       "municipio": "Mallet",
@@ -184,7 +286,13 @@
       "centroid": [
         -50.8567,
         -25.8791
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 851,
+        "loss_pct_forest": 1.55,
+        "loss_change_pct": 91,
+        "loss_base_ha_yr": 446
+      }
     },
     {
       "municipio": "Bituruna",
@@ -194,7 +302,13 @@
       "centroid": [
         -51.5331,
         -26.1664
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1712,
+        "loss_pct_forest": 1.79,
+        "loss_change_pct": 107,
+        "loss_base_ha_yr": 827
+      }
     },
     {
       "municipio": "Rio Branco do Sul",
@@ -204,7 +318,13 @@
       "centroid": [
         -49.3408,
         -25.085
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1093,
+        "loss_pct_forest": 1.87,
+        "loss_change_pct": 73,
+        "loss_base_ha_yr": 633
+      }
     },
     {
       "municipio": "Guamiranga",
@@ -214,7 +334,13 @@
       "centroid": [
         -50.839,
         -25.1724
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 216,
+        "loss_pct_forest": 1.9,
+        "loss_change_pct": 160,
+        "loss_base_ha_yr": 83
+      }
     },
     {
       "municipio": "Prudentópolis",
@@ -224,7 +350,13 @@
       "centroid": [
         -51.1013,
         -25.1338
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2365,
+        "loss_pct_forest": 1.71,
+        "loss_change_pct": 140,
+        "loss_base_ha_yr": 985
+      }
     },
     {
       "municipio": "Rio Azul",
@@ -234,7 +366,13 @@
       "centroid": [
         -50.7963,
         -25.7206
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 508,
+        "loss_pct_forest": 1.42,
+        "loss_change_pct": 61,
+        "loss_base_ha_yr": 316
+      }
     },
     {
       "municipio": "Porto Vitória",
@@ -244,7 +382,13 @@
       "centroid": [
         -51.2248,
         -26.2293
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 254,
+        "loss_pct_forest": 1.59,
+        "loss_change_pct": 134,
+        "loss_base_ha_yr": 109
+      }
     },
     {
       "municipio": "Quedas do Iguaçu",
@@ -254,7 +398,13 @@
       "centroid": [
         -52.9499,
         -25.4579
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1015,
+        "loss_pct_forest": 2.35,
+        "loss_change_pct": 91,
+        "loss_base_ha_yr": 532
+      }
     },
     {
       "municipio": "União da Vitória",
@@ -264,7 +414,13 @@
       "centroid": [
         -51.0763,
         -26.1081
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 985,
+        "loss_pct_forest": 1.71,
+        "loss_change_pct": 169,
+        "loss_base_ha_yr": 366
+      }
     },
     {
       "municipio": "Mauá da Serra",
@@ -274,7 +430,13 @@
       "centroid": [
         -51.1783,
         -23.9119
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 122,
+        "loss_pct_forest": 3.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 37
+      }
     },
     {
       "municipio": "Irati",
@@ -284,7 +446,13 @@
       "centroid": [
         -50.8281,
         -25.4889
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 993,
+        "loss_pct_forest": 2.01,
+        "loss_change_pct": 97,
+        "loss_base_ha_yr": 503
+      }
     },
     {
       "municipio": "Quitandinha",
@@ -294,7 +462,13 @@
       "centroid": [
         -49.4792,
         -25.9106
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 404,
+        "loss_pct_forest": 1.81,
+        "loss_change_pct": 110,
+        "loss_base_ha_yr": 193
+      }
     },
     {
       "municipio": "Campina do Simão",
@@ -304,7 +478,13 @@
       "centroid": [
         -51.78,
         -25.1326
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 540,
+        "loss_pct_forest": 2.09,
+        "loss_change_pct": 29,
+        "loss_base_ha_yr": 418
+      }
     },
     {
       "municipio": "Tunas do Paraná",
@@ -314,7 +494,13 @@
       "centroid": [
         -48.8963,
         -24.9529
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1158,
+        "loss_pct_forest": 1.83,
+        "loss_change_pct": 41,
+        "loss_base_ha_yr": 821
+      }
     },
     {
       "municipio": "Almirante Tamandaré",
@@ -324,7 +510,13 @@
       "centroid": [
         -49.3203,
         -25.2974
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 201,
+        "loss_pct_forest": 1.69,
+        "loss_change_pct": 263,
+        "loss_base_ha_yr": 55
+      }
     },
     {
       "municipio": "Colombo",
@@ -334,7 +526,13 @@
       "centroid": [
         -49.1888,
         -25.3029
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 153,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": 177,
+        "loss_base_ha_yr": 55
+      }
     },
     {
       "municipio": "Ortigueira",
@@ -344,7 +542,13 @@
       "centroid": [
         -50.9414,
         -24.1351
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3530,
+        "loss_pct_forest": 3.25,
+        "loss_change_pct": 313,
+        "loss_base_ha_yr": 856
+      }
     },
     {
       "municipio": "Pinhalão",
@@ -354,7 +558,13 @@
       "centroid": [
         -50.0588,
         -23.9044
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 263,
+        "loss_pct_forest": 4.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "municipio": "Inácio Martins",
@@ -364,7 +574,13 @@
       "centroid": [
         -51.202,
         -25.6368
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1294,
+        "loss_pct_forest": 1.59,
+        "loss_change_pct": 5,
+        "loss_base_ha_yr": 1232
+      }
     },
     {
       "municipio": "São João do Triunfo",
@@ -374,7 +590,13 @@
       "centroid": [
         -50.2916,
         -25.6715
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 636,
+        "loss_pct_forest": 1.35,
+        "loss_change_pct": -6,
+        "loss_base_ha_yr": 676
+      }
     },
     {
       "municipio": "Paulo Frontin",
@@ -384,7 +606,13 @@
       "centroid": [
         -50.7507,
         -26.0614
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 280,
+        "loss_pct_forest": 1.4,
+        "loss_change_pct": 11,
+        "loss_base_ha_yr": 253
+      }
     },
     {
       "municipio": "General Carneiro",
@@ -394,7 +622,13 @@
       "centroid": [
         -51.389,
         -26.473
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1335,
+        "loss_pct_forest": 1.48,
+        "loss_change_pct": 4,
+        "loss_base_ha_yr": 1287
+      }
     },
     {
       "municipio": "Enéas Marques",
@@ -404,7 +638,13 @@
       "centroid": [
         -53.1546,
         -25.9066
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 159,
+        "loss_pct_forest": 1.86,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "municipio": "Ipiranga",
@@ -414,7 +654,13 @@
       "centroid": [
         -50.5768,
         -24.9917
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 826,
+        "loss_pct_forest": 1.94,
+        "loss_change_pct": 20,
+        "loss_base_ha_yr": 689
+      }
     },
     {
       "municipio": "Campo do Tenente",
@@ -424,7 +670,13 @@
       "centroid": [
         -49.6523,
         -25.9785
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 281,
+        "loss_pct_forest": 1.7,
+        "loss_change_pct": -30,
+        "loss_base_ha_yr": 398
+      }
     },
     {
       "municipio": "Cerro Azul",
@@ -434,7 +686,13 @@
       "centroid": [
         -49.2845,
         -24.8728
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1554,
+        "loss_pct_forest": 1.54,
+        "loss_change_pct": -4,
+        "loss_base_ha_yr": 1617
+      }
     },
     {
       "municipio": "Goioxim",
@@ -444,7 +702,13 @@
       "centroid": [
         -51.9952,
         -25.1328
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 657,
+        "loss_pct_forest": 1.81,
+        "loss_change_pct": 21,
+        "loss_base_ha_yr": 545
+      }
     },
     {
       "municipio": "Tijucas do Sul",
@@ -454,7 +718,13 @@
       "centroid": [
         -49.1138,
         -25.9026
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 637,
+        "loss_pct_forest": 1.28,
+        "loss_change_pct": -7,
+        "loss_base_ha_yr": 687
+      }
     },
     {
       "municipio": "Pérola d'Oeste",
@@ -464,7 +734,13 @@
       "centroid": [
         -53.7611,
         -25.8517
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 109,
+        "loss_pct_forest": 1.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Arapoti",
@@ -474,7 +750,13 @@
       "centroid": [
         -49.9716,
         -24.0906
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1410,
+        "loss_pct_forest": 2.47,
+        "loss_change_pct": 1,
+        "loss_base_ha_yr": 1390
+      }
     },
     {
       "municipio": "Campo Magro",
@@ -484,7 +766,13 @@
       "centroid": [
         -49.4625,
         -25.2943
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 255,
+        "loss_pct_forest": 1.35,
+        "loss_change_pct": 273,
+        "loss_base_ha_yr": 69
+      }
     },
     {
       "municipio": "Imbituva",
@@ -494,7 +782,13 @@
       "centroid": [
         -50.6509,
         -25.2268
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 542,
+        "loss_pct_forest": 1.44,
+        "loss_change_pct": 41,
+        "loss_base_ha_yr": 385
+      }
     },
     {
       "municipio": "Paula Freitas",
@@ -504,7 +798,13 @@
       "centroid": [
         -50.8598,
         -26.1762
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 345,
+        "loss_pct_forest": 1.49,
+        "loss_change_pct": 40,
+        "loss_base_ha_yr": 247
+      }
     },
     {
       "municipio": "Planalto",
@@ -514,7 +814,13 @@
       "centroid": [
         -53.7067,
         -25.7393
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 172,
+        "loss_pct_forest": 1.46,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "Bocaiúva do Sul",
@@ -524,7 +830,13 @@
       "centroid": [
         -48.9371,
         -25.1127
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1019,
+        "loss_pct_forest": 1.43,
+        "loss_change_pct": 163,
+        "loss_base_ha_yr": 388
+      }
     },
     {
       "municipio": "Tibagi",
@@ -534,7 +846,13 @@
       "centroid": [
         -50.4662,
         -24.66
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2738,
+        "loss_pct_forest": 2.25,
+        "loss_change_pct": 57,
+        "loss_base_ha_yr": 1745
+      }
     },
     {
       "municipio": "Bela Vista da Caroba",
@@ -544,7 +862,13 @@
       "centroid": [
         -53.6332,
         -25.8811
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 71,
+        "loss_pct_forest": 1.28,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Nova Esperança do Sudoeste",
@@ -554,7 +878,13 @@
       "centroid": [
         -53.2553,
         -25.8968
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 136,
+        "loss_pct_forest": 1.66,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Pinhão",
@@ -564,7 +894,13 @@
       "centroid": [
         -51.6447,
         -25.7839
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1404,
+        "loss_pct_forest": 1.14,
+        "loss_change_pct": 99,
+        "loss_base_ha_yr": 707
+      }
     },
     {
       "municipio": "Piraí do Sul",
@@ -574,7 +910,13 @@
       "centroid": [
         -49.9335,
         -24.4691
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1061,
+        "loss_pct_forest": 1.92,
+        "loss_change_pct": -6,
+        "loss_base_ha_yr": 1126
+      }
     },
     {
       "municipio": "Lapa",
@@ -584,7 +926,13 @@
       "centroid": [
         -49.8689,
         -25.7654
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1610,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": 19,
+        "loss_base_ha_yr": 1348
+      }
     },
     {
       "municipio": "Rio Bonito do Iguaçu",
@@ -594,7 +942,13 @@
       "centroid": [
         -52.6115,
         -25.5451
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 648,
+        "loss_pct_forest": 2.17,
+        "loss_change_pct": 153,
+        "loss_base_ha_yr": 257
+      }
     },
     {
       "municipio": "São Jerônimo da Serra",
@@ -604,7 +958,13 @@
       "centroid": [
         -50.7806,
         -23.721
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 655,
+        "loss_pct_forest": 2.71,
+        "loss_change_pct": 1132,
+        "loss_base_ha_yr": 53
+      }
     },
     {
       "municipio": "Virmond",
@@ -614,7 +974,13 @@
       "centroid": [
         -52.2358,
         -25.4051
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 154,
+        "loss_pct_forest": 1.44,
+        "loss_change_pct": 155,
+        "loss_base_ha_yr": 60
+      }
     },
     {
       "municipio": "Coronel Domingos Soares",
@@ -624,7 +990,13 @@
       "centroid": [
         -51.9242,
         -26.1807
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1639,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": 55,
+        "loss_base_ha_yr": 1055
+      }
     },
     {
       "municipio": "Rebouças",
@@ -634,7 +1006,13 @@
       "centroid": [
         -50.6212,
         -25.6587
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 298,
+        "loss_pct_forest": 1.31,
+        "loss_change_pct": 3,
+        "loss_base_ha_yr": 290
+      }
     },
     {
       "municipio": "Fazenda Rio Grande",
@@ -644,7 +1022,13 @@
       "centroid": [
         -49.2948,
         -25.6757
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 57,
+        "loss_pct_forest": 1.35,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "municipio": "Nova Laranjeiras",
@@ -654,7 +1038,13 @@
       "centroid": [
         -52.5708,
         -25.2244
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1151,
+        "loss_pct_forest": 1.88,
+        "loss_change_pct": 192,
+        "loss_base_ha_yr": 394
+      }
     },
     {
       "municipio": "Salto do Lontra",
@@ -664,7 +1054,13 @@
       "centroid": [
         -53.2845,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 142,
+        "loss_pct_forest": 1.37,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "São Mateus do Sul",
@@ -674,7 +1070,13 @@
       "centroid": [
         -50.4415,
         -25.9029
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 768,
+        "loss_pct_forest": 1.02,
+        "loss_change_pct": -17,
+        "loss_base_ha_yr": 928
+      }
     },
     {
       "municipio": "Bom Jesus do Sul",
@@ -684,7 +1086,13 @@
       "centroid": [
         -53.5513,
         -26.1613
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 119,
+        "loss_pct_forest": 1.73,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Fernandes Pinheiro",
@@ -694,7 +1102,13 @@
       "centroid": [
         -50.5101,
         -25.5149
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 243,
+        "loss_pct_forest": 1.07,
+        "loss_change_pct": -23,
+        "loss_base_ha_yr": 314
+      }
     },
     {
       "municipio": "Capanema",
@@ -704,7 +1118,13 @@
       "centroid": [
         -53.7544,
         -25.6093
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 151,
+        "loss_pct_forest": 1.24,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "municipio": "Espigão Alto do Iguaçu",
@@ -714,7 +1134,13 @@
       "centroid": [
         -52.7897,
         -25.3492
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 247,
+        "loss_pct_forest": 1.51,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 46
+      }
     },
     {
       "municipio": "Guarapuava",
@@ -724,7 +1150,13 @@
       "centroid": [
         -51.4862,
         -25.3655
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2287,
+        "loss_pct_forest": 1.38,
+        "loss_change_pct": 13,
+        "loss_base_ha_yr": 2015
+      }
     },
     {
       "municipio": "Campo Largo",
@@ -734,7 +1166,13 @@
       "centroid": [
         -49.6107,
         -25.2987
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 858,
+        "loss_pct_forest": 0.92,
+        "loss_change_pct": 34,
+        "loss_base_ha_yr": 639
+      }
     },
     {
       "municipio": "Flor da Serra do Sul",
@@ -744,7 +1182,13 @@
       "centroid": [
         -53.2929,
         -26.2387
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 147,
+        "loss_pct_forest": 1.67,
+        "loss_change_pct": 193,
+        "loss_base_ha_yr": 50
+      }
     },
     {
       "municipio": "Presidente Castelo Branco",
@@ -754,7 +1198,13 @@
       "centroid": [
         -52.1504,
         -23.2648
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 49,
+        "loss_pct_forest": 2.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "municipio": "Sapopema",
@@ -764,7 +1214,13 @@
       "centroid": [
         -50.6077,
         -23.8733
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 553,
+        "loss_pct_forest": 2.49,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Porto Amazonas",
@@ -774,7 +1230,13 @@
       "centroid": [
         -49.893,
         -25.5287
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 96,
+        "loss_pct_forest": 1.68,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 48
+      }
     },
     {
       "municipio": "Francisco Beltrão",
@@ -784,7 +1246,13 @@
       "centroid": [
         -53.1357,
         -26.0471
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 390,
+        "loss_pct_forest": 1.41,
+        "loss_change_pct": 195,
+        "loss_base_ha_yr": 132
+      }
     },
     {
       "municipio": "Cruzeiro do Iguaçu",
@@ -794,7 +1262,13 @@
       "centroid": [
         -53.129,
         -25.5956
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 78,
+        "loss_pct_forest": 1.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Castro",
@@ -804,7 +1278,13 @@
       "centroid": [
         -49.8355,
         -24.8033
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1504,
+        "loss_pct_forest": 1.23,
+        "loss_change_pct": 49,
+        "loss_base_ha_yr": 1008
+      }
     },
     {
       "municipio": "Cândido de Abreu",
@@ -814,7 +1294,13 @@
       "centroid": [
         -51.2587,
         -24.6436
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1218,
+        "loss_pct_forest": 1.78,
+        "loss_change_pct": 946,
+        "loss_base_ha_yr": 116
+      }
     },
     {
       "municipio": "Pranchita",
@@ -824,7 +1310,13 @@
       "centroid": [
         -53.7192,
         -25.9671
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 61,
+        "loss_pct_forest": 1.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 21
+      }
     },
     {
       "municipio": "São José da Boa Vista",
@@ -834,7 +1326,13 @@
       "centroid": [
         -49.6746,
         -23.964
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 195,
+        "loss_pct_forest": 2.18,
+        "loss_change_pct": 20,
+        "loss_base_ha_yr": 162
+      }
     },
     {
       "municipio": "Alto Paraná",
@@ -844,7 +1342,13 @@
       "centroid": [
         -52.3244,
         -23.0739
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 93,
+        "loss_pct_forest": 2.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Palmeira",
@@ -854,7 +1358,13 @@
       "centroid": [
         -50.0631,
         -25.4467
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 756,
+        "loss_pct_forest": 1.51,
+        "loss_change_pct": 31,
+        "loss_base_ha_yr": 575
+      }
     },
     {
       "municipio": "Cantagalo",
@@ -864,7 +1374,13 @@
       "centroid": [
         -52.1269,
         -25.2849
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 301,
+        "loss_pct_forest": 1.11,
+        "loss_change_pct": -1,
+        "loss_base_ha_yr": 304
+      }
     },
     {
       "municipio": "Laranjeiras do Sul",
@@ -874,7 +1390,13 @@
       "centroid": [
         -52.3796,
         -25.3446
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 287,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": 194,
+        "loss_base_ha_yr": 98
+      }
     },
     {
       "municipio": "Nova Esperança",
@@ -884,7 +1406,13 @@
       "centroid": [
         -52.2578,
         -23.1955
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 79,
+        "loss_pct_forest": 2.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "municipio": "Palmas",
@@ -894,7 +1422,13 @@
       "centroid": [
         -51.8106,
         -26.4458
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1061,
+        "loss_pct_forest": 1.32,
+        "loss_change_pct": 12,
+        "loss_base_ha_yr": 949
+      }
     },
     {
       "municipio": "Turvo",
@@ -904,7 +1438,13 @@
       "centroid": [
         -51.465,
         -25.0087
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 641,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": 64,
+        "loss_base_ha_yr": 390
+      }
     },
     {
       "municipio": "Califórnia",
@@ -914,7 +1454,13 @@
       "centroid": [
         -51.3327,
         -23.6679
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 64,
+        "loss_pct_forest": 2.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Carambeí",
@@ -924,7 +1470,13 @@
       "centroid": [
         -50.1531,
         -24.8917
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 270,
+        "loss_pct_forest": 1.61,
+        "loss_change_pct": 50,
+        "loss_base_ha_yr": 180
+      }
     },
     {
       "municipio": "Uniflor",
@@ -934,7 +1486,13 @@
       "centroid": [
         -52.1068,
         -23.0663
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 21,
+        "loss_pct_forest": 3.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Dois Vizinhos",
@@ -944,7 +1502,13 @@
       "centroid": [
         -53.0726,
         -25.7488
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 130,
+        "loss_pct_forest": 1.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 33
+      }
     },
     {
       "municipio": "Ibema",
@@ -954,7 +1518,13 @@
       "centroid": [
         -53.0258,
         -25.1495
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 61,
+        "loss_pct_forest": 1.05,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 41
+      }
     },
     {
       "municipio": "Manfrinópolis",
@@ -964,7 +1534,13 @@
       "centroid": [
         -53.3479,
         -26.0943
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 91,
+        "loss_pct_forest": 0.8,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Santa Maria do Oeste",
@@ -974,7 +1550,13 @@
       "centroid": [
         -51.9292,
         -24.9114
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 411,
+        "loss_pct_forest": 1.21,
+        "loss_change_pct": 35,
+        "loss_base_ha_yr": 305
+      }
     },
     {
       "municipio": "Santo Antônio do Sudoeste",
@@ -984,7 +1566,13 @@
       "centroid": [
         -53.6306,
         -26.0626
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 103,
+        "loss_pct_forest": 1.1,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 30
+      }
     },
     {
       "municipio": "Congonhinhas",
@@ -994,7 +1582,13 @@
       "centroid": [
         -50.504,
         -23.6071
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 302,
+        "loss_pct_forest": 3.1,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 42
+      }
     },
     {
       "municipio": "Marmeleiro",
@@ -1004,7 +1598,13 @@
       "centroid": [
         -53.0922,
         -26.2434
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 147,
+        "loss_pct_forest": 1.24,
+        "loss_change_pct": 146,
+        "loss_base_ha_yr": 60
+      }
     },
     {
       "municipio": "Ponta Grossa",
@@ -1014,7 +1614,13 @@
       "centroid": [
         -50.0785,
         -25.145
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1018,
+        "loss_pct_forest": 1.3,
+        "loss_change_pct": -2,
+        "loss_base_ha_yr": 1042
+      }
     },
     {
       "municipio": "Reserva do Iguaçu",
@@ -1024,7 +1630,13 @@
       "centroid": [
         -51.965,
         -25.8644
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 428,
+        "loss_pct_forest": 0.84,
+        "loss_change_pct": 39,
+        "loss_base_ha_yr": 308
+      }
     },
     {
       "municipio": "Teixeira Soares",
@@ -1034,7 +1646,13 @@
       "centroid": [
         -50.4122,
         -25.3125
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 440,
+        "loss_pct_forest": 1.07,
+        "loss_change_pct": 3,
+        "loss_base_ha_yr": 428
+      }
     },
     {
       "municipio": "Barracão",
@@ -1044,7 +1662,13 @@
       "centroid": [
         -53.5222,
         -26.2442
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 60,
+        "loss_pct_forest": 1.05,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Pinhal de São Bento",
@@ -1054,7 +1678,13 @@
       "centroid": [
         -53.4767,
         -26.0162
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Balsa Nova",
@@ -1064,7 +1694,13 @@
       "centroid": [
         -49.6904,
         -25.5244
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 149,
+        "loss_pct_forest": 1.21,
+        "loss_change_pct": 41,
+        "loss_base_ha_yr": 106
+      }
     },
     {
       "municipio": "Santa Izabel do Oeste",
@@ -1074,7 +1710,13 @@
       "centroid": [
         -53.4203,
         -25.7868
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 87,
+        "loss_pct_forest": 1.0,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 26
+      }
     },
     {
       "municipio": "Verê",
@@ -1084,7 +1726,13 @@
       "centroid": [
         -52.9566,
         -25.8737
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 82,
+        "loss_pct_forest": 1.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Boa Esperança do Iguaçu",
@@ -1094,7 +1742,13 @@
       "centroid": [
         -53.2233,
         -25.6411
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 37,
+        "loss_pct_forest": 0.91,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Boa Vista da Aparecida",
@@ -1104,7 +1758,13 @@
       "centroid": [
         -53.4241,
         -25.4309
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 101,
+        "loss_pct_forest": 1.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 18
+      }
     },
     {
       "municipio": "Araruna",
@@ -1114,7 +1774,13 @@
       "centroid": [
         -52.5768,
         -23.9579
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 157,
+        "loss_pct_forest": 2.78,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Clevelândia",
@@ -1124,7 +1790,13 @@
       "centroid": [
         -52.3594,
         -26.345
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 307,
+        "loss_pct_forest": 1.11,
+        "loss_change_pct": 20,
+        "loss_base_ha_yr": 256
+      }
     },
     {
       "municipio": "Tamarana",
@@ -1134,7 +1806,13 @@
       "centroid": [
         -51.0539,
         -23.823
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 194,
+        "loss_pct_forest": 1.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 46
+      }
     },
     {
       "municipio": "Capitão Leônidas Marques",
@@ -1144,7 +1822,13 @@
       "centroid": [
         -53.5948,
         -25.4681
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 66,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Quatro Barras",
@@ -1154,7 +1838,13 @@
       "centroid": [
         -48.9969,
         -25.3691
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 92,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 44
+      }
     },
     {
       "municipio": "Adrianópolis",
@@ -1164,7 +1854,13 @@
       "centroid": [
         -48.8239,
         -24.7839
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 841,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": 18,
+        "loss_base_ha_yr": 710
+      }
     },
     {
       "municipio": "Apucarana",
@@ -1174,7 +1870,13 @@
       "centroid": [
         -51.4441,
         -23.5685
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 185,
+        "loss_pct_forest": 1.41,
+        "loss_change_pct": 124,
+        "loss_base_ha_yr": 82
+      }
     },
     {
       "municipio": "Marquinho",
@@ -1184,7 +1886,13 @@
       "centroid": [
         -52.2515,
         -25.1025
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 167,
+        "loss_pct_forest": 0.77,
+        "loss_change_pct": 206,
+        "loss_base_ha_yr": 54
+      }
     },
     {
       "municipio": "Campina Grande do Sul",
@@ -1194,7 +1902,13 @@
       "centroid": [
         -48.8503,
         -25.1886
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 262,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": 111,
+        "loss_base_ha_yr": 124
+      }
     },
     {
       "municipio": "Jandaia do Sul",
@@ -1204,7 +1918,13 @@
       "centroid": [
         -51.6865,
         -23.6293
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 46,
+        "loss_pct_forest": 1.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Santa Lúcia",
@@ -1214,7 +1934,13 @@
       "centroid": [
         -53.5529,
         -25.3857
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 31,
+        "loss_pct_forest": 0.84,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Wenceslau Braz",
@@ -1224,7 +1950,13 @@
       "centroid": [
         -49.7839,
         -23.8555
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 118,
+        "loss_pct_forest": 1.53,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 41
+      }
     },
     {
       "municipio": "Cianorte",
@@ -1234,7 +1966,13 @@
       "centroid": [
         -52.6258,
         -23.7335
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 156,
+        "loss_pct_forest": 1.33,
+        "loss_change_pct": 60,
+        "loss_base_ha_yr": 97
+      }
     },
     {
       "municipio": "Diamante D'Oeste",
@@ -1244,7 +1982,13 @@
       "centroid": [
         -54.1017,
         -24.9528
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 124,
+        "loss_pct_forest": 1.17,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 21
+      }
     },
     {
       "municipio": "Salgado Filho",
@@ -1254,7 +1998,13 @@
       "centroid": [
         -53.4141,
         -26.141
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 50,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "São Jorge d'Oeste",
@@ -1264,7 +2014,13 @@
       "centroid": [
         -52.9389,
         -25.6583
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 101,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "municipio": "Catanduvas",
@@ -1274,7 +2030,13 @@
       "centroid": [
         -53.1591,
         -25.2406
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 192,
+        "loss_pct_forest": 0.87,
+        "loss_change_pct": 107,
+        "loss_base_ha_yr": 93
+      }
     },
     {
       "municipio": "Três Barras do Paraná",
@@ -1284,7 +2046,13 @@
       "centroid": [
         -53.2226,
         -25.4439
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 132,
+        "loss_pct_forest": 0.77,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 26
+      }
     },
     {
       "municipio": "Diamante do Sul",
@@ -1294,7 +2062,13 @@
       "centroid": [
         -52.7041,
         -24.9927
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 125,
+        "loss_pct_forest": 0.84,
+        "loss_change_pct": 38,
+        "loss_base_ha_yr": 91
+      }
     },
     {
       "municipio": "Lindoeste",
@@ -1304,7 +2078,13 @@
       "centroid": [
         -53.5591,
         -25.2595
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 92,
+        "loss_pct_forest": 0.76,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 39
+      }
     },
     {
       "municipio": "Mato Rico",
@@ -1314,7 +2094,13 @@
       "centroid": [
         -52.2137,
         -24.6995
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 106,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Pitanga",
@@ -1324,7 +2110,13 @@
       "centroid": [
         -51.7699,
         -24.6875
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 563,
+        "loss_pct_forest": 0.91,
+        "loss_change_pct": 175,
+        "loss_base_ha_yr": 205
+      }
     },
     {
       "municipio": "Porto Barreiro",
@@ -1334,7 +2126,13 @@
       "centroid": [
         -52.3851,
         -25.5863
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 96,
+        "loss_pct_forest": 0.78,
+        "loss_change_pct": -47,
+        "loss_base_ha_yr": 181
+      }
     },
     {
       "municipio": "Atalaia",
@@ -1344,7 +2142,13 @@
       "centroid": [
         -52.0633,
         -23.1292
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 38,
+        "loss_pct_forest": 4.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Iporã",
@@ -1354,7 +2158,13 @@
       "centroid": [
         -53.7189,
         -24.0466
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 141,
+        "loss_pct_forest": 2.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Tomazina",
@@ -1364,7 +2174,13 @@
       "centroid": [
         -49.9645,
         -23.7215
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 178,
+        "loss_pct_forest": 1.8,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Ampére",
@@ -1374,7 +2190,13 @@
       "centroid": [
         -53.4842,
         -25.9129
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 70,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 43
+      }
     },
     {
       "municipio": "Honório Serpa",
@@ -1384,7 +2206,13 @@
       "centroid": [
         -52.3686,
         -26.1615
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 191,
+        "loss_pct_forest": 1.09,
+        "loss_change_pct": 74,
+        "loss_base_ha_yr": 109
+      }
     },
     {
       "municipio": "Rio Branco do Ivaí",
@@ -1394,7 +2222,13 @@
       "centroid": [
         -51.3286,
         -24.3471
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 168,
+        "loss_pct_forest": 1.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 47
+      }
     },
     {
       "municipio": "Rio Bom",
@@ -1404,7 +2238,13 @@
       "centroid": [
         -51.4318,
         -23.7991
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Ramilândia",
@@ -1414,7 +2254,13 @@
       "centroid": [
         -54.072,
         -25.0959
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 86,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 39
+      }
     },
     {
       "municipio": "Vera Cruz do Oeste",
@@ -1424,7 +2270,13 @@
       "centroid": [
         -53.9269,
         -25.0056
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 67,
+        "loss_pct_forest": 1.28,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "municipio": "Altônia",
@@ -1434,7 +2286,13 @@
       "centroid": [
         -53.9503,
         -23.9051
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 115,
+        "loss_pct_forest": 1.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Contenda",
@@ -1444,7 +2302,13 @@
       "centroid": [
         -49.5229,
         -25.722
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 74,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 29
+      }
     },
     {
       "municipio": "Pinhais",
@@ -1454,7 +2318,13 @@
       "centroid": [
         -49.1559,
         -25.4198
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Medianeira",
@@ -1464,7 +2334,13 @@
       "centroid": [
         -54.0898,
         -25.2643
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 62,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Santana do Itararé",
@@ -1474,7 +2350,13 @@
       "centroid": [
         -49.6335,
         -23.75
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 66,
+        "loss_pct_forest": 1.99,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Cruzeiro do Sul",
@@ -1484,7 +2366,13 @@
       "centroid": [
         -52.1601,
         -22.9866
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24,
+        "loss_pct_forest": 1.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Mangueirinha",
@@ -1494,7 +2382,13 @@
       "centroid": [
         -52.2104,
         -26.0241
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 258,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": -36,
+        "loss_base_ha_yr": 401
+      }
     },
     {
       "municipio": "São José dos Pinhais",
@@ -1504,7 +2398,13 @@
       "centroid": [
         -49.0998,
         -25.6562
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 228,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": 1,
+        "loss_base_ha_yr": 226
+      }
     },
     {
       "municipio": "Cafezal do Sul",
@@ -1514,7 +2414,13 @@
       "centroid": [
         -53.56,
         -23.9396
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 1.92,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Cascavel",
@@ -1524,7 +2430,13 @@
       "centroid": [
         -53.3889,
         -25.0243
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 605,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": 82,
+        "loss_base_ha_yr": 332
+      }
     },
     {
       "municipio": "Floraí",
@@ -1534,7 +2446,13 @@
       "centroid": [
         -52.3482,
         -23.3321
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29,
+        "loss_pct_forest": 2.2,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Ibaiti",
@@ -1544,7 +2462,13 @@
       "centroid": [
         -50.2922,
         -23.7802
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 273,
+        "loss_pct_forest": 1.51,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 39
+      }
     },
     {
       "municipio": "Mariópolis",
@@ -1554,7 +2478,13 @@
       "centroid": [
         -52.5805,
         -26.3327
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 1.02,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Nova Prata do Iguaçu",
@@ -1564,7 +2494,13 @@
       "centroid": [
         -53.3763,
         -25.5922
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 63,
+        "loss_pct_forest": 0.79,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Sulina",
@@ -1574,7 +2510,13 @@
       "centroid": [
         -52.7169,
         -25.694
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 47,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Cambira",
@@ -1584,7 +2526,13 @@
       "centroid": [
         -51.5691,
         -23.627
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 37,
+        "loss_pct_forest": 1.14,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 40
+      }
     },
     {
       "municipio": "Coronel Vivida",
@@ -1594,7 +2542,13 @@
       "centroid": [
         -52.5661,
         -25.9918
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 187,
+        "loss_pct_forest": 0.95,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 34
+      }
     },
     {
       "municipio": "Indianópolis",
@@ -1604,7 +2558,13 @@
       "centroid": [
         -52.6747,
         -23.487
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 17,
+        "loss_pct_forest": 1.38,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Umuarama",
@@ -1614,7 +2574,13 @@
       "centroid": [
         -53.4225,
         -23.6676
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 164,
+        "loss_pct_forest": 1.41,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Japira",
@@ -1624,7 +2590,13 @@
       "centroid": [
         -50.1621,
         -23.732
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 1.1,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Ribeirão do Pinhal",
@@ -1634,7 +2606,13 @@
       "centroid": [
         -50.3735,
         -23.4464
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 157,
+        "loss_pct_forest": 2.9,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "municipio": "Esperança Nova",
@@ -1644,7 +2622,13 @@
       "centroid": [
         -53.7995,
         -23.7139
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 1.53,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Planaltina do Paraná",
@@ -1654,7 +2638,13 @@
       "centroid": [
         -52.9337,
         -23.0914
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29,
+        "loss_pct_forest": 1.27,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Realeza",
@@ -1664,7 +2654,13 @@
       "centroid": [
         -53.5403,
         -25.6788
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 62,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 29
+      }
     },
     {
       "municipio": "Saudade do Iguaçu",
@@ -1674,7 +2670,13 @@
       "centroid": [
         -52.6038,
         -25.7128
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 34,
+        "loss_pct_forest": 0.79,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Iretama",
@@ -1684,7 +2686,13 @@
       "centroid": [
         -52.1126,
         -24.3513
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 157,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": 65,
+        "loss_base_ha_yr": 95
+      }
     },
     {
       "municipio": "Guairaçá",
@@ -1694,7 +2702,13 @@
       "centroid": [
         -52.739,
         -22.9265
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 49,
+        "loss_pct_forest": 1.45,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "municipio": "Guaraniaçu",
@@ -1704,7 +2718,13 @@
       "centroid": [
         -52.857,
         -25.0538
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 451,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": 155,
+        "loss_base_ha_yr": 176
+      }
     },
     {
       "municipio": "Jesuítas",
@@ -1714,7 +2734,13 @@
       "centroid": [
         -53.4121,
         -24.4093
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 44,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Itapejara d'Oeste",
@@ -1724,7 +2750,13 @@
       "centroid": [
         -52.8269,
         -25.9863
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 60,
+        "loss_pct_forest": 1.15,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Itaúna do Sul",
@@ -1734,7 +2766,13 @@
       "centroid": [
         -52.8993,
         -22.7267
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 1.67,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Carlópolis",
@@ -1744,7 +2782,13 @@
       "centroid": [
         -49.7181,
         -23.4607
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 1.46,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Faxinal",
@@ -1754,7 +2798,13 @@
       "centroid": [
         -51.2837,
         -24.0029
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 211,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 44
+      }
     },
     {
       "municipio": "Piraquara",
@@ -1764,7 +2814,13 @@
       "centroid": [
         -49.053,
         -25.4737
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 44,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 45
+      }
     },
     {
       "municipio": "Renascença",
@@ -1774,7 +2830,13 @@
       "centroid": [
         -52.9481,
         -26.2223
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 83,
+        "loss_pct_forest": 0.84,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 43
+      }
     },
     {
       "municipio": "Chopinzinho",
@@ -1784,7 +2846,13 @@
       "centroid": [
         -52.4507,
         -25.8149
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 242,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 49
+      }
     },
     {
       "municipio": "Cidade Gaúcha",
@@ -1794,7 +2862,13 @@
       "centroid": [
         -52.9591,
         -23.3804
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 1.66,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "São Pedro do Iguaçu",
@@ -1804,7 +2878,13 @@
       "centroid": [
         -53.8846,
         -24.9075
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 66,
+        "loss_pct_forest": 1.05,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "municipio": "Campo Bonito",
@@ -1814,7 +2894,13 @@
       "centroid": [
         -53.0142,
         -24.9334
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 116,
+        "loss_pct_forest": 0.74,
+        "loss_change_pct": 71,
+        "loss_base_ha_yr": 68
+      }
     },
     {
       "municipio": "Moreira Sales",
@@ -1824,7 +2910,13 @@
       "centroid": [
         -52.9997,
         -24.027
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 52,
+        "loss_pct_forest": 2.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Arapongas",
@@ -1834,7 +2926,13 @@
       "centroid": [
         -51.4293,
         -23.4389
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 64,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": 21,
+        "loss_base_ha_yr": 53
+      }
     },
     {
       "municipio": "Candói",
@@ -1844,7 +2942,13 @@
       "centroid": [
         -52.0176,
         -25.5269
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 437,
+        "loss_pct_forest": 0.9,
+        "loss_change_pct": 132,
+        "loss_base_ha_yr": 188
+      }
     },
     {
       "municipio": "São Jorge do Patrocínio",
@@ -1854,7 +2958,13 @@
       "centroid": [
         -53.9485,
         -23.7386
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 1.01,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Terra Boa",
@@ -1864,7 +2974,13 @@
       "centroid": [
         -52.3892,
         -23.6961
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 63,
+        "loss_pct_forest": 0.93,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Corumbataí do Sul",
@@ -1874,7 +2990,13 @@
       "centroid": [
         -52.142,
         -24.1235
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 0.75,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Santa Tereza do Oeste",
@@ -1884,7 +3006,13 @@
       "centroid": [
         -53.6063,
         -25.0384
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 60,
+        "loss_pct_forest": 0.87,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "Santa Isabel do Ivaí",
@@ -1894,7 +3022,13 @@
       "centroid": [
         -53.2412,
         -23.1143
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Marilena",
@@ -1904,7 +3038,13 @@
       "centroid": [
         -53.0657,
         -22.7307
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 1.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Mercedes",
@@ -1914,7 +3054,13 @@
       "centroid": [
         -54.186,
         -24.4332
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 33,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Nova Tebas",
@@ -1924,7 +3070,13 @@
       "centroid": [
         -51.9465,
         -24.4614
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 92,
+        "loss_pct_forest": 0.48,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Perobal",
@@ -1934,7 +3086,13 @@
       "centroid": [
         -53.3546,
         -23.9265
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 38,
+        "loss_pct_forest": 1.44,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Cafelândia",
@@ -1944,7 +3102,13 @@
       "centroid": [
         -53.3611,
         -24.6918
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 23,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Pérola",
@@ -1954,7 +3118,13 @@
       "centroid": [
         -53.7078,
         -23.8342
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 1.14,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Tamboara",
@@ -1964,7 +3134,13 @@
       "centroid": [
         -52.4822,
         -23.1981
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 23,
+        "loss_pct_forest": 1.37,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "São João",
@@ -1974,7 +3150,13 @@
       "centroid": [
         -52.7937,
         -25.776
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 0.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "municipio": "Novo Itacolomi",
@@ -1984,7 +3166,13 @@
       "centroid": [
         -51.5295,
         -23.7805
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Amaporã",
@@ -1994,7 +3182,13 @@
       "centroid": [
         -52.8365,
         -23.1291
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 33,
+        "loss_pct_forest": 1.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Foz do Jordão",
@@ -2004,7 +3198,13 @@
       "centroid": [
         -52.0952,
         -25.7024
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": -58,
+        "loss_base_ha_yr": 128
+      }
     },
     {
       "municipio": "Francisco Alves",
@@ -2014,7 +3214,13 @@
       "centroid": [
         -53.8694,
         -24.0965
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 2.19,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Paranavaí",
@@ -2024,7 +3230,13 @@
       "centroid": [
         -52.5102,
         -22.9304
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 103,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "municipio": "Querência do Norte",
@@ -2034,7 +3246,13 @@
       "centroid": [
         -53.5198,
         -23.0364
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 96,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": 65,
+        "loss_base_ha_yr": 58
+      }
     },
     {
       "municipio": "Boa Ventura de São Roque",
@@ -2044,7 +3262,13 @@
       "centroid": [
         -51.564,
         -24.8514
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 135,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": 49,
+        "loss_base_ha_yr": 91
+      }
     },
     {
       "municipio": "Marilândia do Sul",
@@ -2054,7 +3278,13 @@
       "centroid": [
         -51.2795,
         -23.7724
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 36
+      }
     },
     {
       "municipio": "Altamira do Paraná",
@@ -2064,7 +3294,13 @@
       "centroid": [
         -52.6906,
         -24.8107
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 72,
+        "loss_pct_forest": 0.53,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 43
+      }
     },
     {
       "municipio": "Grandes Rios",
@@ -2074,7 +3310,13 @@
       "centroid": [
         -51.4491,
         -24.1892
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 63,
+        "loss_pct_forest": 0.74,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "São José das Palmeiras",
@@ -2084,7 +3326,13 @@
       "centroid": [
         -54.1212,
         -24.8154
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 1.05,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Vitorino",
@@ -2094,7 +3342,13 @@
       "centroid": [
         -52.8056,
         -26.2794
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 51,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Jaboti",
@@ -2104,7 +3358,13 @@
       "centroid": [
         -50.0818,
         -23.7185
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 1.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Loanda",
@@ -2114,7 +3374,13 @@
       "centroid": [
         -53.0721,
         -22.9524
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Mandaguari",
@@ -2124,7 +3390,13 @@
       "centroid": [
         -51.7041,
         -23.4822
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 52,
+        "loss_pct_forest": 0.85,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 26
+      }
     },
     {
       "municipio": "Missal",
@@ -2134,7 +3406,13 @@
       "centroid": [
         -54.2475,
         -25.0912
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 41,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Rondon",
@@ -2144,7 +3422,13 @@
       "centroid": [
         -52.8044,
         -23.4771
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Siqueira Campos",
@@ -2154,7 +3438,13 @@
       "centroid": [
         -49.7921,
         -23.6399
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 36,
+        "loss_pct_forest": 1.03,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Santa Cruz de Monte Castelo",
@@ -2164,7 +3454,13 @@
       "centroid": [
         -53.3655,
         -23.0888
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Mirador",
@@ -2174,7 +3470,13 @@
       "centroid": [
         -52.741,
         -23.1992
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 1.14,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Ouro Verde do Oeste",
@@ -2184,7 +3486,13 @@
       "centroid": [
         -53.9088,
         -24.7921
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 0.8,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Palmital",
@@ -2194,7 +3502,13 @@
       "centroid": [
         -52.2699,
         -24.8836
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 170,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": 228,
+        "loss_base_ha_yr": 52
+      }
     },
     {
       "municipio": "São Pedro do Paraná",
@@ -2204,7 +3518,13 @@
       "centroid": [
         -53.1791,
         -22.784
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Roncador",
@@ -2214,7 +3534,13 @@
       "centroid": [
         -52.2628,
         -24.5702
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 118,
+        "loss_pct_forest": 0.51,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Salto do Itararé",
@@ -2224,7 +3550,13 @@
       "centroid": [
         -49.6843,
         -23.6319
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 30,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Santo Antônio do Paraíso",
@@ -2234,7 +3566,13 @@
       "centroid": [
         -50.6311,
         -23.5801
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 52,
+        "loss_pct_forest": 1.98,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Iguatu",
@@ -2244,7 +3582,13 @@
       "centroid": [
         -53.0861,
         -24.6861
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 0.7,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Nova Londrina",
@@ -2254,7 +3598,13 @@
       "centroid": [
         -52.9517,
         -22.7909
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 17,
+        "loss_pct_forest": 0.98,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Pato Branco",
@@ -2264,7 +3614,13 @@
       "centroid": [
         -52.6687,
         -26.169
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 86,
+        "loss_pct_forest": 0.59,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "municipio": "Terra Rica",
@@ -2274,7 +3630,13 @@
       "centroid": [
         -52.6837,
         -22.7257
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 37,
+        "loss_pct_forest": 1.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "municipio": "Bom Sucesso",
@@ -2284,7 +3646,13 @@
       "centroid": [
         -51.8228,
         -23.7131
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Iracema do Oeste",
@@ -2294,7 +3662,13 @@
       "centroid": [
         -53.352,
         -24.439
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 1.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Nova Fátima",
@@ -2304,7 +3678,13 @@
       "centroid": [
         -50.5434,
         -23.4192
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 36,
+        "loss_pct_forest": 0.97,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "São João do Caiuá",
@@ -2314,7 +3694,13 @@
       "centroid": [
         -52.3329,
         -22.841
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 1.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Bom Sucesso do Sul",
@@ -2324,7 +3710,13 @@
       "centroid": [
         -52.8413,
         -26.0829
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Paranapoema",
@@ -2334,7 +3726,13 @@
       "centroid": [
         -52.1004,
         -22.6617
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 15,
+        "loss_pct_forest": 1.91,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Rosário do Ivaí",
@@ -2344,7 +3742,13 @@
       "centroid": [
         -51.2023,
         -24.3228
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 74,
+        "loss_pct_forest": 0.85,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Araucária",
@@ -2354,7 +3758,13 @@
       "centroid": [
         -49.4388,
         -25.6099
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 69,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": 22,
+        "loss_base_ha_yr": 57
+      }
     },
     {
       "municipio": "Douradina",
@@ -2364,7 +3774,13 @@
       "centroid": [
         -53.2887,
         -23.3478
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 60,
+        "loss_pct_forest": 1.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Goioerê",
@@ -2374,7 +3790,13 @@
       "centroid": [
         -53.0401,
         -24.1732
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 77,
+        "loss_pct_forest": 1.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Marumbi",
@@ -2384,7 +3806,13 @@
       "centroid": [
         -51.6611,
         -23.7556
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 34,
+        "loss_pct_forest": 0.78,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Quatro Pontes",
@@ -2394,7 +3822,13 @@
       "centroid": [
         -53.9759,
         -24.5697
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.53,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Cruzeiro do Oeste",
@@ -2404,7 +3838,13 @@
       "centroid": [
         -53.081,
         -23.7646
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 84,
+        "loss_pct_forest": 0.97,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Santa Amélia",
@@ -2414,7 +3854,13 @@
       "centroid": [
         -50.409,
         -23.2596
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Santa Mônica",
@@ -2424,7 +3870,13 @@
       "centroid": [
         -53.1069,
         -23.1536
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 15,
+        "loss_pct_forest": 0.76,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Braganey",
@@ -2434,7 +3886,13 @@
       "centroid": [
         -53.0938,
         -24.8037
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 45,
+        "loss_pct_forest": 0.66,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Kaloré",
@@ -2444,7 +3902,13 @@
       "centroid": [
         -51.6865,
         -23.8541
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Manoel Ribas",
@@ -2454,7 +3918,13 @@
       "centroid": [
         -51.6365,
         -24.4901
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 77,
+        "loss_pct_forest": 0.55,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Miraselva",
@@ -2464,7 +3934,13 @@
       "centroid": [
         -51.4851,
         -22.9713
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Nova Olímpia",
@@ -2474,7 +3950,13 @@
       "centroid": [
         -53.0718,
         -23.4263
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.74,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Guapirama",
@@ -2484,7 +3966,13 @@
       "centroid": [
         -50.0771,
         -23.4694
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 1.46,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Iguaraçu",
@@ -2494,7 +3982,13 @@
       "centroid": [
         -51.8456,
         -23.2245
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 1.25,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Nova Santa Bárbara",
@@ -2504,7 +3998,13 @@
       "centroid": [
         -50.7427,
         -23.5938
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.7,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Xambrê",
@@ -2514,7 +4014,13 @@
       "centroid": [
         -53.5948,
         -23.7369
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 21,
+        "loss_pct_forest": 0.94,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Pitangueiras",
@@ -2524,7 +4030,13 @@
       "centroid": [
         -51.573,
         -23.2088
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.94,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Tapira",
@@ -2534,7 +4046,13 @@
       "centroid": [
         -53.1332,
         -23.3283
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 28,
+        "loss_pct_forest": 0.76,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Marechal Cândido Rondon",
@@ -2544,7 +4062,13 @@
       "centroid": [
         -54.1333,
         -24.5745
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 86,
+        "loss_pct_forest": 0.56,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 33
+      }
     },
     {
       "municipio": "Toledo",
@@ -2554,7 +4078,13 @@
       "centroid": [
         -53.7725,
         -24.7115
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 99,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": 20,
+        "loss_base_ha_yr": 83
+      }
     },
     {
       "municipio": "Curitiba",
@@ -2564,7 +4094,13 @@
       "centroid": [
         -49.2904,
         -25.4744
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 26,
+        "loss_pct_forest": 0.35,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 49
+      }
     },
     {
       "municipio": "Japurá",
@@ -2574,7 +4110,13 @@
       "centroid": [
         -52.5405,
         -23.4374
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Paraíso do Norte",
@@ -2584,7 +4126,13 @@
       "centroid": [
         -52.635,
         -23.2692
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 17,
+        "loss_pct_forest": 0.93,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Peabiru",
@@ -2594,7 +4142,13 @@
       "centroid": [
         -52.3297,
         -23.9344
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 50,
+        "loss_pct_forest": 0.77,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "São Miguel do Iguaçu",
@@ -2604,7 +4158,13 @@
       "centroid": [
         -54.2622,
         -25.3835
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 88,
+        "loss_pct_forest": 0.4,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Campo Mourão",
@@ -2614,7 +4174,13 @@
       "centroid": [
         -52.3824,
         -24.1012
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 100,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": 63,
+        "loss_base_ha_yr": 61
+      }
     },
     {
       "municipio": "Corbélia",
@@ -2624,7 +4190,13 @@
       "centroid": [
         -53.2309,
         -24.7346
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 52,
+        "loss_pct_forest": 0.55,
+        "loss_change_pct": -13,
+        "loss_base_ha_yr": 60
+      }
     },
     {
       "municipio": "Inajá",
@@ -2634,7 +4206,13 @@
       "centroid": [
         -52.2244,
         -22.7176
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 1.09,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Maria Helena",
@@ -2644,7 +4222,13 @@
       "centroid": [
         -53.2239,
         -23.5817
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.95,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Sabáudia",
@@ -2654,7 +4238,13 @@
       "centroid": [
         -51.5828,
         -23.3484
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24,
+        "loss_pct_forest": 0.95,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "municipio": "Abatiá",
@@ -2664,7 +4254,13 @@
       "centroid": [
         -50.3116,
         -23.306
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 19,
+        "loss_pct_forest": 0.79,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Matinhos",
@@ -2674,7 +4270,13 @@
       "centroid": [
         -48.5565,
         -25.7598
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29,
+        "loss_pct_forest": 0.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Munhoz de Melo",
@@ -2684,7 +4286,13 @@
       "centroid": [
         -51.7347,
         -23.1308
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.75,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Nova Aliança do Ivaí",
@@ -2694,7 +4302,13 @@
       "centroid": [
         -52.6098,
         -23.1695
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.88,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Ivaiporã",
@@ -2704,7 +4318,13 @@
       "centroid": [
         -51.6277,
         -24.2811
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 0.58,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Luiziana",
@@ -2714,7 +4334,13 @@
       "centroid": [
         -52.3325,
         -24.3457
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 149,
+        "loss_pct_forest": 0.64,
+        "loss_change_pct": 73,
+        "loss_base_ha_yr": 86
+      }
     },
     {
       "municipio": "Matelândia",
@@ -2724,7 +4350,13 @@
       "centroid": [
         -53.9051,
         -25.3554
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 138,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "Alto Piquiri",
@@ -2734,7 +4366,13 @@
       "centroid": [
         -53.4038,
         -24.102
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 30,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Laranjal",
@@ -2744,7 +4382,13 @@
       "centroid": [
         -52.4896,
         -24.9022
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 79,
+        "loss_pct_forest": 0.4,
+        "loss_change_pct": 42,
+        "loss_base_ha_yr": 56
+      }
     },
     {
       "municipio": "Santo Antônio do Caiuá",
@@ -2754,7 +4398,13 @@
       "centroid": [
         -52.3547,
         -22.7012
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.56,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "São Tomé",
@@ -2764,7 +4414,13 @@
       "centroid": [
         -52.5404,
         -23.5242
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Astorga",
@@ -2774,7 +4430,13 @@
       "centroid": [
         -51.6975,
         -23.2459
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 26,
+        "loss_pct_forest": 0.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 29
+      }
     },
     {
       "municipio": "Rolândia",
@@ -2784,7 +4446,13 @@
       "centroid": [
         -51.4096,
         -23.2662
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 39,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": -53,
+        "loss_base_ha_yr": 84
+      }
     },
     {
       "municipio": "Santa Fé",
@@ -2794,7 +4462,13 @@
       "centroid": [
         -51.8369,
         -23.0661
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "São Manoel do Paraná",
@@ -2804,7 +4478,13 @@
       "centroid": [
         -52.6124,
         -23.3729
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Jardim Alegre",
@@ -2814,7 +4494,13 @@
       "centroid": [
         -51.7657,
         -24.2027
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 34,
+        "loss_pct_forest": 0.44,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "municipio": "Paranacity",
@@ -2824,7 +4510,13 @@
       "centroid": [
         -52.1427,
         -22.8416
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.65,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Anahy",
@@ -2834,7 +4526,13 @@
       "centroid": [
         -53.1436,
         -24.6442
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.61,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Guaporema",
@@ -2844,7 +4542,13 @@
       "centroid": [
         -52.8241,
         -23.3277
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Barbosa Ferraz",
@@ -2854,7 +4558,13 @@
       "centroid": [
         -52.0443,
         -24.0809
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 0.44,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Janiópolis",
@@ -2864,7 +4574,13 @@
       "centroid": [
         -52.8098,
         -24.1294
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Nova Aurora",
@@ -2874,7 +4590,13 @@
       "centroid": [
         -53.2753,
         -24.5033
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 43,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "municipio": "Formosa do Oeste",
@@ -2884,7 +4606,13 @@
       "centroid": [
         -53.333,
         -24.2945
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Ivaté",
@@ -2894,7 +4622,13 @@
       "centroid": [
         -53.4231,
         -23.3572
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 0.85,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Maripá",
@@ -2904,7 +4638,13 @@
       "centroid": [
         -53.7895,
         -24.4479
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.39,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Porto Rico",
@@ -2914,7 +4654,13 @@
       "centroid": [
         -53.3138,
         -22.8336
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.41,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Santa Cecília do Pavão",
@@ -2924,7 +4670,13 @@
       "centroid": [
         -50.7988,
         -23.5435
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.56,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Terra Roxa",
@@ -2934,7 +4686,13 @@
       "centroid": [
         -54.0605,
         -24.1975
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 59,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "municipio": "São Carlos do Ivaí",
@@ -2944,7 +4702,13 @@
       "centroid": [
         -52.4834,
         -23.3418
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 26,
+        "loss_pct_forest": 1.2,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Engenheiro Beltrão",
@@ -2954,7 +4718,13 @@
       "centroid": [
         -52.2655,
         -23.7593
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 52,
+        "loss_pct_forest": 0.9,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Quatiguá",
@@ -2964,7 +4734,13 @@
       "centroid": [
         -49.9333,
         -23.5609
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Santa Inês",
@@ -2974,7 +4750,13 @@
       "centroid": [
         -51.8966,
         -22.718
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Alto Paraíso",
@@ -2984,7 +4766,13 @@
       "centroid": [
         -53.8185,
         -23.5424
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 58,
+        "loss_pct_forest": 0.54,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "Ariranha do Ivaí",
@@ -2994,7 +4782,13 @@
       "centroid": [
         -51.5415,
         -24.3776
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29,
+        "loss_pct_forest": 0.71,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Pato Bragado",
@@ -3004,7 +4798,13 @@
       "centroid": [
         -54.2541,
         -24.6343
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.25,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Borrazópolis",
@@ -3014,7 +4814,13 @@
       "centroid": [
         -51.5923,
         -23.9387
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 21,
+        "loss_pct_forest": 0.38,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Conselheiro Mairinck",
@@ -3024,7 +4830,13 @@
       "centroid": [
         -50.1279,
         -23.5963
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 1.02,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Palotina",
@@ -3034,7 +4846,13 @@
       "centroid": [
         -53.8177,
         -24.2718
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 28,
+        "loss_pct_forest": 0.49,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 33
+      }
     },
     {
       "municipio": "Santa Helena",
@@ -3044,7 +4862,13 @@
       "centroid": [
         -54.3046,
         -24.8886
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 62,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Guaratuba",
@@ -3054,7 +4878,13 @@
       "centroid": [
         -48.77,
         -25.8196
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 262,
+        "loss_pct_forest": 0.21,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 47
+      }
     },
     {
       "municipio": "Jaguapitã",
@@ -3064,7 +4894,13 @@
       "centroid": [
         -51.5557,
         -23.0657
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24,
+        "loss_pct_forest": 0.63,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 43
+      }
     },
     {
       "municipio": "Quarto Centenário",
@@ -3074,7 +4910,13 @@
       "centroid": [
         -53.1548,
         -24.3019
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 0.5,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Itaguajé",
@@ -3084,7 +4926,13 @@
       "centroid": [
         -51.9693,
         -22.6555
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Tupãssi",
@@ -3094,7 +4942,13 @@
       "centroid": [
         -53.5109,
         -24.6455
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.56,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Assaí",
@@ -3104,7 +4958,13 @@
       "centroid": [
         -50.8731,
         -23.406
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.5,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 32
+      }
     },
     {
       "municipio": "Jataizinho",
@@ -3114,7 +4974,13 @@
       "centroid": [
         -50.9253,
         -23.2499
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.58,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Icaraíma",
@@ -3124,7 +4990,13 @@
       "centroid": [
         -53.5889,
         -23.3724
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 28,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Tapejara",
@@ -3134,7 +5006,13 @@
       "centroid": [
         -52.888,
         -23.6564
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 0.44,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Uraí",
@@ -3144,7 +5022,13 @@
       "centroid": [
         -50.8282,
         -23.2166
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.61,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "municipio": "Mandaguaçu",
@@ -3154,7 +5038,13 @@
       "centroid": [
         -52.0562,
         -23.2817
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.55,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "municipio": "Nova América da Colina",
@@ -3164,7 +5054,13 @@
       "centroid": [
         -50.7061,
         -23.3448
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Ourizona",
@@ -3174,7 +5070,13 @@
       "centroid": [
         -52.231,
         -23.4593
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Brasilândia do Sul",
@@ -3184,7 +5086,13 @@
       "centroid": [
         -53.5421,
         -24.1664
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.55,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Jundiaí do Sul",
@@ -3194,7 +5102,13 @@
       "centroid": [
         -50.2308,
         -23.4751
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 35,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Londrina",
@@ -3204,7 +5118,13 @@
       "centroid": [
         -51.1069,
         -23.5098
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 166,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": 49,
+        "loss_base_ha_yr": 111
+      }
     },
     {
       "municipio": "Marialva",
@@ -3214,7 +5134,13 @@
       "centroid": [
         -51.8745,
         -23.5378
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 23,
+        "loss_pct_forest": 0.43,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "municipio": "Mariluz",
@@ -3224,7 +5150,13 @@
       "centroid": [
         -53.2137,
         -24.0577
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.49,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Nova Cantu",
@@ -3234,7 +5166,13 @@
       "centroid": [
         -52.5585,
         -24.6596
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 34,
+        "loss_pct_forest": 0.24,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     },
     {
       "municipio": "Campina da Lagoa",
@@ -3244,7 +5182,13 @@
       "centroid": [
         -52.7977,
         -24.6145
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 0.35,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "municipio": "Ubiratã",
@@ -3254,7 +5198,13 @@
       "centroid": [
         -53.0242,
         -24.5
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 35,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Lunardelli",
@@ -3264,7 +5214,13 @@
       "centroid": [
         -51.7717,
         -24.081
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 16,
+        "loss_pct_forest": 0.36,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Assis Chateaubriand",
@@ -3274,7 +5230,13 @@
       "centroid": [
         -53.5823,
         -24.4317
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 43,
+        "loss_pct_forest": 0.59,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 38
+      }
     },
     {
       "municipio": "Cruzmaltina",
@@ -3284,7 +5246,13 @@
       "centroid": [
         -51.4735,
         -24.0188
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 17,
+        "loss_pct_forest": 0.27,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Tuneiras do Oeste",
@@ -3294,7 +5262,13 @@
       "centroid": [
         -52.8346,
         -23.8791
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 47,
+        "loss_pct_forest": 0.35,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Nova Santa Rosa",
@@ -3304,7 +5278,13 @@
       "centroid": [
         -53.9596,
         -24.4421
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Paranaguá",
@@ -3314,7 +5294,13 @@
       "centroid": [
         -48.5193,
         -25.5208
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 51,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 28
+      }
     },
     {
       "municipio": "Ribeirão Claro",
@@ -3324,7 +5310,13 @@
       "centroid": [
         -49.7641,
         -23.2617
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 35,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 21
+      }
     },
     {
       "municipio": "Diamante do Norte",
@@ -3334,7 +5326,13 @@
       "centroid": [
         -52.8925,
         -22.6343
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Guaíra",
@@ -3344,7 +5342,13 @@
       "centroid": [
         -54.2256,
         -24.1918
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 21,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Nossa Senhora das Graças",
@@ -3354,7 +5358,13 @@
       "centroid": [
         -51.7998,
         -22.9109
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.64,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Jardim Olinda",
@@ -3364,7 +5374,13 @@
       "centroid": [
         -52.0788,
         -22.5734
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Lidianópolis",
@@ -3374,7 +5390,13 @@
       "centroid": [
         -51.64,
         -24.0853
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.28,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Jacarezinho",
@@ -3384,7 +5406,13 @@
       "centroid": [
         -49.9489,
         -23.1578
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     },
     {
       "municipio": "São Pedro do Ivaí",
@@ -3394,7 +5422,13 @@
       "centroid": [
         -51.8683,
         -23.8467
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Lobato",
@@ -3404,7 +5438,13 @@
       "centroid": [
         -51.9858,
         -22.9831
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.45,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Pontal do Paraná",
@@ -3414,7 +5454,13 @@
       "centroid": [
         -48.4753,
         -25.6362
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Prado Ferreira",
@@ -3424,7 +5470,13 @@
       "centroid": [
         -51.3994,
         -23.0261
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.45,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Santo Antônio da Platina",
@@ -3434,7 +5486,13 @@
       "centroid": [
         -50.09,
         -23.2913
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 35,
+        "loss_pct_forest": 0.49,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Joaquim Távora",
@@ -3444,7 +5502,13 @@
       "centroid": [
         -49.9076,
         -23.4554
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.46,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "municipio": "Quinta do Sol",
@@ -3454,7 +5518,13 @@
       "centroid": [
         -52.1409,
         -23.8312
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "São Sebastião da Amoreira",
@@ -3464,7 +5534,13 @@
       "centroid": [
         -50.7245,
         -23.453
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "municipio": "Farol",
@@ -3474,7 +5550,13 @@
       "centroid": [
         -52.6279,
         -24.123
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 15,
+        "loss_pct_forest": 0.66,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Morretes",
@@ -3484,7 +5566,13 @@
       "centroid": [
         -48.8557,
         -25.518
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 46,
+        "loss_pct_forest": 0.07,
+        "loss_change_pct": -34,
+        "loss_base_ha_yr": 69
+      }
     },
     {
       "municipio": "Santa Mariana",
@@ -3494,7 +5582,13 @@
       "centroid": [
         -50.5366,
         -23.0639
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Santa Terezinha de Itaipu",
@@ -3504,7 +5598,13 @@
       "centroid": [
         -54.428,
         -25.4531
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Guaraci",
@@ -3514,7 +5614,13 @@
       "centroid": [
         -51.6777,
         -22.9552
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4,
+        "loss_pct_forest": 0.3,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "São Jorge do Ivaí",
@@ -3524,7 +5630,13 @@
       "centroid": [
         -52.3166,
         -23.4337
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 31
+      }
     },
     {
       "municipio": "Godoy Moreira",
@@ -3534,7 +5646,13 @@
       "centroid": [
         -51.9079,
         -24.1619
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Itambé",
@@ -3544,7 +5662,13 @@
       "centroid": [
         -52.012,
         -23.708
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Alvorada do Sul",
@@ -3554,7 +5678,13 @@
       "centroid": [
         -51.2566,
         -22.8067
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.32,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 46
+      }
     },
     {
       "municipio": "Bandeirantes",
@@ -3564,7 +5694,13 @@
       "centroid": [
         -50.3507,
         -23.1639
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.35,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Cafeara",
@@ -3574,7 +5710,13 @@
       "centroid": [
         -51.7112,
         -22.8127
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4,
+        "loss_pct_forest": 0.5,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "municipio": "Centenário do Sul",
@@ -3584,7 +5726,13 @@
       "centroid": [
         -51.5622,
         -22.8059
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Colorado",
@@ -3594,7 +5742,13 @@
       "centroid": [
         -51.9725,
         -22.8372
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.33,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Flórida",
@@ -3604,7 +5758,13 @@
       "centroid": [
         -51.9567,
         -23.1056
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.51,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Maringá",
@@ -3614,7 +5774,13 @@
       "centroid": [
         -51.9678,
         -23.3996
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Sarandi",
@@ -3624,7 +5790,13 @@
       "centroid": [
         -51.8677,
         -23.4696
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Sertanópolis",
@@ -3634,7 +5806,13 @@
       "centroid": [
         -51.077,
         -23.0592
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 0.43,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 35
+      }
     },
     {
       "municipio": "Boa Esperança",
@@ -3644,7 +5822,13 @@
       "centroid": [
         -52.7502,
         -24.2557
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.56,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Foz do Iguaçu",
@@ -3654,7 +5838,13 @@
       "centroid": [
         -54.4789,
         -25.464
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 30,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "municipio": "Jussara",
@@ -3664,7 +5854,13 @@
       "centroid": [
         -52.4439,
         -23.6321
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Fênix",
@@ -3674,7 +5870,13 @@
       "centroid": [
         -52.0297,
         -23.9008
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.24,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Rancho Alegre D'Oeste",
@@ -3684,7 +5886,13 @@
       "centroid": [
         -52.9584,
         -24.2911
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Entre Rios do Oeste",
@@ -3694,7 +5902,13 @@
       "centroid": [
         -54.2265,
         -24.7117
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.19,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "municipio": "Itaipulândia",
@@ -3704,7 +5918,13 @@
       "centroid": [
         -54.3634,
         -25.1539
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Rancho Alegre",
@@ -3714,7 +5934,13 @@
       "centroid": [
         -50.9196,
         -23.0806
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.27,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "municipio": "Andirá",
@@ -3724,7 +5950,13 @@
       "centroid": [
         -50.2725,
         -23.0176
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "municipio": "Bela Vista do Paraíso",
@@ -3734,7 +5966,13 @@
       "centroid": [
         -51.2375,
         -23.0063
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 16
+      }
     },
     {
       "municipio": "Itambaracá",
@@ -3744,7 +5982,13 @@
       "centroid": [
         -50.4157,
         -22.9819
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.21,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Cornélio Procópio",
@@ -3754,7 +5998,13 @@
       "centroid": [
         -50.624,
         -23.2247
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": -58,
+        "loss_base_ha_yr": 53
+      }
     },
     {
       "municipio": "Mamborê",
@@ -3764,7 +6014,13 @@
       "centroid": [
         -52.5864,
         -24.3586
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "municipio": "Serranópolis do Iguaçu",
@@ -3774,7 +6030,13 @@
       "centroid": [
         -54.0301,
         -25.4797
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 26,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "municipio": "Arapuã",
@@ -3784,7 +6046,13 @@
       "centroid": [
         -51.8145,
         -24.3437
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Juranda",
@@ -3794,7 +6062,13 @@
       "centroid": [
         -52.8364,
         -24.3953
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.27,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Cambé",
@@ -3804,7 +6078,13 @@
       "centroid": [
         -51.283,
         -23.1872
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.3,
+        "loss_change_pct": -76,
+        "loss_base_ha_yr": 60
+      }
     },
     {
       "municipio": "Porecatu",
@@ -3814,7 +6094,13 @@
       "centroid": [
         -51.4098,
         -22.7439
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Antonina",
@@ -3824,7 +6110,13 @@
       "centroid": [
         -48.7269,
         -25.3031
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 48,
+        "loss_pct_forest": 0.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "municipio": "Ibiporã",
@@ -3834,7 +6126,13 @@
       "centroid": [
         -51.0408,
         -23.2382
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 20
+      }
     },
     {
       "municipio": "Ângulo",
@@ -3844,7 +6142,13 @@
       "centroid": [
         -51.917,
         -23.1915
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.22,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Cambará",
@@ -3854,7 +6158,13 @@
       "centroid": [
         -50.0787,
         -22.9953
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "municipio": "Céu Azul",
@@ -3864,7 +6174,13 @@
       "centroid": [
         -53.7612,
         -25.2387
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 91,
+        "loss_pct_forest": 0.1,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "municipio": "Lupionópolis",
@@ -3874,7 +6190,13 @@
       "centroid": [
         -51.664,
         -22.7274
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Leópolis",
@@ -3884,7 +6206,13 @@
       "centroid": [
         -50.7098,
         -23.0237
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.17,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "São João do Ivaí",
@@ -3894,7 +6222,13 @@
       "centroid": [
         -51.8454,
         -23.9889
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.2,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "municipio": "Doutor Camargo",
@@ -3904,7 +6238,13 @@
       "centroid": [
         -52.2159,
         -23.5609
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.2,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Florestópolis",
@@ -3914,7 +6254,13 @@
       "centroid": [
         -51.4032,
         -22.8957
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.16,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "municipio": "Paiçandu",
@@ -3924,7 +6270,13 @@
       "centroid": [
         -52.1217,
         -23.4659
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Guaraqueçaba",
@@ -3934,7 +6286,13 @@
       "centroid": [
         -48.365,
         -25.2344
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 81,
+        "loss_pct_forest": 0.05,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 26
+      }
     },
     {
       "municipio": "Primeiro de Maio",
@@ -3944,7 +6302,13 @@
       "centroid": [
         -51.077,
         -22.8631
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.16,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "municipio": "Barra do Jacaré",
@@ -3954,7 +6318,13 @@
       "centroid": [
         -50.1605,
         -23.1061
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.14,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "municipio": "Santo Inácio",
@@ -3964,7 +6334,13 @@
       "centroid": [
         -51.8034,
         -22.721
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "municipio": "Ivatuba",
@@ -3974,7 +6350,13 @@
       "centroid": [
         -52.1774,
         -23.5989
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.13,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "municipio": "Sertaneja",
@@ -3984,7 +6366,13 @@
       "centroid": [
         -50.8764,
         -22.9356
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.14,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     },
     {
       "municipio": "Floresta",
@@ -3994,7 +6382,19 @@
       "centroid": [
         -52.0911,
         -23.6077
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.07,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

@@ -14,7 +14,13 @@
       "centroid": [
         -56.8176,
         -25.9063
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 62,
+        "loss_pct_forest": 1.0,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     },
     {
       "distrito": "Pirayu",
@@ -24,7 +30,13 @@
       "centroid": [
         -57.2018,
         -25.4796
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 112,
+        "loss_pct_forest": 1.36,
+        "loss_change_pct": 123,
+        "loss_base_ha_yr": 50
+      }
     },
     {
       "distrito": "Caballero",
@@ -34,7 +46,13 @@
       "centroid": [
         -56.8862,
         -25.7573
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 85,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": 33,
+        "loss_base_ha_yr": 64
+      }
     },
     {
       "distrito": "Sapucai",
@@ -44,7 +62,13 @@
       "centroid": [
         -56.9738,
         -25.7203
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 62,
+        "loss_pct_forest": 0.68,
+        "loss_change_pct": 7,
+        "loss_base_ha_yr": 58
+      }
     },
     {
       "distrito": "Tebicuarymi",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.666,
         -25.9156
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 64,
+        "loss_pct_forest": 0.86,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 42
+      }
     },
     {
       "distrito": "Escobar",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.0105,
         -25.6329
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 70,
+        "loss_pct_forest": 0.62,
+        "loss_change_pct": 27,
+        "loss_base_ha_yr": 55
+      }
     },
     {
       "distrito": "Ybytymi",
@@ -74,7 +110,13 @@
       "centroid": [
         -56.7656,
         -25.7754
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 194,
+        "loss_pct_forest": 1.47,
+        "loss_change_pct": 211,
+        "loss_base_ha_yr": 62
+      }
     },
     {
       "distrito": "Ybycui",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.942,
         -26.0391
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 220,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": 133,
+        "loss_base_ha_yr": 94
+      }
     },
     {
       "distrito": "Yaguaron",
@@ -94,7 +142,13 @@
       "centroid": [
         -57.2804,
         -25.595
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.79,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "distrito": "Mbuyapey",
@@ -104,7 +158,13 @@
       "centroid": [
         -56.8042,
         -26.2791
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 249,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": 142,
+        "loss_base_ha_yr": 103
+      }
     },
     {
       "distrito": "Acahay",
@@ -114,7 +174,13 @@
       "centroid": [
         -57.076,
         -25.8967
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 63,
+        "loss_pct_forest": 0.68,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 29
+      }
     },
     {
       "distrito": "Paraguari",
@@ -124,7 +190,13 @@
       "centroid": [
         -57.1351,
         -25.6664
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 84,
+        "loss_pct_forest": 0.67,
+        "loss_change_pct": 50,
+        "loss_base_ha_yr": 56
+      }
     },
     {
       "distrito": "Carapegua",
@@ -134,7 +206,13 @@
       "centroid": [
         -57.3255,
         -25.7621
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 69,
+        "loss_pct_forest": 0.71,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "distrito": "San Roque Gonzalez",
@@ -144,7 +222,13 @@
       "centroid": [
         -57.3024,
         -25.8795
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 23,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "distrito": "Quyquyho",
@@ -154,7 +238,13 @@
       "centroid": [
         -57.0129,
         -26.2561
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 50,
+        "loss_pct_forest": 0.49,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "distrito": "Quiindy",
@@ -164,7 +254,13 @@
       "centroid": [
         -57.3214,
         -26.0118
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 35,
+        "loss_pct_forest": 0.26,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 30
+      }
     },
     {
       "distrito": "Caapucu",
@@ -174,7 +270,19 @@
       "centroid": [
         -57.3904,
         -26.3278
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 43,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 33
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

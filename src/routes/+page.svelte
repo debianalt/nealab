@@ -44,6 +44,11 @@
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
 
+	// Hex opacity defaults per basemap: in Satélite the slider starts just under its
+	// middle (range 0.3–0.9) so the imagery reads under the hexes. A value the user
+	// set by hand is kept when switching.
+	const HEX_OPACITY_MAP = 0.78;
+	const HEX_OPACITY_SATELLITE = 0.55;
 	const mapStore = new MapStore();
 	const lensStore = new LensStore();
 	const lassoStore = new LassoStore();
@@ -2008,12 +2013,12 @@
 					<div class="flex gap-1">
 						<button
 							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'map' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
-							onclick={() => { mapStore.basemapMode = 'map'; mapComponent?.setSatellite(false); }}>
+							onclick={() => { mapStore.basemapMode = 'map'; if (mapStore.hexOpacity === HEX_OPACITY_SATELLITE) mapStore.hexOpacity = HEX_OPACITY_MAP; mapComponent?.setSatellite(false); }}>
 							{i18n.t('map.basemap.map')}
 						</button>
 						<button
 							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'satellite' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
-							onclick={() => { mapStore.basemapMode = 'satellite'; mapComponent?.setSatellite(true); }}>
+							onclick={() => { mapStore.basemapMode = 'satellite'; if (mapStore.hexOpacity === HEX_OPACITY_MAP) mapStore.hexOpacity = HEX_OPACITY_SATELLITE; mapComponent?.setSatellite(true); }}>
 							{i18n.t('map.basemap.satellite')}
 						</button>
 					</div>

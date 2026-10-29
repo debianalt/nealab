@@ -522,6 +522,11 @@ export interface DeptRank {
 	saturatedKey?: string; // i18n note shown instead of bars when the summary flags metadata.rank.saturated
 	// Metric used instead where the summary flags saturation and metadata.rank.plain.shown.
 	plain?: { field: string; unit: string; decimals: number; titleKey: string; noteKey: string };
+	unitKey?: string;     // i18n unit, preferred over `unit` when set
+	signed?: boolean;     // values can be negative: bar by |value|, green below 0, "+" shown
+	// Several readings of the same layer, switched from tabs above the ranking; each
+	// entry overrides the base fields. The base itself is the first reading.
+	metrics?: Array<Partial<Omit<DeptRank, 'metrics'>> & { tabKey: string }>;
 }
 
 export interface ColorClass {
@@ -967,6 +972,21 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		temporal: true,
 		temporalPeriods: { current: '2015–2024', baseline: '2001–2010', source: 'Hansen GFC v1.12' },
+		// Three readings of the same Hansen loss (pipeline/build_deforest_rank.py):
+		// where the most is lost, where it is most intense, where it sped up or slowed.
+		deptRank: {
+			field: 'loss_ha_yr', unit: 'ha/año', unitKey: 'rank.unit.haYr', decimals: 0,
+			titleKey: 'rank.deforest.title.ha', noteKey: 'rank.deforest.note.ha',
+			metrics: [
+				{ tabKey: 'rank.deforest.tab.ha' },
+				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2,
+				  titleKey: 'rank.deforest.title.pct', noteKey: 'rank.deforest.note.pct',
+				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
+				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', decimals: 0, signed: true,
+				  titleKey: 'rank.deforest.title.change', noteKey: 'rank.deforest.note.change',
+				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
+			],
+		},
 		// Bands on RAW loss rate (%/yr, Hansen goalpost [0,5]): higher = worse,
 		// so band colors and improved/worsened flow semantics are inverted.
 		flowBands: {

@@ -14,7 +14,13 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 103,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": -34,
+        "loss_base_ha_yr": 155
+      }
     },
     {
       "distrito": "Carayao",
@@ -24,7 +30,13 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 840,
+        "loss_pct_forest": 1.37,
+        "loss_change_pct": 71,
+        "loss_base_ha_yr": 492
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -34,7 +46,13 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 180,
+        "loss_pct_forest": 1.12,
+        "loss_change_pct": 17,
+        "loss_base_ha_yr": 154
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -44,7 +62,13 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 280,
+        "loss_pct_forest": 1.7,
+        "loss_change_pct": -8,
+        "loss_base_ha_yr": 305
+      }
     },
     {
       "distrito": "La Pastora",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 147,
+        "loss_pct_forest": 1.45,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 46
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -64,7 +94,13 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 578,
+        "loss_pct_forest": 1.48,
+        "loss_change_pct": 26,
+        "loss_base_ha_yr": 459
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -74,7 +110,13 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 214,
+        "loss_pct_forest": 1.16,
+        "loss_change_pct": 22,
+        "loss_base_ha_yr": 175
+      }
     },
     {
       "distrito": "San Joaquin",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 274,
+        "loss_pct_forest": 1.59,
+        "loss_change_pct": 11,
+        "loss_base_ha_yr": 247
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -94,7 +142,13 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 69,
+        "loss_pct_forest": 1.67,
+        "loss_change_pct": 33,
+        "loss_base_ha_yr": 52
+      }
     },
     {
       "distrito": "3 De Febrero",
@@ -104,7 +158,13 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 65,
+        "loss_pct_forest": 1.17,
+        "loss_change_pct": -18,
+        "loss_base_ha_yr": 79
+      }
     },
     {
       "distrito": "Yhu",
@@ -114,7 +174,13 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2108,
+        "loss_pct_forest": 1.74,
+        "loss_change_pct": -15,
+        "loss_base_ha_yr": 2477
+      }
     },
     {
       "distrito": "Repatriacion",
@@ -124,7 +190,13 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 413,
+        "loss_pct_forest": 1.48,
+        "loss_change_pct": -27,
+        "loss_base_ha_yr": 563
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -134,7 +206,13 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 254,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": 10,
+        "loss_base_ha_yr": 230
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -144,7 +222,13 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.8,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 34
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -154,7 +238,13 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 634,
+        "loss_pct_forest": 1.35,
+        "loss_change_pct": -60,
+        "loss_base_ha_yr": 1581
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -164,7 +254,13 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 442,
+        "loss_pct_forest": 1.06,
+        "loss_change_pct": -58,
+        "loss_base_ha_yr": 1046
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -174,7 +270,13 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 150,
+        "loss_pct_forest": 1.36,
+        "loss_change_pct": -33,
+        "loss_base_ha_yr": 224
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -184,7 +286,13 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 158,
+        "loss_pct_forest": 1.18,
+        "loss_change_pct": -16,
+        "loss_base_ha_yr": 189
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -194,7 +302,19 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 37,
+        "loss_pct_forest": 0.57,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 21
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

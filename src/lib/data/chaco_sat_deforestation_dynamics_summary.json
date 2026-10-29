@@ -14,7 +14,13 @@
       "centroid": [
         -61.2721,
         -26.9361
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2462,
+        "loss_pct_forest": 2.94,
+        "loss_change_pct": -11,
+        "loss_base_ha_yr": 2752
+      }
     },
     {
       "dpto": "Maipú",
@@ -24,7 +30,13 @@
       "centroid": [
         -60.4564,
         -26.3289
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2309,
+        "loss_pct_forest": 1.67,
+        "loss_change_pct": -16,
+        "loss_base_ha_yr": 2737
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -34,7 +46,13 @@
       "centroid": [
         -61.3118,
         -27.1138
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1053,
+        "loss_pct_forest": 2.98,
+        "loss_change_pct": -15,
+        "loss_base_ha_yr": 1243
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -44,7 +62,13 @@
       "centroid": [
         -61.9817,
         -25.7474
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 24322,
+        "loss_pct_forest": 2.71,
+        "loss_change_pct": 71,
+        "loss_base_ha_yr": 14185
+      }
     },
     {
       "dpto": "Independencia",
@@ -54,7 +78,13 @@
       "centroid": [
         -60.7604,
         -26.7362
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1368,
+        "loss_pct_forest": 1.95,
+        "loss_change_pct": -44,
+        "loss_base_ha_yr": 2423
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -64,7 +94,13 @@
       "centroid": [
         -61.0749,
         -26.838
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 679,
+        "loss_pct_forest": 2.21,
+        "loss_change_pct": -41,
+        "loss_base_ha_yr": 1144
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -74,7 +110,13 @@
       "centroid": [
         -60.692,
         -27.2479
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 734,
+        "loss_pct_forest": 1.86,
+        "loss_change_pct": -6,
+        "loss_base_ha_yr": 782
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -84,7 +126,13 @@
       "centroid": [
         -61.4369,
         -27.3753
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1740,
+        "loss_pct_forest": 2.4,
+        "loss_change_pct": -52,
+        "loss_base_ha_yr": 3588
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -94,7 +142,13 @@
       "centroid": [
         -60.4735,
         -26.7914
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 426,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": -50,
+        "loss_base_ha_yr": 852
+      }
     },
     {
       "dpto": "General Güemes",
@@ -104,7 +158,13 @@
       "centroid": [
         -61.3084,
         -25.2411
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 12561,
+        "loss_pct_forest": 1.15,
+        "loss_change_pct": 52,
+        "loss_base_ha_yr": 8265
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -114,7 +174,13 @@
       "centroid": [
         -61.3304,
         -27.8272
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 372,
+        "loss_pct_forest": 1.72,
+        "loss_change_pct": -6,
+        "loss_base_ha_yr": 396
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -124,7 +190,13 @@
       "centroid": [
         -60.1799,
         -26.6648
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 190,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": -42,
+        "loss_base_ha_yr": 327
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -134,7 +206,13 @@
       "centroid": [
         -60.37,
         -27.4108
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 441,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": 105,
+        "loss_base_ha_yr": 215
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -144,7 +222,13 @@
       "centroid": [
         -59.5073,
         -26.3713
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1207,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": -39,
+        "loss_base_ha_yr": 1977
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -154,7 +238,13 @@
       "centroid": [
         -60.0398,
         -26.8257
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 183,
+        "loss_pct_forest": 0.24,
+        "loss_change_pct": -65,
+        "loss_base_ha_yr": 526
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -164,7 +254,13 @@
       "centroid": [
         -60.6704,
         -27.742
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 266,
+        "loss_pct_forest": 0.61,
+        "loss_change_pct": -2,
+        "loss_base_ha_yr": 273
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -174,7 +270,13 @@
       "centroid": [
         -59.5538,
         -26.7743
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 128,
+        "loss_pct_forest": 0.17,
+        "loss_change_pct": -55,
+        "loss_base_ha_yr": 286
+      }
     },
     {
       "dpto": "General Donovan",
@@ -184,7 +286,13 @@
       "centroid": [
         -59.3494,
         -27.1274
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 129,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": -32,
+        "loss_base_ha_yr": 189
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -194,7 +302,13 @@
       "centroid": [
         -59.7871,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 131,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": -65,
+        "loss_base_ha_yr": 378
+      }
     },
     {
       "dpto": "Libertad",
@@ -204,7 +318,13 @@
       "centroid": [
         -59.2715,
         -27.3475
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": -24,
+        "loss_base_ha_yr": 71
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -214,7 +334,13 @@
       "centroid": [
         -58.9731,
         -27.1551
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 43
+      }
     },
     {
       "dpto": "Bermejo",
@@ -224,7 +350,13 @@
       "centroid": [
         -58.7084,
         -26.9631
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 76,
+        "loss_pct_forest": 0.1,
+        "loss_change_pct": -39,
+        "loss_base_ha_yr": 126
+      }
     },
     {
       "dpto": "San Fernando",
@@ -234,7 +366,13 @@
       "centroid": [
         -59.1267,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 86,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": -30,
+        "loss_base_ha_yr": 123
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -244,7 +382,19 @@
       "centroid": [
         -59.8436,
         -27.6698
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 113,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": -27,
+        "loss_base_ha_yr": 153
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

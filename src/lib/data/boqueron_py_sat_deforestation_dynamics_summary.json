@@ -14,7 +14,13 @@
       "centroid": [
         -61.0698,
         -21.1398
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 64935,
+        "loss_pct_forest": 3.41,
+        "loss_change_pct": 31,
+        "loss_base_ha_yr": 49638
+      }
     },
     {
       "distrito": "Pedro P. Pena",
@@ -24,7 +30,13 @@
       "centroid": [
         -61.3642,
         -22.7396
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 48102,
+        "loss_pct_forest": 4.26,
+        "loss_change_pct": 40,
+        "loss_base_ha_yr": 34264
+      }
     },
     {
       "distrito": "Mcal. Estigarribia",
@@ -34,7 +46,19 @@
       "centroid": [
         -60.3036,
         -22.3771
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 6358,
+        "loss_pct_forest": 2.09,
+        "loss_change_pct": -63,
+        "loss_base_ha_yr": 17350
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

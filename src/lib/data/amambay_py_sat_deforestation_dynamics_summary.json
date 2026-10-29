@@ -14,7 +14,13 @@
       "centroid": [
         -56.4511,
         -22.475
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3593,
+        "loss_pct_forest": 2.31,
+        "loss_change_pct": 76,
+        "loss_base_ha_yr": 2046
+      }
     },
     {
       "distrito": "Pedro Juan Caballero",
@@ -24,7 +30,19 @@
       "centroid": [
         -55.9568,
         -22.7892
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4451,
+        "loss_pct_forest": 2.41,
+        "loss_change_pct": 104,
+        "loss_base_ha_yr": 2182
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

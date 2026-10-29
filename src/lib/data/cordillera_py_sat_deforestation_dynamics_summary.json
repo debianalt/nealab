@@ -14,7 +14,13 @@
       "centroid": [
         -56.9751,
         -25.1246
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 27,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "Altos",
@@ -24,7 +30,13 @@
       "centroid": [
         -57.2174,
         -25.2525
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 53,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 35
+      }
     },
     {
       "distrito": "Atyra",
@@ -34,7 +46,13 @@
       "centroid": [
         -57.1453,
         -25.2524
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 40,
+        "loss_pct_forest": 0.81,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "distrito": "San Bernardino",
@@ -44,7 +62,13 @@
       "centroid": [
         -57.2908,
         -25.2889
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 65,
+        "loss_pct_forest": 0.98,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "distrito": "Nueva Colombia",
@@ -54,7 +78,13 @@
       "centroid": [
         -57.2658,
         -25.1606
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 25,
+        "loss_pct_forest": 0.59,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "distrito": "Emboscada",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.3593,
         -25.1259
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 51,
+        "loss_pct_forest": 0.58,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "distrito": "Isla Pucu",
@@ -74,7 +110,13 @@
       "centroid": [
         -56.9,
         -25.302
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 0.82,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 41
+      }
     },
     {
       "distrito": "Tobati",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.0454,
         -25.218
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 71,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 44
+      }
     },
     {
       "distrito": "Caacupe",
@@ -94,7 +142,13 @@
       "centroid": [
         -57.1229,
         -25.3732
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 41,
+        "loss_pct_forest": 0.88,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "distrito": "Loma Grande",
@@ -104,7 +158,13 @@
       "centroid": [
         -57.1909,
         -25.1471
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
     },
     {
       "distrito": "Eusebio Ayala",
@@ -114,7 +174,13 @@
       "centroid": [
         -56.9762,
         -25.3608
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 78,
+        "loss_pct_forest": 1.04,
+        "loss_change_pct": 11,
+        "loss_base_ha_yr": 71
+      }
     },
     {
       "distrito": "San Jose Obrero",
@@ -124,7 +190,13 @@
       "centroid": [
         -56.8842,
         -25.1148
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "distrito": "Arroyos Y Esteros",
@@ -134,7 +206,13 @@
       "centroid": [
         -57.1657,
         -25.0372
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 118,
+        "loss_pct_forest": 0.73,
+        "loss_change_pct": 11,
+        "loss_base_ha_yr": 106
+      }
     },
     {
       "distrito": "Caraguatay",
@@ -144,7 +222,13 @@
       "centroid": [
         -56.7397,
         -25.2179
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 114,
+        "loss_pct_forest": 0.71,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
     },
     {
       "distrito": "Mbacayaty Del Yhaguy",
@@ -154,7 +238,13 @@
       "centroid": [
         -56.7007,
         -25.3325
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 43,
+        "loss_pct_forest": 0.51,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 22
+      }
     },
     {
       "distrito": "Juan De Mena",
@@ -164,7 +254,13 @@
       "centroid": [
         -56.7701,
         -24.9869
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 197,
+        "loss_pct_forest": 0.75,
+        "loss_change_pct": 81,
+        "loss_base_ha_yr": 109
+      }
     },
     {
       "distrito": "Santa Elena",
@@ -174,7 +270,13 @@
       "centroid": [
         -56.8205,
         -25.3962
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.75,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "distrito": "Piribebuy",
@@ -184,7 +286,13 @@
       "centroid": [
         -57.0428,
         -25.4661
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "distrito": "Itacurubi De La Cordiller",
@@ -194,7 +302,13 @@
       "centroid": [
         -56.8701,
         -25.4677
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "distrito": "Valenzuela",
@@ -204,7 +318,19 @@
       "centroid": [
         -56.8551,
         -25.5913
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

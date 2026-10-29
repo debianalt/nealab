@@ -14,7 +14,13 @@
       "centroid": [
         -55.9173,
         -26.2417
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1159,
+        "loss_pct_forest": 1.89,
+        "loss_change_pct": 74,
+        "loss_base_ha_yr": 668
+      }
     },
     {
       "distrito": "Tavai",
@@ -24,7 +30,13 @@
       "centroid": [
         -55.53,
         -26.195
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2449,
+        "loss_pct_forest": 2.96,
+        "loss_change_pct": 204,
+        "loss_base_ha_yr": 805
+      }
     },
     {
       "distrito": "Gral. Higinio Morinigo",
@@ -34,7 +46,13 @@
       "centroid": [
         -56.1114,
         -26.0729
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 188,
+        "loss_pct_forest": 1.68,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 39
+      }
     },
     {
       "distrito": "Buena Vista",
@@ -44,7 +62,13 @@
       "centroid": [
         -56.0981,
         -26.2335
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 66,
+        "loss_pct_forest": 1.16,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 44
+      }
     },
     {
       "distrito": "Maciel",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.528,
         -26.2225
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 458,
+        "loss_pct_forest": 3.43,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 36
+      }
     },
     {
       "distrito": "Caazapa",
@@ -64,7 +94,13 @@
       "centroid": [
         -56.2983,
         -26.1867
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 303,
+        "loss_pct_forest": 0.97,
+        "loss_change_pct": 184,
+        "loss_base_ha_yr": 107
+      }
     },
     {
       "distrito": "Yuty",
@@ -74,7 +110,13 @@
       "centroid": [
         -56.2397,
         -26.5325
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 809,
+        "loss_pct_forest": 1.16,
+        "loss_change_pct": 46,
+        "loss_base_ha_yr": 552
+      }
     },
     {
       "distrito": "Abai",
@@ -84,7 +126,13 @@
       "centroid": [
         -55.7178,
         -25.8957
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1109,
+        "loss_pct_forest": 1.09,
+        "loss_change_pct": -31,
+        "loss_base_ha_yr": 1603
+      }
     },
     {
       "distrito": "Dr. Moises Bertoni",
@@ -94,7 +142,13 @@
       "centroid": [
         -56.5977,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 361,
+        "loss_pct_forest": 2.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "Fulgencio Yegros",
@@ -104,7 +158,19 @@
       "centroid": [
         -56.5581,
         -26.5506
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 179,
+        "loss_pct_forest": 0.88,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

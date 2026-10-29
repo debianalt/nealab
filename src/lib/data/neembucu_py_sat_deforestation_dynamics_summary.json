@@ -14,7 +14,13 @@
       "centroid": [
         -57.6294,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.02,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "distrito": "Paso De Patria",
@@ -24,7 +30,13 @@
       "centroid": [
         -58.5287,
         -27.2193
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "distrito": "Isla Umbu",
@@ -34,7 +46,13 @@
       "centroid": [
         -58.309,
         -26.9676
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 7,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "distrito": "Humaita",
@@ -44,7 +62,13 @@
       "centroid": [
         -58.484,
         -27.0909
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.09,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "distrito": "Pilar",
@@ -54,7 +78,13 @@
       "centroid": [
         -58.1896,
         -26.8898
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 18,
+        "loss_pct_forest": 0.43,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 7
+      }
     },
     {
       "distrito": "Mayor Martinez",
@@ -64,7 +94,13 @@
       "centroid": [
         -58.136,
         -27.1867
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.03,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "San Juan Bta. Del Neembuc",
@@ -74,7 +110,13 @@
       "centroid": [
         -57.851,
         -26.6089
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "distrito": "Tacuaras",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.8738,
         -26.8217
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 0.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 13
+      }
     },
     {
       "distrito": "Gral. Jose E. Diaz",
@@ -94,7 +142,13 @@
       "centroid": [
         -58.342,
         -27.1778
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Desmochados",
@@ -104,7 +158,13 @@
       "centroid": [
         -58.1239,
         -27.0692
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "distrito": "Laureles",
@@ -114,7 +174,13 @@
       "centroid": [
         -57.5826,
         -27.167
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Guazucua",
@@ -124,7 +190,13 @@
       "centroid": [
         -57.7584,
         -26.9915
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.09,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Villalvin",
@@ -134,7 +206,13 @@
       "centroid": [
         -57.9098,
         -27.1694
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.02,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Villa Franca",
@@ -144,7 +222,13 @@
       "centroid": [
         -57.9497,
         -26.3332
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 51,
+        "loss_pct_forest": 0.42,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Alberdi",
@@ -154,7 +238,13 @@
       "centroid": [
         -58.0676,
         -26.1811
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "distrito": "Villa Oliva",
@@ -164,7 +254,19 @@
       "centroid": [
         -57.7115,
         -26.0301
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

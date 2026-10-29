@@ -14,7 +14,13 @@
       "centroid": [
         -56.7968,
         -26.8686
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 73,
+        "loss_pct_forest": 0.48,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
     },
     {
       "distrito": "San Patricio",
@@ -24,7 +30,13 @@
       "centroid": [
         -56.8303,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 1.11,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 1
+      }
     },
     {
       "distrito": "Santiago",
@@ -34,7 +46,13 @@
       "centroid": [
         -56.7915,
         -27.1361
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 68,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "San Ignacio",
@@ -44,7 +62,13 @@
       "centroid": [
         -57.1427,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 116,
+        "loss_pct_forest": 0.66,
+        "loss_change_pct": 85,
+        "loss_base_ha_yr": 63
+      }
     },
     {
       "distrito": "Santa Maria",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.8905,
         -26.73
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 29,
+        "loss_pct_forest": 0.79,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 9
+      }
     },
     {
       "distrito": "Yabebyry",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.1846,
         -27.2526
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "distrito": "San Juan Bautista",
@@ -74,7 +110,13 @@
       "centroid": [
         -57.426,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.18,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "Ayolas",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.0272,
         -27.3756
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "distrito": "San Miguel",
@@ -94,7 +142,13 @@
       "centroid": [
         -56.9666,
         -26.5689
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     },
     {
       "distrito": "Villa Florida",
@@ -104,7 +158,19 @@
       "centroid": [
         -57.1253,
         -26.4611
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 0,
+        "loss_pct_forest": null,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

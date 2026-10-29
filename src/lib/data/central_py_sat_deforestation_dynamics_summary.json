@@ -14,7 +14,13 @@
       "centroid": [
         -57.5063,
         -25.4553
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 20,
+        "loss_pct_forest": 1.32,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 17
+      }
     },
     {
       "distrito": "Itaugua",
@@ -24,7 +30,13 @@
       "centroid": [
         -57.3532,
         -25.3941
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 46,
+        "loss_pct_forest": 1.17,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 19
+      }
     },
     {
       "distrito": "J. A. Saldivar",
@@ -34,7 +46,13 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 9,
+        "loss_pct_forest": 1.09,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     },
     {
       "distrito": "Aregua",
@@ -44,7 +62,13 @@
       "centroid": [
         -57.3871,
         -25.2913
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 32,
+        "loss_pct_forest": 0.75,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 12
+      }
     },
     {
       "distrito": "Luque",
@@ -54,7 +78,13 @@
       "centroid": [
         -57.4568,
         -25.2476
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 1.23,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "distrito": "Limpio",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.4784,
         -25.1533
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 1.19,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 25
+      }
     },
     {
       "distrito": "Ita",
@@ -74,7 +110,13 @@
       "centroid": [
         -57.3749,
         -25.52
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 31
+      }
     },
     {
       "distrito": "Ypacarai",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.2585,
         -25.3887
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 27,
+        "loss_pct_forest": 0.67,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "distrito": "San Antonio",
@@ -94,7 +142,13 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 0.9,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
     },
     {
       "distrito": "Nemby",
@@ -104,7 +158,13 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
     },
     {
       "distrito": "Capiata",
@@ -114,7 +174,13 @@
       "centroid": [
         -57.4524,
         -25.3673
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "distrito": "M. Roque Alonso",
@@ -124,7 +190,13 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 15,
+        "loss_pct_forest": 1.93,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 6
+      }
     },
     {
       "distrito": "Guarambare",
@@ -134,7 +206,13 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 5,
+        "loss_pct_forest": 1.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Villa Elisa",
@@ -144,7 +222,13 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4,
+        "loss_pct_forest": 1.29,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
     },
     {
       "distrito": "Lambare",
@@ -154,7 +238,13 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.64,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "distrito": "Villeta",
@@ -164,7 +254,13 @@
       "centroid": [
         -57.6064,
         -25.7011
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 113,
+        "loss_pct_forest": 0.89,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 50
+      }
     },
     {
       "distrito": "San Lorenzo",
@@ -174,7 +270,13 @@
       "centroid": [
         -57.5107,
         -25.3477
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "distrito": "Asuncion",
@@ -184,7 +286,13 @@
       "centroid": [
         -57.6069,
         -25.2858
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 23,
+        "loss_pct_forest": 1.78,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 2
+      }
     },
     {
       "distrito": "Nueva Italia",
@@ -194,7 +302,13 @@
       "centroid": [
         -57.4757,
         -25.7512
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 22,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "distrito": "Fdo. De La Mora",
@@ -204,7 +318,19 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1,
+        "loss_pct_forest": 2.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 0
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

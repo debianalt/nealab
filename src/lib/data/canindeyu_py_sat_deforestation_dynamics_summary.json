@@ -14,7 +14,13 @@
       "centroid": [
         -55.4917,
         -24.1422
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 3311,
+        "loss_pct_forest": 2.44,
+        "loss_change_pct": 93,
+        "loss_base_ha_yr": 1712
+      }
     },
     {
       "distrito": "Corpus Christi",
@@ -24,7 +30,13 @@
       "centroid": [
         -55.0227,
         -24.1393
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1056,
+        "loss_pct_forest": 1.7,
+        "loss_change_pct": 7,
+        "loss_base_ha_yr": 990
+      }
     },
     {
       "distrito": "Curuguaty",
@@ -34,7 +46,13 @@
       "centroid": [
         -55.7259,
         -24.3773
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1662,
+        "loss_pct_forest": 1.96,
+        "loss_change_pct": 2,
+        "loss_base_ha_yr": 1631
+      }
     },
     {
       "distrito": "Itanara",
@@ -44,7 +62,13 @@
       "centroid": [
         -55.6588,
         -23.7626
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 271,
+        "loss_pct_forest": 1.46,
+        "loss_change_pct": -52,
+        "loss_base_ha_yr": 566
+      }
     },
     {
       "distrito": "F. Caballero Alvarez",
@@ -54,7 +78,13 @@
       "centroid": [
         -54.7025,
         -24.3729
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 804,
+        "loss_pct_forest": 0.7,
+        "loss_change_pct": -61,
+        "loss_base_ha_yr": 2059
+      }
     },
     {
       "distrito": "Salto Del Guaira",
@@ -64,7 +94,19 @@
       "centroid": [
         -54.4392,
         -24.212
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 217,
+        "loss_pct_forest": 0.45,
+        "loss_change_pct": -66,
+        "loss_base_ha_yr": 634
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }

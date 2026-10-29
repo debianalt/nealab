@@ -14,7 +14,13 @@
       "centroid": [
         -56.248,
         -28.2257
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 4478,
+        "loss_pct_forest": 3.11,
+        "loss_change_pct": 41,
+        "loss_base_ha_yr": 3183
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -24,7 +30,13 @@
       "centroid": [
         -57.871,
         -30.2487
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1078,
+        "loss_pct_forest": 3.24,
+        "loss_change_pct": 132,
+        "loss_base_ha_yr": 466
+      }
     },
     {
       "dpto": "Concepción",
@@ -34,7 +46,13 @@
       "centroid": [
         -58.0479,
         -28.4115
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1574,
+        "loss_pct_forest": 3.53,
+        "loss_change_pct": 101,
+        "loss_base_ha_yr": 783
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -44,7 +62,13 @@
       "centroid": [
         -57.3264,
         -29.599
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 1521,
+        "loss_pct_forest": 3.43,
+        "loss_change_pct": 76,
+        "loss_base_ha_yr": 864
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -54,7 +78,13 @@
       "centroid": [
         -56.8203,
         -27.9285
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 2233,
+        "loss_pct_forest": 2.17,
+        "loss_change_pct": 92,
+        "loss_base_ha_yr": 1164
+      }
     },
     {
       "dpto": "San Miguel",
@@ -64,7 +94,13 @@
       "centroid": [
         -57.4252,
         -27.8708
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 500,
+        "loss_pct_forest": 2.18,
+        "loss_change_pct": 47,
+        "loss_base_ha_yr": 341
+      }
     },
     {
       "dpto": "Saladas",
@@ -74,7 +110,13 @@
       "centroid": [
         -58.602,
         -28.2037
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 290,
+        "loss_pct_forest": 0.91,
+        "loss_change_pct": 103,
+        "loss_base_ha_yr": 143
+      }
     },
     {
       "dpto": "San Roque",
@@ -84,7 +126,13 @@
       "centroid": [
         -58.603,
         -28.7144
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 301,
+        "loss_pct_forest": 1.57,
+        "loss_change_pct": 48,
+        "loss_base_ha_yr": 203
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -94,7 +142,13 @@
       "centroid": [
         -58.9292,
         -28.4852
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 187,
+        "loss_pct_forest": 0.68,
+        "loss_change_pct": 138,
+        "loss_base_ha_yr": 79
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -104,7 +158,13 @@
       "centroid": [
         -58.1721,
         -28.0052
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 105,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 23
+      }
     },
     {
       "dpto": "Esquina",
@@ -114,7 +174,13 @@
       "centroid": [
         -59.2457,
         -29.9916
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 405,
+        "loss_pct_forest": 0.49,
+        "loss_change_pct": -7,
+        "loss_base_ha_yr": 434
+      }
     },
     {
       "dpto": "General Paz",
@@ -124,7 +190,13 @@
       "centroid": [
         -57.8035,
         -27.7136
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 231,
+        "loss_pct_forest": 1.34,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 40
+      }
     },
     {
       "dpto": "Capital",
@@ -134,7 +206,13 @@
       "centroid": [
         -58.7619,
         -27.5213
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 39,
+        "loss_pct_forest": 0.38,
+        "loss_change_pct": -45,
+        "loss_base_ha_yr": 71
+      }
     },
     {
       "dpto": "General Alvear",
@@ -144,7 +222,13 @@
       "centroid": [
         -56.5245,
         -28.7791
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 177,
+        "loss_pct_forest": 1.37,
+        "loss_change_pct": 114,
+        "loss_base_ha_yr": 83
+      }
     },
     {
       "dpto": "Lavalle",
@@ -154,7 +238,13 @@
       "centroid": [
         -58.9267,
         -28.9976
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 124,
+        "loss_pct_forest": 1.13,
+        "loss_change_pct": -30,
+        "loss_base_ha_yr": 176
+      }
     },
     {
       "dpto": "San Cosme",
@@ -164,7 +254,13 @@
       "centroid": [
         -58.5137,
         -27.3768
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 34,
+        "loss_pct_forest": 0.25,
+        "loss_change_pct": -33,
+        "loss_base_ha_yr": 51
+      }
     },
     {
       "dpto": "Sauce",
@@ -174,7 +270,13 @@
       "centroid": [
         -58.8097,
         -30.0011
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 127,
+        "loss_pct_forest": 0.26,
+        "loss_change_pct": -12,
+        "loss_base_ha_yr": 144
+      }
     },
     {
       "dpto": "Goya",
@@ -184,7 +286,13 @@
       "centroid": [
         -59.2704,
         -29.4647
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 178,
+        "loss_pct_forest": 0.2,
+        "loss_change_pct": -1,
+        "loss_base_ha_yr": 179
+      }
     },
     {
       "dpto": "San Martín",
@@ -194,7 +302,13 @@
       "centroid": [
         -56.9513,
         -28.8303
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 302,
+        "loss_pct_forest": 0.97,
+        "loss_change_pct": 196,
+        "loss_base_ha_yr": 102
+      }
     },
     {
       "dpto": "Itatí",
@@ -204,7 +318,13 @@
       "centroid": [
         -58.0869,
         -27.3361
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.12,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -214,7 +334,13 @@
       "centroid": [
         -57.6317,
         -27.472
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 8,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 8
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -224,7 +350,13 @@
       "centroid": [
         -58.3336,
         -29.7068
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 125,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": -43,
+        "loss_base_ha_yr": 218
+      }
     },
     {
       "dpto": "Empedrado",
@@ -234,7 +366,13 @@
       "centroid": [
         -58.6717,
         -27.893
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 28,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
     },
     {
       "dpto": "Mercedes",
@@ -244,7 +382,13 @@
       "centroid": [
         -57.8356,
         -29.0512
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 55,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": -51,
+        "loss_base_ha_yr": 112
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -254,7 +398,19 @@
       "centroid": [
         -58.2668,
         -27.6004
-      ]
+      ],
+      "rank": {
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.04,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 10
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "rank": {
+      "metric": "loss_ha_yr",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+    }
+  }
 }
