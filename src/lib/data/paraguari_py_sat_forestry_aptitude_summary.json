@@ -14,7 +14,11 @@
       "centroid": [
         -56.8176,
         -25.9063
-      ]
+      ],
+      "rank": {
+        "high_ha": 12935,
+        "high_pct": 99.8
+      }
     },
     {
       "distrito": "Tebicuarymi",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.666,
         -25.9156
-      ]
+      ],
+      "rank": {
+        "high_ha": 17506,
+        "high_pct": 94.9
+      }
     },
     {
       "distrito": "Mbuyapey",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.8042,
         -26.2791
-      ]
+      ],
+      "rank": {
+        "high_ha": 80980,
+        "high_pct": 79.1
+      }
     },
     {
       "distrito": "Ybycui",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.942,
         -26.0391
-      ]
+      ],
+      "rank": {
+        "high_ha": 60471,
+        "high_pct": 65.1
+      }
     },
     {
       "distrito": "Acahay",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.076,
         -25.8967
-      ]
+      ],
+      "rank": {
+        "high_ha": 15273,
+        "high_pct": 40.8
+      }
     },
     {
       "distrito": "Escobar",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.0105,
         -25.6329
-      ]
+      ],
+      "rank": {
+        "high_ha": 12577,
+        "high_pct": 38.0
+      }
     },
     {
       "distrito": "Ybytymi",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.7656,
         -25.7754
-      ]
+      ],
+      "rank": {
+        "high_ha": 18897,
+        "high_pct": 40.3
+      }
     },
     {
       "distrito": "Quyquyho",
@@ -84,7 +112,11 @@
       "centroid": [
         -57.0129,
         -26.2561
-      ]
+      ],
+      "rank": {
+        "high_ha": 23879,
+        "high_pct": 34.0
+      }
     },
     {
       "distrito": "Caballero",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.8862,
         -25.7573
-      ]
+      ],
+      "rank": {
+        "high_ha": 2960,
+        "high_pct": 10.8
+      }
     },
     {
       "distrito": "Pirayu",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.2018,
         -25.4796
-      ]
+      ],
+      "rank": {
+        "high_ha": 158,
+        "high_pct": 0.7
+      }
     },
     {
       "distrito": "Sapucai",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.9738,
         -25.7203
-      ]
+      ],
+      "rank": {
+        "high_ha": 3581,
+        "high_pct": 15.8
+      }
     },
     {
       "distrito": "Paraguari",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.1351,
         -25.6664
-      ]
+      ],
+      "rank": {
+        "high_ha": 1864,
+        "high_pct": 3.6
+      }
     },
     {
       "distrito": "Carapegua",
@@ -134,7 +182,11 @@
       "centroid": [
         -57.3255,
         -25.7621
-      ]
+      ],
+      "rank": {
+        "high_ha": 1085,
+        "high_pct": 1.9
+      }
     },
     {
       "distrito": "San Roque Gonzalez",
@@ -144,7 +196,11 @@
       "centroid": [
         -57.3024,
         -25.8795
-      ]
+      ],
+      "rank": {
+        "high_ha": 3497,
+        "high_pct": 14.1
+      }
     },
     {
       "distrito": "Yaguaron",
@@ -154,7 +210,11 @@
       "centroid": [
         -57.2804,
         -25.595
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Quiindy",
@@ -164,7 +224,11 @@
       "centroid": [
         -57.3214,
         -26.0118
-      ]
+      ],
+      "rank": {
+        "high_ha": 369,
+        "high_pct": 0.5
+      }
     },
     {
       "distrito": "Caapucu",
@@ -174,7 +238,11 @@
       "centroid": [
         -57.3904,
         -26.3278
-      ]
+      ],
+      "rank": {
+        "high_ha": 28977,
+        "high_pct": 10.6
+      }
     }
   ]
 }

@@ -14,7 +14,11 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 18.1,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Asuncion",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.6069,
         -25.2858
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 18.0,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Limpio",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.4784,
         -25.1533
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 18.0,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "San Antonio",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 18.0,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Lambare",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.9,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Villa Elisa",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.9,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Ypane",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.5063,
         -25.4553
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.7,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Guarambare",
@@ -84,7 +112,11 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.6,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Luque",
@@ -94,7 +126,11 @@
       "centroid": [
         -57.4568,
         -25.2476
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.6,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Nemby",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.6,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Aregua",
@@ -114,7 +154,11 @@
       "centroid": [
         -57.3871,
         -25.2913
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.5,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Fdo. De La Mora",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Ita",
@@ -134,7 +182,11 @@
       "centroid": [
         -57.3749,
         -25.52
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "San Lorenzo",
@@ -144,7 +196,11 @@
       "centroid": [
         -57.5107,
         -25.3477
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Ypacarai",
@@ -154,7 +210,11 @@
       "centroid": [
         -57.2585,
         -25.3887
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "Capiata",
@@ -164,7 +224,11 @@
       "centroid": [
         -57.4524,
         -25.3673
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.3,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Itaugua",
@@ -174,7 +238,11 @@
       "centroid": [
         -57.3532,
         -25.3941
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.3,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "J. A. Saldivar",
@@ -184,7 +252,11 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.3,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "Villeta",
@@ -194,7 +266,11 @@
       "centroid": [
         -57.6064,
         -25.7011
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.0,
+        "pm25_delta": -1.3
+      }
     },
     {
       "distrito": "Nueva Italia",
@@ -204,7 +280,11 @@
       "centroid": [
         -57.4757,
         -25.7512
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.9,
+        "pm25_delta": -1.5
+      }
     }
   ]
 }

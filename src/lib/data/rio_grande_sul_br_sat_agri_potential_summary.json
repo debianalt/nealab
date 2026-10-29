@@ -14,7 +14,11 @@
       "centroid": [
         -54.6583,
         -28.242
-      ]
+      ],
+      "rank": {
+        "high_ha": 5604,
+        "high_pct": 42.1
+      }
     },
     {
       "municipio": "São Pedro do Butiá",
@@ -24,7 +28,11 @@
       "centroid": [
         -54.8966,
         -28.1254
-      ]
+      ],
+      "rank": {
+        "high_ha": 11123,
+        "high_pct": 89.1
+      }
     },
     {
       "municipio": "Caibaté",
@@ -34,7 +42,11 @@
       "centroid": [
         -54.6565,
         -28.3353
-      ]
+      ],
+      "rank": {
+        "high_ha": 30093,
+        "high_pct": 99.0
+      }
     },
     {
       "municipio": "São Nicolau",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.2497,
         -28.2011
-      ]
+      ],
+      "rank": {
+        "high_ha": 54625,
+        "high_pct": 96.9
+      }
     },
     {
       "municipio": "Três de Maio",
@@ -54,7 +70,11 @@
       "centroid": [
         -54.2695,
         -27.7333
-      ]
+      ],
+      "rank": {
+        "high_ha": 31221,
+        "high_pct": 64.8
+      }
     },
     {
       "municipio": "Sete de Setembro",
@@ -64,7 +84,11 @@
       "centroid": [
         -54.4595,
         -28.1443
-      ]
+      ],
+      "rank": {
+        "high_ha": 7868,
+        "high_pct": 52.9
+      }
     },
     {
       "municipio": "Dezesseis de Novembro",
@@ -74,7 +98,11 @@
       "centroid": [
         -55.0773,
         -28.2081
-      ]
+      ],
+      "rank": {
+        "high_ha": 23932,
+        "high_pct": 94.4
+      }
     },
     {
       "municipio": "Rolador",
@@ -84,7 +112,11 @@
       "centroid": [
         -54.8326,
         -28.2568
-      ]
+      ],
+      "rank": {
+        "high_ha": 12777,
+        "high_pct": 37.2
+      }
     },
     {
       "municipio": "Santa Rosa",
@@ -94,7 +126,11 @@
       "centroid": [
         -54.4979,
         -27.8649
-      ]
+      ],
+      "rank": {
+        "high_ha": 32895,
+        "high_pct": 58.4
+      }
     },
     {
       "municipio": "Senador Salgado Filho",
@@ -104,7 +140,11 @@
       "centroid": [
         -54.5348,
         -28.0303
-      ]
+      ],
+      "rank": {
+        "high_ha": 9564,
+        "high_pct": 56.5
+      }
     },
     {
       "municipio": "Ubiretama",
@@ -114,7 +154,11 @@
       "centroid": [
         -54.6463,
         -28.0402
-      ]
+      ],
+      "rank": {
+        "high_ha": 7974,
+        "high_pct": 54.9
+      }
     },
     {
       "municipio": "Guarani das Missões",
@@ -124,7 +168,11 @@
       "centroid": [
         -54.587,
         -28.1633
-      ]
+      ],
+      "rank": {
+        "high_ha": 32874,
+        "high_pct": 97.7
+      }
     },
     {
       "municipio": "Santo Antônio das Missões",
@@ -134,7 +182,11 @@
       "centroid": [
         -55.4289,
         -28.4941
-      ]
+      ],
+      "rank": {
+        "high_ha": 141799,
+        "high_pct": 70.4
+      }
     },
     {
       "municipio": "Campina das Missões",
@@ -144,7 +196,11 @@
       "centroid": [
         -54.8343,
         -27.9641
-      ]
+      ],
+      "rank": {
+        "high_ha": 24880,
+        "high_pct": 96.0
+      }
     },
     {
       "municipio": "Cândido Godói",
@@ -154,7 +210,11 @@
       "centroid": [
         -54.7188,
         -27.9356
-      ]
+      ],
+      "rank": {
+        "high_ha": 27250,
+        "high_pct": 95.6
+      }
     },
     {
       "municipio": "São Luiz Gonzaga",
@@ -164,7 +224,11 @@
       "centroid": [
         -54.8892,
         -28.416
-      ]
+      ],
+      "rank": {
+        "high_ha": 35950,
+        "high_pct": 23.8
+      }
     },
     {
       "municipio": "Tucunduva",
@@ -174,7 +238,11 @@
       "centroid": [
         -54.4325,
         -27.6388
-      ]
+      ],
+      "rank": {
+        "high_ha": 18981,
+        "high_pct": 91.9
+      }
     },
     {
       "municipio": "Itacurubi",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.2629,
         -28.8101
-      ]
+      ],
+      "rank": {
+        "high_ha": 130233,
+        "high_pct": 98.2
+      }
     },
     {
       "municipio": "Salvador das Missões",
@@ -194,7 +266,11 @@
       "centroid": [
         -54.8318,
         -28.1004
-      ]
+      ],
+      "rank": {
+        "high_ha": 9227,
+        "high_pct": 84.3
+      }
     },
     {
       "municipio": "Cerro Largo",
@@ -204,7 +280,11 @@
       "centroid": [
         -54.7392,
         -28.1344
-      ]
+      ],
+      "rank": {
+        "high_ha": 19329,
+        "high_pct": 94.3
+      }
     },
     {
       "municipio": "Pirapó",
@@ -214,7 +294,11 @@
       "centroid": [
         -55.2451,
         -28.0632
-      ]
+      ],
+      "rank": {
+        "high_ha": 28872,
+        "high_pct": 84.7
+      }
     },
     {
       "municipio": "Chiapetta",
@@ -224,7 +308,11 @@
       "centroid": [
         -53.9046,
         -27.9878
-      ]
+      ],
+      "rank": {
+        "high_ha": 44429,
+        "high_pct": 97.7
+      }
     },
     {
       "municipio": "Giruá",
@@ -234,7 +322,11 @@
       "centroid": [
         -54.2963,
         -28.0338
-      ]
+      ],
+      "rank": {
+        "high_ha": 95726,
+        "high_pct": 97.1
+      }
     },
     {
       "municipio": "Roque Gonzales",
@@ -244,7 +336,11 @@
       "centroid": [
         -55.0798,
         -28.0645
-      ]
+      ],
+      "rank": {
+        "high_ha": 31031,
+        "high_pct": 76.6
+      }
     },
     {
       "municipio": "Independência",
@@ -254,7 +350,11 @@
       "centroid": [
         -54.1852,
         -27.8981
-      ]
+      ],
+      "rank": {
+        "high_ha": 37983,
+        "high_pct": 92.7
+      }
     },
     {
       "municipio": "Vitória das Missões",
@@ -264,7 +364,11 @@
       "centroid": [
         -54.4678,
         -28.3793
-      ]
+      ],
+      "rank": {
+        "high_ha": 27471,
+        "high_pct": 91.6
+      }
     },
     {
       "municipio": "Boa Vista do Buricá",
@@ -274,7 +378,11 @@
       "centroid": [
         -54.0996,
         -27.6755
-      ]
+      ],
+      "rank": {
+        "high_ha": 10691,
+        "high_pct": 86.0
+      }
     },
     {
       "municipio": "São José do Inhacorá",
@@ -284,7 +392,11 @@
       "centroid": [
         -54.1228,
         -27.7377
-      ]
+      ],
+      "rank": {
+        "high_ha": 3013,
+        "high_pct": 33.8
+      }
     },
     {
       "municipio": "São Miguel das Missões",
@@ -294,7 +406,11 @@
       "centroid": [
         -54.5204,
         -28.6711
-      ]
+      ],
+      "rank": {
+        "high_ha": 33591,
+        "high_pct": 23.4
+      }
     },
     {
       "municipio": "São Paulo das Missões",
@@ -304,7 +420,11 @@
       "centroid": [
         -54.9743,
         -27.9905
-      ]
+      ],
+      "rank": {
+        "high_ha": 14725,
+        "high_pct": 56.8
+      }
     },
     {
       "municipio": "Inhacorá",
@@ -314,7 +434,11 @@
       "centroid": [
         -54.0294,
         -27.8994
-      ]
+      ],
+      "rank": {
+        "high_ha": 12082,
+        "high_pct": 93.1
+      }
     },
     {
       "municipio": "Tuparendi",
@@ -324,7 +448,11 @@
       "centroid": [
         -54.5554,
         -27.7026
-      ]
+      ],
+      "rank": {
+        "high_ha": 31916,
+        "high_pct": 90.7
+      }
     },
     {
       "municipio": "Santo Cristo",
@@ -334,7 +462,11 @@
       "centroid": [
         -54.7136,
         -27.798
-      ]
+      ],
+      "rank": {
+        "high_ha": 23310,
+        "high_pct": 55.1
+      }
     },
     {
       "municipio": "Bossoroca",
@@ -344,7 +476,11 @@
       "centroid": [
         -54.98,
         -28.6656
-      ]
+      ],
+      "rank": {
+        "high_ha": 164582,
+        "high_pct": 86.9
+      }
     },
     {
       "municipio": "Garruchos",
@@ -354,7 +490,11 @@
       "centroid": [
         -55.5337,
         -28.2371
-      ]
+      ],
+      "rank": {
+        "high_ha": 86320,
+        "high_pct": 92.5
+      }
     },
     {
       "municipio": "São Valério do Sul",
@@ -364,7 +504,11 @@
       "centroid": [
         -53.9102,
         -27.8199
-      ]
+      ],
+      "rank": {
+        "high_ha": 1517,
+        "high_pct": 12.4
+      }
     },
     {
       "municipio": "Santo Ângelo",
@@ -374,7 +518,11 @@
       "centroid": [
         -54.2984,
         -28.2554
-      ]
+      ],
+      "rank": {
+        "high_ha": 25196,
+        "high_pct": 32.0
+      }
     },
     {
       "municipio": "Catuípe",
@@ -384,7 +532,11 @@
       "centroid": [
         -54.0321,
         -28.1693
-      ]
+      ],
+      "rank": {
+        "high_ha": 61282,
+        "high_pct": 91.4
+      }
     },
     {
       "municipio": "Entre-Ijuís",
@@ -394,7 +546,11 @@
       "centroid": [
         -54.2972,
         -28.4554
-      ]
+      ],
+      "rank": {
+        "high_ha": 53330,
+        "high_pct": 83.1
+      }
     },
     {
       "municipio": "Eugênio de Castro",
@@ -404,7 +560,11 @@
       "centroid": [
         -54.2458,
         -28.5685
-      ]
+      ],
+      "rank": {
+        "high_ha": 39679,
+        "high_pct": 81.7
+      }
     },
     {
       "municipio": "Alegria",
@@ -414,7 +574,11 @@
       "centroid": [
         -54.0557,
         -27.8134
-      ]
+      ],
+      "rank": {
+        "high_ha": 16211,
+        "high_pct": 82.0
+      }
     },
     {
       "municipio": "Nova Candelária",
@@ -424,7 +588,11 @@
       "centroid": [
         -54.1247,
         -27.5953
-      ]
+      ],
+      "rank": {
+        "high_ha": 3339,
+        "high_pct": 30.0
+      }
     },
     {
       "municipio": "Horizontina",
@@ -434,7 +602,11 @@
       "centroid": [
         -54.2992,
         -27.5891
-      ]
+      ],
+      "rank": {
+        "high_ha": 22847,
+        "high_pct": 87.4
+      }
     },
     {
       "municipio": "Humaitá",
@@ -444,7 +616,11 @@
       "centroid": [
         -53.9806,
         -27.5746
-      ]
+      ],
+      "rank": {
+        "high_ha": 12766,
+        "high_pct": 83.4
+      }
     },
     {
       "municipio": "Unistalda",
@@ -454,7 +630,11 @@
       "centroid": [
         -55.154,
         -29.0697
-      ]
+      ],
+      "rank": {
+        "high_ha": 8079,
+        "high_pct": 11.3
+      }
     },
     {
       "municipio": "Campo Novo",
@@ -464,7 +644,11 @@
       "centroid": [
         -53.8233,
         -27.6648
-      ]
+      ],
+      "rank": {
+        "high_ha": 21088,
+        "high_pct": 84.5
+      }
     },
     {
       "municipio": "Santo Augusto",
@@ -474,7 +658,11 @@
       "centroid": [
         -53.7559,
         -27.9009
-      ]
+      ],
+      "rank": {
+        "high_ha": 1559,
+        "high_pct": 2.9
+      }
     },
     {
       "municipio": "Ajuricaba",
@@ -484,7 +672,11 @@
       "centroid": [
         -53.7428,
         -28.2126
-      ]
+      ],
+      "rank": {
+        "high_ha": 30936,
+        "high_pct": 83.5
+      }
     },
     {
       "municipio": "Nova Ramada",
@@ -494,7 +686,11 @@
       "centroid": [
         -53.7014,
         -28.0764
-      ]
+      ],
+      "rank": {
+        "high_ha": 1401,
+        "high_pct": 4.8
+      }
     },
     {
       "municipio": "Sede Nova",
@@ -504,7 +700,11 @@
       "centroid": [
         -53.9514,
         -27.641
-      ]
+      ],
+      "rank": {
+        "high_ha": 169,
+        "high_pct": 1.2
+      }
     },
     {
       "municipio": "São Martinho",
@@ -514,7 +714,11 @@
       "centroid": [
         -53.9521,
         -27.728
-      ]
+      ],
+      "rank": {
+        "high_ha": 284,
+        "high_pct": 1.5
+      }
     },
     {
       "municipio": "Coronel Barros",
@@ -524,7 +728,11 @@
       "centroid": [
         -54.0598,
         -28.4041
-      ]
+      ],
+      "rank": {
+        "high_ha": 13293,
+        "high_pct": 70.1
+      }
     },
     {
       "municipio": "Ijuí",
@@ -534,7 +742,11 @@
       "centroid": [
         -53.8959,
         -28.3181
-      ]
+      ],
+      "rank": {
+        "high_ha": 63800,
+        "high_pct": 80.4
+      }
     },
     {
       "municipio": "Augusto Pestana",
@@ -544,7 +756,11 @@
       "centroid": [
         -54.0047,
         -28.5327
-      ]
+      ],
+      "rank": {
+        "high_ha": 27292,
+        "high_pct": 67.5
+      }
     },
     {
       "municipio": "Redentora",
@@ -554,7 +770,11 @@
       "centroid": [
         -53.6322,
         -27.567
-      ]
+      ],
+      "rank": {
+        "high_ha": 442,
+        "high_pct": 1.3
+      }
     },
     {
       "municipio": "Coronel Bicaco",
@@ -564,7 +784,11 @@
       "centroid": [
         -53.6481,
         -27.7986
-      ]
+      ],
+      "rank": {
+        "high_ha": 35613,
+        "high_pct": 63.8
+      }
     },
     {
       "municipio": "Bozano",
@@ -574,7 +798,11 @@
       "centroid": [
         -53.7475,
         -28.3538
-      ]
+      ],
+      "rank": {
+        "high_ha": 12029,
+        "high_pct": 52.0
+      }
     },
     {
       "municipio": "Porto Xavier",
@@ -584,7 +812,11 @@
       "centroid": [
         -55.1458,
         -27.9328
-      ]
+      ],
+      "rank": {
+        "high_ha": 21277,
+        "high_pct": 66.0
+      }
     },
     {
       "municipio": "Boa Vista das Missões",
@@ -594,7 +826,11 @@
       "centroid": [
         -53.3427,
         -27.7001
-      ]
+      ],
+      "rank": {
+        "high_ha": 12514,
+        "high_pct": 56.6
+      }
     },
     {
       "municipio": "Bom Progresso",
@@ -604,7 +840,11 @@
       "centroid": [
         -53.849,
         -27.5445
-      ]
+      ],
+      "rank": {
+        "high_ha": 6910,
+        "high_pct": 68.6
+      }
     },
     {
       "municipio": "Capão do Cipó",
@@ -614,7 +854,11 @@
       "centroid": [
         -54.5798,
         -28.9594
-      ]
+      ],
+      "rank": {
+        "high_ha": 66707,
+        "high_pct": 56.2
+      }
     },
     {
       "municipio": "Crissiumal",
@@ -624,7 +868,11 @@
       "centroid": [
         -54.1377,
         -27.4897
-      ]
+      ],
+      "rank": {
+        "high_ha": 23826,
+        "high_pct": 58.0
+      }
     },
     {
       "municipio": "Miraguaí",
@@ -634,7 +882,11 @@
       "centroid": [
         -53.7426,
         -27.491
-      ]
+      ],
+      "rank": {
+        "high_ha": 158,
+        "high_pct": 1.1
+      }
     },
     {
       "municipio": "Dois Irmãos das Missões",
@@ -644,7 +896,11 @@
       "centroid": [
         -53.4961,
         -27.6777
-      ]
+      ],
+      "rank": {
+        "high_ha": 12977,
+        "high_pct": 50.6
+      }
     },
     {
       "municipio": "Condor",
@@ -654,7 +910,11 @@
       "centroid": [
         -53.4938,
         -28.165
-      ]
+      ],
+      "rank": {
+        "high_ha": 25743,
+        "high_pct": 48.6
+      }
     },
     {
       "municipio": "Porto Lucena",
@@ -664,7 +924,11 @@
       "centroid": [
         -54.956,
         -27.8508
-      ]
+      ],
+      "rank": {
+        "high_ha": 20013,
+        "high_pct": 70.6
+      }
     },
     {
       "municipio": "Jóia",
@@ -674,7 +938,11 @@
       "centroid": [
         -54.1583,
         -28.7624
-      ]
+      ],
+      "rank": {
+        "high_ha": 33885,
+        "high_pct": 23.4
+      }
     },
     {
       "municipio": "Sagrada Família",
@@ -684,7 +952,11 @@
       "centroid": [
         -53.131,
         -27.7071
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Braga",
@@ -694,7 +966,11 @@
       "centroid": [
         -53.7445,
         -27.5791
-      ]
+      ],
+      "rank": {
+        "high_ha": 8774,
+        "high_pct": 58.3
+      }
     },
     {
       "municipio": "Lagoa dos Três Cantos",
@@ -704,7 +980,11 @@
       "centroid": [
         -52.8361,
         -28.5707
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Capivari do Sul",
@@ -714,7 +994,11 @@
       "centroid": [
         -50.5072,
         -30.1389
-      ]
+      ],
+      "rank": {
+        "high_ha": 38278,
+        "high_pct": 79.2
+      }
     },
     {
       "municipio": "Cerro Grande",
@@ -724,7 +1008,11 @@
       "centroid": [
         -53.1628,
         -27.6297
-      ]
+      ],
+      "rank": {
+        "high_ha": 3929,
+        "high_pct": 47.5
+      }
     },
     {
       "municipio": "Novo Barreiro",
@@ -734,7 +1022,11 @@
       "centroid": [
         -53.1155,
         -27.8977
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 0.8
+      }
     },
     {
       "municipio": "Barra Funda",
@@ -744,7 +1036,11 @@
       "centroid": [
         -53.0161,
         -27.9212
-      ]
+      ],
+      "rank": {
+        "high_ha": 2602,
+        "high_pct": 38.2
+      }
     },
     {
       "municipio": "Esperança do Sul",
@@ -754,7 +1050,11 @@
       "centroid": [
         -54.0095,
         -27.3292
-      ]
+      ],
+      "rank": {
+        "high_ha": 8995,
+        "high_pct": 54.1
+      }
     },
     {
       "municipio": "Ibirubá",
@@ -764,7 +1064,11 @@
       "centroid": [
         -53.1713,
         -28.5947
-      ]
+      ],
+      "rank": {
+        "high_ha": 34244,
+        "high_pct": 48.9
+      }
     },
     {
       "municipio": "Tapera",
@@ -774,7 +1078,11 @@
       "centroid": [
         -52.8585,
         -28.6616
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Novo Tiradentes",
@@ -784,7 +1092,11 @@
       "centroid": [
         -53.168,
         -27.5625
-      ]
+      ],
+      "rank": {
+        "high_ha": 274,
+        "high_pct": 3.2
+      }
     },
     {
       "municipio": "São José das Missões",
@@ -794,7 +1106,11 @@
       "centroid": [
         -53.1321,
         -27.795
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Boa Vista do Incra",
@@ -804,7 +1120,11 @@
       "centroid": [
         -53.4648,
         -28.8665
-      ]
+      ],
+      "rank": {
+        "high_ha": 22815,
+        "high_pct": 39.0
+      }
     },
     {
       "municipio": "Novo Xingu",
@@ -814,7 +1134,11 @@
       "centroid": [
         -53.059,
         -27.743
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Victor Graeff",
@@ -824,7 +1148,11 @@
       "centroid": [
         -52.6856,
         -28.5498
-      ]
+      ],
+      "rank": {
+        "high_ha": 6636,
+        "high_pct": 24.4
+      }
     },
     {
       "municipio": "Lajeado do Bugre",
@@ -834,7 +1162,11 @@
       "centroid": [
         -53.2059,
         -27.7036
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 1.4
+      }
     },
     {
       "municipio": "Não-Me-Toque",
@@ -844,7 +1176,11 @@
       "centroid": [
         -52.825,
         -28.4614
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Palmeira das Missões",
@@ -854,7 +1190,11 @@
       "centroid": [
         -53.3894,
         -27.9367
-      ]
+      ],
+      "rank": {
+        "high_ha": 3118,
+        "high_pct": 1.9
+      }
     },
     {
       "municipio": "Colorado",
@@ -864,7 +1204,11 @@
       "centroid": [
         -52.9907,
         -28.4677
-      ]
+      ],
+      "rank": {
+        "high_ha": 7921,
+        "high_pct": 24.2
+      }
     },
     {
       "municipio": "Santa Bárbara do Sul",
@@ -874,7 +1218,11 @@
       "centroid": [
         -53.2849,
         -28.3794
-      ]
+      ],
+      "rank": {
+        "high_ha": 3149,
+        "high_pct": 2.8
+      }
     },
     {
       "municipio": "Pejuçara",
@@ -884,7 +1232,11 @@
       "centroid": [
         -53.5948,
         -28.4556
-      ]
+      ],
+      "rank": {
+        "high_ha": 4266,
+        "high_pct": 8.9
+      }
     },
     {
       "municipio": "Selbach",
@@ -894,7 +1246,11 @@
       "centroid": [
         -52.976,
         -28.6673
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Gramado dos Loureiros",
@@ -904,7 +1260,11 @@
       "centroid": [
         -52.915,
         -27.4455
-      ]
+      ],
+      "rank": {
+        "high_ha": 7552,
+        "high_pct": 51.4
+      }
     },
     {
       "municipio": "Panambi",
@@ -914,7 +1274,11 @@
       "centroid": [
         -53.5104,
         -28.332
-      ]
+      ],
+      "rank": {
+        "high_ha": 569,
+        "high_pct": 1.0
+      }
     },
     {
       "municipio": "Tenente Portela",
@@ -924,7 +1288,11 @@
       "centroid": [
         -53.7619,
         -27.3719
-      ]
+      ],
+      "rank": {
+        "high_ha": 1159,
+        "high_pct": 3.0
+      }
     },
     {
       "municipio": "São Pedro das Missões",
@@ -934,7 +1302,11 @@
       "centroid": [
         -53.2382,
         -27.7801
-      ]
+      ],
+      "rank": {
+        "high_ha": 42,
+        "high_pct": 0.5
+      }
     },
     {
       "municipio": "Três Passos",
@@ -944,7 +1316,11 @@
       "centroid": [
         -53.9314,
         -27.4386
-      ]
+      ],
+      "rank": {
+        "high_ha": 980,
+        "high_pct": 3.2
+      }
     },
     {
       "municipio": "Rodeio Bonito",
@@ -954,7 +1330,11 @@
       "centroid": [
         -53.172,
         -27.463
-      ]
+      ],
+      "rank": {
+        "high_ha": 274,
+        "high_pct": 2.9
+      }
     },
     {
       "municipio": "Santo Antônio do Planalto",
@@ -964,7 +1344,11 @@
       "centroid": [
         -52.6809,
         -28.365
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Borja",
@@ -974,7 +1358,11 @@
       "centroid": [
         -55.8111,
         -28.7456
-      ]
+      ],
+      "rank": {
+        "high_ha": 220587,
+        "high_pct": 51.1
+      }
     },
     {
       "municipio": "Alto Alegre",
@@ -984,7 +1372,11 @@
       "centroid": [
         -52.9895,
         -28.8015
-      ]
+      ],
+      "rank": {
+        "high_ha": 1770,
+        "high_pct": 13.3
+      }
     },
     {
       "municipio": "Novo Machado",
@@ -994,7 +1386,11 @@
       "centroid": [
         -54.5347,
         -27.5463
-      ]
+      ],
+      "rank": {
+        "high_ha": 20203,
+        "high_pct": 84.1
+      }
     },
     {
       "municipio": "Rio dos Índios",
@@ -1004,7 +1400,11 @@
       "centroid": [
         -52.8788,
         -27.2529
-      ]
+      ],
+      "rank": {
+        "high_ha": 474,
+        "high_pct": 1.8
+      }
     },
     {
       "municipio": "Erval Seco",
@@ -1014,7 +1414,11 @@
       "centroid": [
         -53.5212,
         -27.5152
-      ]
+      ],
+      "rank": {
+        "high_ha": 17991,
+        "high_pct": 44.6
+      }
     },
     {
       "municipio": "Saldanha Marinho",
@@ -1024,7 +1428,11 @@
       "centroid": [
         -53.0958,
         -28.3875
-      ]
+      ],
+      "rank": {
+        "high_ha": 137,
+        "high_pct": 0.5
+      }
     },
     {
       "municipio": "Chapada",
@@ -1034,7 +1442,11 @@
       "centroid": [
         -53.1131,
         -28.0895
-      ]
+      ],
+      "rank": {
+        "high_ha": 14915,
+        "high_pct": 19.1
+      }
     },
     {
       "municipio": "Santiago",
@@ -1044,7 +1456,11 @@
       "centroid": [
         -54.7924,
         -29.1249
-      ]
+      ],
+      "rank": {
+        "high_ha": 47600,
+        "high_pct": 16.6
+      }
     },
     {
       "municipio": "Derrubadas",
@@ -1054,7 +1470,11 @@
       "centroid": [
         -53.8968,
         -27.2398
-      ]
+      ],
+      "rank": {
+        "high_ha": 19423,
+        "high_pct": 48.6
+      }
     },
     {
       "municipio": "Doutor Maurício Cardoso",
@@ -1064,7 +1484,11 @@
       "centroid": [
         -54.3641,
         -27.4871
-      ]
+      ],
+      "rank": {
+        "high_ha": 12693,
+        "high_pct": 44.3
+      }
     },
     {
       "municipio": "Planalto",
@@ -1074,7 +1498,11 @@
       "centroid": [
         -53.0753,
         -27.3371
-      ]
+      ],
+      "rank": {
+        "high_ha": 126,
+        "high_pct": 0.5
+      }
     },
     {
       "municipio": "Sarandi",
@@ -1084,7 +1512,11 @@
       "centroid": [
         -52.8926,
         -27.9419
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Tiradentes do Sul",
@@ -1094,7 +1526,11 @@
       "centroid": [
         -54.1197,
         -27.3711
-      ]
+      ],
+      "rank": {
+        "high_ha": 9933,
+        "high_pct": 37.6
+      }
     },
     {
       "municipio": "Almirante Tamandaré do Sul",
@@ -1104,7 +1540,11 @@
       "centroid": [
         -52.9062,
         -28.1274
-      ]
+      ],
+      "rank": {
+        "high_ha": 2918,
+        "high_pct": 9.7
+      }
     },
     {
       "municipio": "Espumoso",
@@ -1114,7 +1554,11 @@
       "centroid": [
         -52.825,
         -28.8712
-      ]
+      ],
+      "rank": {
+        "high_ha": 18223,
+        "high_pct": 20.1
+      }
     },
     {
       "municipio": "Mormaço",
@@ -1124,7 +1568,11 @@
       "centroid": [
         -52.6618,
         -28.6933
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Boa Vista",
@@ -1134,7 +1582,11 @@
       "centroid": [
         -52.9795,
         -27.9975
-      ]
+      ],
+      "rank": {
+        "high_ha": 95,
+        "high_pct": 0.9
+      }
     },
     {
       "municipio": "Coqueiros do Sul",
@@ -1144,7 +1596,11 @@
       "centroid": [
         -52.7603,
         -28.1335
-      ]
+      ],
+      "rank": {
+        "high_ha": 2296,
+        "high_pct": 7.3
+      }
     },
     {
       "municipio": "Jaboticaba",
@@ -1154,7 +1610,11 @@
       "centroid": [
         -53.2624,
         -27.6304
-      ]
+      ],
+      "rank": {
+        "high_ha": 2918,
+        "high_pct": 20.3
+      }
     },
     {
       "municipio": "Carazinho",
@@ -1164,7 +1624,11 @@
       "centroid": [
         -52.8689,
         -28.2781
-      ]
+      ],
+      "rank": {
+        "high_ha": 7384,
+        "high_pct": 9.7
+      }
     },
     {
       "municipio": "Constantina",
@@ -1174,7 +1638,11 @@
       "centroid": [
         -52.9931,
         -27.6902
-      ]
+      ],
+      "rank": {
+        "high_ha": 5930,
+        "high_pct": 25.9
+      }
     },
     {
       "municipio": "Cristal do Sul",
@@ -1184,7 +1652,11 @@
       "centroid": [
         -53.2488,
         -27.4319
-      ]
+      ],
+      "rank": {
+        "high_ha": 3887,
+        "high_pct": 35.4
+      }
     },
     {
       "municipio": "Taquaruçu do Sul",
@@ -1194,7 +1666,11 @@
       "centroid": [
         -53.4882,
         -27.4083
-      ]
+      ],
+      "rank": {
+        "high_ha": 32,
+        "high_pct": 0.4
+      }
     },
     {
       "municipio": "Nonoai",
@@ -1204,7 +1680,11 @@
       "centroid": [
         -52.8497,
         -27.3692
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 0.2
+      }
     },
     {
       "municipio": "Engenho Velho",
@@ -1214,7 +1694,11 @@
       "centroid": [
         -52.9094,
         -27.6861
-      ]
+      ],
+      "rank": {
+        "high_ha": 1390,
+        "high_pct": 17.3
+      }
     },
     {
       "municipio": "Seberi",
@@ -1224,7 +1708,11 @@
       "centroid": [
         -53.3619,
         -27.4993
-      ]
+      ],
+      "rank": {
+        "high_ha": 832,
+        "high_pct": 2.5
+      }
     },
     {
       "municipio": "Iraí",
@@ -1234,7 +1722,11 @@
       "centroid": [
         -53.2417,
         -27.2508
-      ]
+      ],
+      "rank": {
+        "high_ha": 5867,
+        "high_pct": 28.9
+      }
     },
     {
       "municipio": "Pontão",
@@ -1244,7 +1736,11 @@
       "centroid": [
         -52.6387,
         -28.038
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Rondinha",
@@ -1254,7 +1750,11 @@
       "centroid": [
         -52.8954,
         -27.8306
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Tio Hugo",
@@ -1264,7 +1764,11 @@
       "centroid": [
         -52.5982,
         -28.5803
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Liberato Salzano",
@@ -1274,7 +1778,11 @@
       "centroid": [
         -53.0653,
         -27.5512
-      ]
+      ],
+      "rank": {
+        "high_ha": 263,
+        "high_pct": 1.0
+      }
     },
     {
       "municipio": "Pinhal",
@@ -1284,7 +1792,11 @@
       "centroid": [
         -53.2349,
         -27.529
-      ]
+      ],
+      "rank": {
+        "high_ha": 316,
+        "high_pct": 4.1
+      }
     },
     {
       "municipio": "Alecrim",
@@ -1294,7 +1806,11 @@
       "centroid": [
         -54.783,
         -27.655
-      ]
+      ],
+      "rank": {
+        "high_ha": 11007,
+        "high_pct": 31.3
+      }
     },
     {
       "municipio": "Palmares do Sul",
@@ -1304,7 +1820,11 @@
       "centroid": [
         -50.4574,
         -30.3656
-      ]
+      ],
+      "rank": {
+        "high_ha": 32948,
+        "high_pct": 29.6
+      }
     },
     {
       "municipio": "Boa Vista do Cadeado",
@@ -1314,7 +1834,11 @@
       "centroid": [
         -53.8345,
         -28.6568
-      ]
+      ],
+      "rank": {
+        "high_ha": 10386,
+        "high_pct": 12.7
+      }
     },
     {
       "municipio": "Cruz Alta",
@@ -1324,7 +1848,11 @@
       "centroid": [
         -53.5695,
         -28.7039
-      ]
+      ],
+      "rank": {
+        "high_ha": 44787,
+        "high_pct": 28.4
+      }
     },
     {
       "municipio": "Ernestina",
@@ -1334,7 +1862,11 @@
       "centroid": [
         -52.5572,
         -28.4201
-      ]
+      ],
+      "rank": {
+        "high_ha": 1738,
+        "high_pct": 6.4
+      }
     },
     {
       "municipio": "Vista Gaúcha",
@@ -1344,7 +1876,11 @@
       "centroid": [
         -53.7009,
         -27.2664
-      ]
+      ],
+      "rank": {
+        "high_ha": 3097,
+        "high_pct": 30.5
+      }
     },
     {
       "municipio": "Manoel Viana",
@@ -1354,7 +1890,11 @@
       "centroid": [
         -55.5546,
         -29.4285
-      ]
+      ],
+      "rank": {
+        "high_ha": 101446,
+        "high_pct": 60.5
+      }
     },
     {
       "municipio": "Ametista do Sul",
@@ -1364,7 +1904,11 @@
       "centroid": [
         -53.1937,
         -27.3649
-      ]
+      ],
+      "rank": {
+        "high_ha": 2107,
+        "high_pct": 20.1
+      }
     },
     {
       "municipio": "Porto Vera Cruz",
@@ -1374,7 +1918,11 @@
       "centroid": [
         -54.8894,
         -27.7551
-      ]
+      ],
+      "rank": {
+        "high_ha": 8079,
+        "high_pct": 62.8
+      }
     },
     {
       "municipio": "Vista Alegre",
@@ -1384,7 +1932,11 @@
       "centroid": [
         -53.5095,
         -27.3256
-      ]
+      ],
+      "rank": {
+        "high_ha": 2928,
+        "high_pct": 33.6
+      }
     },
     {
       "municipio": "Porto Mauá",
@@ -1394,7 +1946,11 @@
       "centroid": [
         -54.6568,
         -27.5963
-      ]
+      ],
+      "rank": {
+        "high_ha": 9670,
+        "high_pct": 83.2
+      }
     },
     {
       "municipio": "Salto do Jacuí",
@@ -1404,7 +1960,11 @@
       "centroid": [
         -53.2498,
         -29.072
-      ]
+      ],
+      "rank": {
+        "high_ha": 63,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Trindade do Sul",
@@ -1414,7 +1974,11 @@
       "centroid": [
         -52.8978,
         -27.5277
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Frederico Westphalen",
@@ -1424,7 +1988,11 @@
       "centroid": [
         -53.356,
         -27.342
-      ]
+      ],
+      "rank": {
+        "high_ha": 10639,
+        "high_pct": 35.8
+      }
     },
     {
       "municipio": "São Francisco de Assis",
@@ -1434,7 +2002,11 @@
       "centroid": [
         -55.1369,
         -29.4441
-      ]
+      ],
+      "rank": {
+        "high_ha": 151858,
+        "high_pct": 50.5
+      }
     },
     {
       "municipio": "Maçambará",
@@ -1444,7 +2016,11 @@
       "centroid": [
         -55.7879,
         -29.0681
-      ]
+      ],
+      "rank": {
+        "high_ha": 110115,
+        "high_pct": 54.6
+      }
     },
     {
       "municipio": "Palmitinho",
@@ -1454,7 +2030,11 @@
       "centroid": [
         -53.5873,
         -27.3267
-      ]
+      ],
+      "rank": {
+        "high_ha": 337,
+        "high_pct": 2.1
+      }
     },
     {
       "municipio": "Alpestre",
@@ -1464,7 +2044,11 @@
       "centroid": [
         -53.0604,
         -27.2158
-      ]
+      ],
+      "rank": {
+        "high_ha": 11692,
+        "high_pct": 32.1
+      }
     },
     {
       "municipio": "Viamão",
@@ -1474,7 +2058,11 @@
       "centroid": [
         -50.8647,
         -30.1679
-      ]
+      ],
+      "rank": {
+        "high_ha": 54910,
+        "high_pct": 31.3
+      }
     },
     {
       "municipio": "Glorinha",
@@ -1484,7 +2072,11 @@
       "centroid": [
         -50.7715,
         -29.8853
-      ]
+      ],
+      "rank": {
+        "high_ha": 3550,
+        "high_pct": 9.4
+      }
     },
     {
       "municipio": "Jacuizinho",
@@ -1494,7 +2086,11 @@
       "centroid": [
         -53.0148,
         -29.0357
-      ]
+      ],
+      "rank": {
+        "high_ha": 3887,
+        "high_pct": 9.9
+      }
     },
     {
       "municipio": "Xangri-lá",
@@ -1504,7 +2100,11 @@
       "centroid": [
         -50.0694,
         -29.8073
-      ]
+      ],
+      "rank": {
+        "high_ha": 4571,
+        "high_pct": 65.4
+      }
     },
     {
       "municipio": "Tupanciretã",
@@ -1514,7 +2114,11 @@
       "centroid": [
         -53.999,
         -29.0181
-      ]
+      ],
+      "rank": {
+        "high_ha": 64190,
+        "high_pct": 24.3
+      }
     },
     {
       "municipio": "Jacutinga",
@@ -1524,7 +2128,11 @@
       "centroid": [
         -52.547,
         -27.7871
-      ]
+      ],
+      "rank": {
+        "high_ha": 126,
+        "high_pct": 0.6
+      }
     },
     {
       "municipio": "Estrela",
@@ -1534,7 +2142,11 @@
       "centroid": [
         -51.9195,
         -29.5075
-      ]
+      ],
+      "rank": {
+        "high_ha": 959,
+        "high_pct": 4.5
+      }
     },
     {
       "municipio": "Fortaleza dos Valos",
@@ -1544,7 +2156,11 @@
       "centroid": [
         -53.2772,
         -28.8947
-      ]
+      ],
+      "rank": {
+        "high_ha": 33749,
+        "high_pct": 44.7
+      }
     },
     {
       "municipio": "São Vicente do Sul",
@@ -1554,7 +2170,11 @@
       "centroid": [
         -54.7749,
         -29.7153
-      ]
+      ],
+      "rank": {
+        "high_ha": 131371,
+        "high_pct": 93.0
+      }
     },
     {
       "municipio": "Ronda Alta",
@@ -1564,7 +2184,11 @@
       "centroid": [
         -52.7471,
         -27.8097
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Bom Retiro do Sul",
@@ -1574,7 +2198,11 @@
       "centroid": [
         -51.9228,
         -29.638
-      ]
+      ],
+      "rank": {
+        "high_ha": 95,
+        "high_pct": 0.8
+      }
     },
     {
       "municipio": "Dilermando de Aguiar",
@@ -1584,7 +2212,11 @@
       "centroid": [
         -54.1619,
         -29.8148
-      ]
+      ],
+      "rank": {
+        "high_ha": 369,
+        "high_pct": 0.5
+      }
     },
     {
       "municipio": "Formigueiro",
@@ -1594,7 +2226,11 @@
       "centroid": [
         -53.5075,
         -29.9769
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ibirapuitã",
@@ -1604,7 +2240,11 @@
       "centroid": [
         -52.4441,
         -28.6248
-      ]
+      ],
+      "rank": {
+        "high_ha": 84,
+        "high_pct": 0.2
+      }
     },
     {
       "municipio": "Passo Fundo",
@@ -1614,7 +2254,11 @@
       "centroid": [
         -52.4597,
         -28.2624
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Caiçara",
@@ -1624,7 +2268,11 @@
       "centroid": [
         -53.4674,
         -27.2459
-      ]
+      ],
+      "rank": {
+        "high_ha": 5351,
+        "high_pct": 25.3
+      }
     },
     {
       "municipio": "Cruzaltense",
@@ -1634,7 +2282,11 @@
       "centroid": [
         -52.6452,
         -27.6272
-      ]
+      ],
+      "rank": {
+        "high_ha": 1285,
+        "high_pct": 6.9
+      }
     },
     {
       "municipio": "Nicolau Vergueiro",
@@ -1644,7 +2296,11 @@
       "centroid": [
         -52.4461,
         -28.5195
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Quinze de Novembro",
@@ -1654,7 +2310,11 @@
       "centroid": [
         -53.1112,
         -28.7587
-      ]
+      ],
+      "rank": {
+        "high_ha": 211,
+        "high_pct": 0.8
+      }
     },
     {
       "municipio": "Quatro Irmãos",
@@ -1664,7 +2324,11 @@
       "centroid": [
         -52.4693,
         -27.8405
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Soledade",
@@ -1674,7 +2338,11 @@
       "centroid": [
         -52.5395,
         -28.8308
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cruzeiro do Sul",
@@ -1684,7 +2352,11 @@
       "centroid": [
         -52.0336,
         -29.539
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Arambaré",
@@ -1694,7 +2366,11 @@
       "centroid": [
         -51.5805,
         -30.9095
-      ]
+      ],
+      "rank": {
+        "high_ha": 3918,
+        "high_pct": 6.3
+      }
     },
     {
       "municipio": "Santo Antônio da Patrulha",
@@ -1704,7 +2380,11 @@
       "centroid": [
         -50.5655,
         -29.873
-      ]
+      ],
+      "rank": {
+        "high_ha": 31621,
+        "high_pct": 26.0
+      }
     },
     {
       "municipio": "Passo do Sobrado",
@@ -1714,7 +2394,11 @@
       "centroid": [
         -52.2442,
         -29.7567
-      ]
+      ],
+      "rank": {
+        "high_ha": 12903,
+        "high_pct": 41.4
+      }
     },
     {
       "municipio": "Vicente Dutra",
@@ -1724,7 +2408,11 @@
       "centroid": [
         -53.3851,
         -27.1712
-      ]
+      ],
+      "rank": {
+        "high_ha": 4972,
+        "high_pct": 23.0
+      }
     },
     {
       "municipio": "Mostardas",
@@ -1734,7 +2422,11 @@
       "centroid": [
         -50.7375,
         -30.8652
-      ]
+      ],
+      "rank": {
+        "high_ha": 79463,
+        "high_pct": 33.7
+      }
     },
     {
       "municipio": "Cacequi",
@@ -1744,7 +2436,11 @@
       "centroid": [
         -54.8016,
         -29.9209
-      ]
+      ],
+      "rank": {
+        "high_ha": 169,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Marau",
@@ -1754,7 +2450,11 @@
       "centroid": [
         -52.2694,
         -28.4541
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barra do Quaraí",
@@ -1764,7 +2464,11 @@
       "centroid": [
         -57.3341,
         -30.1467
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Capão da Canoa",
@@ -1774,7 +2478,11 @@
       "centroid": [
         -50.0003,
         -29.6791
-      ]
+      ],
+      "rank": {
+        "high_ha": 4750,
+        "high_pct": 42.0
+      }
     },
     {
       "municipio": "Ponte Preta",
@@ -1784,7 +2492,11 @@
       "centroid": [
         -52.5065,
         -27.6539
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pinheirinho do Vale",
@@ -1794,7 +2506,11 @@
       "centroid": [
         -53.6336,
         -27.2218
-      ]
+      ],
+      "rank": {
+        "high_ha": 2665,
+        "high_pct": 22.6
+      }
     },
     {
       "municipio": "Coxilha",
@@ -1804,7 +2520,11 @@
       "centroid": [
         -52.3342,
         -28.1186
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sertão",
@@ -1814,7 +2534,11 @@
       "centroid": [
         -52.3174,
         -28.0086
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ipiranga do Sul",
@@ -1824,7 +2548,11 @@
       "centroid": [
         -52.4182,
         -27.9304
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São José do Norte",
@@ -1834,7 +2562,11 @@
       "centroid": [
         -51.6767,
         -31.7727
-      ]
+      ],
+      "rank": {
+        "high_ha": 44356,
+        "high_pct": 33.7
+      }
     },
     {
       "municipio": "Tapes",
@@ -1844,7 +2576,11 @@
       "centroid": [
         -51.4415,
         -30.6587
-      ]
+      ],
+      "rank": {
+        "high_ha": 19939,
+        "high_pct": 20.8
+      }
     },
     {
       "municipio": "Taquari",
@@ -1854,7 +2590,11 @@
       "centroid": [
         -51.8321,
         -29.7472
-      ]
+      ],
+      "rank": {
+        "high_ha": 16421,
+        "high_pct": 40.2
+      }
     },
     {
       "municipio": "Tavares",
@@ -1864,7 +2604,11 @@
       "centroid": [
         -51.0776,
         -31.289
-      ]
+      ],
+      "rank": {
+        "high_ha": 17506,
+        "high_pct": 23.7
+      }
     },
     {
       "municipio": "Cidreira",
@@ -1874,7 +2618,11 @@
       "centroid": [
         -50.274,
         -30.1183
-      ]
+      ],
+      "rank": {
+        "high_ha": 7363,
+        "high_pct": 25.9
+      }
     },
     {
       "municipio": "Três Palmeiras",
@@ -1884,7 +2632,11 @@
       "centroid": [
         -52.8405,
         -27.6145
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Uruguaiana",
@@ -1894,7 +2646,11 @@
       "centroid": [
         -56.7365,
         -29.8269
-      ]
+      ],
+      "rank": {
+        "high_ha": 211940,
+        "high_pct": 30.0
+      }
     },
     {
       "municipio": "Fagundes Varela",
@@ -1904,7 +2660,11 @@
       "centroid": [
         -51.7169,
         -28.8861
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Nova Esperança do Sul",
@@ -1914,7 +2674,11 @@
       "centroid": [
         -54.8216,
         -29.4036
-      ]
+      ],
+      "rank": {
+        "high_ha": 6330,
+        "high_pct": 27.7
+      }
     },
     {
       "municipio": "Pinhal Grande",
@@ -1924,7 +2688,11 @@
       "centroid": [
         -53.3381,
         -29.2901
-      ]
+      ],
+      "rank": {
+        "high_ha": 32,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Terra de Areia",
@@ -1934,7 +2702,11 @@
       "centroid": [
         -50.0677,
         -29.6036
-      ]
+      ],
+      "rank": {
+        "high_ha": 4213,
+        "high_pct": 25.8
+      }
     },
     {
       "municipio": "Barra do Guarita",
@@ -1944,7 +2716,11 @@
       "centroid": [
         -53.7636,
         -27.2049
-      ]
+      ],
+      "rank": {
+        "high_ha": 874,
+        "high_pct": 12.4
+      }
     },
     {
       "municipio": "General Câmara",
@@ -1954,7 +2730,11 @@
       "centroid": [
         -51.918,
         -29.8657
-      ]
+      ],
+      "rank": {
+        "high_ha": 74,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Faxinalzinho",
@@ -1964,7 +2744,11 @@
       "centroid": [
         -52.677,
         -27.3733
-      ]
+      ],
+      "rank": {
+        "high_ha": 4930,
+        "high_pct": 30.9
+      }
     },
     {
       "municipio": "Fazenda Vilanova",
@@ -1974,7 +2758,11 @@
       "centroid": [
         -51.8394,
         -29.5893
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Machadinho",
@@ -1984,7 +2772,11 @@
       "centroid": [
         -51.6728,
         -27.586
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Minas do Leão",
@@ -1994,7 +2786,11 @@
       "centroid": [
         -52.0768,
         -30.0784
-      ]
+      ],
+      "rank": {
+        "high_ha": 4982,
+        "high_pct": 9.9
+      }
     },
     {
       "municipio": "Tunas",
@@ -2004,7 +2800,11 @@
       "centroid": [
         -52.8925,
         -29.1141
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Vila Flores",
@@ -2014,7 +2814,11 @@
       "centroid": [
         -51.5509,
         -28.8583
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Júlio de Castilhos",
@@ -2024,7 +2828,11 @@
       "centroid": [
         -53.6591,
         -29.2615
-      ]
+      ],
+      "rank": {
+        "high_ha": 10449,
+        "high_pct": 4.6
+      }
     },
     {
       "municipio": "Nova Prata",
@@ -2034,7 +2842,11 @@
       "centroid": [
         -51.6074,
         -28.7595
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cristal",
@@ -2044,7 +2856,11 @@
       "centroid": [
         -52.0409,
         -31.0078
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Vila Lângaro",
@@ -2054,7 +2870,11 @@
       "centroid": [
         -52.1413,
         -28.129
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Guabiju",
@@ -2064,7 +2884,11 @@
       "centroid": [
         -51.6595,
         -28.5743
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Mato Castelhano",
@@ -2074,7 +2898,11 @@
       "centroid": [
         -52.1986,
         -28.2783
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Pedro do Sul",
@@ -2084,7 +2912,11 @@
       "centroid": [
         -54.2415,
         -29.6139
-      ]
+      ],
+      "rank": {
+        "high_ha": 69972,
+        "high_pct": 67.1
+      }
     },
     {
       "municipio": "Balneário Pinhal",
@@ -2094,7 +2926,11 @@
       "centroid": [
         -50.2942,
         -30.2106
-      ]
+      ],
+      "rank": {
+        "high_ha": 2391,
+        "high_pct": 20.2
+      }
     },
     {
       "municipio": "Camargo",
@@ -2104,7 +2940,11 @@
       "centroid": [
         -52.2218,
         -28.6166
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Gentil",
@@ -2114,7 +2954,11 @@
       "centroid": [
         -52.0376,
         -28.3855
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Bassano",
@@ -2124,7 +2968,11 @@
       "centroid": [
         -51.7525,
         -28.7284
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Vale Verde",
@@ -2134,7 +2982,11 @@
       "centroid": [
         -52.1122,
         -29.8284
-      ]
+      ],
+      "rank": {
+        "high_ha": 24121,
+        "high_pct": 62.3
+      }
     },
     {
       "municipio": "Jari",
@@ -2144,7 +2996,11 @@
       "centroid": [
         -54.2972,
         -29.2881
-      ]
+      ],
+      "rank": {
+        "high_ha": 50317,
+        "high_pct": 49.7
+      }
     },
     {
       "municipio": "Turuçu",
@@ -2154,7 +3010,11 @@
       "centroid": [
         -52.1578,
         -31.4733
-      ]
+      ],
+      "rank": {
+        "high_ha": 3202,
+        "high_pct": 10.3
+      }
     },
     {
       "municipio": "Paulo Bento",
@@ -2164,7 +3024,11 @@
       "centroid": [
         -52.3975,
         -27.7116
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Água Santa",
@@ -2174,7 +3038,11 @@
       "centroid": [
         -52.0534,
         -28.2158
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Valentim",
@@ -2184,7 +3052,11 @@
       "centroid": [
         -52.5612,
         -27.5537
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Alegrete",
@@ -2194,7 +3066,11 @@
       "centroid": [
         -55.8337,
         -29.7639
-      ]
+      ],
+      "rank": {
+        "high_ha": 2412,
+        "high_pct": 0.3
+      }
     },
     {
       "municipio": "Entre Rios do Sul",
@@ -2204,7 +3080,11 @@
       "centroid": [
         -52.7265,
         -27.5189
-      ]
+      ],
+      "rank": {
+        "high_ha": 1306,
+        "high_pct": 9.8
+      }
     },
     {
       "municipio": "Estrela Velha",
@@ -2214,7 +3094,11 @@
       "centroid": [
         -53.1773,
         -29.2226
-      ]
+      ],
+      "rank": {
+        "high_ha": 1095,
+        "high_pct": 3.3
+      }
     },
     {
       "municipio": "São Lourenço do Sul",
@@ -2224,7 +3108,11 @@
       "centroid": [
         -52.1303,
         -31.2362
-      ]
+      ],
+      "rank": {
+        "high_ha": 5551,
+        "high_pct": 2.2
+      }
     },
     {
       "municipio": "Tapejara",
@@ -2234,7 +3122,11 @@
       "centroid": [
         -52.0138,
         -28.0604
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Itaqui",
@@ -2244,7 +3136,11 @@
       "centroid": [
         -56.1643,
         -29.2129
-      ]
+      ],
+      "rank": {
+        "high_ha": 21656,
+        "high_pct": 5.3
+      }
     },
     {
       "municipio": "Rosário do Sul",
@@ -2254,7 +3150,11 @@
       "centroid": [
         -55.1218,
         -30.3209
-      ]
+      ],
+      "rank": {
+        "high_ha": 150668,
+        "high_pct": 28.3
+      }
     },
     {
       "municipio": "Vila Maria",
@@ -2264,7 +3164,11 @@
       "centroid": [
         -52.1493,
         -28.5593
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Campos Borges",
@@ -2274,7 +3178,11 @@
       "centroid": [
         -53.0617,
         -28.9062
-      ]
+      ],
+      "rank": {
+        "high_ha": 5214,
+        "high_pct": 19.9
+      }
     },
     {
       "municipio": "Erebango",
@@ -2284,7 +3192,11 @@
       "centroid": [
         -52.3189,
         -27.8298
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "André da Rocha",
@@ -2294,7 +3206,11 @@
       "centroid": [
         -51.5001,
         -28.5926
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Sepé",
@@ -2304,7 +3220,11 @@
       "centroid": [
         -53.6208,
         -30.1657
-      ]
+      ],
+      "rank": {
+        "high_ha": 194044,
+        "high_pct": 73.2
+      }
     },
     {
       "municipio": "Três Arroios",
@@ -2314,7 +3234,11 @@
       "centroid": [
         -52.1809,
         -27.4922
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Viadutos",
@@ -2324,7 +3248,11 @@
       "centroid": [
         -51.9963,
         -27.5713
-      ]
+      ],
+      "rank": {
+        "high_ha": 527,
+        "high_pct": 1.8
+      }
     },
     {
       "municipio": "Camaquã",
@@ -2334,7 +3262,11 @@
       "centroid": [
         -51.7754,
         -30.928
-      ]
+      ],
+      "rank": {
+        "high_ha": 3360,
+        "high_pct": 1.7
+      }
     },
     {
       "municipio": "Casca",
@@ -2344,7 +3276,11 @@
       "centroid": [
         -51.969,
         -28.5941
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Quevedos",
@@ -2354,7 +3290,11 @@
       "centroid": [
         -54.0619,
         -29.3075
-      ]
+      ],
+      "rank": {
+        "high_ha": 20540,
+        "high_pct": 32.1
+      }
     },
     {
       "municipio": "Tabaí",
@@ -2364,7 +3304,11 @@
       "centroid": [
         -51.732,
         -29.6686
-      ]
+      ],
+      "rank": {
+        "high_ha": 3097,
+        "high_pct": 28.0
+      }
     },
     {
       "municipio": "Tramandaí",
@@ -2374,7 +3318,11 @@
       "centroid": [
         -50.2236,
         -30.0269
-      ]
+      ],
+      "rank": {
+        "high_ha": 8911,
+        "high_pct": 53.9
+      }
     },
     {
       "municipio": "Santa Cecília do Sul",
@@ -2384,7 +3332,11 @@
       "centroid": [
         -51.8968,
         -28.1809
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Gabriel",
@@ -2394,7 +3346,11 @@
       "centroid": [
         -54.3602,
         -30.3084
-      ]
+      ],
+      "rank": {
+        "high_ha": 409312,
+        "high_pct": 66.7
+      }
     },
     {
       "municipio": "Áurea",
@@ -2404,7 +3360,11 @@
       "centroid": [
         -52.0776,
         -27.7092
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barão de Cotegipe",
@@ -2414,7 +3374,11 @@
       "centroid": [
         -52.4171,
         -27.5682
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santa Maria",
@@ -2424,7 +3388,11 @@
       "centroid": [
         -53.8233,
         -29.7858
-      ]
+      ],
+      "rank": {
+        "high_ha": 168184,
+        "high_pct": 79.2
+      }
     },
     {
       "municipio": "Vespasiano Corrêa",
@@ -2434,7 +3402,11 @@
       "centroid": [
         -51.8592,
         -29.0676
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Serafina Corrêa",
@@ -2444,7 +3416,11 @@
       "centroid": [
         -51.9352,
         -28.7004
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Campinas do Sul",
@@ -2454,7 +3430,11 @@
       "centroid": [
         -52.6585,
         -27.7343
-      ]
+      ],
+      "rank": {
+        "high_ha": 2075,
+        "high_pct": 6.7
+      }
     },
     {
       "municipio": "Mato Leitão",
@@ -2464,7 +3444,11 @@
       "centroid": [
         -52.1361,
         -29.5252
-      ]
+      ],
+      "rank": {
+        "high_ha": 748,
+        "high_pct": 13.8
+      }
     },
     {
       "municipio": "Vista Alegre do Prata",
@@ -2474,7 +3458,11 @@
       "centroid": [
         -51.7805,
         -28.8211
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Brochier",
@@ -2484,7 +3472,11 @@
       "centroid": [
         -51.6215,
         -29.5368
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ciríaco",
@@ -2494,7 +3486,11 @@
       "centroid": [
         -51.9148,
         -28.3422
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Mariano Moro",
@@ -2504,7 +3500,11 @@
       "centroid": [
         -52.1668,
         -27.3424
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Vera Cruz",
@@ -2514,7 +3514,11 @@
       "centroid": [
         -52.5382,
         -29.7147
-      ]
+      ],
+      "rank": {
+        "high_ha": 21035,
+        "high_pct": 57.6
+      }
     },
     {
       "municipio": "Araricá",
@@ -2524,7 +3528,11 @@
       "centroid": [
         -50.9344,
         -29.6345
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barra do Ribeiro",
@@ -2534,7 +3542,11 @@
       "centroid": [
         -51.3556,
         -30.3753
-      ]
+      ],
+      "rank": {
+        "high_ha": 2486,
+        "high_pct": 2.9
+      }
     },
     {
       "municipio": "Santo Antônio do Palma",
@@ -2544,7 +3556,11 @@
       "centroid": [
         -52.0096,
         -28.4953
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Carlos Gomes",
@@ -2554,7 +3570,11 @@
       "centroid": [
         -51.9301,
         -27.7031
-      ]
+      ],
+      "rank": {
+        "high_ha": 190,
+        "high_pct": 2.0
+      }
     },
     {
       "municipio": "Erechim",
@@ -2564,7 +3584,11 @@
       "centroid": [
         -52.2574,
         -27.64
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Gaurama",
@@ -2574,7 +3598,11 @@
       "centroid": [
         -52.1144,
         -27.5988
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ibiaçá",
@@ -2584,7 +3612,11 @@
       "centroid": [
         -51.7871,
         -28.1041
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Charrua",
@@ -2594,7 +3626,11 @@
       "centroid": [
         -51.9981,
         -27.9456
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Estação",
@@ -2604,7 +3640,11 @@
       "centroid": [
         -52.2915,
         -27.9299
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Araçá",
@@ -2614,7 +3654,11 @@
       "centroid": [
         -51.7473,
         -28.6518
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Benjamin Constant do Sul",
@@ -2624,7 +3668,11 @@
       "centroid": [
         -52.6428,
         -27.4855
-      ]
+      ],
+      "rank": {
+        "high_ha": 959,
+        "high_pct": 6.5
+      }
     },
     {
       "municipio": "Maximiliano de Almeida",
@@ -2634,7 +3682,11 @@
       "centroid": [
         -51.8159,
         -27.6009
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São José do Ouro",
@@ -2644,7 +3696,11 @@
       "centroid": [
         -51.5612,
         -27.7699
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Marcelino Ramos",
@@ -2654,7 +3710,11 @@
       "centroid": [
         -51.9469,
         -27.4805
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barracão",
@@ -2664,7 +3724,11 @@
       "centroid": [
         -51.4357,
         -27.7295
-      ]
+      ],
+      "rank": {
+        "high_ha": 21,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Mata",
@@ -2674,7 +3738,11 @@
       "centroid": [
         -54.4695,
         -29.5373
-      ]
+      ],
+      "rank": {
+        "high_ha": 20614,
+        "high_pct": 54.6
+      }
     },
     {
       "municipio": "Paverama",
@@ -2684,7 +3752,11 @@
       "centroid": [
         -51.7295,
         -29.5698
-      ]
+      ],
+      "rank": {
+        "high_ha": 2338,
+        "high_pct": 11.7
+      }
     },
     {
       "municipio": "Jaguari",
@@ -2694,7 +3766,11 @@
       "centroid": [
         -54.6506,
         -29.4611
-      ]
+      ],
+      "rank": {
+        "high_ha": 74,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Parobé",
@@ -2704,7 +3780,11 @@
       "centroid": [
         -50.8564,
         -29.6605
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 0.8
+      }
     },
     {
       "municipio": "Quaraí",
@@ -2714,7 +3794,11 @@
       "centroid": [
         -56.1586,
         -30.2839
-      ]
+      ],
+      "rank": {
+        "high_ha": 71373,
+        "high_pct": 18.3
+      }
     },
     {
       "municipio": "União da Serra",
@@ -2724,7 +3808,11 @@
       "centroid": [
         -52.0211,
         -28.7716
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Capão do Leão",
@@ -2734,7 +3822,11 @@
       "centroid": [
         -52.5375,
         -31.8308
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Rio Grande",
@@ -2744,7 +3836,11 @@
       "centroid": [
         -52.4076,
         -32.2241
-      ]
+      ],
+      "rank": {
+        "high_ha": 57375,
+        "high_pct": 17.0
+      }
     },
     {
       "municipio": "São Martinho da Serra",
@@ -2754,7 +3850,11 @@
       "centroid": [
         -53.8855,
         -29.4761
-      ]
+      ],
+      "rank": {
+        "high_ha": 17612,
+        "high_pct": 22.2
+      }
     },
     {
       "municipio": "Arroio do Padre",
@@ -2764,7 +3864,11 @@
       "centroid": [
         -52.3985,
         -31.4417
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Getúlio Vargas",
@@ -2774,7 +3878,11 @@
       "centroid": [
         -52.1795,
         -27.849
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santana da Boa Vista",
@@ -2784,7 +3892,11 @@
       "centroid": [
         -53.1801,
         -30.8128
-      ]
+      ],
+      "rank": {
+        "high_ha": 2433,
+        "high_pct": 1.4
+      }
     },
     {
       "municipio": "Segredo",
@@ -2794,7 +3906,11 @@
       "centroid": [
         -52.9275,
         -29.3144
-      ]
+      ],
+      "rank": {
+        "high_ha": 21,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Aratiba",
@@ -2804,7 +3920,11 @@
       "centroid": [
         -52.3003,
         -27.387
-      ]
+      ],
+      "rank": {
+        "high_ha": 1148,
+        "high_pct": 3.0
+      }
     },
     {
       "municipio": "Itapuca",
@@ -2814,7 +3934,11 @@
       "centroid": [
         -52.1973,
         -28.776
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Amaral Ferrador",
@@ -2824,7 +3948,11 @@
       "centroid": [
         -52.3208,
         -30.8045
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cachoeira do Sul",
@@ -2834,7 +3962,11 @@
       "centroid": [
         -52.9875,
         -30.2071
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Gravataí",
@@ -2844,7 +3976,11 @@
       "centroid": [
         -50.9439,
         -29.889
-      ]
+      ],
+      "rank": {
+        "high_ha": 126,
+        "high_pct": 0.2
+      }
     },
     {
       "municipio": "Rio Pardo",
@@ -2854,7 +3990,11 @@
       "centroid": [
         -52.4437,
         -30.0154
-      ]
+      ],
+      "rank": {
+        "high_ha": 131329,
+        "high_pct": 54.1
+      }
     },
     {
       "municipio": "São Jorge",
@@ -2864,7 +4004,11 @@
       "centroid": [
         -51.7157,
         -28.4981
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Arroio do Sal",
@@ -2874,7 +4018,11 @@
       "centroid": [
         -49.8944,
         -29.5211
-      ]
+      ],
+      "rank": {
+        "high_ha": 2770,
+        "high_pct": 20.3
+      }
     },
     {
       "municipio": "Caseiros",
@@ -2884,7 +4032,11 @@
       "centroid": [
         -51.7365,
         -28.2466
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "David Canabarro",
@@ -2894,7 +4046,11 @@
       "centroid": [
         -51.8087,
         -28.4152
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Morro Redondo",
@@ -2904,7 +4060,11 @@
       "centroid": [
         -52.6349,
         -31.63
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Teutônia",
@@ -2914,7 +4074,11 @@
       "centroid": [
         -51.7771,
         -29.4707
-      ]
+      ],
+      "rank": {
+        "high_ha": 1443,
+        "high_pct": 7.0
+      }
     },
     {
       "municipio": "Butiá",
@@ -2924,7 +4088,11 @@
       "centroid": [
         -52.0066,
         -30.1875
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sananduva",
@@ -2934,7 +4102,11 @@
       "centroid": [
         -51.8017,
         -27.9562
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Severiano de Almeida",
@@ -2944,7 +4116,11 @@
       "centroid": [
         -52.1128,
         -27.4164
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Torres",
@@ -2954,7 +4130,11 @@
       "centroid": [
         -49.8084,
         -29.3282
-      ]
+      ],
+      "rank": {
+        "high_ha": 14494,
+        "high_pct": 79.0
+      }
     },
     {
       "municipio": "Caçapava do Sul",
@@ -2964,7 +4144,11 @@
       "centroid": [
         -53.4809,
         -30.6024
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santa Margarida do Sul",
@@ -2974,7 +4158,11 @@
       "centroid": [
         -54.1009,
         -30.362
-      ]
+      ],
+      "rank": {
+        "high_ha": 47747,
+        "high_pct": 41.2
+      }
     },
     {
       "municipio": "Jaguarão",
@@ -2984,7 +4172,11 @@
       "centroid": [
         -53.3336,
         -32.4107
-      ]
+      ],
+      "rank": {
+        "high_ha": 1780,
+        "high_pct": 0.7
+      }
     },
     {
       "municipio": "Restinga Sêca",
@@ -2994,7 +4186,11 @@
       "centroid": [
         -53.3418,
         -29.8172
-      ]
+      ],
+      "rank": {
+        "high_ha": 102857,
+        "high_pct": 89.5
+      }
     },
     {
       "municipio": "Vanini",
@@ -3004,7 +4200,11 @@
       "centroid": [
         -51.835,
         -28.4895
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sant'Ana do Livramento",
@@ -3014,7 +4214,11 @@
       "centroid": [
         -55.5714,
         -30.7374
-      ]
+      ],
+      "rank": {
+        "high_ha": 10438,
+        "high_pct": 1.2
+      }
     },
     {
       "municipio": "Venâncio Aires",
@@ -3024,7 +4228,11 @@
       "centroid": [
         -52.1965,
         -29.5741
-      ]
+      ],
+      "rank": {
+        "high_ha": 26491,
+        "high_pct": 29.4
+      }
     },
     {
       "municipio": "Cerrito",
@@ -3034,7 +4242,11 @@
       "centroid": [
         -52.7981,
         -31.7239
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Pedro da Serra",
@@ -3044,7 +4256,11 @@
       "centroid": [
         -51.5068,
         -29.4192
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Colinas",
@@ -3054,7 +4270,11 @@
       "centroid": [
         -51.8652,
         -29.3925
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Cacique Doble",
@@ -3064,7 +4284,11 @@
       "centroid": [
         -51.6759,
         -27.8137
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Santa Rita",
@@ -3074,7 +4298,11 @@
       "centroid": [
         -51.2894,
         -29.8439
-      ]
+      ],
+      "rank": {
+        "high_ha": 19086,
+        "high_pct": 75.0
+      }
     },
     {
       "municipio": "Salvador do Sul",
@@ -3084,7 +4312,11 @@
       "centroid": [
         -51.5349,
         -29.4584
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Arroio do Tigre",
@@ -3094,7 +4326,11 @@
       "centroid": [
         -53.0537,
         -29.2591
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Dois Lajeados",
@@ -3104,7 +4340,11 @@
       "centroid": [
         -51.8434,
         -28.9768
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Paim Filho",
@@ -3114,7 +4354,11 @@
       "centroid": [
         -51.7804,
         -27.7228
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Valentim do Sul",
@@ -3124,7 +4368,11 @@
       "centroid": [
         -51.7624,
         -29.0568
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barra do Rio Azul",
@@ -3134,7 +4382,11 @@
       "centroid": [
         -52.4072,
         -27.402
-      ]
+      ],
+      "rank": {
+        "high_ha": 695,
+        "high_pct": 4.2
+      }
     },
     {
       "municipio": "Guaporé",
@@ -3144,7 +4396,11 @@
       "centroid": [
         -51.9057,
         -28.8523
-      ]
+      ],
+      "rank": {
+        "high_ha": 95,
+        "high_pct": 0.3
+      }
     },
     {
       "municipio": "Muliterno",
@@ -3154,7 +4410,11 @@
       "centroid": [
         -51.778,
         -28.3266
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sentinela do Sul",
@@ -3164,7 +4424,11 @@
       "centroid": [
         -51.6045,
         -30.6254
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Arroio do Meio",
@@ -3174,7 +4438,11 @@
       "centroid": [
         -51.966,
         -29.3609
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Paraí",
@@ -3184,7 +4452,11 @@
       "centroid": [
         -51.7863,
         -28.6005
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Taquara",
@@ -3194,7 +4466,11 @@
       "centroid": [
         -50.7582,
         -29.668
-      ]
+      ],
+      "rank": {
+        "high_ha": 1991,
+        "high_pct": 3.8
+      }
     },
     {
       "municipio": "Arroio Grande",
@@ -3204,7 +4480,11 @@
       "centroid": [
         -52.9212,
         -32.1875
-      ]
+      ],
+      "rank": {
+        "high_ha": 4413,
+        "high_pct": 1.4
+      }
     },
     {
       "municipio": "Portão",
@@ -3214,7 +4494,11 @@
       "centroid": [
         -51.2487,
         -29.7007
-      ]
+      ],
+      "rank": {
+        "high_ha": 6025,
+        "high_pct": 32.5
+      }
     },
     {
       "municipio": "Triunfo",
@@ -3224,7 +4508,11 @@
       "centroid": [
         -51.5789,
         -29.8422
-      ]
+      ],
+      "rank": {
+        "high_ha": 35961,
+        "high_pct": 37.6
+      }
     },
     {
       "municipio": "Lagoão",
@@ -3234,7 +4522,11 @@
       "centroid": [
         -52.7882,
         -29.2395
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Erval Grande",
@@ -3244,7 +4536,11 @@
       "centroid": [
         -52.5798,
         -27.3519
-      ]
+      ],
+      "rank": {
+        "high_ha": 4340,
+        "high_pct": 13.6
+      }
     },
     {
       "municipio": "Santo Expedito do Sul",
@@ -3254,7 +4550,11 @@
       "centroid": [
         -51.6602,
         -27.9246
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sobradinho",
@@ -3264,7 +4564,11 @@
       "centroid": [
         -53.0268,
         -29.4054
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pelotas",
@@ -3274,7 +4578,11 @@
       "centroid": [
         -52.3451,
         -31.5775
-      ]
+      ],
+      "rank": {
+        "high_ha": 10502,
+        "high_pct": 5.3
+      }
     },
     {
       "municipio": "Osório",
@@ -3284,7 +4592,11 @@
       "centroid": [
         -50.2618,
         -29.9125
-      ]
+      ],
+      "rank": {
+        "high_ha": 37677,
+        "high_pct": 49.0
+      }
     },
     {
       "municipio": "Vila Nova do Sul",
@@ -3294,7 +4606,11 @@
       "centroid": [
         -53.8799,
         -30.3432
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Garibaldi",
@@ -3304,7 +4620,11 @@
       "centroid": [
         -51.582,
         -29.2428
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ibiraiaras",
@@ -3314,7 +4634,11 @@
       "centroid": [
         -51.6321,
         -28.3782
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Lajeado",
@@ -3324,7 +4648,11 @@
       "centroid": [
         -52.0082,
         -29.4433
-      ]
+      ],
+      "rank": {
+        "high_ha": 179,
+        "high_pct": 1.7
+      }
     },
     {
       "municipio": "Nova Alvorada",
@@ -3334,7 +4662,11 @@
       "centroid": [
         -52.1704,
         -28.7086
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pedro Osório",
@@ -3344,7 +4676,11 @@
       "centroid": [
         -52.865,
         -31.9587
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Montauri",
@@ -3354,7 +4690,11 @@
       "centroid": [
         -52.0506,
         -28.668
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Hartz",
@@ -3364,7 +4704,11 @@
       "centroid": [
         -50.8986,
         -29.5846
-      ]
+      ],
+      "rank": {
+        "high_ha": 147,
+        "high_pct": 2.1
+      }
     },
     {
       "municipio": "Monte Belo do Sul",
@@ -3374,7 +4718,11 @@
       "centroid": [
         -51.6508,
         -29.1399
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Centenário",
@@ -3384,7 +4732,11 @@
       "centroid": [
         -52.0017,
         -27.7746
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Arroio dos Ratos",
@@ -3394,7 +4746,11 @@
       "centroid": [
         -51.7502,
         -30.1908
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Canguçu",
@@ -3404,7 +4760,11 @@
       "centroid": [
         -52.6733,
         -31.226
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pantano Grande",
@@ -3414,7 +4774,11 @@
       "centroid": [
         -52.367,
         -30.2574
-      ]
+      ],
+      "rank": {
+        "high_ha": 27913,
+        "high_pct": 27.9
+      }
     },
     {
       "municipio": "Ilópolis",
@@ -3424,7 +4788,11 @@
       "centroid": [
         -52.1307,
         -28.9316
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Novo Cabrais",
@@ -3434,7 +4802,11 @@
       "centroid": [
         -52.9936,
         -29.7614
-      ]
+      ],
+      "rank": {
+        "high_ha": 16200,
+        "high_pct": 71.2
+      }
     },
     {
       "municipio": "São João da Urtiga",
@@ -3444,7 +4816,11 @@
       "centroid": [
         -51.8341,
         -27.7992
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barão",
@@ -3454,7 +4830,11 @@
       "centroid": [
         -51.4906,
         -29.3853
-      ]
+      ],
+      "rank": {
+        "high_ha": 21,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Candelária",
@@ -3464,7 +4844,11 @@
       "centroid": [
         -52.8173,
         -29.698
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Montenegro",
@@ -3474,7 +4858,11 @@
       "centroid": [
         -51.5035,
         -29.7124
-      ]
+      ],
+      "rank": {
+        "high_ha": 21477,
+        "high_pct": 43.5
+      }
     },
     {
       "municipio": "Imbé",
@@ -3484,7 +4872,11 @@
       "centroid": [
         -50.1174,
         -29.9305
-      ]
+      ],
+      "rank": {
+        "high_ha": 2402,
+        "high_pct": 52.7
+      }
     },
     {
       "municipio": "Itatiba do Sul",
@@ -3494,7 +4886,11 @@
       "centroid": [
         -52.4774,
         -27.3606
-      ]
+      ],
+      "rank": {
+        "high_ha": 548,
+        "high_pct": 2.3
+      }
     },
     {
       "municipio": "Piratini",
@@ -3504,7 +4900,11 @@
       "centroid": [
         -53.1024,
         -31.4464
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Tupanci do Sul",
@@ -3514,7 +4914,11 @@
       "centroid": [
         -51.538,
         -27.9302
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Encruzilhada do Sul",
@@ -3524,7 +4928,11 @@
       "centroid": [
         -52.672,
         -30.6246
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Itaara",
@@ -3534,7 +4942,11 @@
       "centroid": [
         -53.7624,
         -29.5798
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Protásio Alves",
@@ -3544,7 +4956,11 @@
       "centroid": [
         -51.4874,
         -28.7346
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sapiranga",
@@ -3554,7 +4970,11 @@
       "centroid": [
         -50.9936,
         -29.6164
-      ]
+      ],
+      "rank": {
+        "high_ha": 137,
+        "high_pct": 0.9
+      }
     },
     {
       "municipio": "São Domingos do Sul",
@@ -3564,7 +4984,11 @@
       "centroid": [
         -51.867,
         -28.5381
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Dom Pedrito",
@@ -3574,7 +4998,11 @@
       "centroid": [
         -54.6633,
         -31.0405
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Eldorado do Sul",
@@ -3584,7 +5012,11 @@
       "centroid": [
         -51.4868,
         -30.075
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ipê",
@@ -3594,7 +5026,11 @@
       "centroid": [
         -51.3029,
         -28.7209
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Anta Gorda",
@@ -3604,7 +5040,11 @@
       "centroid": [
         -51.9938,
         -28.9693
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Barros Cassal",
@@ -3614,7 +5054,11 @@
       "centroid": [
         -52.5907,
         -29.1112
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Igrejinha",
@@ -3624,7 +5068,11 @@
       "centroid": [
         -50.7984,
         -29.5593
-      ]
+      ],
+      "rank": {
+        "high_ha": 74,
+        "high_pct": 0.5
+      }
     },
     {
       "municipio": "Maratá",
@@ -3634,7 +5082,11 @@
       "centroid": [
         -51.5506,
         -29.5491
-      ]
+      ],
+      "rank": {
+        "high_ha": 1780,
+        "high_pct": 18.6
+      }
     },
     {
       "municipio": "Toropi",
@@ -3644,7 +5096,11 @@
       "centroid": [
         -54.2978,
         -29.4691
-      ]
+      ],
+      "rank": {
+        "high_ha": 7805,
+        "high_pct": 33.1
+      }
     },
     {
       "municipio": "Capela de Santana",
@@ -3654,7 +5110,11 @@
       "centroid": [
         -51.3577,
         -29.7077
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Lavras do Sul",
@@ -3664,7 +5124,11 @@
       "centroid": [
         -54.1447,
         -30.7779
-      ]
+      ],
+      "rank": {
+        "high_ha": 31347,
+        "high_pct": 9.8
+      }
     },
     {
       "municipio": "Chuvisca",
@@ -3674,7 +5138,11 @@
       "centroid": [
         -52.0033,
         -30.7809
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Floriano Peixoto",
@@ -3684,7 +5152,11 @@
       "centroid": [
         -52.0477,
         -27.8581
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Boa Vista do Sul",
@@ -3694,7 +5166,11 @@
       "centroid": [
         -51.6726,
         -29.3505
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Caraá",
@@ -3704,7 +5180,11 @@
       "centroid": [
         -50.3441,
         -29.7696
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Palma",
@@ -3714,7 +5194,11 @@
       "centroid": [
         -53.415,
         -29.4361
-      ]
+      ],
+      "rank": {
+        "high_ha": 379,
+        "high_pct": 1.0
+      }
     },
     {
       "municipio": "Bagé",
@@ -3724,7 +5208,11 @@
       "centroid": [
         -54.0142,
         -31.2383
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Linha Nova",
@@ -3734,7 +5222,11 @@
       "centroid": [
         -51.2159,
         -29.4597
-      ]
+      ],
+      "rank": {
+        "high_ha": 42,
+        "high_pct": 0.6
+      }
     },
     {
       "municipio": "Aceguá",
@@ -3744,7 +5236,11 @@
       "centroid": [
         -54.1364,
         -31.6999
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Arvorezinha",
@@ -3754,7 +5250,11 @@
       "centroid": [
         -52.1869,
         -28.8632
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santa Cruz do Sul",
@@ -3764,7 +5264,11 @@
       "centroid": [
         -52.409,
         -29.6473
-      ]
+      ],
+      "rank": {
+        "high_ha": 18802,
+        "high_pct": 21.8
+      }
     },
     {
       "municipio": "São José do Sul",
@@ -3774,7 +5278,11 @@
       "centroid": [
         -51.4858,
         -29.5482
-      ]
+      ],
+      "rank": {
+        "high_ha": 1770,
+        "high_pct": 27.5
+      }
     },
     {
       "municipio": "Harmonia",
@@ -3784,7 +5292,11 @@
       "centroid": [
         -51.4263,
         -29.5455
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Jerônimo",
@@ -3794,7 +5306,11 @@
       "centroid": [
         -51.9083,
         -30.2867
-      ]
+      ],
+      "rank": {
+        "high_ha": 1706,
+        "high_pct": 1.5
+      }
     },
     {
       "municipio": "Herval",
@@ -3804,7 +5320,11 @@
       "centroid": [
         -53.3994,
         -32.0209
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pareci Novo",
@@ -3814,7 +5334,11 @@
       "centroid": [
         -51.423,
         -29.6101
-      ]
+      ],
+      "rank": {
+        "high_ha": 3887,
+        "high_pct": 58.0
+      }
     },
     {
       "municipio": "Pinheiro Machado",
@@ -3824,7 +5348,11 @@
       "centroid": [
         -53.4178,
         -31.4082
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Alto Feliz",
@@ -3834,7 +5362,11 @@
       "centroid": [
         -51.3052,
         -29.3626
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Candiota",
@@ -3844,7 +5376,11 @@
       "centroid": [
         -53.7439,
         -31.5532
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Charqueadas",
@@ -3854,7 +5390,11 @@
       "centroid": [
         -51.5537,
         -29.9891
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Hulha Negra",
@@ -3864,7 +5404,11 @@
       "centroid": [
         -53.89,
         -31.4466
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santa Vitória do Palmar",
@@ -3874,7 +5418,11 @@
       "centroid": [
         -53.0197,
         -33.1763
-      ]
+      ],
+      "rank": {
+        "high_ha": 90702,
+        "high_pct": 13.5
+      }
     },
     {
       "municipio": "Veranópolis",
@@ -3884,7 +5432,11 @@
       "centroid": [
         -51.5551,
         -28.964
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Westfália",
@@ -3894,7 +5446,11 @@
       "centroid": [
         -51.7415,
         -29.406
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Guaíba",
@@ -3904,7 +5460,11 @@
       "centroid": [
         -51.4311,
         -30.1745
-      ]
+      ],
+      "rank": {
+        "high_ha": 74,
+        "high_pct": 0.2
+      }
     },
     {
       "municipio": "Lagoa Vermelha",
@@ -3914,7 +5474,11 @@
       "centroid": [
         -51.4995,
         -28.2165
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Dois Irmãos",
@@ -3924,7 +5488,11 @@
       "centroid": [
         -51.0907,
         -29.5994
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Farroupilha",
@@ -3934,7 +5502,11 @@
       "centroid": [
         -51.3671,
         -29.2087
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Sebastião do Caí",
@@ -3944,7 +5516,11 @@
       "centroid": [
         -51.3374,
         -29.5874
-      ]
+      ],
+      "rank": {
+        "high_ha": 5720,
+        "high_pct": 43.0
+      }
     },
     {
       "municipio": "Campo Bom",
@@ -3954,7 +5530,11 @@
       "centroid": [
         -51.0486,
         -29.6732
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Lindolfo Collor",
@@ -3964,7 +5544,11 @@
       "centroid": [
         -51.2199,
         -29.5822
-      ]
+      ],
+      "rank": {
+        "high_ha": 927,
+        "high_pct": 24.2
+      }
     },
     {
       "municipio": "Estância Velha",
@@ -3974,7 +5558,11 @@
       "centroid": [
         -51.1884,
         -29.648
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Agudo",
@@ -3984,7 +5572,11 @@
       "centroid": [
         -53.2263,
         -29.6098
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Fontoura Xavier",
@@ -3994,7 +5586,11 @@
       "centroid": [
         -52.3774,
         -29.0104
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pedras Altas",
@@ -4004,7 +5600,11 @@
       "centroid": [
         -53.6876,
         -31.8391
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Lagoa Bonita do Sul",
@@ -4014,7 +5614,11 @@
       "centroid": [
         -53.0415,
         -29.5023
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cotiporã",
@@ -4024,7 +5628,11 @@
       "centroid": [
         -51.6868,
         -28.9948
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Morrinhos do Sul",
@@ -4034,7 +5642,11 @@
       "centroid": [
         -49.9562,
         -29.3366
-      ]
+      ],
+      "rank": {
+        "high_ha": 5878,
+        "high_pct": 31.0
+      }
     },
     {
       "municipio": "Dona Francisca",
@@ -4044,7 +5656,11 @@
       "centroid": [
         -53.3459,
         -29.5608
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Novo Hamburgo",
@@ -4054,7 +5670,11 @@
       "centroid": [
         -51.0496,
         -29.7361
-      ]
+      ],
+      "rank": {
+        "high_ha": 927,
+        "high_pct": 3.6
+      }
     },
     {
       "municipio": "Paraíso do Sul",
@@ -4064,7 +5684,11 @@
       "centroid": [
         -53.1203,
         -29.7033
-      ]
+      ],
+      "rank": {
+        "high_ha": 17959,
+        "high_pct": 44.9
+      }
     },
     {
       "municipio": "Santa Maria do Herval",
@@ -4074,7 +5698,11 @@
       "centroid": [
         -50.9678,
         -29.477
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Tupandi",
@@ -4084,7 +5712,11 @@
       "centroid": [
         -51.4264,
         -29.4737
-      ]
+      ],
+      "rank": {
+        "high_ha": 748,
+        "high_pct": 10.9
+      }
     },
     {
       "municipio": "Rolante",
@@ -4094,7 +5726,11 @@
       "centroid": [
         -50.5474,
         -29.63
-      ]
+      ],
+      "rank": {
+        "high_ha": 843,
+        "high_pct": 2.5
+      }
     },
     {
       "municipio": "Antônio Prado",
@@ -4104,7 +5740,11 @@
       "centroid": [
         -51.3174,
         -28.8832
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Presidente Lucena",
@@ -4114,7 +5754,11 @@
       "centroid": [
         -51.1747,
         -29.5242
-      ]
+      ],
+      "rank": {
+        "high_ha": 169,
+        "high_pct": 2.9
+      }
     },
     {
       "municipio": "Doutor Ricardo",
@@ -4124,7 +5768,11 @@
       "centroid": [
         -51.9755,
         -29.0925
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São João do Polêsine",
@@ -4134,7 +5782,11 @@
       "centroid": [
         -53.4723,
         -29.6428
-      ]
+      ],
+      "rank": {
+        "high_ha": 4761,
+        "high_pct": 51.1
+      }
     },
     {
       "municipio": "São José do Hortêncio",
@@ -4144,7 +5796,11 @@
       "centroid": [
         -51.2571,
         -29.5349
-      ]
+      ],
+      "rank": {
+        "high_ha": 1780,
+        "high_pct": 24.4
+      }
     },
     {
       "municipio": "Vale do Sol",
@@ -4154,7 +5810,11 @@
       "centroid": [
         -52.6885,
         -29.5824
-      ]
+      ],
+      "rank": {
+        "high_ha": 11808,
+        "high_pct": 30.7
+      }
     },
     {
       "municipio": "Coronel Pilar",
@@ -4164,7 +5824,11 @@
       "centroid": [
         -51.7237,
         -29.263
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Roma do Sul",
@@ -4174,7 +5838,11 @@
       "centroid": [
         -51.408,
         -28.9896
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Flores da Cunha",
@@ -4184,7 +5852,11 @@
       "centroid": [
         -51.2219,
         -29.0308
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ivoti",
@@ -4194,7 +5866,11 @@
       "centroid": [
         -51.1575,
         -29.5808
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Carlos Barbosa",
@@ -4204,7 +5880,11 @@
       "centroid": [
         -51.5018,
         -29.3211
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Bréscia",
@@ -4214,7 +5894,11 @@
       "centroid": [
         -52.0343,
         -29.2219
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Três Coroas",
@@ -4224,7 +5908,11 @@
       "centroid": [
         -50.7761,
         -29.4831
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Passa Sete",
@@ -4234,7 +5922,11 @@
       "centroid": [
         -52.8662,
         -29.4375
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Alvorada",
@@ -4244,7 +5936,11 @@
       "centroid": [
         -51.0397,
         -29.9955
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Encantado",
@@ -4254,7 +5950,11 @@
       "centroid": [
         -51.9218,
         -29.2141
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pinhal da Serra",
@@ -4264,7 +5964,11 @@
       "centroid": [
         -51.2152,
         -27.8562
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Pinto Bandeira",
@@ -4274,7 +5978,11 @@
       "centroid": [
         -51.4631,
         -29.0927
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Morro Reuter",
@@ -4284,7 +5992,11 @@
       "centroid": [
         -51.0514,
         -29.5221
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Leopoldo",
@@ -4294,7 +6006,11 @@
       "centroid": [
         -51.1461,
         -29.7544
-      ]
+      ],
+      "rank": {
+        "high_ha": 1348,
+        "high_pct": 11.2
+      }
     },
     {
       "municipio": "Dom Feliciano",
@@ -4304,7 +6020,11 @@
       "centroid": [
         -52.2004,
         -30.6114
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Silveira Martins",
@@ -4314,7 +6034,11 @@
       "centroid": [
         -53.5726,
         -29.634
-      ]
+      ],
+      "rank": {
+        "high_ha": 1264,
+        "high_pct": 9.0
+      }
     },
     {
       "municipio": "Santa Clara do Sul",
@@ -4324,7 +6048,11 @@
       "centroid": [
         -52.1328,
         -29.4529
-      ]
+      ],
+      "rank": {
+        "high_ha": 369,
+        "high_pct": 3.7
+      }
     },
     {
       "municipio": "Chuí",
@@ -4334,7 +6062,11 @@
       "centroid": [
         -53.4143,
         -33.6491
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Gramado Xavier",
@@ -4344,7 +6076,11 @@
       "centroid": [
         -52.598,
         -29.2895
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ivorá",
@@ -4354,7 +6090,11 @@
       "centroid": [
         -53.5859,
         -29.513
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Relvado",
@@ -4364,7 +6104,11 @@
       "centroid": [
         -52.0669,
         -29.1177
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Bom Princípio",
@@ -4374,7 +6118,11 @@
       "centroid": [
         -51.3632,
         -29.4683
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Pádua",
@@ -4384,7 +6132,11 @@
       "centroid": [
         -51.3158,
         -29.0022
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Poço das Antas",
@@ -4394,7 +6146,11 @@
       "centroid": [
         -51.6408,
         -29.4459
-      ]
+      ],
+      "rank": {
+        "high_ha": 63,
+        "high_pct": 0.8
+      }
     },
     {
       "municipio": "Dom Pedro de Alcântara",
@@ -4404,7 +6160,11 @@
       "centroid": [
         -49.8565,
         -29.3674
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 1.2
+      }
     },
     {
       "municipio": "Capitão",
@@ -4414,7 +6174,11 @@
       "centroid": [
         -51.9844,
         -29.2844
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Feliz",
@@ -4424,7 +6188,11 @@
       "centroid": [
         -51.2855,
         -29.4556
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Mariana Pimentel",
@@ -4434,7 +6202,11 @@
       "centroid": [
         -51.5866,
         -30.3161
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Muçum",
@@ -4444,7 +6216,11 @@
       "centroid": [
         -51.8162,
         -29.1401
-      ]
+      ],
+      "rank": {
+        "high_ha": 327,
+        "high_pct": 2.6
+      }
     },
     {
       "municipio": "Faxinal do Soturno",
@@ -4454,7 +6230,11 @@
       "centroid": [
         -53.4638,
         -29.5596
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Putinga",
@@ -4464,7 +6244,11 @@
       "centroid": [
         -52.1436,
         -29.028
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Ibarama",
@@ -4474,7 +6258,11 @@
       "centroid": [
         -53.1663,
         -29.4192
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Roca Sales",
@@ -4484,7 +6272,11 @@
       "centroid": [
         -51.8307,
         -29.2565
-      ]
+      ],
+      "rank": {
+        "high_ha": 685,
+        "high_pct": 2.8
+      }
     },
     {
       "municipio": "Gramado",
@@ -4494,7 +6286,11 @@
       "centroid": [
         -50.8949,
         -29.3871
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Canela",
@@ -4504,7 +6300,11 @@
       "centroid": [
         -50.773,
         -29.3507
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Bento Gonçalves",
@@ -4514,7 +6314,11 @@
       "centroid": [
         -51.5534,
         -29.1256
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Campestre da Serra",
@@ -4524,7 +6328,11 @@
       "centroid": [
         -51.1017,
         -28.7187
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cerro Branco",
@@ -4534,7 +6342,11 @@
       "centroid": [
         -52.9949,
         -29.6309
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cerro Grande do Sul",
@@ -4544,7 +6356,11 @@
       "centroid": [
         -51.7598,
         -30.5847
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Nova Petrópolis",
@@ -4554,7 +6370,11 @@
       "centroid": [
         -51.0859,
         -29.3746
-      ]
+      ],
+      "rank": {
+        "high_ha": 200,
+        "high_pct": 0.6
+      }
     },
     {
       "municipio": "São Vendelino",
@@ -4564,7 +6384,11 @@
       "centroid": [
         -51.3728,
         -29.3826
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sertão Santana",
@@ -4574,7 +6398,11 @@
       "centroid": [
         -51.6302,
         -30.4691
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Travesseiro",
@@ -4584,7 +6412,11 @@
       "centroid": [
         -52.087,
         -29.2841
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Imigrante",
@@ -4594,7 +6426,11 @@
       "centroid": [
         -51.7744,
         -29.3441
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Capão Bonito do Sul",
@@ -4604,7 +6440,11 @@
       "centroid": [
         -51.3858,
         -28.1533
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Marques de Souza",
@@ -4614,7 +6454,11 @@
       "centroid": [
         -52.147,
         -29.2919
-      ]
+      ],
+      "rank": {
+        "high_ha": 190,
+        "high_pct": 1.3
+      }
     },
     {
       "municipio": "Barão do Triunfo",
@@ -4624,7 +6468,11 @@
       "centroid": [
         -51.7987,
         -30.4176
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São José do Herval",
@@ -4634,7 +6482,11 @@
       "centroid": [
         -52.2724,
         -29.0657
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Mampituba",
@@ -4644,7 +6496,11 @@
       "centroid": [
         -50.0024,
         -29.2618
-      ]
+      ],
+      "rank": {
+        "high_ha": 1138,
+        "high_pct": 6.4
+      }
     },
     {
       "municipio": "Sapucaia do Sul",
@@ -4654,7 +6510,11 @@
       "centroid": [
         -51.1336,
         -29.8226
-      ]
+      ],
+      "rank": {
+        "high_ha": 558,
+        "high_pct": 8.2
+      }
     },
     {
       "municipio": "Picada Café",
@@ -4664,7 +6524,11 @@
       "centroid": [
         -51.1094,
         -29.4611
-      ]
+      ],
+      "rank": {
+        "high_ha": 63,
+        "high_pct": 0.6
+      }
     },
     {
       "municipio": "Porto Alegre",
@@ -4674,7 +6538,11 @@
       "centroid": [
         -51.1653,
         -30.0916
-      ]
+      ],
+      "rank": {
+        "high_ha": 8005,
+        "high_pct": 13.8
+      }
     },
     {
       "municipio": "Caxias do Sul",
@@ -4684,7 +6552,11 @@
       "centroid": [
         -51.0233,
         -29.1116
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Marcos",
@@ -4694,7 +6566,11 @@
       "centroid": [
         -51.067,
         -28.9618
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Muitos Capões",
@@ -4704,7 +6580,11 @@
       "centroid": [
         -51.235,
         -28.3763
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Coqueiro Baixo",
@@ -4714,7 +6594,11 @@
       "centroid": [
         -52.1266,
         -29.167
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Forquetinha",
@@ -4724,7 +6608,11 @@
       "centroid": [
         -52.126,
         -29.388
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Vale Real",
@@ -4734,7 +6622,11 @@
       "centroid": [
         -51.2482,
         -29.3625
-      ]
+      ],
+      "rank": {
+        "high_ha": 179,
+        "high_pct": 3.4
+      }
     },
     {
       "municipio": "Canoas",
@@ -4744,7 +6636,11 @@
       "centroid": [
         -51.1805,
         -29.9121
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Três Forquilhas",
@@ -4754,7 +6650,11 @@
       "centroid": [
         -50.0866,
         -29.4263
-      ]
+      ],
+      "rank": {
+        "high_ha": 32,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Esmeralda",
@@ -4764,7 +6664,11 @@
       "centroid": [
         -51.1741,
         -28.0365
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Boqueirão do Leão",
@@ -4774,7 +6678,11 @@
       "centroid": [
         -52.4192,
         -29.3042
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cachoeirinha",
@@ -4784,7 +6692,11 @@
       "centroid": [
         -51.0952,
         -29.9208
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Santa Tereza",
@@ -4794,7 +6706,11 @@
       "centroid": [
         -51.7109,
         -29.1643
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São Francisco de Paula",
@@ -4804,7 +6720,11 @@
       "centroid": [
         -50.5464,
         -29.1992
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Riozinho",
@@ -4814,7 +6734,11 @@
       "centroid": [
         -50.3973,
         -29.6164
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Herveiras",
@@ -4824,7 +6748,11 @@
       "centroid": [
         -52.6702,
         -29.44
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Esteio",
@@ -4834,7 +6762,11 @@
       "centroid": [
         -51.1764,
         -29.8518
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Cambará do Sul",
@@ -4844,7 +6776,11 @@
       "centroid": [
         -50.1356,
         -29.0618
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Progresso",
@@ -4854,7 +6790,11 @@
       "centroid": [
         -52.3215,
         -29.2226
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Maquiné",
@@ -4864,7 +6804,11 @@
       "centroid": [
         -50.2109,
         -29.6339
-      ]
+      ],
+      "rank": {
+        "high_ha": 3476,
+        "high_pct": 4.9
+      }
     },
     {
       "municipio": "Pouso Novo",
@@ -4874,7 +6818,11 @@
       "centroid": [
         -52.2298,
         -29.1575
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Três Cachoeiras",
@@ -4884,7 +6832,11 @@
       "centroid": [
         -49.9623,
         -29.4746
-      ]
+      ],
+      "rank": {
+        "high_ha": 4182,
+        "high_pct": 14.6
+      }
     },
     {
       "municipio": "Sinimbu",
@@ -4894,7 +6846,11 @@
       "centroid": [
         -52.5727,
         -29.4427
-      ]
+      ],
+      "rank": {
+        "high_ha": 242,
+        "high_pct": 0.4
+      }
     },
     {
       "municipio": "Monte Alegre dos Campos",
@@ -4904,7 +6860,11 @@
       "centroid": [
         -50.8013,
         -28.6955
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Jaquirana",
@@ -4914,7 +6874,11 @@
       "centroid": [
         -50.3585,
         -28.9447
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Itati",
@@ -4924,7 +6888,11 @@
       "centroid": [
         -50.1641,
         -29.4618
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Vacaria",
@@ -4934,7 +6902,11 @@
       "centroid": [
         -50.9247,
         -28.3787
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Sério",
@@ -4944,7 +6916,11 @@
       "centroid": [
         -52.2422,
         -29.3952
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Bom Jesus",
@@ -4954,7 +6930,11 @@
       "centroid": [
         -50.4279,
         -28.5893
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "São José dos Ausentes",
@@ -4964,7 +6944,11 @@
       "centroid": [
         -49.9586,
         -28.643
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Canudos do Vale",
@@ -4974,7 +6958,11 @@
       "centroid": [
         -52.2345,
         -29.3264
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "municipio": "Lagoa Mirim",
@@ -4984,7 +6972,11 @@
       "centroid": [
         -52.9953,
         -32.7697
-      ]
+      ],
+      "rank": {
+        "high_ha": 211,
+        "high_pct": 0.1
+      }
     },
     {
       "municipio": "Lagoa dos Patos",
@@ -4994,7 +6986,11 @@
       "centroid": [
         -51.3765,
         -31.0802
-      ]
+      ],
+      "rank": {
+        "high_ha": 411,
+        "high_pct": 0.0
+      }
     }
   ]
 }

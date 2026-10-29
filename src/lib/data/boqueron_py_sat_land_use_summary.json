@@ -14,7 +14,15 @@
       "centroid": [
         -60.3036,
         -22.3771
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.9,
+        "trees_ha": 361103,
+        "crops_pct": 17.5,
+        "crops_ha": 253410,
+        "built_pct": 5.8,
+        "built_ha": 83500
+      }
     },
     {
       "distrito": "Gral. Eugenio A. Garay",
@@ -24,7 +32,15 @@
       "centroid": [
         -61.0698,
         -21.1398
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.2,
+        "trees_ha": 1747016,
+        "crops_pct": 11.5,
+        "crops_ha": 538207,
+        "built_pct": 4.5,
+        "built_ha": 213071
+      }
     },
     {
       "distrito": "Pedro P. Pena",
@@ -34,7 +50,15 @@
       "centroid": [
         -61.3642,
         -22.7396
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.6,
+        "trees_ha": 937033,
+        "crops_pct": 10.1,
+        "crops_ha": 370200,
+        "built_pct": 3.5,
+        "built_ha": 127103
+      }
     }
   ]
 }

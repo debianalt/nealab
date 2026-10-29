@@ -14,7 +14,15 @@
       "centroid": [
         -62.2609,
         -22.9514
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 43.6,
+        "nbi_n": 1298,
+        "cloacas_pct": 78.2,
+        "cloacas_n": 2330,
+        "hacin_pct": 45.0,
+        "hacin_n": 1341
+      }
     },
     {
       "dpto": "Bermejo",
@@ -24,7 +32,15 @@
       "centroid": [
         -61.4778,
         -24.2184
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 24.8,
+        "nbi_n": 1240,
+        "cloacas_pct": 87.0,
+        "cloacas_n": 4356,
+        "hacin_pct": 24.3,
+        "hacin_n": 1216
+      }
     },
     {
       "dpto": "Patiño",
@@ -34,7 +50,15 @@
       "centroid": [
         -59.0809,
         -24.9268
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 13.2,
+        "nbi_n": 3658,
+        "cloacas_pct": 94.6,
+        "cloacas_n": 26244,
+        "hacin_pct": 13.9,
+        "hacin_n": 3861
+      }
     },
     {
       "dpto": "Pirané",
@@ -44,7 +68,15 @@
       "centroid": [
         -59.0324,
         -25.6655
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.8,
+        "nbi_n": 2397,
+        "cloacas_pct": 85.0,
+        "cloacas_n": 20746,
+        "hacin_pct": 12.3,
+        "hacin_n": 3002
+      }
     },
     {
       "dpto": "Matacos",
@@ -54,7 +86,15 @@
       "centroid": [
         -61.9734,
         -23.902
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 19.5,
+        "nbi_n": 1009,
+        "cloacas_pct": 91.3,
+        "cloacas_n": 4717,
+        "hacin_pct": 19.7,
+        "hacin_n": 1019
+      }
     },
     {
       "dpto": "Pilagás",
@@ -64,7 +104,15 @@
       "centroid": [
         -58.7089,
         -24.9733
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.1,
+        "nbi_n": 570,
+        "cloacas_pct": 96.1,
+        "cloacas_n": 6028,
+        "hacin_pct": 11.8,
+        "hacin_n": 742
+      }
     },
     {
       "dpto": "Laishi",
@@ -74,7 +122,15 @@
       "centroid": [
         -58.414,
         -26.4014
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.7,
+        "nbi_n": 680,
+        "cloacas_pct": 88.6,
+        "cloacas_n": 5656,
+        "hacin_pct": 13.7,
+        "hacin_n": 872
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -84,7 +140,15 @@
       "centroid": [
         -58.1397,
         -25.321
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.6,
+        "nbi_n": 2886,
+        "cloacas_pct": 57.8,
+        "cloacas_n": 17438,
+        "hacin_pct": 12.1,
+        "hacin_n": 3656
+      }
     },
     {
       "dpto": "Formosa",
@@ -94,7 +158,15 @@
       "centroid": [
         -58.174,
         -26.172
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.8,
+        "nbi_n": 8624,
+        "cloacas_pct": 26.5,
+        "cloacas_n": 23406,
+        "hacin_pct": 10.9,
+        "hacin_n": 9641
+      }
     }
   ]
 }

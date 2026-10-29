@@ -14,7 +14,11 @@
       "centroid": [
         -56.8303,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "high_ha": 7163,
+        "high_pct": 93.4
+      }
     },
     {
       "distrito": "Santiago",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.7915,
         -27.1361
-      ]
+      ],
+      "rank": {
+        "high_ha": 50180,
+        "high_pct": 46.0
+      }
     },
     {
       "distrito": "Santa Rosa",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.7968,
         -26.8686
-      ]
+      ],
+      "rank": {
+        "high_ha": 49011,
+        "high_pct": 50.9
+      }
     },
     {
       "distrito": "Santa Maria",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.8905,
         -26.73
-      ]
+      ],
+      "rank": {
+        "high_ha": 20203,
+        "high_pct": 47.2
+      }
     },
     {
       "distrito": "San Ignacio",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.1427,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "high_ha": 103184,
+        "high_pct": 58.5
+      }
     },
     {
       "distrito": "Yabebyry",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.1846,
         -27.2526
-      ]
+      ],
+      "rank": {
+        "high_ha": 35929,
+        "high_pct": 36.9
+      }
     },
     {
       "distrito": "Ayolas",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.0272,
         -27.3756
-      ]
+      ],
+      "rank": {
+        "high_ha": 2612,
+        "high_pct": 2.6
+      }
     },
     {
       "distrito": "San Miguel",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.9666,
         -26.5689
-      ]
+      ],
+      "rank": {
+        "high_ha": 21,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Villa Florida",
@@ -94,7 +126,11 @@
       "centroid": [
         -57.1253,
         -26.4611
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Juan Bautista",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.426,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "high_ha": 21077,
+        "high_pct": 8.4
+      }
     }
   ]
 }

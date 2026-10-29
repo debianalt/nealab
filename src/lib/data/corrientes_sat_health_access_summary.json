@@ -14,7 +14,11 @@
       "centroid": [
         -58.5733,
         -28.6609
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Saladas",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.6938,
         -28.1886
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Goya",
@@ -34,7 +42,11 @@
       "centroid": [
         -59.2645,
         -29.3931
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -44,7 +56,11 @@
       "centroid": [
         -59.0107,
         -28.5133
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Esquina",
@@ -54,7 +70,11 @@
       "centroid": [
         -59.2346,
         -29.7806
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -64,7 +84,11 @@
       "centroid": [
         -58.2535,
         -27.5477
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Empedrado",
@@ -74,7 +98,11 @@
       "centroid": [
         -58.5321,
         -27.8751
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Lavalle",
@@ -84,7 +112,11 @@
       "centroid": [
         -59.0791,
         -28.9281
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -94,7 +126,11 @@
       "centroid": [
         -58.2423,
         -28.0436
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "General Paz",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.4525,
         -27.5917
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.874,
         -27.7591
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.0137,
         -27.9746
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Concepción",
@@ -134,7 +182,11 @@
       "centroid": [
         -58.0893,
         -28.2861
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "San Miguel",
@@ -144,7 +196,11 @@
       "centroid": [
         -57.2695,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -154,7 +210,11 @@
       "centroid": [
         -58.3444,
         -29.4371
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Sauce",
@@ -164,7 +224,11 @@
       "centroid": [
         -58.6302,
         -30.0717
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Itatí",
@@ -174,7 +238,11 @@
       "centroid": [
         -58.1494,
         -27.3243
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Capital",
@@ -184,7 +252,11 @@
       "centroid": [
         -58.757,
         -27.5141
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "San Cosme",
@@ -194,7 +266,11 @@
       "centroid": [
         -58.5155,
         -27.357
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "General Alvear",
@@ -204,7 +280,11 @@
       "centroid": [
         -56.5038,
         -28.8562
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -214,7 +294,11 @@
       "centroid": [
         -57.9972,
         -30.0419
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Mercedes",
@@ -224,7 +308,11 @@
       "centroid": [
         -58.1608,
         -29.1446
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "San Martín",
@@ -234,7 +322,11 @@
       "centroid": [
         -56.9849,
         -28.8545
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -244,7 +336,11 @@
       "centroid": [
         -57.5828,
         -27.4836
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -254,7 +350,11 @@
       "centroid": [
         -57.5418,
         -30.0344
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     }
   ]
 }

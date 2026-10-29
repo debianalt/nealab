@@ -14,7 +14,15 @@
       "centroid": [
         -60.6287,
         -26.0385
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 21.6,
+        "nbi_n": 4298,
+        "cloacas_pct": 88.2,
+        "cloacas_n": 17579,
+        "hacin_pct": 11.5,
+        "hacin_n": 2292
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -24,7 +32,15 @@
       "centroid": [
         -60.0606,
         -26.9388
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 18.6,
+        "nbi_n": 1862,
+        "cloacas_pct": 65.1,
+        "cloacas_n": 6503,
+        "hacin_pct": 17.8,
+        "hacin_n": 1782
+      }
     },
     {
       "dpto": "Maipú",
@@ -34,7 +50,15 @@
       "centroid": [
         -60.4481,
         -26.4666
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 19.2,
+        "nbi_n": 1621,
+        "cloacas_pct": 82.3,
+        "cloacas_n": 6954,
+        "hacin_pct": 12.6,
+        "hacin_n": 1067
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -44,7 +68,15 @@
       "centroid": [
         -59.2624,
         -26.5636
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.4,
+        "nbi_n": 2438,
+        "cloacas_pct": 74.0,
+        "cloacas_n": 15773,
+        "hacin_pct": 13.4,
+        "hacin_n": 2855
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -54,7 +86,15 @@
       "centroid": [
         -60.1745,
         -26.6802
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 14.7,
+        "nbi_n": 1527,
+        "cloacas_pct": 64.8,
+        "cloacas_n": 6759,
+        "hacin_pct": 12.5,
+        "hacin_n": 1298
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -64,7 +104,15 @@
       "centroid": [
         -60.105,
         -27.5908
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.9,
+        "nbi_n": 163,
+        "cloacas_pct": 70.8,
+        "cloacas_n": 963,
+        "hacin_pct": 13.6,
+        "hacin_n": 185
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -74,7 +122,15 @@
       "centroid": [
         -59.8639,
         -26.9787
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 13.1,
+        "nbi_n": 580,
+        "cloacas_pct": 57.0,
+        "cloacas_n": 2517,
+        "hacin_pct": 13.6,
+        "hacin_n": 600
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -84,7 +140,15 @@
       "centroid": [
         -59.5185,
         -26.9066
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.9,
+        "nbi_n": 558,
+        "cloacas_pct": 87.6,
+        "cloacas_n": 5507,
+        "hacin_pct": 10.2,
+        "hacin_n": 643
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -94,7 +158,15 @@
       "centroid": [
         -60.9495,
         -26.4947
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 15.7,
+        "nbi_n": 1807,
+        "cloacas_pct": 95.8,
+        "cloacas_n": 10992,
+        "hacin_pct": 12.5,
+        "hacin_n": 1432
+      }
     },
     {
       "dpto": "9 de Julio",
@@ -104,7 +176,15 @@
       "centroid": [
         -61.094,
         -27.0465
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.0,
+        "nbi_n": 895,
+        "cloacas_pct": 95.3,
+        "cloacas_n": 9437,
+        "hacin_pct": 10.0,
+        "hacin_n": 990
+      }
     },
     {
       "dpto": "Independencia",
@@ -114,7 +194,15 @@
       "centroid": [
         -60.746,
         -26.5928
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 26.7,
+        "nbi_n": 1787,
+        "cloacas_pct": 93.2,
+        "cloacas_n": 6232,
+        "hacin_pct": 12.5,
+        "hacin_n": 834
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -124,7 +212,15 @@
       "centroid": [
         -60.3845,
         -27.2115
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.6,
+        "nbi_n": 676,
+        "cloacas_pct": 94.4,
+        "cloacas_n": 5083,
+        "hacin_pct": 10.6,
+        "hacin_n": 571
+      }
     },
     {
       "dpto": "2 de Abril",
@@ -134,7 +230,15 @@
       "centroid": [
         -61.281,
         -27.6091
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.4,
+        "nbi_n": 281,
+        "cloacas_pct": 96.8,
+        "cloacas_n": 2884,
+        "hacin_pct": 8.0,
+        "hacin_n": 239
+      }
     },
     {
       "dpto": "12 de Octubre",
@@ -144,7 +248,15 @@
       "centroid": [
         -61.2476,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 17.8,
+        "nbi_n": 1342,
+        "cloacas_pct": 96.9,
+        "cloacas_n": 7290,
+        "hacin_pct": 10.3,
+        "hacin_n": 772
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -154,7 +266,15 @@
       "centroid": [
         -61.0058,
         -26.9294
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 19.1,
+        "nbi_n": 750,
+        "cloacas_pct": 94.5,
+        "cloacas_n": 3721,
+        "hacin_pct": 11.7,
+        "hacin_n": 461
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -164,7 +284,15 @@
       "centroid": [
         -61.1724,
         -27.2451
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.0,
+        "nbi_n": 921,
+        "cloacas_pct": 88.5,
+        "cloacas_n": 10185,
+        "hacin_pct": 9.6,
+        "hacin_n": 1100
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -174,7 +302,15 @@
       "centroid": [
         -61.1354,
         -27.8402
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.0,
+        "nbi_n": 329,
+        "cloacas_pct": 96.4,
+        "cloacas_n": 3509,
+        "hacin_pct": 8.7,
+        "hacin_n": 317
+      }
     },
     {
       "dpto": "Libertad",
@@ -184,7 +320,15 @@
       "centroid": [
         -59.1935,
         -27.304
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.3,
+        "nbi_n": 409,
+        "cloacas_pct": 45.0,
+        "cloacas_n": 1979,
+        "hacin_pct": 10.1,
+        "hacin_n": 444
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -194,7 +338,15 @@
       "centroid": [
         -60.6361,
         -27.2059
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 19.4,
+        "nbi_n": 1293,
+        "cloacas_pct": 93.4,
+        "cloacas_n": 6217,
+        "hacin_pct": 12.9,
+        "hacin_n": 857
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -204,7 +356,15 @@
       "centroid": [
         -60.3662,
         -26.7051
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.4,
+        "nbi_n": 4222,
+        "cloacas_pct": 64.3,
+        "cloacas_n": 21845,
+        "hacin_pct": 9.6,
+        "hacin_n": 3252
+      }
     },
     {
       "dpto": "Bermejo",
@@ -214,7 +374,15 @@
       "centroid": [
         -58.6749,
         -26.9131
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.3,
+        "nbi_n": 790,
+        "cloacas_pct": 81.5,
+        "cloacas_n": 7743,
+        "hacin_pct": 10.5,
+        "hacin_n": 1001
+      }
     },
     {
       "dpto": "General Donovan",
@@ -224,7 +392,15 @@
       "centroid": [
         -59.4059,
         -27.0776
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.5,
+        "nbi_n": 414,
+        "cloacas_pct": 89.7,
+        "cloacas_n": 4390,
+        "hacin_pct": 10.2,
+        "hacin_n": 499
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -234,7 +410,15 @@
       "centroid": [
         -60.718,
         -27.6372
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.6,
+        "nbi_n": 1747,
+        "cloacas_pct": 68.6,
+        "cloacas_n": 13879,
+        "hacin_pct": 9.6,
+        "hacin_n": 1941
+      }
     },
     {
       "dpto": "1° de Mayo",
@@ -244,7 +428,15 @@
       "centroid": [
         -58.9587,
         -27.1679
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.2,
+        "nbi_n": 445,
+        "cloacas_pct": 92.8,
+        "cloacas_n": 4497,
+        "hacin_pct": 10.8,
+        "hacin_n": 525
+      }
     },
     {
       "dpto": "San Fernando",
@@ -254,7 +446,15 @@
       "centroid": [
         -58.9957,
         -27.5283
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 6.9,
+        "nbi_n": 9795,
+        "cloacas_pct": 42.4,
+        "cloacas_n": 60247,
+        "hacin_pct": 8.2,
+        "hacin_n": 11670
+      }
     }
   ]
 }

@@ -14,7 +14,11 @@
       "centroid": [
         -57.426,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": -0.9
+      }
     },
     {
       "distrito": "San Ignacio",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.1427,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -0.9
+      }
     },
     {
       "distrito": "Santa Maria",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.8905,
         -26.73
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -1.3
+      }
     },
     {
       "distrito": "Yabebyry",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.1846,
         -27.2526
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.5,
+        "pm25_delta": -0.4
+      }
     },
     {
       "distrito": "Santa Rosa",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.7968,
         -26.8686
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "San Patricio",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.8303,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "Ayolas",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.0272,
         -27.3756
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -0.8
+      }
     },
     {
       "distrito": "Santiago",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.7915,
         -27.1361
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -1.2
+      }
     },
     {
       "distrito": "San Miguel",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.9666,
         -26.5689
-      ]
+      ],
+      "rank": {
+        "pm25_ug": null,
+        "pm25_delta": null
+      }
     },
     {
       "distrito": "Villa Florida",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.1253,
         -26.4611
-      ]
+      ],
+      "rank": {
+        "pm25_ug": null,
+        "pm25_delta": null
+      }
     }
   ]
 }

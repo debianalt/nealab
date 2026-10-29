@@ -14,7 +14,11 @@
       "centroid": [
         -56.7993,
         -24.5836
-      ]
+      ],
+      "rank": {
+        "high_ha": 49464,
+        "high_pct": 49.1
+      }
     },
     {
       "distrito": "Nueva Germania",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.3104,
         -23.735
-      ]
+      ],
+      "rank": {
+        "high_ha": 121069,
+        "high_pct": 50.4
+      }
     },
     {
       "distrito": "Tacuati",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.6316,
         -23.5417
-      ]
+      ],
+      "rank": {
+        "high_ha": 107271,
+        "high_pct": 43.1
+      }
     },
     {
       "distrito": "Elizardo Aquino",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.7857,
         -24.3795
-      ]
+      ],
+      "rank": {
+        "high_ha": 36571,
+        "high_pct": 40.9
+      }
     },
     {
       "distrito": "S.pedro De Ycuamandyyu",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.0771,
         -23.775
-      ]
+      ],
+      "rank": {
+        "high_ha": 105143,
+        "high_pct": 29.7
+      }
     },
     {
       "distrito": "Union",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.5298,
         -24.8644
-      ]
+      ],
+      "rank": {
+        "high_ha": 20624,
+        "high_pct": 31.8
+      }
     },
     {
       "distrito": "Chore",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.5957,
         -24.1739
-      ]
+      ],
+      "rank": {
+        "high_ha": 32579,
+        "high_pct": 29.7
+      }
     },
     {
       "distrito": "Lima",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.5553,
         -23.9736
-      ]
+      ],
+      "rank": {
+        "high_ha": 17043,
+        "high_pct": 23.9
+      }
     },
     {
       "distrito": "25 De Diciembre",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.8088,
         -24.776
-      ]
+      ],
+      "rank": {
+        "high_ha": 18718,
+        "high_pct": 18.1
+      }
     },
     {
       "distrito": "Villa Del Rosario",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.0866,
         -24.5571
-      ]
+      ],
+      "rank": {
+        "high_ha": 32211,
+        "high_pct": 13.7
+      }
     },
     {
       "distrito": "Isidoro Resquin",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.2011,
         -24.0042
-      ]
+      ],
+      "rank": {
+        "high_ha": 22857,
+        "high_pct": 19.7
+      }
     },
     {
       "distrito": "San Estanislao",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.2615,
         -24.5423
-      ]
+      ],
+      "rank": {
+        "high_ha": 98507,
+        "high_pct": 23.1
+      }
     },
     {
       "distrito": "San Pablo",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.9215,
         -24.1315
-      ]
+      ],
+      "rank": {
+        "high_ha": 2159,
+        "high_pct": 6.1
+      }
     },
     {
       "distrito": "Yataity Del Norte",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.3437,
         -24.8237
-      ]
+      ],
+      "rank": {
+        "high_ha": 6099,
+        "high_pct": 18.9
+      }
     },
     {
       "distrito": "Antequera",
@@ -154,7 +210,11 @@
       "centroid": [
         -57.1736,
         -24.0802
-      ]
+      ],
+      "rank": {
+        "high_ha": 537,
+        "high_pct": 0.9
+      }
     }
   ]
 }

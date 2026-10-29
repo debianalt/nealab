@@ -14,7 +14,15 @@
       "centroid": [
         -57.6317,
         -27.472
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.2,
+        "trees_ha": 18614,
+        "crops_pct": 11.8,
+        "crops_ha": 10383,
+        "built_pct": 4.3,
+        "built_ha": 3752
+      }
     },
     {
       "dpto": "Lavalle",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.9267,
         -28.9976
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.3,
+        "trees_ha": 40311,
+        "crops_pct": 8.9,
+        "crops_ha": 16840,
+        "built_pct": 5.0,
+        "built_ha": 9541
+      }
     },
     {
       "dpto": "General Paz",
@@ -34,7 +50,15 @@
       "centroid": [
         -57.8035,
         -27.7136
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.3,
+        "trees_ha": 99639,
+        "crops_pct": 5.2,
+        "crops_ha": 16166,
+        "built_pct": 3.6,
+        "built_ha": 11188
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -44,7 +68,15 @@
       "centroid": [
         -58.9292,
         -28.4852
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.5,
+        "trees_ha": 59776,
+        "crops_pct": 8.8,
+        "crops_ha": 20626,
+        "built_pct": 4.3,
+        "built_ha": 10035
+      }
     },
     {
       "dpto": "San Roque",
@@ -54,7 +86,15 @@
       "centroid": [
         -58.603,
         -28.7144
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.4,
+        "trees_ha": 77589,
+        "crops_pct": 7.7,
+        "crops_ha": 23406,
+        "built_pct": 3.8,
+        "built_ha": 11571
+      }
     },
     {
       "dpto": "Goya",
@@ -64,7 +104,15 @@
       "centroid": [
         -59.2704,
         -29.4647
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.3,
+        "trees_ha": 155480,
+        "crops_pct": 7.3,
+        "crops_ha": 44599,
+        "built_pct": 4.0,
+        "built_ha": 24728
+      }
     },
     {
       "dpto": "Saladas",
@@ -74,7 +122,15 @@
       "centroid": [
         -58.602,
         -28.2037
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.6,
+        "trees_ha": 75352,
+        "crops_pct": 7.3,
+        "crops_ha": 16878,
+        "built_pct": 3.8,
+        "built_ha": 8810
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -84,7 +140,15 @@
       "centroid": [
         -58.2668,
         -27.6004
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.6,
+        "trees_ha": 117700,
+        "crops_pct": 5.0,
+        "crops_ha": 15534,
+        "built_pct": 3.6,
+        "built_ha": 11298
+      }
     },
     {
       "dpto": "Esquina",
@@ -94,7 +158,15 @@
       "centroid": [
         -59.2457,
         -29.9916
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.4,
+        "trees_ha": 160124,
+        "crops_pct": 7.4,
+        "crops_ha": 36649,
+        "built_pct": 3.9,
+        "built_ha": 19053
+      }
     },
     {
       "dpto": "Itatí",
@@ -104,7 +176,15 @@
       "centroid": [
         -58.0869,
         -27.3361
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.1,
+        "trees_ha": 26063,
+        "crops_pct": 5.4,
+        "crops_ha": 5020,
+        "built_pct": 3.9,
+        "built_ha": 3622
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -114,7 +194,15 @@
       "centroid": [
         -58.1721,
         -28.0052
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.3,
+        "trees_ha": 41172,
+        "crops_pct": 6.4,
+        "crops_ha": 7674,
+        "built_pct": 3.8,
+        "built_ha": 4561
+      }
     },
     {
       "dpto": "Mercedes",
@@ -124,7 +212,15 @@
       "centroid": [
         -57.8356,
         -29.0512
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.5,
+        "trees_ha": 289054,
+        "crops_pct": 7.3,
+        "crops_ha": 90071,
+        "built_pct": 3.7,
+        "built_ha": 45910
+      }
     },
     {
       "dpto": "Empedrado",
@@ -134,7 +230,15 @@
       "centroid": [
         -58.6717,
         -27.893
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.6,
+        "trees_ha": 84173,
+        "crops_pct": 6.2,
+        "crops_ha": 15610,
+        "built_pct": 3.8,
+        "built_ha": 9438
+      }
     },
     {
       "dpto": "General Alvear",
@@ -144,7 +248,15 @@
       "centroid": [
         -56.5245,
         -28.7791
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.5,
+        "trees_ha": 77188,
+        "crops_pct": 5.7,
+        "crops_ha": 13618,
+        "built_pct": 3.4,
+        "built_ha": 8067
+      }
     },
     {
       "dpto": "Concepción",
@@ -154,7 +266,15 @@
       "centroid": [
         -58.0479,
         -28.4115
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.5,
+        "trees_ha": 215592,
+        "crops_pct": 5.7,
+        "crops_ha": 35729,
+        "built_pct": 3.5,
+        "built_ha": 21796
+      }
     },
     {
       "dpto": "San Cosme",
@@ -164,7 +284,15 @@
       "centroid": [
         -58.5137,
         -27.3768
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.4,
+        "trees_ha": 23647,
+        "crops_pct": 6.2,
+        "crops_ha": 4490,
+        "built_pct": 5.5,
+        "built_ha": 4011
+      }
     },
     {
       "dpto": "San Martín",
@@ -174,7 +302,15 @@
       "centroid": [
         -56.9513,
         -28.8303
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.3,
+        "trees_ha": 269710,
+        "crops_pct": 5.7,
+        "crops_ha": 45983,
+        "built_pct": 3.3,
+        "built_ha": 26927
+      }
     },
     {
       "dpto": "San Miguel",
@@ -184,7 +320,15 @@
       "centroid": [
         -57.4252,
         -27.8708
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.5,
+        "trees_ha": 134881,
+        "crops_pct": 4.5,
+        "crops_ha": 15868,
+        "built_pct": 3.3,
+        "built_ha": 11678
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -194,7 +338,15 @@
       "centroid": [
         -57.3264,
         -29.599
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.2,
+        "trees_ha": 162359,
+        "crops_pct": 7.3,
+        "crops_ha": 45361,
+        "built_pct": 3.7,
+        "built_ha": 22931
+      }
     },
     {
       "dpto": "Capital",
@@ -204,7 +356,15 @@
       "centroid": [
         -58.7619,
         -27.5213
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.9,
+        "trees_ha": 16033,
+        "crops_pct": 6.8,
+        "crops_ha": 4398,
+        "built_pct": 12.8,
+        "built_ha": 8256
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -214,7 +374,15 @@
       "centroid": [
         -58.3336,
         -29.7068
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.6,
+        "trees_ha": 254632,
+        "crops_pct": 7.2,
+        "crops_ha": 74720,
+        "built_pct": 3.8,
+        "built_ha": 38945
+      }
     },
     {
       "dpto": "Sauce",
@@ -224,7 +392,15 @@
       "centroid": [
         -58.8097,
         -30.0011
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.5,
+        "trees_ha": 112956,
+        "crops_pct": 7.0,
+        "crops_ha": 21526,
+        "built_pct": 3.6,
+        "built_ha": 11095
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -234,7 +410,15 @@
       "centroid": [
         -56.248,
         -28.2257
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.3,
+        "trees_ha": 324599,
+        "crops_pct": 6.3,
+        "crops_ha": 54386,
+        "built_pct": 3.4,
+        "built_ha": 30004
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -244,7 +428,15 @@
       "centroid": [
         -57.871,
         -30.2487
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.3,
+        "trees_ha": 82907,
+        "crops_pct": 8.3,
+        "crops_ha": 27323,
+        "built_pct": 4.0,
+        "built_ha": 13243
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -254,7 +446,15 @@
       "centroid": [
         -56.8203,
         -27.9285
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.2,
+        "trees_ha": 462528,
+        "crops_pct": 4.5,
+        "crops_ha": 49317,
+        "built_pct": 3.3,
+        "built_ha": 35960
+      }
     }
   ]
 }

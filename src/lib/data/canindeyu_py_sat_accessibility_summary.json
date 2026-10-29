@@ -14,7 +14,12 @@
       "centroid": [
         -55.6588,
         -23.7626
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 178,
+        "min_capital": null,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Salto Del Guaira",
@@ -24,7 +29,12 @@
       "centroid": [
         -54.4392,
         -24.212
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 190,
+        "min_capital": null,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Curuguaty",
@@ -34,7 +44,12 @@
       "centroid": [
         -55.7259,
         -24.3773
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 52,
+        "min_capital": null,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Villa Igatimi",
@@ -44,7 +59,12 @@
       "centroid": [
         -55.4917,
         -24.1422
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 242,
+        "min_capital": null,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "F. Caballero Alvarez",
@@ -54,7 +74,12 @@
       "centroid": [
         -54.7025,
         -24.3729
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 190,
+        "min_capital": null,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Corpus Christi",
@@ -64,7 +89,12 @@
       "centroid": [
         -55.0227,
         -24.1393
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 216,
+        "min_capital": null,
+        "km_hospital": null
+      }
     }
   ]
 }

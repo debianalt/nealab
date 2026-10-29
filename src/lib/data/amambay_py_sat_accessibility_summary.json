@@ -14,7 +14,12 @@
       "centroid": [
         -56.4511,
         -22.475
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 105,
+        "min_capital": 131,
+        "km_hospital": 75.4
+      }
     },
     {
       "distrito": "Pedro Juan Caballero",
@@ -24,7 +29,12 @@
       "centroid": [
         -55.9568,
         -22.7892
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 132,
+        "min_capital": 101,
+        "km_hospital": 38.2
+      }
     }
   ]
 }

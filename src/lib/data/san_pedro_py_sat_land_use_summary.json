@@ -14,7 +14,15 @@
       "centroid": [
         -57.0866,
         -24.5571
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.3,
+        "trees_ha": 63999,
+        "crops_pct": 10.5,
+        "crops_ha": 24620,
+        "built_pct": 3.9,
+        "built_ha": 9241
+      }
     },
     {
       "distrito": "Chore",
@@ -24,7 +32,15 @@
       "centroid": [
         -56.5957,
         -24.1739
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.9,
+        "trees_ha": 30614,
+        "crops_pct": 19.5,
+        "crops_ha": 21423,
+        "built_pct": 6.6,
+        "built_ha": 7257
+      }
     },
     {
       "distrito": "San Pablo",
@@ -34,7 +50,15 @@
       "centroid": [
         -56.9215,
         -24.1315
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.9,
+        "trees_ha": 11974,
+        "crops_pct": 8.9,
+        "crops_ha": 3164,
+        "built_pct": 4.3,
+        "built_ha": 1516
+      }
     },
     {
       "distrito": "Antequera",
@@ -44,7 +68,15 @@
       "centroid": [
         -57.1736,
         -24.0802
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.8,
+        "trees_ha": 18725,
+        "crops_pct": 8.2,
+        "crops_ha": 4848,
+        "built_pct": 3.9,
+        "built_ha": 2321
+      }
     },
     {
       "distrito": "Lima",
@@ -54,7 +86,15 @@
       "centroid": [
         -56.5553,
         -23.9736
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.8,
+        "trees_ha": 22721,
+        "crops_pct": 13.3,
+        "crops_ha": 9490,
+        "built_pct": 5.0,
+        "built_ha": 3574
+      }
     },
     {
       "distrito": "S.pedro De Ycuamandyyu",
@@ -64,7 +104,15 @@
       "centroid": [
         -57.0771,
         -23.775
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.6,
+        "trees_ha": 101088,
+        "crops_pct": 14.3,
+        "crops_ha": 50648,
+        "built_pct": 4.5,
+        "built_ha": 15761
+      }
     },
     {
       "distrito": "Elizardo Aquino",
@@ -74,7 +122,15 @@
       "centroid": [
         -56.7857,
         -24.3795
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.4,
+        "trees_ha": 27152,
+        "crops_pct": 15.3,
+        "crops_ha": 13688,
+        "built_pct": 5.3,
+        "built_ha": 4769
+      }
     },
     {
       "distrito": "Itacurubi Del Rosario",
@@ -84,7 +140,15 @@
       "centroid": [
         -56.7993,
         -24.5836
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.1,
+        "trees_ha": 28295,
+        "crops_pct": 10.0,
+        "crops_ha": 10072,
+        "built_pct": 4.5,
+        "built_ha": 4516
+      }
     },
     {
       "distrito": "Isidoro Resquin",
@@ -94,7 +158,15 @@
       "centroid": [
         -56.2011,
         -24.0042
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.7,
+        "trees_ha": 29859,
+        "crops_pct": 24.6,
+        "crops_ha": 28551,
+        "built_pct": 5.6,
+        "built_ha": 6495
+      }
     },
     {
       "distrito": "25 De Diciembre",
@@ -104,7 +176,15 @@
       "centroid": [
         -56.8088,
         -24.776
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.5,
+        "trees_ha": 32533,
+        "crops_pct": 7.8,
+        "crops_ha": 8056,
+        "built_pct": 4.0,
+        "built_ha": 4129
+      }
     },
     {
       "distrito": "Yataity Del Norte",
@@ -114,7 +194,15 @@
       "centroid": [
         -56.3437,
         -24.8237
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.4,
+        "trees_ha": 11136,
+        "crops_pct": 12.1,
+        "crops_ha": 3914,
+        "built_pct": 6.4,
+        "built_ha": 2073
+      }
     },
     {
       "distrito": "Nueva Germania",
@@ -124,7 +212,15 @@
       "centroid": [
         -56.3104,
         -23.735
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.4,
+        "trees_ha": 61038,
+        "crops_pct": 21.3,
+        "crops_ha": 51230,
+        "built_pct": 5.6,
+        "built_ha": 13380
+      }
     },
     {
       "distrito": "San Estanislao",
@@ -134,7 +230,15 @@
       "centroid": [
         -56.2615,
         -24.5423
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.4,
+        "trees_ha": 129461,
+        "crops_pct": 20.3,
+        "crops_ha": 86418,
+        "built_pct": 6.0,
+        "built_ha": 25481
+      }
     },
     {
       "distrito": "Tacuati",
@@ -144,7 +248,15 @@
       "centroid": [
         -56.6316,
         -23.5417
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.3,
+        "trees_ha": 67916,
+        "crops_pct": 22.2,
+        "crops_ha": 55371,
+        "built_pct": 4.7,
+        "built_ha": 11585
+      }
     },
     {
       "distrito": "Union",
@@ -154,7 +266,15 @@
       "centroid": [
         -56.5298,
         -24.8644
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.3,
+        "trees_ha": 22880,
+        "crops_pct": 7.9,
+        "crops_ha": 5122,
+        "built_pct": 4.2,
+        "built_ha": 2704
+      }
     }
   ]
 }

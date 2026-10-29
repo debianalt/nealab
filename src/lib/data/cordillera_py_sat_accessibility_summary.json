@@ -14,7 +14,12 @@
       "centroid": [
         -56.8551,
         -25.5913
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": null,
+        "km_hospital": 25.5
+      }
     },
     {
       "distrito": "San Jose Obrero",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.8842,
         -25.1148
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 116,
+        "min_capital": 70,
+        "km_hospital": 28.8
+      }
     },
     {
       "distrito": "Juan De Mena",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.7701,
         -24.9869
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 104,
+        "min_capital": 98,
+        "km_hospital": 35.4
+      }
     },
     {
       "distrito": "Caraguatay",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.7397,
         -25.2179
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 106,
+        "min_capital": 81,
+        "km_hospital": 17.0
+      }
     },
     {
       "distrito": "Itacurubi De La Cordiller",
@@ -54,7 +74,12 @@
       "centroid": [
         -56.8701,
         -25.4677
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": null,
+        "km_hospital": 13.3
+      }
     },
     {
       "distrito": "Arroyos Y Esteros",
@@ -64,7 +89,12 @@
       "centroid": [
         -57.1657,
         -25.0372
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 43,
+        "min_capital": 42,
+        "km_hospital": 22.0
+      }
     },
     {
       "distrito": "Piribebuy",
@@ -74,7 +104,12 @@
       "centroid": [
         -57.0428,
         -25.4661
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 1,
+        "km_hospital": 11.1
+      }
     },
     {
       "distrito": "Loma Grande",
@@ -84,7 +119,12 @@
       "centroid": [
         -57.1909,
         -25.1471
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 45,
+        "min_capital": 30,
+        "km_hospital": 16.2
+      }
     },
     {
       "distrito": "1 De Marzo",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.9751,
         -25.1246
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 60,
+        "min_capital": 29,
+        "km_hospital": 28.4
+      }
     },
     {
       "distrito": "Tobati",
@@ -104,7 +149,12 @@
       "centroid": [
         -57.0454,
         -25.218
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 42,
+        "min_capital": 16,
+        "km_hospital": 19.4
+      }
     },
     {
       "distrito": "Santa Elena",
@@ -114,7 +164,12 @@
       "centroid": [
         -56.8205,
         -25.3962
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 42,
+        "min_capital": 40,
+        "km_hospital": 9.7
+      }
     },
     {
       "distrito": "Mbacayaty Del Yhaguy",
@@ -124,7 +179,12 @@
       "centroid": [
         -56.7007,
         -25.3325
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 73,
+        "min_capital": 74,
+        "km_hospital": 7.8
+      }
     },
     {
       "distrito": "Isla Pucu",
@@ -134,7 +194,12 @@
       "centroid": [
         -56.9,
         -25.302
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 60,
+        "min_capital": 40,
+        "km_hospital": 11.3
+      }
     },
     {
       "distrito": "Atyra",
@@ -144,7 +209,12 @@
       "centroid": [
         -57.1453,
         -25.2524
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 27,
+        "min_capital": 15,
+        "km_hospital": 14.0
+      }
     },
     {
       "distrito": "Eusebio Ayala",
@@ -154,7 +224,12 @@
       "centroid": [
         -56.9762,
         -25.3608
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 31,
+        "min_capital": 23,
+        "km_hospital": 7.0
+      }
     },
     {
       "distrito": "Altos",
@@ -164,7 +239,12 @@
       "centroid": [
         -57.2174,
         -25.2525
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 20,
+        "min_capital": 21,
+        "km_hospital": 12.6
+      }
     },
     {
       "distrito": "Nueva Colombia",
@@ -174,7 +254,12 @@
       "centroid": [
         -57.2658,
         -25.1606
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 23,
+        "min_capital": 31,
+        "km_hospital": 9.9
+      }
     },
     {
       "distrito": "Emboscada",
@@ -184,7 +269,12 @@
       "centroid": [
         -57.3593,
         -25.1259
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 19,
+        "min_capital": 48,
+        "km_hospital": 4.9
+      }
     },
     {
       "distrito": "Caacupe",
@@ -194,7 +284,12 @@
       "centroid": [
         -57.1229,
         -25.3732
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 14,
+        "min_capital": 17,
+        "km_hospital": 4.8
+      }
     },
     {
       "distrito": "San Bernardino",
@@ -204,7 +299,12 @@
       "centroid": [
         -57.2908,
         -25.2889
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 12,
+        "min_capital": 32,
+        "km_hospital": 7.2
+      }
     }
   ]
 }

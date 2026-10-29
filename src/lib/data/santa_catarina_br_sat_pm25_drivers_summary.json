@@ -14,7 +14,11 @@
       "centroid": [
         -50.0737,
         -27.9571
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.6,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Urupema",
@@ -24,7 +28,11 @@
       "centroid": [
         -49.8994,
         -28.0232
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.6,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Calmon",
@@ -34,7 +42,11 @@
       "centroid": [
         -50.9965,
         -26.6202
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "São Joaquim",
@@ -44,7 +56,11 @@
       "centroid": [
         -50.0171,
         -28.3044
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.2,
+        "pm25_delta": 2.0
+      }
     },
     {
       "municipio": "Lebon Régis",
@@ -54,7 +70,11 @@
       "centroid": [
         -50.7101,
         -26.8636
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.9,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Macieira",
@@ -64,7 +84,11 @@
       "centroid": [
         -51.3513,
         -26.8021
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.9,
+        "pm25_delta": 1.5
+      }
     },
     {
       "municipio": "Água Doce",
@@ -74,7 +98,11 @@
       "centroid": [
         -51.6134,
         -26.7703
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.9,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Caçador",
@@ -84,7 +112,11 @@
       "centroid": [
         -51.0761,
         -26.7655
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.7,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Santa Cecília",
@@ -94,7 +126,11 @@
       "centroid": [
         -50.4487,
         -26.9353
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.7,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Bom Jardim da Serra",
@@ -104,7 +140,11 @@
       "centroid": [
         -49.6544,
         -28.3562
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.6,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Matos Costa",
@@ -114,7 +154,11 @@
       "centroid": [
         -51.1452,
         -26.4808
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.4,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "Lages",
@@ -124,7 +168,11 @@
       "centroid": [
         -50.3354,
         -28.0215
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.8,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Capão Alto",
@@ -134,7 +182,11 @@
       "centroid": [
         -50.6096,
         -28.0544
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.7,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Salto Veloso",
@@ -144,7 +196,11 @@
       "centroid": [
         -51.4274,
         -26.8955
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.7,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Urubici",
@@ -154,7 +210,11 @@
       "centroid": [
         -49.5794,
         -28.0414
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.7,
+        "pm25_delta": 1.2
+      }
     },
     {
       "municipio": "Fraiburgo",
@@ -164,7 +224,11 @@
       "centroid": [
         -50.867,
         -27.0353
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.5,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Ponte Alta do Norte",
@@ -174,7 +238,11 @@
       "centroid": [
         -50.4232,
         -27.1763
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.5,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "São Cristóvão do Sul",
@@ -184,7 +252,11 @@
       "centroid": [
         -50.3513,
         -27.2952
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -1.6
+      }
     },
     {
       "municipio": "Timbó Grande",
@@ -194,7 +266,11 @@
       "centroid": [
         -50.6703,
         -26.6213
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Vargem Bonita",
@@ -204,7 +280,11 @@
       "centroid": [
         -51.7594,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Rio das Antas",
@@ -214,7 +294,11 @@
       "centroid": [
         -51.0678,
         -26.9078
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.1,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Arroio Trinta",
@@ -224,7 +308,11 @@
       "centroid": [
         -51.3374,
         -26.9222
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.0,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Rio Rufino",
@@ -234,7 +322,11 @@
       "centroid": [
         -49.7552,
         -27.9154
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": 1.9
+      }
     },
     {
       "municipio": "Monte Carlo",
@@ -244,7 +336,11 @@
       "centroid": [
         -50.926,
         -27.192
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.8,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Passos Maia",
@@ -254,7 +350,11 @@
       "centroid": [
         -51.9621,
         -26.7026
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.8,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Treze Tílias",
@@ -264,7 +364,11 @@
       "centroid": [
         -51.4478,
         -26.9676
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.8,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Bocaina do Sul",
@@ -274,7 +378,11 @@
       "centroid": [
         -49.906,
         -27.7663
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Curitibanos",
@@ -284,7 +392,11 @@
       "centroid": [
         -50.6155,
         -27.2936
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": 0.2
+      }
     },
     {
       "municipio": "Ponte Serrada",
@@ -294,7 +406,11 @@
       "centroid": [
         -51.9352,
         -26.8655
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Videira",
@@ -304,7 +420,11 @@
       "centroid": [
         -51.1275,
         -27.0069
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Campo Belo do Sul",
@@ -314,7 +434,11 @@
       "centroid": [
         -50.7734,
         -27.8463
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": 1.2
+      }
     },
     {
       "municipio": "Iomerê",
@@ -324,7 +448,11 @@
       "centroid": [
         -51.2766,
         -26.9884
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Ponte Alta",
@@ -334,7 +462,11 @@
       "centroid": [
         -50.3044,
         -27.4105
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.3,
+        "pm25_delta": -1.6
+      }
     },
     {
       "municipio": "Porto União",
@@ -344,7 +476,11 @@
       "centroid": [
         -51.0044,
         -26.3889
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.3,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Frei Rogério",
@@ -354,7 +490,11 @@
       "centroid": [
         -50.7654,
         -27.1918
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Catanduvas",
@@ -364,7 +504,11 @@
       "centroid": [
         -51.6981,
         -27.0457
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.1,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "São José do Cerrito",
@@ -374,7 +518,11 @@
       "centroid": [
         -50.6538,
         -27.5992
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.0,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Pinheiro Preto",
@@ -384,7 +532,11 @@
       "centroid": [
         -51.2355,
         -27.0491
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Correia Pinto",
@@ -394,7 +546,11 @@
       "centroid": [
         -50.3772,
         -27.5964
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -1.3
+      }
     },
     {
       "municipio": "Otacílio Costa",
@@ -404,7 +560,11 @@
       "centroid": [
         -49.9673,
         -27.5219
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Bom Retiro",
@@ -414,7 +574,11 @@
       "centroid": [
         -49.5552,
         -27.7823
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Brunópolis",
@@ -424,7 +588,11 @@
       "centroid": [
         -50.8453,
         -27.3467
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Tangará",
@@ -434,7 +602,11 @@
       "centroid": [
         -51.1496,
         -27.1455
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Bela Vista do Toldo",
@@ -444,7 +616,11 @@
       "centroid": [
         -50.4859,
         -26.4099
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Cerro Negro",
@@ -454,7 +630,11 @@
       "centroid": [
         -50.9324,
         -27.7801
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": 1.2
+      }
     },
     {
       "municipio": "Ibiam",
@@ -464,7 +644,11 @@
       "centroid": [
         -51.2164,
         -27.2092
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Irani",
@@ -474,7 +658,11 @@
       "centroid": [
         -51.9144,
         -27.0224
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Palmeira",
@@ -484,7 +672,11 @@
       "centroid": [
         -50.1567,
         -27.5663
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Canoinhas",
@@ -494,7 +686,11 @@
       "centroid": [
         -50.5304,
         -26.241
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Luzerna",
@@ -504,7 +700,11 @@
       "centroid": [
         -51.5047,
         -27.0917
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Três Barras",
@@ -514,7 +714,11 @@
       "centroid": [
         -50.2574,
         -26.1673
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Vargem",
@@ -524,7 +728,11 @@
       "centroid": [
         -50.952,
         -27.4678
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Campo Alegre",
@@ -534,7 +742,11 @@
       "centroid": [
         -49.2161,
         -26.1214
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.3,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Ibicaré",
@@ -544,7 +756,11 @@
       "centroid": [
         -51.3706,
         -27.0899
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.3,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Irineópolis",
@@ -554,7 +770,11 @@
       "centroid": [
         -50.7667,
         -26.3509
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Joaçaba",
@@ -564,7 +784,11 @@
       "centroid": [
         -51.5951,
         -27.1527
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Major Vieira",
@@ -574,7 +798,11 @@
       "centroid": [
         -50.3644,
         -26.48
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Monte Castelo",
@@ -584,7 +812,11 @@
       "centroid": [
         -50.2902,
         -26.6636
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Morro Grande",
@@ -594,7 +826,11 @@
       "centroid": [
         -49.7426,
         -28.7233
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Timbé do Sul",
@@ -604,7 +840,11 @@
       "centroid": [
         -49.8688,
         -28.8087
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": 1.5
+      }
     },
     {
       "municipio": "Abelardo Luz",
@@ -614,7 +854,11 @@
       "centroid": [
         -52.2585,
         -26.5568
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Campos Novos",
@@ -624,7 +868,11 @@
       "centroid": [
         -51.2438,
         -27.4132
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Mafra",
@@ -634,7 +882,11 @@
       "centroid": [
         -49.8917,
         -26.2008
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "São Bento do Sul",
@@ -644,7 +896,11 @@
       "centroid": [
         -49.3503,
         -26.2929
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Vargeão",
@@ -654,7 +910,11 @@
       "centroid": [
         -52.1226,
         -26.777
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Abdon Batista",
@@ -664,7 +924,11 @@
       "centroid": [
         -51.0593,
         -27.5839
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Rio Negrinho",
@@ -674,7 +938,11 @@
       "centroid": [
         -49.599,
         -26.4442
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Anita Garibaldi",
@@ -684,7 +952,11 @@
       "centroid": [
         -51.0784,
         -27.7315
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Garuva",
@@ -694,7 +966,11 @@
       "centroid": [
         -48.8661,
         -26.0565
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Herval d'Oeste",
@@ -704,7 +980,11 @@
       "centroid": [
         -51.4122,
         -27.1952
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Itaiópolis",
@@ -714,7 +994,11 @@
       "centroid": [
         -49.8891,
         -26.4731
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": 1.2
+      }
     },
     {
       "municipio": "Mirim Doce",
@@ -724,7 +1008,11 @@
       "centroid": [
         -50.1744,
         -27.1864
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": 0.2
+      }
     },
     {
       "municipio": "Rio dos Cedros",
@@ -734,7 +1022,11 @@
       "centroid": [
         -49.3695,
         -26.6204
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Taió",
@@ -744,7 +1036,11 @@
       "centroid": [
         -50.088,
         -27.082
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Anitápolis",
@@ -754,7 +1050,11 @@
       "centroid": [
         -49.1357,
         -27.8828
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Doutor Pedrinho",
@@ -764,7 +1064,11 @@
       "centroid": [
         -49.5518,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Erval Velho",
@@ -774,7 +1078,11 @@
       "centroid": [
         -51.4216,
         -27.2838
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Faxinal dos Guedes",
@@ -784,7 +1092,11 @@
       "centroid": [
         -52.2413,
         -26.8493
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.0
+      }
     },
     {
       "municipio": "Jaborá",
@@ -794,7 +1106,11 @@
       "centroid": [
         -51.7735,
         -27.1411
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Lindóia do Sul",
@@ -804,7 +1120,11 @@
       "centroid": [
         -52.051,
         -27.032
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Ouro Verde",
@@ -814,7 +1134,11 @@
       "centroid": [
         -52.2783,
         -26.7112
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": 0.2
+      }
     },
     {
       "municipio": "Guatambú",
@@ -824,7 +1148,11 @@
       "centroid": [
         -52.7852,
         -27.1195
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Joinville",
@@ -834,7 +1162,11 @@
       "centroid": [
         -48.9473,
         -26.2487
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -0.1
+      }
     },
     {
       "municipio": "Lacerdópolis",
@@ -844,7 +1176,11 @@
       "centroid": [
         -51.5894,
         -27.2506
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Praia Grande",
@@ -854,7 +1190,11 @@
       "centroid": [
         -49.9926,
         -29.1804
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Rio do Campo",
@@ -864,7 +1204,11 @@
       "centroid": [
         -50.1298,
         -26.8957
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "Schroeder",
@@ -874,7 +1218,11 @@
       "centroid": [
         -49.0581,
         -26.3698
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "Alfredo Wagner",
@@ -884,7 +1232,11 @@
       "centroid": [
         -49.3323,
         -27.7075
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Caxambu do Sul",
@@ -894,7 +1246,11 @@
       "centroid": [
         -52.9207,
         -27.147
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Chapecó",
@@ -904,7 +1260,11 @@
       "centroid": [
         -52.6544,
         -27.1207
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Guaramirim",
@@ -914,7 +1274,11 @@
       "centroid": [
         -48.9436,
         -26.4786
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Imbuia",
@@ -924,7 +1288,11 @@
       "centroid": [
         -49.4061,
         -27.5033
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Ipumirim",
@@ -934,7 +1302,11 @@
       "centroid": [
         -52.1544,
         -27.0382
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 0.2
+      }
     },
     {
       "municipio": "Itá",
@@ -944,7 +1316,11 @@
       "centroid": [
         -52.3324,
         -27.2432
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 0.0
+      }
     },
     {
       "municipio": "Ouro",
@@ -954,7 +1330,11 @@
       "centroid": [
         -51.6829,
         -27.2829
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Paial",
@@ -964,7 +1344,11 @@
       "centroid": [
         -52.4892,
         -27.2139
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Presidente Castello Branco",
@@ -974,7 +1358,11 @@
       "centroid": [
         -51.7815,
         -27.2331
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Timbó",
@@ -984,7 +1372,11 @@
       "centroid": [
         -49.2693,
         -26.8073
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Treviso",
@@ -994,7 +1386,11 @@
       "centroid": [
         -49.4877,
         -28.5011
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Alto Bela Vista",
@@ -1004,7 +1400,11 @@
       "centroid": [
         -51.9255,
         -27.4209
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Araquari",
@@ -1014,7 +1414,11 @@
       "centroid": [
         -48.7614,
         -26.4656
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Arvoredo",
@@ -1024,7 +1428,11 @@
       "centroid": [
         -52.4422,
         -27.0711
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 0.0
+      }
     },
     {
       "municipio": "Concórdia",
@@ -1034,7 +1442,11 @@
       "centroid": [
         -52.0093,
         -27.2359
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Jaraguá do Sul",
@@ -1044,7 +1456,11 @@
       "centroid": [
         -49.1618,
         -26.4881
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Papanduva",
@@ -1054,7 +1470,11 @@
       "centroid": [
         -50.1686,
         -26.4908
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Seara",
@@ -1064,7 +1484,11 @@
       "centroid": [
         -52.3401,
         -27.1505
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "Siderópolis",
@@ -1074,7 +1498,11 @@
       "centroid": [
         -49.5302,
         -28.5833
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Arabutã",
@@ -1084,7 +1512,11 @@
       "centroid": [
         -52.1817,
         -27.1419
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Ascurra",
@@ -1094,7 +1526,11 @@
       "centroid": [
         -49.3955,
         -26.9727
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Bom Jesus",
@@ -1104,7 +1540,11 @@
       "centroid": [
         -52.3902,
         -26.7396
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Celso Ramos",
@@ -1114,7 +1554,11 @@
       "centroid": [
         -51.3061,
         -27.651
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.9
+      }
     },
     {
       "municipio": "Itapoá",
@@ -1124,7 +1568,11 @@
       "centroid": [
         -48.6525,
         -26.0808
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Jupiá",
@@ -1134,7 +1582,11 @@
       "centroid": [
         -52.7195,
         -26.3946
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Massaranduba",
@@ -1144,7 +1596,11 @@
       "centroid": [
         -48.9895,
         -26.6284
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Nova Veneza",
@@ -1154,7 +1610,11 @@
       "centroid": [
         -49.5841,
         -28.6854
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Pomerode",
@@ -1164,7 +1624,11 @@
       "centroid": [
         -49.172,
         -26.7293
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "São Domingos",
@@ -1174,7 +1638,11 @@
       "centroid": [
         -52.5524,
         -26.5404
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.2
+      }
     },
     {
       "municipio": "São João do Itaperiú",
@@ -1184,7 +1652,11 @@
       "centroid": [
         -48.7989,
         -26.5875
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Xavantina",
@@ -1194,7 +1666,11 @@
       "centroid": [
         -52.3215,
         -27.0192
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "Zortéa",
@@ -1204,7 +1680,11 @@
       "centroid": [
         -51.5379,
         -27.4781
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Barra Velha",
@@ -1214,7 +1694,11 @@
       "centroid": [
         -48.7251,
         -26.6625
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Campo Erê",
@@ -1224,7 +1708,11 @@
       "centroid": [
         -53.126,
         -26.4489
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Corupá",
@@ -1234,7 +1722,11 @@
       "centroid": [
         -49.3306,
         -26.4415
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Galvão",
@@ -1244,7 +1736,11 @@
       "centroid": [
         -52.6578,
         -26.448
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Peritiba",
@@ -1254,7 +1750,11 @@
       "centroid": [
         -51.876,
         -27.3498
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Piratuba",
@@ -1264,7 +1764,11 @@
       "centroid": [
         -51.7732,
         -27.4611
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Pouso Redondo",
@@ -1274,7 +1778,11 @@
       "centroid": [
         -49.9809,
         -27.29
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Rancho Queimado",
@@ -1284,7 +1792,11 @@
       "centroid": [
         -49.0872,
         -27.6756
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Salete",
@@ -1294,7 +1806,11 @@
       "centroid": [
         -50.0108,
         -26.9718
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 1.5
+      }
     },
     {
       "municipio": "São Francisco do Sul",
@@ -1304,7 +1820,11 @@
       "centroid": [
         -48.6395,
         -26.2617
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Trombudo Central",
@@ -1314,7 +1834,11 @@
       "centroid": [
         -49.8115,
         -27.3148
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Xaxim",
@@ -1324,7 +1848,11 @@
       "centroid": [
         -52.5282,
         -26.9691
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Aurora",
@@ -1334,7 +1862,11 @@
       "centroid": [
         -49.5907,
         -27.3313
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Balneário Barra do Sul",
@@ -1344,7 +1876,11 @@
       "centroid": [
         -48.652,
         -26.4464
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Balneário Piçarras",
@@ -1354,7 +1890,11 @@
       "centroid": [
         -48.7327,
         -26.7599
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Benedito Novo",
@@ -1364,7 +1904,11 @@
       "centroid": [
         -49.4334,
         -26.8007
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Capinzal",
@@ -1374,7 +1918,11 @@
       "centroid": [
         -51.6321,
         -27.4126
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Ibirama",
@@ -1384,7 +1932,11 @@
       "centroid": [
         -49.5264,
         -27.0164
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Ipira",
@@ -1394,7 +1946,11 @@
       "centroid": [
         -51.7978,
         -27.3718
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Ipuaçu",
@@ -1404,7 +1960,11 @@
       "centroid": [
         -52.4757,
         -26.6792
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 0.3
+      }
     },
     {
       "municipio": "Laurentino",
@@ -1414,7 +1974,11 @@
       "centroid": [
         -49.7328,
         -27.2088
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Penha",
@@ -1424,7 +1988,11 @@
       "centroid": [
         -48.6509,
         -26.8079
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Planalto Alegre",
@@ -1434,7 +2002,11 @@
       "centroid": [
         -52.8688,
         -27.0521
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Rio do Oeste",
@@ -1444,7 +2016,11 @@
       "centroid": [
         -49.8438,
         -27.1583
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "São Lourenço do Oeste",
@@ -1454,7 +2030,11 @@
       "centroid": [
         -52.8611,
         -26.4633
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Xanxerê",
@@ -1464,7 +2044,11 @@
       "centroid": [
         -52.4097,
         -26.8729
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.1
+      }
     },
     {
       "municipio": "Águas de Chapecó",
@@ -1474,7 +2058,11 @@
       "centroid": [
         -52.9586,
         -27.0567
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.0,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Agrolândia",
@@ -1484,7 +2072,11 @@
       "centroid": [
         -49.8231,
         -27.4538
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Cordilheira Alta",
@@ -1494,7 +2086,11 @@
       "centroid": [
         -52.6408,
         -26.9754
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": -0.1
+      }
     },
     {
       "municipio": "Coronel Martins",
@@ -1504,7 +2100,11 @@
       "centroid": [
         -52.6718,
         -26.5343
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 0.0
+      }
     },
     {
       "municipio": "Gaspar",
@@ -1514,7 +2114,11 @@
       "centroid": [
         -48.9674,
         -26.9304
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Ituporanga",
@@ -1524,7 +2128,11 @@
       "centroid": [
         -49.5363,
         -27.4553
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 1.9
+      }
     },
     {
       "municipio": "José Boiteux",
@@ -1534,7 +2142,11 @@
       "centroid": [
         -49.6445,
         -26.86
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "Lauro Müller",
@@ -1544,7 +2156,11 @@
       "centroid": [
         -49.4488,
         -28.3853
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Navegantes",
@@ -1554,7 +2170,11 @@
       "centroid": [
         -48.7252,
         -26.8291
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Novo Horizonte",
@@ -1564,7 +2184,11 @@
       "centroid": [
         -52.7966,
         -26.4951
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Palma Sola",
@@ -1574,7 +2198,11 @@
       "centroid": [
         -53.3123,
         -26.3707
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Rodeio",
@@ -1584,7 +2212,11 @@
       "centroid": [
         -49.3509,
         -26.8948
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.9,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Agronômica",
@@ -1594,7 +2226,11 @@
       "centroid": [
         -49.7217,
         -27.3278
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": 1.8
+      }
     },
     {
       "municipio": "Balneário Camboriú",
@@ -1604,7 +2240,11 @@
       "centroid": [
         -48.6221,
         -27.0044
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Ilhota",
@@ -1614,7 +2254,11 @@
       "centroid": [
         -48.8561,
         -26.8598
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Nova Itaberaba",
@@ -1624,7 +2268,11 @@
       "centroid": [
         -52.8332,
         -26.9611
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Palmitos",
@@ -1634,7 +2282,11 @@
       "centroid": [
         -53.1798,
         -27.0933
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -1.0
+      }
     },
     {
       "municipio": "Presidente Nereu",
@@ -1644,7 +2296,11 @@
       "centroid": [
         -49.3495,
         -27.2652
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "São Bernardino",
@@ -1654,7 +2310,11 @@
       "centroid": [
         -52.9863,
         -26.4896
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "São Carlos",
@@ -1664,7 +2324,11 @@
       "centroid": [
         -53.0351,
         -27.0297
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.8,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Blumenau",
@@ -1674,7 +2338,11 @@
       "centroid": [
         -49.0991,
         -26.8874
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Braço do Trombudo",
@@ -1684,7 +2352,11 @@
       "centroid": [
         -49.9046,
         -27.3684
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Caibi",
@@ -1694,7 +2366,11 @@
       "centroid": [
         -53.2619,
         -27.0239
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Cunha Porã",
@@ -1704,7 +2380,11 @@
       "centroid": [
         -53.1903,
         -26.8773
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Cunhataí",
@@ -1714,7 +2394,11 @@
       "centroid": [
         -53.1008,
         -26.975
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Itajaí",
@@ -1724,7 +2408,11 @@
       "centroid": [
         -48.753,
         -26.9685
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Jacinto Machado",
@@ -1734,7 +2422,11 @@
       "centroid": [
         -49.846,
         -28.9977
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Lajeado Grande",
@@ -1744,7 +2436,11 @@
       "centroid": [
         -52.551,
         -26.855
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Leoberto Leal",
@@ -1754,7 +2450,11 @@
       "centroid": [
         -49.2577,
         -27.4729
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 1.3
+      }
     },
     {
       "municipio": "Luiz Alves",
@@ -1764,7 +2464,11 @@
       "centroid": [
         -48.8919,
         -26.7258
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Meleiro",
@@ -1774,7 +2478,11 @@
       "centroid": [
         -49.6013,
         -28.8409
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Nova Erechim",
@@ -1784,7 +2492,11 @@
       "centroid": [
         -52.9066,
         -26.9079
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Orleans",
@@ -1794,7 +2506,11 @@
       "centroid": [
         -49.3743,
         -28.2782
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "Petrolândia",
@@ -1804,7 +2520,11 @@
       "centroid": [
         -49.6815,
         -27.5432
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 1.8
+      }
     },
     {
       "municipio": "Rio do Sul",
@@ -1814,7 +2534,11 @@
       "centroid": [
         -49.6322,
         -27.1946
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.7,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Angelina",
@@ -1824,7 +2548,11 @@
       "centroid": [
         -49.0716,
         -27.5456
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Coronel Freitas",
@@ -1834,7 +2562,11 @@
       "centroid": [
         -52.7254,
         -26.8851
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Entre Rios",
@@ -1844,7 +2576,11 @@
       "centroid": [
         -52.5769,
         -26.74
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.1
+      }
     },
     {
       "municipio": "Formosa do Sul",
@@ -1854,7 +2590,11 @@
       "centroid": [
         -52.7939,
         -26.6344
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.1
+      }
     },
     {
       "municipio": "Irati",
@@ -1864,7 +2604,11 @@
       "centroid": [
         -52.89,
         -26.6263
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Modelo",
@@ -1874,7 +2618,11 @@
       "centroid": [
         -53.05,
         -26.7755
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Pinhalzinho",
@@ -1884,7 +2632,11 @@
       "centroid": [
         -52.9761,
         -26.8296
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Santa Rosa de Lima",
@@ -1894,7 +2646,11 @@
       "centroid": [
         -49.184,
         -28.0103
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": 1.0
+      }
     },
     {
       "municipio": "Santiago do Sul",
@@ -1904,7 +2660,11 @@
       "centroid": [
         -52.6963,
         -26.6308
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.0
+      }
     },
     {
       "municipio": "Saudades",
@@ -1914,7 +2674,11 @@
       "centroid": [
         -53.0395,
         -26.8989
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "São José do Cedro",
@@ -1924,7 +2688,11 @@
       "centroid": [
         -53.5305,
         -26.4804
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "São João do Oeste",
@@ -1934,7 +2702,11 @@
       "centroid": [
         -53.5911,
         -27.0914
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Turvo",
@@ -1944,7 +2716,11 @@
       "centroid": [
         -49.7078,
         -28.9016
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "União do Oeste",
@@ -1954,7 +2730,11 @@
       "centroid": [
         -52.8568,
         -26.7869
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Vidal Ramos",
@@ -1964,7 +2744,11 @@
       "centroid": [
         -49.3424,
         -27.3881
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Águas Frias",
@@ -1974,7 +2758,11 @@
       "centroid": [
         -52.8516,
         -26.8511
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.6,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Anchieta",
@@ -1984,7 +2772,11 @@
       "centroid": [
         -53.3325,
         -26.5327
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Atalanta",
@@ -1994,7 +2786,11 @@
       "centroid": [
         -49.7407,
         -27.4376
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": 1.7
+      }
     },
     {
       "municipio": "Belmonte",
@@ -2004,7 +2800,11 @@
       "centroid": [
         -53.6155,
         -26.8564
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Bom Jesus do Oeste",
@@ -2014,7 +2814,11 @@
       "centroid": [
         -53.0958,
         -26.6835
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Chapadão do Lageado",
@@ -2024,7 +2828,11 @@
       "centroid": [
         -49.5559,
         -27.5817
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": 1.9
+      }
     },
     {
       "municipio": "Dionísio Cerqueira",
@@ -2034,7 +2842,11 @@
       "centroid": [
         -53.5184,
         -26.334
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Forquilhinha",
@@ -2044,7 +2856,11 @@
       "centroid": [
         -49.4938,
         -28.7851
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Grão-Pará",
@@ -2054,7 +2870,11 @@
       "centroid": [
         -49.3135,
         -28.1531
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": 0.7
+      }
     },
     {
       "municipio": "Guaraciaba",
@@ -2064,7 +2884,11 @@
       "centroid": [
         -53.5673,
         -26.5797
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Guarujá do Sul",
@@ -2074,7 +2898,11 @@
       "centroid": [
         -53.4852,
         -26.3984
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Jardinópolis",
@@ -2084,7 +2912,11 @@
       "centroid": [
         -52.871,
         -26.7175
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Maravilha",
@@ -2094,7 +2926,11 @@
       "centroid": [
         -53.1985,
         -26.7608
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Marema",
@@ -2104,7 +2940,11 @@
       "centroid": [
         -52.6291,
         -26.8118
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Mondaí",
@@ -2114,7 +2954,11 @@
       "centroid": [
         -53.4462,
         -27.0972
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Paraíso",
@@ -2124,7 +2968,11 @@
       "centroid": [
         -53.6751,
         -26.6608
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Princesa",
@@ -2134,7 +2982,11 @@
       "centroid": [
         -53.611,
         -26.4332
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Quilombo",
@@ -2144,7 +2996,11 @@
       "centroid": [
         -52.717,
         -26.7256
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Riqueza",
@@ -2154,7 +3010,11 @@
       "centroid": [
         -53.3451,
         -26.9779
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Saltinho",
@@ -2164,7 +3024,11 @@
       "centroid": [
         -53.0203,
         -26.5923
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Santa Helena",
@@ -2174,7 +3038,11 @@
       "centroid": [
         -53.6183,
         -26.9219
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Santa Terezinha do Progresso",
@@ -2184,7 +3052,11 @@
       "centroid": [
         -53.1691,
         -26.5942
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Serra Alta",
@@ -2194,7 +3066,11 @@
       "centroid": [
         -53.0246,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Sul Brasil",
@@ -2204,7 +3080,11 @@
       "centroid": [
         -52.9472,
         -26.6957
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "São Bonifácio",
@@ -2214,7 +3094,11 @@
       "centroid": [
         -48.9365,
         -27.9595
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "São Miguel do Oeste",
@@ -2224,7 +3108,11 @@
       "centroid": [
         -53.5157,
         -26.7284
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Bandeirante",
@@ -2234,7 +3122,11 @@
       "centroid": [
         -53.6453,
         -26.7681
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Bombinhas",
@@ -2244,7 +3136,11 @@
       "centroid": [
         -48.5176,
         -27.1729
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Brusque",
@@ -2254,7 +3150,11 @@
       "centroid": [
         -48.911,
         -27.1302
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Descanso",
@@ -2264,7 +3164,11 @@
       "centroid": [
         -53.4779,
         -26.8574
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Ermo",
@@ -2274,7 +3178,11 @@
       "centroid": [
         -49.6527,
         -28.9909
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Flor do Sertão",
@@ -2284,7 +3192,11 @@
       "centroid": [
         -53.3364,
         -26.7629
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Guabiruba",
@@ -2294,7 +3206,11 @@
       "centroid": [
         -49.0202,
         -27.1018
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.3
+      }
     },
     {
       "municipio": "Indaial",
@@ -2304,7 +3220,11 @@
       "centroid": [
         -49.2232,
         -26.995
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "Iporã do Oeste",
@@ -2314,7 +3234,11 @@
       "centroid": [
         -53.4873,
         -27.0013
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Iraceminha",
@@ -2324,7 +3248,11 @@
       "centroid": [
         -53.3256,
         -26.8469
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Itapiranga",
@@ -2334,7 +3262,11 @@
       "centroid": [
         -53.71,
         -27.1108
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Romelândia",
@@ -2344,7 +3276,11 @@
       "centroid": [
         -53.3189,
         -26.6468
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Tunápolis",
@@ -2354,7 +3290,11 @@
       "centroid": [
         -53.6479,
         -26.9875
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Águas Mornas",
@@ -2364,7 +3304,11 @@
       "centroid": [
         -48.9329,
         -27.7276
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.4,
+        "pm25_delta": 0.1
+      }
     },
     {
       "municipio": "Apiúna",
@@ -2374,7 +3318,11 @@
       "centroid": [
         -49.3621,
         -27.1256
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": 1.1
+      }
     },
     {
       "municipio": "Barra Bonita",
@@ -2384,7 +3332,11 @@
       "centroid": [
         -53.4253,
         -26.6672
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Lontras",
@@ -2394,7 +3346,11 @@
       "centroid": [
         -49.5083,
         -27.1888
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "Presidente Getúlio",
@@ -2404,7 +3360,11 @@
       "centroid": [
         -49.715,
         -27.0611
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": 1.5
+      }
     },
     {
       "municipio": "Santa Terezinha",
@@ -2414,7 +3374,11 @@
       "centroid": [
         -50.0064,
         -26.66
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": 1.4
+      }
     },
     {
       "municipio": "São Miguel da Boa Vista",
@@ -2424,7 +3388,11 @@
       "centroid": [
         -53.2402,
         -26.6903
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Tigrinhos",
@@ -2434,7 +3402,11 @@
       "centroid": [
         -53.1566,
         -26.6759
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Witmarsum",
@@ -2444,7 +3416,11 @@
       "centroid": [
         -49.8452,
         -26.9376
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.3,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Botuverá",
@@ -2454,7 +3430,11 @@
       "centroid": [
         -49.1212,
         -27.2152
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.2,
+        "pm25_delta": 0.8
+      }
     },
     {
       "municipio": "Canelinha",
@@ -2464,7 +3444,11 @@
       "centroid": [
         -48.8021,
         -27.2319
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.2,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Dona Emma",
@@ -2474,7 +3458,11 @@
       "centroid": [
         -49.7766,
         -26.9889
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.2,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Major Gercino",
@@ -2484,7 +3472,11 @@
       "centroid": [
         -49.0506,
         -27.4264
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.2,
+        "pm25_delta": 0.4
+      }
     },
     {
       "municipio": "Maracajá",
@@ -2494,7 +3486,11 @@
       "centroid": [
         -49.4556,
         -28.8637
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.2,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Camboriú",
@@ -2504,7 +3500,11 @@
       "centroid": [
         -48.7096,
         -27.0672
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.1,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Nova Trento",
@@ -2514,7 +3514,11 @@
       "centroid": [
         -49.0409,
         -27.3115
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.1,
+        "pm25_delta": 0.5
+      }
     },
     {
       "municipio": "São João Batista",
@@ -2524,7 +3528,11 @@
       "centroid": [
         -48.8592,
         -27.3313
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.1,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Tijucas",
@@ -2534,7 +3542,11 @@
       "centroid": [
         -48.7019,
         -27.2482
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.1,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Antônio Carlos",
@@ -2544,7 +3556,11 @@
       "centroid": [
         -48.8321,
         -27.4972
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.0,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Araranguá",
@@ -2554,7 +3570,11 @@
       "centroid": [
         -49.4649,
         -28.94
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.0,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Governador Celso Ramos",
@@ -2564,7 +3584,11 @@
       "centroid": [
         -48.5769,
         -27.3772
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.0,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Porto Belo",
@@ -2574,7 +3598,11 @@
       "centroid": [
         -48.617,
         -27.1744
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.0,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Vitor Meireles",
@@ -2584,7 +3612,11 @@
       "centroid": [
         -49.8384,
         -26.8254
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 11.0,
+        "pm25_delta": 1.6
+      }
     },
     {
       "municipio": "Biguaçu",
@@ -2594,7 +3626,11 @@
       "centroid": [
         -48.6939,
         -27.4328
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Itapema",
@@ -2604,7 +3640,11 @@
       "centroid": [
         -48.634,
         -27.1089
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Rio Fortuna",
@@ -2614,7 +3654,11 @@
       "centroid": [
         -49.1887,
         -28.0941
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": 0.6
+      }
     },
     {
       "municipio": "Santa Rosa do Sul",
@@ -2624,7 +3668,11 @@
       "centroid": [
         -49.7412,
         -29.1223
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Sombrio",
@@ -2634,7 +3682,11 @@
       "centroid": [
         -49.657,
         -29.0701
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "São João do Sul",
@@ -2644,7 +3696,11 @@
       "centroid": [
         -49.8133,
         -29.2086
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.9,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Criciúma",
@@ -2654,7 +3710,11 @@
       "centroid": [
         -49.377,
         -28.7153
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.8,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Florianópolis",
@@ -2664,7 +3724,11 @@
       "centroid": [
         -48.5044,
         -27.5755
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.8,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Urussanga",
@@ -2674,7 +3738,11 @@
       "centroid": [
         -49.3261,
         -28.4919
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.8,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Passo de Torres",
@@ -2684,7 +3752,11 @@
       "centroid": [
         -49.7216,
         -29.2679
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.7,
+        "pm25_delta": -1.0
+      }
     },
     {
       "municipio": "Santo Amaro da Imperatriz",
@@ -2694,7 +3766,11 @@
       "centroid": [
         -48.7954,
         -27.7397
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.7,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "São Pedro de Alcântara",
@@ -2704,7 +3780,11 @@
       "centroid": [
         -48.8343,
         -27.5914
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.7,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Balneário Arroio do Silva",
@@ -2714,7 +3794,11 @@
       "centroid": [
         -49.4746,
         -29.0195
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.6,
+        "pm25_delta": -1.2
+      }
     },
     {
       "municipio": "São José",
@@ -2724,7 +3808,11 @@
       "centroid": [
         -48.6551,
         -27.5782
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.6,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Balneário Gaivota",
@@ -2734,7 +3822,11 @@
       "centroid": [
         -49.6155,
         -29.1531
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Balneário Rincão",
@@ -2744,7 +3836,11 @@
       "centroid": [
         -49.2556,
         -28.8279
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -1.2
+      }
     },
     {
       "municipio": "Cocal do Sul",
@@ -2754,7 +3850,11 @@
       "centroid": [
         -49.333,
         -28.5988
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Morro da Fumaça",
@@ -2764,7 +3864,11 @@
       "centroid": [
         -49.2446,
         -28.6368
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -1.1
+      }
     },
     {
       "municipio": "Palhoça",
@@ -2774,7 +3878,11 @@
       "centroid": [
         -48.6605,
         -27.7722
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -0.7
+      }
     },
     {
       "municipio": "Pedras Grandes",
@@ -2784,7 +3892,11 @@
       "centroid": [
         -49.2012,
         -28.4763
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.5,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Paulo Lopes",
@@ -2794,7 +3906,11 @@
       "centroid": [
         -48.76,
         -27.9624
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.4,
+        "pm25_delta": -0.6
+      }
     },
     {
       "municipio": "Braço do Norte",
@@ -2804,7 +3920,11 @@
       "centroid": [
         -49.1429,
         -28.2394
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.3,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Içara",
@@ -2814,7 +3934,11 @@
       "centroid": [
         -49.2776,
         -28.7527
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.3,
+        "pm25_delta": -1.3
+      }
     },
     {
       "municipio": "São Ludgero",
@@ -2824,7 +3948,11 @@
       "centroid": [
         -49.1693,
         -28.3525
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.3,
+        "pm25_delta": -0.4
+      }
     },
     {
       "municipio": "Treze de Maio",
@@ -2834,7 +3962,11 @@
       "centroid": [
         -49.1563,
         -28.5687
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.3,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Jaguaruna",
@@ -2844,7 +3976,11 @@
       "centroid": [
         -49.0432,
         -28.6555
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.2,
+        "pm25_delta": -1.0
+      }
     },
     {
       "municipio": "São Martinho",
@@ -2854,7 +3990,11 @@
       "centroid": [
         -48.9697,
         -28.1257
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.2,
+        "pm25_delta": -0.2
+      }
     },
     {
       "municipio": "Sangão",
@@ -2864,7 +4004,11 @@
       "centroid": [
         -49.1273,
         -28.6516
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.1,
+        "pm25_delta": -1.2
+      }
     },
     {
       "municipio": "Imbituba",
@@ -2874,7 +4018,11 @@
       "centroid": [
         -48.7039,
         -28.199
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.0,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Laguna",
@@ -2884,7 +4032,11 @@
       "centroid": [
         -48.826,
         -28.4857
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.0,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Tubarão",
@@ -2894,7 +4046,11 @@
       "centroid": [
         -49.0352,
         -28.4815
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 10.0,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Capivari de Baixo",
@@ -2904,7 +4060,11 @@
       "centroid": [
         -48.9443,
         -28.4547
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.9,
+        "pm25_delta": -1.0
+      }
     },
     {
       "municipio": "Gravatal",
@@ -2914,7 +4074,11 @@
       "centroid": [
         -49.0205,
         -28.354
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.9,
+        "pm25_delta": -0.8
+      }
     },
     {
       "municipio": "Pescaria Brava",
@@ -2924,7 +4088,11 @@
       "centroid": [
         -48.8831,
         -28.4015
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.9,
+        "pm25_delta": -1.0
+      }
     },
     {
       "municipio": "Armazém",
@@ -2934,7 +4102,11 @@
       "centroid": [
         -49.0122,
         -28.2397
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.8,
+        "pm25_delta": -0.5
+      }
     },
     {
       "municipio": "Garopaba",
@@ -2944,7 +4116,11 @@
       "centroid": [
         -48.6591,
         -28.0479
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.7,
+        "pm25_delta": -0.9
+      }
     },
     {
       "municipio": "Imaruí",
@@ -2954,7 +4130,11 @@
       "centroid": [
         -48.8313,
         -28.2367
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 9.6,
+        "pm25_delta": -0.8
+      }
     }
   ]
 }

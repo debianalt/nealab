@@ -14,7 +14,11 @@
       "centroid": [
         -57.3749,
         -25.52
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Ypacarai",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.2585,
         -25.3887
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Ypane",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.5063,
         -25.4553
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Guarambare",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Limpio",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.4784,
         -25.1533
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Itaugua",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.3532,
         -25.3941
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Luque",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.4568,
         -25.2476
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Aregua",
@@ -84,7 +112,11 @@
       "centroid": [
         -57.3871,
         -25.2913
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Villeta",
@@ -94,7 +126,11 @@
       "centroid": [
         -57.6064,
         -25.7011
-      ]
+      ],
+      "rank": {
+        "high_ha": 32,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "J. A. Saldivar",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "M. Roque Alonso",
@@ -114,7 +154,11 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Capiata",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.4524,
         -25.3673
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Nueva Italia",
@@ -134,7 +182,11 @@
       "centroid": [
         -57.4757,
         -25.7512
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Asuncion",
@@ -144,7 +196,11 @@
       "centroid": [
         -57.6069,
         -25.2858
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Nemby",
@@ -154,7 +210,11 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Antonio",
@@ -164,7 +224,11 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Villa Elisa",
@@ -174,7 +238,11 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Lorenzo",
@@ -184,7 +252,11 @@
       "centroid": [
         -57.5107,
         -25.3477
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Lambare",
@@ -194,7 +266,11 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Fdo. De La Mora",
@@ -204,7 +280,11 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

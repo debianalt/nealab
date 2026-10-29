@@ -14,7 +14,15 @@
       "centroid": [
         -59.0791,
         -28.9281
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 22.0,
+        "nbi_n": 2559,
+        "cloacas_pct": 63.3,
+        "cloacas_n": 7355,
+        "hacin_pct": 18.5,
+        "hacin_n": 2146
+      }
     },
     {
       "dpto": "Saladas",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.6938,
         -28.1886
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 20.6,
+        "nbi_n": 1744,
+        "cloacas_pct": 59.5,
+        "cloacas_n": 5035,
+        "hacin_pct": 15.7,
+        "hacin_n": 1326
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -34,7 +50,15 @@
       "centroid": [
         -58.2423,
         -28.0436
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.2,
+        "nbi_n": 467,
+        "cloacas_pct": 65.1,
+        "cloacas_n": 2491,
+        "hacin_pct": 12.7,
+        "hacin_n": 486
+      }
     },
     {
       "dpto": "Concepción",
@@ -44,7 +68,15 @@
       "centroid": [
         -58.0893,
         -28.2861
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 28.0,
+        "nbi_n": 2146,
+        "cloacas_pct": 91.7,
+        "cloacas_n": 7032,
+        "hacin_pct": 17.3,
+        "hacin_n": 1323
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -54,7 +86,15 @@
       "centroid": [
         -58.2535,
         -27.5477
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.2,
+        "nbi_n": 764,
+        "cloacas_pct": 60.3,
+        "cloacas_n": 3766,
+        "hacin_pct": 14.6,
+        "hacin_n": 915
+      }
     },
     {
       "dpto": "San Miguel",
@@ -64,7 +104,15 @@
       "centroid": [
         -57.2695,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 17.0,
+        "nbi_n": 650,
+        "cloacas_pct": 93.4,
+        "cloacas_n": 3582,
+        "hacin_pct": 15.2,
+        "hacin_n": 582
+      }
     },
     {
       "dpto": "San Roque",
@@ -74,7 +122,15 @@
       "centroid": [
         -58.5733,
         -28.6609
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.6,
+        "nbi_n": 869,
+        "cloacas_pct": 67.1,
+        "cloacas_n": 4610,
+        "hacin_pct": 13.4,
+        "hacin_n": 920
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -84,7 +140,15 @@
       "centroid": [
         -59.0107,
         -28.5133
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.9,
+        "nbi_n": 1754,
+        "cloacas_pct": 44.2,
+        "cloacas_n": 6024,
+        "hacin_pct": 14.4,
+        "hacin_n": 1969
+      }
     },
     {
       "dpto": "Goya",
@@ -94,7 +158,15 @@
       "centroid": [
         -59.2645,
         -29.3931
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 12.0,
+        "nbi_n": 4018,
+        "cloacas_pct": 34.9,
+        "cloacas_n": 11681,
+        "hacin_pct": 12.5,
+        "hacin_n": 4197
+      }
     },
     {
       "dpto": "Esquina",
@@ -104,7 +176,15 @@
       "centroid": [
         -59.2346,
         -29.7806
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 21.6,
+        "nbi_n": 247,
+        "cloacas_pct": 90.0,
+        "cloacas_n": 1027,
+        "hacin_pct": 17.4,
+        "hacin_n": 199
+      }
     },
     {
       "dpto": "General Paz",
@@ -114,7 +194,15 @@
       "centroid": [
         -57.4525,
         -27.5917
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.6,
+        "nbi_n": 643,
+        "cloacas_pct": 59.1,
+        "cloacas_n": 3281,
+        "hacin_pct": 11.2,
+        "hacin_n": 620
+      }
     },
     {
       "dpto": "Empedrado",
@@ -124,7 +212,15 @@
       "centroid": [
         -58.5321,
         -27.8751
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.5,
+        "nbi_n": 591,
+        "cloacas_pct": 87.7,
+        "cloacas_n": 4922,
+        "hacin_pct": 10.9,
+        "hacin_n": 614
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -134,7 +230,15 @@
       "centroid": [
         -58.3444,
         -29.4371
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.8,
+        "nbi_n": 1459,
+        "cloacas_pct": 24.0,
+        "cloacas_n": 3965,
+        "hacin_pct": 10.1,
+        "hacin_n": 1663
+      }
     },
     {
       "dpto": "General Alvear",
@@ -144,7 +248,15 @@
       "centroid": [
         -56.5038,
         -28.8562
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.5,
+        "nbi_n": 290,
+        "cloacas_pct": 73.9,
+        "cloacas_n": 2262,
+        "hacin_pct": 8.9,
+        "hacin_n": 272
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -154,7 +266,15 @@
       "centroid": [
         -57.5828,
         -27.4836
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.5,
+        "nbi_n": 101,
+        "cloacas_pct": 90.0,
+        "cloacas_n": 868,
+        "hacin_pct": 11.3,
+        "hacin_n": 109
+      }
     },
     {
       "dpto": "Itatí",
@@ -164,7 +284,15 @@
       "centroid": [
         -58.1494,
         -27.3243
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.3,
+        "nbi_n": 305,
+        "cloacas_pct": 69.9,
+        "cloacas_n": 2572,
+        "hacin_pct": 10.5,
+        "hacin_n": 385
+      }
     },
     {
       "dpto": "Sauce",
@@ -174,7 +302,15 @@
       "centroid": [
         -58.6302,
         -30.0717
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 4.1,
+        "nbi_n": 5,
+        "cloacas_pct": 96.7,
+        "cloacas_n": 117,
+        "hacin_pct": 6.6,
+        "hacin_n": 8
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -184,7 +320,15 @@
       "centroid": [
         -56.874,
         -27.7591
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.7,
+        "nbi_n": 1177,
+        "cloacas_pct": 67.0,
+        "cloacas_n": 6767,
+        "hacin_pct": 10.5,
+        "hacin_n": 1064
+      }
     },
     {
       "dpto": "San Cosme",
@@ -194,7 +338,15 @@
       "centroid": [
         -58.5155,
         -27.357
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 7.8,
+        "nbi_n": 505,
+        "cloacas_pct": 92.8,
+        "cloacas_n": 6022,
+        "hacin_pct": 9.6,
+        "hacin_n": 624
+      }
     },
     {
       "dpto": "San Martín",
@@ -204,7 +356,15 @@
       "centroid": [
         -56.9849,
         -28.8545
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.9,
+        "nbi_n": 495,
+        "cloacas_pct": 54.6,
+        "cloacas_n": 2725,
+        "hacin_pct": 10.8,
+        "hacin_n": 539
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -214,7 +374,15 @@
       "centroid": [
         -56.0137,
         -27.9746
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.1,
+        "nbi_n": 2034,
+        "cloacas_pct": 28.9,
+        "cloacas_n": 6470,
+        "hacin_pct": 9.6,
+        "hacin_n": 2163
+      }
     },
     {
       "dpto": "Mercedes",
@@ -224,7 +392,15 @@
       "centroid": [
         -58.1608,
         -29.1446
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.9,
+        "nbi_n": 1379,
+        "cloacas_pct": 32.0,
+        "cloacas_n": 4962,
+        "hacin_pct": 9.6,
+        "hacin_n": 1491
+      }
     },
     {
       "dpto": "Capital",
@@ -234,7 +410,15 @@
       "centroid": [
         -58.757,
         -27.5141
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.5,
+        "nbi_n": 14458,
+        "cloacas_pct": 20.3,
+        "cloacas_n": 27902,
+        "hacin_pct": 11.0,
+        "hacin_n": 15083
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -244,7 +428,15 @@
       "centroid": [
         -57.9972,
         -30.0419
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.7,
+        "nbi_n": 17,
+        "cloacas_pct": 96.5,
+        "cloacas_n": 189,
+        "hacin_pct": 10.7,
+        "hacin_n": 21
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -254,7 +446,15 @@
       "centroid": [
         -57.5418,
         -30.0344
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.1,
+        "nbi_n": 1802,
+        "cloacas_pct": 30.3,
+        "cloacas_n": 5418,
+        "hacin_pct": 10.9,
+        "hacin_n": 1957
+      }
     }
   ]
 }

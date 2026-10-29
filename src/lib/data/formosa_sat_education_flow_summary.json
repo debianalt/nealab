@@ -14,7 +14,11 @@
       "centroid": [
         -62.2609,
         -22.9514
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 19.4,
+        "teen_preg_pct": 22.3
+      }
     },
     {
       "dpto": "Matacos",
@@ -24,7 +28,11 @@
       "centroid": [
         -61.9734,
         -23.902
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 14.9,
+        "teen_preg_pct": 15.5
+      }
     },
     {
       "dpto": "Bermejo",
@@ -34,7 +42,11 @@
       "centroid": [
         -61.4778,
         -24.2184
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 19.8,
+        "teen_preg_pct": 12.3
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -44,7 +56,11 @@
       "centroid": [
         -58.1397,
         -25.321
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 9.9,
+        "teen_preg_pct": 4.6
+      }
     },
     {
       "dpto": "Pirané",
@@ -54,7 +70,11 @@
       "centroid": [
         -59.0324,
         -25.6655
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 10.5,
+        "teen_preg_pct": 6.9
+      }
     },
     {
       "dpto": "Pilagás",
@@ -64,7 +84,11 @@
       "centroid": [
         -58.7089,
         -24.9733
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 10.2,
+        "teen_preg_pct": 4.3
+      }
     },
     {
       "dpto": "Patiño",
@@ -74,7 +98,11 @@
       "centroid": [
         -59.0809,
         -24.9268
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 11.2,
+        "teen_preg_pct": 5.6
+      }
     },
     {
       "dpto": "Laishi",
@@ -84,7 +112,11 @@
       "centroid": [
         -58.414,
         -26.4014
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 8.7,
+        "teen_preg_pct": 4.5
+      }
     },
     {
       "dpto": "Formosa",
@@ -94,7 +126,11 @@
       "centroid": [
         -58.174,
         -26.172
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 6.8,
+        "teen_preg_pct": 2.7
+      }
     }
   ]
 }

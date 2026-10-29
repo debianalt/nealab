@@ -14,7 +14,11 @@
       "centroid": [
         -55.7178,
         -25.8957
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.1,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Gral. Higinio Morinigo",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.1114,
         -26.0729
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.1,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Maciel",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.528,
         -26.2225
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.1,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Dr. Moises Bertoni",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.5977,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.0,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Caazapa",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.2983,
         -26.1867
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "Fulgencio Yegros",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.5581,
         -26.5506
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Buena Vista",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.0981,
         -26.2335
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "San Juan Nepomuceno",
@@ -84,7 +112,11 @@
       "centroid": [
         -55.9173,
         -26.2417
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.3,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Tavai",
@@ -94,7 +126,11 @@
       "centroid": [
         -55.53,
         -26.195
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Yuty",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.2397,
         -26.5325
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -2.0
+      }
     }
   ]
 }

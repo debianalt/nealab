@@ -14,7 +14,15 @@
       "centroid": [
         -55.2555,
         -25.4849
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.2,
+        "trees_ha": 7722,
+        "crops_pct": 23.0,
+        "crops_ha": 6791,
+        "built_pct": 6.3,
+        "built_ha": 1861
+      }
     },
     {
       "distrito": "MINGA GUAZÚ",
@@ -24,7 +32,15 @@
       "centroid": [
         -54.8404,
         -25.5054
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.5,
+        "trees_ha": 12480,
+        "crops_pct": 25.5,
+        "crops_ha": 13541,
+        "built_pct": 9.8,
+        "built_ha": 5207
+      }
     },
     {
       "distrito": "JUAN E. O'LEARY",
@@ -34,7 +50,15 @@
       "centroid": [
         -55.3633,
         -25.4804
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.5,
+        "trees_ha": 6596,
+        "crops_pct": 18.7,
+        "crops_ha": 4656,
+        "built_pct": 7.2,
+        "built_ha": 1790
+      }
     },
     {
       "distrito": "IRUÑA",
@@ -44,7 +68,15 @@
       "centroid": [
         -55.0381,
         -26.1334
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.9,
+        "trees_ha": 13024,
+        "crops_pct": 33.5,
+        "crops_ha": 19926,
+        "built_pct": 4.8,
+        "built_ha": 2862
+      }
     },
     {
       "distrito": "TAVAPY",
@@ -54,7 +86,15 @@
       "centroid": [
         -55.0691,
         -25.6222
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.9,
+        "trees_ha": 12921,
+        "crops_pct": 27.1,
+        "crops_ha": 13031,
+        "built_pct": 4.7,
+        "built_ha": 2249
+      }
     },
     {
       "distrito": "SAN CRISTÓBAL",
@@ -64,7 +104,15 @@
       "centroid": [
         -55.3862,
         -25.7898
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.1,
+        "trees_ha": 26894,
+        "crops_pct": 28.0,
+        "crops_ha": 28775,
+        "built_pct": 4.7,
+        "built_ha": 4789
+      }
     },
     {
       "distrito": "SANTA RITA",
@@ -74,7 +122,15 @@
       "centroid": [
         -55.1372,
         -25.7706
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.6,
+        "trees_ha": 14143,
+        "crops_pct": 32.8,
+        "crops_ha": 21512,
+        "built_pct": 6.4,
+        "built_ha": 4173
+      }
     },
     {
       "distrito": "LOS CEDRALES",
@@ -84,7 +140,15 @@
       "centroid": [
         -54.7516,
         -25.6831
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.6,
+        "trees_ha": 9135,
+        "crops_pct": 34.9,
+        "crops_ha": 15458,
+        "built_pct": 5.0,
+        "built_ha": 2212
+      }
     },
     {
       "distrito": "DR. RAÚL PEÑA",
@@ -94,7 +158,15 @@
       "centroid": [
         -55.2241,
         -26.1362
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.6,
+        "trees_ha": 6939,
+        "crops_pct": 31.2,
+        "crops_ha": 8429,
+        "built_pct": 5.4,
+        "built_ha": 1471
+      }
     },
     {
       "distrito": "NARANJAL",
@@ -104,7 +176,15 @@
       "centroid": [
         -55.208,
         -25.9527
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.2,
+        "trees_ha": 16191,
+        "crops_pct": 33.5,
+        "crops_ha": 23382,
+        "built_pct": 5.0,
+        "built_ha": 3469
+      }
     },
     {
       "distrito": "SANTA ROSA DEL MONDAY",
@@ -114,7 +194,15 @@
       "centroid": [
         -54.9236,
         -25.8464
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.8,
+        "trees_ha": 15001,
+        "crops_pct": 34.5,
+        "crops_ha": 23756,
+        "built_pct": 4.9,
+        "built_ha": 3342
+      }
     },
     {
       "distrito": "MINGA PORÁ",
@@ -124,7 +212,15 @@
       "centroid": [
         -54.8684,
         -24.7658
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.5,
+        "trees_ha": 20558,
+        "crops_pct": 34.3,
+        "crops_ha": 32718,
+        "built_pct": 4.8,
+        "built_ha": 4592
+      }
     },
     {
       "distrito": "ITAKYRY",
@@ -134,7 +230,15 @@
       "centroid": [
         -55.1516,
         -24.8215
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.2,
+        "trees_ha": 51501,
+        "crops_pct": 29.4,
+        "crops_ha": 62554,
+        "built_pct": 4.8,
+        "built_ha": 10158
+      }
     },
     {
       "distrito": "DOMINGO MARTÍNEZ DE IRALA",
@@ -144,7 +248,15 @@
       "centroid": [
         -54.6889,
         -25.8607
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.5,
+        "trees_ha": 9525,
+        "crops_pct": 30.8,
+        "crops_ha": 11512,
+        "built_pct": 4.8,
+        "built_ha": 1795
+      }
     },
     {
       "distrito": "HERNANDARIAS",
@@ -154,7 +266,15 @@
       "centroid": [
         -54.7802,
         -25.3136
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.1,
+        "trees_ha": 22152,
+        "crops_pct": 22.7,
+        "crops_ha": 19224,
+        "built_pct": 6.9,
+        "built_ha": 5823
+      }
     },
     {
       "distrito": "ÑACUNDAY",
@@ -164,7 +284,15 @@
       "centroid": [
         -54.7844,
         -26.0741
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.4,
+        "trees_ha": 28964,
+        "crops_pct": 27.4,
+        "crops_ha": 26163,
+        "built_pct": 4.4,
+        "built_ha": 4207
+      }
     },
     {
       "distrito": "PRESIDENTE FRANCO",
@@ -174,7 +302,15 @@
       "centroid": [
         -54.6414,
         -25.5971
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.2,
+        "trees_ha": 3362,
+        "crops_pct": 20.3,
+        "crops_ha": 2710,
+        "built_pct": 17.1,
+        "built_ha": 2277
+      }
     },
     {
       "distrito": "MBARACAYÚ",
@@ -184,7 +320,15 @@
       "centroid": [
         -54.6833,
         -25.0093
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.1,
+        "trees_ha": 27021,
+        "crops_pct": 27.9,
+        "crops_ha": 34083,
+        "built_pct": 4.4,
+        "built_ha": 5393
+      }
     },
     {
       "distrito": "YGUAZÚ",
@@ -194,7 +338,15 @@
       "centroid": [
         -55.0999,
         -25.4145
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 20384,
+        "crops_pct": 23.8,
+        "crops_ha": 20813,
+        "built_pct": 4.6,
+        "built_ha": 4000
+      }
     },
     {
       "distrito": "SAN ALBERTO",
@@ -204,7 +356,15 @@
       "centroid": [
         -54.6794,
         -24.8378
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.1,
+        "trees_ha": 26703,
+        "crops_pct": 27.3,
+        "crops_ha": 30273,
+        "built_pct": 4.6,
+        "built_ha": 5075
+      }
     },
     {
       "distrito": "SANTA FE DEL PARANÁ",
@@ -214,7 +374,15 @@
       "centroid": [
         -54.6299,
         -25.1914
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.1,
+        "trees_ha": 16862,
+        "crops_pct": 27.2,
+        "crops_ha": 24021,
+        "built_pct": 4.1,
+        "built_ha": 3639
+      }
     },
     {
       "distrito": "CIUDAD DEL ESTE",
@@ -224,7 +392,15 @@
       "centroid": [
         -54.6775,
         -25.5031
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.7,
+        "trees_ha": 2606,
+        "crops_pct": 9.5,
+        "crops_ha": 1573,
+        "built_pct": 39.8,
+        "built_ha": 6598
+      }
     }
   ]
 }

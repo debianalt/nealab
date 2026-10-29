@@ -14,7 +14,12 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 800,
+        "min_capital": 435,
+        "km_hospital": 123.0
+      }
     },
     {
       "distrito": "Fuerte Olimpo",
@@ -24,7 +29,12 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 828,
+        "min_capital": 255,
+        "km_hospital": 63.6
+      }
     },
     {
       "distrito": "La Victoria",
@@ -34,7 +44,12 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 612,
+        "min_capital": 430,
+        "km_hospital": 65.1
+      }
     }
   ]
 }

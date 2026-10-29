@@ -14,7 +14,12 @@
       "centroid": [
         -55.9221,
         -25.8245
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 88,
+        "min_capital": 78,
+        "km_hospital": 29.4
+      }
     },
     {
       "distrito": "Gral Garay",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.1916,
         -25.9353
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 82,
+        "min_capital": 59,
+        "km_hospital": 23.9
+      }
     },
     {
       "distrito": "Borja",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.609,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 79,
+        "min_capital": 42,
+        "km_hospital": 15.0
+      }
     },
     {
       "distrito": "Colonia Independencia",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.0671,
         -25.7311
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 47,
+        "min_capital": 53,
+        "km_hospital": 16.9
+      }
     },
     {
       "distrito": "Numi",
@@ -54,7 +74,12 @@
       "centroid": [
         -56.3101,
         -25.9052
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 56,
+        "min_capital": 31,
+        "km_hospital": 19.0
+      }
     },
     {
       "distrito": "Capitan Troche",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.2055,
         -25.6088
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 38,
+        "min_capital": 42,
+        "km_hospital": 13.8
+      }
     },
     {
       "distrito": "Dr. Bottrell",
@@ -74,7 +104,12 @@
       "centroid": [
         -56.3675,
         -25.5987
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 35,
+        "min_capital": 36,
+        "km_hospital": 12.6
+      }
     },
     {
       "distrito": "Iturbe",
@@ -84,7 +119,12 @@
       "centroid": [
         -56.4662,
         -26.0627
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 62,
+        "min_capital": 36,
+        "km_hospital": 9.1
+      }
     },
     {
       "distrito": "San Salvador",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 57,
+        "min_capital": 31,
+        "km_hospital": 12.9
+      }
     },
     {
       "distrito": "Cnel Martinez",
@@ -104,7 +149,12 @@
       "centroid": [
         -56.648,
         -25.7972
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 40,
+        "min_capital": 27,
+        "km_hospital": 17.8
+      }
     },
     {
       "distrito": "Itape",
@@ -114,7 +164,12 @@
       "centroid": [
         -56.561,
         -25.8515
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 59,
+        "min_capital": 24,
+        "km_hospital": 13.6
+      }
     },
     {
       "distrito": "Villarica",
@@ -124,7 +179,12 @@
       "centroid": [
         -56.4107,
         -25.8273
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 41,
+        "min_capital": 17,
+        "km_hospital": 8.8
+      }
     },
     {
       "distrito": "Natalicio Talavera",
@@ -134,7 +194,12 @@
       "centroid": [
         -56.2826,
         -25.6601
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 30,
+        "min_capital": 26,
+        "km_hospital": 8.5
+      }
     },
     {
       "distrito": "Yataity",
@@ -144,7 +209,12 @@
       "centroid": [
         -56.501,
         -25.6879
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 27,
+        "min_capital": 20,
+        "km_hospital": 10.2
+      }
     },
     {
       "distrito": "Mbocayati",
@@ -154,7 +224,12 @@
       "centroid": [
         -56.3632,
         -25.7041
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 32,
+        "min_capital": 20,
+        "km_hospital": 6.3
+      }
     }
   ]
 }

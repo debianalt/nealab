@@ -673,6 +673,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Satellite composite scores ──
 	agri_potential: {
 		id: 'agri_potential',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'high_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+			titleKey: 'rank.agri.title', noteKey: 'rank.agri.note',
+			extraField: 'high_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+		},
 		parquet: 'sat_agri_potential',
 		variables: [
 			{ col: 'c_soc', labelKey: 'sat.agri.soc', aggregation: 'mean', unit: '/100' },
@@ -694,6 +700,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'high_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+			titleKey: 'rank.forestry.title', noteKey: 'rank.forestry.note',
+			extraField: 'high_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+		},
 		parquet: 'sat_forestry_aptitude',
 		variables: [
 			{ col: 'type_label', labelKey: 'sat.forestry.typeLabel', aggregation: 'mean' },
@@ -716,6 +728,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	service_deprivation: {
 		id: 'service_deprivation',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'nbi_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.service.title', noteKey: 'rank.service.note',
+			extraField: 'nbi_n', extraUnitKey: 'rank.unit.hogares', extraDecimals: 0,
+			metrics: [
+				{ tabKey: 'rank.service.tab.nbi' },
+				{ tabKey: 'rank.service.tab.cloacas', field: 'cloacas_pct', extraField: 'cloacas_n' },
+				{ tabKey: 'rank.service.tab.hacin', field: 'hacin_pct', extraField: 'hacin_n' },
+			],
+		},
 		parquet: 'sat_service_deprivation',
 		variables: [
 			// No K-means classification for this layer (compute_satellite_scores emits no
@@ -738,6 +761,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	health_access: {
 		id: 'health_access',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'health_min', unit: 'min', decimals: 0,
+			titleKey: 'rank.health.title', noteKey: 'rank.health.note',
+			extraField: 'health_cov_pct', extraUnitKey: 'rank.unit.pctCoverage', extraDecimals: 1,
+		},
 		parquet: 'sat_health_access',
 		variables: [
 			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'percentil', rawUnit: 'min' },
@@ -758,6 +787,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	education_capital: {
 		id: 'education_capital',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'noschool_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.educap.title', noteKey: 'rank.educap.note',
+			metrics: [
+				{ tabKey: 'rank.educap.tab.noschool' },
+				{ tabKey: 'rank.educap.tab.univ', field: 'univ_pct' },
+			],
+		},
 		parquet: 'sat_education_capital',
 		variables: [
 			{ col: 'c_no_schooling', labelKey: 'sat.eduCap.noSchooling', aggregation: 'mean', unit: 'percentil' },
@@ -776,6 +814,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	education_flow: {
 		id: 'education_flow',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'dropout_sec_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.eduflow.title', noteKey: 'rank.eduflow.note',
+			metrics: [
+				{ tabKey: 'rank.eduflow.tab.dropout' },
+				{ tabKey: 'rank.eduflow.tab.teen', field: 'teen_preg_pct' },
+			],
+		},
 		parquet: 'sat_education_flow',
 		variables: [
 			{ col: 'c_dropout_primary', labelKey: 'sat.eduFlow.dropoutPrimary', aggregation: 'mean', unit: 'percentil' },
@@ -794,6 +841,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Land use / MapBiomas ──
 	land_use: {
 		id: 'land_use',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'trees_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.landuse.title', noteKey: 'rank.landuse.note',
+			extraField: 'trees_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0,
+			metrics: [
+				{ tabKey: 'rank.landuse.tab.trees' },
+				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha' },
+				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha' },
+			],
+		},
 		parquet: 'sat_land_use',
 		// Dynamic World v1 (Google/WRI, 10m): 9 land-cover probability fractions [0-1].
 		// Global product, identical method across AR/PY/BR → cross-territory comparable.
@@ -884,6 +942,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	economic_activity: {
 		id: 'economic_activity',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		// Night lights only: tasa_empleo behaves like a percentile, not a rate (build_layer_ranks.py).
+		deptRank: {
+			field: 'viirs', unit: 'nW/cm²/sr', decimals: 2,
+			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note.viirs',
+		},
 		parquet: 'sat_economic_activity',
 		variables: [
 			{ col: 'score', labelKey: 'analysis.economic.score', aggregation: 'mean' },
@@ -904,6 +968,16 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	accessibility: {
 		id: 'accessibility',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'min_cabecera', unit: 'min', decimals: 0,
+			titleKey: 'rank.access.title', noteKey: 'rank.access.note',
+			metrics: [
+				{ tabKey: 'rank.access.tab.cabecera' },
+				{ tabKey: 'rank.access.tab.capital', field: 'min_capital' },
+				{ tabKey: 'rank.access.tab.hospital', field: 'km_hospital', unit: 'km', decimals: 1, noteKey: 'rank.access.note.hospital' },
+			],
+		},
 		parquet: 'sat_accessibility',
 		variables: [
 			{ col: 'travel_min_capital', rawCol: 'travel_min_capital_raw', unit: 'min', labelKey: 'radio.travelCapital', aggregation: 'mean' },
@@ -924,6 +998,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── PM2.5 Drivers (25-year ML decomposition) ──
 	pm25_drivers: {
 		id: 'pm25_drivers',
+		// Department ranking — pipeline/build_layer_ranks.py.
+		deptRank: {
+			field: 'pm25_ug', unit: 'µg/m³', decimals: 1,
+			titleKey: 'rank.pm25.title', noteKey: 'rank.pm25.note',
+			extraField: 'pm25_delta', extraUnitKey: 'rank.unit.ugDelta', extraDecimals: 1,
+		},
 		parquet: 'sat_pm25_drivers',
 		variables: [
 			{ col: 'type', labelKey: 'sat.pm25.type', aggregation: 'mean' },

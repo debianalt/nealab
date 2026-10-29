@@ -14,7 +14,15 @@
       "centroid": [
         -57.2183,
         -23.4372
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.3,
+        "trees_ha": 4134,
+        "crops_pct": 11.8,
+        "crops_ha": 1856,
+        "built_pct": 6.8,
+        "built_ha": 1065
+      }
     },
     {
       "distrito": "Loreto",
@@ -24,7 +32,15 @@
       "centroid": [
         -57.1715,
         -23.2161
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.4,
+        "trees_ha": 27956,
+        "crops_pct": 10.6,
+        "crops_ha": 10813,
+        "built_pct": 5.1,
+        "built_ha": 5204
+      }
     },
     {
       "distrito": "Horqueta",
@@ -34,7 +50,15 @@
       "centroid": [
         -56.7402,
         -23.283
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.8,
+        "trees_ha": 78482,
+        "crops_pct": 16.5,
+        "crops_ha": 46537,
+        "built_pct": 5.6,
+        "built_ha": 15689
+      }
     },
     {
       "distrito": "San Carlos",
@@ -44,7 +68,15 @@
       "centroid": [
         -57.3306,
         -22.3583
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.5,
+        "trees_ha": 66210,
+        "crops_pct": 7.9,
+        "crops_ha": 13868,
+        "built_pct": 3.8,
+        "built_ha": 6714
+      }
     },
     {
       "distrito": "San Lazaro",
@@ -54,7 +86,15 @@
       "centroid": [
         -57.7533,
         -22.2364
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.2,
+        "trees_ha": 44303,
+        "crops_pct": 8.1,
+        "crops_ha": 9676,
+        "built_pct": 4.4,
+        "built_ha": 5287
+      }
     },
     {
       "distrito": "Concepcion",
@@ -64,7 +104,15 @@
       "centroid": [
         -57.2752,
         -22.8011
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.3,
+        "trees_ha": 397694,
+        "crops_pct": 8.2,
+        "crops_ha": 90044,
+        "built_pct": 4.2,
+        "built_ha": 45944
+      }
     },
     {
       "distrito": "Yby Yau",
@@ -74,7 +122,15 @@
       "centroid": [
         -56.3726,
         -23.0159
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.0,
+        "trees_ha": 70671,
+        "crops_pct": 13.7,
+        "crops_ha": 31223,
+        "built_pct": 4.9,
+        "built_ha": 11295
+      }
     }
   ]
 }

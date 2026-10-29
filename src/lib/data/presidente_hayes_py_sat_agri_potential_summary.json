@@ -14,7 +14,11 @@
       "centroid": [
         -58.3619,
         -22.6175
-      ]
+      ],
+      "rank": {
+        "high_ha": 25122,
+        "high_pct": 2.5
+      }
     },
     {
       "distrito": "Pozo Colorado",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.8214,
         -23.1741
-      ]
+      ],
+      "rank": {
+        "high_ha": 48948,
+        "high_pct": 1.5
+      }
     },
     {
       "distrito": "Villa Hayes",
@@ -34,7 +42,11 @@
       "centroid": [
         -58.6721,
         -24.2215
-      ]
+      ],
+      "rank": {
+        "high_ha": 82707,
+        "high_pct": 2.3
+      }
     },
     {
       "distrito": "Benjamin Aceval",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.6409,
         -24.821
-      ]
+      ],
+      "rank": {
+        "high_ha": 10017,
+        "high_pct": 4.1
+      }
     }
   ]
 }

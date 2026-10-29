@@ -14,7 +14,15 @@
       "centroid": [
         -58.8214,
         -23.1741
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.7,
+        "trees_ha": 1086760,
+        "crops_pct": 9.6,
+        "crops_ha": 310165,
+        "built_pct": 4.2,
+        "built_ha": 134142
+      }
     },
     {
       "distrito": "Puerto Pinasco",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.3619,
         -22.6175
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.1,
+        "trees_ha": 438437,
+        "crops_pct": 6.0,
+        "crops_ha": 61185,
+        "built_pct": 3.7,
+        "built_ha": 37681
+      }
     },
     {
       "distrito": "Villa Hayes",
@@ -34,7 +50,15 @@
       "centroid": [
         -58.6721,
         -24.2215
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.2,
+        "trees_ha": 1393409,
+        "crops_pct": 6.6,
+        "crops_ha": 241645,
+        "built_pct": 3.6,
+        "built_ha": 131652
+      }
     },
     {
       "distrito": "Benjamin Aceval",
@@ -44,7 +68,15 @@
       "centroid": [
         -57.6409,
         -24.821
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.6,
+        "trees_ha": 75415,
+        "crops_pct": 5.8,
+        "crops_ha": 14329,
+        "built_pct": 3.6,
+        "built_ha": 8870
+      }
     }
   ]
 }

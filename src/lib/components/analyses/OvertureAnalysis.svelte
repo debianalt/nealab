@@ -150,13 +150,21 @@
 	const rankSaturatedRaw = $derived(!!rankSummary?.metadata?.rank?.saturated);
 	const rankPlain = $derived(rankSaturatedRaw && !!rankSummary?.metadata?.rank?.plain?.shown && !!layerCfg?.deptRank?.plain);
 	// deptRank.metrics: several readings of the layer, switched from tabs.
+	// Only readings with data in the active territory get a tab (accessibility has
+	// no cabecera times in Chaco/Formosa, no hospital distances in Brazil).
 	let rankMetricIdx = $state(0);
 	$effect(() => { layerCfg?.id; rankMetricIdx = 0; });
+	const rankMetrics = $derived.by(() => {
+		const base = layerCfg?.deptRank;
+		if (!base?.metrics) return [];
+		return base.metrics.filter(m => rankSummary?.departments?.some((d: any) => d.rank?.[m.field ?? base.field] != null));
+	});
+	$effect(() => { if (rankMetricIdx >= rankMetrics.length) rankMetricIdx = 0; });
 	const rankCfg = $derived.by(() => {
 		const base = layerCfg?.deptRank ?? null;
 		if (!base) return null;
 		if (rankPlain) return { ...base, ...base.plain!, extraField: undefined, extraUnitKey: undefined };
-		const m = base.metrics?.[rankMetricIdx];
+		const m = rankMetrics[rankMetricIdx];
 		return m ? { ...base, ...m } : base;
 	});
 	const rankUnit = $derived(rankCfg ? (rankCfg.unitKey ? i18n.t(rankCfg.unitKey) : rankCfg.unit) : '');
@@ -789,9 +797,9 @@
 		{#if hasRank && rankCfg}
 			<div class="dept-section rank-section">
 				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
-				{#if layerCfg?.deptRank?.metrics && !rankPlain}
+				{#if rankMetrics.length > 1 && !rankPlain}
 					<div class="rank-tabs">
-						{#each layerCfg.deptRank.metrics as m, i}
+						{#each rankMetrics as m, i}
 							<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
 						{/each}
 					</div>

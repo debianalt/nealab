@@ -14,7 +14,15 @@
       "centroid": [
         -57.1427,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.4,
+        "trees_ha": 48253,
+        "crops_pct": 12.8,
+        "crops_ha": 22557,
+        "built_pct": 4.5,
+        "built_ha": 7959
+      }
     },
     {
       "distrito": "San Patricio",
@@ -24,7 +32,15 @@
       "centroid": [
         -56.8303,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.9,
+        "trees_ha": 1829,
+        "crops_pct": 14.6,
+        "crops_ha": 1122,
+        "built_pct": 5.9,
+        "built_ha": 454
+      }
     },
     {
       "distrito": "Santiago",
@@ -34,7 +50,15 @@
       "centroid": [
         -56.7915,
         -27.1361
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.3,
+        "trees_ha": 33057,
+        "crops_pct": 9.8,
+        "crops_ha": 10631,
+        "built_pct": 3.9,
+        "built_ha": 4225
+      }
     },
     {
       "distrito": "Santa Rosa",
@@ -44,7 +68,15 @@
       "centroid": [
         -56.7968,
         -26.8686
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.7,
+        "trees_ha": 26650,
+        "crops_pct": 9.5,
+        "crops_ha": 9140,
+        "built_pct": 4.0,
+        "built_ha": 3882
+      }
     },
     {
       "distrito": "Yabebyry",
@@ -54,7 +86,15 @@
       "centroid": [
         -57.1846,
         -27.2526
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 22699,
+        "crops_pct": 3.8,
+        "crops_ha": 3743,
+        "built_pct": 2.6,
+        "built_ha": 2531
+      }
     },
     {
       "distrito": "Santa Maria",
@@ -64,7 +104,15 @@
       "centroid": [
         -56.8905,
         -26.73
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.0,
+        "trees_ha": 6829,
+        "crops_pct": 11.1,
+        "crops_ha": 4736,
+        "built_pct": 3.4,
+        "built_ha": 1460
+      }
     },
     {
       "distrito": "San Juan Bautista",
@@ -74,7 +122,15 @@
       "centroid": [
         -57.426,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "trees_pct": 10.1,
+        "trees_ha": 25383,
+        "crops_pct": 3.2,
+        "crops_ha": 7961,
+        "built_pct": 1.4,
+        "built_ha": 3551
+      }
     },
     {
       "distrito": "Ayolas",
@@ -84,7 +140,15 @@
       "centroid": [
         -57.0272,
         -27.3756
-      ]
+      ],
+      "rank": {
+        "trees_pct": 3.5,
+        "trees_ha": 3469,
+        "crops_pct": 0.3,
+        "crops_ha": 312,
+        "built_pct": 0.3,
+        "built_ha": 260
+      }
     },
     {
       "distrito": "San Miguel",
@@ -94,7 +158,15 @@
       "centroid": [
         -56.9666,
         -26.5689
-      ]
+      ],
+      "rank": {
+        "trees_pct": 0.0,
+        "trees_ha": 2,
+        "crops_pct": 0.0,
+        "crops_ha": 7,
+        "built_pct": 0.0,
+        "built_ha": 1
+      }
     },
     {
       "distrito": "Villa Florida",
@@ -104,7 +176,15 @@
       "centroid": [
         -57.1253,
         -26.4611
-      ]
+      ],
+      "rank": {
+        "trees_pct": 0.0,
+        "trees_ha": 0,
+        "crops_pct": 0.0,
+        "crops_ha": 0,
+        "built_pct": 0.0,
+        "built_ha": 0
+      }
     }
   ]
 }

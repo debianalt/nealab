@@ -14,7 +14,11 @@
       "centroid": [
         -57.2183,
         -23.4372
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Loreto",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.1715,
         -23.2161
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.5,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "San Lazaro",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.7533,
         -22.2364
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Concepcion",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.2752,
         -22.8011
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.0,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Horqueta",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.7402,
         -23.283
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.7,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "San Carlos",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.3306,
         -22.3583
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Yby Yau",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.3726,
         -23.0159
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.1,
+        "pm25_delta": -1.4
+      }
     }
   ]
 }

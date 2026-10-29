@@ -14,7 +14,11 @@
       "centroid": [
         -54.7762,
         -26.2756
-      ]
+      ],
+      "rank": {
+        "high_ha": 29588,
+        "high_pct": 86.2
+      }
     },
     {
       "distrito": "Natalio",
@@ -24,7 +28,11 @@
       "centroid": [
         -55.1481,
         -26.7574
-      ]
+      ],
+      "rank": {
+        "high_ha": 28935,
+        "high_pct": 77.3
+      }
     },
     {
       "distrito": "Yatytay",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.0816,
         -26.6682
-      ]
+      ],
+      "rank": {
+        "high_ha": 17169,
+        "high_pct": 52.2
+      }
     },
     {
       "distrito": "San Cosme Y Damian",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.4868,
         -27.2628
-      ]
+      ],
+      "rank": {
+        "high_ha": 20245,
+        "high_pct": 26.8
+      }
     },
     {
       "distrito": "Trinidad",
@@ -54,7 +70,11 @@
       "centroid": [
         -55.735,
         -27.1495
-      ]
+      ],
+      "rank": {
+        "high_ha": 12745,
+        "high_pct": 50.9
+      }
     },
     {
       "distrito": "Isla Yacyreta",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.5119,
         -27.3952
-      ]
+      ],
+      "rank": {
+        "high_ha": 4466,
+        "high_pct": 4.8
+      }
     },
     {
       "distrito": "Carlos A Lopez",
@@ -74,7 +98,11 @@
       "centroid": [
         -54.9021,
         -26.3704
-      ]
+      ],
+      "rank": {
+        "high_ha": 43502,
+        "high_pct": 47.2
+      }
     },
     {
       "distrito": "Gral. Delgado",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.5565,
         -27.0741
-      ]
+      ],
+      "rank": {
+        "high_ha": 7679,
+        "high_pct": 15.0
+      }
     },
     {
       "distrito": "Alto Vera",
@@ -94,7 +126,11 @@
       "centroid": [
         -55.7222,
         -26.5954
-      ]
+      ],
+      "rank": {
+        "high_ha": 57385,
+        "high_pct": 41.6
+      }
     },
     {
       "distrito": "San Rafael Del Parana",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.1388,
         -26.4058
-      ]
+      ],
+      "rank": {
+        "high_ha": 66370,
+        "high_pct": 39.1
+      }
     },
     {
       "distrito": "Tomas Romero P.",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.2933,
         -26.4732
-      ]
+      ],
+      "rank": {
+        "high_ha": 18844,
+        "high_pct": 26.6
+      }
     },
     {
       "distrito": "La Paz",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.9091,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "high_ha": 9975,
+        "high_pct": 37.7
+      }
     },
     {
       "distrito": "San Pedro Del Parana",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.0239,
         -26.7295
-      ]
+      ],
+      "rank": {
+        "high_ha": 65022,
+        "high_pct": 41.0
+      }
     },
     {
       "distrito": "Leandro Oviedo",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.2346,
         -26.7503
-      ]
+      ],
+      "rank": {
+        "high_ha": 4993,
+        "high_pct": 34.3
+      }
     },
     {
       "distrito": "Capitan Meza",
@@ -154,7 +210,11 @@
       "centroid": [
         -55.3725,
         -26.7763
-      ]
+      ],
+      "rank": {
+        "high_ha": 35339,
+        "high_pct": 40.2
+      }
     },
     {
       "distrito": "Edelira",
@@ -164,7 +224,11 @@
       "centroid": [
         -55.4008,
         -26.58
-      ]
+      ],
+      "rank": {
+        "high_ha": 18086,
+        "high_pct": 23.2
+      }
     },
     {
       "distrito": "Nueva Alborada",
@@ -174,7 +238,11 @@
       "centroid": [
         -55.665,
         -27.2813
-      ]
+      ],
+      "rank": {
+        "high_ha": 7236,
+        "high_pct": 27.1
+      }
     },
     {
       "distrito": "Hohenau",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.7418,
         -27.0077
-      ]
+      ],
+      "rank": {
+        "high_ha": 5793,
+        "high_pct": 18.4
+      }
     },
     {
       "distrito": "Coronel Bogado",
@@ -194,7 +266,11 @@
       "centroid": [
         -56.306,
         -27.1479
-      ]
+      ],
+      "rank": {
+        "high_ha": 7152,
+        "high_pct": 11.2
+      }
     },
     {
       "distrito": "Jesus",
@@ -204,7 +280,11 @@
       "centroid": [
         -55.7803,
         -27.0605
-      ]
+      ],
+      "rank": {
+        "high_ha": 2254,
+        "high_pct": 15.4
+      }
     },
     {
       "distrito": "Gral Artigas",
@@ -214,7 +294,11 @@
       "centroid": [
         -56.3772,
         -26.9109
-      ]
+      ],
+      "rank": {
+        "high_ha": 12629,
+        "high_pct": 7.7
+      }
     },
     {
       "distrito": "Capitan Miranda",
@@ -224,7 +308,11 @@
       "centroid": [
         -55.8331,
         -27.1821
-      ]
+      ],
+      "rank": {
+        "high_ha": 2560,
+        "high_pct": 12.3
+      }
     },
     {
       "distrito": "Fram",
@@ -234,7 +322,11 @@
       "centroid": [
         -56.0203,
         -27.0764
-      ]
+      ],
+      "rank": {
+        "high_ha": 3128,
+        "high_pct": 8.4
+      }
     },
     {
       "distrito": "Obligado",
@@ -244,7 +336,11 @@
       "centroid": [
         -55.7125,
         -26.9229
-      ]
+      ],
+      "rank": {
+        "high_ha": 4592,
+        "high_pct": 10.3
+      }
     },
     {
       "distrito": "Cambyreta",
@@ -254,7 +350,11 @@
       "centroid": [
         -55.7699,
         -27.3561
-      ]
+      ],
+      "rank": {
+        "high_ha": 2970,
+        "high_pct": 13.6
+      }
     },
     {
       "distrito": "San Juan",
@@ -264,7 +364,11 @@
       "centroid": [
         -55.9922,
         -27.2954
-      ]
+      ],
+      "rank": {
+        "high_ha": 1106,
+        "high_pct": 11.7
+      }
     },
     {
       "distrito": "Encarnacion",
@@ -274,7 +378,11 @@
       "centroid": [
         -55.8985,
         -27.2646
-      ]
+      ],
+      "rank": {
+        "high_ha": 3402,
+        "high_pct": 9.5
+      }
     },
     {
       "distrito": "Pirapo",
@@ -284,7 +392,11 @@
       "centroid": [
         -55.5412,
         -26.8461
-      ]
+      ],
+      "rank": {
+        "high_ha": 4361,
+        "high_pct": 5.6
+      }
     },
     {
       "distrito": "Bella Vista",
@@ -294,7 +406,11 @@
       "centroid": [
         -55.5355,
         -27.0111
-      ]
+      ],
+      "rank": {
+        "high_ha": 948,
+        "high_pct": 2.9
+      }
     },
     {
       "distrito": "Carmen Del Parana",
@@ -304,7 +420,11 @@
       "centroid": [
         -56.1055,
         -27.2074
-      ]
+      ],
+      "rank": {
+        "high_ha": 2054,
+        "high_pct": 6.5
+      }
     },
     {
       "distrito": "Isla",
@@ -314,7 +434,11 @@
       "centroid": [
         -56.4098,
         -27.5135
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

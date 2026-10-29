@@ -14,7 +14,11 @@
       "centroid": [
         -55.208,
         -25.9527
-      ]
+      ],
+      "rank": {
+        "high_ha": 69435,
+        "high_pct": 99.5
+      }
     },
     {
       "distrito": "SANTA ROSA DEL MONDAY",
@@ -24,7 +28,11 @@
       "centroid": [
         -54.9236,
         -25.8464
-      ]
+      ],
+      "rank": {
+        "high_ha": 68466,
+        "high_pct": 99.5
+      }
     },
     {
       "distrito": "SANTA RITA",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.1372,
         -25.7706
-      ]
+      ],
+      "rank": {
+        "high_ha": 64421,
+        "high_pct": 98.2
+      }
     },
     {
       "distrito": "IRUÑA",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.0381,
         -26.1334
-      ]
+      ],
+      "rank": {
+        "high_ha": 59271,
+        "high_pct": 99.7
+      }
     },
     {
       "distrito": "LOS CEDRALES",
@@ -54,7 +70,11 @@
       "centroid": [
         -54.7516,
         -25.6831
-      ]
+      ],
+      "rank": {
+        "high_ha": 43250,
+        "high_pct": 97.7
+      }
     },
     {
       "distrito": "DR. RAÚL PEÑA",
@@ -64,7 +84,11 @@
       "centroid": [
         -55.2241,
         -26.1362
-      ]
+      ],
+      "rank": {
+        "high_ha": 26912,
+        "high_pct": 99.5
+      }
     },
     {
       "distrito": "DOMINGO MARTÍNEZ DE IRALA",
@@ -74,7 +98,11 @@
       "centroid": [
         -54.6889,
         -25.8607
-      ]
+      ],
+      "rank": {
+        "high_ha": 34876,
+        "high_pct": 93.2
+      }
     },
     {
       "distrito": "ÑACUNDAY",
@@ -84,7 +112,11 @@
       "centroid": [
         -54.7844,
         -26.0741
-      ]
+      ],
+      "rank": {
+        "high_ha": 90438,
+        "high_pct": 94.8
+      }
     },
     {
       "distrito": "MINGA GUAZÚ",
@@ -94,7 +126,11 @@
       "centroid": [
         -54.8404,
         -25.5054
-      ]
+      ],
+      "rank": {
+        "high_ha": 47537,
+        "high_pct": 89.4
+      }
     },
     {
       "distrito": "MINGA PORÁ",
@@ -104,7 +140,11 @@
       "centroid": [
         -54.8684,
         -24.7658
-      ]
+      ],
+      "rank": {
+        "high_ha": 78146,
+        "high_pct": 81.9
+      }
     },
     {
       "distrito": "SAN CRISTÓBAL",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.3862,
         -25.7898
-      ]
+      ],
+      "rank": {
+        "high_ha": 82707,
+        "high_pct": 80.4
+      }
     },
     {
       "distrito": "TAVAPY",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.0691,
         -25.6222
-      ]
+      ],
+      "rank": {
+        "high_ha": 29967,
+        "high_pct": 62.3
+      }
     },
     {
       "distrito": "MBARACAYÚ",
@@ -134,7 +182,11 @@
       "centroid": [
         -54.6833,
         -25.0093
-      ]
+      ],
+      "rank": {
+        "high_ha": 99034,
+        "high_pct": 81.1
+      }
     },
     {
       "distrito": "PRESIDENTE FRANCO",
@@ -144,7 +196,11 @@
       "centroid": [
         -54.6414,
         -25.5971
-      ]
+      ],
+      "rank": {
+        "high_ha": 10217,
+        "high_pct": 76.6
+      }
     },
     {
       "distrito": "SAN ALBERTO",
@@ -154,7 +210,11 @@
       "centroid": [
         -54.6794,
         -24.8378
-      ]
+      ],
+      "rank": {
+        "high_ha": 81580,
+        "high_pct": 73.6
+      }
     },
     {
       "distrito": "HERNANDARIAS",
@@ -164,7 +224,11 @@
       "centroid": [
         -54.7802,
         -25.3136
-      ]
+      ],
+      "rank": {
+        "high_ha": 46188,
+        "high_pct": 54.5
+      }
     },
     {
       "distrito": "ITAKYRY",
@@ -174,7 +238,11 @@
       "centroid": [
         -55.1516,
         -24.8215
-      ]
+      ],
+      "rank": {
+        "high_ha": 27218,
+        "high_pct": 12.8
+      }
     },
     {
       "distrito": "SANTA FE DEL PARANÁ",
@@ -184,7 +252,11 @@
       "centroid": [
         -54.6299,
         -25.1914
-      ]
+      ],
+      "rank": {
+        "high_ha": 53024,
+        "high_pct": 60.1
+      }
     },
     {
       "distrito": "DR. JUAN LEÓN MALLORQUÍN",
@@ -194,7 +266,11 @@
       "centroid": [
         -55.2555,
         -25.4849
-      ]
+      ],
+      "rank": {
+        "high_ha": 316,
+        "high_pct": 1.1
+      }
     },
     {
       "distrito": "JUAN E. O'LEARY",
@@ -204,7 +280,11 @@
       "centroid": [
         -55.3633,
         -25.4804
-      ]
+      ],
+      "rank": {
+        "high_ha": 1938,
+        "high_pct": 7.8
+      }
     },
     {
       "distrito": "YGUAZÚ",
@@ -214,7 +294,11 @@
       "centroid": [
         -55.0999,
         -25.4145
-      ]
+      ],
+      "rank": {
+        "high_ha": 13588,
+        "high_pct": 15.6
+      }
     },
     {
       "distrito": "CIUDAD DEL ESTE",
@@ -224,7 +308,11 @@
       "centroid": [
         -54.6775,
         -25.5031
-      ]
+      ],
+      "rank": {
+        "high_ha": 6678,
+        "high_pct": 40.3
+      }
     }
   ]
 }

@@ -14,7 +14,15 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.0,
+        "trees_ha": 929324,
+        "crops_pct": 9.9,
+        "crops_ha": 247688,
+        "built_pct": 4.3,
+        "built_ha": 106858
+      }
     },
     {
       "distrito": "Fuerte Olimpo",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.6,
+        "trees_ha": 853363,
+        "crops_pct": 7.9,
+        "crops_ha": 170476,
+        "built_pct": 3.9,
+        "built_ha": 84884
+      }
     },
     {
       "distrito": "Mayor Pablo La Gerenza",
@@ -34,7 +50,15 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.0,
+        "trees_ha": 1268324,
+        "crops_pct": 7.5,
+        "crops_ha": 281614,
+        "built_pct": 3.6,
+        "built_ha": 135911
+      }
     }
   ]
 }

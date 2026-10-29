@@ -14,7 +14,15 @@
       "centroid": [
         -61.3304,
         -27.8272
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.2,
+        "trees_ha": 71289,
+        "crops_pct": 23.9,
+        "crops_ha": 84616,
+        "built_pct": 4.2,
+        "built_ha": 14830
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -24,7 +32,15 @@
       "centroid": [
         -60.6704,
         -27.742
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.0,
+        "trees_ha": 123522,
+        "crops_pct": 17.6,
+        "crops_ha": 80619,
+        "built_pct": 4.6,
+        "built_ha": 21145
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -34,7 +50,15 @@
       "centroid": [
         -61.4369,
         -27.3753
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.7,
+        "trees_ha": 76093,
+        "crops_pct": 32.3,
+        "crops_ha": 139195,
+        "built_pct": 4.3,
+        "built_ha": 18660
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -44,7 +68,15 @@
       "centroid": [
         -60.692,
         -27.2479
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.4,
+        "trees_ha": 46185,
+        "crops_pct": 27.4,
+        "crops_ha": 51874,
+        "built_pct": 4.5,
+        "built_ha": 8493
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -54,7 +86,15 @@
       "centroid": [
         -60.1799,
         -26.6648
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.6,
+        "trees_ha": 68298,
+        "crops_pct": 12.4,
+        "crops_ha": 23169,
+        "built_pct": 4.6,
+        "built_ha": 8672
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -64,7 +104,15 @@
       "centroid": [
         -61.0749,
         -26.838
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.2,
+        "trees_ha": 30694,
+        "crops_pct": 32.0,
+        "crops_ha": 48767,
+        "built_pct": 4.4,
+        "built_ha": 6773
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -74,7 +122,15 @@
       "centroid": [
         -61.3118,
         -27.1138
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.1,
+        "trees_ha": 32405,
+        "crops_pct": 31.9,
+        "crops_ha": 51460,
+        "built_pct": 4.8,
+        "built_ha": 7662
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -84,7 +140,15 @@
       "centroid": [
         -60.37,
         -27.4108
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.6,
+        "trees_ha": 103751,
+        "crops_pct": 8.7,
+        "crops_ha": 22814,
+        "built_pct": 4.3,
+        "built_ha": 11376
+      }
     },
     {
       "dpto": "Independencia",
@@ -94,7 +158,15 @@
       "centroid": [
         -60.7604,
         -26.7362
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.7,
+        "trees_ha": 55084,
+        "crops_pct": 29.6,
+        "crops_ha": 66161,
+        "built_pct": 4.5,
+        "built_ha": 10146
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -104,7 +176,15 @@
       "centroid": [
         -60.4735,
         -26.7914
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.1,
+        "trees_ha": 49683,
+        "crops_pct": 24.4,
+        "crops_ha": 43107,
+        "built_pct": 5.7,
+        "built_ha": 10110
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -114,7 +194,15 @@
       "centroid": [
         -60.0398,
         -26.8257
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.0,
+        "trees_ha": 107631,
+        "crops_pct": 8.1,
+        "crops_ha": 21806,
+        "built_pct": 4.3,
+        "built_ha": 11643
+      }
     },
     {
       "dpto": "San Fernando",
@@ -124,7 +212,15 @@
       "centroid": [
         -59.1267,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.7,
+        "trees_ha": 167437,
+        "crops_pct": 7.3,
+        "crops_ha": 31610,
+        "built_pct": 5.4,
+        "built_ha": 23351
+      }
     },
     {
       "dpto": "Nueve de Julio",
@@ -134,7 +230,15 @@
       "centroid": [
         -61.2721,
         -26.9361
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.7,
+        "trees_ha": 70174,
+        "crops_pct": 28.9,
+        "crops_ha": 78849,
+        "built_pct": 4.5,
+        "built_ha": 12354
+      }
     },
     {
       "dpto": "Bermejo",
@@ -144,7 +248,15 @@
       "centroid": [
         -58.7084,
         -26.9631
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.2,
+        "trees_ha": 117922,
+        "crops_pct": 6.7,
+        "crops_ha": 20630,
+        "built_pct": 3.9,
+        "built_ha": 12184
+      }
     },
     {
       "dpto": "Maipú",
@@ -154,7 +266,15 @@
       "centroid": [
         -60.4564,
         -26.3289
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.8,
+        "trees_ha": 119999,
+        "crops_pct": 18.3,
+        "crops_ha": 61288,
+        "built_pct": 4.5,
+        "built_ha": 15005
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -164,7 +284,15 @@
       "centroid": [
         -59.8436,
         -27.6698
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.1,
+        "trees_ha": 310846,
+        "crops_pct": 6.2,
+        "crops_ha": 45974,
+        "built_pct": 3.7,
+        "built_ha": 27076
+      }
     },
     {
       "dpto": "General Donovan",
@@ -174,7 +302,15 @@
       "centroid": [
         -59.3494,
         -27.1274
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.7,
+        "trees_ha": 87845,
+        "crops_pct": 6.3,
+        "crops_ha": 12399,
+        "built_pct": 4.0,
+        "built_ha": 7862
+      }
     },
     {
       "dpto": "Libertad",
@@ -184,7 +320,15 @@
       "centroid": [
         -59.2715,
         -27.3475
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.0,
+        "trees_ha": 52926,
+        "crops_pct": 6.1,
+        "crops_ha": 7330,
+        "built_pct": 4.2,
+        "built_ha": 5060
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -194,7 +338,15 @@
       "centroid": [
         -58.9731,
         -27.1551
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.7,
+        "trees_ha": 74921,
+        "crops_pct": 6.3,
+        "crops_ha": 10547,
+        "built_pct": 4.0,
+        "built_ha": 6748
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -204,7 +356,15 @@
       "centroid": [
         -59.7871,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "trees_pct": 46.4,
+        "trees_ha": 131381,
+        "crops_pct": 5.9,
+        "crops_ha": 16826,
+        "built_pct": 3.8,
+        "built_ha": 10833
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -214,7 +374,15 @@
       "centroid": [
         -59.5538,
         -26.7743
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.1,
+        "trees_ha": 86507,
+        "crops_pct": 6.8,
+        "crops_ha": 13097,
+        "built_pct": 4.1,
+        "built_ha": 7796
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -224,7 +392,15 @@
       "centroid": [
         -59.5073,
         -26.3713
-      ]
+      ],
+      "rank": {
+        "trees_pct": 46.4,
+        "trees_ha": 408197,
+        "crops_pct": 6.6,
+        "crops_ha": 58179,
+        "built_pct": 3.9,
+        "built_ha": 34517
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -234,7 +410,15 @@
       "centroid": [
         -61.9817,
         -25.7474
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.1,
+        "trees_ha": 868390,
+        "crops_pct": 14.9,
+        "crops_ha": 287795,
+        "built_pct": 4.2,
+        "built_ha": 80177
+      }
     },
     {
       "dpto": "General Güemes",
@@ -244,7 +428,15 @@
       "centroid": [
         -61.3084,
         -25.2411
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.5,
+        "trees_ha": 1265530,
+        "crops_pct": 5.9,
+        "crops_ha": 178796,
+        "built_pct": 3.2,
+        "built_ha": 96244
+      }
     }
   ]
 }

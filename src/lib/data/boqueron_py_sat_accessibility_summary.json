@@ -14,7 +14,12 @@
       "centroid": [
         -61.0698,
         -21.1398
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 578,
+        "min_capital": 310,
+        "km_hospital": 107.0
+      }
     },
     {
       "distrito": "Pedro P. Pena",
@@ -24,7 +29,12 @@
       "centroid": [
         -61.3642,
         -22.7396
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 362,
+        "min_capital": 194,
+        "km_hospital": 90.2
+      }
     },
     {
       "distrito": "Mcal. Estigarribia",
@@ -34,7 +44,12 @@
       "centroid": [
         -60.3036,
         -22.3771
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 283,
+        "min_capital": 96,
+        "km_hospital": 29.3
+      }
     }
   ]
 }

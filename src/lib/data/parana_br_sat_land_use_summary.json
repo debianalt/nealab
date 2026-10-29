@@ -14,7 +14,15 @@
       "centroid": [
         -53.7995,
         -23.7139
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.9,
+        "trees_ha": 2166,
+        "crops_pct": 23.5,
+        "crops_ha": 3415,
+        "built_pct": 5.3,
+        "built_ha": 778
+      }
     },
     {
       "municipio": "Icaraíma",
@@ -24,7 +32,15 @@
       "centroid": [
         -53.5889,
         -23.3724
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 10330,
+        "crops_pct": 25.0,
+        "crops_ha": 17572,
+        "built_pct": 5.3,
+        "built_ha": 3729
+      }
     },
     {
       "municipio": "Pérola",
@@ -34,7 +50,15 @@
       "centroid": [
         -53.7078,
         -23.8342
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.9,
+        "trees_ha": 4281,
+        "crops_pct": 19.2,
+        "crops_ha": 4845,
+        "built_pct": 6.4,
+        "built_ha": 1614
+      }
     },
     {
       "municipio": "Xambrê",
@@ -44,7 +68,15 @@
       "centroid": [
         -53.5948,
         -23.7369
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.6,
+        "trees_ha": 6634,
+        "crops_pct": 22.3,
+        "crops_ha": 8420,
+        "built_pct": 5.3,
+        "built_ha": 1983
+      }
     },
     {
       "municipio": "Novo Itacolomi",
@@ -54,7 +86,15 @@
       "centroid": [
         -51.5295,
         -23.7805
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.8,
+        "trees_ha": 4259,
+        "crops_pct": 20.8,
+        "crops_ha": 3438,
+        "built_pct": 5.0,
+        "built_ha": 828
+      }
     },
     {
       "municipio": "Barra do Jacaré",
@@ -64,7 +104,15 @@
       "centroid": [
         -50.1605,
         -23.1061
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.2,
+        "trees_ha": 1890,
+        "crops_pct": 35.4,
+        "crops_ha": 4137,
+        "built_pct": 5.2,
+        "built_ha": 606
+      }
     },
     {
       "municipio": "Kaloré",
@@ -74,7 +122,15 @@
       "centroid": [
         -51.6865,
         -23.8541
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.4,
+        "trees_ha": 3878,
+        "crops_pct": 31.5,
+        "crops_ha": 6280,
+        "built_pct": 5.0,
+        "built_ha": 1003
+      }
     },
     {
       "municipio": "Alto Paraíso",
@@ -84,7 +140,15 @@
       "centroid": [
         -53.8185,
         -23.5424
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.9,
+        "trees_ha": 21203,
+        "crops_pct": 18.1,
+        "crops_ha": 18331,
+        "built_pct": 4.4,
+        "built_ha": 4429
+      }
     },
     {
       "municipio": "Tamboara",
@@ -94,7 +158,15 @@
       "centroid": [
         -52.4822,
         -23.1981
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.2,
+        "trees_ha": 3613,
+        "crops_pct": 28.8,
+        "crops_ha": 5700,
+        "built_pct": 5.5,
+        "built_ha": 1096
+      }
     },
     {
       "municipio": "Godoy Moreira",
@@ -104,7 +176,15 @@
       "centroid": [
         -51.9079,
         -24.1619
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.6,
+        "trees_ha": 3505,
+        "crops_pct": 21.1,
+        "crops_ha": 2893,
+        "built_pct": 4.9,
+        "built_ha": 666
+      }
     },
     {
       "municipio": "Abatiá",
@@ -114,7 +194,15 @@
       "centroid": [
         -50.3116,
         -23.306
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.2,
+        "trees_ha": 4656,
+        "crops_pct": 26.2,
+        "crops_ha": 6050,
+        "built_pct": 5.2,
+        "built_ha": 1204
+      }
     },
     {
       "municipio": "Jandaia do Sul",
@@ -124,7 +212,15 @@
       "centroid": [
         -51.6865,
         -23.6293
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.0,
+        "trees_ha": 4618,
+        "crops_pct": 23.9,
+        "crops_ha": 4611,
+        "built_pct": 8.0,
+        "built_ha": 1535
+      }
     },
     {
       "municipio": "Marumbi",
@@ -134,7 +230,15 @@
       "centroid": [
         -51.6611,
         -23.7556
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.8,
+        "trees_ha": 5121,
+        "crops_pct": 24.5,
+        "crops_ha": 5255,
+        "built_pct": 4.8,
+        "built_ha": 1020
+      }
     },
     {
       "municipio": "Borrazópolis",
@@ -144,7 +248,15 @@
       "centroid": [
         -51.5923,
         -23.9387
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.0,
+        "trees_ha": 7571,
+        "crops_pct": 28.1,
+        "crops_ha": 9679,
+        "built_pct": 4.9,
+        "built_ha": 1687
+      }
     },
     {
       "municipio": "São Jorge do Patrocínio",
@@ -154,7 +266,15 @@
       "centroid": [
         -53.9485,
         -23.7386
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.8,
+        "trees_ha": 10544,
+        "crops_pct": 14.3,
+        "crops_ha": 6098,
+        "built_pct": 4.6,
+        "built_ha": 1960
+      }
     },
     {
       "municipio": "Medianeira",
@@ -164,7 +284,15 @@
       "centroid": [
         -54.0898,
         -25.2643
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 8286,
+        "crops_pct": 25.4,
+        "crops_ha": 9014,
+        "built_pct": 8.4,
+        "built_ha": 2974
+      }
     },
     {
       "municipio": "Nova Aliança do Ivaí",
@@ -174,7 +302,15 @@
       "centroid": [
         -52.6098,
         -23.1695
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.8,
+        "trees_ha": 2390,
+        "crops_pct": 26.3,
+        "crops_ha": 3526,
+        "built_pct": 4.9,
+        "built_ha": 658
+      }
     },
     {
       "municipio": "Sulina",
@@ -184,7 +320,15 @@
       "centroid": [
         -52.7169,
         -25.694
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.6,
+        "trees_ha": 5069,
+        "crops_pct": 20.9,
+        "crops_ha": 3845,
+        "built_pct": 5.4,
+        "built_ha": 999
+      }
     },
     {
       "municipio": "Douradina",
@@ -194,7 +338,15 @@
       "centroid": [
         -53.2887,
         -23.3478
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.5,
+        "trees_ha": 8476,
+        "crops_pct": 21.9,
+        "crops_ha": 9541,
+        "built_pct": 5.2,
+        "built_ha": 2246
+      }
     },
     {
       "municipio": "Nova Esperança",
@@ -204,7 +356,15 @@
       "centroid": [
         -52.2578,
         -23.1955
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.5,
+        "trees_ha": 8007,
+        "crops_pct": 27.6,
+        "crops_ha": 11303,
+        "built_pct": 6.3,
+        "built_ha": 2602
+      }
     },
     {
       "municipio": "Santa Cruz de Monte Castelo",
@@ -214,7 +374,15 @@
       "centroid": [
         -53.3655,
         -23.0888
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.9,
+        "trees_ha": 6783,
+        "crops_pct": 25.1,
+        "crops_ha": 11430,
+        "built_pct": 5.0,
+        "built_ha": 2284
+      }
     },
     {
       "municipio": "Verê",
@@ -224,7 +392,15 @@
       "centroid": [
         -52.9566,
         -25.8737
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.9,
+        "trees_ha": 8775,
+        "crops_pct": 28.5,
+        "crops_ha": 9657,
+        "built_pct": 5.9,
+        "built_ha": 1982
+      }
     },
     {
       "municipio": "Arapuã",
@@ -234,7 +410,15 @@
       "centroid": [
         -51.8145,
         -24.3437
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.6,
+        "trees_ha": 4645,
+        "crops_pct": 28.4,
+        "crops_ha": 6392,
+        "built_pct": 4.7,
+        "built_ha": 1066
+      }
     },
     {
       "municipio": "Colorado",
@@ -244,7 +428,15 @@
       "centroid": [
         -51.9725,
         -22.8372
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.8,
+        "trees_ha": 6946,
+        "crops_pct": 30.3,
+        "crops_ha": 12532,
+        "built_pct": 6.1,
+        "built_ha": 2506
+      }
     },
     {
       "municipio": "Ivaté",
@@ -254,7 +446,15 @@
       "centroid": [
         -53.4231,
         -23.3572
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.9,
+        "trees_ha": 8472,
+        "crops_pct": 25.4,
+        "crops_ha": 10848,
+        "built_pct": 5.2,
+        "built_ha": 2227
+      }
     },
     {
       "municipio": "Maria Helena",
@@ -264,7 +464,15 @@
       "centroid": [
         -53.2239,
         -23.5817
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.4,
+        "trees_ha": 10303,
+        "crops_pct": 22.1,
+        "crops_ha": 11197,
+        "built_pct": 4.8,
+        "built_ha": 2440
+      }
     },
     {
       "municipio": "Umuarama",
@@ -274,7 +482,15 @@
       "centroid": [
         -53.4225,
         -23.6676
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.2,
+        "trees_ha": 24690,
+        "crops_pct": 21.7,
+        "crops_ha": 28007,
+        "built_pct": 7.0,
+        "built_ha": 9074
+      }
     },
     {
       "municipio": "Santa Isabel do Ivaí",
@@ -284,7 +500,15 @@
       "centroid": [
         -53.2412,
         -23.1143
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.2,
+        "trees_ha": 5127,
+        "crops_pct": 26.2,
+        "crops_ha": 9463,
+        "built_pct": 5.1,
+        "built_ha": 1837
+      }
     },
     {
       "municipio": "São João do Ivaí",
@@ -294,7 +518,15 @@
       "centroid": [
         -51.8454,
         -23.9889
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.8,
+        "trees_ha": 6511,
+        "crops_pct": 33.1,
+        "crops_ha": 12087,
+        "built_pct": 5.1,
+        "built_ha": 1870
+      }
     },
     {
       "municipio": "Altônia",
@@ -304,7 +536,15 @@
       "centroid": [
         -53.9503,
         -23.9051
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.6,
+        "trees_ha": 15075,
+        "crops_pct": 18.1,
+        "crops_ha": 12613,
+        "built_pct": 5.1,
+        "built_ha": 3571
+      }
     },
     {
       "municipio": "Bom Sucesso do Sul",
@@ -314,7 +554,15 @@
       "centroid": [
         -52.8413,
         -26.0829
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.9,
+        "trees_ha": 4869,
+        "crops_pct": 32.5,
+        "crops_ha": 6911,
+        "built_pct": 5.1,
+        "built_ha": 1094
+      }
     },
     {
       "municipio": "Itapejara d'Oeste",
@@ -324,7 +572,15 @@
       "centroid": [
         -52.8269,
         -25.9863
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.2,
+        "trees_ha": 6940,
+        "crops_pct": 29.3,
+        "crops_ha": 8077,
+        "built_pct": 6.3,
+        "built_ha": 1748
+      }
     },
     {
       "municipio": "Nova Londrina",
@@ -334,7 +590,15 @@
       "centroid": [
         -52.9517,
         -22.7909
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 4372,
+        "crops_pct": 27.2,
+        "crops_ha": 7513,
+        "built_pct": 6.0,
+        "built_ha": 1666
+      }
     },
     {
       "municipio": "Nova Santa Rosa",
@@ -344,7 +608,15 @@
       "centroid": [
         -53.9596,
         -24.4421
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.5,
+        "trees_ha": 3380,
+        "crops_pct": 36.4,
+        "crops_ha": 7944,
+        "built_pct": 7.1,
+        "built_ha": 1558
+      }
     },
     {
       "municipio": "Santa Inês",
@@ -354,7 +626,15 @@
       "centroid": [
         -51.8966,
         -22.718
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.8,
+        "trees_ha": 2351,
+        "crops_pct": 31.5,
+        "crops_ha": 5000,
+        "built_pct": 5.2,
+        "built_ha": 822
+      }
     },
     {
       "municipio": "Uraí",
@@ -364,7 +644,15 @@
       "centroid": [
         -50.8282,
         -23.2166
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.8,
+        "trees_ha": 5238,
+        "crops_pct": 28.8,
+        "crops_ha": 6934,
+        "built_pct": 5.6,
+        "built_ha": 1342
+      }
     },
     {
       "municipio": "Bom Sucesso",
@@ -374,7 +662,15 @@
       "centroid": [
         -51.8228,
         -23.7131
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.0,
+        "trees_ha": 8618,
+        "crops_pct": 24.6,
+        "crops_ha": 8169,
+        "built_pct": 4.7,
+        "built_ha": 1545
+      }
     },
     {
       "municipio": "Marilena",
@@ -384,7 +680,15 @@
       "centroid": [
         -53.0657,
         -22.7307
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.8,
+        "trees_ha": 3515,
+        "crops_pct": 26.2,
+        "crops_ha": 6229,
+        "built_pct": 5.8,
+        "built_ha": 1372
+      }
     },
     {
       "municipio": "Mariópolis",
@@ -394,7 +698,15 @@
       "centroid": [
         -52.5805,
         -26.3327
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.1,
+        "trees_ha": 6551,
+        "crops_pct": 27.6,
+        "crops_ha": 6924,
+        "built_pct": 5.5,
+        "built_ha": 1381
+      }
     },
     {
       "municipio": "Nossa Senhora das Graças",
@@ -404,7 +716,15 @@
       "centroid": [
         -51.7998,
         -22.9109
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.5,
+        "trees_ha": 3114,
+        "crops_pct": 31.0,
+        "crops_ha": 5856,
+        "built_pct": 5.5,
+        "built_ha": 1039
+      }
     },
     {
       "municipio": "Tapira",
@@ -414,7 +734,15 @@
       "centroid": [
         -53.1332,
         -23.3283
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.7,
+        "trees_ha": 7940,
+        "crops_pct": 23.2,
+        "crops_ha": 10444,
+        "built_pct": 4.9,
+        "built_ha": 2221
+      }
     },
     {
       "municipio": "Vera Cruz do Oeste",
@@ -424,7 +752,15 @@
       "centroid": [
         -53.9269,
         -25.0056
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.6,
+        "trees_ha": 7962,
+        "crops_pct": 29.7,
+        "crops_ha": 10426,
+        "built_pct": 5.2,
+        "built_ha": 1840
+      }
     },
     {
       "municipio": "Bandeirantes",
@@ -434,7 +770,15 @@
       "centroid": [
         -50.3507,
         -23.1639
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.0,
+        "trees_ha": 8089,
+        "crops_pct": 32.3,
+        "crops_ha": 14478,
+        "built_pct": 6.0,
+        "built_ha": 2674
+      }
     },
     {
       "municipio": "Barbosa Ferraz",
@@ -444,7 +788,15 @@
       "centroid": [
         -52.0443,
         -24.0809
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.8,
+        "trees_ha": 14402,
+        "crops_pct": 21.2,
+        "crops_ha": 11836,
+        "built_pct": 4.7,
+        "built_ha": 2637
+      }
     },
     {
       "municipio": "Cafezal do Sul",
@@ -454,7 +806,15 @@
       "centroid": [
         -53.56,
         -23.9396
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.8,
+        "trees_ha": 6293,
+        "crops_pct": 29.3,
+        "crops_ha": 10348,
+        "built_pct": 5.1,
+        "built_ha": 1810
+      }
     },
     {
       "municipio": "Califórnia",
@@ -464,7 +824,15 @@
       "centroid": [
         -51.3327,
         -23.6679
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.3,
+        "trees_ha": 3663,
+        "crops_pct": 28.0,
+        "crops_ha": 4056,
+        "built_pct": 5.9,
+        "built_ha": 846
+      }
     },
     {
       "municipio": "Dois Vizinhos",
@@ -474,7 +842,15 @@
       "centroid": [
         -53.0726,
         -25.7488
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.2,
+        "trees_ha": 12313,
+        "crops_pct": 25.5,
+        "crops_ha": 11568,
+        "built_pct": 7.9,
+        "built_ha": 3558
+      }
     },
     {
       "municipio": "Grandes Rios",
@@ -484,7 +860,15 @@
       "centroid": [
         -51.4491,
         -24.1892
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.3,
+        "trees_ha": 9225,
+        "crops_pct": 14.6,
+        "crops_ha": 4755,
+        "built_pct": 4.6,
+        "built_ha": 1512
+      }
     },
     {
       "municipio": "Itaúna do Sul",
@@ -494,7 +878,15 @@
       "centroid": [
         -52.8993,
         -22.7267
-      ]
+      ],
+      "rank": {
+        "trees_pct": 11.7,
+        "trees_ha": 1535,
+        "crops_pct": 28.5,
+        "crops_ha": 3732,
+        "built_pct": 5.3,
+        "built_ha": 688
+      }
     },
     {
       "municipio": "Loanda",
@@ -504,7 +896,15 @@
       "centroid": [
         -53.0721,
         -22.9524
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.1,
+        "trees_ha": 11949,
+        "crops_pct": 22.3,
+        "crops_ha": 16556,
+        "built_pct": 5.2,
+        "built_ha": 3838
+      }
     },
     {
       "municipio": "Quatro Pontes",
@@ -514,7 +914,15 @@
       "centroid": [
         -53.9759,
         -24.5697
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.3,
+        "trees_ha": 2115,
+        "crops_pct": 35.1,
+        "crops_ha": 4298,
+        "built_pct": 7.4,
+        "built_ha": 904
+      }
     },
     {
       "municipio": "São José das Palmeiras",
@@ -524,7 +932,15 @@
       "centroid": [
         -54.1212,
         -24.8154
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.1,
+        "trees_ha": 5706,
+        "crops_pct": 15.4,
+        "crops_ha": 3011,
+        "built_pct": 4.8,
+        "built_ha": 945
+      }
     },
     {
       "municipio": "Cafeara",
@@ -534,7 +950,15 @@
       "centroid": [
         -51.7112,
         -22.8127
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.3,
+        "trees_ha": 3068,
+        "crops_pct": 32.4,
+        "crops_ha": 6085,
+        "built_pct": 5.2,
+        "built_ha": 982
+      }
     },
     {
       "municipio": "Corumbataí do Sul",
@@ -544,7 +968,15 @@
       "centroid": [
         -52.142,
         -24.1235
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.3,
+        "trees_ha": 4501,
+        "crops_pct": 20.0,
+        "crops_ha": 3430,
+        "built_pct": 4.9,
+        "built_ha": 834
+      }
     },
     {
       "municipio": "Cruzeiro do Sul",
@@ -554,7 +986,15 @@
       "centroid": [
         -52.1601,
         -22.9866
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.6,
+        "trees_ha": 4648,
+        "crops_pct": 31.4,
+        "crops_ha": 8309,
+        "built_pct": 5.0,
+        "built_ha": 1317
+      }
     },
     {
       "municipio": "Nova Tebas",
@@ -564,7 +1004,15 @@
       "centroid": [
         -51.9465,
         -24.4614
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.5,
+        "trees_ha": 16808,
+        "crops_pct": 17.8,
+        "crops_ha": 10154,
+        "built_pct": 4.5,
+        "built_ha": 2551
+      }
     },
     {
       "municipio": "Paranacity",
@@ -574,7 +1022,15 @@
       "centroid": [
         -52.1427,
         -22.8416
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.4,
+        "trees_ha": 6522,
+        "crops_pct": 32.3,
+        "crops_ha": 11460,
+        "built_pct": 5.2,
+        "built_ha": 1838
+      }
     },
     {
       "municipio": "Planaltina do Paraná",
@@ -584,7 +1040,15 @@
       "centroid": [
         -52.9337,
         -23.0914
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.6,
+        "trees_ha": 6103,
+        "crops_pct": 23.7,
+        "crops_ha": 8687,
+        "built_pct": 4.7,
+        "built_ha": 1711
+      }
     },
     {
       "municipio": "Lidianópolis",
@@ -594,7 +1058,15 @@
       "centroid": [
         -51.64,
         -24.0853
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.2,
+        "trees_ha": 3301,
+        "crops_pct": 27.6,
+        "crops_ha": 4305,
+        "built_pct": 5.1,
+        "built_ha": 799
+      }
     },
     {
       "municipio": "Alto Paraná",
@@ -604,7 +1076,15 @@
       "centroid": [
         -52.3244,
         -23.0739
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.9,
+        "trees_ha": 8318,
+        "crops_pct": 22.8,
+        "crops_ha": 9503,
+        "built_pct": 5.4,
+        "built_ha": 2268
+      }
     },
     {
       "municipio": "Guaporema",
@@ -614,7 +1094,15 @@
       "centroid": [
         -52.8241,
         -23.3277
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.7,
+        "trees_ha": 4093,
+        "crops_pct": 29.4,
+        "crops_ha": 6100,
+        "built_pct": 4.9,
+        "built_ha": 1008
+      }
     },
     {
       "municipio": "Jaboti",
@@ -624,7 +1112,15 @@
       "centroid": [
         -50.0818,
         -23.7185
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.1,
+        "trees_ha": 2984,
+        "crops_pct": 21.6,
+        "crops_ha": 3058,
+        "built_pct": 6.2,
+        "built_ha": 874
+      }
     },
     {
       "municipio": "Jardim Alegre",
@@ -634,7 +1130,15 @@
       "centroid": [
         -51.7657,
         -24.2027
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.3,
+        "trees_ha": 10899,
+        "crops_pct": 24.3,
+        "crops_ha": 10452,
+        "built_pct": 5.1,
+        "built_ha": 2190
+      }
     },
     {
       "municipio": "Nova Olímpia",
@@ -644,7 +1148,15 @@
       "centroid": [
         -53.0718,
         -23.4263
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.2,
+        "trees_ha": 2435,
+        "crops_pct": 26.0,
+        "crops_ha": 3675,
+        "built_pct": 6.1,
+        "built_ha": 856
+      }
     },
     {
       "municipio": "Renascença",
@@ -654,7 +1166,15 @@
       "centroid": [
         -52.9481,
         -26.2223
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.8,
+        "trees_ha": 12408,
+        "crops_pct": 27.9,
+        "crops_ha": 12904,
+        "built_pct": 4.9,
+        "built_ha": 2282
+      }
     },
     {
       "municipio": "Anahy",
@@ -664,7 +1184,15 @@
       "centroid": [
         -53.1436,
         -24.6442
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.7,
+        "trees_ha": 2464,
+        "crops_pct": 31.9,
+        "crops_ha": 3463,
+        "built_pct": 5.0,
+        "built_ha": 541
+      }
     },
     {
       "municipio": "Boa Esperança do Iguaçu",
@@ -674,7 +1202,15 @@
       "centroid": [
         -53.2233,
         -25.6411
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.5,
+        "trees_ha": 4032,
+        "crops_pct": 24.9,
+        "crops_ha": 4090,
+        "built_pct": 5.4,
+        "built_ha": 889
+      }
     },
     {
       "municipio": "Iguatu",
@@ -684,7 +1220,15 @@
       "centroid": [
         -53.0861,
         -24.6861
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.5,
+        "trees_ha": 3004,
+        "crops_pct": 24.2,
+        "crops_ha": 2748,
+        "built_pct": 4.8,
+        "built_ha": 546
+      }
     },
     {
       "municipio": "Itaguajé",
@@ -694,7 +1238,15 @@
       "centroid": [
         -51.9693,
         -22.6555
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.2,
+        "trees_ha": 2985,
+        "crops_pct": 26.0,
+        "crops_ha": 5115,
+        "built_pct": 5.2,
+        "built_ha": 1020
+      }
     },
     {
       "municipio": "Jataizinho",
@@ -704,7 +1256,15 @@
       "centroid": [
         -50.9253,
         -23.2499
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.4,
+        "trees_ha": 3922,
+        "crops_pct": 24.4,
+        "crops_ha": 3932,
+        "built_pct": 5.9,
+        "built_ha": 957
+      }
     },
     {
       "municipio": "Paranapoema",
@@ -714,7 +1274,15 @@
       "centroid": [
         -52.1004,
         -22.6617
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.0,
+        "trees_ha": 3041,
+        "crops_pct": 23.4,
+        "crops_ha": 4185,
+        "built_pct": 4.5,
+        "built_ha": 805
+      }
     },
     {
       "municipio": "Santa Lúcia",
@@ -724,7 +1292,15 @@
       "centroid": [
         -53.5529,
         -25.3857
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.7,
+        "trees_ha": 3855,
+        "crops_pct": 24.8,
+        "crops_ha": 3449,
+        "built_pct": 5.5,
+        "built_ha": 763
+      }
     },
     {
       "municipio": "Santo Antônio da Platina",
@@ -734,7 +1310,15 @@
       "centroid": [
         -50.09,
         -23.2913
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.5,
+        "trees_ha": 13451,
+        "crops_pct": 21.4,
+        "crops_ha": 15559,
+        "built_pct": 5.7,
+        "built_ha": 4133
+      }
     },
     {
       "municipio": "Santo Inácio",
@@ -744,7 +1328,15 @@
       "centroid": [
         -51.8034,
         -22.721
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.6,
+        "trees_ha": 4124,
+        "crops_pct": 30.9,
+        "crops_ha": 8742,
+        "built_pct": 5.6,
+        "built_ha": 1598
+      }
     },
     {
       "municipio": "Querência do Norte",
@@ -754,7 +1346,15 @@
       "centroid": [
         -53.5198,
         -23.0364
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.9,
+        "trees_ha": 16949,
+        "crops_pct": 22.7,
+        "crops_ha": 21510,
+        "built_pct": 4.7,
+        "built_ha": 4442
+      }
     },
     {
       "municipio": "Rancho Alegre",
@@ -764,7 +1364,15 @@
       "centroid": [
         -50.9196,
         -23.0806
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.6,
+        "trees_ha": 2974,
+        "crops_pct": 33.8,
+        "crops_ha": 5723,
+        "built_pct": 4.9,
+        "built_ha": 826
+      }
     },
     {
       "municipio": "Salto do Itararé",
@@ -774,7 +1382,15 @@
       "centroid": [
         -49.6843,
         -23.6319
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.8,
+        "trees_ha": 4218,
+        "crops_pct": 19.1,
+        "crops_ha": 3879,
+        "built_pct": 4.8,
+        "built_ha": 972
+      }
     },
     {
       "municipio": "São João",
@@ -784,7 +1400,15 @@
       "centroid": [
         -52.7937,
         -25.776
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.8,
+        "trees_ha": 10388,
+        "crops_pct": 28.4,
+        "crops_ha": 11854,
+        "built_pct": 5.6,
+        "built_ha": 2347
+      }
     },
     {
       "municipio": "Braganey",
@@ -794,7 +1418,15 @@
       "centroid": [
         -53.0938,
         -24.8037
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.7,
+        "trees_ha": 9024,
+        "crops_pct": 28.3,
+        "crops_ha": 10338,
+        "built_pct": 4.6,
+        "built_ha": 1674
+      }
     },
     {
       "municipio": "Cidade Gaúcha",
@@ -804,7 +1436,15 @@
       "centroid": [
         -52.9591,
         -23.3804
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.1,
+        "trees_ha": 7540,
+        "crops_pct": 25.5,
+        "crops_ha": 10599,
+        "built_pct": 5.3,
+        "built_ha": 2213
+      }
     },
     {
       "municipio": "Guapirama",
@@ -814,7 +1454,15 @@
       "centroid": [
         -50.0771,
         -23.4694
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.5,
+        "trees_ha": 3347,
+        "crops_pct": 23.9,
+        "crops_ha": 4562,
+        "built_pct": 5.1,
+        "built_ha": 975
+      }
     },
     {
       "municipio": "Iporã",
@@ -824,7 +1472,15 @@
       "centroid": [
         -53.7189,
         -24.0466
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.3,
+        "trees_ha": 13830,
+        "crops_pct": 28.2,
+        "crops_ha": 19245,
+        "built_pct": 5.3,
+        "built_ha": 3611
+      }
     },
     {
       "municipio": "Ivaiporã",
@@ -834,7 +1490,15 @@
       "centroid": [
         -51.6277,
         -24.2811
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.4,
+        "trees_ha": 9565,
+        "crops_pct": 29.3,
+        "crops_ha": 13096,
+        "built_pct": 6.4,
+        "built_ha": 2854
+      }
     },
     {
       "municipio": "Rio Bom",
@@ -844,7 +1508,15 @@
       "centroid": [
         -51.4318,
         -23.7991
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.5,
+        "trees_ha": 5421,
+        "crops_pct": 21.3,
+        "crops_ha": 3925,
+        "built_pct": 4.6,
+        "built_ha": 854
+      }
     },
     {
       "municipio": "São Pedro do Paraná",
@@ -854,7 +1526,15 @@
       "centroid": [
         -53.1791,
         -22.784
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.5,
+        "trees_ha": 3738,
+        "crops_pct": 19.2,
+        "crops_ha": 4931,
+        "built_pct": 4.9,
+        "built_ha": 1250
+      }
     },
     {
       "municipio": "Tapejara",
@@ -864,7 +1544,15 @@
       "centroid": [
         -52.888,
         -23.6564
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.8,
+        "trees_ha": 12140,
+        "crops_pct": 25.1,
+        "crops_ha": 15406,
+        "built_pct": 5.1,
+        "built_ha": 3107
+      }
     },
     {
       "municipio": "Uniflor",
@@ -874,7 +1562,15 @@
       "centroid": [
         -52.1068,
         -23.0663
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.3,
+        "trees_ha": 1772,
+        "crops_pct": 33.6,
+        "crops_ha": 3252,
+        "built_pct": 5.1,
+        "built_ha": 498
+      }
     },
     {
       "municipio": "Formosa do Oeste",
@@ -884,7 +1580,15 @@
       "centroid": [
         -53.333,
         -24.2945
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.7,
+        "trees_ha": 4561,
+        "crops_pct": 35.9,
+        "crops_ha": 10421,
+        "built_pct": 5.5,
+        "built_ha": 1586
+      }
     },
     {
       "municipio": "Jesuítas",
@@ -894,7 +1598,15 @@
       "centroid": [
         -53.4121,
         -24.4093
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.4,
+        "trees_ha": 4538,
+        "crops_pct": 36.0,
+        "crops_ha": 9419,
+        "built_pct": 5.8,
+        "built_ha": 1527
+      }
     },
     {
       "municipio": "Amaporã",
@@ -904,7 +1616,15 @@
       "centroid": [
         -52.8365,
         -23.1291
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.2,
+        "trees_ha": 6798,
+        "crops_pct": 26.3,
+        "crops_ha": 10406,
+        "built_pct": 4.6,
+        "built_ha": 1831
+      }
     },
     {
       "municipio": "Ariranha do Ivaí",
@@ -914,7 +1634,15 @@
       "centroid": [
         -51.5415,
         -24.3776
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.0,
+        "trees_ha": 6217,
+        "crops_pct": 28.0,
+        "crops_ha": 6967,
+        "built_pct": 4.4,
+        "built_ha": 1084
+      }
     },
     {
       "municipio": "Mirador",
@@ -924,7 +1652,15 @@
       "centroid": [
         -52.741,
         -23.1992
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.1,
+        "trees_ha": 4371,
+        "crops_pct": 30.5,
+        "crops_ha": 6977,
+        "built_pct": 4.7,
+        "built_ha": 1082
+      }
     },
     {
       "municipio": "Presidente Castelo Branco",
@@ -934,7 +1670,15 @@
       "centroid": [
         -52.1504,
         -23.2648
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.2,
+        "trees_ha": 3368,
+        "crops_pct": 30.8,
+        "crops_ha": 4899,
+        "built_pct": 5.6,
+        "built_ha": 886
+      }
     },
     {
       "municipio": "Rondon",
@@ -944,7 +1688,15 @@
       "centroid": [
         -52.8044,
         -23.4771
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.5,
+        "trees_ha": 12377,
+        "crops_pct": 26.5,
+        "crops_ha": 15200,
+        "built_pct": 4.9,
+        "built_ha": 2827
+      }
     },
     {
       "municipio": "Cruzmaltina",
@@ -954,7 +1706,15 @@
       "centroid": [
         -51.4735,
         -24.0188
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.5,
+        "trees_ha": 8209,
+        "crops_pct": 27.3,
+        "crops_ha": 8770,
+        "built_pct": 4.6,
+        "built_ha": 1488
+      }
     },
     {
       "municipio": "Guairaçá",
@@ -964,7 +1724,15 @@
       "centroid": [
         -52.739,
         -22.9265
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.3,
+        "trees_ha": 8252,
+        "crops_pct": 25.4,
+        "crops_ha": 12832,
+        "built_pct": 4.6,
+        "built_ha": 2315
+      }
     },
     {
       "municipio": "Guaraci",
@@ -974,7 +1742,15 @@
       "centroid": [
         -51.6777,
         -22.9552
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.2,
+        "trees_ha": 3890,
+        "crops_pct": 26.0,
+        "crops_ha": 5564,
+        "built_pct": 5.3,
+        "built_ha": 1132
+      }
     },
     {
       "municipio": "Maripá",
@@ -984,7 +1760,15 @@
       "centroid": [
         -53.7895,
         -24.4479
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.5,
+        "trees_ha": 4073,
+        "crops_pct": 40.1,
+        "crops_ha": 12085,
+        "built_pct": 6.0,
+        "built_ha": 1821
+      }
     },
     {
       "municipio": "Santa Mônica",
@@ -994,7 +1778,15 @@
       "centroid": [
         -53.1069,
         -23.1536
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.4,
+        "trees_ha": 4400,
+        "crops_pct": 29.7,
+        "crops_ha": 7952,
+        "built_pct": 4.8,
+        "built_ha": 1280
+      }
     },
     {
       "municipio": "Cambira",
@@ -1004,7 +1796,15 @@
       "centroid": [
         -51.5691,
         -23.627
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.6,
+        "trees_ha": 3799,
+        "crops_pct": 30.1,
+        "crops_ha": 5064,
+        "built_pct": 6.2,
+        "built_ha": 1046
+      }
     },
     {
       "municipio": "Iretama",
@@ -1014,7 +1814,15 @@
       "centroid": [
         -52.1126,
         -24.3513
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.5,
+        "trees_ha": 18091,
+        "crops_pct": 19.4,
+        "crops_ha": 11539,
+        "built_pct": 4.7,
+        "built_ha": 2812
+      }
     },
     {
       "municipio": "Mandaguari",
@@ -1024,7 +1832,15 @@
       "centroid": [
         -51.7041,
         -23.4822
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.6,
+        "trees_ha": 8776,
+        "crops_pct": 20.5,
+        "crops_ha": 7027,
+        "built_pct": 6.6,
+        "built_ha": 2281
+      }
     },
     {
       "municipio": "São Jorge d'Oeste",
@@ -1034,7 +1850,15 @@
       "centroid": [
         -52.9389,
         -25.6583
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.1,
+        "trees_ha": 11477,
+        "crops_pct": 21.4,
+        "crops_ha": 8755,
+        "built_pct": 5.7,
+        "built_ha": 2314
+      }
     },
     {
       "municipio": "São Pedro do Ivaí",
@@ -1044,7 +1868,15 @@
       "centroid": [
         -51.8683,
         -23.8467
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.2,
+        "trees_ha": 6731,
+        "crops_pct": 32.1,
+        "crops_ha": 10717,
+        "built_pct": 5.0,
+        "built_ha": 1655
+      }
     },
     {
       "municipio": "Assaí",
@@ -1054,7 +1886,15 @@
       "centroid": [
         -50.8731,
         -23.406
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.9,
+        "trees_ha": 9778,
+        "crops_pct": 31.7,
+        "crops_ha": 14197,
+        "built_pct": 5.2,
+        "built_ha": 2318
+      }
     },
     {
       "municipio": "Francisco Alves",
@@ -1064,7 +1904,15 @@
       "centroid": [
         -53.8694,
         -24.0965
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.7,
+        "trees_ha": 5346,
+        "crops_pct": 35.6,
+        "crops_ha": 12111,
+        "built_pct": 5.4,
+        "built_ha": 1825
+      }
     },
     {
       "municipio": "Marialva",
@@ -1074,7 +1922,15 @@
       "centroid": [
         -51.8745,
         -23.5378
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.1,
+        "trees_ha": 8814,
+        "crops_pct": 34.4,
+        "crops_ha": 16758,
+        "built_pct": 7.0,
+        "built_ha": 3419
+      }
     },
     {
       "municipio": "Miraselva",
@@ -1084,7 +1940,15 @@
       "centroid": [
         -51.4851,
         -22.9713
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.9,
+        "trees_ha": 1906,
+        "crops_pct": 31.2,
+        "crops_ha": 2849,
+        "built_pct": 5.3,
+        "built_ha": 480
+      }
     },
     {
       "municipio": "Paiçandu",
@@ -1094,7 +1958,15 @@
       "centroid": [
         -52.1217,
         -23.4659
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 2796,
+        "crops_pct": 36.2,
+        "crops_ha": 6377,
+        "built_pct": 8.3,
+        "built_ha": 1463
+      }
     },
     {
       "municipio": "Salto do Lontra",
@@ -1104,7 +1976,15 @@
       "centroid": [
         -53.2845,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.7,
+        "trees_ha": 10411,
+        "crops_pct": 24.4,
+        "crops_ha": 8281,
+        "built_pct": 6.3,
+        "built_ha": 2136
+      }
     },
     {
       "municipio": "São Pedro do Iguaçu",
@@ -1114,7 +1994,15 @@
       "centroid": [
         -53.8846,
         -24.9075
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.6,
+        "trees_ha": 8109,
+        "crops_pct": 28.1,
+        "crops_ha": 9253,
+        "built_pct": 5.1,
+        "built_ha": 1696
+      }
     },
     {
       "municipio": "Mandaguaçu",
@@ -1124,7 +2012,15 @@
       "centroid": [
         -52.0562,
         -23.2817
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.5,
+        "trees_ha": 5261,
+        "crops_pct": 34.3,
+        "crops_ha": 10336,
+        "built_pct": 7.0,
+        "built_ha": 2112
+      }
     },
     {
       "municipio": "Manoel Ribas",
@@ -1134,7 +2030,15 @@
       "centroid": [
         -51.6365,
         -24.4901
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.5,
+        "trees_ha": 15189,
+        "crops_pct": 27.2,
+        "crops_ha": 16206,
+        "built_pct": 5.1,
+        "built_ha": 3040
+      }
     },
     {
       "municipio": "Siqueira Campos",
@@ -1144,7 +2048,15 @@
       "centroid": [
         -49.7921,
         -23.6399
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.7,
+        "trees_ha": 6076,
+        "crops_pct": 15.7,
+        "crops_ha": 4416,
+        "built_pct": 6.5,
+        "built_ha": 1813
+      }
     },
     {
       "municipio": "Tupãssi",
@@ -1154,7 +2066,15 @@
       "centroid": [
         -53.5109,
         -24.6455
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 4680,
+        "crops_pct": 41.1,
+        "crops_ha": 13087,
+        "built_pct": 5.4,
+        "built_ha": 1735
+      }
     },
     {
       "municipio": "Virmond",
@@ -1164,7 +2084,15 @@
       "centroid": [
         -52.2358,
         -25.4051
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.0,
+        "trees_ha": 8746,
+        "crops_pct": 20.8,
+        "crops_ha": 5531,
+        "built_pct": 4.8,
+        "built_ha": 1261
+      }
     },
     {
       "municipio": "Conselheiro Mairinck",
@@ -1174,7 +2102,15 @@
       "centroid": [
         -50.1279,
         -23.5963
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.3,
+        "trees_ha": 4413,
+        "crops_pct": 20.1,
+        "crops_ha": 4170,
+        "built_pct": 4.5,
+        "built_ha": 939
+      }
     },
     {
       "municipio": "Indianópolis",
@@ -1184,7 +2120,15 @@
       "centroid": [
         -52.6747,
         -23.487
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.8,
+        "trees_ha": 2389,
+        "crops_pct": 30.8,
+        "crops_ha": 3912,
+        "built_pct": 5.9,
+        "built_ha": 753
+      }
     },
     {
       "municipio": "Jacarezinho",
@@ -1194,7 +2138,15 @@
       "centroid": [
         -49.9489,
         -23.1578
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.8,
+        "trees_ha": 15053,
+        "crops_pct": 21.6,
+        "crops_ha": 13059,
+        "built_pct": 5.7,
+        "built_ha": 3456
+      }
     },
     {
       "municipio": "Nova América da Colina",
@@ -1204,7 +2156,15 @@
       "centroid": [
         -50.7061,
         -23.3448
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.4,
+        "trees_ha": 3462,
+        "crops_pct": 25.8,
+        "crops_ha": 3395,
+        "built_pct": 4.7,
+        "built_ha": 613
+      }
     },
     {
       "municipio": "Ouro Verde do Oeste",
@@ -1214,7 +2174,15 @@
       "centroid": [
         -53.9088,
         -24.7921
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.4,
+        "trees_ha": 7361,
+        "crops_pct": 28.3,
+        "crops_ha": 8905,
+        "built_pct": 5.1,
+        "built_ha": 1596
+      }
     },
     {
       "municipio": "Paraíso do Norte",
@@ -1224,7 +2192,15 @@
       "centroid": [
         -52.635,
         -23.2692
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.4,
+        "trees_ha": 3656,
+        "crops_pct": 33.9,
+        "crops_ha": 7116,
+        "built_pct": 5.9,
+        "built_ha": 1238
+      }
     },
     {
       "municipio": "Quatiguá",
@@ -1234,7 +2210,15 @@
       "centroid": [
         -49.9333,
         -23.5609
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.1,
+        "trees_ha": 2068,
+        "crops_pct": 11.5,
+        "crops_ha": 1315,
+        "built_pct": 6.2,
+        "built_ha": 708
+      }
     },
     {
       "municipio": "Ribeirão do Pinhal",
@@ -1244,7 +2228,15 @@
       "centroid": [
         -50.3735,
         -23.4464
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.1,
+        "trees_ha": 9150,
+        "crops_pct": 21.9,
+        "crops_ha": 8314,
+        "built_pct": 5.0,
+        "built_ha": 1891
+      }
     },
     {
       "municipio": "Santana do Itararé",
@@ -1254,7 +2246,15 @@
       "centroid": [
         -49.6335,
         -23.75
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.3,
+        "trees_ha": 6186,
+        "crops_pct": 27.0,
+        "crops_ha": 6871,
+        "built_pct": 5.0,
+        "built_ha": 1268
+      }
     },
     {
       "municipio": "Vitorino",
@@ -1264,7 +2264,15 @@
       "centroid": [
         -52.8056,
         -26.2794
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.8,
+        "trees_ha": 9378,
+        "crops_pct": 27.1,
+        "crops_ha": 9133,
+        "built_pct": 5.8,
+        "built_ha": 1955
+      }
     },
     {
       "municipio": "Altamira do Paraná",
@@ -1274,7 +2282,15 @@
       "centroid": [
         -52.6906,
         -24.8107
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.7,
+        "trees_ha": 12161,
+        "crops_pct": 10.3,
+        "crops_ha": 4212,
+        "built_pct": 4.1,
+        "built_ha": 1695
+      }
     },
     {
       "municipio": "Diamante D'Oeste",
@@ -1284,7 +2300,15 @@
       "centroid": [
         -54.1017,
         -24.9528
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.8,
+        "trees_ha": 10920,
+        "crops_pct": 14.8,
+        "crops_ha": 4911,
+        "built_pct": 4.6,
+        "built_ha": 1522
+      }
     },
     {
       "municipio": "Flórida",
@@ -1294,7 +2318,15 @@
       "centroid": [
         -51.9567,
         -23.1056
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.0,
+        "trees_ha": 1185,
+        "crops_pct": 34.6,
+        "crops_ha": 2936,
+        "built_pct": 5.3,
+        "built_ha": 452
+      }
     },
     {
       "municipio": "Lunardelli",
@@ -1304,7 +2336,15 @@
       "centroid": [
         -51.7717,
         -24.081
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.8,
+        "trees_ha": 5105,
+        "crops_pct": 24.3,
+        "crops_ha": 5004,
+        "built_pct": 4.9,
+        "built_ha": 1004
+      }
     },
     {
       "municipio": "Marmeleiro",
@@ -1314,7 +2354,15 @@
       "centroid": [
         -53.0922,
         -26.2434
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.6,
+        "trees_ha": 13829,
+        "crops_pct": 23.2,
+        "crops_ha": 9871,
+        "built_pct": 5.9,
+        "built_ha": 2485
+      }
     },
     {
       "municipio": "Missal",
@@ -1324,7 +2372,15 @@
       "centroid": [
         -54.2475,
         -25.0912
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.9,
+        "trees_ha": 8046,
+        "crops_pct": 25.9,
+        "crops_ha": 9090,
+        "built_pct": 6.0,
+        "built_ha": 2117
+      }
     },
     {
       "municipio": "Porto Amazonas",
@@ -1334,7 +2390,15 @@
       "centroid": [
         -49.893,
         -25.5287
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.9,
+        "trees_ha": 6424,
+        "crops_pct": 16.3,
+        "crops_ha": 3185,
+        "built_pct": 4.6,
+        "built_ha": 892
+      }
     },
     {
       "municipio": "Santa Izabel do Oeste",
@@ -1344,7 +2408,15 @@
       "centroid": [
         -53.4203,
         -25.7868
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.7,
+        "trees_ha": 10724,
+        "crops_pct": 24.2,
+        "crops_ha": 8477,
+        "built_pct": 5.7,
+        "built_ha": 2003
+      }
     },
     {
       "municipio": "São Carlos do Ivaí",
@@ -1354,7 +2426,15 @@
       "centroid": [
         -52.4834,
         -23.3418
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.0,
+        "trees_ha": 3705,
+        "crops_pct": 37.1,
+        "crops_ha": 8605,
+        "built_pct": 5.1,
+        "built_ha": 1185
+      }
     },
     {
       "municipio": "São João do Caiuá",
@@ -1364,7 +2444,15 @@
       "centroid": [
         -52.3329,
         -22.841
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.4,
+        "trees_ha": 4755,
+        "crops_pct": 22.5,
+        "crops_ha": 6983,
+        "built_pct": 4.6,
+        "built_ha": 1425
+      }
     },
     {
       "municipio": "Assis Chateaubriand",
@@ -1374,7 +2462,15 @@
       "centroid": [
         -53.5823,
         -24.4317
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 15333,
+        "crops_pct": 39.7,
+        "crops_ha": 41285,
+        "built_pct": 5.6,
+        "built_ha": 5844
+      }
     },
     {
       "municipio": "Capanema",
@@ -1384,7 +2480,15 @@
       "centroid": [
         -53.7544,
         -25.6093
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.3,
+        "trees_ha": 11788,
+        "crops_pct": 26.9,
+        "crops_ha": 12076,
+        "built_pct": 6.3,
+        "built_ha": 2837
+      }
     },
     {
       "municipio": "Doutor Camargo",
@@ -1394,7 +2498,15 @@
       "centroid": [
         -52.2159,
         -23.5609
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 1796,
+        "crops_pct": 39.2,
+        "crops_ha": 4810,
+        "built_pct": 6.1,
+        "built_ha": 742
+      }
     },
     {
       "municipio": "Enéas Marques",
@@ -1404,7 +2516,15 @@
       "centroid": [
         -53.1546,
         -25.9066
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.9,
+        "trees_ha": 7481,
+        "crops_pct": 19.7,
+        "crops_ha": 4103,
+        "built_pct": 6.5,
+        "built_ha": 1347
+      }
     },
     {
       "municipio": "Perobal",
@@ -1414,7 +2534,15 @@
       "centroid": [
         -53.3546,
         -23.9265
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 6834,
+        "crops_pct": 31.6,
+        "crops_ha": 13592,
+        "built_pct": 5.1,
+        "built_ha": 2207
+      }
     },
     {
       "municipio": "Pinhal de São Bento",
@@ -1424,7 +2552,15 @@
       "centroid": [
         -53.4767,
         -26.0162
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.6,
+        "trees_ha": 3678,
+        "crops_pct": 17.5,
+        "crops_ha": 1857,
+        "built_pct": 5.3,
+        "built_ha": 566
+      }
     },
     {
       "municipio": "Planalto",
@@ -1434,7 +2570,15 @@
       "centroid": [
         -53.7067,
         -25.7393
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.8,
+        "trees_ha": 11565,
+        "crops_pct": 26.1,
+        "crops_ha": 9806,
+        "built_pct": 5.8,
+        "built_ha": 2190
+      }
     },
     {
       "municipio": "Santo Antônio do Sudoeste",
@@ -1444,7 +2588,15 @@
       "centroid": [
         -53.6306,
         -26.0626
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.4,
+        "trees_ha": 11401,
+        "crops_pct": 21.6,
+        "crops_ha": 7373,
+        "built_pct": 5.5,
+        "built_ha": 1875
+      }
     },
     {
       "municipio": "Terra Rica",
@@ -1454,7 +2606,15 @@
       "centroid": [
         -52.6837,
         -22.7257
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 11339,
+        "crops_pct": 22.1,
+        "crops_ha": 15782,
+        "built_pct": 4.8,
+        "built_ha": 3410
+      }
     },
     {
       "municipio": "Cruzeiro do Oeste",
@@ -1464,7 +2624,15 @@
       "centroid": [
         -53.081,
         -23.7646
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.3,
+        "trees_ha": 17242,
+        "crops_pct": 25.5,
+        "crops_ha": 20595,
+        "built_pct": 5.3,
+        "built_ha": 4300
+      }
     },
     {
       "municipio": "Jardim Olinda",
@@ -1474,7 +2642,15 @@
       "centroid": [
         -52.0788,
         -22.5734
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.1,
+        "trees_ha": 2743,
+        "crops_pct": 24.4,
+        "crops_ha": 3170,
+        "built_pct": 4.5,
+        "built_ha": 585
+      }
     },
     {
       "municipio": "Jundiaí do Sul",
@@ -1484,7 +2660,15 @@
       "centroid": [
         -50.2308,
         -23.4751
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.0,
+        "trees_ha": 7475,
+        "crops_pct": 18.4,
+        "crops_ha": 5975,
+        "built_pct": 4.4,
+        "built_ha": 1428
+      }
     },
     {
       "municipio": "Atalaia",
@@ -1494,7 +2678,15 @@
       "centroid": [
         -52.0633,
         -23.1292
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.7,
+        "trees_ha": 2340,
+        "crops_pct": 36.7,
+        "crops_ha": 5151,
+        "built_pct": 5.6,
+        "built_ha": 786
+      }
     },
     {
       "municipio": "Bela Vista da Caroba",
@@ -1504,7 +2696,15 @@
       "centroid": [
         -53.6332,
         -25.8811
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.5,
+        "trees_ha": 5253,
+        "crops_pct": 20.9,
+        "crops_ha": 3384,
+        "built_pct": 4.9,
+        "built_ha": 788
+      }
     },
     {
       "municipio": "Cruzeiro do Iguaçu",
@@ -1514,7 +2714,15 @@
       "centroid": [
         -53.129,
         -25.5956
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.0,
+        "trees_ha": 4379,
+        "crops_pct": 22.0,
+        "crops_ha": 3841,
+        "built_pct": 5.6,
+        "built_ha": 971
+      }
     },
     {
       "municipio": "Floresta",
@@ -1524,7 +2732,15 @@
       "centroid": [
         -52.0911,
         -23.6077
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.4,
+        "trees_ha": 2186,
+        "crops_pct": 40.6,
+        "crops_ha": 6627,
+        "built_pct": 6.0,
+        "built_ha": 987
+      }
     },
     {
       "municipio": "Iracema do Oeste",
@@ -1534,7 +2750,15 @@
       "centroid": [
         -53.352,
         -24.439
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.0,
+        "trees_ha": 1468,
+        "crops_pct": 38.5,
+        "crops_ha": 3328,
+        "built_pct": 5.3,
+        "built_ha": 460
+      }
     },
     {
       "municipio": "Marechal Cândido Rondon",
@@ -1544,7 +2768,15 @@
       "centroid": [
         -54.1333,
         -24.5745
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.3,
+        "trees_ha": 17144,
+        "crops_pct": 28.6,
+        "crops_ha": 22979,
+        "built_pct": 6.9,
+        "built_ha": 5565
+      }
     },
     {
       "municipio": "Palotina",
@@ -1554,7 +2786,15 @@
       "centroid": [
         -53.8177,
         -24.2718
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.3,
+        "trees_ha": 9845,
+        "crops_pct": 39.2,
+        "crops_ha": 27090,
+        "built_pct": 6.2,
+        "built_ha": 4311
+      }
     },
     {
       "municipio": "Paranavaí",
@@ -1564,7 +2804,15 @@
       "centroid": [
         -52.5102,
         -22.9304
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.6,
+        "trees_ha": 22876,
+        "crops_pct": 23.8,
+        "crops_ha": 29254,
+        "built_pct": 6.3,
+        "built_ha": 7691
+      }
     },
     {
       "municipio": "Rosário do Ivaí",
@@ -1574,7 +2822,15 @@
       "centroid": [
         -51.2023,
         -24.3228
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.7,
+        "trees_ha": 11057,
+        "crops_pct": 12.0,
+        "crops_ha": 4628,
+        "built_pct": 4.7,
+        "built_ha": 1810
+      }
     },
     {
       "municipio": "Santa Amélia",
@@ -1584,7 +2840,15 @@
       "centroid": [
         -50.409,
         -23.2596
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.0,
+        "trees_ha": 1652,
+        "crops_pct": 32.7,
+        "crops_ha": 2578,
+        "built_pct": 5.8,
+        "built_ha": 454
+      }
     },
     {
       "municipio": "Cambará",
@@ -1594,7 +2858,15 @@
       "centroid": [
         -50.0787,
         -22.9953
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.5,
+        "trees_ha": 4949,
+        "crops_pct": 39.0,
+        "crops_ha": 14294,
+        "built_pct": 5.5,
+        "built_ha": 2010
+      }
     },
     {
       "municipio": "Floraí",
@@ -1604,7 +2876,15 @@
       "centroid": [
         -52.3482,
         -23.3321
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 2879,
+        "crops_pct": 39.6,
+        "crops_ha": 7764,
+        "built_pct": 5.2,
+        "built_ha": 1019
+      }
     },
     {
       "municipio": "Joaquim Távora",
@@ -1614,7 +2894,15 @@
       "centroid": [
         -49.9076,
         -23.4554
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.8,
+        "trees_ha": 6367,
+        "crops_pct": 13.9,
+        "crops_ha": 4071,
+        "built_pct": 5.3,
+        "built_ha": 1557
+      }
     },
     {
       "municipio": "Mercedes",
@@ -1624,7 +2912,15 @@
       "centroid": [
         -54.186,
         -24.4332
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.1,
+        "trees_ha": 4653,
+        "crops_pct": 29.9,
+        "crops_ha": 6299,
+        "built_pct": 6.3,
+        "built_ha": 1329
+      }
     },
     {
       "municipio": "Boa Ventura de São Roque",
@@ -1634,7 +2930,15 @@
       "centroid": [
         -51.564,
         -24.8514
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.5,
+        "trees_ha": 21194,
+        "crops_pct": 22.0,
+        "crops_ha": 14346,
+        "built_pct": 4.5,
+        "built_ha": 2923
+      }
     },
     {
       "municipio": "Ivatuba",
@@ -1644,7 +2948,15 @@
       "centroid": [
         -52.1774,
         -23.5989
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.5,
+        "trees_ha": 1341,
+        "crops_pct": 41.3,
+        "crops_ha": 4104,
+        "built_pct": 5.6,
+        "built_ha": 560
+      }
     },
     {
       "municipio": "Japira",
@@ -1654,7 +2966,15 @@
       "centroid": [
         -50.1621,
         -23.732
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.5,
+        "trees_ha": 4837,
+        "crops_pct": 20.1,
+        "crops_ha": 3813,
+        "built_pct": 5.4,
+        "built_ha": 1034
+      }
     },
     {
       "municipio": "Laranjal",
@@ -1664,7 +2984,15 @@
       "centroid": [
         -52.4896,
         -24.9022
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.3,
+        "trees_ha": 19087,
+        "crops_pct": 10.9,
+        "crops_ha": 6452,
+        "built_pct": 4.1,
+        "built_ha": 2450
+      }
     },
     {
       "municipio": "Lobato",
@@ -1674,7 +3002,15 @@
       "centroid": [
         -51.9858,
         -22.9831
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.9,
+        "trees_ha": 4358,
+        "crops_pct": 34.4,
+        "crops_ha": 8385,
+        "built_pct": 4.9,
+        "built_ha": 1200
+      }
     },
     {
       "municipio": "Paula Freitas",
@@ -1684,7 +3020,15 @@
       "centroid": [
         -50.8598,
         -26.1762
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.5,
+        "trees_ha": 17386,
+        "crops_pct": 14.5,
+        "crops_ha": 6560,
+        "built_pct": 4.9,
+        "built_ha": 2233
+      }
     },
     {
       "municipio": "Pérola d'Oeste",
@@ -1694,7 +3038,15 @@
       "centroid": [
         -53.7611,
         -25.8517
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.5,
+        "trees_ha": 6681,
+        "crops_pct": 28.7,
+        "crops_ha": 6498,
+        "built_pct": 5.6,
+        "built_ha": 1266
+      }
     },
     {
       "municipio": "Quinta do Sol",
@@ -1704,7 +3056,15 @@
       "centroid": [
         -52.1409,
         -23.8312
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.4,
+        "trees_ha": 6542,
+        "crops_pct": 35.5,
+        "crops_ha": 11984,
+        "built_pct": 4.7,
+        "built_ha": 1575
+      }
     },
     {
       "municipio": "Realeza",
@@ -1714,7 +3074,15 @@
       "centroid": [
         -53.5403,
         -25.6788
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.0,
+        "trees_ha": 11097,
+        "crops_pct": 24.6,
+        "crops_ha": 9408,
+        "built_pct": 6.1,
+        "built_ha": 2328
+      }
     },
     {
       "municipio": "Corbélia",
@@ -1724,7 +3092,15 @@
       "centroid": [
         -53.2309,
         -24.7346
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 13107,
+        "crops_pct": 33.5,
+        "crops_ha": 18834,
+        "built_pct": 5.4,
+        "built_ha": 3026
+      }
     },
     {
       "municipio": "Lindoeste",
@@ -1734,7 +3110,15 @@
       "centroid": [
         -53.5591,
         -25.2595
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.7,
+        "trees_ha": 12608,
+        "crops_pct": 18.0,
+        "crops_ha": 6736,
+        "built_pct": 4.7,
+        "built_ha": 1750
+      }
     },
     {
       "municipio": "Nova Esperança do Sudoeste",
@@ -1744,7 +3128,15 @@
       "centroid": [
         -53.2553,
         -25.8968
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.1,
+        "trees_ha": 7726,
+        "crops_pct": 19.7,
+        "crops_ha": 4465,
+        "built_pct": 6.1,
+        "built_ha": 1377
+      }
     },
     {
       "municipio": "Nova Fátima",
@@ -1754,7 +3146,15 @@
       "centroid": [
         -50.5434,
         -23.4192
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.1,
+        "trees_ha": 7209,
+        "crops_pct": 26.5,
+        "crops_ha": 7627,
+        "built_pct": 4.7,
+        "built_ha": 1365
+      }
     },
     {
       "municipio": "Nova Prata do Iguaçu",
@@ -1764,7 +3164,15 @@
       "centroid": [
         -53.3763,
         -25.5922
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.7,
+        "trees_ha": 9413,
+        "crops_pct": 23.8,
+        "crops_ha": 9066,
+        "built_pct": 5.7,
+        "built_ha": 2186
+      }
     },
     {
       "municipio": "Palmital",
@@ -1774,7 +3182,15 @@
       "centroid": [
         -52.2699,
         -24.8836
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.9,
+        "trees_ha": 27526,
+        "crops_pct": 13.1,
+        "crops_ha": 11270,
+        "built_pct": 4.4,
+        "built_ha": 3825
+      }
     },
     {
       "municipio": "Santo Antônio do Caiuá",
@@ -1784,7 +3200,15 @@
       "centroid": [
         -52.3547,
         -22.7012
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.4,
+        "trees_ha": 3211,
+        "crops_pct": 25.7,
+        "crops_ha": 5706,
+        "built_pct": 4.4,
+        "built_ha": 973
+      }
     },
     {
       "municipio": "Toledo",
@@ -1794,7 +3218,15 @@
       "centroid": [
         -53.7725,
         -24.7115
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.6,
+        "trees_ha": 25099,
+        "crops_pct": 34.8,
+        "crops_ha": 44542,
+        "built_pct": 7.7,
+        "built_ha": 9871
+      }
     },
     {
       "municipio": "Capitão Leônidas Marques",
@@ -1804,7 +3236,15 @@
       "centroid": [
         -53.5948,
         -25.4681
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.1,
+        "trees_ha": 8434,
+        "crops_pct": 21.8,
+        "crops_ha": 6555,
+        "built_pct": 6.1,
+        "built_ha": 1821
+      }
     },
     {
       "municipio": "Coronel Vivida",
@@ -1814,7 +3254,15 @@
       "centroid": [
         -52.5661,
         -25.9918
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.1,
+        "trees_ha": 23018,
+        "crops_pct": 24.2,
+        "crops_ha": 17962,
+        "built_pct": 5.3,
+        "built_ha": 3945
+      }
     },
     {
       "municipio": "Francisco Beltrão",
@@ -1824,7 +3272,15 @@
       "centroid": [
         -53.1357,
         -26.0471
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.1,
+        "trees_ha": 27272,
+        "crops_pct": 21.1,
+        "crops_ha": 16918,
+        "built_pct": 7.8,
+        "built_ha": 6244
+      }
     },
     {
       "municipio": "Itambaracá",
@@ -1834,7 +3290,15 @@
       "centroid": [
         -50.4157,
         -22.9819
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.3,
+        "trees_ha": 2758,
+        "crops_pct": 37.1,
+        "crops_ha": 7721,
+        "built_pct": 5.0,
+        "built_ha": 1037
+      }
     },
     {
       "municipio": "Itambé",
@@ -1844,7 +3308,15 @@
       "centroid": [
         -52.012,
         -23.708
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.3,
+        "trees_ha": 3852,
+        "crops_pct": 40.0,
+        "crops_ha": 10033,
+        "built_pct": 4.9,
+        "built_ha": 1242
+      }
     },
     {
       "municipio": "Leópolis",
@@ -1854,7 +3326,15 @@
       "centroid": [
         -50.7098,
         -23.0237
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.0,
+        "trees_ha": 6255,
+        "crops_pct": 28.7,
+        "crops_ha": 9971,
+        "built_pct": 4.5,
+        "built_ha": 1578
+      }
     },
     {
       "municipio": "Nova Aurora",
@@ -1864,7 +3344,15 @@
       "centroid": [
         -53.2753,
         -24.5033
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.2,
+        "trees_ha": 9655,
+        "crops_pct": 36.6,
+        "crops_ha": 18403,
+        "built_pct": 5.3,
+        "built_ha": 2647
+      }
     },
     {
       "municipio": "Ramilândia",
@@ -1874,7 +3362,15 @@
       "centroid": [
         -54.072,
         -25.0959
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.8,
+        "trees_ha": 8417,
+        "crops_pct": 16.4,
+        "crops_ha": 4197,
+        "built_pct": 4.7,
+        "built_ha": 1195
+      }
     },
     {
       "municipio": "Saudade do Iguaçu",
@@ -1884,7 +3380,15 @@
       "centroid": [
         -52.6038,
         -25.7128
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.6,
+        "trees_ha": 4672,
+        "crops_pct": 18.9,
+        "crops_ha": 3087,
+        "built_pct": 6.1,
+        "built_ha": 989
+      }
     },
     {
       "municipio": "Ampére",
@@ -1894,7 +3398,15 @@
       "centroid": [
         -53.4842,
         -25.9129
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.8,
+        "trees_ha": 10668,
+        "crops_pct": 19.2,
+        "crops_ha": 6256,
+        "built_pct": 6.3,
+        "built_ha": 2038
+      }
     },
     {
       "municipio": "Boa Vista da Aparecida",
@@ -1904,7 +3416,15 @@
       "centroid": [
         -53.4241,
         -25.4309
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.2,
+        "trees_ha": 8380,
+        "crops_pct": 15.4,
+        "crops_ha": 4432,
+        "built_pct": 5.4,
+        "built_ha": 1559
+      }
     },
     {
       "municipio": "Cafelândia",
@@ -1914,7 +3434,15 @@
       "centroid": [
         -53.3611,
         -24.6918
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.6,
+        "trees_ha": 5065,
+        "crops_pct": 38.5,
+        "crops_ha": 11124,
+        "built_pct": 6.5,
+        "built_ha": 1882
+      }
     },
     {
       "municipio": "Campina da Lagoa",
@@ -1924,7 +3452,15 @@
       "centroid": [
         -52.7977,
         -24.6145
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.4,
+        "trees_ha": 18823,
+        "crops_pct": 29.2,
+        "crops_ha": 24550,
+        "built_pct": 4.6,
+        "built_ha": 3889
+      }
     },
     {
       "municipio": "Contenda",
@@ -1934,7 +3470,15 @@
       "centroid": [
         -49.5229,
         -25.722
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.2,
+        "trees_ha": 12312,
+        "crops_pct": 12.9,
+        "crops_ha": 4065,
+        "built_pct": 6.1,
+        "built_ha": 1900
+      }
     },
     {
       "municipio": "Cornélio Procópio",
@@ -1944,7 +3488,15 @@
       "centroid": [
         -50.624,
         -23.2247
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.4,
+        "trees_ha": 15006,
+        "crops_pct": 27.1,
+        "crops_ha": 17378,
+        "built_pct": 5.7,
+        "built_ha": 3627
+      }
     },
     {
       "municipio": "Rebouças",
@@ -1954,7 +3506,15 @@
       "centroid": [
         -50.6212,
         -25.6587
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.2,
+        "trees_ha": 18399,
+        "crops_pct": 19.7,
+        "crops_ha": 9997,
+        "built_pct": 5.1,
+        "built_ha": 2598
+      }
     },
     {
       "municipio": "Santa Fé",
@@ -1964,7 +3524,15 @@
       "centroid": [
         -51.8369,
         -23.0661
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.2,
+        "trees_ha": 4265,
+        "crops_pct": 34.4,
+        "crops_ha": 9668,
+        "built_pct": 5.8,
+        "built_ha": 1638
+      }
     },
     {
       "municipio": "Sertanópolis",
@@ -1974,7 +3542,15 @@
       "centroid": [
         -51.077,
         -23.0592
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.6,
+        "trees_ha": 9991,
+        "crops_pct": 33.9,
+        "crops_ha": 17324,
+        "built_pct": 5.4,
+        "built_ha": 2749
+      }
     },
     {
       "municipio": "São José da Boa Vista",
@@ -1984,7 +3560,15 @@
       "centroid": [
         -49.6746,
         -23.964
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.0,
+        "trees_ha": 11390,
+        "crops_pct": 24.5,
+        "crops_ha": 9980,
+        "built_pct": 4.4,
+        "built_ha": 1802
+      }
     },
     {
       "municipio": "São Sebastião da Amoreira",
@@ -1994,7 +3578,15 @@
       "centroid": [
         -50.7245,
         -23.453
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.9,
+        "trees_ha": 4608,
+        "crops_pct": 35.1,
+        "crops_ha": 8119,
+        "built_pct": 5.0,
+        "built_ha": 1147
+      }
     },
     {
       "municipio": "Wenceslau Braz",
@@ -2004,7 +3596,15 @@
       "centroid": [
         -49.7839,
         -23.8555
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.5,
+        "trees_ha": 11479,
+        "crops_pct": 22.9,
+        "crops_ha": 9244,
+        "built_pct": 5.3,
+        "built_ha": 2128
+      }
     },
     {
       "municipio": "Ângulo",
@@ -2014,7 +3614,15 @@
       "centroid": [
         -51.917,
         -23.1915
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.8,
+        "trees_ha": 1595,
+        "crops_pct": 38.0,
+        "crops_ha": 4091,
+        "built_pct": 5.6,
+        "built_ha": 604
+      }
     },
     {
       "municipio": "Andirá",
@@ -2024,7 +3632,15 @@
       "centroid": [
         -50.2725,
         -23.0176
-      ]
+      ],
+      "rank": {
+        "trees_pct": 12.1,
+        "trees_ha": 2869,
+        "crops_pct": 39.9,
+        "crops_ha": 9432,
+        "built_pct": 6.3,
+        "built_ha": 1480
+      }
     },
     {
       "municipio": "Honório Serpa",
@@ -2034,7 +3650,15 @@
       "centroid": [
         -52.3686,
         -26.1615
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.7,
+        "trees_ha": 16674,
+        "crops_pct": 23.8,
+        "crops_ha": 12918,
+        "built_pct": 4.6,
+        "built_ha": 2501
+      }
     },
     {
       "municipio": "Ibiporã",
@@ -2044,7 +3668,15 @@
       "centroid": [
         -51.0408,
         -23.2382
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.5,
+        "trees_ha": 6472,
+        "crops_pct": 30.7,
+        "crops_ha": 9262,
+        "built_pct": 8.7,
+        "built_ha": 2613
+      }
     },
     {
       "municipio": "Iguaraçu",
@@ -2054,7 +3686,15 @@
       "centroid": [
         -51.8456,
         -23.2245
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.3,
+        "trees_ha": 2577,
+        "crops_pct": 37.2,
+        "crops_ha": 6257,
+        "built_pct": 6.6,
+        "built_ha": 1110
+      }
     },
     {
       "municipio": "Jaguapitã",
@@ -2064,7 +3704,15 @@
       "centroid": [
         -51.5557,
         -23.0657
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.5,
+        "trees_ha": 8434,
+        "crops_pct": 32.3,
+        "crops_ha": 15588,
+        "built_pct": 5.2,
+        "built_ha": 2494
+      }
     },
     {
       "municipio": "Laranjeiras do Sul",
@@ -2074,7 +3722,15 @@
       "centroid": [
         -52.3796,
         -25.3446
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.4,
+        "trees_ha": 23818,
+        "crops_pct": 18.3,
+        "crops_ha": 13065,
+        "built_pct": 5.5,
+        "built_ha": 3933
+      }
     },
     {
       "municipio": "Santa Maria do Oeste",
@@ -2084,7 +3740,15 @@
       "centroid": [
         -51.9292,
         -24.9114
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.4,
+        "trees_ha": 30324,
+        "crops_pct": 18.2,
+        "crops_ha": 16026,
+        "built_pct": 4.4,
+        "built_ha": 3887
+      }
     },
     {
       "municipio": "Três Barras do Paraná",
@@ -2094,7 +3758,15 @@
       "centroid": [
         -53.2226,
         -25.4439
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.4,
+        "trees_ha": 16603,
+        "crops_pct": 19.6,
+        "crops_ha": 10701,
+        "built_pct": 4.9,
+        "built_ha": 2676
+      }
     },
     {
       "municipio": "Inajá",
@@ -2104,7 +3776,15 @@
       "centroid": [
         -52.2244,
         -22.7176
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.0,
+        "trees_ha": 3161,
+        "crops_pct": 25.4,
+        "crops_ha": 5023,
+        "built_pct": 4.4,
+        "built_ha": 872
+      }
     },
     {
       "municipio": "Marquinho",
@@ -2114,7 +3794,15 @@
       "centroid": [
         -52.2515,
         -25.1025
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.7,
+        "trees_ha": 19344,
+        "crops_pct": 13.1,
+        "crops_ha": 7078,
+        "built_pct": 4.2,
+        "built_ha": 2261
+      }
     },
     {
       "municipio": "Moreira Sales",
@@ -2124,7 +3812,15 @@
       "centroid": [
         -52.9997,
         -24.027
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.4,
+        "trees_ha": 7168,
+        "crops_pct": 31.7,
+        "crops_ha": 11711,
+        "built_pct": 5.3,
+        "built_ha": 1964
+      }
     },
     {
       "municipio": "Pato Branco",
@@ -2134,7 +3830,15 @@
       "centroid": [
         -52.6687,
         -26.169
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.1,
+        "trees_ha": 17070,
+        "crops_pct": 24.5,
+        "crops_ha": 14348,
+        "built_pct": 8.3,
+        "built_ha": 4860
+      }
     },
     {
       "municipio": "Terra Roxa",
@@ -2144,7 +3848,15 @@
       "centroid": [
         -54.0605,
         -24.1975
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.0,
+        "trees_ha": 13601,
+        "crops_pct": 37.1,
+        "crops_ha": 31512,
+        "built_pct": 5.2,
+        "built_ha": 4397
+      }
     },
     {
       "municipio": "Catanduvas",
@@ -2154,7 +3866,15 @@
       "centroid": [
         -53.1591,
         -25.2406
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.4,
+        "trees_ha": 20823,
+        "crops_pct": 20.3,
+        "crops_ha": 12670,
+        "built_pct": 4.6,
+        "built_ha": 2867
+      }
     },
     {
       "municipio": "Centenário do Sul",
@@ -2164,7 +3884,15 @@
       "centroid": [
         -51.5622,
         -22.8059
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.2,
+        "trees_ha": 6822,
+        "crops_pct": 33.7,
+        "crops_ha": 12644,
+        "built_pct": 5.1,
+        "built_ha": 1899
+      }
     },
     {
       "municipio": "Clevelândia",
@@ -2174,7 +3902,15 @@
       "centroid": [
         -52.3594,
         -26.345
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.2,
+        "trees_ha": 25431,
+        "crops_pct": 21.4,
+        "crops_ha": 16407,
+        "built_pct": 4.7,
+        "built_ha": 3609
+      }
     },
     {
       "municipio": "Munhoz de Melo",
@@ -2184,7 +3920,15 @@
       "centroid": [
         -51.7347,
         -23.1308
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.7,
+        "trees_ha": 2049,
+        "crops_pct": 37.6,
+        "crops_ha": 5243,
+        "built_pct": 5.7,
+        "built_ha": 789
+      }
     },
     {
       "municipio": "Pitanga",
@@ -2194,7 +3938,15 @@
       "centroid": [
         -51.7699,
         -24.6875
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.1,
+        "trees_ha": 57563,
+        "crops_pct": 20.6,
+        "crops_ha": 35942,
+        "built_pct": 4.7,
+        "built_ha": 8137
+      }
     },
     {
       "municipio": "Apucarana",
@@ -2204,7 +3956,15 @@
       "centroid": [
         -51.4441,
         -23.5685
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.3,
+        "trees_ha": 15033,
+        "crops_pct": 25.3,
+        "crops_ha": 14422,
+        "built_pct": 9.3,
+        "built_ha": 5280
+      }
     },
     {
       "municipio": "Ibema",
@@ -2214,7 +3974,15 @@
       "centroid": [
         -53.0258,
         -25.1495
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.1,
+        "trees_ha": 5012,
+        "crops_pct": 22.9,
+        "crops_ha": 3569,
+        "built_pct": 5.5,
+        "built_ha": 854
+      }
     },
     {
       "municipio": "Marilândia do Sul",
@@ -2224,7 +3992,15 @@
       "centroid": [
         -51.2795,
         -23.7724
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.8,
+        "trees_ha": 9392,
+        "crops_pct": 32.3,
+        "crops_ha": 12761,
+        "built_pct": 5.0,
+        "built_ha": 1962
+      }
     },
     {
       "municipio": "Nova Santa Bárbara",
@@ -2234,7 +4010,15 @@
       "centroid": [
         -50.7427,
         -23.5938
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.8,
+        "trees_ha": 1464,
+        "crops_pct": 36.5,
+        "crops_ha": 2693,
+        "built_pct": 5.5,
+        "built_ha": 408
+      }
     },
     {
       "municipio": "Rio Branco do Ivaí",
@@ -2244,7 +4028,15 @@
       "centroid": [
         -51.3286,
         -24.3471
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.4,
+        "trees_ha": 13220,
+        "crops_pct": 19.0,
+        "crops_ha": 7537,
+        "built_pct": 4.3,
+        "built_ha": 1692
+      }
     },
     {
       "municipio": "Tomazina",
@@ -2254,7 +4046,15 @@
       "centroid": [
         -49.9645,
         -23.7215
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.0,
+        "trees_ha": 16781,
+        "crops_pct": 17.9,
+        "crops_ha": 10741,
+        "built_pct": 4.5,
+        "built_ha": 2700
+      }
     },
     {
       "municipio": "Lupionópolis",
@@ -2264,7 +4064,15 @@
       "centroid": [
         -51.664,
         -22.7274
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.5,
+        "trees_ha": 1764,
+        "crops_pct": 32.0,
+        "crops_ha": 3898,
+        "built_pct": 5.8,
+        "built_ha": 708
+      }
     },
     {
       "municipio": "Ourizona",
@@ -2274,7 +4082,15 @@
       "centroid": [
         -52.231,
         -23.4593
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.9,
+        "trees_ha": 2684,
+        "crops_pct": 41.9,
+        "crops_ha": 7566,
+        "built_pct": 4.9,
+        "built_ha": 882
+      }
     },
     {
       "municipio": "Palmeira",
@@ -2284,7 +4100,15 @@
       "centroid": [
         -50.0631,
         -25.4467
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.6,
+        "trees_ha": 51775,
+        "crops_pct": 19.5,
+        "crops_ha": 30056,
+        "built_pct": 4.8,
+        "built_ha": 7375
+      }
     },
     {
       "municipio": "Santa Cecília do Pavão",
@@ -2294,7 +4118,15 @@
       "centroid": [
         -50.7988,
         -23.5435
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.6,
+        "trees_ha": 2642,
+        "crops_pct": 31.1,
+        "crops_ha": 3474,
+        "built_pct": 4.9,
+        "built_ha": 552
+      }
     },
     {
       "municipio": "Candói",
@@ -2304,7 +4136,15 @@
       "centroid": [
         -52.0176,
         -25.5269
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.5,
+        "trees_ha": 47602,
+        "crops_pct": 22.1,
+        "crops_ha": 35740,
+        "built_pct": 4.3,
+        "built_ha": 7007
+      }
     },
     {
       "municipio": "Nova Cantu",
@@ -2314,7 +4154,15 @@
       "centroid": [
         -52.5585,
         -24.6596
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.1,
+        "trees_ha": 15892,
+        "crops_pct": 26.7,
+        "crops_ha": 15654,
+        "built_pct": 4.5,
+        "built_ha": 2611
+      }
     },
     {
       "municipio": "Pranchita",
@@ -2324,7 +4172,15 @@
       "centroid": [
         -53.7192,
         -25.9671
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.7,
+        "trees_ha": 6777,
+        "crops_pct": 30.4,
+        "crops_ha": 7434,
+        "built_pct": 5.3,
+        "built_ha": 1297
+      }
     },
     {
       "municipio": "Florestópolis",
@@ -2334,7 +4190,15 @@
       "centroid": [
         -51.4032,
         -22.8957
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.1,
+        "trees_ha": 5251,
+        "crops_pct": 33.3,
+        "crops_ha": 8285,
+        "built_pct": 5.3,
+        "built_ha": 1316
+      }
     },
     {
       "municipio": "Fênix",
@@ -2344,7 +4208,15 @@
       "centroid": [
         -52.0297,
         -23.9008
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.7,
+        "trees_ha": 4756,
+        "crops_pct": 35.5,
+        "crops_ha": 8576,
+        "built_pct": 4.8,
+        "built_ha": 1156
+      }
     },
     {
       "municipio": "São Jorge do Ivaí",
@@ -2354,7 +4226,15 @@
       "centroid": [
         -52.3166,
         -23.4337
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.0,
+        "trees_ha": 4544,
+        "crops_pct": 42.3,
+        "crops_ha": 13738,
+        "built_pct": 4.9,
+        "built_ha": 1581
+      }
     },
     {
       "municipio": "Engenheiro Beltrão",
@@ -2364,7 +4244,15 @@
       "centroid": [
         -52.2655,
         -23.7593
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.1,
+        "trees_ha": 9203,
+        "crops_pct": 37.0,
+        "crops_ha": 17881,
+        "built_pct": 5.0,
+        "built_ha": 2431
+      }
     },
     {
       "municipio": "Ubiratã",
@@ -2374,7 +4262,15 @@
       "centroid": [
         -53.0242,
         -24.5
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.9,
+        "trees_ha": 12984,
+        "crops_pct": 37.6,
+        "crops_ha": 25880,
+        "built_pct": 5.3,
+        "built_ha": 3621
+      }
     },
     {
       "municipio": "Bela Vista do Paraíso",
@@ -2384,7 +4280,15 @@
       "centroid": [
         -51.2375,
         -23.0063
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.7,
+        "trees_ha": 4581,
+        "crops_pct": 36.5,
+        "crops_ha": 8961,
+        "built_pct": 5.8,
+        "built_ha": 1428
+      }
     },
     {
       "municipio": "Brasilândia do Sul",
@@ -2394,7 +4298,15 @@
       "centroid": [
         -53.5421,
         -24.1664
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.0,
+        "trees_ha": 4598,
+        "crops_pct": 40.9,
+        "crops_ha": 12553,
+        "built_pct": 4.8,
+        "built_ha": 1483
+      }
     },
     {
       "municipio": "Ibaiti",
@@ -2404,7 +4316,15 @@
       "centroid": [
         -50.2922,
         -23.7802
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.1,
+        "trees_ha": 27554,
+        "crops_pct": 15.6,
+        "crops_ha": 14301,
+        "built_pct": 4.9,
+        "built_ha": 4467
+      }
     },
     {
       "municipio": "Ivaí",
@@ -2414,7 +4334,15 @@
       "centroid": [
         -50.8518,
         -24.9888
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.8,
+        "trees_ha": 24000,
+        "crops_pct": 17.6,
+        "crops_ha": 11149,
+        "built_pct": 4.9,
+        "built_ha": 3107
+      }
     },
     {
       "municipio": "Paulo Frontin",
@@ -2424,7 +4352,15 @@
       "centroid": [
         -50.7507,
         -26.0614
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.2,
+        "trees_ha": 15081,
+        "crops_pct": 17.7,
+        "crops_ha": 6985,
+        "built_pct": 5.2,
+        "built_ha": 2046
+      }
     },
     {
       "municipio": "Rio Bonito do Iguaçu",
@@ -2434,7 +4370,15 @@
       "centroid": [
         -52.6115,
         -25.5451
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.7,
+        "trees_ha": 20971,
+        "crops_pct": 22.8,
+        "crops_ha": 16715,
+        "built_pct": 4.8,
+        "built_ha": 3518
+      }
     },
     {
       "municipio": "Alto Piquiri",
@@ -2444,7 +4388,15 @@
       "centroid": [
         -53.4038,
         -24.102
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.2,
+        "trees_ha": 7164,
+        "crops_pct": 40.1,
+        "crops_ha": 18860,
+        "built_pct": 4.9,
+        "built_ha": 2305
+      }
     },
     {
       "municipio": "Quarto Centenário",
@@ -2454,7 +4406,15 @@
       "centroid": [
         -53.1548,
         -24.3019
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.3,
+        "trees_ha": 6200,
+        "crops_pct": 39.1,
+        "crops_ha": 13280,
+        "built_pct": 4.5,
+        "built_ha": 1540
+      }
     },
     {
       "municipio": "Quedas do Iguaçu",
@@ -2464,7 +4424,15 @@
       "centroid": [
         -52.9499,
         -25.4579
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.2,
+        "trees_ha": 29309,
+        "crops_pct": 20.4,
+        "crops_ha": 17984,
+        "built_pct": 5.3,
+        "built_ha": 4689
+      }
     },
     {
       "municipio": "Cianorte",
@@ -2474,7 +4442,15 @@
       "centroid": [
         -52.6258,
         -23.7335
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.2,
+        "trees_ha": 18646,
+        "crops_pct": 28.8,
+        "crops_ha": 24257,
+        "built_pct": 7.3,
+        "built_ha": 6126
+      }
     },
     {
       "municipio": "Guaíra",
@@ -2484,7 +4460,15 @@
       "centroid": [
         -54.2256,
         -24.1918
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.1,
+        "trees_ha": 9233,
+        "crops_pct": 33.1,
+        "crops_ha": 19060,
+        "built_pct": 5.8,
+        "built_ha": 3335
+      }
     },
     {
       "municipio": "Peabiru",
@@ -2494,7 +4478,15 @@
       "centroid": [
         -52.3297,
         -23.9344
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.1,
+        "trees_ha": 10280,
+        "crops_pct": 34.6,
+        "crops_ha": 16860,
+        "built_pct": 4.9,
+        "built_ha": 2373
+      }
     },
     {
       "municipio": "Rancho Alegre D'Oeste",
@@ -2504,7 +4496,15 @@
       "centroid": [
         -52.9584,
         -24.2911
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 4015,
+        "crops_pct": 41.0,
+        "crops_ha": 10373,
+        "built_pct": 4.4,
+        "built_ha": 1125
+      }
     },
     {
       "municipio": "Sabáudia",
@@ -2514,7 +4514,15 @@
       "centroid": [
         -51.5828,
         -23.3484
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.4,
+        "trees_ha": 3570,
+        "crops_pct": 34.8,
+        "crops_ha": 6757,
+        "built_pct": 6.5,
+        "built_ha": 1264
+      }
     },
     {
       "municipio": "Santa Terezinha de Itaipu",
@@ -2524,7 +4532,15 @@
       "centroid": [
         -54.428,
         -25.4531
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.7,
+        "trees_ha": 5583,
+        "crops_pct": 31.3,
+        "crops_ha": 8857,
+        "built_pct": 6.5,
+        "built_ha": 1856
+      }
     },
     {
       "municipio": "Astorga",
@@ -2534,7 +4550,15 @@
       "centroid": [
         -51.6975,
         -23.2459
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.4,
+        "trees_ha": 7707,
+        "crops_pct": 36.5,
+        "crops_ha": 16204,
+        "built_pct": 6.2,
+        "built_ha": 2754
+      }
     },
     {
       "municipio": "Cantagalo",
@@ -2544,7 +4568,15 @@
       "centroid": [
         -52.1269,
         -25.2849
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.1,
+        "trees_ha": 22358,
+        "crops_pct": 18.0,
+        "crops_ha": 11114,
+        "built_pct": 4.6,
+        "built_ha": 2831
+      }
     },
     {
       "municipio": "Faxinal",
@@ -2554,7 +4586,15 @@
       "centroid": [
         -51.2837,
         -24.0029
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.7,
+        "trees_ha": 24065,
+        "crops_pct": 19.9,
+        "crops_ha": 14672,
+        "built_pct": 4.8,
+        "built_ha": 3541
+      }
     },
     {
       "municipio": "Flor da Serra do Sul",
@@ -2564,7 +4604,15 @@
       "centroid": [
         -53.2929,
         -26.2387
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.8,
+        "trees_ha": 9364,
+        "crops_pct": 20.5,
+        "crops_ha": 5347,
+        "built_pct": 5.0,
+        "built_ha": 1295
+      }
     },
     {
       "municipio": "Porto Rico",
@@ -2574,7 +4622,15 @@
       "centroid": [
         -53.3138,
         -22.8336
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.4,
+        "trees_ha": 4114,
+        "crops_pct": 15.7,
+        "crops_ha": 3503,
+        "built_pct": 5.6,
+        "built_ha": 1258
+      }
     },
     {
       "municipio": "Santa Mariana",
@@ -2584,7 +4640,15 @@
       "centroid": [
         -50.5366,
         -23.0639
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.5,
+        "trees_ha": 7098,
+        "crops_pct": 38.6,
+        "crops_ha": 16604,
+        "built_pct": 5.0,
+        "built_ha": 2134
+      }
     },
     {
       "municipio": "Janiópolis",
@@ -2594,7 +4658,15 @@
       "centroid": [
         -52.8098,
         -24.1294
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.8,
+        "trees_ha": 5570,
+        "crops_pct": 38.9,
+        "crops_ha": 13667,
+        "built_pct": 4.8,
+        "built_ha": 1674
+      }
     },
     {
       "municipio": "Porecatu",
@@ -2604,7 +4676,15 @@
       "centroid": [
         -51.4098,
         -22.7439
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.4,
+        "trees_ha": 6306,
+        "crops_pct": 26.7,
+        "crops_ha": 7844,
+        "built_pct": 5.1,
+        "built_ha": 1498
+      }
     },
     {
       "municipio": "Roncador",
@@ -2614,7 +4694,15 @@
       "centroid": [
         -52.2628,
         -24.5702
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.1,
+        "trees_ha": 23407,
+        "crops_pct": 24.7,
+        "crops_ha": 19216,
+        "built_pct": 4.5,
+        "built_ha": 3510
+      }
     },
     {
       "municipio": "Cambé",
@@ -2624,7 +4712,15 @@
       "centroid": [
         -51.283,
         -23.1872
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.0,
+        "trees_ha": 8514,
+        "crops_pct": 37.8,
+        "crops_ha": 18961,
+        "built_pct": 8.6,
+        "built_ha": 4299
+      }
     },
     {
       "municipio": "Prado Ferreira",
@@ -2634,7 +4730,15 @@
       "centroid": [
         -51.3994,
         -23.0261
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.6,
+        "trees_ha": 2890,
+        "crops_pct": 38.5,
+        "crops_ha": 5991,
+        "built_pct": 5.2,
+        "built_ha": 806
+      }
     },
     {
       "municipio": "Santa Tereza do Oeste",
@@ -2644,7 +4748,15 @@
       "centroid": [
         -53.6063,
         -25.0384
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.9,
+        "trees_ha": 9065,
+        "crops_pct": 32.3,
+        "crops_ha": 11306,
+        "built_pct": 5.5,
+        "built_ha": 1932
+      }
     },
     {
       "municipio": "Irati",
@@ -2654,7 +4766,15 @@
       "centroid": [
         -50.8281,
         -25.4889
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.2,
+        "trees_ha": 41386,
+        "crops_pct": 17.3,
+        "crops_ha": 18269,
+        "built_pct": 5.8,
+        "built_ha": 6143
+      }
     },
     {
       "municipio": "Pitangueiras",
@@ -2664,7 +4784,15 @@
       "centroid": [
         -51.573,
         -23.2088
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.8,
+        "trees_ha": 1744,
+        "crops_pct": 42.9,
+        "crops_ha": 5411,
+        "built_pct": 5.2,
+        "built_ha": 653
+      }
     },
     {
       "municipio": "Porto Barreiro",
@@ -2674,7 +4802,15 @@
       "centroid": [
         -52.3851,
         -25.5863
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.8,
+        "trees_ha": 11131,
+        "crops_pct": 18.7,
+        "crops_ha": 7248,
+        "built_pct": 4.3,
+        "built_ha": 1663
+      }
     },
     {
       "municipio": "São Tomé",
@@ -2684,7 +4820,15 @@
       "centroid": [
         -52.5404,
         -23.5242
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 5273,
+        "crops_pct": 32.0,
+        "crops_ha": 7232,
+        "built_pct": 5.1,
+        "built_ha": 1150
+      }
     },
     {
       "municipio": "Araruna",
@@ -2694,7 +4838,15 @@
       "centroid": [
         -52.5768,
         -23.9579
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.7,
+        "trees_ha": 11130,
+        "crops_pct": 34.2,
+        "crops_ha": 17566,
+        "built_pct": 5.2,
+        "built_ha": 2665
+      }
     },
     {
       "municipio": "Araucária",
@@ -2704,7 +4856,15 @@
       "centroid": [
         -49.4388,
         -25.6099
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.0,
+        "trees_ha": 18676,
+        "crops_pct": 11.6,
+        "crops_ha": 5688,
+        "built_pct": 10.5,
+        "built_ha": 5144
+      }
     },
     {
       "municipio": "Campo Bonito",
@@ -2714,7 +4874,15 @@
       "centroid": [
         -53.0142,
         -24.9334
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.6,
+        "trees_ha": 15007,
+        "crops_pct": 23.0,
+        "crops_ha": 10597,
+        "built_pct": 4.5,
+        "built_ha": 2092
+      }
     },
     {
       "municipio": "Mato Rico",
@@ -2724,7 +4892,15 @@
       "centroid": [
         -52.2137,
         -24.6995
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.0,
+        "trees_ha": 14995,
+        "crops_pct": 17.2,
+        "crops_ha": 7177,
+        "built_pct": 4.2,
+        "built_ha": 1753
+      }
     },
     {
       "municipio": "Mangueirinha",
@@ -2734,7 +4910,15 @@
       "centroid": [
         -52.2104,
         -26.0241
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.9,
+        "trees_ha": 36382,
+        "crops_pct": 21.2,
+        "crops_ha": 24199,
+        "built_pct": 4.7,
+        "built_ha": 5339
+      }
     },
     {
       "municipio": "São Mateus do Sul",
@@ -2744,7 +4928,15 @@
       "centroid": [
         -50.4415,
         -25.9029
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.7,
+        "trees_ha": 59396,
+        "crops_pct": 12.9,
+        "crops_ha": 18398,
+        "built_pct": 4.8,
+        "built_ha": 6864
+      }
     },
     {
       "municipio": "Balsa Nova",
@@ -2754,7 +4946,15 @@
       "centroid": [
         -49.6904,
         -25.5244
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.9,
+        "trees_ha": 13831,
+        "crops_pct": 11.7,
+        "crops_ha": 4273,
+        "built_pct": 5.5,
+        "built_ha": 1993
+      }
     },
     {
       "municipio": "Goioxim",
@@ -2764,7 +4964,15 @@
       "centroid": [
         -51.9952,
         -25.1328
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.5,
+        "trees_ha": 27820,
+        "crops_pct": 18.0,
+        "crops_ha": 13382,
+        "built_pct": 4.3,
+        "built_ha": 3192
+      }
     },
     {
       "municipio": "Guaraniaçu",
@@ -2774,7 +4982,15 @@
       "centroid": [
         -52.857,
         -25.0538
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.5,
+        "trees_ha": 49432,
+        "crops_pct": 13.3,
+        "crops_ha": 17568,
+        "built_pct": 4.3,
+        "built_ha": 5670
+      }
     },
     {
       "municipio": "Rolândia",
@@ -2784,7 +5000,15 @@
       "centroid": [
         -51.4096,
         -23.2662
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 7400,
+        "crops_pct": 39.4,
+        "crops_ha": 18390,
+        "built_pct": 7.6,
+        "built_ha": 3532
+      }
     },
     {
       "municipio": "Carambeí",
@@ -2794,7 +5018,15 @@
       "centroid": [
         -50.1531,
         -24.8917
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.1,
+        "trees_ha": 21620,
+        "crops_pct": 23.5,
+        "crops_ha": 15815,
+        "built_pct": 5.2,
+        "built_ha": 3489
+      }
     },
     {
       "municipio": "Cascavel",
@@ -2804,7 +5036,15 @@
       "centroid": [
         -53.3889,
         -25.0243
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.0,
+        "trees_ha": 62708,
+        "crops_pct": 27.3,
+        "crops_ha": 61077,
+        "built_pct": 7.3,
+        "built_ha": 16352
+      }
     },
     {
       "municipio": "Jussara",
@@ -2814,7 +5054,15 @@
       "centroid": [
         -52.4439,
         -23.6321
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.9,
+        "trees_ha": 4351,
+        "crops_pct": 38.0,
+        "crops_ha": 8303,
+        "built_pct": 5.0,
+        "built_ha": 1087
+      }
     },
     {
       "municipio": "Maringá",
@@ -2824,7 +5072,15 @@
       "centroid": [
         -51.9678,
         -23.3996
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.9,
+        "trees_ha": 7439,
+        "crops_pct": 30.3,
+        "crops_ha": 15118,
+        "built_pct": 18.2,
+        "built_ha": 9090
+      }
     },
     {
       "municipio": "Barracão",
@@ -2834,7 +5090,15 @@
       "centroid": [
         -53.5222,
         -26.2442
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.2,
+        "trees_ha": 7015,
+        "crops_pct": 13.3,
+        "crops_ha": 2324,
+        "built_pct": 4.7,
+        "built_ha": 812
+      }
     },
     {
       "municipio": "Juranda",
@@ -2844,7 +5108,15 @@
       "centroid": [
         -52.8364,
         -24.3953
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.5,
+        "trees_ha": 5394,
+        "crops_pct": 43.5,
+        "crops_ha": 16214,
+        "built_pct": 4.9,
+        "built_ha": 1817
+      }
     },
     {
       "municipio": "Londrina",
@@ -2854,7 +5126,15 @@
       "centroid": [
         -51.1069,
         -23.5098
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.4,
+        "trees_ha": 44571,
+        "crops_pct": 26.4,
+        "crops_ha": 44512,
+        "built_pct": 9.1,
+        "built_ha": 15364
+      }
     },
     {
       "municipio": "Nova Laranjeiras",
@@ -2864,7 +5144,15 @@
       "centroid": [
         -52.5708,
         -25.2244
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.8,
+        "trees_ha": 48670,
+        "crops_pct": 13.6,
+        "crops_ha": 17561,
+        "built_pct": 4.2,
+        "built_ha": 5430
+      }
     },
     {
       "municipio": "Foz do Jordão",
@@ -2874,7 +5162,15 @@
       "centroid": [
         -52.0952,
         -25.7024
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.2,
+        "trees_ha": 8098,
+        "crops_pct": 22.3,
+        "crops_ha": 5600,
+        "built_pct": 4.7,
+        "built_ha": 1185
+      }
     },
     {
       "municipio": "Mamborê",
@@ -2884,7 +5180,15 @@
       "centroid": [
         -52.5864,
         -24.3586
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.1,
+        "trees_ha": 14937,
+        "crops_pct": 40.4,
+        "crops_ha": 33341,
+        "built_pct": 4.7,
+        "built_ha": 3901
+      }
     },
     {
       "municipio": "Mariluz",
@@ -2894,7 +5198,15 @@
       "centroid": [
         -53.2137,
         -24.0577
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.4,
+        "trees_ha": 8820,
+        "crops_pct": 36.1,
+        "crops_ha": 16403,
+        "built_pct": 4.8,
+        "built_ha": 2173
+      }
     },
     {
       "municipio": "Santo Antônio do Paraíso",
@@ -2904,7 +5216,15 @@
       "centroid": [
         -50.6311,
         -23.5801
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.0,
+        "trees_ha": 4538,
+        "crops_pct": 29.3,
+        "crops_ha": 4928,
+        "built_pct": 4.3,
+        "built_ha": 721
+      }
     },
     {
       "municipio": "Sertaneja",
@@ -2914,7 +5234,15 @@
       "centroid": [
         -50.8764,
         -22.9356
-      ]
+      ],
+      "rank": {
+        "trees_pct": 12.3,
+        "trees_ha": 5505,
+        "crops_pct": 33.0,
+        "crops_ha": 14803,
+        "built_pct": 4.7,
+        "built_ha": 2126
+      }
     },
     {
       "municipio": "Diamante do Norte",
@@ -2924,7 +5252,15 @@
       "centroid": [
         -52.8925,
         -22.6343
-      ]
+      ],
+      "rank": {
+        "trees_pct": 17.9,
+        "trees_ha": 4420,
+        "crops_pct": 26.4,
+        "crops_ha": 6535,
+        "built_pct": 4.8,
+        "built_ha": 1189
+      }
     },
     {
       "municipio": "Pinhalão",
@@ -2934,7 +5270,15 @@
       "centroid": [
         -50.0588,
         -23.9044
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.6,
+        "trees_ha": 8219,
+        "crops_pct": 17.5,
+        "crops_ha": 3938,
+        "built_pct": 5.1,
+        "built_ha": 1156
+      }
     },
     {
       "municipio": "Tuneiras do Oeste",
@@ -2944,7 +5288,15 @@
       "centroid": [
         -52.8346,
         -23.8791
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.9,
+        "trees_ha": 18170,
+        "crops_pct": 28.5,
+        "crops_ha": 20787,
+        "built_pct": 4.7,
+        "built_ha": 3412
+      }
     },
     {
       "municipio": "Bom Jesus do Sul",
@@ -2954,7 +5306,15 @@
       "centroid": [
         -53.5513,
         -26.1613
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.5,
+        "trees_ha": 7859,
+        "crops_pct": 12.8,
+        "crops_ha": 2426,
+        "built_pct": 4.8,
+        "built_ha": 906
+      }
     },
     {
       "municipio": "Chopinzinho",
@@ -2964,7 +5324,15 @@
       "centroid": [
         -52.4507,
         -25.8149
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.8,
+        "trees_ha": 32900,
+        "crops_pct": 20.5,
+        "crops_ha": 21146,
+        "built_pct": 4.9,
+        "built_ha": 5057
+      }
     },
     {
       "municipio": "Congonhinhas",
@@ -2974,7 +5342,15 @@
       "centroid": [
         -50.504,
         -23.6071
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.5,
+        "trees_ha": 17694,
+        "crops_pct": 20.7,
+        "crops_ha": 11299,
+        "built_pct": 4.3,
+        "built_ha": 2339
+      }
     },
     {
       "municipio": "São Miguel do Iguaçu",
@@ -2984,7 +5360,15 @@
       "centroid": [
         -54.2622,
         -25.3835
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.1,
+        "trees_ha": 22463,
+        "crops_pct": 28.9,
+        "crops_ha": 26888,
+        "built_pct": 5.4,
+        "built_ha": 5010
+      }
     },
     {
       "municipio": "Arapongas",
@@ -2994,7 +5378,15 @@
       "centroid": [
         -51.4293,
         -23.4389
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.5,
+        "trees_ha": 7588,
+        "crops_pct": 33.6,
+        "crops_ha": 13079,
+        "built_pct": 10.8,
+        "built_ha": 4208
+      }
     },
     {
       "municipio": "Goioerê",
@@ -3004,7 +5396,15 @@
       "centroid": [
         -53.0401,
         -24.1732
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.7,
+        "trees_ha": 11682,
+        "crops_pct": 36.7,
+        "crops_ha": 21703,
+        "built_pct": 5.6,
+        "built_ha": 3293
+      }
     },
     {
       "municipio": "Campo Mourão",
@@ -3014,7 +5414,15 @@
       "centroid": [
         -52.3824,
         -24.1012
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.8,
+        "trees_ha": 17072,
+        "crops_pct": 33.7,
+        "crops_ha": 26311,
+        "built_pct": 7.0,
+        "built_ha": 5448
+      }
     },
     {
       "municipio": "Entre Rios do Oeste",
@@ -3024,7 +5432,15 @@
       "centroid": [
         -54.2265,
         -24.7117
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.3,
+        "trees_ha": 2645,
+        "crops_pct": 25.9,
+        "crops_ha": 3547,
+        "built_pct": 6.2,
+        "built_ha": 845
+      }
     },
     {
       "municipio": "Luiziana",
@@ -3034,7 +5450,15 @@
       "centroid": [
         -52.3325,
         -24.3457
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.0,
+        "trees_ha": 24964,
+        "crops_pct": 30.8,
+        "crops_ha": 29567,
+        "built_pct": 4.3,
+        "built_ha": 4121
+      }
     },
     {
       "municipio": "Diamante do Sul",
@@ -3044,7 +5468,15 @@
       "centroid": [
         -52.7041,
         -24.9927
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.5,
+        "trees_ha": 14608,
+        "crops_pct": 9.4,
+        "crops_ha": 3476,
+        "built_pct": 4.2,
+        "built_ha": 1564
+      }
     },
     {
       "municipio": "Sarandi",
@@ -3054,7 +5486,15 @@
       "centroid": [
         -51.8677,
         -23.4696
-      ]
+      ],
+      "rank": {
+        "trees_pct": 12.4,
+        "trees_ha": 1321,
+        "crops_pct": 32.0,
+        "crops_ha": 3415,
+        "built_pct": 19.5,
+        "built_ha": 2074
+      }
     },
     {
       "municipio": "Antônio Olinto",
@@ -3064,7 +5504,15 @@
       "centroid": [
         -50.1296,
         -25.9638
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.0,
+        "trees_ha": 21881,
+        "crops_pct": 13.5,
+        "crops_ha": 6732,
+        "built_pct": 4.4,
+        "built_ha": 2208
+      }
     },
     {
       "municipio": "Prudentópolis",
@@ -3074,7 +5522,15 @@
       "centroid": [
         -51.1013,
         -25.1338
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.2,
+        "trees_ha": 99743,
+        "crops_pct": 13.4,
+        "crops_ha": 31708,
+        "built_pct": 4.7,
+        "built_ha": 11071
+      }
     },
     {
       "municipio": "São Manoel do Paraná",
@@ -3084,7 +5540,15 @@
       "centroid": [
         -52.6124,
         -23.3729
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.7,
+        "trees_ha": 2232,
+        "crops_pct": 33.8,
+        "crops_ha": 3320,
+        "built_pct": 5.0,
+        "built_ha": 487
+      }
     },
     {
       "municipio": "Farol",
@@ -3094,7 +5558,15 @@
       "centroid": [
         -52.6279,
         -24.123
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.9,
+        "trees_ha": 4804,
+        "crops_pct": 42.9,
+        "crops_ha": 12958,
+        "built_pct": 4.5,
+        "built_ha": 1356
+      }
     },
     {
       "municipio": "Salgado Filho",
@@ -3104,7 +5576,15 @@
       "centroid": [
         -53.4141,
         -26.141
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.6,
+        "trees_ha": 8376,
+        "crops_pct": 11.6,
+        "crops_ha": 2390,
+        "built_pct": 4.9,
+        "built_ha": 1019
+      }
     },
     {
       "municipio": "Terra Boa",
@@ -3114,7 +5594,15 @@
       "centroid": [
         -52.3892,
         -23.6961
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.9,
+        "trees_ha": 8571,
+        "crops_pct": 31.2,
+        "crops_ha": 10326,
+        "built_pct": 5.7,
+        "built_ha": 1881
+      }
     },
     {
       "municipio": "Boa Esperança",
@@ -3124,7 +5612,15 @@
       "centroid": [
         -52.7502,
         -24.2557
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.2,
+        "trees_ha": 4167,
+        "crops_pct": 45.9,
+        "crops_ha": 14548,
+        "built_pct": 4.6,
+        "built_ha": 1443
+      }
     },
     {
       "municipio": "Tamarana",
@@ -3134,7 +5630,15 @@
       "centroid": [
         -51.0539,
         -23.823
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.9,
+        "trees_ha": 17373,
+        "crops_pct": 20.4,
+        "crops_ha": 9870,
+        "built_pct": 4.7,
+        "built_ha": 2256
+      }
     },
     {
       "municipio": "Alvorada do Sul",
@@ -3144,7 +5648,15 @@
       "centroid": [
         -51.2566,
         -22.8067
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.6,
+        "trees_ha": 6658,
+        "crops_pct": 29.8,
+        "crops_ha": 12707,
+        "built_pct": 5.2,
+        "built_ha": 2214
+      }
     },
     {
       "municipio": "Guamiranga",
@@ -3154,7 +5666,15 @@
       "centroid": [
         -50.839,
         -25.1724
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.1,
+        "trees_ha": 10560,
+        "crops_pct": 17.4,
+        "crops_ha": 4478,
+        "built_pct": 5.3,
+        "built_ha": 1368
+      }
     },
     {
       "municipio": "Ipiranga",
@@ -3164,7 +5684,15 @@
       "centroid": [
         -50.5768,
         -24.9917
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.8,
+        "trees_ha": 37501,
+        "crops_pct": 19.0,
+        "crops_ha": 18334,
+        "built_pct": 4.5,
+        "built_ha": 4333
+      }
     },
     {
       "municipio": "Campo do Tenente",
@@ -3174,7 +5702,15 @@
       "centroid": [
         -49.6523,
         -25.9785
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.8,
+        "trees_ha": 13791,
+        "crops_pct": 12.8,
+        "crops_ha": 4123,
+        "built_pct": 4.7,
+        "built_ha": 1502
+      }
     },
     {
       "municipio": "Japurá",
@@ -3184,7 +5720,15 @@
       "centroid": [
         -52.5405,
         -23.4374
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.6,
+        "trees_ha": 2639,
+        "crops_pct": 41.9,
+        "crops_ha": 7104,
+        "built_pct": 5.7,
+        "built_ha": 962
+      }
     },
     {
       "municipio": "Rio Azul",
@@ -3194,7 +5738,15 @@
       "centroid": [
         -50.7963,
         -25.7206
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.1,
+        "trees_ha": 27981,
+        "crops_pct": 14.8,
+        "crops_ha": 9404,
+        "built_pct": 4.9,
+        "built_ha": 3114
+      }
     },
     {
       "municipio": "Lapa",
@@ -3204,7 +5756,15 @@
       "centroid": [
         -49.8689,
         -25.7654
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.5,
+        "trees_ha": 93614,
+        "crops_pct": 13.3,
+        "crops_ha": 29391,
+        "built_pct": 4.4,
+        "built_ha": 9781
+      }
     },
     {
       "municipio": "Imbituva",
@@ -3214,7 +5774,15 @@
       "centroid": [
         -50.6509,
         -25.2268
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.2,
+        "trees_ha": 31890,
+        "crops_pct": 18.1,
+        "crops_ha": 14379,
+        "built_pct": 5.4,
+        "built_ha": 4247
+      }
     },
     {
       "municipio": "Primeiro de Maio",
@@ -3224,7 +5792,15 @@
       "centroid": [
         -51.077,
         -22.8631
-      ]
+      ],
+      "rank": {
+        "trees_pct": 14.1,
+        "trees_ha": 5889,
+        "crops_pct": 29.0,
+        "crops_ha": 12100,
+        "built_pct": 4.9,
+        "built_ha": 2029
+      }
     },
     {
       "municipio": "Cândido de Abreu",
@@ -3234,7 +5810,15 @@
       "centroid": [
         -51.2587,
         -24.6436
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.7,
+        "trees_ha": 64006,
+        "crops_pct": 13.7,
+        "crops_ha": 21479,
+        "built_pct": 4.2,
+        "built_ha": 6639
+      }
     },
     {
       "municipio": "Figueira",
@@ -3244,7 +5828,15 @@
       "centroid": [
         -50.4296,
         -23.8767
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.9,
+        "trees_ha": 4905,
+        "crops_pct": 14.0,
+        "crops_ha": 1857,
+        "built_pct": 5.4,
+        "built_ha": 722
+      }
     },
     {
       "municipio": "Mauá da Serra",
@@ -3254,7 +5846,15 @@
       "centroid": [
         -51.1783,
         -23.9119
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.5,
+        "trees_ha": 3928,
+        "crops_pct": 18.9,
+        "crops_ha": 2093,
+        "built_pct": 7.5,
+        "built_ha": 833
+      }
     },
     {
       "municipio": "Quitandinha",
@@ -3264,7 +5864,15 @@
       "centroid": [
         -49.4792,
         -25.9106
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.9,
+        "trees_ha": 21626,
+        "crops_pct": 10.8,
+        "crops_ha": 5090,
+        "built_pct": 5.4,
+        "built_ha": 2522
+      }
     },
     {
       "municipio": "Carlópolis",
@@ -3274,7 +5882,15 @@
       "centroid": [
         -49.7181,
         -23.4607
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.0,
+        "trees_ha": 9113,
+        "crops_pct": 15.3,
+        "crops_ha": 6949,
+        "built_pct": 5.4,
+        "built_ha": 2436
+      }
     },
     {
       "municipio": "Ribeirão Claro",
@@ -3284,7 +5900,15 @@
       "centroid": [
         -49.7641,
         -23.2617
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.5,
+        "trees_ha": 12280,
+        "crops_pct": 9.0,
+        "crops_ha": 5677,
+        "built_pct": 4.5,
+        "built_ha": 2814
+      }
     },
     {
       "municipio": "Teixeira Soares",
@@ -3294,7 +5918,15 @@
       "centroid": [
         -50.4122,
         -25.3125
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.7,
+        "trees_ha": 36671,
+        "crops_pct": 19.7,
+        "crops_ha": 18642,
+        "built_pct": 4.3,
+        "built_ha": 4042
+      }
     },
     {
       "municipio": "Manfrinópolis",
@@ -3304,7 +5936,15 @@
       "centroid": [
         -53.3479,
         -26.0943
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.4,
+        "trees_ha": 10261,
+        "crops_pct": 10.6,
+        "crops_ha": 2517,
+        "built_pct": 4.7,
+        "built_ha": 1101
+      }
     },
     {
       "municipio": "Espigão Alto do Iguaçu",
@@ -3314,7 +5954,15 @@
       "centroid": [
         -52.7897,
         -25.3492
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.5,
+        "trees_ha": 14506,
+        "crops_pct": 16.5,
+        "crops_ha": 5764,
+        "built_pct": 4.5,
+        "built_ha": 1561
+      }
     },
     {
       "municipio": "Santa Helena",
@@ -3324,7 +5972,15 @@
       "centroid": [
         -54.3046,
         -24.8886
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.2,
+        "trees_ha": 17445,
+        "crops_pct": 21.5,
+        "crops_ha": 17708,
+        "built_pct": 5.6,
+        "built_ha": 4601
+      }
     },
     {
       "municipio": "Piraí do Sul",
@@ -3334,7 +5990,15 @@
       "centroid": [
         -49.9335,
         -24.4691
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.0,
+        "trees_ha": 55309,
+        "crops_pct": 16.5,
+        "crops_ha": 22810,
+        "built_pct": 4.1,
+        "built_ha": 5705
+      }
     },
     {
       "municipio": "Campina do Simão",
@@ -3344,7 +6008,15 @@
       "centroid": [
         -51.78,
         -25.1326
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.4,
+        "trees_ha": 20521,
+        "crops_pct": 16.4,
+        "crops_ha": 7752,
+        "built_pct": 4.1,
+        "built_ha": 1927
+      }
     },
     {
       "municipio": "Ponta Grossa",
@@ -3354,7 +6026,15 @@
       "centroid": [
         -50.0785,
         -25.145
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.9,
+        "trees_ha": 78963,
+        "crops_pct": 17.1,
+        "crops_ha": 36538,
+        "built_pct": 7.3,
+        "built_ha": 15538
+      }
     },
     {
       "municipio": "Sapopema",
@@ -3364,7 +6044,15 @@
       "centroid": [
         -50.6077,
         -23.8733
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.2,
+        "trees_ha": 28525,
+        "crops_pct": 10.1,
+        "crops_ha": 7020,
+        "built_pct": 4.0,
+        "built_ha": 2739
+      }
     },
     {
       "municipio": "Palmas",
@@ -3374,7 +6062,15 @@
       "centroid": [
         -51.8106,
         -26.4458
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.9,
+        "trees_ha": 74187,
+        "crops_pct": 11.5,
+        "crops_ha": 19516,
+        "built_pct": 4.3,
+        "built_ha": 7332
+      }
     },
     {
       "municipio": "Pato Bragado",
@@ -3384,7 +6080,15 @@
       "centroid": [
         -54.2541,
         -24.6343
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.1,
+        "trees_ha": 2792,
+        "crops_pct": 24.6,
+        "crops_ha": 3785,
+        "built_pct": 6.2,
+        "built_ha": 952
+      }
     },
     {
       "municipio": "Castro",
@@ -3394,7 +6098,15 @@
       "centroid": [
         -49.8355,
         -24.8033
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.5,
+        "trees_ha": 111176,
+        "crops_pct": 15.5,
+        "crops_ha": 40512,
+        "built_pct": 4.6,
+        "built_ha": 12018
+      }
     },
     {
       "municipio": "Fernandes Pinheiro",
@@ -3404,7 +6116,15 @@
       "centroid": [
         -50.5101,
         -25.5149
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.9,
+        "trees_ha": 18375,
+        "crops_pct": 17.5,
+        "crops_ha": 7482,
+        "built_pct": 4.3,
+        "built_ha": 1848
+      }
     },
     {
       "municipio": "São Jerônimo da Serra",
@@ -3414,7 +6134,15 @@
       "centroid": [
         -50.7806,
         -23.721
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.9,
+        "trees_ha": 32653,
+        "crops_pct": 18.2,
+        "crops_ha": 15244,
+        "built_pct": 4.1,
+        "built_ha": 3419
+      }
     },
     {
       "municipio": "Piên",
@@ -3424,7 +6152,15 @@
       "centroid": [
         -49.4542,
         -26.0909
-      ]
+      ],
+      "rank": {
+        "trees_pct": 48.2,
+        "trees_ha": 12953,
+        "crops_pct": 10.7,
+        "crops_ha": 2870,
+        "built_pct": 5.8,
+        "built_ha": 1553
+      }
     },
     {
       "municipio": "Fazenda Rio Grande",
@@ -3434,7 +6170,15 @@
       "centroid": [
         -49.2948,
         -25.6757
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.2,
+        "trees_ha": 4414,
+        "crops_pct": 8.3,
+        "crops_ha": 1013,
+        "built_pct": 20.5,
+        "built_ha": 2505
+      }
     },
     {
       "municipio": "Guarapuava",
@@ -3444,7 +6188,15 @@
       "centroid": [
         -51.4862,
         -25.3655
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.0,
+        "trees_ha": 141004,
+        "crops_pct": 16.7,
+        "crops_ha": 55917,
+        "built_pct": 5.0,
+        "built_ha": 16924
+      }
     },
     {
       "municipio": "Tibagi",
@@ -3454,7 +6206,15 @@
       "centroid": [
         -50.4662,
         -24.66
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.2,
+        "trees_ha": 122802,
+        "crops_pct": 19.1,
+        "crops_ha": 58309,
+        "built_pct": 3.8,
+        "built_ha": 11601
+      }
     },
     {
       "municipio": "São João do Triunfo",
@@ -3464,7 +6224,15 @@
       "centroid": [
         -50.2916,
         -25.6715
-      ]
+      ],
+      "rank": {
+        "trees_pct": 47.9,
+        "trees_ha": 36389,
+        "crops_pct": 12.4,
+        "crops_ha": 9435,
+        "built_pct": 4.5,
+        "built_ha": 3431
+      }
     },
     {
       "municipio": "Turvo",
@@ -3474,7 +6242,15 @@
       "centroid": [
         -51.465,
         -25.0087
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.5,
+        "trees_ha": 44905,
+        "crops_pct": 13.7,
+        "crops_ha": 13529,
+        "built_pct": 4.4,
+        "built_ha": 4311
+      }
     },
     {
       "municipio": "Curiúva",
@@ -3484,7 +6260,15 @@
       "centroid": [
         -50.46,
         -24.0112
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.6,
+        "trees_ha": 25069,
+        "crops_pct": 11.9,
+        "crops_ha": 7024,
+        "built_pct": 4.2,
+        "built_ha": 2446
+      }
     },
     {
       "municipio": "Ortigueira",
@@ -3494,7 +6278,15 @@
       "centroid": [
         -50.9414,
         -24.1351
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.9,
+        "trees_ha": 112360,
+        "crops_pct": 10.5,
+        "crops_ha": 26223,
+        "built_pct": 3.9,
+        "built_ha": 9874
+      }
     },
     {
       "municipio": "Reserva",
@@ -3504,7 +6296,15 @@
       "centroid": [
         -50.9581,
         -24.59
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.3,
+        "trees_ha": 76882,
+        "crops_pct": 11.9,
+        "crops_ha": 20281,
+        "built_pct": 4.1,
+        "built_ha": 6926
+      }
     },
     {
       "municipio": "Mallet",
@@ -3514,7 +6314,15 @@
       "centroid": [
         -50.8567,
         -25.8791
-      ]
+      ],
+      "rank": {
+        "trees_pct": 51.6,
+        "trees_ha": 41379,
+        "crops_pct": 10.4,
+        "crops_ha": 8356,
+        "built_pct": 4.5,
+        "built_ha": 3611
+      }
     },
     {
       "municipio": "Reserva do Iguaçu",
@@ -3524,7 +6332,15 @@
       "centroid": [
         -51.965,
         -25.8644
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.2,
+        "trees_ha": 39620,
+        "crops_pct": 13.8,
+        "crops_ha": 12347,
+        "built_pct": 4.1,
+        "built_ha": 3655
+      }
     },
     {
       "municipio": "Arapoti",
@@ -3534,7 +6350,15 @@
       "centroid": [
         -49.9716,
         -24.0906
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.6,
+        "trees_ha": 60416,
+        "crops_pct": 16.8,
+        "crops_ha": 23318,
+        "built_pct": 4.1,
+        "built_ha": 5725
+      }
     },
     {
       "municipio": "Itaipulândia",
@@ -3544,7 +6368,15 @@
       "centroid": [
         -54.3634,
         -25.1539
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.3,
+        "trees_ha": 5944,
+        "crops_pct": 18.6,
+        "crops_ha": 6771,
+        "built_pct": 5.1,
+        "built_ha": 1864
+      }
     },
     {
       "municipio": "Pinhão",
@@ -3554,7 +6386,15 @@
       "centroid": [
         -51.6447,
         -25.7839
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.7,
+        "trees_ha": 97805,
+        "crops_pct": 13.4,
+        "crops_ha": 28778,
+        "built_pct": 4.2,
+        "built_ha": 9010
+      }
     },
     {
       "municipio": "Ventania",
@@ -3564,7 +6404,15 @@
       "centroid": [
         -50.239,
         -24.1831
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.9,
+        "trees_ha": 37710,
+        "crops_pct": 17.7,
+        "crops_ha": 14860,
+        "built_pct": 3.9,
+        "built_ha": 3310
+      }
     },
     {
       "municipio": "Coronel Domingos Soares",
@@ -3574,7 +6422,15 @@
       "centroid": [
         -51.9242,
         -26.1807
-      ]
+      ],
+      "rank": {
+        "trees_pct": 51.0,
+        "trees_ha": 86083,
+        "crops_pct": 8.7,
+        "crops_ha": 14718,
+        "built_pct": 3.9,
+        "built_ha": 6614
+      }
     },
     {
       "municipio": "Rio Negro",
@@ -3584,7 +6440,15 @@
       "centroid": [
         -49.6898,
         -26.0908
-      ]
+      ],
+      "rank": {
+        "trees_pct": 52.0,
+        "trees_ha": 33299,
+        "crops_pct": 9.4,
+        "crops_ha": 6042,
+        "built_pct": 5.2,
+        "built_ha": 3317
+      }
     },
     {
       "municipio": "Pinhais",
@@ -3594,7 +6458,15 @@
       "centroid": [
         -49.1559,
         -25.4198
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.5,
+        "trees_ha": 1477,
+        "crops_pct": 6.3,
+        "crops_ha": 398,
+        "built_pct": 33.4,
+        "built_ha": 2103
+      }
     },
     {
       "municipio": "Jaguariaíva",
@@ -3604,7 +6476,15 @@
       "centroid": [
         -49.7127,
         -24.3313
-      ]
+      ],
+      "rank": {
+        "trees_pct": 48.1,
+        "trees_ha": 71478,
+        "crops_pct": 13.0,
+        "crops_ha": 19361,
+        "built_pct": 4.0,
+        "built_ha": 5997
+      }
     },
     {
       "municipio": "Matelândia",
@@ -3614,7 +6494,15 @@
       "centroid": [
         -53.9051,
         -25.3554
-      ]
+      ],
+      "rank": {
+        "trees_pct": 48.0,
+        "trees_ha": 33241,
+        "crops_pct": 14.3,
+        "crops_ha": 9892,
+        "built_pct": 4.8,
+        "built_ha": 3340
+      }
     },
     {
       "municipio": "Agudos do Sul",
@@ -3624,7 +6512,15 @@
       "centroid": [
         -49.3089,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "trees_pct": 54.9,
+        "trees_ha": 11173,
+        "crops_pct": 8.7,
+        "crops_ha": 1770,
+        "built_pct": 5.2,
+        "built_ha": 1054
+      }
     },
     {
       "municipio": "Almirante Tamandaré",
@@ -3634,7 +6530,15 @@
       "centroid": [
         -49.3203,
         -25.2974
-      ]
+      ],
+      "rank": {
+        "trees_pct": 50.9,
+        "trees_ha": 10316,
+        "crops_pct": 7.4,
+        "crops_ha": 1505,
+        "built_pct": 12.8,
+        "built_ha": 2592
+      }
     },
     {
       "municipio": "Foz do Iguaçu",
@@ -3644,7 +6548,15 @@
       "centroid": [
         -54.4789,
         -25.464
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.4,
+        "trees_ha": 19857,
+        "crops_pct": 11.7,
+        "crops_ha": 8196,
+        "built_pct": 11.5,
+        "built_ha": 8028
+      }
     },
     {
       "municipio": "Imbaú",
@@ -3654,7 +6566,15 @@
       "centroid": [
         -50.7433,
         -24.437
-      ]
+      ],
+      "rank": {
+        "trees_pct": 53.8,
+        "trees_ha": 18413,
+        "crops_pct": 10.0,
+        "crops_ha": 3415,
+        "built_pct": 4.4,
+        "built_ha": 1508
+      }
     },
     {
       "municipio": "Cerro Azul",
@@ -3664,7 +6584,15 @@
       "centroid": [
         -49.2845,
         -24.8728
-      ]
+      ],
+      "rank": {
+        "trees_pct": 56.8,
+        "trees_ha": 78593,
+        "crops_pct": 5.5,
+        "crops_ha": 7565,
+        "built_pct": 4.0,
+        "built_ha": 5595
+      }
     },
     {
       "municipio": "Campo Magro",
@@ -3674,7 +6602,15 @@
       "centroid": [
         -49.4625,
         -25.2943
-      ]
+      ],
+      "rank": {
+        "trees_pct": 55.7,
+        "trees_ha": 15958,
+        "crops_pct": 7.5,
+        "crops_ha": 2149,
+        "built_pct": 6.2,
+        "built_ha": 1762
+      }
     },
     {
       "municipio": "São José dos Pinhais",
@@ -3684,7 +6620,15 @@
       "centroid": [
         -49.0998,
         -25.6562
-      ]
+      ],
+      "rank": {
+        "trees_pct": 51.7,
+        "trees_ha": 51288,
+        "crops_pct": 7.1,
+        "crops_ha": 7001,
+        "built_pct": 10.0,
+        "built_ha": 9949
+      }
     },
     {
       "municipio": "Piraquara",
@@ -3694,7 +6638,15 @@
       "centroid": [
         -49.053,
         -25.4737
-      ]
+      ],
+      "rank": {
+        "trees_pct": 47.1,
+        "trees_ha": 11160,
+        "crops_pct": 5.8,
+        "crops_ha": 1383,
+        "built_pct": 11.3,
+        "built_ha": 2673
+      }
     },
     {
       "municipio": "Mandirituba",
@@ -3704,7 +6656,15 @@
       "centroid": [
         -49.3268,
         -25.8411
-      ]
+      ],
+      "rank": {
+        "trees_pct": 56.5,
+        "trees_ha": 22554,
+        "crops_pct": 7.0,
+        "crops_ha": 2781,
+        "built_pct": 6.0,
+        "built_ha": 2378
+      }
     },
     {
       "municipio": "Sengés",
@@ -3714,7 +6674,15 @@
       "centroid": [
         -49.4625,
         -24.2437
-      ]
+      ],
+      "rank": {
+        "trees_pct": 52.8,
+        "trees_ha": 77699,
+        "crops_pct": 10.2,
+        "crops_ha": 15025,
+        "built_pct": 3.7,
+        "built_ha": 5430
+      }
     },
     {
       "municipio": "União da Vitória",
@@ -3724,7 +6692,15 @@
       "centroid": [
         -51.0763,
         -26.1081
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.3,
+        "trees_ha": 44115,
+        "crops_pct": 5.6,
+        "crops_ha": 4282,
+        "built_pct": 5.3,
+        "built_ha": 4086
+      }
     },
     {
       "municipio": "Cruz Machado",
@@ -3734,7 +6710,15 @@
       "centroid": [
         -51.2347,
         -25.9242
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.6,
+        "trees_ha": 90940,
+        "crops_pct": 6.3,
+        "crops_ha": 9881,
+        "built_pct": 4.0,
+        "built_ha": 6388
+      }
     },
     {
       "municipio": "Colombo",
@@ -3744,7 +6728,15 @@
       "centroid": [
         -49.1888,
         -25.3029
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.2,
+        "trees_ha": 9299,
+        "crops_pct": 6.0,
+        "crops_ha": 1233,
+        "built_pct": 21.3,
+        "built_ha": 4387
+      }
     },
     {
       "municipio": "General Carneiro",
@@ -3754,7 +6746,15 @@
       "centroid": [
         -51.389,
         -26.473
-      ]
+      ],
+      "rank": {
+        "trees_pct": 58.8,
+        "trees_ha": 68109,
+        "crops_pct": 5.6,
+        "crops_ha": 6510,
+        "built_pct": 4.1,
+        "built_ha": 4805
+      }
     },
     {
       "municipio": "Itaperuçu",
@@ -3764,7 +6764,15 @@
       "centroid": [
         -49.4882,
         -25.1288
-      ]
+      ],
+      "rank": {
+        "trees_pct": 58.2,
+        "trees_ha": 19360,
+        "crops_pct": 4.9,
+        "crops_ha": 1635,
+        "built_pct": 5.1,
+        "built_ha": 1681
+      }
     },
     {
       "municipio": "Porto Vitória",
@@ -3774,7 +6782,15 @@
       "centroid": [
         -51.2248,
         -26.2293
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.9,
+        "trees_ha": 13305,
+        "crops_pct": 7.3,
+        "crops_ha": 1666,
+        "built_pct": 4.5,
+        "built_ha": 1039
+      }
     },
     {
       "municipio": "Rio Branco do Sul",
@@ -3784,7 +6800,15 @@
       "centroid": [
         -49.3408,
         -25.085
-      ]
+      ],
+      "rank": {
+        "trees_pct": 58.2,
+        "trees_ha": 48925,
+        "crops_pct": 5.1,
+        "crops_ha": 4293,
+        "built_pct": 4.5,
+        "built_ha": 3804
+      }
     },
     {
       "municipio": "Bituruna",
@@ -3794,7 +6818,15 @@
       "centroid": [
         -51.5331,
         -26.1664
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.6,
+        "trees_ha": 76084,
+        "crops_pct": 6.2,
+        "crops_ha": 8168,
+        "built_pct": 4.1,
+        "built_ha": 5403
+      }
     },
     {
       "municipio": "Tijucas do Sul",
@@ -3804,7 +6836,15 @@
       "centroid": [
         -49.1138,
         -25.9026
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.7,
+        "trees_ha": 40673,
+        "crops_pct": 6.8,
+        "crops_ha": 4796,
+        "built_pct": 4.4,
+        "built_ha": 3082
+      }
     },
     {
       "municipio": "Doutor Ulysses",
@@ -3814,7 +6854,15 @@
       "centroid": [
         -49.3974,
         -24.6273
-      ]
+      ],
+      "rank": {
+        "trees_pct": 60.4,
+        "trees_ha": 48223,
+        "crops_pct": 5.2,
+        "crops_ha": 4138,
+        "built_pct": 3.8,
+        "built_ha": 3001
+      }
     },
     {
       "municipio": "Campo Largo",
@@ -3824,7 +6872,15 @@
       "centroid": [
         -49.6107,
         -25.2987
-      ]
+      ],
+      "rank": {
+        "trees_pct": 59.0,
+        "trees_ha": 76529,
+        "crops_pct": 5.8,
+        "crops_ha": 7523,
+        "built_pct": 6.0,
+        "built_ha": 7745
+      }
     },
     {
       "municipio": "Inácio Martins",
@@ -3834,7 +6890,15 @@
       "centroid": [
         -51.202,
         -25.6368
-      ]
+      ],
+      "rank": {
+        "trees_pct": 61.5,
+        "trees_ha": 61070,
+        "crops_pct": 5.1,
+        "crops_ha": 5098,
+        "built_pct": 3.8,
+        "built_ha": 3755
+      }
     },
     {
       "municipio": "Serranópolis do Iguaçu",
@@ -3844,7 +6908,15 @@
       "centroid": [
         -54.0301,
         -25.4797
-      ]
+      ],
+      "rank": {
+        "trees_pct": 49.0,
+        "trees_ha": 26578,
+        "crops_pct": 15.4,
+        "crops_ha": 8365,
+        "built_pct": 4.2,
+        "built_ha": 2296
+      }
     },
     {
       "municipio": "Curitiba",
@@ -3854,7 +6926,15 @@
       "centroid": [
         -49.2904,
         -25.4744
-      ]
+      ],
+      "rank": {
+        "trees_pct": 18.6,
+        "trees_ha": 8435,
+        "crops_pct": 4.6,
+        "crops_ha": 2089,
+        "built_pct": 50.3,
+        "built_ha": 22835
+      }
     },
     {
       "municipio": "Céu Azul",
@@ -3864,7 +6944,15 @@
       "centroid": [
         -53.7612,
         -25.2387
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.5,
+        "trees_ha": 73121,
+        "crops_pct": 11.0,
+        "crops_ha": 14026,
+        "built_pct": 4.0,
+        "built_ha": 5082
+      }
     },
     {
       "municipio": "Adrianópolis",
@@ -3874,7 +6962,15 @@
       "centroid": [
         -48.8239,
         -24.7839
-      ]
+      ],
+      "rank": {
+        "trees_pct": 64.4,
+        "trees_ha": 89091,
+        "crops_pct": 4.1,
+        "crops_ha": 5674,
+        "built_pct": 3.7,
+        "built_ha": 5072
+      }
     },
     {
       "municipio": "Matinhos",
@@ -3884,7 +6980,15 @@
       "centroid": [
         -48.5565,
         -25.7598
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.3,
+        "trees_ha": 7106,
+        "crops_pct": 3.9,
+        "crops_ha": 478,
+        "built_pct": 13.4,
+        "built_ha": 1662
+      }
     },
     {
       "municipio": "Quatro Barras",
@@ -3894,7 +6998,15 @@
       "centroid": [
         -48.9969,
         -25.3691
-      ]
+      ],
+      "rank": {
+        "trees_pct": 62.7,
+        "trees_ha": 11734,
+        "crops_pct": 4.1,
+        "crops_ha": 770,
+        "built_pct": 7.6,
+        "built_ha": 1424
+      }
     },
     {
       "municipio": "Telêmaco Borba",
@@ -3904,7 +7016,15 @@
       "centroid": [
         -50.525,
         -24.2499
-      ]
+      ],
+      "rank": {
+        "trees_pct": 63.7,
+        "trees_ha": 90681,
+        "crops_pct": 6.2,
+        "crops_ha": 8838,
+        "built_pct": 4.0,
+        "built_ha": 5623
+      }
     },
     {
       "municipio": "Campina Grande do Sul",
@@ -3914,7 +7034,15 @@
       "centroid": [
         -48.8503,
         -25.1886
-      ]
+      ],
+      "rank": {
+        "trees_pct": 65.1,
+        "trees_ha": 36349,
+        "crops_pct": 4.0,
+        "crops_ha": 2225,
+        "built_pct": 5.4,
+        "built_ha": 3038
+      }
     },
     {
       "municipio": "Bocaiúva do Sul",
@@ -3924,7 +7052,15 @@
       "centroid": [
         -48.9371,
         -25.1127
-      ]
+      ],
+      "rank": {
+        "trees_pct": 66.6,
+        "trees_ha": 56955,
+        "crops_pct": 4.1,
+        "crops_ha": 3505,
+        "built_pct": 3.9,
+        "built_ha": 3315
+      }
     },
     {
       "municipio": "Guaraqueçaba",
@@ -3934,7 +7070,15 @@
       "centroid": [
         -48.365,
         -25.2344
-      ]
+      ],
+      "rank": {
+        "trees_pct": 60.4,
+        "trees_ha": 125857,
+        "crops_pct": 3.5,
+        "crops_ha": 7235,
+        "built_pct": 3.5,
+        "built_ha": 7341
+      }
     },
     {
       "municipio": "Pontal do Paraná",
@@ -3944,7 +7088,15 @@
       "centroid": [
         -48.4753,
         -25.6362
-      ]
+      ],
+      "rank": {
+        "trees_pct": 61.7,
+        "trees_ha": 12853,
+        "crops_pct": 3.6,
+        "crops_ha": 754,
+        "built_pct": 9.6,
+        "built_ha": 2001
+      }
     },
     {
       "municipio": "Paranaguá",
@@ -3954,7 +7106,15 @@
       "centroid": [
         -48.5193,
         -25.5208
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.8,
+        "trees_ha": 37663,
+        "crops_pct": 3.5,
+        "crops_ha": 2998,
+        "built_pct": 5.6,
+        "built_ha": 4810
+      }
     },
     {
       "municipio": "Guaratuba",
@@ -3964,7 +7124,15 @@
       "centroid": [
         -48.77,
         -25.8196
-      ]
+      ],
+      "rank": {
+        "trees_pct": 66.3,
+        "trees_ha": 92074,
+        "crops_pct": 3.8,
+        "crops_ha": 5349,
+        "built_pct": 4.3,
+        "built_ha": 6014
+      }
     },
     {
       "municipio": "Tunas do Paraná",
@@ -3974,7 +7142,15 @@
       "centroid": [
         -48.8963,
         -24.9529
-      ]
+      ],
+      "rank": {
+        "trees_pct": 69.2,
+        "trees_ha": 47641,
+        "crops_pct": 3.9,
+        "crops_ha": 2700,
+        "built_pct": 3.5,
+        "built_ha": 2433
+      }
     },
     {
       "municipio": "Morretes",
@@ -3984,7 +7160,15 @@
       "centroid": [
         -48.8557,
         -25.518
-      ]
+      ],
+      "rank": {
+        "trees_pct": 69.0,
+        "trees_ha": 49218,
+        "crops_pct": 3.9,
+        "crops_ha": 2801,
+        "built_pct": 4.0,
+        "built_ha": 2886
+      }
     },
     {
       "municipio": "Antonina",
@@ -3994,7 +7178,15 @@
       "centroid": [
         -48.7269,
         -25.3031
-      ]
+      ],
+      "rank": {
+        "trees_pct": 67.2,
+        "trees_ha": 61412,
+        "crops_pct": 3.5,
+        "crops_ha": 3177,
+        "built_pct": 3.7,
+        "built_ha": 3407
+      }
     }
   ]
 }

@@ -14,7 +14,11 @@
       "centroid": [
         -54.7844,
         -26.0741
-      ]
+      ],
+      "rank": {
+        "high_ha": 89375,
+        "high_pct": 93.7
+      }
     },
     {
       "distrito": "Domingo Martínez De Irala",
@@ -24,7 +28,11 @@
       "centroid": [
         -54.6889,
         -25.8607
-      ]
+      ],
+      "rank": {
+        "high_ha": 29820,
+        "high_pct": 79.7
+      }
     },
     {
       "distrito": "Naranjal",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.208,
         -25.9527
-      ]
+      ],
+      "rank": {
+        "high_ha": 65001,
+        "high_pct": 93.1
+      }
     },
     {
       "distrito": "Santa Rosa Del Monday",
@@ -44,7 +56,11 @@
       "centroid": [
         -54.9236,
         -25.8464
-      ]
+      ],
+      "rank": {
+        "high_ha": 46757,
+        "high_pct": 67.9
+      }
     },
     {
       "distrito": "Santa Rita",
@@ -54,7 +70,11 @@
       "centroid": [
         -55.1372,
         -25.7706
-      ]
+      ],
+      "rank": {
+        "high_ha": 43471,
+        "high_pct": 66.3
+      }
     },
     {
       "distrito": "San Cristóbal",
@@ -64,7 +84,11 @@
       "centroid": [
         -55.3862,
         -25.7898
-      ]
+      ],
+      "rank": {
+        "high_ha": 77936,
+        "high_pct": 75.7
+      }
     },
     {
       "distrito": "Iruña",
@@ -74,7 +98,11 @@
       "centroid": [
         -55.0381,
         -26.1334
-      ]
+      ],
+      "rank": {
+        "high_ha": 36940,
+        "high_pct": 62.1
+      }
     },
     {
       "distrito": "Dr. Raúl Peña",
@@ -84,7 +112,11 @@
       "centroid": [
         -55.2241,
         -26.1362
-      ]
+      ],
+      "rank": {
+        "high_ha": 18054,
+        "high_pct": 66.7
+      }
     },
     {
       "distrito": "Los Cedrales",
@@ -94,7 +126,11 @@
       "centroid": [
         -54.7516,
         -25.6831
-      ]
+      ],
+      "rank": {
+        "high_ha": 15863,
+        "high_pct": 35.8
+      }
     },
     {
       "distrito": "Itakyry",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.1516,
         -24.8215
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Tavapy",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.0691,
         -25.6222
-      ]
+      ],
+      "rank": {
+        "high_ha": 10523,
+        "high_pct": 21.9
+      }
     },
     {
       "distrito": "Juan E. O'Leary",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.3633,
         -25.4804
-      ]
+      ],
+      "rank": {
+        "high_ha": 4940,
+        "high_pct": 19.8
+      }
     },
     {
       "distrito": "Minga Porá",
@@ -134,7 +182,11 @@
       "centroid": [
         -54.8684,
         -24.7658
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Minga Guazú",
@@ -144,7 +196,11 @@
       "centroid": [
         -54.8404,
         -25.5054
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Alberto",
@@ -154,7 +210,11 @@
       "centroid": [
         -54.6794,
         -24.8378
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Yguazú",
@@ -164,7 +224,11 @@
       "centroid": [
         -55.0999,
         -25.4145
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Hernandarias",
@@ -174,7 +238,11 @@
       "centroid": [
         -54.7802,
         -25.3136
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Dr. Juan León Mallorquín",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.2555,
         -25.4849
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Ciudad Del Este",
@@ -194,7 +266,11 @@
       "centroid": [
         -54.6775,
         -25.5031
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Santa Fe Del Paraná",
@@ -204,7 +280,11 @@
       "centroid": [
         -54.6299,
         -25.1914
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Mbaracayú",
@@ -214,7 +294,11 @@
       "centroid": [
         -54.6833,
         -25.0093
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Presidente Franco",
@@ -224,7 +308,11 @@
       "centroid": [
         -54.6414,
         -25.5971
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

@@ -14,7 +14,15 @@
       "centroid": [
         -56.3772,
         -26.9109
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.6,
+        "trees_ha": 43402,
+        "crops_pct": 16.1,
+        "crops_ha": 26265,
+        "built_pct": 4.0,
+        "built_ha": 6562
+      }
     },
     {
       "distrito": "Gral. Delgado",
@@ -24,7 +32,15 @@
       "centroid": [
         -56.5565,
         -27.0741
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.7,
+        "trees_ha": 13652,
+        "crops_pct": 12.6,
+        "crops_ha": 6408,
+        "built_pct": 4.2,
+        "built_ha": 2149
+      }
     },
     {
       "distrito": "Yatytay",
@@ -34,7 +50,15 @@
       "centroid": [
         -55.0816,
         -26.6682
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.6,
+        "trees_ha": 7088,
+        "crops_pct": 30.0,
+        "crops_ha": 9875,
+        "built_pct": 5.5,
+        "built_ha": 1792
+      }
     },
     {
       "distrito": "Natalio",
@@ -44,7 +68,15 @@
       "centroid": [
         -55.1481,
         -26.7574
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.6,
+        "trees_ha": 9565,
+        "crops_pct": 25.7,
+        "crops_ha": 9612,
+        "built_pct": 5.6,
+        "built_ha": 2110
+      }
     },
     {
       "distrito": "San Cosme Y Damian",
@@ -54,7 +86,15 @@
       "centroid": [
         -56.4868,
         -27.2628
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.1,
+        "trees_ha": 18996,
+        "crops_pct": 14.8,
+        "crops_ha": 11212,
+        "built_pct": 4.2,
+        "built_ha": 3175
+      }
     },
     {
       "distrito": "Edelira",
@@ -64,7 +104,15 @@
       "centroid": [
         -55.4008,
         -26.58
-      ]
+      ],
+      "rank": {
+        "trees_pct": 23.3,
+        "trees_ha": 18114,
+        "crops_pct": 30.5,
+        "crops_ha": 23720,
+        "built_pct": 5.3,
+        "built_ha": 4148
+      }
     },
     {
       "distrito": "Tomas Romero P.",
@@ -74,7 +122,15 @@
       "centroid": [
         -55.2933,
         -26.4732
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.0,
+        "trees_ha": 17021,
+        "crops_pct": 29.7,
+        "crops_ha": 21013,
+        "built_pct": 5.9,
+        "built_ha": 4173
+      }
     },
     {
       "distrito": "Fram",
@@ -84,7 +140,15 @@
       "centroid": [
         -56.0203,
         -27.0764
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.0,
+        "trees_ha": 9325,
+        "crops_pct": 26.8,
+        "crops_ha": 10007,
+        "built_pct": 5.6,
+        "built_ha": 2078
+      }
     },
     {
       "distrito": "Capitan Miranda",
@@ -94,7 +158,15 @@
       "centroid": [
         -55.8331,
         -27.1821
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.4,
+        "trees_ha": 5483,
+        "crops_pct": 26.1,
+        "crops_ha": 5410,
+        "built_pct": 6.8,
+        "built_ha": 1409
+      }
     },
     {
       "distrito": "Capitan Meza",
@@ -104,7 +176,15 @@
       "centroid": [
         -55.3725,
         -26.7763
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.1,
+        "trees_ha": 23831,
+        "crops_pct": 28.1,
+        "crops_ha": 24744,
+        "built_pct": 5.0,
+        "built_ha": 4395
+      }
     },
     {
       "distrito": "Jesus",
@@ -114,7 +194,15 @@
       "centroid": [
         -55.7803,
         -27.0605
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.6,
+        "trees_ha": 3589,
+        "crops_pct": 29.3,
+        "crops_ha": 4278,
+        "built_pct": 5.8,
+        "built_ha": 846
+      }
     },
     {
       "distrito": "Coronel Bogado",
@@ -124,7 +212,15 @@
       "centroid": [
         -56.306,
         -27.1479
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.2,
+        "trees_ha": 18026,
+        "crops_pct": 10.1,
+        "crops_ha": 6441,
+        "built_pct": 4.6,
+        "built_ha": 2922
+      }
     },
     {
       "distrito": "San Rafael Del Parana",
@@ -134,7 +230,15 @@
       "centroid": [
         -55.1388,
         -26.4058
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.1,
+        "trees_ha": 45967,
+        "crops_pct": 28.9,
+        "crops_ha": 48997,
+        "built_pct": 4.6,
+        "built_ha": 7880
+      }
     },
     {
       "distrito": "Leandro Oviedo",
@@ -144,7 +248,15 @@
       "centroid": [
         -56.2346,
         -26.7503
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.7,
+        "trees_ha": 5768,
+        "crops_pct": 8.2,
+        "crops_ha": 1195,
+        "built_pct": 4.2,
+        "built_ha": 611
+      }
     },
     {
       "distrito": "Mayor Otano",
@@ -154,7 +266,15 @@
       "centroid": [
         -54.7762,
         -26.2756
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.5,
+        "trees_ha": 10111,
+        "crops_pct": 26.4,
+        "crops_ha": 9054,
+        "built_pct": 5.6,
+        "built_ha": 1929
+      }
     },
     {
       "distrito": "Carlos A Lopez",
@@ -164,7 +284,15 @@
       "centroid": [
         -54.9021,
         -26.3704
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.4,
+        "trees_ha": 26184,
+        "crops_pct": 28.4,
+        "crops_ha": 26175,
+        "built_pct": 4.8,
+        "built_ha": 4446
+      }
     },
     {
       "distrito": "Hohenau",
@@ -174,7 +302,15 @@
       "centroid": [
         -55.7418,
         -27.0077
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.0,
+        "trees_ha": 8823,
+        "crops_pct": 24.5,
+        "crops_ha": 7711,
+        "built_pct": 5.9,
+        "built_ha": 1855
+      }
     },
     {
       "distrito": "La Paz",
@@ -184,7 +320,15 @@
       "centroid": [
         -55.9091,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.0,
+        "trees_ha": 7402,
+        "crops_pct": 28.3,
+        "crops_ha": 7471,
+        "built_pct": 4.8,
+        "built_ha": 1279
+      }
     },
     {
       "distrito": "San Pedro Del Parana",
@@ -194,7 +338,15 @@
       "centroid": [
         -56.0239,
         -26.7295
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.8,
+        "trees_ha": 59912,
+        "crops_pct": 12.7,
+        "crops_ha": 20105,
+        "built_pct": 4.4,
+        "built_ha": 6898
+      }
     },
     {
       "distrito": "Bella Vista",
@@ -204,7 +356,15 @@
       "centroid": [
         -55.5355,
         -27.0111
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.8,
+        "trees_ha": 9874,
+        "crops_pct": 24.3,
+        "crops_ha": 8076,
+        "built_pct": 5.8,
+        "built_ha": 1921
+      }
     },
     {
       "distrito": "Obligado",
@@ -214,7 +374,15 @@
       "centroid": [
         -55.7125,
         -26.9229
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.2,
+        "trees_ha": 13025,
+        "crops_pct": 26.0,
+        "crops_ha": 11583,
+        "built_pct": 5.8,
+        "built_ha": 2583
+      }
     },
     {
       "distrito": "Cambyreta",
@@ -224,7 +392,15 @@
       "centroid": [
         -55.7699,
         -27.3561
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.0,
+        "trees_ha": 7227,
+        "crops_pct": 14.3,
+        "crops_ha": 3121,
+        "built_pct": 11.6,
+        "built_ha": 2527
+      }
     },
     {
       "distrito": "Encarnacion",
@@ -234,7 +410,15 @@
       "centroid": [
         -55.8985,
         -27.2646
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.0,
+        "trees_ha": 8977,
+        "crops_pct": 15.5,
+        "crops_ha": 5565,
+        "built_pct": 10.5,
+        "built_ha": 3764
+      }
     },
     {
       "distrito": "Pirapo",
@@ -244,7 +428,15 @@
       "centroid": [
         -55.5412,
         -26.8461
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.2,
+        "trees_ha": 22573,
+        "crops_pct": 29.3,
+        "crops_ha": 22627,
+        "built_pct": 4.6,
+        "built_ha": 3566
+      }
     },
     {
       "distrito": "Nueva Alborada",
@@ -254,7 +446,15 @@
       "centroid": [
         -55.665,
         -27.2813
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.6,
+        "trees_ha": 8702,
+        "crops_pct": 20.3,
+        "crops_ha": 5418,
+        "built_pct": 4.6,
+        "built_ha": 1228
+      }
     },
     {
       "distrito": "Carmen Del Parana",
@@ -264,7 +464,15 @@
       "centroid": [
         -56.1055,
         -27.2074
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.7,
+        "trees_ha": 7205,
+        "crops_pct": 15.1,
+        "crops_ha": 4806,
+        "built_pct": 4.6,
+        "built_ha": 1445
+      }
     },
     {
       "distrito": "Trinidad",
@@ -274,7 +482,15 @@
       "centroid": [
         -55.735,
         -27.1495
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.9,
+        "trees_ha": 10733,
+        "crops_pct": 11.1,
+        "crops_ha": 2774,
+        "built_pct": 4.8,
+        "built_ha": 1191
+      }
     },
     {
       "distrito": "Alto Vera",
@@ -284,7 +500,15 @@
       "centroid": [
         -55.7222,
         -26.5954
-      ]
+      ],
+      "rank": {
+        "trees_pct": 44.0,
+        "trees_ha": 60685,
+        "crops_pct": 15.1,
+        "crops_ha": 20795,
+        "built_pct": 4.4,
+        "built_ha": 6031
+      }
     },
     {
       "distrito": "San Juan",
@@ -294,7 +518,15 @@
       "centroid": [
         -55.9922,
         -27.2954
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.6,
+        "trees_ha": 2054,
+        "crops_pct": 9.4,
+        "crops_ha": 894,
+        "built_pct": 6.8,
+        "built_ha": 644
+      }
     },
     {
       "distrito": "Isla Yacyreta",
@@ -304,7 +536,15 @@
       "centroid": [
         -56.5119,
         -27.3952
-      ]
+      ],
+      "rank": {
+        "trees_pct": 9.5,
+        "trees_ha": 8818,
+        "crops_pct": 3.5,
+        "crops_ha": 3238,
+        "built_pct": 3.0,
+        "built_ha": 2743
+      }
     },
     {
       "distrito": "Isla",
@@ -314,7 +554,15 @@
       "centroid": [
         -56.4098,
         -27.5135
-      ]
+      ],
+      "rank": {
+        "trees_pct": 3.6,
+        "trees_ha": 933,
+        "crops_pct": 2.9,
+        "crops_ha": 745,
+        "built_pct": 2.7,
+        "built_ha": 678
+      }
     }
   ]
 }

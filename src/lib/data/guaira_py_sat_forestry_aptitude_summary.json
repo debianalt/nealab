@@ -14,7 +14,11 @@
       "centroid": [
         -55.9221,
         -25.8245
-      ]
+      ],
+      "rank": {
+        "high_ha": 35265,
+        "high_pct": 88.8
+      }
     },
     {
       "distrito": "Gral Garay",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.1916,
         -25.9353
-      ]
+      ],
+      "rank": {
+        "high_ha": 17538,
+        "high_pct": 56.7
+      }
     },
     {
       "distrito": "Numi",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.3101,
         -25.9052
-      ]
+      ],
+      "rank": {
+        "high_ha": 6804,
+        "high_pct": 65.3
+      }
     },
     {
       "distrito": "Borja",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.609,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "high_ha": 10944,
+        "high_pct": 23.2
+      }
     },
     {
       "distrito": "Iturbe",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.4662,
         -26.0627
-      ]
+      ],
+      "rank": {
+        "high_ha": 2517,
+        "high_pct": 8.5
+      }
     },
     {
       "distrito": "Colonia Independencia",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.0671,
         -25.7311
-      ]
+      ],
+      "rank": {
+        "high_ha": 48284,
+        "high_pct": 45.4
+      }
     },
     {
       "distrito": "Itape",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.561,
         -25.8515
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Salvador",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Cnel Martinez",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.648,
         -25.7972
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Villarica",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.4107,
         -25.8273
-      ]
+      ],
+      "rank": {
+        "high_ha": 5182,
+        "high_pct": 14.5
+      }
     },
     {
       "distrito": "Mbocayati",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.3632,
         -25.7041
-      ]
+      ],
+      "rank": {
+        "high_ha": 1938,
+        "high_pct": 8.7
+      }
     },
     {
       "distrito": "Yataity",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.501,
         -25.6879
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Dr. Bottrell",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.3675,
         -25.5987
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Natalicio Talavera",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.2826,
         -25.6601
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Capitan Troche",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.2055,
         -25.6088
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

@@ -14,7 +14,12 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 123,
+        "min_capital": 127,
+        "km_hospital": 31.8
+      }
     },
     {
       "distrito": "La Pastora",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 62,
+        "min_capital": 90,
+        "km_hospital": 22.2
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 49,
+        "min_capital": 42,
+        "km_hospital": 19.1
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 26,
+        "min_capital": 58,
+        "km_hospital": 24.9
+      }
     },
     {
       "distrito": "Repatriacion",
@@ -54,7 +74,12 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 64,
+        "min_capital": 44,
+        "km_hospital": 16.2
+      }
     },
     {
       "distrito": "Carayao",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 67,
+        "min_capital": 90,
+        "km_hospital": 24.6
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -74,7 +104,12 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 123,
+        "min_capital": 139,
+        "km_hospital": 24.0
+      }
     },
     {
       "distrito": "San Joaquin",
@@ -84,7 +119,12 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 74,
+        "min_capital": 72,
+        "km_hospital": 28.1
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 80,
+        "min_capital": 126,
+        "km_hospital": 12.8
+      }
     },
     {
       "distrito": "3 De Febrero",
@@ -104,7 +149,12 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 64,
+        "min_capital": 50,
+        "km_hospital": 22.5
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -114,7 +164,12 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 85,
+        "min_capital": 90,
+        "km_hospital": 13.6
+      }
     },
     {
       "distrito": "Cecilio Baez",
@@ -124,7 +179,12 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 51,
+        "min_capital": 86,
+        "km_hospital": 15.0
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -134,7 +194,12 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 55,
+        "min_capital": 108,
+        "km_hospital": 10.9
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -144,7 +209,12 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 51,
+        "min_capital": 65,
+        "km_hospital": 8.8
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -154,7 +224,12 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 30,
+        "min_capital": 78,
+        "km_hospital": 13.0
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -164,7 +239,12 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 35,
+        "min_capital": 37,
+        "km_hospital": 12.8
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -174,7 +254,12 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 23,
+        "min_capital": 22,
+        "km_hospital": 13.9
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -184,7 +269,12 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 23,
+        "min_capital": 63,
+        "km_hospital": 11.2
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -194,7 +284,12 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 56,
+        "min_capital": 84,
+        "km_hospital": 6.1
+      }
     }
   ]
 }

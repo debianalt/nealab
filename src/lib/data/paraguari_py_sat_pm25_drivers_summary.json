@@ -14,7 +14,11 @@
       "centroid": [
         -57.2018,
         -25.4796
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.4,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Yaguaron",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.2804,
         -25.595
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 17.1,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Escobar",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.0105,
         -25.6329
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.6,
+        "pm25_delta": -2.7
+      }
     },
     {
       "distrito": "Paraguari",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.1351,
         -25.6664
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.6,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "Carapegua",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.3255,
         -25.7621
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.3,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Sapucai",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.9738,
         -25.7203
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.1,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "San Roque Gonzalez",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.3024,
         -25.8795
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Quiindy",
@@ -84,7 +112,11 @@
       "centroid": [
         -57.3214,
         -26.0118
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Caballero",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.8862,
         -25.7573
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.5,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Acahay",
@@ -104,7 +140,11 @@
       "centroid": [
         -57.076,
         -25.8967
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "Ybytymi",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.7656,
         -25.7754
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Caapucu",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.3904,
         -26.3278
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -1.1
+      }
     },
     {
       "distrito": "La Colmena",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.8176,
         -25.9063
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Ybycui",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.942,
         -26.0391
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "Tebicuarymi",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.666,
         -25.9156
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.7,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Mbuyapey",
@@ -164,7 +224,11 @@
       "centroid": [
         -56.8042,
         -26.2791
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Quyquyho",
@@ -174,7 +238,11 @@
       "centroid": [
         -57.0129,
         -26.2561
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.3,
+        "pm25_delta": -1.8
+      }
     }
   ]
 }

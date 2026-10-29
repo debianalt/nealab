@@ -14,7 +14,11 @@
       "centroid": [
         -60.3036,
         -22.3771
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Gral. Eugenio A. Garay",
@@ -24,7 +28,11 @@
       "centroid": [
         -61.0698,
         -21.1398
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Pedro P. Pena",
@@ -34,7 +42,11 @@
       "centroid": [
         -61.3642,
         -22.7396
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

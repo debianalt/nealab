@@ -14,7 +14,10 @@
       "centroid": [
         -58.756,
         -27.5128
-      ]
+      ],
+      "rank": {
+        "viirs": 25.76
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -24,7 +27,10 @@
       "centroid": [
         -57.8087,
         -30.1335
-      ]
+      ],
+      "rank": {
+        "viirs": 3.43
+      }
     },
     {
       "dpto": "Mercedes",
@@ -34,7 +40,10 @@
       "centroid": [
         -58.1652,
         -29.1433
-      ]
+      ],
+      "rank": {
+        "viirs": 2.43
+      }
     },
     {
       "dpto": "General Alvear",
@@ -44,7 +53,10 @@
       "centroid": [
         -56.5109,
         -28.8762
-      ]
+      ],
+      "rank": {
+        "viirs": 1.73
+      }
     },
     {
       "dpto": "San Cosme",
@@ -54,7 +66,10 @@
       "centroid": [
         -58.5243,
         -27.3536
-      ]
+      ],
+      "rank": {
+        "viirs": 3.24
+      }
     },
     {
       "dpto": "Lavalle",
@@ -64,7 +79,10 @@
       "centroid": [
         -59.0779,
         -28.9307
-      ]
+      ],
+      "rank": {
+        "viirs": 1.76
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -74,7 +92,10 @@
       "centroid": [
         -58.3625,
         -29.4281
-      ]
+      ],
+      "rank": {
+        "viirs": 3.11
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -84,7 +105,10 @@
       "centroid": [
         -57.5785,
         -27.485
-      ]
+      ],
+      "rank": {
+        "viirs": 1.1
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -94,7 +118,10 @@
       "centroid": [
         -56.8685,
         -27.7336
-      ]
+      ],
+      "rank": {
+        "viirs": 1.16
+      }
     },
     {
       "dpto": "San Martín",
@@ -104,7 +131,10 @@
       "centroid": [
         -56.9713,
         -28.8726
-      ]
+      ],
+      "rank": {
+        "viirs": 2.1
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -114,7 +144,10 @@
       "centroid": [
         -55.9812,
         -27.9777
-      ]
+      ],
+      "rank": {
+        "viirs": 0.94
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -124,7 +157,10 @@
       "centroid": [
         -57.2015,
         -29.6765
-      ]
+      ],
+      "rank": {
+        "viirs": 5.32
+      }
     },
     {
       "dpto": "Itatí",
@@ -134,7 +170,10 @@
       "centroid": [
         -58.147,
         -27.3409
-      ]
+      ],
+      "rank": {
+        "viirs": 2.29
+      }
     },
     {
       "dpto": "Sauce",
@@ -144,7 +183,10 @@
       "centroid": [
         -58.8204,
         -30.0776
-      ]
+      ],
+      "rank": {
+        "viirs": 1.55
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -154,7 +196,10 @@
       "centroid": [
         -59.009,
         -28.5112
-      ]
+      ],
+      "rank": {
+        "viirs": 2.06
+      }
     },
     {
       "dpto": "Goya",
@@ -164,7 +209,10 @@
       "centroid": [
         -59.2692,
         -29.3963
-      ]
+      ],
+      "rank": {
+        "viirs": 2.71
+      }
     },
     {
       "dpto": "General Paz",
@@ -174,7 +222,10 @@
       "centroid": [
         -57.4659,
         -27.6047
-      ]
+      ],
+      "rank": {
+        "viirs": 1.22
+      }
     },
     {
       "dpto": "Concepción",
@@ -184,7 +235,10 @@
       "centroid": [
         -58.101,
         -28.2758
-      ]
+      ],
+      "rank": {
+        "viirs": 1.36
+      }
     },
     {
       "dpto": "Empedrado",
@@ -194,7 +248,10 @@
       "centroid": [
         -58.5528,
         -27.8349
-      ]
+      ],
+      "rank": {
+        "viirs": 1.25
+      }
     },
     {
       "dpto": "San Miguel",
@@ -204,7 +261,10 @@
       "centroid": [
         -57.2898,
         -27.7296
-      ]
+      ],
+      "rank": {
+        "viirs": 0.84
+      }
     },
     {
       "dpto": "Esquina",
@@ -214,7 +274,10 @@
       "centroid": [
         -59.2055,
         -29.7808
-      ]
+      ],
+      "rank": {
+        "viirs": 1.88
+      }
     },
     {
       "dpto": "San Roque",
@@ -224,7 +287,10 @@
       "centroid": [
         -58.5728,
         -28.6497
-      ]
+      ],
+      "rank": {
+        "viirs": 1.46
+      }
     },
     {
       "dpto": "Saladas",
@@ -234,7 +300,10 @@
       "centroid": [
         -58.6838,
         -28.1953
-      ]
+      ],
+      "rank": {
+        "viirs": 2.11
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -244,7 +313,10 @@
       "centroid": [
         -58.2652,
         -27.5547
-      ]
+      ],
+      "rank": {
+        "viirs": 1.64
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -254,7 +326,10 @@
       "centroid": [
         -58.2378,
         -28.0433
-      ]
+      ],
+      "rank": {
+        "viirs": 1.6
+      }
     }
   ]
 }

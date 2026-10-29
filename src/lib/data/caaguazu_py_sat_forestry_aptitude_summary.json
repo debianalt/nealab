@@ -14,7 +14,11 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "high_ha": 82223,
+        "high_pct": 86.8
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -24,7 +28,11 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "high_ha": 47463,
+        "high_pct": 78.0
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "high_ha": 40669,
+        "high_pct": 72.9
+      }
     },
     {
       "distrito": "San Joaquin",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "high_ha": 23658,
+        "high_pct": 50.7
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "high_ha": 10575,
+        "high_pct": 44.0
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "high_ha": 42986,
+        "high_pct": 40.4
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -74,7 +98,11 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "high_ha": 22352,
+        "high_pct": 32.3
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "high_ha": 11523,
+        "high_pct": 27.4
+      }
     },
     {
       "distrito": "La Pastora",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "high_ha": 4750,
+        "high_pct": 20.1
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "high_ha": 9311,
+        "high_pct": 23.1
+      }
     },
     {
       "distrito": "Yhu",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "high_ha": 49338,
+        "high_pct": 17.3
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "high_ha": 23068,
+        "high_pct": 16.1
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -134,7 +182,11 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "high_ha": 15336,
+        "high_pct": 9.8
+      }
     },
     {
       "distrito": "3 De Febrero",
@@ -144,7 +196,11 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "high_ha": 2728,
+        "high_pct": 14.2
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "high_ha": 12956,
+        "high_pct": 13.5
+      }
     },
     {
       "distrito": "Carayao",
@@ -164,7 +224,11 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "high_ha": 11228,
+        "high_pct": 10.9
+      }
     },
     {
       "distrito": "Cecilio Baez",
@@ -174,7 +238,11 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "high_ha": 1622,
+        "high_pct": 10.2
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -184,7 +252,11 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "high_ha": 3171,
+        "high_pct": 10.3
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -194,7 +266,11 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "high_ha": 53,
+        "high_pct": 0.3
+      }
     }
   ]
 }

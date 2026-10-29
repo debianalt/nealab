@@ -14,7 +14,11 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "La Victoria",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "high_ha": 9533,
+        "high_pct": 0.4
+      }
     },
     {
       "distrito": "Mayor Pablo La Gerenza",
@@ -34,7 +42,11 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

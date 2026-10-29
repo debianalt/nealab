@@ -14,7 +14,12 @@
       "centroid": [
         -57.7115,
         -26.0301
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": null,
+        "km_hospital": 73.4
+      }
     },
     {
       "distrito": "Alberdi",
@@ -24,7 +29,12 @@
       "centroid": [
         -58.0676,
         -26.1811
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": null,
+        "km_hospital": 37.7
+      }
     },
     {
       "distrito": "San Juan Bta. Del Neembuc",
@@ -34,7 +44,12 @@
       "centroid": [
         -57.851,
         -26.6089
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 221,
+        "min_capital": 232,
+        "km_hospital": 46.2
+      }
     },
     {
       "distrito": "Guazucua",
@@ -44,7 +59,12 @@
       "centroid": [
         -57.7584,
         -26.9915
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 233,
+        "min_capital": 180,
+        "km_hospital": 31.4
+      }
     },
     {
       "distrito": "Villa Franca",
@@ -54,7 +74,12 @@
       "centroid": [
         -57.9497,
         -26.3332
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 86,
+        "min_capital": 167,
+        "km_hospital": 39.5
+      }
     },
     {
       "distrito": "Laureles",
@@ -64,7 +89,12 @@
       "centroid": [
         -57.5826,
         -27.167
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 272,
+        "min_capital": 144,
+        "km_hospital": 23.5
+      }
     },
     {
       "distrito": "Tacuaras",
@@ -74,7 +104,12 @@
       "centroid": [
         -57.8738,
         -26.8217
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 192,
+        "min_capital": 179,
+        "km_hospital": 37.2
+      }
     },
     {
       "distrito": "Villalvin",
@@ -84,7 +119,12 @@
       "centroid": [
         -57.9098,
         -27.1694
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 250,
+        "min_capital": 111,
+        "km_hospital": 19.8
+      }
     },
     {
       "distrito": "Cerrito",
@@ -94,7 +134,12 @@
       "centroid": [
         -57.6294,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 225,
+        "min_capital": 150,
+        "km_hospital": 11.2
+      }
     },
     {
       "distrito": "Desmochados",
@@ -104,7 +149,12 @@
       "centroid": [
         -58.1239,
         -27.0692
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 203,
+        "min_capital": 77,
+        "km_hospital": 24.2
+      }
     },
     {
       "distrito": "Humaita",
@@ -114,7 +164,12 @@
       "centroid": [
         -58.484,
         -27.0909
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 140,
+        "min_capital": 103,
+        "km_hospital": 17.7
+      }
     },
     {
       "distrito": "Mayor Martinez",
@@ -124,7 +179,12 @@
       "centroid": [
         -58.136,
         -27.1867
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 204,
+        "min_capital": 78,
+        "km_hospital": 13.5
+      }
     },
     {
       "distrito": "Paso De Patria",
@@ -134,7 +194,12 @@
       "centroid": [
         -58.5287,
         -27.2193
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 132,
+        "min_capital": 122,
+        "km_hospital": 13.1
+      }
     },
     {
       "distrito": "Pilar",
@@ -144,7 +209,12 @@
       "centroid": [
         -58.1896,
         -26.8898
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 150,
+        "min_capital": 100,
+        "km_hospital": 11.5
+      }
     },
     {
       "distrito": "Gral. Jose E. Diaz",
@@ -154,7 +224,12 @@
       "centroid": [
         -58.342,
         -27.1778
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 169,
+        "min_capital": 92,
+        "km_hospital": 15.6
+      }
     },
     {
       "distrito": "Isla Umbu",
@@ -164,7 +239,12 @@
       "centroid": [
         -58.309,
         -26.9676
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 154,
+        "min_capital": 97,
+        "km_hospital": 11.1
+      }
     }
   ]
 }

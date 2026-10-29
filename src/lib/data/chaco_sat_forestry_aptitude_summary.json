@@ -14,7 +14,11 @@
       "centroid": [
         -60.4735,
         -26.7914
-      ]
+      ],
+      "rank": {
+        "high_ha": 108271,
+        "high_pct": 61.2
+      }
     },
     {
       "dpto": "Independencia",
@@ -24,7 +28,11 @@
       "centroid": [
         -60.7604,
         -26.7362
-      ]
+      ],
+      "rank": {
+        "high_ha": 123555,
+        "high_pct": 55.4
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -34,7 +42,11 @@
       "centroid": [
         -60.1799,
         -26.6648
-      ]
+      ],
+      "rank": {
+        "high_ha": 72047,
+        "high_pct": 38.6
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -44,7 +56,11 @@
       "centroid": [
         -60.692,
         -27.2479
-      ]
+      ],
+      "rank": {
+        "high_ha": 53088,
+        "high_pct": 28.0
+      }
     },
     {
       "dpto": "Maipú",
@@ -54,7 +70,11 @@
       "centroid": [
         -60.4564,
         -26.3289
-      ]
+      ],
+      "rank": {
+        "high_ha": 93841,
+        "high_pct": 28.0
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -64,7 +84,11 @@
       "centroid": [
         -60.0398,
         -26.8257
-      ]
+      ],
+      "rank": {
+        "high_ha": 1401,
+        "high_pct": 0.5
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -74,7 +98,11 @@
       "centroid": [
         -59.5073,
         -26.3713
-      ]
+      ],
+      "rank": {
+        "high_ha": 66138,
+        "high_pct": 7.5
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -84,7 +112,11 @@
       "centroid": [
         -61.0749,
         -26.838
-      ]
+      ],
+      "rank": {
+        "high_ha": 7774,
+        "high_pct": 5.1
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -94,7 +126,11 @@
       "centroid": [
         -60.37,
         -27.4108
-      ]
+      ],
+      "rank": {
+        "high_ha": 58955,
+        "high_pct": 22.5
+      }
     },
     {
       "dpto": "Libertad",
@@ -104,7 +140,11 @@
       "centroid": [
         -59.2715,
         -27.3475
-      ]
+      ],
+      "rank": {
+        "high_ha": 22141,
+        "high_pct": 18.4
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -114,7 +154,11 @@
       "centroid": [
         -59.5538,
         -26.7743
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -124,7 +168,11 @@
       "centroid": [
         -58.9731,
         -27.1551
-      ]
+      ],
+      "rank": {
+        "high_ha": 7510,
+        "high_pct": 4.5
+      }
     },
     {
       "dpto": "General Donovan",
@@ -134,7 +182,11 @@
       "centroid": [
         -59.3494,
         -27.1274
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -144,7 +196,11 @@
       "centroid": [
         -61.3118,
         -27.1138
-      ]
+      ],
+      "rank": {
+        "high_ha": 21,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -154,7 +210,11 @@
       "centroid": [
         -60.6704,
         -27.742
-      ]
+      ],
+      "rank": {
+        "high_ha": 9301,
+        "high_pct": 2.0
+      }
     },
     {
       "dpto": "Nueve de Julio",
@@ -164,7 +224,11 @@
       "centroid": [
         -61.2721,
         -26.9361
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -174,7 +238,11 @@
       "centroid": [
         -59.7871,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -184,7 +252,11 @@
       "centroid": [
         -61.4369,
         -27.3753
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Bermejo",
@@ -194,7 +266,11 @@
       "centroid": [
         -58.7084,
         -26.9631
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -204,7 +280,11 @@
       "centroid": [
         -61.3304,
         -27.8272
-      ]
+      ],
+      "rank": {
+        "high_ha": 84,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "San Fernando",
@@ -214,7 +294,11 @@
       "centroid": [
         -59.1267,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "high_ha": 7910,
+        "high_pct": 1.8
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -224,7 +308,11 @@
       "centroid": [
         -61.9817,
         -25.7474
-      ]
+      ],
+      "rank": {
+        "high_ha": 23089,
+        "high_pct": 1.2
+      }
     },
     {
       "dpto": "General Güemes",
@@ -234,7 +322,11 @@
       "centroid": [
         -61.3084,
         -25.2411
-      ]
+      ],
+      "rank": {
+        "high_ha": 874,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -244,7 +336,11 @@
       "centroid": [
         -59.8436,
         -27.6698
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

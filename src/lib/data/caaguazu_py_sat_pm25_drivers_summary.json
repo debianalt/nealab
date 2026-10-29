@@ -14,7 +14,11 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.2,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.2,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "Cecilio Baez",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.1,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Carayao",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.9,
+        "pm25_delta": -2.9
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.8,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "La Pastora",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "3 De Febrero",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.3,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.3,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "Repatriacion",
@@ -144,7 +196,11 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.8,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -154,7 +210,11 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.5,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -164,7 +224,11 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.5,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Yhu",
@@ -174,7 +238,11 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -194,7 +266,11 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -1.8
+      }
     }
   ]
 }

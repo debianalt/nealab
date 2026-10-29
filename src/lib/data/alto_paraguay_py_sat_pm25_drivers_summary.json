@@ -14,7 +14,11 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.7,
+        "pm25_delta": -2.7
+      }
     },
     {
       "distrito": "Fuerte Olimpo",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.1,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "La Victoria",
@@ -34,7 +42,11 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.1,
+        "pm25_delta": -2.2
+      }
     }
   ]
 }

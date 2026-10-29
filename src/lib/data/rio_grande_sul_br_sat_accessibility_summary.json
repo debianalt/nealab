@@ -14,7 +14,12 @@
       "centroid": [
         -52.9953,
         -32.7697
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 476,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rosário do Sul",
@@ -24,7 +29,12 @@
       "centroid": [
         -55.1218,
         -30.3209
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 543,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jaguarão",
@@ -34,7 +44,12 @@
       "centroid": [
         -53.3336,
         -32.4107
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 397,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Vitória do Palmar",
@@ -44,7 +59,12 @@
       "centroid": [
         -53.0197,
         -33.1763
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 489,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Manoel Viana",
@@ -54,7 +74,12 @@
       "centroid": [
         -55.5546,
         -29.4285
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 603,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dom Pedrito",
@@ -64,7 +89,12 @@
       "centroid": [
         -54.6633,
         -31.0405
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 533,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinheiro Machado",
@@ -74,7 +104,12 @@
       "centroid": [
         -53.4178,
         -31.4082
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 407,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cacequi",
@@ -84,7 +119,12 @@
       "centroid": [
         -54.8016,
         -29.9209
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 492,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Miguel das Missões",
@@ -94,7 +134,12 @@
       "centroid": [
         -54.5204,
         -28.6711
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 515,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Quaraí",
@@ -104,7 +149,12 @@
       "centroid": [
         -56.1586,
         -30.2839
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 732,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tupanciretã",
@@ -114,7 +164,12 @@
       "centroid": [
         -53.999,
         -29.0181
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 434,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bagé",
@@ -124,7 +179,12 @@
       "centroid": [
         -54.0142,
         -31.2383
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 456,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pedras Altas",
@@ -134,7 +194,12 @@
       "centroid": [
         -53.6876,
         -31.8391
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 459,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Uruguaiana",
@@ -144,7 +209,12 @@
       "centroid": [
         -56.7365,
         -29.8269
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 782,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alegrete",
@@ -154,7 +224,12 @@
       "centroid": [
         -55.8337,
         -29.7639
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 647,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Francisco de Assis",
@@ -164,7 +239,12 @@
       "centroid": [
         -55.1369,
         -29.4441
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 544,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lagoa dos Patos",
@@ -174,7 +254,12 @@
       "centroid": [
         -51.3765,
         -31.0802
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 206,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sant'Ana do Livramento",
@@ -184,7 +269,12 @@
       "centroid": [
         -55.5714,
         -30.7374
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 644,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boa Vista do Cadeado",
@@ -194,7 +284,12 @@
       "centroid": [
         -53.8345,
         -28.6568
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 409,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Herval",
@@ -204,7 +299,12 @@
       "centroid": [
         -53.3994,
         -32.0209
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 405,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jari",
@@ -214,7 +314,12 @@
       "centroid": [
         -54.2972,
         -29.2881
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 447,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jóia",
@@ -224,7 +329,12 @@
       "centroid": [
         -54.1583,
         -28.7624
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 465,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santana da Boa Vista",
@@ -234,7 +344,12 @@
       "centroid": [
         -53.1801,
         -30.8128
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 329,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio Grande",
@@ -244,7 +359,12 @@
       "centroid": [
         -52.9212,
         -32.1875
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 347,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Quevedos",
@@ -254,7 +374,12 @@
       "centroid": [
         -54.0619,
         -29.3075
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 410,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santiago",
@@ -264,7 +389,12 @@
       "centroid": [
         -54.7924,
         -29.1249
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 522,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bossoroca",
@@ -274,7 +404,12 @@
       "centroid": [
         -54.98,
         -28.6656
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 573,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Encruzilhada do Sul",
@@ -284,7 +419,12 @@
       "centroid": [
         -52.672,
         -30.6246
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 245,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itaqui",
@@ -294,7 +434,12 @@
       "centroid": [
         -56.1643,
         -29.2129
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 737,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Antônio das Missões",
@@ -304,7 +449,12 @@
       "centroid": [
         -55.4289,
         -28.4941
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 609,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Borja",
@@ -314,7 +464,12 @@
       "centroid": [
         -55.8111,
         -28.7456
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 679,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Aceguá",
@@ -324,7 +479,12 @@
       "centroid": [
         -54.1364,
         -31.6999
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 502,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Maçambará",
@@ -334,7 +494,12 @@
       "centroid": [
         -55.7879,
         -29.0681
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 677,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Gabriel",
@@ -344,7 +509,12 @@
       "centroid": [
         -54.3602,
         -30.3084
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 429,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capão do Cipó",
@@ -354,7 +524,12 @@
       "centroid": [
         -54.5798,
         -28.9594
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 524,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barra do Quaraí",
@@ -364,7 +539,12 @@
       "centroid": [
         -57.3341,
         -30.1467
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 874,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Eugênio de Castro",
@@ -374,7 +554,12 @@
       "centroid": [
         -54.2458,
         -28.5685
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 468,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lavras do Sul",
@@ -384,7 +569,12 @@
       "centroid": [
         -54.1447,
         -30.7779
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 430,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Bárbara do Sul",
@@ -394,7 +584,12 @@
       "centroid": [
         -53.2849,
         -28.3794
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 354,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Entre-Ijuís",
@@ -404,7 +599,12 @@
       "centroid": [
         -54.2972,
         -28.4554
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 467,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Garruchos",
@@ -414,7 +614,12 @@
       "centroid": [
         -55.5337,
         -28.2371
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 650,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Júlio de Castilhos",
@@ -424,7 +629,12 @@
       "centroid": [
         -53.6591,
         -29.2615
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 355,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itacurubi",
@@ -434,7 +644,12 @@
       "centroid": [
         -55.2629,
         -28.8101
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 604,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Piratini",
@@ -444,7 +659,12 @@
       "centroid": [
         -53.1024,
         -31.4464
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 353,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cachoeira do Sul",
@@ -454,7 +674,12 @@
       "centroid": [
         -52.9875,
         -30.2071
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 248,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Martinho da Serra",
@@ -464,7 +689,12 @@
       "centroid": [
         -53.8855,
         -29.4761
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 370,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Turuçu",
@@ -474,7 +704,12 @@
       "centroid": [
         -52.1578,
         -31.4733
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 228,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Sepé",
@@ -484,7 +719,12 @@
       "centroid": [
         -53.6208,
         -30.1657
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 329,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jaguari",
@@ -494,7 +734,12 @@
       "centroid": [
         -54.6506,
         -29.4611
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 464,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Vicente do Sul",
@@ -504,7 +749,12 @@
       "centroid": [
         -54.7749,
         -29.7153
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 475,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Chapada",
@@ -514,7 +764,12 @@
       "centroid": [
         -53.1131,
         -28.0895
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 354,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Margarida do Sul",
@@ -524,7 +779,12 @@
       "centroid": [
         -54.1009,
         -30.362
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 383,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Engenho Velho",
@@ -534,7 +794,12 @@
       "centroid": [
         -52.9094,
         -27.6861
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 372,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Canguçu",
@@ -544,7 +809,12 @@
       "centroid": [
         -52.6733,
         -31.226
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 273,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Unistalda",
@@ -554,7 +824,12 @@
       "centroid": [
         -55.154,
         -29.0697
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 561,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Hulha Negra",
@@ -564,7 +839,12 @@
       "centroid": [
         -53.89,
         -31.4466
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 452,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caçapava do Sul",
@@ -574,7 +854,12 @@
       "centroid": [
         -53.4809,
         -30.6024
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 320,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Luiz Gonzaga",
@@ -584,7 +869,12 @@
       "centroid": [
         -54.8892,
         -28.416
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 539,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Augusto Pestana",
@@ -594,7 +884,12 @@
       "centroid": [
         -54.0047,
         -28.5327
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 424,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Nicolau",
@@ -604,7 +899,12 @@
       "centroid": [
         -55.2497,
         -28.2011
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 597,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Muitos Capões",
@@ -614,7 +914,12 @@
       "centroid": [
         -51.235,
         -28.3763
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 209,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinhal Grande",
@@ -624,7 +929,12 @@
       "centroid": [
         -53.3381,
         -29.2901
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 313,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sertão",
@@ -634,7 +944,12 @@
       "centroid": [
         -52.3174,
         -28.0086
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 313,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mata",
@@ -644,7 +959,12 @@
       "centroid": [
         -54.4695,
         -29.5373
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 428,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Espumoso",
@@ -654,7 +974,12 @@
       "centroid": [
         -52.825,
         -28.8712
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 261,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Candiota",
@@ -664,7 +989,12 @@
       "centroid": [
         -53.7439,
         -31.5532
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 448,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Fortaleza dos Valos",
@@ -674,7 +1004,12 @@
       "centroid": [
         -53.2772,
         -28.8947
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 336,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Toropi",
@@ -684,7 +1019,12 @@
       "centroid": [
         -54.2978,
         -29.4691
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 416,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capão do Leão",
@@ -694,7 +1034,12 @@
       "centroid": [
         -52.5375,
         -31.8308
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 281,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bom Jesus",
@@ -704,7 +1049,12 @@
       "centroid": [
         -50.4279,
         -28.5893
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 243,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mariano Moro",
@@ -714,7 +1064,12 @@
       "centroid": [
         -52.1668,
         -27.3424
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 403,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vila Nova do Sul",
@@ -724,7 +1079,12 @@
       "centroid": [
         -53.8799,
         -30.3432
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 344,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cruz Alta",
@@ -734,7 +1094,12 @@
       "centroid": [
         -53.5695,
         -28.7039
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 370,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coqueiros do Sul",
@@ -744,7 +1109,12 @@
       "centroid": [
         -52.7603,
         -28.1335
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 313,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pedro Osório",
@@ -754,7 +1124,12 @@
       "centroid": [
         -52.865,
         -31.9587
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 317,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Norte",
@@ -764,7 +1139,12 @@
       "centroid": [
         -51.6767,
         -31.7727
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 332,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vacaria",
@@ -774,7 +1154,12 @@
       "centroid": [
         -50.9247,
         -28.3787
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 203,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José dos Ausentes",
@@ -784,7 +1169,12 @@
       "centroid": [
         -49.9586,
         -28.643
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 256,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Camaquã",
@@ -794,7 +1184,12 @@
       "centroid": [
         -51.7754,
         -30.928
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 147,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tunas",
@@ -804,7 +1199,12 @@
       "centroid": [
         -52.8925,
         -29.1141
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 258,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cerrito",
@@ -814,7 +1214,12 @@
       "centroid": [
         -52.7981,
         -31.7239
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 308,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coronel Barros",
@@ -824,7 +1229,12 @@
       "centroid": [
         -54.0598,
         -28.4041
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 427,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dom Feliciano",
@@ -834,7 +1244,12 @@
       "centroid": [
         -52.2004,
         -30.6114
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 185,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Palmeira das Missões",
@@ -844,7 +1259,12 @@
       "centroid": [
         -53.3894,
         -27.9367
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 408,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Salto do Jacuí",
@@ -854,7 +1274,12 @@
       "centroid": [
         -53.2498,
         -29.072
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 321,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boa Vista do Incra",
@@ -864,7 +1289,12 @@
       "centroid": [
         -53.4648,
         -28.8665
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 359,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Pedro do Sul",
@@ -874,7 +1304,12 @@
       "centroid": [
         -54.2415,
         -29.6139
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 396,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Esmeralda",
@@ -884,7 +1319,12 @@
       "centroid": [
         -51.1741,
         -28.0365
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 254,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Marau",
@@ -894,7 +1334,12 @@
       "centroid": [
         -52.2694,
         -28.4541
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 253,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Quatro Irmãos",
@@ -904,7 +1349,12 @@
       "centroid": [
         -52.4693,
         -27.8405
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 351,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Derrubadas",
@@ -914,7 +1364,12 @@
       "centroid": [
         -53.8968,
         -27.2398
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 531,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ronda Alta",
@@ -924,7 +1379,12 @@
       "centroid": [
         -52.7471,
         -27.8097
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 360,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "André da Rocha",
@@ -934,7 +1394,12 @@
       "centroid": [
         -51.5001,
         -28.5926
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 194,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ipiranga do Sul",
@@ -944,7 +1409,12 @@
       "centroid": [
         -52.4182,
         -27.9304
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 330,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Fontoura Xavier",
@@ -954,7 +1424,12 @@
       "centroid": [
         -52.3774,
         -29.0104
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 192,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mostardas",
@@ -964,7 +1439,12 @@
       "centroid": [
         -50.7375,
         -30.8652
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 211,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Floriano Peixoto",
@@ -974,7 +1454,12 @@
       "centroid": [
         -52.0477,
         -27.8581
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 322,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pontão",
@@ -984,7 +1469,12 @@
       "centroid": [
         -52.6387,
         -28.038
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 324,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Butiá",
@@ -994,7 +1484,12 @@
       "centroid": [
         -52.0066,
         -30.1875
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 124,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campinas do Sul",
@@ -1004,7 +1499,12 @@
       "centroid": [
         -52.6585,
         -27.7343
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 380,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Lourenço do Sul",
@@ -1014,7 +1514,12 @@
       "centroid": [
         -52.1303,
         -31.2362
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 202,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Passa Sete",
@@ -1024,7 +1529,12 @@
       "centroid": [
         -52.8662,
         -29.4375
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 241,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rio Grande",
@@ -1034,7 +1544,12 @@
       "centroid": [
         -52.4076,
         -32.2241
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 317,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pirapó",
@@ -1044,7 +1559,12 @@
       "centroid": [
         -55.2451,
         -28.0632
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 597,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rio dos Índios",
@@ -1054,7 +1574,12 @@
       "centroid": [
         -52.8788,
         -27.2529
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 442,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tavares",
@@ -1064,7 +1589,12 @@
       "centroid": [
         -51.0776,
         -31.289
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 273,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alpestre",
@@ -1074,7 +1604,12 @@
       "centroid": [
         -53.0604,
         -27.2158
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 455,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Formigueiro",
@@ -1084,7 +1619,12 @@
       "centroid": [
         -53.5075,
         -29.9769
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 324,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coronel Bicaco",
@@ -1094,7 +1634,12 @@
       "centroid": [
         -53.6481,
         -27.7986
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 446,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dezesseis de Novembro",
@@ -1104,7 +1649,12 @@
       "centroid": [
         -55.0773,
         -28.2081
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 569,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dilermando de Aguiar",
@@ -1114,7 +1664,12 @@
       "centroid": [
         -54.1619,
         -29.8148
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 385,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ibirapuitã",
@@ -1124,7 +1679,12 @@
       "centroid": [
         -52.4441,
         -28.6248
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 243,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lagoa Vermelha",
@@ -1134,7 +1694,12 @@
       "centroid": [
         -51.4995,
         -28.2165
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 246,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Jerônimo",
@@ -1144,7 +1709,12 @@
       "centroid": [
         -51.9083,
         -30.2867
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 118,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Arroios",
@@ -1154,7 +1724,12 @@
       "centroid": [
         -52.1809,
         -27.4922
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 376,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caiçara",
@@ -1164,7 +1739,12 @@
       "centroid": [
         -53.4674,
         -27.2459
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 458,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rio Pardo",
@@ -1174,7 +1754,12 @@
       "centroid": [
         -52.4437,
         -30.0154
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 177,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Chuí",
@@ -1184,7 +1769,12 @@
       "centroid": [
         -53.4143,
         -33.6491
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 538,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Condor",
@@ -1194,7 +1784,12 @@
       "centroid": [
         -53.4938,
         -28.165
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 396,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Esperança do Sul",
@@ -1204,7 +1799,12 @@
       "centroid": [
         -54.8216,
         -29.4036
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 488,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vitória das Missões",
@@ -1214,7 +1814,12 @@
       "centroid": [
         -54.4678,
         -28.3793
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 479,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coxilha",
@@ -1224,7 +1829,12 @@
       "centroid": [
         -52.3342,
         -28.1186
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 297,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Restinga Sêca",
@@ -1234,7 +1844,12 @@
       "centroid": [
         -53.3418,
         -29.8172
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 289,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ibirubá",
@@ -1244,7 +1859,12 @@
       "centroid": [
         -53.1713,
         -28.5947
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 311,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Monte Alegre dos Campos",
@@ -1254,7 +1874,12 @@
       "centroid": [
         -50.8013,
         -28.6955
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 189,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Herveiras",
@@ -1264,7 +1889,12 @@
       "centroid": [
         -52.6702,
         -29.44
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 215,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio do Padre",
@@ -1274,7 +1904,12 @@
       "centroid": [
         -52.3985,
         -31.4417
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 246,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Getúlio Vargas",
@@ -1284,7 +1919,12 @@
       "centroid": [
         -52.1795,
         -27.849
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 328,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sinimbu",
@@ -1294,7 +1934,12 @@
       "centroid": [
         -52.5727,
         -29.4427
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 204,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Viadutos",
@@ -1304,7 +1949,12 @@
       "centroid": [
         -51.9963,
         -27.5713
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 355,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Maria",
@@ -1314,7 +1964,12 @@
       "centroid": [
         -53.8233,
         -29.7858
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 342,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pejuçara",
@@ -1324,7 +1979,12 @@
       "centroid": [
         -53.5948,
         -28.4556
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 384,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Carlos Gomes",
@@ -1334,7 +1994,12 @@
       "centroid": [
         -51.9301,
         -27.7031
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 328,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ibiaçá",
@@ -1344,7 +2009,12 @@
       "centroid": [
         -51.7871,
         -28.1041
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 271,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nonoai",
@@ -1354,7 +2024,12 @@
       "centroid": [
         -52.8497,
         -27.3692
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 445,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Constantina",
@@ -1364,7 +2039,12 @@
       "centroid": [
         -52.9931,
         -27.6902
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 375,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Segredo",
@@ -1374,7 +2054,12 @@
       "centroid": [
         -52.9275,
         -29.3144
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 260,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Erebango",
@@ -1384,7 +2069,12 @@
       "centroid": [
         -52.3189,
         -27.8298
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 337,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Minas do Leão",
@@ -1394,7 +2084,12 @@
       "centroid": [
         -52.0768,
         -30.0784
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 130,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Erval Seco",
@@ -1404,7 +2099,12 @@
       "centroid": [
         -53.5212,
         -27.5152
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 451,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jacutinga",
@@ -1414,7 +2114,12 @@
       "centroid": [
         -52.547,
         -27.7871
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 363,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mato Castelhano",
@@ -1424,7 +2129,12 @@
       "centroid": [
         -52.1986,
         -28.2783
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 265,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pelotas",
@@ -1434,7 +2144,12 @@
       "centroid": [
         -52.3451,
         -31.5775
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 254,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ibarama",
@@ -1444,7 +2159,12 @@
       "centroid": [
         -53.1663,
         -29.4192
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 275,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ipê",
@@ -1454,7 +2174,12 @@
       "centroid": [
         -51.3029,
         -28.7209
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 156,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tapes",
@@ -1464,7 +2189,12 @@
       "centroid": [
         -51.4415,
         -30.6587
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 106,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barracão",
@@ -1474,7 +2204,12 @@
       "centroid": [
         -51.4357,
         -27.7295
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 316,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Expedito do Sul",
@@ -1484,7 +2219,12 @@
       "centroid": [
         -51.6602,
         -27.9246
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 297,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Agudo",
@@ -1494,7 +2234,12 @@
       "centroid": [
         -53.2263,
         -29.6098
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 275,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cristal",
@@ -1504,7 +2249,12 @@
       "centroid": [
         -52.0409,
         -31.0078
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 171,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itatiba do Sul",
@@ -1514,7 +2264,12 @@
       "centroid": [
         -52.4774,
         -27.3606
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 410,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinhal da Serra",
@@ -1524,7 +2279,12 @@
       "centroid": [
         -51.2152,
         -27.8562
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 281,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arambaré",
@@ -1534,7 +2294,12 @@
       "centroid": [
         -51.5805,
         -30.9095
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 132,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mampituba",
@@ -1544,7 +2309,12 @@
       "centroid": [
         -50.0024,
         -29.2618
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 158,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio dos Ratos",
@@ -1554,7 +2324,12 @@
       "centroid": [
         -51.7502,
         -30.1908
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 87,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ernestina",
@@ -1564,7 +2339,12 @@
       "centroid": [
         -52.5572,
         -28.4201
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 268,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Amaral Ferrador",
@@ -1574,7 +2354,12 @@
       "centroid": [
         -52.3208,
         -30.8045
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 210,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nicolau Vergueiro",
@@ -1584,7 +2369,12 @@
       "centroid": [
         -52.4461,
         -28.5195
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 260,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Saldanha Marinho",
@@ -1594,7 +2384,12 @@
       "centroid": [
         -53.0958,
         -28.3875
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 323,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Chiapetta",
@@ -1604,7 +2399,12 @@
       "centroid": [
         -53.9046,
         -27.9878
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 465,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Iraí",
@@ -1614,7 +2414,12 @@
       "centroid": [
         -53.2417,
         -27.2508
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 456,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lagoão",
@@ -1624,7 +2429,12 @@
       "centroid": [
         -52.7882,
         -29.2395
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 242,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pantano Grande",
@@ -1634,7 +2444,12 @@
       "centroid": [
         -52.367,
         -30.2574
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 163,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vista Alegre",
@@ -1644,7 +2459,12 @@
       "centroid": [
         -53.5095,
         -27.3256
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 448,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Carazinho",
@@ -1654,7 +2474,12 @@
       "centroid": [
         -52.8689,
         -28.2781
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 305,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cruzaltense",
@@ -1664,7 +2489,12 @@
       "centroid": [
         -52.6452,
         -27.6272
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 393,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dona Francisca",
@@ -1674,7 +2504,12 @@
       "centroid": [
         -53.3459,
         -29.5608
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 294,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jaquirana",
@@ -1684,7 +2519,12 @@
       "centroid": [
         -50.3585,
         -28.9447
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 204,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campos Borges",
@@ -1694,7 +2534,12 @@
       "centroid": [
         -53.0617,
         -28.9062
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 303,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Soledade",
@@ -1704,7 +2549,12 @@
       "centroid": [
         -52.5395,
         -28.8308
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 227,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Candelária",
@@ -1714,7 +2564,12 @@
       "centroid": [
         -52.8173,
         -29.698
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 223,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Francisco de Paula",
@@ -1724,7 +2579,12 @@
       "centroid": [
         -50.5464,
         -29.1992
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 149,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Maximiliano de Almeida",
@@ -1734,7 +2594,12 @@
       "centroid": [
         -51.8159,
         -27.6009
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 335,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Miraguaí",
@@ -1744,7 +2609,12 @@
       "centroid": [
         -53.7426,
         -27.491
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 476,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cambará do Sul",
@@ -1754,7 +2624,12 @@
       "centroid": [
         -50.1356,
         -29.0618
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 197,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Catuípe",
@@ -1764,7 +2639,12 @@
       "centroid": [
         -54.0321,
         -28.1693
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 446,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rolador",
@@ -1774,7 +2654,12 @@
       "centroid": [
         -54.8326,
         -28.2568
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 539,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dois Irmãos das Missões",
@@ -1784,7 +2669,12 @@
       "centroid": [
         -53.4961,
         -27.6777
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 432,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Erval Grande",
@@ -1794,7 +2684,12 @@
       "centroid": [
         -52.5798,
         -27.3519
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 418,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Paulo das Missões",
@@ -1804,7 +2699,12 @@
       "centroid": [
         -54.9743,
         -27.9905
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 564,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Almirante Tamandaré do Sul",
@@ -1814,7 +2714,12 @@
       "centroid": [
         -52.9062,
         -28.1274
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 318,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caibaté",
@@ -1824,7 +2729,12 @@
       "centroid": [
         -54.6565,
         -28.3353
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 510,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "David Canabarro",
@@ -1834,7 +2744,12 @@
       "centroid": [
         -51.8087,
         -28.4152
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 220,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Estação",
@@ -1844,7 +2759,12 @@
       "centroid": [
         -52.2915,
         -27.9299
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 321,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Panambi",
@@ -1854,7 +2774,12 @@
       "centroid": [
         -53.5104,
         -28.332
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 374,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Morro Redondo",
@@ -1864,7 +2789,12 @@
       "centroid": [
         -52.6349,
         -31.63
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 283,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sananduva",
@@ -1874,7 +2804,12 @@
       "centroid": [
         -51.8017,
         -27.9562
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 291,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Machadinho",
@@ -1884,7 +2819,12 @@
       "centroid": [
         -51.6728,
         -27.586
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 346,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Estrela Velha",
@@ -1894,7 +2834,12 @@
       "centroid": [
         -53.1773,
         -29.2226
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 290,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio do Tigre",
@@ -1904,7 +2849,12 @@
       "centroid": [
         -53.0537,
         -29.2591
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 272,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capão Bonito do Sul",
@@ -1914,7 +2864,12 @@
       "centroid": [
         -51.3858,
         -28.1533
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 252,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Esperança do Sul",
@@ -1924,7 +2879,12 @@
       "centroid": [
         -54.0095,
         -27.3292
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 515,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Ângelo",
@@ -1934,7 +2894,12 @@
       "centroid": [
         -54.2984,
         -28.2554
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 465,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barão do Triunfo",
@@ -1944,7 +2909,12 @@
       "centroid": [
         -51.7987,
         -30.4176
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 113,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gaurama",
@@ -1954,7 +2924,12 @@
       "centroid": [
         -52.1144,
         -27.5988
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 362,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gramado dos Loureiros",
@@ -1964,7 +2939,12 @@
       "centroid": [
         -52.915,
         -27.4455
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 418,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Aratiba",
@@ -1974,7 +2954,12 @@
       "centroid": [
         -52.3003,
         -27.387
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 394,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lagoa Bonita do Sul",
@@ -1984,7 +2969,12 @@
       "centroid": [
         -53.0415,
         -29.5023
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 252,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rondinha",
@@ -1994,7 +2984,12 @@
       "centroid": [
         -52.8954,
         -27.8306
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 352,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boa Vista das Missões",
@@ -2004,7 +2999,12 @@
       "centroid": [
         -53.3427,
         -27.7001
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 405,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Entre Rios do Sul",
@@ -2014,7 +3014,12 @@
       "centroid": [
         -52.7265,
         -27.5189
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 412,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Giruá",
@@ -2024,7 +3029,12 @@
       "centroid": [
         -54.2963,
         -28.0338
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 488,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Áurea",
@@ -2034,7 +3044,12 @@
       "centroid": [
         -52.0776,
         -27.7092
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 346,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Colorado",
@@ -2044,7 +3059,12 @@
       "centroid": [
         -52.9907,
         -28.4677
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 300,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Quinze de Novembro",
@@ -2054,7 +3074,12 @@
       "centroid": [
         -53.1112,
         -28.7587
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 300,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barros Cassal",
@@ -2064,7 +3089,12 @@
       "centroid": [
         -52.5907,
         -29.1112
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 214,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Não-Me-Toque",
@@ -2074,7 +3104,12 @@
       "centroid": [
         -52.825,
         -28.4614
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 281,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "União da Serra",
@@ -2084,7 +3119,12 @@
       "centroid": [
         -52.0211,
         -28.7716
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 195,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Machado",
@@ -2094,7 +3134,12 @@
       "centroid": [
         -54.5347,
         -27.5463
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 552,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vicente Dutra",
@@ -2104,7 +3149,12 @@
       "centroid": [
         -53.3851,
         -27.1712
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 467,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Trindade do Sul",
@@ -2114,7 +3164,12 @@
       "centroid": [
         -52.8978,
         -27.5277
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 403,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arvorezinha",
@@ -2124,7 +3179,12 @@
       "centroid": [
         -52.1869,
         -28.8632
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 202,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vale Verde",
@@ -2134,7 +3194,12 @@
       "centroid": [
         -52.1122,
         -29.8284
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 137,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jacuizinho",
@@ -2144,7 +3209,12 @@
       "centroid": [
         -53.0148,
         -29.0357
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 288,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Muliterno",
@@ -2154,7 +3224,12 @@
       "centroid": [
         -51.778,
         -28.3266
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 236,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mato Queimado",
@@ -2164,7 +3239,12 @@
       "centroid": [
         -54.6583,
         -28.242
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 519,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Palmares do Sul",
@@ -2174,7 +3254,12 @@
       "centroid": [
         -50.4574,
         -30.3656
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 144,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ciríaco",
@@ -2184,7 +3269,12 @@
       "centroid": [
         -51.9148,
         -28.3422
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 236,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Barreiro",
@@ -2194,7 +3284,12 @@
       "centroid": [
         -53.1155,
         -27.8977
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 364,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Roque Gonzales",
@@ -2204,7 +3299,12 @@
       "centroid": [
         -55.0798,
         -28.0645
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 571,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Braga",
@@ -2214,7 +3314,12 @@
       "centroid": [
         -53.7445,
         -27.5791
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 470,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Redentora",
@@ -2224,7 +3329,12 @@
       "centroid": [
         -53.6322,
         -27.567
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 459,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Palmeiras",
@@ -2234,7 +3344,12 @@
       "centroid": [
         -52.8405,
         -27.6145
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 390,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Água Santa",
@@ -2244,7 +3359,12 @@
       "centroid": [
         -52.0534,
         -28.2158
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 265,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bozano",
@@ -2254,7 +3374,12 @@
       "centroid": [
         -53.7475,
         -28.3538
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 402,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Centenário",
@@ -2264,7 +3389,12 @@
       "centroid": [
         -52.0017,
         -27.7746
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 330,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cerro Branco",
@@ -2274,7 +3404,12 @@
       "centroid": [
         -52.9949,
         -29.6309
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 243,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ijuí",
@@ -2284,7 +3419,12 @@
       "centroid": [
         -53.8959,
         -28.3181
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 418,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Liberato Salzano",
@@ -2294,7 +3434,12 @@
       "centroid": [
         -53.0653,
         -27.5512
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 408,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barra do Guarita",
@@ -2304,7 +3449,12 @@
       "centroid": [
         -53.7636,
         -27.2049
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 487,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Seberi",
@@ -2314,7 +3464,12 @@
       "centroid": [
         -53.3619,
         -27.4993
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 421,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Ouro",
@@ -2324,7 +3479,12 @@
       "centroid": [
         -51.5612,
         -27.7699
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 315,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rodeio Bonito",
@@ -2334,7 +3494,12 @@
       "centroid": [
         -53.172,
         -27.463
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 419,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campestre da Serra",
@@ -2344,7 +3509,12 @@
       "centroid": [
         -51.1017,
         -28.7187
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 150,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José das Missões",
@@ -2354,7 +3524,12 @@
       "centroid": [
         -53.1321,
         -27.795
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 372,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ibiraiaras",
@@ -2364,7 +3539,12 @@
       "centroid": [
         -51.6321,
         -28.3782
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 223,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Cecília do Sul",
@@ -2374,7 +3554,12 @@
       "centroid": [
         -51.8968,
         -28.1809
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 263,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Augusto",
@@ -2384,7 +3569,12 @@
       "centroid": [
         -53.7559,
         -27.9009
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 455,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Paulo Bento",
@@ -2394,7 +3584,12 @@
       "centroid": [
         -52.3975,
         -27.7116
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 359,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sarandi",
@@ -2404,7 +3599,12 @@
       "centroid": [
         -52.8926,
         -27.9419
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 338,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Camargo",
@@ -2414,7 +3614,12 @@
       "centroid": [
         -52.2218,
         -28.6166
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 237,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Charrua",
@@ -2424,7 +3629,12 @@
       "centroid": [
         -51.9981,
         -27.9456
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 306,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Faxinalzinho",
@@ -2434,7 +3644,12 @@
       "centroid": [
         -52.677,
         -27.3733
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 425,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Antônio do Planalto",
@@ -2444,7 +3659,12 @@
       "centroid": [
         -52.6809,
         -28.365
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 279,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Taquaruçu do Sul",
@@ -2454,7 +3674,12 @@
       "centroid": [
         -53.4882,
         -27.4083
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 439,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Planalto",
@@ -2464,7 +3689,12 @@
       "centroid": [
         -53.0753,
         -27.3371
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 442,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alegria",
@@ -2474,7 +3704,12 @@
       "centroid": [
         -54.0557,
         -27.8134
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 490,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alto Alegre",
@@ -2484,7 +3719,12 @@
       "centroid": [
         -52.9895,
         -28.8015
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 278,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Selbach",
@@ -2494,7 +3734,12 @@
       "centroid": [
         -52.976,
         -28.6673
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 279,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gentil",
@@ -2504,7 +3749,12 @@
       "centroid": [
         -52.0376,
         -28.3855
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 238,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tenente Portela",
@@ -2514,7 +3764,12 @@
       "centroid": [
         -53.7619,
         -27.3719
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 489,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barra do Rio Azul",
@@ -2524,7 +3779,12 @@
       "centroid": [
         -52.4072,
         -27.402
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 397,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Palma",
@@ -2534,7 +3794,12 @@
       "centroid": [
         -53.415,
         -29.4361
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 312,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Paraíso do Sul",
@@ -2544,7 +3809,12 @@
       "centroid": [
         -53.1203,
         -29.7033
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 258,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Doutor Maurício Cardoso",
@@ -2554,7 +3824,12 @@
       "centroid": [
         -54.3641,
         -27.4871
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 540,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Fagundes Varela",
@@ -2564,7 +3839,12 @@
       "centroid": [
         -51.7169,
         -28.8861
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 159,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barão de Cotegipe",
@@ -2574,7 +3854,12 @@
       "centroid": [
         -52.4171,
         -27.5682
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 374,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São João da Urtiga",
@@ -2584,7 +3869,12 @@
       "centroid": [
         -51.8341,
         -27.7992
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 309,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vale do Sol",
@@ -2594,7 +3884,12 @@
       "centroid": [
         -52.6885,
         -29.5824
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 208,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cristal do Sul",
@@ -2604,7 +3899,12 @@
       "centroid": [
         -53.2488,
         -27.4319
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 426,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Candelária",
@@ -2614,7 +3914,12 @@
       "centroid": [
         -54.1247,
         -27.5953
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 508,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Passo Fundo",
@@ -2624,7 +3929,12 @@
       "centroid": [
         -52.4597,
         -28.2624
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 284,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Victor Graeff",
@@ -2634,7 +3944,12 @@
       "centroid": [
         -52.6856,
         -28.5498
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 256,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lagoa dos Três Cantos",
@@ -2644,7 +3959,12 @@
       "centroid": [
         -52.8361,
         -28.5707
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 272,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Boa Vista",
@@ -2654,7 +3974,12 @@
       "centroid": [
         -52.9795,
         -27.9975
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 339,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Porto Xavier",
@@ -2664,7 +3989,12 @@
       "centroid": [
         -55.1458,
         -27.9328
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 588,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Benjamin Constant do Sul",
@@ -2674,7 +4004,12 @@
       "centroid": [
         -52.6428,
         -27.4855
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 409,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ponte Preta",
@@ -2684,7 +4019,12 @@
       "centroid": [
         -52.5065,
         -27.6539
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 378,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vila Lângaro",
@@ -2694,7 +4034,12 @@
       "centroid": [
         -52.1413,
         -28.129
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 283,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Erechim",
@@ -2704,7 +4049,12 @@
       "centroid": [
         -52.2574,
         -27.64
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 355,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ubiretama",
@@ -2714,7 +4064,12 @@
       "centroid": [
         -54.6463,
         -28.0402
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 523,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Guarani das Missões",
@@ -2724,7 +4079,12 @@
       "centroid": [
         -54.587,
         -28.1633
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 506,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Inhacorá",
@@ -2734,7 +4094,12 @@
       "centroid": [
         -54.0294,
         -27.8994
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 481,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Putinga",
@@ -2744,7 +4109,12 @@
       "centroid": [
         -52.1436,
         -29.028
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 178,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Frederico Westphalen",
@@ -2754,7 +4124,12 @@
       "centroid": [
         -53.356,
         -27.342
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 443,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ametista do Sul",
@@ -2764,7 +4139,12 @@
       "centroid": [
         -53.1937,
         -27.3649
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 435,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Chuvisca",
@@ -2774,7 +4154,12 @@
       "centroid": [
         -52.0033,
         -30.7809
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 152,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itapuca",
@@ -2784,7 +4169,12 @@
       "centroid": [
         -52.1973,
         -28.776
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 216,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Porto Lucena",
@@ -2794,7 +4184,12 @@
       "centroid": [
         -54.956,
         -27.8508
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 577,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campina das Missões",
@@ -2804,7 +4199,12 @@
       "centroid": [
         -54.8343,
         -27.9641
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 550,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ivorá",
@@ -2814,7 +4214,12 @@
       "centroid": [
         -53.5859,
         -29.513
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 320,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Tiradentes",
@@ -2824,7 +4229,12 @@
       "centroid": [
         -53.168,
         -27.5625
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 402,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vista Gaúcha",
@@ -2834,7 +4244,12 @@
       "centroid": [
         -53.7009,
         -27.2664
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 474,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barra do Ribeiro",
@@ -2844,7 +4259,12 @@
       "centroid": [
         -51.3556,
         -30.3753
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 65,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinheirinho do Vale",
@@ -2854,7 +4274,12 @@
       "centroid": [
         -53.6336,
         -27.2218
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 475,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Marcelino Ramos",
@@ -2864,7 +4289,12 @@
       "centroid": [
         -51.9469,
         -27.4805
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 364,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Paim Filho",
@@ -2874,7 +4304,12 @@
       "centroid": [
         -51.7804,
         -27.7228
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 320,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Crissiumal",
@@ -2884,7 +4319,12 @@
       "centroid": [
         -54.1377,
         -27.4897
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 520,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itaara",
@@ -2894,7 +4334,12 @@
       "centroid": [
         -53.7624,
         -29.5798
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 342,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Jaboticaba",
@@ -2904,7 +4349,12 @@
       "centroid": [
         -53.2624,
         -27.6304
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 398,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mormaço",
@@ -2914,7 +4364,12 @@
       "centroid": [
         -52.6618,
         -28.6933
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 240,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mariana Pimentel",
@@ -2924,7 +4379,12 @@
       "centroid": [
         -51.5866,
         -30.3161
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 73,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tiradentes do Sul",
@@ -2934,7 +4394,12 @@
       "centroid": [
         -54.1197,
         -27.3711
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 525,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Forquilhas",
@@ -2944,7 +4409,12 @@
       "centroid": [
         -50.0866,
         -29.4263
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 159,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caseiros",
@@ -2954,7 +4424,12 @@
       "centroid": [
         -51.7365,
         -28.2466
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 246,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Alvorada",
@@ -2964,7 +4439,12 @@
       "centroid": [
         -52.1704,
         -28.7086
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 222,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Pedro das Missões",
@@ -2974,7 +4454,12 @@
       "centroid": [
         -53.2382,
         -27.7801
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 386,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sede Nova",
@@ -2984,7 +4469,12 @@
       "centroid": [
         -53.9514,
         -27.641
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 486,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cerro Grande",
@@ -2994,7 +4484,12 @@
       "centroid": [
         -53.1628,
         -27.6297
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 391,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "General Câmara",
@@ -3004,7 +4499,12 @@
       "centroid": [
         -51.918,
         -29.8657
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 108,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tapejara",
@@ -3014,7 +4514,12 @@
       "centroid": [
         -52.0138,
         -28.0604
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 286,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ajuricaba",
@@ -3024,7 +4529,12 @@
       "centroid": [
         -53.7428,
         -28.2126
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 411,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coronel Pilar",
@@ -3034,7 +4544,12 @@
       "centroid": [
         -51.7237,
         -29.263
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 124,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Severiano de Almeida",
@@ -3044,7 +4559,12 @@
       "centroid": [
         -52.1128,
         -27.4164
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 386,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Anta Gorda",
@@ -3054,7 +4574,12 @@
       "centroid": [
         -51.9938,
         -28.9693
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 176,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Jorge",
@@ -3064,7 +4589,12 @@
       "centroid": [
         -51.7157,
         -28.4981
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 204,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Faxinal do Soturno",
@@ -3074,7 +4604,12 @@
       "centroid": [
         -53.4638,
         -29.5596
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 303,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Antônio do Palma",
@@ -3084,7 +4619,12 @@
       "centroid": [
         -52.0096,
         -28.4953
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 219,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Pedro do Butiá",
@@ -3094,7 +4634,12 @@
       "centroid": [
         -54.8966,
         -28.1254
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 545,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caraá",
@@ -3104,7 +4649,12 @@
       "centroid": [
         -50.3441,
         -29.7696
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 90,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Maquiné",
@@ -3114,7 +4664,12 @@
       "centroid": [
         -50.2109,
         -29.6339
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 136,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sagrada Família",
@@ -3124,7 +4679,12 @@
       "centroid": [
         -53.131,
         -27.7071
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 377,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tupanci do Sul",
@@ -3134,7 +4694,12 @@
       "centroid": [
         -51.538,
         -27.9302
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 290,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gramado Xavier",
@@ -3144,7 +4709,12 @@
       "centroid": [
         -52.598,
         -29.2895
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 209,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Independência",
@@ -3154,7 +4724,12 @@
       "centroid": [
         -54.1852,
         -27.8981
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 481,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cacique Doble",
@@ -3164,7 +4739,12 @@
       "centroid": [
         -51.6759,
         -27.8137
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 315,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Coqueiro Baixo",
@@ -3174,7 +4754,12 @@
       "centroid": [
         -52.1266,
         -29.167
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 156,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Roca Sales",
@@ -3184,7 +4769,12 @@
       "centroid": [
         -51.8307,
         -29.2565
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 134,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Valentim",
@@ -3194,7 +4784,12 @@
       "centroid": [
         -52.5612,
         -27.5537
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 392,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vera Cruz",
@@ -3204,7 +4799,12 @@
       "centroid": [
         -52.5382,
         -29.7147
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 184,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alecrim",
@@ -3214,7 +4814,12 @@
       "centroid": [
         -54.783,
         -27.655
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 573,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bom Progresso",
@@ -3224,7 +4829,12 @@
       "centroid": [
         -53.849,
         -27.5445
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 486,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Guaporé",
@@ -3234,7 +4844,12 @@
       "centroid": [
         -51.9057,
         -28.8523
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 176,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Humaitá",
@@ -3244,7 +4859,12 @@
       "centroid": [
         -53.9806,
         -27.5746
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 495,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Muçum",
@@ -3254,7 +4874,12 @@
       "centroid": [
         -51.8162,
         -29.1401
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 146,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Cabrais",
@@ -3264,7 +4889,12 @@
       "centroid": [
         -52.9936,
         -29.7614
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 241,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campo Novo",
@@ -3274,7 +4904,12 @@
       "centroid": [
         -53.8233,
         -27.6648
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 470,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Passo do Sobrado",
@@ -3284,7 +4919,12 @@
       "centroid": [
         -52.2442,
         -29.7567
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 153,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Inhacorá",
@@ -3294,7 +4934,12 @@
       "centroid": [
         -54.1228,
         -27.7377
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 501,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Valério do Sul",
@@ -3304,7 +4949,12 @@
       "centroid": [
         -53.9102,
         -27.8199
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 476,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cândido Godói",
@@ -3314,7 +4964,12 @@
       "centroid": [
         -54.7188,
         -27.9356
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 543,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ilópolis",
@@ -3324,7 +4979,12 @@
       "centroid": [
         -52.1307,
         -28.9316
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 193,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Xingu",
@@ -3334,7 +4994,12 @@
       "centroid": [
         -53.059,
         -27.743
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 368,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Palmitinho",
@@ -3344,7 +5009,12 @@
       "centroid": [
         -53.5873,
         -27.3267
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 457,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Riozinho",
@@ -3354,7 +5024,12 @@
       "centroid": [
         -50.3973,
         -29.6164
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 110,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tapera",
@@ -3364,7 +5039,12 @@
       "centroid": [
         -52.8585,
         -28.6616
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 267,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vila Maria",
@@ -3374,7 +5054,12 @@
       "centroid": [
         -52.1493,
         -28.5593
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 229,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cidreira",
@@ -3384,7 +5069,12 @@
       "centroid": [
         -50.274,
         -30.1183
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 111,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Cruz do Sul",
@@ -3394,7 +5084,12 @@
       "centroid": [
         -52.409,
         -29.6473
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 170,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Itati",
@@ -3404,7 +5099,12 @@
       "centroid": [
         -50.1641,
         -29.4618
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 163,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Morrinhos do Sul",
@@ -3414,7 +5114,12 @@
       "centroid": [
         -49.9562,
         -29.3366
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 149,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Domingos do Sul",
@@ -3424,7 +5129,12 @@
       "centroid": [
         -51.867,
         -28.5381
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 205,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Progresso",
@@ -3434,7 +5144,12 @@
       "centroid": [
         -52.3215,
         -29.2226
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 166,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vanini",
@@ -3444,7 +5159,12 @@
       "centroid": [
         -51.835,
         -28.4895
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 209,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Relvado",
@@ -3454,7 +5174,12 @@
       "centroid": [
         -52.0669,
         -29.1177
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 164,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Porto Vera Cruz",
@@ -3464,7 +5189,12 @@
       "centroid": [
         -54.8894,
         -27.7551
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 575,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Protásio Alves",
@@ -3474,7 +5204,12 @@
       "centroid": [
         -51.4874,
         -28.7346
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 168,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tuparendi",
@@ -3484,7 +5219,12 @@
       "centroid": [
         -54.5554,
         -27.7026
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 542,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Salvador das Missões",
@@ -3494,7 +5234,12 @@
       "centroid": [
         -54.8318,
         -28.1004
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 538,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Senador Salgado Filho",
@@ -3504,7 +5249,12 @@
       "centroid": [
         -54.5348,
         -28.0303
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 513,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinhal",
@@ -3514,7 +5264,12 @@
       "centroid": [
         -53.2349,
         -27.529
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 411,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Martinho",
@@ -3524,7 +5279,12 @@
       "centroid": [
         -53.9521,
         -27.728
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 478,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Porto Mauá",
@@ -3534,7 +5294,12 @@
       "centroid": [
         -54.6568,
         -27.5963
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 564,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sertão Santana",
@@ -3544,7 +5309,12 @@
       "centroid": [
         -51.6302,
         -30.4691
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 84,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sete de Setembro",
@@ -3554,7 +5324,12 @@
       "centroid": [
         -54.4595,
         -28.1443
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 491,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Passos",
@@ -3564,7 +5339,12 @@
       "centroid": [
         -53.9314,
         -27.4386
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 499,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Antônio Prado",
@@ -3574,7 +5354,12 @@
       "centroid": [
         -51.3174,
         -28.8832
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 138,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dois Lajeados",
@@ -3584,7 +5369,12 @@
       "centroid": [
         -51.8434,
         -28.9768
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 157,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Silveira Martins",
@@ -3594,7 +5384,12 @@
       "centroid": [
         -53.5726,
         -29.634
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 314,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capivari do Sul",
@@ -3604,7 +5399,12 @@
       "centroid": [
         -50.5072,
         -30.1389
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 98,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Ramada",
@@ -3614,7 +5414,12 @@
       "centroid": [
         -53.7014,
         -28.0764
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 427,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tucunduva",
@@ -3624,7 +5429,12 @@
       "centroid": [
         -54.4325,
         -27.6388
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 530,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Antônio da Patrulha",
@@ -3634,7 +5444,12 @@
       "centroid": [
         -50.5655,
         -29.873
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 68,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cerro Grande do Sul",
@@ -3644,7 +5459,12 @@
       "centroid": [
         -51.7598,
         -30.5847
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 112,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Viamão",
@@ -3654,7 +5474,12 @@
       "centroid": [
         -50.8647,
         -30.1679
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 53,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Bassano",
@@ -3664,7 +5489,12 @@
       "centroid": [
         -51.7525,
         -28.7284
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 178,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vespasiano Corrêa",
@@ -3674,7 +5504,12 @@
       "centroid": [
         -51.8592,
         -29.0676
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 152,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Taquari",
@@ -3684,7 +5519,12 @@
       "centroid": [
         -51.8321,
         -29.7472
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 93,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Horizontina",
@@ -3694,7 +5534,12 @@
       "centroid": [
         -54.2992,
         -27.5891
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 521,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Veranópolis",
@@ -3704,7 +5549,12 @@
       "centroid": [
         -51.5551,
         -28.964
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 136,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barra Funda",
@@ -3714,7 +5564,12 @@
       "centroid": [
         -53.0161,
         -27.9212
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 349,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Pádua",
@@ -3724,7 +5579,12 @@
       "centroid": [
         -51.3158,
         -29.0022
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 120,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Casca",
@@ -3734,7 +5594,12 @@
       "centroid": [
         -51.969,
         -28.5941
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 205,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Caxias do Sul",
@@ -3744,7 +5609,12 @@
       "centroid": [
         -51.0233,
         -29.1116
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 109,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Herval",
@@ -3754,7 +5624,12 @@
       "centroid": [
         -52.2724,
         -29.0657
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 170,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Cachoeiras",
@@ -3764,7 +5639,12 @@
       "centroid": [
         -49.9623,
         -29.4746
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 133,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Guaíba",
@@ -3774,7 +5654,12 @@
       "centroid": [
         -51.4311,
         -30.1745
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 40,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Canela",
@@ -3784,7 +5669,12 @@
       "centroid": [
         -50.773,
         -29.3507
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 99,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vista Alegre do Prata",
@@ -3794,7 +5684,12 @@
       "centroid": [
         -51.7805,
         -28.8211
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 177,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Montauri",
@@ -3804,7 +5699,12 @@
       "centroid": [
         -52.0506,
         -28.668
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 207,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três de Maio",
@@ -3814,7 +5714,12 @@
       "centroid": [
         -54.2695,
         -27.7333
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 506,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Venâncio Aires",
@@ -3824,7 +5729,12 @@
       "centroid": [
         -52.1965,
         -29.5741
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 139,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Eldorado do Sul",
@@ -3834,7 +5744,12 @@
       "centroid": [
         -51.4868,
         -30.075
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 44,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Bréscia",
@@ -3844,7 +5759,12 @@
       "centroid": [
         -52.0343,
         -29.2219
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 147,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Paraí",
@@ -3854,7 +5774,12 @@
       "centroid": [
         -51.7863,
         -28.6005
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 189,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pouso Novo",
@@ -3864,7 +5789,12 @@
       "centroid": [
         -52.2298,
         -29.1575
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 158,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Doutor Ricardo",
@@ -3874,7 +5804,12 @@
       "centroid": [
         -51.9755,
         -29.0925
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 162,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tio Hugo",
@@ -3884,7 +5819,12 @@
       "centroid": [
         -52.5982,
         -28.5803
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 245,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capitão",
@@ -3894,7 +5834,12 @@
       "centroid": [
         -51.9844,
         -29.2844
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 134,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cotiporã",
@@ -3904,7 +5849,12 @@
       "centroid": [
         -51.6868,
         -28.9948
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 141,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Rolante",
@@ -3914,7 +5864,12 @@
       "centroid": [
         -50.5474,
         -29.63
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 92,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Serafina Corrêa",
@@ -3924,7 +5879,12 @@
       "centroid": [
         -51.9352,
         -28.7004
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 193,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Guabiju",
@@ -3934,7 +5894,12 @@
       "centroid": [
         -51.6595,
         -28.5743
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 190,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Tereza",
@@ -3944,7 +5909,12 @@
       "centroid": [
         -51.7109,
         -29.1643
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 128,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vila Flores",
@@ -3954,7 +5924,12 @@
       "centroid": [
         -51.5509,
         -28.8583
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 152,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dom Pedro de Alcântara",
@@ -3964,7 +5939,12 @@
       "centroid": [
         -49.8565,
         -29.3674
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 137,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Travesseiro",
@@ -3974,7 +5954,12 @@
       "centroid": [
         -52.087,
         -29.2841
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 138,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sério",
@@ -3984,7 +5969,12 @@
       "centroid": [
         -52.2422,
         -29.3952
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 150,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boa Vista do Buricá",
@@ -3994,7 +5984,12 @@
       "centroid": [
         -54.0996,
         -27.6755
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 497,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Roma do Sul",
@@ -4004,7 +5999,12 @@
       "centroid": [
         -51.408,
         -28.9896
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 131,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pinto Bandeira",
@@ -4014,7 +6014,12 @@
       "centroid": [
         -51.4631,
         -29.0927
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 117,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sobradinho",
@@ -4024,7 +6029,12 @@
       "centroid": [
         -53.0268,
         -29.4054
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 253,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Clara do Sul",
@@ -4034,7 +6044,12 @@
       "centroid": [
         -52.1328,
         -29.4529
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 132,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santo Cristo",
@@ -4044,7 +6059,12 @@
       "centroid": [
         -54.7136,
         -27.798
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 549,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Valentim do Sul",
@@ -4054,7 +6074,12 @@
       "centroid": [
         -51.7624,
         -29.0568
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 142,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Araçá",
@@ -4064,7 +6089,12 @@
       "centroid": [
         -51.7473,
         -28.6518
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 182,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lajeado do Bugre",
@@ -4074,7 +6104,12 @@
       "centroid": [
         -53.2059,
         -27.7036
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 383,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Prata",
@@ -4084,7 +6119,12 @@
       "centroid": [
         -51.6074,
         -28.7595
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 162,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Canudos do Vale",
@@ -4094,7 +6134,12 @@
       "centroid": [
         -52.2345,
         -29.3264
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 150,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Charqueadas",
@@ -4104,7 +6149,12 @@
       "centroid": [
         -51.5537,
         -29.9891
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 54,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Triunfo",
@@ -4114,7 +6164,12 @@
       "centroid": [
         -51.5789,
         -29.8422
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 60,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Monte Belo do Sul",
@@ -4124,7 +6179,12 @@
       "centroid": [
         -51.6508,
         -29.1399
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 121,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São João do Polêsine",
@@ -4134,7 +6194,12 @@
       "centroid": [
         -53.4723,
         -29.6428
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 299,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Marcos",
@@ -4144,7 +6209,12 @@
       "centroid": [
         -51.067,
         -28.9618
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 117,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cerro Largo",
@@ -4154,7 +6224,12 @@
       "centroid": [
         -54.7392,
         -28.1344
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 526,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Taquara",
@@ -4164,7 +6239,12 @@
       "centroid": [
         -50.7582,
         -29.668
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 71,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Imigrante",
@@ -4174,7 +6254,12 @@
       "centroid": [
         -51.7744,
         -29.3441
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 116,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bom Retiro do Sul",
@@ -4184,7 +6269,12 @@
       "centroid": [
         -51.9228,
         -29.638
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 101,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Osório",
@@ -4194,7 +6284,12 @@
       "centroid": [
         -50.2618,
         -29.9125
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 92,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Terra de Areia",
@@ -4204,7 +6299,12 @@
       "centroid": [
         -50.0677,
         -29.6036
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 114,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Marques de Souza",
@@ -4214,7 +6314,12 @@
       "centroid": [
         -52.147,
         -29.2919
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 139,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sentinela do Sul",
@@ -4224,7 +6329,12 @@
       "centroid": [
         -51.6045,
         -30.6254
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 87,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Paverama",
@@ -4234,7 +6344,12 @@
       "centroid": [
         -51.7295,
         -29.5698
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 87,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Três Coroas",
@@ -4244,7 +6359,12 @@
       "centroid": [
         -50.7761,
         -29.4831
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 86,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Barão",
@@ -4254,7 +6374,12 @@
       "centroid": [
         -51.4906,
         -29.3853
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 83,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tramandaí",
@@ -4264,7 +6389,12 @@
       "centroid": [
         -50.2236,
         -30.0269
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 99,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cruzeiro do Sul",
@@ -4274,7 +6404,12 @@
       "centroid": [
         -52.0336,
         -29.539
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 114,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Torres",
@@ -4284,7 +6419,12 @@
       "centroid": [
         -49.8084,
         -29.3282
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 140,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boa Vista do Sul",
@@ -4294,7 +6434,12 @@
       "centroid": [
         -51.6726,
         -29.3505
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 107,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Garibaldi",
@@ -4304,7 +6449,12 @@
       "centroid": [
         -51.582,
         -29.2428
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 105,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Glorinha",
@@ -4314,7 +6464,12 @@
       "centroid": [
         -50.7715,
         -29.8853
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 46,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Encantado",
@@ -4324,7 +6479,12 @@
       "centroid": [
         -51.9218,
         -29.2141
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 144,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Balneário Pinhal",
@@ -4334,7 +6494,12 @@
       "centroid": [
         -50.2942,
         -30.2106
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 125,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Rosa",
@@ -4344,7 +6509,12 @@
       "centroid": [
         -54.4979,
         -27.8649
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 523,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Carlos Barbosa",
@@ -4354,7 +6524,12 @@
       "centroid": [
         -51.5018,
         -29.3211
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 91,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Forquetinha",
@@ -4364,7 +6539,12 @@
       "centroid": [
         -52.126,
         -29.388
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 133,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gramado",
@@ -4374,7 +6554,12 @@
       "centroid": [
         -50.8949,
         -29.3871
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 79,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Mato Leitão",
@@ -4384,7 +6569,12 @@
       "centroid": [
         -52.1361,
         -29.5252
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 127,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Salvador do Sul",
@@ -4394,7 +6584,12 @@
       "centroid": [
         -51.5349,
         -29.4584
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 82,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Colinas",
@@ -4404,7 +6599,12 @@
       "centroid": [
         -51.8652,
         -29.3925
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 114,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alto Feliz",
@@ -4414,7 +6614,12 @@
       "centroid": [
         -51.3052,
         -29.3626
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 76,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tabaí",
@@ -4424,7 +6629,12 @@
       "centroid": [
         -51.732,
         -29.6686
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 77,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Fazenda Vilanova",
@@ -4434,7 +6644,12 @@
       "centroid": [
         -51.8394,
         -29.5893
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 90,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Poço das Antas",
@@ -4444,7 +6659,12 @@
       "centroid": [
         -51.6408,
         -29.4459
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 93,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Boqueirão do Leão",
@@ -4454,7 +6674,12 @@
       "centroid": [
         -52.4192,
         -29.3042
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 179,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Flores da Cunha",
@@ -4464,7 +6689,12 @@
       "centroid": [
         -51.2219,
         -29.0308
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 107,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio do Sal",
@@ -4474,7 +6704,12 @@
       "centroid": [
         -49.8944,
         -29.5211
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 138,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Teutônia",
@@ -4484,7 +6719,12 @@
       "centroid": [
         -51.7771,
         -29.4707
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 101,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Arroio do Meio",
@@ -4494,7 +6734,12 @@
       "centroid": [
         -51.966,
         -29.3609
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 122,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Santa Maria do Herval",
@@ -4504,7 +6749,12 @@
       "centroid": [
         -50.9678,
         -29.477
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 62,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Westfália",
@@ -4514,7 +6764,12 @@
       "centroid": [
         -51.7415,
         -29.406
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 105,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capela de Santana",
@@ -4524,7 +6779,12 @@
       "centroid": [
         -51.3577,
         -29.7077
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 49,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Pedro da Serra",
@@ -4534,7 +6794,12 @@
       "centroid": [
         -51.5068,
         -29.4192
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 81,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Igrejinha",
@@ -4544,7 +6809,12 @@
       "centroid": [
         -50.7984,
         -29.5593
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 75,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bento Gonçalves",
@@ -4554,7 +6824,12 @@
       "centroid": [
         -51.5534,
         -29.1256
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 113,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Montenegro",
@@ -4564,7 +6839,12 @@
       "centroid": [
         -51.5035,
         -29.7124
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 56,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Farroupilha",
@@ -4574,7 +6854,12 @@
       "centroid": [
         -51.3671,
         -29.2087
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 96,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Capão da Canoa",
@@ -4584,7 +6869,12 @@
       "centroid": [
         -50.0003,
         -29.6791
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 122,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Estrela",
@@ -4594,7 +6884,12 @@
       "centroid": [
         -51.9195,
         -29.5075
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 103,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Xangri-lá",
@@ -4604,7 +6899,12 @@
       "centroid": [
         -50.0694,
         -29.8073
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 118,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Vale Real",
@@ -4614,7 +6914,12 @@
       "centroid": [
         -51.2482,
         -29.3625
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 72,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Petrópolis",
@@ -4624,7 +6929,12 @@
       "centroid": [
         -51.0859,
         -29.3746
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 68,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sapiranga",
@@ -4634,7 +6944,12 @@
       "centroid": [
         -50.9936,
         -29.6164
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 51,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Linha Nova",
@@ -4644,7 +6959,12 @@
       "centroid": [
         -51.2159,
         -29.4597
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 57,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Santa Rita",
@@ -4654,7 +6974,12 @@
       "centroid": [
         -51.2894,
         -29.8439
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 28,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Brochier",
@@ -4664,7 +6989,12 @@
       "centroid": [
         -51.6215,
         -29.5368
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 79,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Portão",
@@ -4674,7 +7004,12 @@
       "centroid": [
         -51.2487,
         -29.7007
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 37,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Gravataí",
@@ -4684,7 +7019,12 @@
       "centroid": [
         -50.9439,
         -29.889
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 33,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Maratá",
@@ -4694,7 +7034,12 @@
       "centroid": [
         -51.5506,
         -29.5491
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 76,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Harmonia",
@@ -4704,7 +7049,12 @@
       "centroid": [
         -51.4263,
         -29.5455
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 61,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Vendelino",
@@ -4714,7 +7064,12 @@
       "centroid": [
         -51.3728,
         -29.3826
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 72,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Nova Hartz",
@@ -4724,7 +7079,12 @@
       "centroid": [
         -50.8986,
         -29.5846
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 61,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Parobé",
@@ -4734,7 +7094,12 @@
       "centroid": [
         -50.8564,
         -29.6605
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 61,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Hortêncio",
@@ -4744,7 +7109,12 @@
       "centroid": [
         -51.2571,
         -29.5349
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 53,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Morro Reuter",
@@ -4754,7 +7124,12 @@
       "centroid": [
         -51.0514,
         -29.5221
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 51,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Tupandi",
@@ -4764,7 +7139,12 @@
       "centroid": [
         -51.4264,
         -29.4737
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 68,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Feliz",
@@ -4774,7 +7154,12 @@
       "centroid": [
         -51.2855,
         -29.4556
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 65,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Presidente Lucena",
@@ -4784,7 +7169,12 @@
       "centroid": [
         -51.1747,
         -29.5242
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 50,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São José do Sul",
@@ -4794,7 +7184,12 @@
       "centroid": [
         -51.4858,
         -29.5482
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 68,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Bom Princípio",
@@ -4804,7 +7199,12 @@
       "centroid": [
         -51.3632,
         -29.4683
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 63,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Pareci Novo",
@@ -4814,7 +7214,12 @@
       "centroid": [
         -51.423,
         -29.6101
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 59,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Sebastião do Caí",
@@ -4824,7 +7229,12 @@
       "centroid": [
         -51.3374,
         -29.5874
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 51,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lajeado",
@@ -4834,7 +7244,12 @@
       "centroid": [
         -52.0082,
         -29.4433
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 113,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Araricá",
@@ -4844,7 +7259,12 @@
       "centroid": [
         -50.9344,
         -29.6345
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 54,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Lindolfo Collor",
@@ -4854,7 +7274,12 @@
       "centroid": [
         -51.2199,
         -29.5822
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 44,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Picada Café",
@@ -4864,7 +7289,12 @@
       "centroid": [
         -51.1094,
         -29.4611
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 55,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Novo Hamburgo",
@@ -4874,7 +7304,12 @@
       "centroid": [
         -51.0496,
         -29.7361
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 39,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Imbé",
@@ -4884,7 +7319,12 @@
       "centroid": [
         -50.1174,
         -29.9305
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 105,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Ivoti",
@@ -4894,7 +7334,12 @@
       "centroid": [
         -51.1575,
         -29.5808
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 41,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Estância Velha",
@@ -4904,7 +7349,12 @@
       "centroid": [
         -51.1884,
         -29.648
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 34,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Campo Bom",
@@ -4914,7 +7364,12 @@
       "centroid": [
         -51.0486,
         -29.6732
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 42,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Dois Irmãos",
@@ -4924,7 +7379,12 @@
       "centroid": [
         -51.0907,
         -29.5994
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 40,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "São Leopoldo",
@@ -4934,7 +7394,12 @@
       "centroid": [
         -51.1461,
         -29.7544
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 28,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Alvorada",
@@ -4944,7 +7409,12 @@
       "centroid": [
         -51.0397,
         -29.9955
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 21,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Sapucaia do Sul",
@@ -4954,7 +7424,12 @@
       "centroid": [
         -51.1336,
         -29.8226
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 23,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Porto Alegre",
@@ -4964,7 +7439,12 @@
       "centroid": [
         -51.1653,
         -30.0916
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 16,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Cachoeirinha",
@@ -4974,7 +7454,12 @@
       "centroid": [
         -51.0952,
         -29.9208
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 18,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Esteio",
@@ -4984,7 +7469,12 @@
       "centroid": [
         -51.1764,
         -29.8518
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 18,
+        "km_hospital": null
+      }
     },
     {
       "municipio": "Canoas",
@@ -4994,7 +7484,12 @@
       "centroid": [
         -51.1805,
         -29.9121
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 15,
+        "km_hospital": null
+      }
     }
   ]
 }

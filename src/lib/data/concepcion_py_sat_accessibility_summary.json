@@ -14,7 +14,12 @@
       "centroid": [
         -57.3306,
         -22.3583
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 381,
+        "min_capital": 262,
+        "km_hospital": 61.3
+      }
     },
     {
       "distrito": "Yby Yau",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.3726,
         -23.0159
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 130,
+        "min_capital": 180,
+        "km_hospital": 72.2
+      }
     },
     {
       "distrito": "Concepcion",
@@ -34,7 +44,12 @@
       "centroid": [
         -57.2752,
         -22.8011
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 256,
+        "min_capital": 166,
+        "km_hospital": 47.3
+      }
     },
     {
       "distrito": "San Lazaro",
@@ -44,7 +59,12 @@
       "centroid": [
         -57.7533,
         -22.2364
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 426,
+        "min_capital": 235,
+        "km_hospital": 23.1
+      }
     },
     {
       "distrito": "Horqueta",
@@ -54,7 +74,12 @@
       "centroid": [
         -56.7402,
         -23.283
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 91,
+        "min_capital": 105,
+        "km_hospital": 36.7
+      }
     },
     {
       "distrito": "Loreto",
@@ -64,7 +89,12 @@
       "centroid": [
         -57.1715,
         -23.2161
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 85,
+        "min_capital": 58,
+        "km_hospital": 14.9
+      }
     },
     {
       "distrito": "Belen",
@@ -74,7 +104,12 @@
       "centroid": [
         -57.2183,
         -23.4372
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 20,
+        "min_capital": 29,
+        "km_hospital": 12.8
+      }
     }
   ]
 }

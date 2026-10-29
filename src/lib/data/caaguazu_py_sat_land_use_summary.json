@@ -14,7 +14,15 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.7,
+        "trees_ha": 5507,
+        "crops_pct": 19.3,
+        "crops_ha": 3697,
+        "built_pct": 7.3,
+        "built_ha": 1393
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -24,7 +32,15 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.0,
+        "trees_ha": 14607,
+        "crops_pct": 24.6,
+        "crops_ha": 14973,
+        "built_pct": 7.1,
+        "built_ha": 4316
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -34,7 +50,15 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.0,
+        "trees_ha": 4079,
+        "crops_pct": 20.4,
+        "crops_ha": 3315,
+        "built_pct": 6.4,
+        "built_ha": 1041
+      }
     },
     {
       "distrito": "Repatriacion",
@@ -44,7 +68,15 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.4,
+        "trees_ha": 25007,
+        "crops_pct": 24.9,
+        "crops_ha": 23561,
+        "built_pct": 5.8,
+        "built_ha": 5467
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -54,7 +86,15 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "trees_pct": 20.6,
+        "trees_ha": 14290,
+        "crops_pct": 29.6,
+        "crops_ha": 20476,
+        "built_pct": 7.9,
+        "built_ha": 5472
+      }
     },
     {
       "distrito": "La Pastora",
@@ -64,7 +104,15 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.0,
+        "trees_ha": 8037,
+        "crops_pct": 9.6,
+        "crops_ha": 2274,
+        "built_pct": 4.8,
+        "built_ha": 1139
+      }
     },
     {
       "distrito": "San Joaquin",
@@ -74,7 +122,15 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.4,
+        "trees_ha": 14635,
+        "crops_pct": 19.9,
+        "crops_ha": 9275,
+        "built_pct": 5.9,
+        "built_ha": 2735
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -84,7 +140,15 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.4,
+        "trees_ha": 13873,
+        "crops_pct": 12.1,
+        "crops_ha": 4878,
+        "built_pct": 5.4,
+        "built_ha": 2196
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -94,7 +158,15 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.9,
+        "trees_ha": 7198,
+        "crops_pct": 6.3,
+        "crops_ha": 1520,
+        "built_pct": 4.6,
+        "built_ha": 1115
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -104,7 +176,15 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.1,
+        "trees_ha": 38408,
+        "crops_pct": 14.6,
+        "crops_ha": 15554,
+        "built_pct": 8.3,
+        "built_ha": 8865
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -114,7 +194,15 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.7,
+        "trees_ha": 33993,
+        "crops_pct": 28.7,
+        "crops_ha": 44847,
+        "built_pct": 5.4,
+        "built_ha": 8368
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -124,7 +212,15 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.3,
+        "trees_ha": 34880,
+        "crops_pct": 6.9,
+        "crops_ha": 6606,
+        "built_pct": 7.2,
+        "built_ha": 6906
+      }
     },
     {
       "distrito": "Yhu",
@@ -134,7 +230,15 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.3,
+        "trees_ha": 80787,
+        "crops_pct": 26.5,
+        "crops_ha": 75540,
+        "built_pct": 5.0,
+        "built_ha": 14244
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -144,7 +248,15 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.3,
+        "trees_ha": 30395,
+        "crops_pct": 28.7,
+        "crops_ha": 41004,
+        "built_pct": 4.3,
+        "built_ha": 6175
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -154,7 +266,15 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.1,
+        "trees_ha": 15627,
+        "crops_pct": 11.1,
+        "crops_ha": 4681,
+        "built_pct": 4.3,
+        "built_ha": 1820
+      }
     },
     {
       "distrito": "Cecilio Baez",
@@ -164,7 +284,15 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "trees_pct": 41.9,
+        "trees_ha": 6685,
+        "crops_pct": 8.4,
+        "crops_ha": 1340,
+        "built_pct": 5.6,
+        "built_ha": 899
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -174,7 +302,15 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.9,
+        "trees_ha": 13528,
+        "crops_pct": 7.2,
+        "crops_ha": 2231,
+        "built_pct": 5.0,
+        "built_ha": 1527
+      }
     },
     {
       "distrito": "Carayao",
@@ -184,7 +320,15 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.8,
+        "trees_ha": 47126,
+        "crops_pct": 7.7,
+        "crops_ha": 7892,
+        "built_pct": 4.2,
+        "built_ha": 4361
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -194,7 +338,15 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.5,
+        "trees_ha": 9230,
+        "crops_pct": 3.8,
+        "crops_ha": 2116,
+        "built_pct": 2.4,
+        "built_ha": 1316
+      }
     }
   ]
 }

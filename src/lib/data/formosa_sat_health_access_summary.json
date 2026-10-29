@@ -14,7 +14,11 @@
       "centroid": [
         -62.2609,
         -22.9514
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Matacos",
@@ -24,7 +28,11 @@
       "centroid": [
         -61.9734,
         -23.902
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Bermejo",
@@ -34,7 +42,11 @@
       "centroid": [
         -61.4778,
         -24.2184
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Pilagás",
@@ -44,7 +56,11 @@
       "centroid": [
         -58.7089,
         -24.9733
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -54,7 +70,11 @@
       "centroid": [
         -58.1397,
         -25.321
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Patiño",
@@ -64,7 +84,11 @@
       "centroid": [
         -59.0809,
         -24.9268
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Pirané",
@@ -74,7 +98,11 @@
       "centroid": [
         -59.0324,
         -25.6655
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Laishi",
@@ -84,7 +112,11 @@
       "centroid": [
         -58.414,
         -26.4014
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     },
     {
       "dpto": "Formosa",
@@ -94,7 +126,11 @@
       "centroid": [
         -58.174,
         -26.172
-      ]
+      ],
+      "rank": {
+        "health_min": null,
+        "health_cov_pct": null
+      }
     }
   ]
 }

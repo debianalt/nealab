@@ -14,7 +14,12 @@
       "centroid": [
         -56.5581,
         -26.5506
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 158,
+        "min_capital": 135,
+        "km_hospital": 45.3
+      }
     },
     {
       "distrito": "Tavai",
@@ -24,7 +29,12 @@
       "centroid": [
         -55.53,
         -26.195
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 172,
+        "min_capital": 149,
+        "km_hospital": 29.6
+      }
     },
     {
       "distrito": "Yuty",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.2397,
         -26.5325
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 126,
+        "min_capital": 109,
+        "km_hospital": 37.5
+      }
     },
     {
       "distrito": "Dr. Moises Bertoni",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.5977,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 123,
+        "min_capital": 65,
+        "km_hospital": 32.7
+      }
     },
     {
       "distrito": "Abai",
@@ -54,7 +74,12 @@
       "centroid": [
         -55.7178,
         -25.8957
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 120,
+        "min_capital": 121,
+        "km_hospital": 31.6
+      }
     },
     {
       "distrito": "Gral. Higinio Morinigo",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.1114,
         -26.0729
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 81,
+        "min_capital": 55,
+        "km_hospital": 17.7
+      }
     },
     {
       "distrito": "San Juan Nepomuceno",
@@ -74,7 +104,12 @@
       "centroid": [
         -55.9173,
         -26.2417
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 122,
+        "min_capital": 81,
+        "km_hospital": 9.2
+      }
     },
     {
       "distrito": "Buena Vista",
@@ -84,7 +119,12 @@
       "centroid": [
         -56.0981,
         -26.2335
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 107,
+        "min_capital": 47,
+        "km_hospital": 16.5
+      }
     },
     {
       "distrito": "Caazapa",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.2983,
         -26.1867
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 84,
+        "min_capital": 35,
+        "km_hospital": 13.9
+      }
     },
     {
       "distrito": "Maciel",
@@ -104,7 +149,12 @@
       "centroid": [
         -56.528,
         -26.2225
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 88,
+        "min_capital": 37,
+        "km_hospital": 15.4
+      }
     }
   ]
 }

@@ -14,7 +14,11 @@
       "centroid": [
         -61.0698,
         -21.1398
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.8,
+        "pm25_delta": -3.3
+      }
     },
     {
       "distrito": "Mcal. Estigarribia",
@@ -24,7 +28,11 @@
       "centroid": [
         -60.3036,
         -22.3771
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.9
+      }
     },
     {
       "distrito": "Pedro P. Pena",
@@ -34,7 +42,11 @@
       "centroid": [
         -61.3642,
         -22.7396
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.1,
+        "pm25_delta": -2.8
+      }
     }
   ]
 }

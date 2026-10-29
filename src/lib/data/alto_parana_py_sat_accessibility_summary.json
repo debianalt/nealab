@@ -14,7 +14,12 @@
       "centroid": [
         -55.3862,
         -25.7898
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 115,
+        "min_capital": 150,
+        "km_hospital": 31.1
+      }
     },
     {
       "distrito": "San Alberto",
@@ -24,7 +29,12 @@
       "centroid": [
         -54.6794,
         -24.8378
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 201,
+        "min_capital": 159,
+        "km_hospital": 17.7
+      }
     },
     {
       "distrito": "Itakyry",
@@ -34,7 +44,12 @@
       "centroid": [
         -55.1516,
         -24.8215
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 175,
+        "min_capital": 148,
+        "km_hospital": 24.4
+      }
     },
     {
       "distrito": "Santa Fe Del Paraná",
@@ -44,7 +59,12 @@
       "centroid": [
         -54.6299,
         -25.1914
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 128,
+        "min_capital": 79,
+        "km_hospital": 21.0
+      }
     },
     {
       "distrito": "Ñacunday",
@@ -54,7 +74,12 @@
       "centroid": [
         -54.7844,
         -26.0741
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 146,
+        "min_capital": 141,
+        "km_hospital": 15.4
+      }
     },
     {
       "distrito": "Minga Porá",
@@ -64,7 +89,12 @@
       "centroid": [
         -54.8684,
         -24.7658
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 139,
+        "min_capital": 126,
+        "km_hospital": 26.7
+      }
     },
     {
       "distrito": "Iruña",
@@ -74,7 +104,12 @@
       "centroid": [
         -55.0381,
         -26.1334
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 98,
+        "min_capital": 157,
+        "km_hospital": 13.5
+      }
     },
     {
       "distrito": "Mbaracayú",
@@ -84,7 +119,12 @@
       "centroid": [
         -54.6833,
         -25.0093
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 187,
+        "min_capital": 114,
+        "km_hospital": 20.0
+      }
     },
     {
       "distrito": "Naranjal",
@@ -94,7 +134,12 @@
       "centroid": [
         -55.208,
         -25.9527
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 72,
+        "min_capital": 130,
+        "km_hospital": 15.5
+      }
     },
     {
       "distrito": "Tavapy",
@@ -104,7 +149,12 @@
       "centroid": [
         -55.0691,
         -25.6222
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 61,
+        "min_capital": 85,
+        "km_hospital": 19.7
+      }
     },
     {
       "distrito": "Juan E. O'Leary",
@@ -114,7 +164,12 @@
       "centroid": [
         -55.3633,
         -25.4804
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 63,
+        "min_capital": 100,
+        "km_hospital": 12.1
+      }
     },
     {
       "distrito": "Dr. Juan León Mallorquín",
@@ -124,7 +179,12 @@
       "centroid": [
         -55.2555,
         -25.4849
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 55,
+        "min_capital": 89,
+        "km_hospital": 19.3
+      }
     },
     {
       "distrito": "Dr. Raúl Peña",
@@ -134,7 +194,12 @@
       "centroid": [
         -55.2241,
         -26.1362
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 77,
+        "min_capital": 144,
+        "km_hospital": 15.1
+      }
     },
     {
       "distrito": "Yguazú",
@@ -144,7 +209,12 @@
       "centroid": [
         -55.0999,
         -25.4145
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 52,
+        "min_capital": 81,
+        "km_hospital": 25.5
+      }
     },
     {
       "distrito": "Santa Rosa Del Monday",
@@ -154,7 +224,12 @@
       "centroid": [
         -54.9236,
         -25.8464
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 92,
+        "min_capital": 99,
+        "km_hospital": 10.1
+      }
     },
     {
       "distrito": "Santa Rita",
@@ -164,7 +239,12 @@
       "centroid": [
         -55.1372,
         -25.7706
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 60,
+        "min_capital": 99,
+        "km_hospital": 9.9
+      }
     },
     {
       "distrito": "Hernandarias",
@@ -174,7 +254,12 @@
       "centroid": [
         -54.7802,
         -25.3136
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 60,
+        "min_capital": 46,
+        "km_hospital": 14.3
+      }
     },
     {
       "distrito": "Domingo Martínez De Irala",
@@ -184,7 +269,12 @@
       "centroid": [
         -54.6889,
         -25.8607
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 98,
+        "min_capital": 80,
+        "km_hospital": 11.0
+      }
     },
     {
       "distrito": "Los Cedrales",
@@ -194,7 +284,12 @@
       "centroid": [
         -54.7516,
         -25.6831
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 55,
+        "min_capital": 46,
+        "km_hospital": 14.6
+      }
     },
     {
       "distrito": "Minga Guazú",
@@ -204,7 +299,12 @@
       "centroid": [
         -54.8404,
         -25.5054
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 19,
+        "min_capital": 35,
+        "km_hospital": 11.1
+      }
     },
     {
       "distrito": "Presidente Franco",
@@ -214,7 +314,12 @@
       "centroid": [
         -54.6414,
         -25.5971
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 16,
+        "min_capital": 21,
+        "km_hospital": 4.1
+      }
     },
     {
       "distrito": "Ciudad Del Este",
@@ -224,7 +329,12 @@
       "centroid": [
         -54.6775,
         -25.5031
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 5,
+        "min_capital": 13,
+        "km_hospital": 2.7
+      }
     }
   ]
 }

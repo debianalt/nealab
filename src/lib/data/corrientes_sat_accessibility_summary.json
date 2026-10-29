@@ -14,7 +14,12 @@
       "centroid": [
         -56.9513,
         -28.8303
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 204,
+        "min_capital": 515,
+        "km_hospital": 32.4
+      }
     },
     {
       "dpto": "Sauce",
@@ -24,7 +29,12 @@
       "centroid": [
         -58.8097,
         -30.0011
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 68,
+        "min_capital": 183,
+        "km_hospital": 33.1
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.8203,
         -27.9285
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 266,
+        "min_capital": 430,
+        "km_hospital": 25.7
+      }
     },
     {
       "dpto": "General Alvear",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.5245,
         -28.7791
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 148,
+        "min_capital": 529,
+        "km_hospital": 31.8
+      }
     },
     {
       "dpto": "Esquina",
@@ -54,7 +74,12 @@
       "centroid": [
         -59.2457,
         -29.9916
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 63,
+        "min_capital": 187,
+        "km_hospital": 36.3
+      }
     },
     {
       "dpto": "Mercedes",
@@ -64,7 +89,12 @@
       "centroid": [
         -57.8356,
         -29.0512
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 190,
+        "min_capital": 360,
+        "km_hospital": 31.3
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -74,7 +104,12 @@
       "centroid": [
         -56.248,
         -28.2257
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 111,
+        "min_capital": 357,
+        "km_hospital": 25.0
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -84,7 +119,12 @@
       "centroid": [
         -58.3336,
         -29.7068
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 97,
+        "min_capital": 271,
+        "km_hospital": 27.9
+      }
     },
     {
       "dpto": "Concepción",
@@ -94,7 +134,12 @@
       "centroid": [
         -58.0479,
         -28.4115
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 194,
+        "min_capital": 288,
+        "km_hospital": 16.9
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -104,7 +149,12 @@
       "centroid": [
         -57.3264,
         -29.599
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 101,
+        "min_capital": 428,
+        "km_hospital": 22.1
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -114,7 +164,12 @@
       "centroid": [
         -57.871,
         -30.2487
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 15,
+        "min_capital": 46,
+        "km_hospital": 2.3
+      }
     },
     {
       "dpto": "San Miguel",
@@ -124,7 +179,12 @@
       "centroid": [
         -57.4252,
         -27.8708
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 180,
+        "min_capital": 266,
+        "km_hospital": 15.9
+      }
     },
     {
       "dpto": "San Roque",
@@ -134,7 +194,12 @@
       "centroid": [
         -58.603,
         -28.7144
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 94,
+        "min_capital": 177,
+        "km_hospital": 27.7
+      }
     },
     {
       "dpto": "Goya",
@@ -144,7 +209,12 @@
       "centroid": [
         -59.2704,
         -29.4647
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 58,
+        "min_capital": 221,
+        "km_hospital": 26.4
+      }
     },
     {
       "dpto": "General Paz",
@@ -154,7 +224,12 @@
       "centroid": [
         -57.8035,
         -27.7136
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 112,
+        "min_capital": 191,
+        "km_hospital": 14.0
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -164,7 +239,12 @@
       "centroid": [
         -58.1721,
         -28.0052
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 115,
+        "min_capital": 179,
+        "km_hospital": 12.2
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -174,7 +254,12 @@
       "centroid": [
         -58.9292,
         -28.4852
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 98,
+        "min_capital": 168,
+        "km_hospital": 18.1
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -184,7 +269,12 @@
       "centroid": [
         -57.6317,
         -27.472
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 131,
+        "min_capital": 179,
+        "km_hospital": 9.1
+      }
     },
     {
       "dpto": "Saladas",
@@ -194,7 +284,12 @@
       "centroid": [
         -58.602,
         -28.2037
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 112,
+        "min_capital": 128,
+        "km_hospital": 16.1
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -204,7 +299,12 @@
       "centroid": [
         -58.2668,
         -27.6004
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 71,
+        "min_capital": 123,
+        "km_hospital": 20.7
+      }
     },
     {
       "dpto": "Empedrado",
@@ -214,7 +314,12 @@
       "centroid": [
         -58.6717,
         -27.893
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 81,
+        "min_capital": 91,
+        "km_hospital": 18.3
+      }
     },
     {
       "dpto": "Lavalle",
@@ -224,7 +329,12 @@
       "centroid": [
         -58.9267,
         -28.9976
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 47,
+        "min_capital": 194,
+        "km_hospital": 9.7
+      }
     },
     {
       "dpto": "Itatí",
@@ -234,7 +344,12 @@
       "centroid": [
         -58.0869,
         -27.3361
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 78,
+        "min_capital": 111,
+        "km_hospital": 7.4
+      }
     },
     {
       "dpto": "San Cosme",
@@ -244,7 +359,12 @@
       "centroid": [
         -58.5137,
         -27.3768
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 29,
+        "min_capital": 46,
+        "km_hospital": 7.8
+      }
     },
     {
       "dpto": "Capital",
@@ -254,7 +374,12 @@
       "centroid": [
         -58.7619,
         -27.5213
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 21,
+        "min_capital": 27,
+        "km_hospital": 5.9
+      }
     }
   ]
 }

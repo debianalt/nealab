@@ -14,7 +14,15 @@
       "centroid": [
         -55.6761,
         -27.8846
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.4,
+        "trees_ha": 47314,
+        "crops_pct": 9.4,
+        "crops_ha": 11289,
+        "built_pct": 4.7,
+        "built_ha": 5681
+      }
     },
     {
       "dpto": "Capital",
@@ -24,7 +32,15 @@
       "centroid": [
         -55.8527,
         -27.5545
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.7,
+        "trees_ha": 36395,
+        "crops_pct": 7.5,
+        "crops_ha": 8388,
+        "built_pct": 9.1,
+        "built_ha": 10171
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -34,7 +50,15 @@
       "centroid": [
         -54.928,
         -26.8937
-      ]
+      ],
+      "rank": {
+        "trees_pct": 52.1,
+        "trees_ha": 86179,
+        "crops_pct": 7.6,
+        "crops_ha": 12528,
+        "built_pct": 4.8,
+        "built_ha": 7933
+      }
     },
     {
       "dpto": "Cainguás",
@@ -44,7 +68,15 @@
       "centroid": [
         -54.7984,
         -27.1445
-      ]
+      ],
+      "rank": {
+        "trees_pct": 53.4,
+        "trees_ha": 94148,
+        "crops_pct": 8.4,
+        "crops_ha": 14747,
+        "built_pct": 5.4,
+        "built_ha": 9443
+      }
     },
     {
       "dpto": "Oberá",
@@ -54,7 +86,15 @@
       "centroid": [
         -55.0739,
         -27.4719
-      ]
+      ],
+      "rank": {
+        "trees_pct": 53.3,
+        "trees_ha": 96460,
+        "crops_pct": 7.8,
+        "crops_ha": 14173,
+        "built_pct": 5.9,
+        "built_ha": 10617
+      }
     },
     {
       "dpto": "Concepción",
@@ -64,7 +104,15 @@
       "centroid": [
         -55.4696,
         -27.9322
-      ]
+      ],
+      "rank": {
+        "trees_pct": 46.9,
+        "trees_ha": 42110,
+        "crops_pct": 7.3,
+        "crops_ha": 6553,
+        "built_pct": 3.7,
+        "built_ha": 3349
+      }
     },
     {
       "dpto": "San Javier",
@@ -74,7 +122,15 @@
       "centroid": [
         -55.1695,
         -27.7764
-      ]
+      ],
+      "rank": {
+        "trees_pct": 51.3,
+        "trees_ha": 39414,
+        "crops_pct": 6.6,
+        "crops_ha": 5086,
+        "built_pct": 5.0,
+        "built_ha": 3827
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -84,7 +140,15 @@
       "centroid": [
         -54.6331,
         -27.3777
-      ]
+      ],
+      "rank": {
+        "trees_pct": 53.5,
+        "trees_ha": 100340,
+        "crops_pct": 8.2,
+        "crops_ha": 15292,
+        "built_pct": 5.0,
+        "built_ha": 9329
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -94,7 +158,15 @@
       "centroid": [
         -55.3896,
         -27.6292
-      ]
+      ],
+      "rank": {
+        "trees_pct": 55.7,
+        "trees_ha": 68378,
+        "crops_pct": 6.1,
+        "crops_ha": 7537,
+        "built_pct": 5.1,
+        "built_ha": 6261
+      }
     },
     {
       "dpto": "Candelaria",
@@ -104,7 +176,15 @@
       "centroid": [
         -55.5863,
         -27.4607
-      ]
+      ],
+      "rank": {
+        "trees_pct": 53.5,
+        "trees_ha": 57175,
+        "crops_pct": 4.8,
+        "crops_ha": 5096,
+        "built_pct": 4.5,
+        "built_ha": 4806
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -114,7 +194,15 @@
       "centroid": [
         -55.3353,
         -27.1742
-      ]
+      ],
+      "rank": {
+        "trees_pct": 56.5,
+        "trees_ha": 107462,
+        "crops_pct": 6.5,
+        "crops_ha": 12419,
+        "built_pct": 4.5,
+        "built_ha": 8552
+      }
     },
     {
       "dpto": "Guaraní",
@@ -124,7 +212,15 @@
       "centroid": [
         -54.2709,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "trees_pct": 57.5,
+        "trees_ha": 212705,
+        "crops_pct": 7.5,
+        "crops_ha": 27620,
+        "built_pct": 5.0,
+        "built_ha": 18401
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -134,7 +230,15 @@
       "centroid": [
         -54.5696,
         -26.6643
-      ]
+      ],
+      "rank": {
+        "trees_pct": 60.7,
+        "trees_ha": 118101,
+        "crops_pct": 5.3,
+        "crops_ha": 10266,
+        "built_pct": 4.1,
+        "built_ha": 7925
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -144,7 +248,15 @@
       "centroid": [
         -53.9559,
         -26.0032
-      ]
+      ],
+      "rank": {
+        "trees_pct": 61.4,
+        "trees_ha": 209003,
+        "crops_pct": 6.3,
+        "crops_ha": 21556,
+        "built_pct": 4.2,
+        "built_ha": 14160
+      }
     },
     {
       "dpto": "Eldorado",
@@ -154,7 +266,15 @@
       "centroid": [
         -54.4436,
         -26.3178
-      ]
+      ],
+      "rank": {
+        "trees_pct": 62.7,
+        "trees_ha": 119918,
+        "crops_pct": 5.5,
+        "crops_ha": 10517,
+        "built_pct": 4.7,
+        "built_ha": 8941
+      }
     },
     {
       "dpto": "Iguazú",
@@ -164,7 +284,15 @@
       "centroid": [
         -54.4021,
         -25.8739
-      ]
+      ],
+      "rank": {
+        "trees_pct": 61.1,
+        "trees_ha": 184447,
+        "crops_pct": 6.2,
+        "crops_ha": 18763,
+        "built_pct": 4.1,
+        "built_ha": 12498
+      }
     },
     {
       "dpto": "San Pedro",
@@ -174,7 +302,15 @@
       "centroid": [
         -53.9669,
         -26.6351
-      ]
+      ],
+      "rank": {
+        "trees_pct": 65.0,
+        "trees_ha": 287905,
+        "crops_pct": 5.0,
+        "crops_ha": 22132,
+        "built_pct": 4.0,
+        "built_ha": 17813
+      }
     }
   ]
 }

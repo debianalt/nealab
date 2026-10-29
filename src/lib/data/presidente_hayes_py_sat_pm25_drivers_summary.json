@@ -14,7 +14,11 @@
       "centroid": [
         -57.6409,
         -24.821
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.7,
+        "pm25_delta": -1.3
+      }
     },
     {
       "distrito": "Villa Hayes",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.6721,
         -24.2215
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.6,
+        "pm25_delta": -1.1
+      }
     },
     {
       "distrito": "Pozo Colorado",
@@ -34,7 +42,11 @@
       "centroid": [
         -58.8214,
         -23.1741
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.3,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "Puerto Pinasco",
@@ -44,7 +56,11 @@
       "centroid": [
         -58.3619,
         -22.6175
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -1.6
+      }
     }
   ]
 }

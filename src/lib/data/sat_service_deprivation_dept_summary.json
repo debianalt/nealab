@@ -13,7 +13,15 @@
       "centroid": [
         -54.0439,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 13.6,
+        "nbi_n": 1442,
+        "cloacas_pct": 94.4,
+        "cloacas_n": 9988,
+        "hacin_pct": 10.5,
+        "hacin_n": 1107
+      }
     },
     {
       "dpto": "Candelaria",
@@ -23,7 +31,15 @@
       "centroid": [
         -55.6618,
         -27.4836
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.0,
+        "nbi_n": 1258,
+        "cloacas_pct": 93.5,
+        "cloacas_n": 10687,
+        "hacin_pct": 11.4,
+        "hacin_n": 1299
+      }
     },
     {
       "dpto": "Iguazú",
@@ -33,7 +49,15 @@
       "centroid": [
         -54.5596,
         -26.0323
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.0,
+        "nbi_n": 3557,
+        "cloacas_pct": 84.1,
+        "cloacas_n": 27070,
+        "hacin_pct": 10.8,
+        "hacin_n": 3468
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -43,7 +67,15 @@
       "centroid": [
         -55.2321,
         -27.0669
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.8,
+        "nbi_n": 1831,
+        "cloacas_pct": 92.8,
+        "cloacas_n": 19415,
+        "hacin_pct": 8.7,
+        "hacin_n": 1818
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -53,7 +85,15 @@
       "centroid": [
         -55.5248,
         -27.5921
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 7.3,
+        "nbi_n": 1250,
+        "cloacas_pct": 94.0,
+        "cloacas_n": 16094,
+        "hacin_pct": 6.1,
+        "hacin_n": 1040
+      }
     },
     {
       "dpto": "Guaraní",
@@ -63,7 +103,15 @@
       "centroid": [
         -54.1853,
         -26.9559
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.8,
+        "nbi_n": 2472,
+        "cloacas_pct": 94.5,
+        "cloacas_n": 23804,
+        "hacin_pct": 6.8,
+        "hacin_n": 1723
+      }
     },
     {
       "dpto": "Cainguás",
@@ -73,7 +121,15 @@
       "centroid": [
         -54.951,
         -27.1287
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.5,
+        "nbi_n": 1666,
+        "cloacas_pct": 94.9,
+        "cloacas_n": 18593,
+        "hacin_pct": 7.8,
+        "hacin_n": 1522
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -83,7 +139,15 @@
       "centroid": [
         -55.755,
         -27.8091
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 11.7,
+        "nbi_n": 1899,
+        "cloacas_pct": 90.0,
+        "cloacas_n": 14578,
+        "hacin_pct": 9.3,
+        "hacin_n": 1514
+      }
     },
     {
       "dpto": "Eldorado",
@@ -93,7 +157,15 @@
       "centroid": [
         -54.4038,
         -26.3893
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.1,
+        "nbi_n": 2533,
+        "cloacas_pct": 90.2,
+        "cloacas_n": 28084,
+        "hacin_pct": 8.1,
+        "hacin_n": 2516
+      }
     },
     {
       "dpto": "Oberá",
@@ -103,7 +175,15 @@
       "centroid": [
         -55.0711,
         -27.2737
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.3,
+        "nbi_n": 3402,
+        "cloacas_pct": 71.8,
+        "cloacas_n": 29403,
+        "hacin_pct": 7.8,
+        "hacin_n": 3202
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -113,7 +193,15 @@
       "centroid": [
         -53.7542,
         -26.3013
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 10.2,
+        "nbi_n": 1470,
+        "cloacas_pct": 93.3,
+        "cloacas_n": 13459,
+        "hacin_pct": 7.7,
+        "hacin_n": 1118
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -123,7 +211,15 @@
       "centroid": [
         -54.6365,
         -26.6147
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.1,
+        "nbi_n": 1016,
+        "cloacas_pct": 73.0,
+        "cloacas_n": 9189,
+        "hacin_pct": 8.2,
+        "hacin_n": 1034
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -133,7 +229,15 @@
       "centroid": [
         -55.0755,
         -26.9918
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 8.9,
+        "nbi_n": 1565,
+        "cloacas_pct": 73.4,
+        "cloacas_n": 12982,
+        "hacin_pct": 7.8,
+        "hacin_n": 1373
+      }
     },
     {
       "dpto": "San Javier",
@@ -143,7 +247,15 @@
       "centroid": [
         -55.2586,
         -27.7646
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 9.1,
+        "nbi_n": 697,
+        "cloacas_pct": 87.1,
+        "cloacas_n": 6645,
+        "hacin_pct": 5.5,
+        "hacin_n": 423
+      }
     },
     {
       "dpto": "Concepción",
@@ -153,7 +265,15 @@
       "centroid": [
         -55.4271,
         -27.8858
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 15.7,
+        "nbi_n": 512,
+        "cloacas_pct": 90.5,
+        "cloacas_n": 2951,
+        "hacin_pct": 8.9,
+        "hacin_n": 292
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -163,7 +283,15 @@
       "centroid": [
         -54.4425,
         -27.3319
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 7.2,
+        "nbi_n": 736,
+        "cloacas_pct": 96.1,
+        "cloacas_n": 9870,
+        "hacin_pct": 4.2,
+        "hacin_n": 433
+      }
     },
     {
       "dpto": "Capital",
@@ -173,7 +301,15 @@
       "centroid": [
         -55.9408,
         -27.4297
-      ]
+      ],
+      "rank": {
+        "nbi_pct": 7.6,
+        "nbi_n": 10219,
+        "cloacas_pct": 44.1,
+        "cloacas_n": 59289,
+        "hacin_pct": 7.7,
+        "hacin_n": 10288
+      }
     }
   ]
 }

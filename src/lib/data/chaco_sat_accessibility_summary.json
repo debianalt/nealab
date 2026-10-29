@@ -14,7 +14,12 @@
       "centroid": [
         -61.9817,
         -25.7474
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 481,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -24,7 +29,12 @@
       "centroid": [
         -61.3304,
         -27.8272
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 365,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "General Güemes",
@@ -34,7 +44,12 @@
       "centroid": [
         -61.3084,
         -25.2411
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 327,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -44,7 +59,12 @@
       "centroid": [
         -61.4369,
         -27.3753
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 334,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -54,7 +74,12 @@
       "centroid": [
         -61.3118,
         -27.1138
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 306,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -64,7 +89,12 @@
       "centroid": [
         -60.6704,
         -27.742
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 303,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Nueve de Julio",
@@ -74,7 +104,12 @@
       "centroid": [
         -61.2721,
         -26.9361
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 290,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -84,7 +119,12 @@
       "centroid": [
         -61.0749,
         -26.838
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 266,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Maipú",
@@ -94,7 +134,12 @@
       "centroid": [
         -60.4564,
         -26.3289
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 239,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -104,7 +149,12 @@
       "centroid": [
         -60.37,
         -27.4108
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 240,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -114,7 +164,12 @@
       "centroid": [
         -60.692,
         -27.2479
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 234,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Independencia",
@@ -124,7 +179,12 @@
       "centroid": [
         -60.7604,
         -26.7362
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 220,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -134,7 +194,12 @@
       "centroid": [
         -60.4735,
         -26.7914
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 182,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -144,7 +209,12 @@
       "centroid": [
         -59.8436,
         -27.6698
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 185,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -154,7 +224,12 @@
       "centroid": [
         -60.1799,
         -26.6648
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 175,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -164,7 +239,12 @@
       "centroid": [
         -59.5073,
         -26.3713
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 179,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -174,7 +254,12 @@
       "centroid": [
         -60.0398,
         -26.8257
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 162,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -184,7 +269,12 @@
       "centroid": [
         -59.7871,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 124,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -194,7 +284,12 @@
       "centroid": [
         -59.5538,
         -26.7743
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 119,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Bermejo",
@@ -204,7 +299,12 @@
       "centroid": [
         -58.7084,
         -26.9631
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 96,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "General Donovan",
@@ -214,7 +314,12 @@
       "centroid": [
         -59.3494,
         -27.1274
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 74,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "San Fernando",
@@ -224,7 +329,12 @@
       "centroid": [
         -59.1267,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 71,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -234,7 +344,12 @@
       "centroid": [
         -58.9731,
         -27.1551
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 53,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Libertad",
@@ -244,7 +359,12 @@
       "centroid": [
         -59.2715,
         -27.3475
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 54,
+        "km_hospital": null
+      }
     }
   ]
 }

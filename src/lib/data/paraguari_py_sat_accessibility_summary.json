@@ -14,7 +14,12 @@
       "centroid": [
         -56.8042,
         -26.2791
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 155,
+        "min_capital": 136,
+        "km_hospital": 28.6
+      }
     },
     {
       "distrito": "Caapucu",
@@ -24,7 +29,12 @@
       "centroid": [
         -57.3904,
         -26.3278
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 176,
+        "min_capital": 176,
+        "km_hospital": 26.2
+      }
     },
     {
       "distrito": "Quyquyho",
@@ -34,7 +44,12 @@
       "centroid": [
         -57.0129,
         -26.2561
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 116,
+        "min_capital": 116,
+        "km_hospital": 18.7
+      }
     },
     {
       "distrito": "Ybycui",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.942,
         -26.0391
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 79,
+        "min_capital": 82,
+        "km_hospital": 18.6
+      }
     },
     {
       "distrito": "Quiindy",
@@ -54,7 +74,12 @@
       "centroid": [
         -57.3214,
         -26.0118
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 89,
+        "min_capital": 82,
+        "km_hospital": 12.8
+      }
     },
     {
       "distrito": "Ybytymi",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.7656,
         -25.7754
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 65,
+        "min_capital": 70,
+        "km_hospital": 15.2
+      }
     },
     {
       "distrito": "Tebicuarymi",
@@ -74,7 +104,12 @@
       "centroid": [
         -56.666,
         -25.9156
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 59,
+        "min_capital": 88,
+        "km_hospital": 17.9
+      }
     },
     {
       "distrito": "Sapucai",
@@ -84,7 +119,12 @@
       "centroid": [
         -56.9738,
         -25.7203
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 58,
+        "min_capital": 38,
+        "km_hospital": 18.9
+      }
     },
     {
       "distrito": "Caballero",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.8862,
         -25.7573
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 59,
+        "min_capital": 48,
+        "km_hospital": 16.4
+      }
     },
     {
       "distrito": "San Roque Gonzalez",
@@ -104,7 +149,12 @@
       "centroid": [
         -57.3024,
         -25.8795
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 62,
+        "min_capital": 54,
+        "km_hospital": 9.8
+      }
     },
     {
       "distrito": "Acahay",
@@ -114,7 +164,12 @@
       "centroid": [
         -57.076,
         -25.8967
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 53,
+        "min_capital": 49,
+        "km_hospital": 15.0
+      }
     },
     {
       "distrito": "Escobar",
@@ -124,7 +179,12 @@
       "centroid": [
         -57.0105,
         -25.6329
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 55,
+        "min_capital": 28,
+        "km_hospital": 12.9
+      }
     },
     {
       "distrito": "La Colmena",
@@ -134,7 +194,12 @@
       "centroid": [
         -56.8176,
         -25.9063
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 66,
+        "min_capital": 73,
+        "km_hospital": 5.1
+      }
     },
     {
       "distrito": "Carapegua",
@@ -144,7 +209,12 @@
       "centroid": [
         -57.3255,
         -25.7621
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 46,
+        "min_capital": 42,
+        "km_hospital": 6.9
+      }
     },
     {
       "distrito": "Paraguari",
@@ -154,7 +224,12 @@
       "centroid": [
         -57.1351,
         -25.6664
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 47,
+        "min_capital": 22,
+        "km_hospital": 8.2
+      }
     },
     {
       "distrito": "Yaguaron",
@@ -164,7 +239,12 @@
       "centroid": [
         -57.2804,
         -25.595
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 27,
+        "min_capital": 29,
+        "km_hospital": 8.1
+      }
     },
     {
       "distrito": "Pirayu",
@@ -174,7 +254,12 @@
       "centroid": [
         -57.2018,
         -25.4796
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 20,
+        "min_capital": 31,
+        "km_hospital": 7.9
+      }
     }
   ]
 }

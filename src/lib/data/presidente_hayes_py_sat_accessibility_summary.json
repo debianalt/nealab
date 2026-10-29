@@ -14,7 +14,12 @@
       "centroid": [
         -58.3619,
         -22.6175
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 530,
+        "min_capital": 366,
+        "km_hospital": 52.4
+      }
     },
     {
       "distrito": "Villa Hayes",
@@ -24,7 +29,12 @@
       "centroid": [
         -58.6721,
         -24.2215
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 229,
+        "min_capital": 352,
+        "km_hospital": 71.1
+      }
     },
     {
       "distrito": "Pozo Colorado",
@@ -34,7 +44,12 @@
       "centroid": [
         -58.8214,
         -23.1741
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 246,
+        "min_capital": 246,
+        "km_hospital": 53.7
+      }
     },
     {
       "distrito": "Benjamin Aceval",
@@ -44,7 +59,12 @@
       "centroid": [
         -57.6409,
         -24.821
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 67,
+        "min_capital": 321,
+        "km_hospital": 36.3
+      }
     }
   ]
 }

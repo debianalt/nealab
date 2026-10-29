@@ -14,7 +14,11 @@
       "centroid": [
         -60.2193,
         -20.0049
-      ]
+      ],
+      "rank": {
+        "high_ha": 2031938,
+        "high_pct": 54.4
+      }
     },
     {
       "distrito": "La Victoria",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.845,
         -21.6079
-      ]
+      ],
+      "rank": {
+        "high_ha": 354855,
+        "high_pct": 14.1
+      }
     },
     {
       "distrito": "Fuerte Olimpo",
@@ -34,7 +42,11 @@
       "centroid": [
         -58.6553,
         -20.376
-      ]
+      ],
+      "rank": {
+        "high_ha": 130602,
+        "high_pct": 6.1
+      }
     }
   ]
 }

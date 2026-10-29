@@ -14,7 +14,12 @@
       "centroid": [
         -53.9658,
         -26.6398
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 149,
+        "min_capital": 321,
+        "km_hospital": 10.9
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -24,7 +29,12 @@
       "centroid": [
         -53.9584,
         -26.0076
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 114,
+        "min_capital": 355,
+        "km_hospital": 8.8
+      }
     },
     {
       "dpto": "Iguazú",
@@ -34,7 +44,12 @@
       "centroid": [
         -54.4076,
         -25.8818
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 90,
+        "min_capital": 306,
+        "km_hospital": 8.0
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -44,7 +59,12 @@
       "centroid": [
         -54.5675,
         -26.6682
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 72,
+        "min_capital": 219,
+        "km_hospital": 10.4
+      }
     },
     {
       "dpto": "Guaraní",
@@ -54,7 +74,12 @@
       "centroid": [
         -54.2688,
         -27.0274
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 96,
+        "min_capital": 230,
+        "km_hospital": 7.7
+      }
     },
     {
       "dpto": "Eldorado",
@@ -64,7 +89,12 @@
       "centroid": [
         -54.4402,
         -26.3193
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 59,
+        "min_capital": 239,
+        "km_hospital": 6.1
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -74,7 +104,12 @@
       "centroid": [
         -54.6382,
         -27.3768
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 71,
+        "min_capital": 182,
+        "km_hospital": 4.7
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -84,7 +119,12 @@
       "centroid": [
         -54.9218,
         -26.8934
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 66,
+        "min_capital": 149,
+        "km_hospital": 5.6
+      }
     },
     {
       "dpto": "Concepción",
@@ -94,7 +134,12 @@
       "centroid": [
         -55.4678,
         -27.9377
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 64,
+        "min_capital": 111,
+        "km_hospital": 3.8
+      }
     },
     {
       "dpto": "Cainguás",
@@ -104,7 +149,12 @@
       "centroid": [
         -54.8072,
         -27.1483
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 60,
+        "min_capital": 154,
+        "km_hospital": 4.1
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -114,7 +164,12 @@
       "centroid": [
         -55.3377,
         -27.1764
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 57,
+        "min_capital": 90,
+        "km_hospital": 3.8
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -124,7 +179,12 @@
       "centroid": [
         -55.682,
         -27.8934
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 51,
+        "min_capital": 79,
+        "km_hospital": 5.0
+      }
     },
     {
       "dpto": "San Javier",
@@ -134,7 +194,12 @@
       "centroid": [
         -55.1659,
         -27.775
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 41,
+        "min_capital": 114,
+        "km_hospital": 3.6
+      }
     },
     {
       "dpto": "Capital",
@@ -144,7 +209,12 @@
       "centroid": [
         -55.8579,
         -27.5524
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 26,
+        "min_capital": 35,
+        "km_hospital": 5.1
+      }
     },
     {
       "dpto": "Candelaria",
@@ -154,7 +224,12 @@
       "centroid": [
         -55.5827,
         -27.4641
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 32,
+        "min_capital": 49,
+        "km_hospital": 4.0
+      }
     },
     {
       "dpto": "Oberá",
@@ -164,7 +239,12 @@
       "centroid": [
         -55.0808,
         -27.4651
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 21,
+        "min_capital": 110,
+        "km_hospital": 3.7
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -174,7 +254,12 @@
       "centroid": [
         -55.3895,
         -27.6277
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 30,
+        "min_capital": 76,
+        "km_hospital": 3.5
+      }
     }
   ]
 }

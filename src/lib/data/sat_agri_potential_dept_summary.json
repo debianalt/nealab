@@ -14,7 +14,11 @@
       "centroid": [
         -55.5863,
         -27.4607
-      ]
+      ],
+      "rank": {
+        "high_ha": 90091,
+        "high_pct": 84.3
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -24,7 +28,11 @@
       "centroid": [
         -55.3896,
         -27.6292
-      ]
+      ],
+      "rank": {
+        "high_ha": 96537,
+        "high_pct": 78.6
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.6761,
         -27.8846
-      ]
+      ],
+      "rank": {
+        "high_ha": 83371,
+        "high_pct": 69.4
+      }
     },
     {
       "dpto": "Concepción",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.4696,
         -27.9322
-      ]
+      ],
+      "rank": {
+        "high_ha": 69846,
+        "high_pct": 77.8
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -54,7 +70,11 @@
       "centroid": [
         -54.928,
         -26.8937
-      ]
+      ],
+      "rank": {
+        "high_ha": 122544,
+        "high_pct": 74.2
+      }
     },
     {
       "dpto": "Iguazú",
@@ -64,7 +84,11 @@
       "centroid": [
         -54.4021,
         -25.8739
-      ]
+      ],
+      "rank": {
+        "high_ha": 212719,
+        "high_pct": 70.4
+      }
     },
     {
       "dpto": "Eldorado",
@@ -74,7 +98,11 @@
       "centroid": [
         -54.4436,
         -26.3178
-      ]
+      ],
+      "rank": {
+        "high_ha": 112337,
+        "high_pct": 58.7
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -84,7 +112,11 @@
       "centroid": [
         -55.3353,
         -27.1742
-      ]
+      ],
+      "rank": {
+        "high_ha": 112316,
+        "high_pct": 59.1
+      }
     },
     {
       "dpto": "Capital",
@@ -94,7 +126,11 @@
       "centroid": [
         -55.8527,
         -27.5545
-      ]
+      ],
+      "rank": {
+        "high_ha": 88174,
+        "high_pct": 79.3
+      }
     },
     {
       "dpto": "San Javier",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.1695,
         -27.7764
-      ]
+      ],
+      "rank": {
+        "high_ha": 48042,
+        "high_pct": 62.6
+      }
     },
     {
       "dpto": "Oberá",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.0739,
         -27.4719
-      ]
+      ],
+      "rank": {
+        "high_ha": 76682,
+        "high_pct": 42.3
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -124,7 +168,11 @@
       "centroid": [
         -54.5696,
         -26.6643
-      ]
+      ],
+      "rank": {
+        "high_ha": 81991,
+        "high_pct": 42.2
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -134,7 +182,11 @@
       "centroid": [
         -53.9559,
         -26.0032
-      ]
+      ],
+      "rank": {
+        "high_ha": 61219,
+        "high_pct": 18.0
+      }
     },
     {
       "dpto": "San Pedro",
@@ -144,7 +196,11 @@
       "centroid": [
         -53.9669,
         -26.6351
-      ]
+      ],
+      "rank": {
+        "high_ha": 111547,
+        "high_pct": 25.2
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -154,7 +210,11 @@
       "centroid": [
         -54.6331,
         -27.3777
-      ]
+      ],
+      "rank": {
+        "high_ha": 59408,
+        "high_pct": 31.7
+      }
     },
     {
       "dpto": "Guaraní",
@@ -164,7 +224,11 @@
       "centroid": [
         -54.2709,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "high_ha": 76176,
+        "high_pct": 20.6
+      }
     },
     {
       "dpto": "Cainguás",
@@ -174,7 +238,11 @@
       "centroid": [
         -54.7984,
         -27.1445
-      ]
+      ],
+      "rank": {
+        "high_ha": 11882,
+        "high_pct": 6.7
+      }
     }
   ]
 }

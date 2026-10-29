@@ -14,7 +14,11 @@
       "centroid": [
         -56.2055,
         -25.6088
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.7,
+        "pm25_delta": -3.0
+      }
     },
     {
       "distrito": "Dr. Bottrell",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.3675,
         -25.5987
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Natalicio Talavera",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.2826,
         -25.6601
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Mbocayati",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.3632,
         -25.7041
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.5,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Yataity",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.501,
         -25.6879
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.3,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "Cnel Martinez",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.648,
         -25.7972
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "Colonia Independencia",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.0671,
         -25.7311
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.9
+      }
     },
     {
       "distrito": "Gral Garay",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.1916,
         -25.9353
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -3.1
+      }
     },
     {
       "distrito": "Villarica",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.4107,
         -25.8273
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -2.7
+      }
     },
     {
       "distrito": "Numi",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.3101,
         -25.9052
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.1,
+        "pm25_delta": -2.8
+      }
     },
     {
       "distrito": "Itape",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.561,
         -25.8515
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.0,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "Jose Fassardi",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.9221,
         -25.8245
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.7,
+        "pm25_delta": -2.6
+      }
     },
     {
       "distrito": "Borja",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.609,
         -26.0281
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "San Salvador",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.4246,
         -25.953
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": -2.5
+      }
     },
     {
       "distrito": "Iturbe",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.4662,
         -26.0627
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": -2.3
+      }
     }
   ]
 }

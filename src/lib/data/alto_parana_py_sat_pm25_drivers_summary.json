@@ -14,7 +14,11 @@
       "centroid": [
         -54.8404,
         -25.5054
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.0,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "YGUAZÚ",
@@ -24,7 +28,11 @@
       "centroid": [
         -55.0999,
         -25.4145
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.0,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "HERNANDARIAS",
@@ -34,7 +42,11 @@
       "centroid": [
         -54.7802,
         -25.3136
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -2.4
+      }
     },
     {
       "distrito": "SANTA FE DEL PARANÁ",
@@ -44,7 +56,11 @@
       "centroid": [
         -54.6299,
         -25.1914
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "LOS CEDRALES",
@@ -54,7 +70,11 @@
       "centroid": [
         -54.7516,
         -25.6831
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "TAVAPY",
@@ -64,7 +84,11 @@
       "centroid": [
         -55.0691,
         -25.6222
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "CIUDAD DEL ESTE",
@@ -74,7 +98,11 @@
       "centroid": [
         -54.6775,
         -25.5031
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "JUAN E. O'LEARY",
@@ -84,7 +112,11 @@
       "centroid": [
         -55.3633,
         -25.4804
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "SANTA ROSA DEL MONDAY",
@@ -94,7 +126,11 @@
       "centroid": [
         -54.9236,
         -25.8464
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -2.3
+      }
     },
     {
       "distrito": "MBARACAYÚ",
@@ -104,7 +140,11 @@
       "centroid": [
         -54.6833,
         -25.0093
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "SANTA RITA",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.1372,
         -25.7706
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.6,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "DR. JUAN LEÓN MALLORQUÍN",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.2555,
         -25.4849
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.5,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "SAN CRISTÓBAL",
@@ -134,7 +182,11 @@
       "centroid": [
         -55.3862,
         -25.7898
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.5,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "PRESIDENTE FRANCO",
@@ -144,7 +196,11 @@
       "centroid": [
         -54.6414,
         -25.5971
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "DOMINGO MARTÍNEZ DE IRALA",
@@ -154,7 +210,11 @@
       "centroid": [
         -54.6889,
         -25.8607
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.3,
+        "pm25_delta": -2.1
+      }
     },
     {
       "distrito": "ITAKYRY",
@@ -164,7 +224,11 @@
       "centroid": [
         -55.1516,
         -24.8215
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "NARANJAL",
@@ -174,7 +238,11 @@
       "centroid": [
         -55.208,
         -25.9527
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "SAN ALBERTO",
@@ -184,7 +252,11 @@
       "centroid": [
         -54.6794,
         -24.8378
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "DR. RAÚL PEÑA",
@@ -194,7 +266,11 @@
       "centroid": [
         -55.2241,
         -26.1362
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.3
+      }
     },
     {
       "distrito": "IRUÑA",
@@ -204,7 +280,11 @@
       "centroid": [
         -55.0381,
         -26.1334
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "ÑACUNDAY",
@@ -214,7 +294,11 @@
       "centroid": [
         -54.7844,
         -26.0741
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "MINGA PORÁ",
@@ -224,7 +308,11 @@
       "centroid": [
         -54.8684,
         -24.7658
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.8
+      }
     }
   ]
 }

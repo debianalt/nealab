@@ -14,7 +14,11 @@
       "centroid": [
         -57.9497,
         -26.3332
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.1,
+        "pm25_delta": -0.9
+      }
     },
     {
       "distrito": "Pilar",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.1896,
         -26.8898
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.0,
+        "pm25_delta": -0.5
+      }
     },
     {
       "distrito": "San Juan Bta. Del Neembuc",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.851,
         -26.6089
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -0.7
+      }
     },
     {
       "distrito": "Tacuaras",
@@ -44,7 +56,11 @@
       "centroid": [
         -57.8738,
         -26.8217
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -0.5
+      }
     },
     {
       "distrito": "Isla Umbu",
@@ -54,7 +70,11 @@
       "centroid": [
         -58.309,
         -26.9676
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.7,
+        "pm25_delta": -0.7
+      }
     },
     {
       "distrito": "Guazucua",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.7584,
         -26.9915
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": -0.3
+      }
     },
     {
       "distrito": "Humaita",
@@ -74,7 +98,11 @@
       "centroid": [
         -58.484,
         -27.0909
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.4,
+        "pm25_delta": -0.9
+      }
     },
     {
       "distrito": "Desmochados",
@@ -84,7 +112,11 @@
       "centroid": [
         -58.1239,
         -27.0692
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.3,
+        "pm25_delta": -0.6
+      }
     },
     {
       "distrito": "Paso De Patria",
@@ -94,7 +126,11 @@
       "centroid": [
         -58.5287,
         -27.2193
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": -1.1
+      }
     },
     {
       "distrito": "Gral. Jose E. Diaz",
@@ -104,7 +140,11 @@
       "centroid": [
         -58.342,
         -27.1778
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -1.0
+      }
     },
     {
       "distrito": "Villalvin",
@@ -114,7 +154,11 @@
       "centroid": [
         -57.9098,
         -27.1694
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.9,
+        "pm25_delta": -0.6
+      }
     },
     {
       "distrito": "Laureles",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.5826,
         -27.167
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -0.4
+      }
     },
     {
       "distrito": "Mayor Martinez",
@@ -134,7 +182,11 @@
       "centroid": [
         -58.136,
         -27.1867
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -0.8
+      }
     },
     {
       "distrito": "Cerrito",
@@ -144,7 +196,11 @@
       "centroid": [
         -57.6294,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.3,
+        "pm25_delta": -0.5
+      }
     },
     {
       "distrito": "Alberdi",
@@ -154,7 +210,11 @@
       "centroid": [
         -58.0676,
         -26.1811
-      ]
+      ],
+      "rank": {
+        "pm25_ug": null,
+        "pm25_delta": null
+      }
     },
     {
       "distrito": "Villa Oliva",
@@ -164,7 +224,11 @@
       "centroid": [
         -57.7115,
         -26.0301
-      ]
+      ],
+      "rank": {
+        "pm25_ug": null,
+        "pm25_delta": null
+      }
     }
   ]
 }

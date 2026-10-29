@@ -14,7 +14,15 @@
       "centroid": [
         -56.2397,
         -26.5325
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.6,
+        "trees_ha": 67936,
+        "crops_pct": 10.4,
+        "crops_ha": 21102,
+        "built_pct": 4.2,
+        "built_ha": 8523
+      }
     },
     {
       "distrito": "Gral. Higinio Morinigo",
@@ -24,7 +32,15 @@
       "centroid": [
         -56.1114,
         -26.0729
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.5,
+        "trees_ha": 10051,
+        "crops_pct": 13.6,
+        "crops_ha": 3972,
+        "built_pct": 4.7,
+        "built_ha": 1365
+      }
     },
     {
       "distrito": "Caazapa",
@@ -34,7 +50,15 @@
       "centroid": [
         -56.2983,
         -26.1867
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.1,
+        "trees_ha": 35399,
+        "crops_pct": 8.4,
+        "crops_ha": 8241,
+        "built_pct": 4.8,
+        "built_ha": 4665
+      }
     },
     {
       "distrito": "Buena Vista",
@@ -44,7 +68,15 @@
       "centroid": [
         -56.0981,
         -26.2335
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.0,
+        "trees_ha": 5367,
+        "crops_pct": 9.4,
+        "crops_ha": 1259,
+        "built_pct": 5.7,
+        "built_ha": 770
+      }
     },
     {
       "distrito": "Abai",
@@ -54,7 +86,15 @@
       "centroid": [
         -55.7178,
         -25.8957
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.7,
+        "trees_ha": 75650,
+        "crops_pct": 24.7,
+        "crops_ha": 60909,
+        "built_pct": 4.8,
+        "built_ha": 11877
+      }
     },
     {
       "distrito": "Maciel",
@@ -64,7 +104,15 @@
       "centroid": [
         -56.528,
         -26.2225
-      ]
+      ],
+      "rank": {
+        "trees_pct": 37.2,
+        "trees_ha": 18766,
+        "crops_pct": 9.4,
+        "crops_ha": 4727,
+        "built_pct": 3.8,
+        "built_ha": 1907
+      }
     },
     {
       "distrito": "San Juan Nepomuceno",
@@ -74,7 +122,15 @@
       "centroid": [
         -55.9173,
         -26.2417
-      ]
+      ],
+      "rank": {
+        "trees_pct": 43.9,
+        "trees_ha": 50295,
+        "crops_pct": 10.1,
+        "crops_ha": 11536,
+        "built_pct": 4.5,
+        "built_ha": 5206
+      }
     },
     {
       "distrito": "Tavai",
@@ -84,7 +140,15 @@
       "centroid": [
         -55.53,
         -26.195
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.6,
+        "trees_ha": 57647,
+        "crops_pct": 16.8,
+        "crops_ha": 23852,
+        "built_pct": 4.5,
+        "built_ha": 6330
+      }
     },
     {
       "distrito": "Fulgencio Yegros",
@@ -94,7 +158,15 @@
       "centroid": [
         -56.5581,
         -26.5506
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.7,
+        "trees_ha": 32002,
+        "crops_pct": 6.4,
+        "crops_ha": 6447,
+        "built_pct": 3.0,
+        "built_ha": 3038
+      }
     },
     {
       "distrito": "Dr. Moises Bertoni",
@@ -104,7 +176,15 @@
       "centroid": [
         -56.5977,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.5,
+        "trees_ha": 24808,
+        "crops_pct": 6.8,
+        "crops_ha": 5536,
+        "built_pct": 2.9,
+        "built_ha": 2356
+      }
     }
   ]
 }

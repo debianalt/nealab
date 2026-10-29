@@ -14,7 +14,12 @@
       "centroid": [
         -61.2886,
         -24.027
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 643,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Matacos",
@@ -24,7 +29,12 @@
       "centroid": [
         -62.0811,
         -23.8673
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 544,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Ramón Lista",
@@ -34,7 +44,12 @@
       "centroid": [
         -62.1413,
         -23.111
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 464,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Patiño",
@@ -44,7 +59,12 @@
       "centroid": [
         -60.0089,
         -24.8951
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 422,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Pilagás",
@@ -54,7 +74,12 @@
       "centroid": [
         -58.6711,
         -25.1016
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 232,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Pirané",
@@ -64,7 +89,12 @@
       "centroid": [
         -59.1628,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 228,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -74,7 +104,12 @@
       "centroid": [
         -58.0456,
         -25.3808
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 153,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Formosa",
@@ -84,7 +119,12 @@
       "centroid": [
         -58.3872,
         -25.9345
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 101,
+        "km_hospital": null
+      }
     },
     {
       "dpto": "Laishi",
@@ -94,7 +134,12 @@
       "centroid": [
         -58.5513,
         -26.4647
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 110,
+        "km_hospital": null
+      }
     }
   ]
 }

@@ -14,7 +14,11 @@
       "centroid": [
         -58.5513,
         -26.4647
-      ]
+      ],
+      "rank": {
+        "high_ha": 107418,
+        "high_pct": 25.7
+      }
     },
     {
       "dpto": "Formosa",
@@ -24,7 +28,11 @@
       "centroid": [
         -58.3872,
         -25.9345
-      ]
+      ],
+      "rank": {
+        "high_ha": 165783,
+        "high_pct": 21.9
+      }
     },
     {
       "dpto": "Pirané",
@@ -34,7 +42,11 @@
       "centroid": [
         -59.1628,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "high_ha": 80295,
+        "high_pct": 8.0
+      }
     },
     {
       "dpto": "Pilagás",
@@ -44,7 +56,11 @@
       "centroid": [
         -58.6711,
         -25.1016
-      ]
+      ],
+      "rank": {
+        "high_ha": 1654,
+        "high_pct": 0.4
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -54,7 +70,11 @@
       "centroid": [
         -58.0456,
         -25.3808
-      ]
+      ],
+      "rank": {
+        "high_ha": 95674,
+        "high_pct": 15.5
+      }
     },
     {
       "dpto": "Patiño",
@@ -64,7 +84,11 @@
       "centroid": [
         -60.0089,
         -24.8951
-      ]
+      ],
+      "rank": {
+        "high_ha": 253,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Bermejo",
@@ -74,7 +98,11 @@
       "centroid": [
         -61.2886,
         -24.027
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Matacos",
@@ -84,7 +112,11 @@
       "centroid": [
         -62.0811,
         -23.8673
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "dpto": "Ramón Lista",
@@ -94,7 +126,11 @@
       "centroid": [
         -62.1413,
         -23.111
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

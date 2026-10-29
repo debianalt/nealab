@@ -14,7 +14,11 @@
       "centroid": [
         -55.7998,
         -25.576
-      ]
+      ],
+      "rank": {
+        "high_ha": 17390,
+        "high_pct": 18.4
+      }
     },
     {
       "distrito": "La Pastora",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.5132,
         -25.26
-      ]
+      ],
+      "rank": {
+        "high_ha": 284,
+        "high_pct": 1.2
+      }
     },
     {
       "distrito": "Juan M. Frutos",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.825,
         -25.3574
-      ]
+      ],
+      "rank": {
+        "high_ha": 358,
+        "high_pct": 0.6
+      }
     },
     {
       "distrito": "Yhu",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.6355,
         -24.8194
-      ]
+      ],
+      "rank": {
+        "high_ha": 9606,
+        "high_pct": 3.4
+      }
     },
     {
       "distrito": "Jose D. Ocampos",
@@ -54,7 +70,11 @@
       "centroid": [
         -55.4392,
         -25.4429
-      ]
+      ],
+      "rank": {
+        "high_ha": 4972,
+        "high_pct": 30.5
+      }
     },
     {
       "distrito": "Carayao",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.3183,
         -25.1893
-      ]
+      ],
+      "rank": {
+        "high_ha": 1664,
+        "high_pct": 1.6
+      }
     },
     {
       "distrito": "Cecilio Baez",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.2428,
         -25.0895
-      ]
+      ],
+      "rank": {
+        "high_ha": 32,
+        "high_pct": 0.2
+      }
     },
     {
       "distrito": "Nueva Londres",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.5598,
         -25.4168
-      ]
+      ],
+      "rank": {
+        "high_ha": 95,
+        "high_pct": 0.4
+      }
     },
     {
       "distrito": "Simon Bolivar",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.3273,
         -25.0226
-      ]
+      ],
+      "rank": {
+        "high_ha": 147,
+        "high_pct": 0.4
+      }
     },
     {
       "distrito": "3 De Febrero",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.8351,
         -25.2076
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "J.e. Estigarribia",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.5968,
         -25.401
-      ]
+      ],
+      "rank": {
+        "high_ha": 11713,
+        "high_pct": 16.9
+      }
     },
     {
       "distrito": "Santa Rosa Del Mbutuy",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.2558,
         -24.9235
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Caaguazu",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.0534,
         -25.4075
-      ]
+      ],
+      "rank": {
+        "high_ha": 105,
+        "high_pct": 0.1
+      }
     },
     {
       "distrito": "R.i. 3 Corrales",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.2343,
         -25.3597
-      ]
+      ],
+      "rank": {
+        "high_ha": 11,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "San Joaquin",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.0375,
         -25.0351
-      ]
+      ],
+      "rank": {
+        "high_ha": 179,
+        "high_pct": 0.4
+      }
     },
     {
       "distrito": "Mcal. Fco. Solano Lopez",
@@ -164,7 +224,11 @@
       "centroid": [
         -55.2805,
         -25.0871
-      ]
+      ],
+      "rank": {
+        "high_ha": 64263,
+        "high_pct": 45.0
+      }
     },
     {
       "distrito": "Coronel Oviedo",
@@ -174,7 +238,11 @@
       "centroid": [
         -56.4242,
         -25.4906
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     },
     {
       "distrito": "Raul  A. Oviedo",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.526,
         -25.1647
-      ]
+      ],
+      "rank": {
+        "high_ha": 25964,
+        "high_pct": 16.6
+      }
     },
     {
       "distrito": "San Jose De Los Arroyos",
@@ -194,7 +266,11 @@
       "centroid": [
         -56.6955,
         -25.5352
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

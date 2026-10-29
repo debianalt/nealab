@@ -14,7 +14,11 @@
       "centroid": [
         -56.8701,
         -25.4677
-      ]
+      ],
+      "rank": {
+        "high_ha": 12082,
+        "high_pct": 100.0
+      }
     },
     {
       "distrito": "Valenzuela",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.8551,
         -25.5913
-      ]
+      ],
+      "rank": {
+        "high_ha": 21298,
+        "high_pct": 100.0
+      }
     },
     {
       "distrito": "Piribebuy",
@@ -34,7 +42,11 @@
       "centroid": [
         -57.0428,
         -25.4661
-      ]
+      ],
+      "rank": {
+        "high_ha": 20919,
+        "high_pct": 98.0
+      }
     },
     {
       "distrito": "Santa Elena",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.8205,
         -25.3962
-      ]
+      ],
+      "rank": {
+        "high_ha": 7142,
+        "high_pct": 57.9
+      }
     },
     {
       "distrito": "Eusebio Ayala",
@@ -54,7 +70,11 @@
       "centroid": [
         -56.9762,
         -25.3608
-      ]
+      ],
+      "rank": {
+        "high_ha": 14115,
+        "high_pct": 46.6
+      }
     },
     {
       "distrito": "Caacupe",
@@ -64,7 +84,11 @@
       "centroid": [
         -57.1229,
         -25.3732
-      ]
+      ],
+      "rank": {
+        "high_ha": 7531,
+        "high_pct": 57.2
+      }
     },
     {
       "distrito": "Nueva Colombia",
@@ -74,7 +98,11 @@
       "centroid": [
         -57.2658,
         -25.1606
-      ]
+      ],
+      "rank": {
+        "high_ha": 4413,
+        "high_pct": 40.8
+      }
     },
     {
       "distrito": "Loma Grande",
@@ -84,7 +112,11 @@
       "centroid": [
         -57.1909,
         -25.1471
-      ]
+      ],
+      "rank": {
+        "high_ha": 1727,
+        "high_pct": 16.2
+      }
     },
     {
       "distrito": "Altos",
@@ -94,7 +126,11 @@
       "centroid": [
         -57.2174,
         -25.2525
-      ]
+      ],
+      "rank": {
+        "high_ha": 5856,
+        "high_pct": 41.1
+      }
     },
     {
       "distrito": "Isla Pucu",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.9,
         -25.302
-      ]
+      ],
+      "rank": {
+        "high_ha": 5119,
+        "high_pct": 41.1
+      }
     },
     {
       "distrito": "Emboscada",
@@ -114,7 +154,11 @@
       "centroid": [
         -57.3593,
         -25.1259
-      ]
+      ],
+      "rank": {
+        "high_ha": 4750,
+        "high_pct": 21.9
+      }
     },
     {
       "distrito": "Tobati",
@@ -124,7 +168,11 @@
       "centroid": [
         -57.0454,
         -25.218
-      ]
+      ],
+      "rank": {
+        "high_ha": 5193,
+        "high_pct": 17.2
+      }
     },
     {
       "distrito": "Atyra",
@@ -134,7 +182,11 @@
       "centroid": [
         -57.1453,
         -25.2524
-      ]
+      ],
+      "rank": {
+        "high_ha": 3213,
+        "high_pct": 23.7
+      }
     },
     {
       "distrito": "Mbacayaty Del Yhaguy",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.7007,
         -25.3325
-      ]
+      ],
+      "rank": {
+        "high_ha": 7658,
+        "high_pct": 23.1
+      }
     },
     {
       "distrito": "Arroyos Y Esteros",
@@ -154,7 +210,11 @@
       "centroid": [
         -57.1657,
         -25.0372
-      ]
+      ],
+      "rank": {
+        "high_ha": 6215,
+        "high_pct": 10.0
+      }
     },
     {
       "distrito": "1 De Marzo",
@@ -164,7 +224,11 @@
       "centroid": [
         -56.9751,
         -25.1246
-      ]
+      ],
+      "rank": {
+        "high_ha": 632,
+        "high_pct": 7.4
+      }
     },
     {
       "distrito": "Caraguatay",
@@ -174,7 +238,11 @@
       "centroid": [
         -56.7397,
         -25.2179
-      ]
+      ],
+      "rank": {
+        "high_ha": 10038,
+        "high_pct": 16.6
+      }
     },
     {
       "distrito": "San Bernardino",
@@ -184,7 +252,11 @@
       "centroid": [
         -57.2908,
         -25.2889
-      ]
+      ],
+      "rank": {
+        "high_ha": 3423,
+        "high_pct": 23.0
+      }
     },
     {
       "distrito": "San Jose Obrero",
@@ -194,7 +266,11 @@
       "centroid": [
         -56.8842,
         -25.1148
-      ]
+      ],
+      "rank": {
+        "high_ha": 1738,
+        "high_pct": 7.6
+      }
     },
     {
       "distrito": "Juan De Mena",
@@ -204,7 +280,11 @@
       "centroid": [
         -56.7701,
         -24.9869
-      ]
+      ],
+      "rank": {
+        "high_ha": 10165,
+        "high_pct": 8.9
+      }
     }
   ]
 }

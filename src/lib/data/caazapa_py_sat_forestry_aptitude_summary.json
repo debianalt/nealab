@@ -14,7 +14,11 @@
       "centroid": [
         -55.9173,
         -26.2417
-      ]
+      ],
+      "rank": {
+        "high_ha": 69983,
+        "high_pct": 61.0
+      }
     },
     {
       "distrito": "Buena Vista",
@@ -24,7 +28,11 @@
       "centroid": [
         -56.0981,
         -26.2335
-      ]
+      ],
+      "rank": {
+        "high_ha": 6920,
+        "high_pct": 51.5
+      }
     },
     {
       "distrito": "Gral. Higinio Morinigo",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.1114,
         -26.0729
-      ]
+      ],
+      "rank": {
+        "high_ha": 12903,
+        "high_pct": 44.3
+      }
     },
     {
       "distrito": "Abai",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.7178,
         -25.8957
-      ]
+      ],
+      "rank": {
+        "high_ha": 115939,
+        "high_pct": 47.1
+      }
     },
     {
       "distrito": "Tavai",
@@ -54,7 +70,11 @@
       "centroid": [
         -55.53,
         -26.195
-      ]
+      ],
+      "rank": {
+        "high_ha": 31537,
+        "high_pct": 22.2
+      }
     },
     {
       "distrito": "Caazapa",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.2983,
         -26.1867
-      ]
+      ],
+      "rank": {
+        "high_ha": 21993,
+        "high_pct": 22.4
+      }
     },
     {
       "distrito": "Yuty",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.2397,
         -26.5325
-      ]
+      ],
+      "rank": {
+        "high_ha": 58344,
+        "high_pct": 28.8
+      }
     },
     {
       "distrito": "Maciel",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.528,
         -26.2225
-      ]
+      ],
+      "rank": {
+        "high_ha": 2654,
+        "high_pct": 5.3
+      }
     },
     {
       "distrito": "Dr. Moises Bertoni",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.5977,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "high_ha": 169,
+        "high_pct": 0.2
+      }
     },
     {
       "distrito": "Fulgencio Yegros",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.5581,
         -26.5506
-      ]
+      ],
+      "rank": {
+        "high_ha": 0,
+        "high_pct": 0.0
+      }
     }
   ]
 }

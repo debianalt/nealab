@@ -14,7 +14,15 @@
       "centroid": [
         -54.7025,
         -24.3729
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.2,
+        "trees_ha": 86084,
+        "crops_pct": 32.8,
+        "crops_ha": 127419,
+        "built_pct": 4.8,
+        "built_ha": 18477
+      }
     },
     {
       "distrito": "Corpus Christi",
@@ -24,7 +32,15 @@
       "centroid": [
         -55.0227,
         -24.1393
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.0,
+        "trees_ha": 46919,
+        "crops_pct": 29.8,
+        "crops_ha": 58179,
+        "built_pct": 4.6,
+        "built_ha": 8884
+      }
     },
     {
       "distrito": "Salto Del Guaira",
@@ -34,7 +50,15 @@
       "centroid": [
         -54.4392,
         -24.212
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.1,
+        "trees_ha": 42782,
+        "crops_pct": 25.5,
+        "crops_ha": 45277,
+        "built_pct": 4.7,
+        "built_ha": 8254
+      }
     },
     {
       "distrito": "Villa Igatimi",
@@ -44,7 +68,15 @@
       "centroid": [
         -55.4917,
         -24.1422
-      ]
+      ],
+      "rank": {
+        "trees_pct": 42.0,
+        "trees_ha": 85006,
+        "crops_pct": 11.5,
+        "crops_ha": 23238,
+        "built_pct": 4.1,
+        "built_ha": 8322
+      }
     },
     {
       "distrito": "Itanara",
@@ -54,7 +86,15 @@
       "centroid": [
         -55.6588,
         -23.7626
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.6,
+        "trees_ha": 13696,
+        "crops_pct": 9.1,
+        "crops_ha": 7987,
+        "built_pct": 2.7,
+        "built_ha": 2330
+      }
     },
     {
       "distrito": "Curuguaty",
@@ -64,7 +104,15 @@
       "centroid": [
         -55.7259,
         -24.3773
-      ]
+      ],
+      "rank": {
+        "trees_pct": 12.3,
+        "trees_ha": 55076,
+        "crops_pct": 6.7,
+        "crops_ha": 30021,
+        "built_pct": 1.8,
+        "built_ha": 8047
+      }
     }
   ]
 }

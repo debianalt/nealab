@@ -13,7 +13,11 @@
       "centroid": [
         -54.1853,
         -26.9559
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 25.6,
+        "teen_preg_pct": 7.1
+      }
     },
     {
       "dpto": "San Pedro",
@@ -23,7 +27,11 @@
       "centroid": [
         -54.0439,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 28.2,
+        "teen_preg_pct": 10.0
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -33,7 +41,11 @@
       "centroid": [
         -54.4425,
         -27.3319
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 26.0,
+        "teen_preg_pct": 6.5
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -43,7 +55,11 @@
       "centroid": [
         -53.7542,
         -26.3013
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 24.5,
+        "teen_preg_pct": 7.2
+      }
     },
     {
       "dpto": "Iguazú",
@@ -53,7 +69,11 @@
       "centroid": [
         -54.5596,
         -26.0323
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 13.1,
+        "teen_preg_pct": 6.2
+      }
     },
     {
       "dpto": "Cainguás",
@@ -63,7 +83,11 @@
       "centroid": [
         -54.951,
         -27.1287
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 19.3,
+        "teen_preg_pct": 6.9
+      }
     },
     {
       "dpto": "Oberá",
@@ -73,7 +97,11 @@
       "centroid": [
         -55.0711,
         -27.2737
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 13.8,
+        "teen_preg_pct": 4.5
+      }
     },
     {
       "dpto": "San Javier",
@@ -83,7 +111,11 @@
       "centroid": [
         -55.2586,
         -27.7646
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 18.9,
+        "teen_preg_pct": 4.3
+      }
     },
     {
       "dpto": "Candelaria",
@@ -93,7 +125,11 @@
       "centroid": [
         -55.6618,
         -27.4836
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 10.6,
+        "teen_preg_pct": 6.8
+      }
     },
     {
       "dpto": "Concepción",
@@ -103,7 +139,11 @@
       "centroid": [
         -55.4271,
         -27.8858
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 18.2,
+        "teen_preg_pct": 6.9
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -113,7 +153,11 @@
       "centroid": [
         -55.5248,
         -27.5921
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 13.6,
+        "teen_preg_pct": 4.5
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -123,7 +167,11 @@
       "centroid": [
         -54.6365,
         -26.6147
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 12.1,
+        "teen_preg_pct": 4.9
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -133,7 +181,11 @@
       "centroid": [
         -55.2321,
         -27.0669
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 12.2,
+        "teen_preg_pct": 4.7
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -143,7 +195,11 @@
       "centroid": [
         -55.0755,
         -26.9918
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 10.9,
+        "teen_preg_pct": 5.1
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -153,7 +209,11 @@
       "centroid": [
         -55.755,
         -27.8091
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 13.5,
+        "teen_preg_pct": 5.1
+      }
     },
     {
       "dpto": "Eldorado",
@@ -163,7 +223,11 @@
       "centroid": [
         -54.4038,
         -26.3893
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 9.6,
+        "teen_preg_pct": 3.9
+      }
     },
     {
       "dpto": "Capital",
@@ -173,7 +237,11 @@
       "centroid": [
         -55.9408,
         -27.4297
-      ]
+      ],
+      "rank": {
+        "dropout_sec_pct": 6.1,
+        "teen_preg_pct": 2.3
+      }
     }
   ]
 }

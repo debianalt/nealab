@@ -14,7 +14,11 @@
       "centroid": [
         -55.8331,
         -27.1821
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "La Paz",
@@ -24,7 +28,11 @@
       "centroid": [
         -55.9091,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Edelira",
@@ -34,7 +42,11 @@
       "centroid": [
         -55.4008,
         -26.58
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Jesus",
@@ -44,7 +56,11 @@
       "centroid": [
         -55.7803,
         -27.0605
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "San Juan",
@@ -54,7 +70,11 @@
       "centroid": [
         -55.9922,
         -27.2954
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.0,
+        "pm25_delta": -1.2
+      }
     },
     {
       "distrito": "Alto Vera",
@@ -64,7 +84,11 @@
       "centroid": [
         -55.7222,
         -26.5954
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Encarnacion",
@@ -74,7 +98,11 @@
       "centroid": [
         -55.8985,
         -27.2646
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "Fram",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.0203,
         -27.0764
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Gral Artigas",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.3772,
         -26.9109
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Hohenau",
@@ -104,7 +140,11 @@
       "centroid": [
         -55.7418,
         -27.0077
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Obligado",
@@ -114,7 +154,11 @@
       "centroid": [
         -55.7125,
         -26.9229
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Tomas Romero P.",
@@ -124,7 +168,11 @@
       "centroid": [
         -55.2933,
         -26.4732
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "Cambyreta",
@@ -134,7 +182,11 @@
       "centroid": [
         -55.7699,
         -27.3561
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "Carmen Del Parana",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.1055,
         -27.2074
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "Gral. Delgado",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.5565,
         -27.0741
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "Leandro Oviedo",
@@ -164,7 +224,11 @@
       "centroid": [
         -56.2346,
         -26.7503
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Nueva Alborada",
@@ -174,7 +238,11 @@
       "centroid": [
         -55.665,
         -27.2813
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "Trinidad",
@@ -184,7 +252,11 @@
       "centroid": [
         -55.735,
         -27.1495
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Capitan Meza",
@@ -194,7 +266,11 @@
       "centroid": [
         -55.3725,
         -26.7763
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Pirapo",
@@ -204,7 +280,11 @@
       "centroid": [
         -55.5412,
         -26.8461
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "San Pedro Del Parana",
@@ -214,7 +294,11 @@
       "centroid": [
         -56.0239,
         -26.7295
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.7,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Bella Vista",
@@ -224,7 +308,11 @@
       "centroid": [
         -55.5355,
         -27.0111
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": -1.7
+      }
     },
     {
       "distrito": "San Cosme Y Damian",
@@ -234,7 +322,11 @@
       "centroid": [
         -56.4868,
         -27.2628
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": -1.2
+      }
     },
     {
       "distrito": "Isla Yacyreta",
@@ -244,7 +336,11 @@
       "centroid": [
         -56.5119,
         -27.3952
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -0.9
+      }
     },
     {
       "distrito": "San Rafael Del Parana",
@@ -254,7 +350,11 @@
       "centroid": [
         -55.1388,
         -26.4058
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Coronel Bogado",
@@ -264,7 +364,11 @@
       "centroid": [
         -56.306,
         -27.1479
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Natalio",
@@ -274,7 +378,11 @@
       "centroid": [
         -55.1481,
         -26.7574
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": -1.9
+      }
     },
     {
       "distrito": "Carlos A Lopez",
@@ -284,7 +392,11 @@
       "centroid": [
         -54.9021,
         -26.3704
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "Isla",
@@ -294,7 +406,11 @@
       "centroid": [
         -56.4098,
         -27.5135
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -0.7
+      }
     },
     {
       "distrito": "Mayor Otano",
@@ -304,7 +420,11 @@
       "centroid": [
         -54.7762,
         -26.2756
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "Yatytay",
@@ -314,7 +434,11 @@
       "centroid": [
         -55.0816,
         -26.6682
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.1,
+        "pm25_delta": -1.8
+      }
     }
   ]
 }

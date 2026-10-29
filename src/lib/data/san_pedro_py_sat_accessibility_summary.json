@@ -14,7 +14,12 @@
       "centroid": [
         -57.0866,
         -24.5571
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 164,
+        "min_capital": 197,
+        "km_hospital": 24.7
+      }
     },
     {
       "distrito": "Tacuati",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.6316,
         -23.5417
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 158,
+        "min_capital": 128,
+        "km_hospital": 34.0
+      }
     },
     {
       "distrito": "Isidoro Resquin",
@@ -34,7 +44,12 @@
       "centroid": [
         -56.2011,
         -24.0042
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 200,
+        "min_capital": 151,
+        "km_hospital": 23.0
+      }
     },
     {
       "distrito": "Union",
@@ -44,7 +59,12 @@
       "centroid": [
         -56.5298,
         -24.8644
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 104,
+        "min_capital": 237,
+        "km_hospital": 20.7
+      }
     },
     {
       "distrito": "Nueva Germania",
@@ -54,7 +74,12 @@
       "centroid": [
         -56.3104,
         -23.735
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 158,
+        "min_capital": 124,
+        "km_hospital": 26.7
+      }
     },
     {
       "distrito": "Elizardo Aquino",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.7857,
         -24.3795
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 135,
+        "min_capital": 138,
+        "km_hospital": 21.5
+      }
     },
     {
       "distrito": "25 De Diciembre",
@@ -74,7 +104,12 @@
       "centroid": [
         -56.8088,
         -24.776
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 112,
+        "min_capital": 244,
+        "km_hospital": 20.8
+      }
     },
     {
       "distrito": "S.pedro De Ycuamandyyu",
@@ -84,7 +119,12 @@
       "centroid": [
         -57.0771,
         -23.775
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 143,
+        "min_capital": 91,
+        "km_hospital": 32.5
+      }
     },
     {
       "distrito": "Itacurubi Del Rosario",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.7993,
         -24.5836
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 118,
+        "min_capital": 179,
+        "km_hospital": 10.7
+      }
     },
     {
       "distrito": "Antequera",
@@ -104,7 +149,12 @@
       "centroid": [
         -57.1736,
         -24.0802
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 208,
+        "min_capital": 65,
+        "km_hospital": 27.8
+      }
     },
     {
       "distrito": "San Estanislao",
@@ -114,7 +164,12 @@
       "centroid": [
         -56.2615,
         -24.5423
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 99,
+        "min_capital": 195,
+        "km_hospital": 19.1
+      }
     },
     {
       "distrito": "Chore",
@@ -124,7 +179,12 @@
       "centroid": [
         -56.5957,
         -24.1739
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 128,
+        "min_capital": 116,
+        "km_hospital": 28.1
+      }
     },
     {
       "distrito": "Lima",
@@ -134,7 +194,12 @@
       "centroid": [
         -56.5553,
         -23.9736
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 143,
+        "min_capital": 101,
+        "km_hospital": 15.9
+      }
     },
     {
       "distrito": "San Pablo",
@@ -144,7 +209,12 @@
       "centroid": [
         -56.9215,
         -24.1315
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 199,
+        "min_capital": 73,
+        "km_hospital": 20.2
+      }
     },
     {
       "distrito": "Yataity Del Norte",
@@ -154,7 +224,12 @@
       "centroid": [
         -56.3437,
         -24.8237
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 51,
+        "min_capital": 205,
+        "km_hospital": 13.8
+      }
     }
   ]
 }

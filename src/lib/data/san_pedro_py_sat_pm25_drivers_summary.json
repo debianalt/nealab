@@ -14,7 +14,11 @@
       "centroid": [
         -57.1736,
         -24.0802
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.2,
+        "pm25_delta": -1.2
+      }
     },
     {
       "distrito": "Villa Del Rosario",
@@ -24,7 +28,11 @@
       "centroid": [
         -57.0866,
         -24.5571
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.1,
+        "pm25_delta": -1.5
+      }
     },
     {
       "distrito": "San Pablo",
@@ -34,7 +42,11 @@
       "centroid": [
         -56.9215,
         -24.1315
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Yataity Del Norte",
@@ -44,7 +56,11 @@
       "centroid": [
         -56.3437,
         -24.8237
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 16.0,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "S.pedro De Ycuamandyyu",
@@ -54,7 +70,11 @@
       "centroid": [
         -57.0771,
         -23.775
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.8,
+        "pm25_delta": -1.4
+      }
     },
     {
       "distrito": "25 De Diciembre",
@@ -64,7 +84,11 @@
       "centroid": [
         -56.8088,
         -24.776
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Elizardo Aquino",
@@ -74,7 +98,11 @@
       "centroid": [
         -56.7857,
         -24.3795
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "Union",
@@ -84,7 +112,11 @@
       "centroid": [
         -56.5298,
         -24.8644
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.6,
+        "pm25_delta": -2.2
+      }
     },
     {
       "distrito": "Chore",
@@ -94,7 +126,11 @@
       "centroid": [
         -56.5957,
         -24.1739
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Itacurubi Del Rosario",
@@ -104,7 +140,11 @@
       "centroid": [
         -56.7993,
         -24.5836
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -2.0
+      }
     },
     {
       "distrito": "San Estanislao",
@@ -114,7 +154,11 @@
       "centroid": [
         -56.2615,
         -24.5423
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.4,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Lima",
@@ -124,7 +168,11 @@
       "centroid": [
         -56.5553,
         -23.9736
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 15.2,
+        "pm25_delta": -1.8
+      }
     },
     {
       "distrito": "Tacuati",
@@ -134,7 +182,11 @@
       "centroid": [
         -56.6316,
         -23.5417
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -1.3
+      }
     },
     {
       "distrito": "Nueva Germania",
@@ -144,7 +196,11 @@
       "centroid": [
         -56.3104,
         -23.735
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.3,
+        "pm25_delta": -1.6
+      }
     },
     {
       "distrito": "Isidoro Resquin",
@@ -154,7 +210,11 @@
       "centroid": [
         -56.2011,
         -24.0042
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": -1.9
+      }
     }
   ]
 }

@@ -14,7 +14,15 @@
       "centroid": [
         -57.3749,
         -25.52
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.0,
+        "trees_ha": 6770,
+        "crops_pct": 8.1,
+        "crops_ha": 1653,
+        "built_pct": 16.2,
+        "built_ha": 3326
+      }
     },
     {
       "distrito": "Guarambare",
@@ -24,7 +32,15 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.5,
+        "trees_ha": 706,
+        "crops_pct": 11.1,
+        "crops_ha": 365,
+        "built_pct": 32.4,
+        "built_ha": 1064
+      }
     },
     {
       "distrito": "Limpio",
@@ -34,7 +50,15 @@
       "centroid": [
         -57.4784,
         -25.1533
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.7,
+        "trees_ha": 3135,
+        "crops_pct": 6.6,
+        "crops_ha": 919,
+        "built_pct": 26.6,
+        "built_ha": 3674
+      }
     },
     {
       "distrito": "Ypacarai",
@@ -44,7 +68,15 @@
       "centroid": [
         -57.2585,
         -25.3887
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.8,
+        "trees_ha": 4386,
+        "crops_pct": 6.8,
+        "crops_ha": 854,
+        "built_pct": 11.1,
+        "built_ha": 1398
+      }
     },
     {
       "distrito": "Ypane",
@@ -54,7 +86,15 @@
       "centroid": [
         -57.5063,
         -25.4553
-      ]
+      ],
+      "rank": {
+        "trees_pct": 22.3,
+        "trees_ha": 1193,
+        "crops_pct": 6.4,
+        "crops_ha": 342,
+        "built_pct": 38.0,
+        "built_ha": 2040
+      }
     },
     {
       "distrito": "Itaugua",
@@ -64,7 +104,15 @@
       "centroid": [
         -57.3532,
         -25.3941
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.7,
+        "trees_ha": 4191,
+        "crops_pct": 6.4,
+        "crops_ha": 827,
+        "built_pct": 24.3,
+        "built_ha": 3124
+      }
     },
     {
       "distrito": "Luque",
@@ -74,7 +122,15 @@
       "centroid": [
         -57.4568,
         -25.2476
-      ]
+      ],
+      "rank": {
+        "trees_pct": 25.2,
+        "trees_ha": 4234,
+        "crops_pct": 6.2,
+        "crops_ha": 1035,
+        "built_pct": 34.1,
+        "built_ha": 5725
+      }
     },
     {
       "distrito": "M. Roque Alonso",
@@ -84,7 +140,15 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "trees_pct": 13.7,
+        "trees_ha": 656,
+        "crops_pct": 6.4,
+        "crops_ha": 308,
+        "built_pct": 39.4,
+        "built_ha": 1887
+      }
     },
     {
       "distrito": "J. A. Saldivar",
@@ -94,7 +158,15 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "trees_pct": 15.3,
+        "trees_ha": 601,
+        "crops_pct": 6.5,
+        "crops_ha": 257,
+        "built_pct": 49.6,
+        "built_ha": 1952
+      }
     },
     {
       "distrito": "Aregua",
@@ -104,7 +176,15 @@
       "centroid": [
         -57.3871,
         -25.2913
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.7,
+        "trees_ha": 3873,
+        "crops_pct": 5.9,
+        "crops_ha": 701,
+        "built_pct": 19.5,
+        "built_ha": 2310
+      }
     },
     {
       "distrito": "San Antonio",
@@ -114,7 +194,15 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "trees_pct": 11.1,
+        "trees_ha": 367,
+        "crops_pct": 5.3,
+        "crops_ha": 175,
+        "built_pct": 45.8,
+        "built_ha": 1520
+      }
     },
     {
       "distrito": "Capiata",
@@ -124,7 +212,15 @@
       "centroid": [
         -57.4524,
         -25.3673
-      ]
+      ],
+      "rank": {
+        "trees_pct": 16.3,
+        "trees_ha": 1426,
+        "crops_pct": 5.5,
+        "crops_ha": 485,
+        "built_pct": 50.4,
+        "built_ha": 4423
+      }
     },
     {
       "distrito": "Asuncion",
@@ -134,7 +230,15 @@
       "centroid": [
         -57.6069,
         -25.2858
-      ]
+      ],
+      "rank": {
+        "trees_pct": 10.8,
+        "trees_ha": 1671,
+        "crops_pct": 5.2,
+        "crops_ha": 800,
+        "built_pct": 47.2,
+        "built_ha": 7282
+      }
     },
     {
       "distrito": "Villeta",
@@ -144,7 +248,15 @@
       "centroid": [
         -57.6064,
         -25.7011
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.1,
+        "trees_ha": 23224,
+        "crops_pct": 8.9,
+        "crops_ha": 8563,
+        "built_pct": 5.0,
+        "built_ha": 4799
+      }
     },
     {
       "distrito": "Lambare",
@@ -154,7 +266,15 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "trees_pct": 8.5,
+        "trees_ha": 276,
+        "crops_pct": 4.5,
+        "crops_ha": 148,
+        "built_pct": 56.2,
+        "built_ha": 1834
+      }
     },
     {
       "distrito": "Villa Elisa",
@@ -164,7 +284,15 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "trees_pct": 9.1,
+        "trees_ha": 211,
+        "crops_pct": 4.7,
+        "crops_ha": 109,
+        "built_pct": 57.6,
+        "built_ha": 1335
+      }
     },
     {
       "distrito": "Nemby",
@@ -174,7 +302,15 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "trees_pct": 9.4,
+        "trees_ha": 281,
+        "crops_pct": 4.5,
+        "crops_ha": 135,
+        "built_pct": 59.8,
+        "built_ha": 1784
+      }
     },
     {
       "distrito": "San Lorenzo",
@@ -184,7 +320,15 @@
       "centroid": [
         -57.5107,
         -25.3477
-      ]
+      ],
+      "rank": {
+        "trees_pct": 7.9,
+        "trees_ha": 504,
+        "crops_pct": 4.5,
+        "crops_ha": 289,
+        "built_pct": 62.0,
+        "built_ha": 3963
+      }
     },
     {
       "distrito": "Fdo. De La Mora",
@@ -194,7 +338,15 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "trees_pct": 4.6,
+        "trees_ha": 106,
+        "crops_pct": 3.7,
+        "crops_ha": 87,
+        "built_pct": 67.5,
+        "built_ha": 1571
+      }
     },
     {
       "distrito": "Nueva Italia",
@@ -204,7 +356,15 @@
       "centroid": [
         -57.4757,
         -25.7512
-      ]
+      ],
+      "rank": {
+        "trees_pct": 21.9,
+        "trees_ha": 9272,
+        "crops_pct": 5.4,
+        "crops_ha": 2294,
+        "built_pct": 3.1,
+        "built_ha": 1319
+      }
     }
   ]
 }

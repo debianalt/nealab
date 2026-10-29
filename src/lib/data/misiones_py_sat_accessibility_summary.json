@@ -14,7 +14,12 @@
       "centroid": [
         -57.1253,
         -26.4611
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": null,
+        "km_hospital": 49.0
+      }
     },
     {
       "distrito": "San Miguel",
@@ -24,7 +29,12 @@
       "centroid": [
         -56.9666,
         -26.5689
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 1,
+        "km_hospital": 35.5
+      }
     },
     {
       "distrito": "San Juan Bautista",
@@ -34,7 +44,12 @@
       "centroid": [
         -57.426,
         -26.6948
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 54,
+        "min_capital": 50,
+        "km_hospital": 45.2
+      }
     },
     {
       "distrito": "Ayolas",
@@ -44,7 +59,12 @@
       "centroid": [
         -57.0272,
         -27.3756
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 14,
+        "min_capital": 11,
+        "km_hospital": 55.4
+      }
     },
     {
       "distrito": "Yabebyry",
@@ -54,7 +74,12 @@
       "centroid": [
         -57.1846,
         -27.2526
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 176,
+        "min_capital": 142,
+        "km_hospital": 44.5
+      }
     },
     {
       "distrito": "Santa Rosa",
@@ -64,7 +89,12 @@
       "centroid": [
         -56.7968,
         -26.8686
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 116,
+        "min_capital": 61,
+        "km_hospital": 15.0
+      }
     },
     {
       "distrito": "Santiago",
@@ -74,7 +104,12 @@
       "centroid": [
         -56.7915,
         -27.1361
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 106,
+        "min_capital": 83,
+        "km_hospital": 29.8
+      }
     },
     {
       "distrito": "San Ignacio",
@@ -84,7 +119,12 @@
       "centroid": [
         -57.1427,
         -26.9445
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 147,
+        "min_capital": 90,
+        "km_hospital": 18.7
+      }
     },
     {
       "distrito": "Santa Maria",
@@ -94,7 +134,12 @@
       "centroid": [
         -56.8905,
         -26.73
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 81,
+        "min_capital": 30,
+        "km_hospital": 18.4
+      }
     },
     {
       "distrito": "San Patricio",
@@ -104,7 +149,12 @@
       "centroid": [
         -56.8303,
         -26.9867
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 73,
+        "min_capital": 40,
+        "km_hospital": 11.4
+      }
     }
   ]
 }

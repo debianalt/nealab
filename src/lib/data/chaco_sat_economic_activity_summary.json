@@ -14,7 +14,10 @@
       "centroid": [
         -58.9957,
         -27.5283
-      ]
+      ],
+      "rank": {
+        "viirs": 19.27
+      }
     },
     {
       "dpto": "1° de Mayo",
@@ -24,7 +27,10 @@
       "centroid": [
         -58.9587,
         -27.1679
-      ]
+      ],
+      "rank": {
+        "viirs": 2.95
+      }
     },
     {
       "dpto": "Libertad",
@@ -34,7 +40,10 @@
       "centroid": [
         -59.1935,
         -27.304
-      ]
+      ],
+      "rank": {
+        "viirs": 3.37
+      }
     },
     {
       "dpto": "2 de Abril",
@@ -44,7 +53,10 @@
       "centroid": [
         -61.281,
         -27.6091
-      ]
+      ],
+      "rank": {
+        "viirs": 1.78
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -54,7 +66,10 @@
       "centroid": [
         -60.718,
         -27.6372
-      ]
+      ],
+      "rank": {
+        "viirs": 3.93
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -64,7 +79,10 @@
       "centroid": [
         -60.9495,
         -26.4947
-      ]
+      ],
+      "rank": {
+        "viirs": 1.43
+      }
     },
     {
       "dpto": "General Güemes",
@@ -74,7 +92,10 @@
       "centroid": [
         -60.6287,
         -26.0385
-      ]
+      ],
+      "rank": {
+        "viirs": 0.45
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -84,7 +105,10 @@
       "centroid": [
         -60.105,
         -27.5908
-      ]
+      ],
+      "rank": {
+        "viirs": 0.63
+      }
     },
     {
       "dpto": "12 de Octubre",
@@ -94,7 +118,10 @@
       "centroid": [
         -61.2476,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "viirs": 3.25
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -104,7 +131,10 @@
       "centroid": [
         -61.1724,
         -27.2451
-      ]
+      ],
+      "rank": {
+        "viirs": 5.91
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -114,7 +144,10 @@
       "centroid": [
         -61.1354,
         -27.8402
-      ]
+      ],
+      "rank": {
+        "viirs": 2.2
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -124,7 +157,10 @@
       "centroid": [
         -60.3662,
         -26.7051
-      ]
+      ],
+      "rank": {
+        "viirs": 8.18
+      }
     },
     {
       "dpto": "General Donovan",
@@ -134,7 +170,10 @@
       "centroid": [
         -59.4059,
         -27.0776
-      ]
+      ],
+      "rank": {
+        "viirs": 1.76
+      }
     },
     {
       "dpto": "9 de Julio",
@@ -144,7 +183,10 @@
       "centroid": [
         -61.094,
         -27.0465
-      ]
+      ],
+      "rank": {
+        "viirs": 5.99
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -154,7 +196,10 @@
       "centroid": [
         -59.8639,
         -26.9787
-      ]
+      ],
+      "rank": {
+        "viirs": 1.78
+      }
     },
     {
       "dpto": "Bermejo",
@@ -164,7 +209,10 @@
       "centroid": [
         -58.6749,
         -26.9131
-      ]
+      ],
+      "rank": {
+        "viirs": 2.5
+      }
     },
     {
       "dpto": "Independencia",
@@ -174,7 +222,10 @@
       "centroid": [
         -60.746,
         -26.5928
-      ]
+      ],
+      "rank": {
+        "viirs": 3.29
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -184,7 +235,10 @@
       "centroid": [
         -60.3845,
         -27.2115
-      ]
+      ],
+      "rank": {
+        "viirs": 1.84
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -194,7 +248,10 @@
       "centroid": [
         -59.5185,
         -26.9066
-      ]
+      ],
+      "rank": {
+        "viirs": 2.06
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -204,7 +261,10 @@
       "centroid": [
         -59.2624,
         -26.5636
-      ]
+      ],
+      "rank": {
+        "viirs": 1.46
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -214,7 +274,10 @@
       "centroid": [
         -60.6361,
         -27.2059
-      ]
+      ],
+      "rank": {
+        "viirs": 2.33
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -224,7 +287,10 @@
       "centroid": [
         -61.0058,
         -26.9294
-      ]
+      ],
+      "rank": {
+        "viirs": 3.71
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -234,7 +300,10 @@
       "centroid": [
         -60.1745,
         -26.6802
-      ]
+      ],
+      "rank": {
+        "viirs": 2.21
+      }
     },
     {
       "dpto": "Maipú",
@@ -244,7 +313,10 @@
       "centroid": [
         -60.4481,
         -26.4666
-      ]
+      ],
+      "rank": {
+        "viirs": 1.3
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -254,7 +326,10 @@
       "centroid": [
         -60.0606,
         -26.9388
-      ]
+      ],
+      "rank": {
+        "viirs": 2.07
+      }
     }
   ]
 }

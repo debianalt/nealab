@@ -14,7 +14,15 @@
       "centroid": [
         -57.851,
         -26.6089
-      ]
+      ],
+      "rank": {
+        "trees_pct": 32.3,
+        "trees_ha": 51103,
+        "crops_pct": 5.6,
+        "crops_ha": 8920,
+        "built_pct": 3.7,
+        "built_ha": 5820
+      }
     },
     {
       "distrito": "Gral. Jose E. Diaz",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.342,
         -27.1778
-      ]
+      ],
+      "rank": {
+        "trees_pct": 28.3,
+        "trees_ha": 12565,
+        "crops_pct": 6.8,
+        "crops_ha": 3037,
+        "built_pct": 4.2,
+        "built_ha": 1876
+      }
     },
     {
       "distrito": "Desmochados",
@@ -34,7 +50,15 @@
       "centroid": [
         -58.1239,
         -27.0692
-      ]
+      ],
+      "rank": {
+        "trees_pct": 34.6,
+        "trees_ha": 11953,
+        "crops_pct": 5.8,
+        "crops_ha": 2001,
+        "built_pct": 3.7,
+        "built_ha": 1287
+      }
     },
     {
       "distrito": "Isla Umbu",
@@ -44,7 +68,15 @@
       "centroid": [
         -58.309,
         -26.9676
-      ]
+      ],
+      "rank": {
+        "trees_pct": 31.5,
+        "trees_ha": 16990,
+        "crops_pct": 6.6,
+        "crops_ha": 3534,
+        "built_pct": 4.0,
+        "built_ha": 2166
+      }
     },
     {
       "distrito": "Guazucua",
@@ -54,7 +86,15 @@
       "centroid": [
         -57.7584,
         -26.9915
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.7,
+        "trees_ha": 47639,
+        "crops_pct": 4.5,
+        "crops_ha": 6380,
+        "built_pct": 3.6,
+        "built_ha": 5040
+      }
     },
     {
       "distrito": "Villalvin",
@@ -64,7 +104,15 @@
       "centroid": [
         -57.9098,
         -27.1694
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.2,
+        "trees_ha": 16371,
+        "crops_pct": 5.8,
+        "crops_ha": 3233,
+        "built_pct": 3.7,
+        "built_ha": 2090
+      }
     },
     {
       "distrito": "Laureles",
@@ -74,7 +122,15 @@
       "centroid": [
         -57.5826,
         -27.167
-      ]
+      ],
+      "rank": {
+        "trees_pct": 30.9,
+        "trees_ha": 29166,
+        "crops_pct": 4.8,
+        "crops_ha": 4524,
+        "built_pct": 3.6,
+        "built_ha": 3414
+      }
     },
     {
       "distrito": "Mayor Martinez",
@@ -84,7 +140,15 @@
       "centroid": [
         -58.136,
         -27.1867
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.4,
+        "trees_ha": 12957,
+        "crops_pct": 6.5,
+        "crops_ha": 2866,
+        "built_pct": 4.1,
+        "built_ha": 1805
+      }
     },
     {
       "distrito": "Tacuaras",
@@ -94,7 +158,15 @@
       "centroid": [
         -57.8738,
         -26.8217
-      ]
+      ],
+      "rank": {
+        "trees_pct": 35.9,
+        "trees_ha": 55989,
+        "crops_pct": 5.2,
+        "crops_ha": 8068,
+        "built_pct": 3.6,
+        "built_ha": 5598
+      }
     },
     {
       "distrito": "Pilar",
@@ -104,7 +176,15 @@
       "centroid": [
         -58.1896,
         -26.8898
-      ]
+      ],
+      "rank": {
+        "trees_pct": 33.9,
+        "trees_ha": 12933,
+        "crops_pct": 5.4,
+        "crops_ha": 2073,
+        "built_pct": 6.2,
+        "built_ha": 2352
+      }
     },
     {
       "distrito": "Cerrito",
@@ -114,7 +194,15 @@
       "centroid": [
         -57.6294,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "trees_pct": 29.2,
+        "trees_ha": 19878,
+        "crops_pct": 6.2,
+        "crops_ha": 4191,
+        "built_pct": 4.0,
+        "built_ha": 2747
+      }
     },
     {
       "distrito": "Paso De Patria",
@@ -124,7 +212,15 @@
       "centroid": [
         -58.5287,
         -27.2193
-      ]
+      ],
+      "rank": {
+        "trees_pct": 26.7,
+        "trees_ha": 7517,
+        "crops_pct": 7.2,
+        "crops_ha": 2027,
+        "built_pct": 4.0,
+        "built_ha": 1129
+      }
     },
     {
       "distrito": "Humaita",
@@ -134,7 +230,15 @@
       "centroid": [
         -58.484,
         -27.0909
-      ]
+      ],
+      "rank": {
+        "trees_pct": 27.7,
+        "trees_ha": 11002,
+        "crops_pct": 5.7,
+        "crops_ha": 2278,
+        "built_pct": 3.6,
+        "built_ha": 1431
+      }
     },
     {
       "distrito": "Villa Franca",
@@ -144,7 +248,15 @@
       "centroid": [
         -57.9497,
         -26.3332
-      ]
+      ],
+      "rank": {
+        "trees_pct": 19.2,
+        "trees_ha": 34759,
+        "crops_pct": 5.6,
+        "crops_ha": 10118,
+        "built_pct": 2.4,
+        "built_ha": 4322
+      }
     },
     {
       "distrito": "Alberdi",
@@ -154,7 +266,15 @@
       "centroid": [
         -58.0676,
         -26.1811
-      ]
+      ],
+      "rank": {
+        "trees_pct": 0.0,
+        "trees_ha": 0,
+        "crops_pct": 0.0,
+        "crops_ha": 0,
+        "built_pct": 0.0,
+        "built_ha": 0
+      }
     },
     {
       "distrito": "Villa Oliva",
@@ -164,7 +284,15 @@
       "centroid": [
         -57.7115,
         -26.0301
-      ]
+      ],
+      "rank": {
+        "trees_pct": 0.0,
+        "trees_ha": 0,
+        "crops_pct": 0.0,
+        "crops_ha": 0,
+        "built_pct": 0.0,
+        "built_ha": 0
+      }
     }
   ]
 }

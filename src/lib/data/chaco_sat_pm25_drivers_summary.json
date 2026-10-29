@@ -14,7 +14,11 @@
       "centroid": [
         -59.5073,
         -26.3713
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.9,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "General Güemes",
@@ -24,7 +28,11 @@
       "centroid": [
         -61.3084,
         -25.2411
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.8,
+        "pm25_delta": -1.7
+      }
     },
     {
       "dpto": "Bermejo",
@@ -34,7 +42,11 @@
       "centroid": [
         -58.7084,
         -26.9631
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.6,
+        "pm25_delta": -1.1
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -44,7 +56,11 @@
       "centroid": [
         -58.9731,
         -27.1551
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": -1.1
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -54,7 +70,11 @@
       "centroid": [
         -59.5538,
         -26.7743
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.2,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "Maipú",
@@ -64,7 +84,11 @@
       "centroid": [
         -60.4564,
         -26.3289
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 14.0,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -74,7 +98,11 @@
       "centroid": [
         -60.1799,
         -26.6648
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.8,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "General Donovan",
@@ -84,7 +112,11 @@
       "centroid": [
         -59.3494,
         -27.1274
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -1.3
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -94,7 +126,11 @@
       "centroid": [
         -60.0398,
         -26.8257
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.7,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -104,7 +140,11 @@
       "centroid": [
         -61.9817,
         -25.7474
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.5,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -114,7 +154,11 @@
       "centroid": [
         -60.4735,
         -26.7914
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.5,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "Independencia",
@@ -124,7 +168,11 @@
       "centroid": [
         -60.7604,
         -26.7362
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -134,7 +182,11 @@
       "centroid": [
         -59.7871,
         -27.0282
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.4,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Libertad",
@@ -144,7 +196,11 @@
       "centroid": [
         -59.2715,
         -27.3475
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.2,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -154,7 +210,11 @@
       "centroid": [
         -61.0749,
         -26.838
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 13.1,
+        "pm25_delta": -1.3
+      }
     },
     {
       "dpto": "Nueve de Julio",
@@ -164,7 +224,11 @@
       "centroid": [
         -61.2721,
         -26.9361
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.2
+      }
     },
     {
       "dpto": "San Fernando",
@@ -174,7 +238,11 @@
       "centroid": [
         -59.1267,
         -27.7065
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.9,
+        "pm25_delta": -1.0
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -184,7 +252,11 @@
       "centroid": [
         -61.3118,
         -27.1138
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.8,
+        "pm25_delta": -1.3
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -194,7 +266,11 @@
       "centroid": [
         -60.692,
         -27.2479
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.6,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -204,7 +280,11 @@
       "centroid": [
         -61.4369,
         -27.3753
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -214,7 +294,11 @@
       "centroid": [
         -60.37,
         -27.4108
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.5,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -224,7 +308,11 @@
       "centroid": [
         -59.8436,
         -27.6698
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.4,
+        "pm25_delta": -1.4
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -234,7 +322,11 @@
       "centroid": [
         -61.3304,
         -27.8272
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.3,
+        "pm25_delta": -1.5
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -244,7 +336,11 @@
       "centroid": [
         -60.6704,
         -27.742
-      ]
+      ],
+      "rank": {
+        "pm25_ug": 12.2,
+        "pm25_delta": -1.6
+      }
     }
   ]
 }

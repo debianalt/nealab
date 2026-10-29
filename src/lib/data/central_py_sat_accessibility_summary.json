@@ -14,7 +14,12 @@
       "centroid": [
         -57.4757,
         -25.7512
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 37,
+        "min_capital": 70,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Villeta",
@@ -24,7 +29,12 @@
       "centroid": [
         -57.6064,
         -25.7011
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 38,
+        "min_capital": 83,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Ita",
@@ -34,7 +44,12 @@
       "centroid": [
         -57.3749,
         -25.52
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 12,
+        "min_capital": 77,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Ypacarai",
@@ -44,7 +59,12 @@
       "centroid": [
         -57.2585,
         -25.3887
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 7,
+        "min_capital": 83,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Aregua",
@@ -54,7 +74,12 @@
       "centroid": [
         -57.3871,
         -25.2913
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 11,
+        "min_capital": 72,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Itaugua",
@@ -64,7 +89,12 @@
       "centroid": [
         -57.3532,
         -25.3941
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 4,
+        "min_capital": 71,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Limpio",
@@ -74,7 +104,12 @@
       "centroid": [
         -57.4784,
         -25.1533
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 5,
+        "min_capital": 63,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Guarambare",
@@ -84,7 +119,12 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 3,
+        "min_capital": 64,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "J. A. Saldivar",
@@ -94,7 +134,12 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 63,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Luque",
@@ -104,7 +149,12 @@
       "centroid": [
         -57.4568,
         -25.2476
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 4,
+        "min_capital": 58,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Ypane",
@@ -114,7 +164,12 @@
       "centroid": [
         -57.5063,
         -25.4553
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 4,
+        "min_capital": 58,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Capiata",
@@ -124,7 +179,12 @@
       "centroid": [
         -57.4524,
         -25.3673
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 58,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "San Antonio",
@@ -134,7 +194,12 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 11,
+        "min_capital": 59,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "M. Roque Alonso",
@@ -144,7 +209,12 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 52,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Nemby",
@@ -154,7 +224,12 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 50,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "San Lorenzo",
@@ -164,7 +239,12 @@
       "centroid": [
         -57.5107,
         -25.3477
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 50,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Asuncion",
@@ -174,7 +254,12 @@
       "centroid": [
         -57.6069,
         -25.2858
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 2,
+        "min_capital": 41,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Villa Elisa",
@@ -184,7 +269,12 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 44,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Lambare",
@@ -194,7 +284,12 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 40,
+        "km_hospital": null
+      }
     },
     {
       "distrito": "Fdo. De La Mora",
@@ -204,7 +299,12 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "min_cabecera": null,
+        "min_capital": 44,
+        "km_hospital": null
+      }
     }
   ]
 }

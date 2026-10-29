@@ -13,7 +13,11 @@
       "centroid": [
         -54.1853,
         -26.9559
-      ]
+      ],
+      "rank": {
+        "health_min": 20,
+        "health_cov_pct": 39.5
+      }
     },
     {
       "dpto": "San Pedro",
@@ -23,7 +27,11 @@
       "centroid": [
         -54.0439,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "health_min": 22,
+        "health_cov_pct": 27.1
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -33,7 +41,11 @@
       "centroid": [
         -55.2321,
         -27.0669
-      ]
+      ],
+      "rank": {
+        "health_min": 6,
+        "health_cov_pct": 40.9
+      }
     },
     {
       "dpto": "Oberá",
@@ -43,7 +55,11 @@
       "centroid": [
         -55.0711,
         -27.2737
-      ]
+      ],
+      "rank": {
+        "health_min": 5,
+        "health_cov_pct": 51.7
+      }
     },
     {
       "dpto": "Cainguás",
@@ -53,7 +69,11 @@
       "centroid": [
         -54.951,
         -27.1287
-      ]
+      ],
+      "rank": {
+        "health_min": 6,
+        "health_cov_pct": 43.3
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -63,7 +83,11 @@
       "centroid": [
         -53.7542,
         -26.3013
-      ]
+      ],
+      "rank": {
+        "health_min": 14,
+        "health_cov_pct": 33.7
+      }
     },
     {
       "dpto": "San Javier",
@@ -73,7 +97,11 @@
       "centroid": [
         -55.2586,
         -27.7646
-      ]
+      ],
+      "rank": {
+        "health_min": 8,
+        "health_cov_pct": 46.9
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -83,7 +111,11 @@
       "centroid": [
         -55.0755,
         -26.9918
-      ]
+      ],
+      "rank": {
+        "health_min": 7,
+        "health_cov_pct": 46.5
+      }
     },
     {
       "dpto": "Candelaria",
@@ -93,7 +125,11 @@
       "centroid": [
         -55.6618,
         -27.4836
-      ]
+      ],
+      "rank": {
+        "health_min": 5,
+        "health_cov_pct": 39.6
+      }
     },
     {
       "dpto": "Iguazú",
@@ -103,7 +139,11 @@
       "centroid": [
         -54.5596,
         -26.0323
-      ]
+      ],
+      "rank": {
+        "health_min": 4,
+        "health_cov_pct": 44.2
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -113,7 +153,11 @@
       "centroid": [
         -54.4425,
         -27.3319
-      ]
+      ],
+      "rank": {
+        "health_min": 22,
+        "health_cov_pct": 44.6
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -123,7 +167,11 @@
       "centroid": [
         -55.5248,
         -27.5921
-      ]
+      ],
+      "rank": {
+        "health_min": 4,
+        "health_cov_pct": 52.2
+      }
     },
     {
       "dpto": "Eldorado",
@@ -133,7 +181,11 @@
       "centroid": [
         -54.4038,
         -26.3893
-      ]
+      ],
+      "rank": {
+        "health_min": 4,
+        "health_cov_pct": 47.6
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -143,7 +195,11 @@
       "centroid": [
         -54.6365,
         -26.6147
-      ]
+      ],
+      "rank": {
+        "health_min": 5,
+        "health_cov_pct": 45.8
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -153,7 +209,11 @@
       "centroid": [
         -55.755,
         -27.8091
-      ]
+      ],
+      "rank": {
+        "health_min": 3,
+        "health_cov_pct": 50.7
+      }
     },
     {
       "dpto": "Concepción",
@@ -163,7 +223,11 @@
       "centroid": [
         -55.4271,
         -27.8858
-      ]
+      ],
+      "rank": {
+        "health_min": 5,
+        "health_cov_pct": 45.9
+      }
     },
     {
       "dpto": "Capital",
@@ -173,7 +237,11 @@
       "centroid": [
         -55.9408,
         -27.4297
-      ]
+      ],
+      "rank": {
+        "health_min": 1,
+        "health_cov_pct": 57.5
+      }
     }
   ]
 }

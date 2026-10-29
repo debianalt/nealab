@@ -14,7 +14,15 @@
       "centroid": [
         -58.0456,
         -25.3808
-      ]
+      ],
+      "rank": {
+        "trees_pct": 36.0,
+        "trees_ha": 222113,
+        "crops_pct": 7.4,
+        "crops_ha": 45584,
+        "built_pct": 4.2,
+        "built_ha": 25815
+      }
     },
     {
       "dpto": "Formosa",
@@ -24,7 +32,15 @@
       "centroid": [
         -58.3872,
         -25.9345
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.0,
+        "trees_ha": 287077,
+        "crops_pct": 6.5,
+        "crops_ha": 48875,
+        "built_pct": 4.2,
+        "built_ha": 31890
+      }
     },
     {
       "dpto": "Laishi",
@@ -34,7 +50,15 @@
       "centroid": [
         -58.5513,
         -26.4647
-      ]
+      ],
+      "rank": {
+        "trees_pct": 38.5,
+        "trees_ha": 160683,
+        "crops_pct": 6.7,
+        "crops_ha": 28108,
+        "built_pct": 3.8,
+        "built_ha": 16087
+      }
     },
     {
       "dpto": "Pilagás",
@@ -44,7 +68,15 @@
       "centroid": [
         -58.6711,
         -25.1016
-      ]
+      ],
+      "rank": {
+        "trees_pct": 39.9,
+        "trees_ha": 156948,
+        "crops_pct": 7.3,
+        "crops_ha": 28540,
+        "built_pct": 3.9,
+        "built_ha": 15338
+      }
     },
     {
       "dpto": "Pirané",
@@ -54,7 +86,15 @@
       "centroid": [
         -59.1628,
         -25.7727
-      ]
+      ],
+      "rank": {
+        "trees_pct": 45.4,
+        "trees_ha": 456555,
+        "crops_pct": 6.6,
+        "crops_ha": 66026,
+        "built_pct": 3.9,
+        "built_ha": 38926
+      }
     },
     {
       "dpto": "Patiño",
@@ -64,7 +104,15 @@
       "centroid": [
         -60.0089,
         -24.8951
-      ]
+      ],
+      "rank": {
+        "trees_pct": 46.6,
+        "trees_ha": 1416364,
+        "crops_pct": 7.6,
+        "crops_ha": 231897,
+        "built_pct": 3.9,
+        "built_ha": 119503
+      }
     },
     {
       "dpto": "Bermejo",
@@ -74,7 +122,15 @@
       "centroid": [
         -61.2886,
         -24.027
-      ]
+      ],
+      "rank": {
+        "trees_pct": 48.0,
+        "trees_ha": 760586,
+        "crops_pct": 7.2,
+        "crops_ha": 114693,
+        "built_pct": 4.0,
+        "built_ha": 63758
+      }
     },
     {
       "dpto": "Matacos",
@@ -84,7 +140,15 @@
       "centroid": [
         -62.0811,
         -23.8673
-      ]
+      ],
+      "rank": {
+        "trees_pct": 40.7,
+        "trees_ha": 185835,
+        "crops_pct": 4.5,
+        "crops_ha": 20353,
+        "built_pct": 2.9,
+        "built_ha": 13168
+      }
     },
     {
       "dpto": "Ramón Lista",
@@ -94,7 +158,15 @@
       "centroid": [
         -62.1413,
         -23.111
-      ]
+      ],
+      "rank": {
+        "trees_pct": 24.0,
+        "trees_ha": 102607,
+        "crops_pct": 4.5,
+        "crops_ha": 19103,
+        "built_pct": 2.4,
+        "built_ha": 10296
+      }
     }
   ]
 }
