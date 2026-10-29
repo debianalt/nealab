@@ -226,31 +226,26 @@ def run(args):
 
     # ── Step 8: Split by department + upload ──────────────────────
     step(8, "Split by department and upload to R2")
-    try:
-        import subprocess as _sp
-        split_script = os.path.join(PIPELINE_DIR, "split_flood_by_dpto.py")
-        split_cmd = [sys.executable, split_script, '--territory', args.territory]
-        sar_date = sar_date_from_path(current_path)
-        if sar_date:
-            split_cmd += ['--sar-date', sar_date]
-            print(f"  SAR snapshot date: {sar_date}")
-        result = _sp.run(split_cmd, cwd=PIPELINE_DIR)
-        if result.returncode != 0:
-            print("  WARNING: Department splitting failed, continuing...")
-        else:
-            # Upload department parquets to R2
-            dept_dir = os.path.join(t_dir, "flood_dpto")
-            if os.path.isdir(dept_dir):
-                dept_files = [f for f in os.listdir(dept_dir) if f.endswith(".parquet")]
-                uploaded = 0
-                for fname in dept_files:
-                    fpath = os.path.join(dept_dir, fname)
-                    r2_dpto_key = f"{r2_dpto_prefix}{fname}"
-                    if upload_file(fpath, r2_dpto_key, versioned=False):
-                        uploaded += 1
-                print(f"  Uploaded {uploaded}/{len(dept_files)} department parquets to R2")
-    except Exception as e:
-        print(f"  WARNING: Department split/upload failed: {e}")
+    # A failed split used to print a WARNING and finish green: the department
+    # parquets are what the UI loads, so a run that leaves them stale is a failure.
+    import subprocess as _sp
+    split_script = os.path.join(PIPELINE_DIR, "split_flood_by_dpto.py")
+    split_cmd = [sys.executable, split_script, '--territory', args.territory]
+    sar_date = sar_date_from_path(current_path)
+    if sar_date:
+        split_cmd += ['--sar-date', sar_date]
+        print(f"  SAR snapshot date: {sar_date}")
+    result = _sp.run(split_cmd, cwd=PIPELINE_DIR)
+    if result.returncode != 0:
+        print("  ERROR: Department splitting failed.")
+        return 1
+    dept_dir = os.path.join(t_dir, "flood_dpto")
+    dept_files = [f for f in os.listdir(dept_dir) if f.endswith(".parquet")] if os.path.isdir(dept_dir) else []
+    uploaded = sum(upload_file(os.path.join(dept_dir, f), f"{r2_dpto_prefix}{f}", versioned=False) for f in dept_files)
+    print(f"  Uploaded {uploaded}/{len(dept_files)} department parquets to R2")
+    if not dept_files or uploaded < len(dept_files):
+        print("  ERROR: department parquets missing or not all uploaded.")
+        return 1
 
     # ── Step 9: Summary ────────────────────────────────────────────
     elapsed = time.time() - start_time

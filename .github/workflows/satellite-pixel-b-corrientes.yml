@@ -1,9 +1,8 @@
 name: Update Satellite Analyses (Corrientes — Group B)
 # agri_potential for Corrientes (AR)
 
+# Sin cron (29-oct-2026): agri_potential: suelo, clima medio y pendiente no cambian; recalcular cada 15 días no aportaba. Además upload_to_r2 no subía nada desde CI (shell=True en Linux) y, arreglado, publicaría sin revisión. Manual.
 on:
-  schedule:
-    - cron: '0 7 10,25 * *'  # 10th and 25th of each month, 07:00 UTC
   workflow_dispatch:
     inputs:
       analyses:

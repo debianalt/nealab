@@ -40,6 +40,12 @@ river floods (a 3-month flood is < 10 % of the months). Shown only where the
 department spread is ≥ 3 points (Alto Paraguay: 1.0–2.0 %, kept as a note).
 The buildings version (% of buildings on such pixels) stayed under 3 %: noise.
 
+WITHDRAWN the same day (29-oct-2026): Sentinel-2 MNDWI sees 0.05 % open water in
+Doce de Octubre where this radar metric gives 15–19 %, in October and in June:
+VV < −15 dB flags the plain's smooth, saline soils as water. --plain still
+computes s1_land_pct but writes shown=False; publishing it needs a method that
+survives that check (e.g. change detection against a dry baseline, or S1 ∧ S2).
+
 Writes a `rank` block into each department of the flood dept summary JSON;
 split_flood_by_dpto.py keeps it when it rewrites the summary.
 
@@ -248,7 +254,7 @@ def process_plain(tid: str) -> None:
             vals.append(v)
     spread = float(max(vals) - min(vals)) if vals else 0.0
     summary['metadata']['rank']['plain'] = {
-        'metric': 's1_land_pct', 'spread': round(spread, 1), 'shown': bool(spread >= PLAIN_MIN_SPREAD),
+        'metric': 's1_land_pct', 'spread': round(spread, 1), 'shown': False,  # withdrawn, see docstring
         'definition': '% de la tierra (sin agua permanente JRC) con agua en al menos el 10 % de los meses '
                       '2015–2026 (Sentinel-1, VV < −15 dB, mediana mensual)',
     }

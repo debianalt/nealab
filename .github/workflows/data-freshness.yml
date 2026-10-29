@@ -1,0 +1,49 @@
+name: Check Data Freshness
+
+# Weekly check that what spatia.ar serves matches each automatic refresh's
+# cadence (pipeline/check_freshness.py). Opens one issue when something is late
+# and comments on it while it stays late, so a silent pipeline failure — like
+# the June–October 2026 no-op uploads — surfaces within a week.
+on:
+  schedule:
+    - cron: '0 12 * * 2'   # Tuesdays 12:00 UTC, the day after the flood refresh
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    if: github.repository == 'debianalt/spatia-dev'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check freshness
+        id: check
+        run: |
+          set +e
+          python pipeline/check_freshness.py > report.md
+          echo "late=$?" >> "$GITHUB_OUTPUT"
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          cat report.md
+
+      - name: Open or update issue
+        if: steps.check.outputs.late != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Datos atrasados en spatia.ar"
+          num=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$num" ]; then
+            gh issue comment "$num" --body-file report.md
+          else
+            gh issue create --title "$title" --body-file report.md
+          fi
+          exit 1

@@ -64,33 +64,61 @@ def download_file(r2_key: str, local_path: str) -> bool:
     return False
 
 
-def _run_wrangler_upload(local_path: str, r2_key: str) -> bool:
-    """Execute a single wrangler R2 upload, return True on success."""
+IMMUTABLE = "public, max-age=31536000, immutable"
+
+
+def _remote_size(r2_key: str) -> int | None:
+    """Content-Length of the object as R2 serves it (public bucket URL, cache-busted)."""
+    import urllib.request
+    url = f"{R2_PUBLIC_BASE}/{r2_key}?verify={int(datetime.now().timestamp())}"
+    try:
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "spatia-pipeline/1.0"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return int(resp.headers.get("Content-Length", -1))
+    except Exception:
+        return None
+
+
+def _run_wrangler_upload(local_path: str, r2_key: str, cache_control: str = IMMUTABLE) -> bool:
+    """Execute a single wrangler R2 upload and confirm R2 now serves a file of the
+    same size; return True only then.
+
+    shell=True only on Windows (npx is npx.cmd there). On Linux shell=True with a
+    list runs just the first item: `npx` alone, which uploads nothing and exits 0 —
+    every CI upload from June to October 2026 "succeeded" that way while R2 kept
+    the old objects. The size check catches any such silent no-op.
+    """
     result = subprocess.run(
         ["npx", "wrangler", "r2", "object", "put",
          f"{R2_BUCKET}/{r2_key}", "--file", local_path, "--remote",
-         "--cache-control", "public, max-age=31536000, immutable"],
+         "--cache-control", cache_control],
         capture_output=True,
-        shell=True,
+        shell=(os.name == "nt"),
         encoding="utf-8",
         errors="replace",
     )
 
-    if result.returncode == 0:
-        return True
-    else:
+    if result.returncode != 0:
         err = result.stderr.strip().encode("ascii", "replace").decode("ascii")
         print(f"  [x] wrangler failed for {r2_key}: {err}")
         return False
+    local_size = os.path.getsize(local_path)
+    remote = _remote_size(r2_key)
+    if remote != local_size:
+        print(f"  [x] {r2_key}: R2 serves {remote} bytes, local file is {local_size} — upload did not land")
+        return False
+    return True
 
 
-def upload_file(local_path: str, r2_key: str, versioned: bool = False) -> bool:
+def upload_file(local_path: str, r2_key: str, versioned: bool = False, cache_control: str = IMMUTABLE) -> bool:
     """
     Upload a single file to R2 using wrangler.
 
     If versioned=True, uploads to data/archive/{YYYY-MM-DD}/{filename} first,
     then to the latest path (r2_key).
-    Retries up to 2 attempts with a brief pause between.
+    Retries up to 2 attempts with a brief pause between. Objects refreshed in place
+    under a fixed URL (the flood current extent) need a short cache_control: the
+    default immutable year would pin browsers to the first copy.
     """
     if not os.path.exists(local_path):
         print(f"  [x] File not found: {local_path}")
@@ -120,7 +148,7 @@ def upload_file(local_path: str, r2_key: str, versioned: bool = False) -> bool:
 
     # Latest upload (this is the critical one)
     for attempt in range(2):
-        if _run_wrangler_upload(local_path, r2_key):
+        if _run_wrangler_upload(local_path, r2_key, cache_control):
             print(f"  [ok] Uploaded {r2_key}")
             return True
         if attempt == 0:

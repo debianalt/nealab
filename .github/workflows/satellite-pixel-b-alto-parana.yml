@@ -1,9 +1,8 @@
 name: Update Satellite Analyses (Alto Paraná — Group B)
 # agri_potential for Alto Paraná (PY)
 
+# Sin cron (29-oct-2026): agri_potential: insumos fijos (suelo, clima medio, pendiente); el cron quincenal no aportaba y, con upload_to_r2 arreglado, publicaría sin revisión. Manual.
 on:
-  schedule:
-    - cron: '0 8 15,30 * *'  # 15th & 30th, 08:00 UTC (offset from Itapúa 07:00)
   workflow_dispatch:
     inputs:
       analyses:

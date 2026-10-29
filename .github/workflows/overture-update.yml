@@ -1,8 +1,7 @@
 name: Update Overture Indices
 
+# Sin cron (29-oct-2026): upload_to_r2 no subía nada desde CI (shell=True en Linux); arreglado, este cron empezaría a publicar índices Overture que nadie revisó desde julio. Manual hasta revisar una corrida.
 on:
-  schedule:
-    - cron: '0 10 1 1,4,7,10 *'  # 1st of Jan, Apr, Jul, Oct — quarterly
   workflow_dispatch:
     inputs:
       release:

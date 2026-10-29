@@ -1,16 +1,28 @@
 name: Update Flood Risk Layer
 
+# Refreshes only the Sentinel-1 current extent for the 4 NEA provinces
+# (Misiones, Corrientes, Chaco, Formosa): JRC history and the department ranking
+# do not change between runs. Weekly in the rainy season (Oct–Apr), monthly
+# otherwise. Paraguay and Brazil keep their last manual run and show its date.
+# The SAR date goes to data/flood_meta.json, which the UI reads at runtime, so
+# no redeploy is needed. Full rebuilds stay local (run_flood_update.py).
 on:
   schedule:
-    - cron: '0 6 1 * *'  # 1st of each month, 06:00 UTC
-  workflow_dispatch:       # manual trigger
+    - cron: '0 6 * 1-4,10-12 1'   # Mondays 06:00 UTC, Oct–Apr
+    - cron: '0 6 1 5-9 *'         # 1st of the month, May–Sep
+  workflow_dispatch:
+    inputs:
+      territory:
+        description: 'One NEA territory (empty = all four)'
+        required: false
+        default: ''
 
 jobs:
   update:
     # Solo en el repo privado: el mirror publico (debianalt/nealab) no tiene secrets.
     if: github.repository == 'debianalt/spatia-dev'
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
 
     steps:
       - uses: actions/checkout@v5
@@ -30,27 +42,18 @@ jobs:
           pip install -r pipeline/requirements.txt
           npm install -g wrangler
 
-      - name: Generate H3 grid (if needed)
+      - name: Refresh current flood extent (NEA)
         run: |
-          if [ ! -f pipeline/output/hexagons.geojson ]; then
-            python pipeline/generate_h3_grid.py
+          if [ -n "${{ github.event.inputs.territory }}" ]; then
+            python pipeline/update_flood_current.py --territory "${{ github.event.inputs.territory }}"
+          else
+            python pipeline/update_flood_current.py
           fi
-
-      - name: Run flood update pipeline
-        run: python pipeline/run_flood_update.py --current
         env:
           GEE_SERVICE_ACCOUNT_KEY: ${{ secrets.GEE_SERVICE_ACCOUNT_KEY }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
-      - name: Upload parquet as artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: flood-parquet
-          path: pipeline/output/hex_flood_risk.parquet
-          retention-days: 30
-
       - name: Notify on failure
         if: failure()
         run: |
-          echo "::error::Flood pipeline failed. Check logs."
+          echo "::error::Flood refresh failed — nothing is uploaded unless every territory passed its checks. See the step log."
