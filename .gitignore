@@ -69,3 +69,6 @@ pipeline/**/*_PLAN.md
 
 # Claves API locales (variantes tipo copia.env)
 *.env
+
+# Secretos de Pages Functions en local (wrangler pages dev)
+.dev.vars

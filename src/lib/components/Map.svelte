@@ -3117,17 +3117,37 @@
 				source: 'satellite',
 				// EOX s2cloudless renders flat/hazy; push contrast + saturation and clip the
 				// highlights so it has more punch. (Resolution stays 10 m — no real sharpen.)
+				// Linear, not nearest: past z14 nearest showed each 10 m pixel as a block.
 				paint: {
 					'raster-opacity': 1,
 					'raster-contrast': 0.28,
 					'raster-saturation': 0.35,
 					'raster-brightness-max': 0.94,
-					'raster-resampling': 'nearest'
+					'raster-resampling': 'linear'
 				}
 			}, beforeId);
+			// Esri World Imagery (Maxar Vivid, 0.3–0.5 m across all 23 territories) on top
+			// of EOX. A tile Esri refuses (free quota of 2M tiles/month spent, key expired,
+			// proxy not configured) simply does not draw, so EOX shows through: fallback
+			// without code. Through /api/esri, which adds the key server-side — the key
+			// never ships in the bundle. Max level with data over Posadas is 17 (~1 m);
+			// MapLibre overzooms past it.
+			map.addSource('satellite-esri', {
+				type: 'raster',
+				tiles: ['/api/esri/{z}/{y}/{x}'],
+				tileSize: 256,
+				maxzoom: 17,
+				attribution: 'Powered by <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> · Esri, Maxar, Earthstar Geographics'
+			});
+			map.addLayer({
+				id: 'satellite-esri-layer',
+				type: 'raster',
+				source: 'satellite-esri',
+				paint: { 'raster-opacity': 1, 'raster-resampling': 'linear' }
+			}, beforeId);
 		}
-		if (map.getLayer('satellite-layer')) {
-			map.setLayoutProperty('satellite-layer', 'visibility', active ? 'visible' : 'none');
+		for (const id of ['satellite-layer', 'satellite-esri-layer']) {
+			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', active ? 'visible' : 'none');
 		}
 	}
 
