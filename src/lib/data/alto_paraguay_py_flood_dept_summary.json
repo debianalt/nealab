@@ -6,7 +6,13 @@
       "metric": "bld_hand5_pct",
       "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
       "median": 84.9,
-      "saturated": true
+      "saturated": true,
+      "plain": {
+        "metric": "s1_land_pct",
+        "spread": 1.0,
+        "shown": false,
+        "definition": "% de la tierra (sin agua permanente JRC) con agua en al menos el 10 % de los meses 2015–2026 (Sentinel-1, VV < −15 dB, mediana mensual)"
+      }
     }
   },
   "province": {
@@ -29,7 +35,8 @@
         "bld_hand5_pct": 75.7,
         "bld_hand5_n": 8510,
         "bld_total": 11235,
-        "land_hand5_pct": 95.0
+        "land_hand5_pct": 95.0,
+        "s1_land_pct": 1.0
       }
     },
     {
@@ -46,7 +53,8 @@
         "bld_hand5_pct": 84.9,
         "bld_hand5_n": 16062,
         "bld_total": 18924,
-        "land_hand5_pct": 99.5
+        "land_hand5_pct": 99.5,
+        "s1_land_pct": 2.0
       }
     },
     {
@@ -63,7 +71,8 @@
         "bld_hand5_pct": 93.3,
         "bld_hand5_n": 6373,
         "bld_total": 6834,
-        "land_hand5_pct": 87.3
+        "land_hand5_pct": 87.3,
+        "s1_land_pct": 2.0
       }
     }
   ]

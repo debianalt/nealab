@@ -29,12 +29,24 @@ lake; without permanent water and reservoirs every department fell under
 0.4 % with Iguazú first on the Urugua-í shoreline, and "ever saw water" added
 almost nothing: Landsat misses the short, cloudy floods of an incised plateau.
 
+Plain territories (`metadata.rank.saturated`): HAND < 5 m does not separate
+departments there and HAND < 1 m ranked them backwards (Chaco's dry interior
+first, Bermejo and Sargento Cabral on the río Paraguay last). `--plain` ranks
+them by s1_land_pct = % of land (permanent water excluded) with water in at
+least 10 % of months 2015–present (Sentinel-1, VV < −15 dB monthly median):
+it puts the Bajos Submeridionales first in Chaco, eastern Formosa first and
+the Ñeembucú wetlands first. It measures recurrent waterlogging, not episodic
+river floods (a 3-month flood is < 10 % of the months). Shown only where the
+department spread is ≥ 3 points (Alto Paraguay: 1.0–2.0 %, kept as a note).
+The buildings version (% of buildings on such pixels) stayed under 3 %: noise.
+
 Writes a `rank` block into each department of the flood dept summary JSON;
 split_flood_by_dpto.py keeps it when it rewrites the summary.
 
     python pipeline/build_flood_rank.py --export --all     # launch GEE exports, wait, download
     python pipeline/build_flood_rank.py --all              # tifs → JSON
     python pipeline/build_flood_rank.py --territory corrientes
+    python pipeline/build_flood_rank.py --plain --export      # saturated territories, Sentinel-1
 """
 
 import argparse
@@ -58,6 +70,9 @@ OB_EPOCH = 1688108400   # Open Buildings Temporal: 2023 inference
 BANDS = ['land_m2', 'low_land_m2', 'bld', 'bld_low']
 NAME = 'flood_rank_hand'
 SATURATED_MEDIAN = 80   # % — at or above, HAND < 5 m does not separate departments
+PLAIN_NAME = 'flood_rank_s1'
+S1_MIN_MONTHS = 0.10    # share of months with water
+PLAIN_MIN_SPREAD = 3    # points between the wettest and driest department
 
 
 def territory_paths(tid: str):
@@ -104,8 +119,9 @@ def download(tid: str, t_dir: str) -> None:
     subprocess.run(['gcloud', 'storage', 'cp', src, t_dir], check=True, shell=(os.name == 'nt'))
 
 
-def hex_sums(tifs: list) -> pd.DataFrame:
-    """Sum the four bands per H3 res-9 cell (pixel centre), block by block."""
+def hex_sums(tifs: list, bands: list = BANDS) -> pd.DataFrame:
+    """Sum the bands per H3 res-9 cell (pixel centre), block by block. Pixels with
+    no land and no buildings (first band and 'bld', when present) are skipped."""
     import duckdb
     import rasterio
     con = duckdb.connect()
@@ -114,21 +130,23 @@ def hex_sums(tifs: list) -> pd.DataFrame:
     for tif in tifs:
         with rasterio.open(tif) as src:
             for _, win in src.block_windows(1):
-                a = src.read(window=win).astype(np.float64)        # (4, h, w)
-                keep = (a[0] > 0) | (a[2] > 0)
+                a = src.read(window=win).astype(np.float64)        # (bands, h, w)
+                keep = a[0] > 0
+                if 'bld' in bands:
+                    keep |= a[bands.index('bld')] > 0
                 if not keep.any():
                     continue
                 rows, cols = np.nonzero(keep)
                 t = src.window_transform(win)
                 df = pd.DataFrame({
                     'lng': t.c + (cols + 0.5) * t.a, 'lat': t.f + (rows + 0.5) * t.e,
-                    **{b: a[i][keep] for i, b in enumerate(BANDS)},
+                    **{b: a[i][keep] for i, b in enumerate(bands)},
                 })
                 parts.append(con.execute(
                     'SELECT h3_latlng_to_cell_string(lat, lng, 9) AS h3index, '
-                    + ', '.join(f'SUM({b}) AS {b}' for b in BANDS)
+                    + ', '.join(f'SUM({b}) AS {b}' for b in bands)
                     + ' FROM df GROUP BY 1').df())
-    return pd.concat(parts).groupby('h3index', as_index=False)[BANDS].sum()
+    return pd.concat(parts).groupby('h3index', as_index=False)[bands].sum()
 
 
 def dept_assignment(prefix: str, departments: list) -> pd.DataFrame:
@@ -188,12 +206,80 @@ def process(tid: str) -> None:
     print(f'{tid}: {len(ranked)}/{len(summary["departments"])} ranked, {missing} without data · top: {top}')
 
 
+def launch_plain(tid: str):
+    import ee
+    from gee_flood_detection import get_territory_aoi, compute_historical_recurrence
+    aoi = get_territory_aoi(tid)
+    proj = ee.Image('MERIT/Hydro/v1_0_1').select('hnd').projection()
+    perm = (ee.Image('JRC/GSW1_4/GlobalSurfaceWater').select('transition')
+            .remap(PERMANENT, [1] * len(PERMANENT), 0).unmask(0))
+    land = ee.Image.pixelArea().multiply(perm.Not())
+    wet = compute_historical_recurrence(aoi).select('flood_recurrence').gte(S1_MIN_MONTHS).unmask(0)
+    img = ee.Image.cat([land.rename('land_m2'), land.multiply(wet).rename('land_s1')]).reproject(proj).toFloat()
+    task = ee.batch.Export.image.toCloudStorage(
+        image=img, description=f'{PLAIN_NAME}_{tid}', bucket=GCS_BUCKET,
+        fileNamePrefix=f'{EXPORT_PREFIX}/{tid}/{PLAIN_NAME}', region=aoi,
+        crs='EPSG:4326', crsTransform=proj.getInfo()['transform'],
+        maxPixels=1e11, fileFormat='GeoTIFF',
+    )
+    task.start()
+    print(f'  -> {tid} (plain): {task.id}')
+    return task
+
+
+def process_plain(tid: str) -> None:
+    prefix, t_dir, summary_path = territory_paths(tid)
+    tifs = sorted(glob.glob(os.path.join(t_dir, f'{PLAIN_NAME}*.tif')))
+    if not tifs:
+        sys.exit(f'{tid}: no {PLAIN_NAME}*.tif in {t_dir} — run with --plain --export')
+    with open(summary_path, encoding='utf-8') as f:
+        summary = json.load(f)
+    plain_bands = ['land_m2', 'land_s1']
+    hexes = hex_sums(tifs, plain_bands).merge(dept_assignment(prefix, summary['departments']), on='h3index', how='inner')
+    by = hexes.groupby('parquetKey')[plain_bands].sum()
+    vals = []
+    for d in summary['departments']:
+        if d['parquetKey'] not in by.index:
+            continue
+        r = by.loc[d['parquetKey']]
+        v = round(float(100 * r.land_s1 / r.land_m2), 1) if r.land_m2 > 0 else None
+        d['rank'] = {**(d.get('rank') or {}), 's1_land_pct': v}
+        if v is not None:
+            vals.append(v)
+    spread = float(max(vals) - min(vals)) if vals else 0.0
+    summary['metadata']['rank']['plain'] = {
+        'metric': 's1_land_pct', 'spread': round(spread, 1), 'shown': bool(spread >= PLAIN_MIN_SPREAD),
+        'definition': '% de la tierra (sin agua permanente JRC) con agua en al menos el 10 % de los meses '
+                      '2015–2026 (Sentinel-1, VV < −15 dB, mediana mensual)',
+    }
+    with open(summary_path, 'w', encoding='utf-8') as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+    print(f'{tid} (plain): spread {spread:.1f} -> {"shown" if spread >= PLAIN_MIN_SPREAD else "note only"}')
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--territory', default='misiones')
     ap.add_argument('--all', action='store_true')
     ap.add_argument('--export', action='store_true', help='Launch the GEE exports, wait and download first')
+    ap.add_argument('--plain', action='store_true', help='Sentinel-1 ranking for the saturated (plain) territories')
     args = ap.parse_args()
+    if args.plain:
+        tids = [t for t in TERRITORY_CONFIGS
+                if json.load(open(territory_paths(t)[2], encoding='utf-8'))['metadata'].get('rank', {}).get('saturated')]
+        if args.export:
+            from gee_flood_detection import authenticate, wait_for_tasks
+            authenticate()
+            wait_for_tasks([launch_plain(t) for t in tids], timeout=6 * 3600)
+            for t in tids:
+                t_dir = territory_paths(t)[1]
+                for old in glob.glob(os.path.join(t_dir, f'{PLAIN_NAME}*.tif')):
+                    os.remove(old)
+                subprocess.run(['gcloud', 'storage', 'cp', f'gs://{GCS_BUCKET}/{EXPORT_PREFIX}/{t}/{PLAIN_NAME}*.tif',
+                                t_dir], check=True, shell=(os.name == 'nt'))
+        for t in tids:
+            process_plain(t)
+        return
     tids = list(TERRITORY_CONFIGS) if args.all else [args.territory]
 
     if args.export:

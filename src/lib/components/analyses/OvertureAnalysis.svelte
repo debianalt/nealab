@@ -124,21 +124,25 @@
 
 	// Department ranking (layerCfg.deptRank): physical metric per department from
 	// the summary's `rank` block. Only when the active territory's summary has it.
-	const rankCfg = $derived(layerCfg?.deptRank ?? null);
+	// The pipeline flags territories where the metric does not separate departments
+	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %). There the ranking
+	// switches to deptRank.plain when the summary carries it and it spreads
+	// (metadata.rank.plain.shown); otherwise a note replaces the bars.
+	const rankSummary = $derived(allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary);
+	const rankSaturatedRaw = $derived(!!rankSummary?.metadata?.rank?.saturated);
+	const rankPlain = $derived(rankSaturatedRaw && !!rankSummary?.metadata?.rank?.plain?.shown && !!layerCfg?.deptRank?.plain);
+	const rankCfg = $derived.by(() => {
+		const base = layerCfg?.deptRank ?? null;
+		if (!base || !rankPlain) return base;
+		return { ...base, ...base.plain!, extraField: undefined, extraUnitKey: undefined };
+	});
 	const hasRank = $derived.by(() => {
 		if (!rankCfg) return false;
-		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
-		if (summary?.metadata?.rank?.saturated) return false;
-		return !!summary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null);
+		if (rankSaturatedRaw && !rankPlain) return false;
+		return !!rankSummary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null);
 	});
-	// The pipeline flags territories where the metric does not separate departments
-	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %) — say so instead of bars.
 	const activeTerritoryLabel = $derived(TERRITORY_REGISTRY[activeTab]?.label ?? '');
-	const rankSaturated = $derived.by(() => {
-		if (!rankCfg?.saturatedKey) return false;
-		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
-		return !!summary?.metadata?.rank?.saturated;
-	});
+	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw && !rankPlain);
 
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
