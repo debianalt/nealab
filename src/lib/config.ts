@@ -880,6 +880,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Migrated from radio/catastro to H3 ──
 	sociodemographic: {
 		id: 'sociodemographic',
+		// NBI rate from local raw census data (served pct_nbi is a percentile) —
+		// pipeline/build_layer_ranks.py --census-rates.
+		deptRank: {
+			field: 'nbi_pop_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.socio.title', noteKey: 'rank.socio.note',
+		},
 		parquet: 'sat_sociodemographic',
 		variables: [
 			{ col: 'score', labelKey: 'analysis.socio.score', aggregation: 'mean' },
@@ -943,10 +949,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	economic_activity: {
 		id: 'economic_activity',
 		// Department ranking — pipeline/build_layer_ranks.py.
-		// Night lights only: tasa_empleo behaves like a percentile, not a rate (build_layer_ranks.py).
+		// Employment rate from local raw census data (served tasa_empleo is a
+		// percentile) — build_layer_ranks.py --census-rates; night lights from the parquet.
 		deptRank: {
-			field: 'viirs', unit: 'nW/cm²/sr', decimals: 2,
-			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note.viirs',
+			field: 'empleo_pct', unit: '%', decimals: 1,
+			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note',
+			metrics: [
+				{ tabKey: 'rank.econ.tab.empleo' },
+				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs' },
+			],
 		},
 		parquet: 'sat_economic_activity',
 		variables: [

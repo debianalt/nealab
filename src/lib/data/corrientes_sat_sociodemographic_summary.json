@@ -14,7 +14,10 @@
       "centroid": [
         -56.833,
         -28.2966
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.4
+      }
     },
     {
       "dpto": "Concepción",
@@ -24,7 +27,10 @@
       "centroid": [
         -58.101,
         -28.2758
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 26.6
+      }
     },
     {
       "dpto": "Lavalle",
@@ -34,7 +40,10 @@
       "centroid": [
         -59.0772,
         -28.9281
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 22.7
+      }
     },
     {
       "dpto": "Saladas",
@@ -44,7 +53,10 @@
       "centroid": [
         -58.703,
         -28.1969
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 19.4
+      }
     },
     {
       "dpto": "Esquina",
@@ -54,7 +66,10 @@
       "centroid": [
         -59.2055,
         -29.7808
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 15.0
+      }
     },
     {
       "dpto": "San Miguel",
@@ -64,7 +79,10 @@
       "centroid": [
         -57.2887,
         -27.7292
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.3
+      }
     },
     {
       "dpto": "San Roque",
@@ -74,7 +92,10 @@
       "centroid": [
         -58.5728,
         -28.6497
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 12.1
+      }
     },
     {
       "dpto": "Sauce",
@@ -84,7 +105,10 @@
       "centroid": [
         -58.6914,
         -29.9713
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.5
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -94,7 +118,10 @@
       "centroid": [
         -59.0114,
         -28.5147
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.1
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -104,7 +131,10 @@
       "centroid": [
         -58.2653,
         -27.5545
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 12.2
+      }
     },
     {
       "dpto": "Goya",
@@ -114,7 +144,10 @@
       "centroid": [
         -59.2692,
         -29.3963
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.9
+      }
     },
     {
       "dpto": "General Alvear",
@@ -124,7 +157,10 @@
       "centroid": [
         -56.5109,
         -28.8762
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.7
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -134,7 +170,10 @@
       "centroid": [
         -56.874,
         -27.7429
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.7
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -144,7 +183,10 @@
       "centroid": [
         -58.3625,
         -29.4281
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.7
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -154,7 +196,10 @@
       "centroid": [
         -58.2378,
         -28.0433
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 12.2
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -164,7 +209,10 @@
       "centroid": [
         -56.0073,
         -27.9764
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.4
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -174,7 +222,10 @@
       "centroid": [
         -57.2071,
         -29.6803
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.7
+      }
     },
     {
       "dpto": "Empedrado",
@@ -184,7 +235,10 @@
       "centroid": [
         -58.5558,
         -27.84
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.9
+      }
     },
     {
       "dpto": "General Paz",
@@ -194,7 +248,10 @@
       "centroid": [
         -57.4659,
         -27.6047
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.3
+      }
     },
     {
       "dpto": "Mercedes",
@@ -204,7 +261,10 @@
       "centroid": [
         -58.1652,
         -29.1433
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.7
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -214,7 +274,10 @@
       "centroid": [
         -57.5793,
         -27.4842
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.3
+      }
     },
     {
       "dpto": "Itatí",
@@ -224,7 +287,10 @@
       "centroid": [
         -58.1789,
         -27.3235
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.6
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -234,7 +300,10 @@
       "centroid": [
         -57.8212,
         -30.0997
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 12.0
+      }
     },
     {
       "dpto": "Capital",
@@ -244,7 +313,10 @@
       "centroid": [
         -58.756,
         -27.5128
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.1
+      }
     },
     {
       "dpto": "San Cosme",
@@ -254,7 +326,10 @@
       "centroid": [
         -58.5098,
         -27.3489
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.9
+      }
     }
   ]
 }

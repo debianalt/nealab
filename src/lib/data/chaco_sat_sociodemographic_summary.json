@@ -14,7 +14,10 @@
       "centroid": [
         -60.6287,
         -26.0385
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 22.4
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -24,7 +27,10 @@
       "centroid": [
         -60.105,
         -27.5908
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.0
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -34,7 +40,10 @@
       "centroid": [
         -60.0606,
         -26.9388
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 20.0
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -44,7 +53,10 @@
       "centroid": [
         -59.8639,
         -26.9787
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.5
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -54,7 +66,10 @@
       "centroid": [
         -59.2624,
         -26.5636
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.3
+      }
     },
     {
       "dpto": "Almirante Brown",
@@ -64,7 +79,10 @@
       "centroid": [
         -60.9495,
         -26.4947
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 16.2
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -74,7 +92,10 @@
       "centroid": [
         -60.1745,
         -26.6802
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 15.6
+      }
     },
     {
       "dpto": "Maipú",
@@ -84,7 +105,10 @@
       "centroid": [
         -60.4481,
         -26.4666
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 21.0
+      }
     },
     {
       "dpto": "12 de Octubre",
@@ -94,7 +118,10 @@
       "centroid": [
         -61.2476,
         -27.3058
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 18.8
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -104,7 +131,10 @@
       "centroid": [
         -61.1724,
         -27.2451
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.4
+      }
     },
     {
       "dpto": "Independencia",
@@ -114,7 +144,10 @@
       "centroid": [
         -60.746,
         -26.5928
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 27.7
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -124,7 +157,10 @@
       "centroid": [
         -60.718,
         -27.6372
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.3
+      }
     },
     {
       "dpto": "9 de Julio",
@@ -134,7 +170,10 @@
       "centroid": [
         -61.094,
         -27.0465
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.7
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -144,7 +183,10 @@
       "centroid": [
         -60.6361,
         -27.2059
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 18.4
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -154,7 +196,10 @@
       "centroid": [
         -60.3662,
         -26.7051
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.5
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -164,7 +209,10 @@
       "centroid": [
         -61.0058,
         -26.9294
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 19.6
+      }
     },
     {
       "dpto": "Bermejo",
@@ -174,7 +222,10 @@
       "centroid": [
         -58.6749,
         -26.9131
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.6
+      }
     },
     {
       "dpto": "General Donovan",
@@ -184,7 +235,10 @@
       "centroid": [
         -59.4059,
         -27.0776
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.5
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -194,7 +248,10 @@
       "centroid": [
         -60.3845,
         -27.2115
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.6
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -204,7 +261,10 @@
       "centroid": [
         -59.5185,
         -26.9066
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.6
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -214,7 +274,10 @@
       "centroid": [
         -61.1354,
         -27.8402
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.4
+      }
     },
     {
       "dpto": "2 de Abril",
@@ -224,7 +287,10 @@
       "centroid": [
         -61.281,
         -27.6091
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.9
+      }
     },
     {
       "dpto": "San Fernando",
@@ -234,7 +300,10 @@
       "centroid": [
         -58.9957,
         -27.5283
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.4
+      }
     },
     {
       "dpto": "Libertad",
@@ -244,7 +313,10 @@
       "centroid": [
         -59.1935,
         -27.304
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.2
+      }
     },
     {
       "dpto": "1° de Mayo",
@@ -254,7 +326,10 @@
       "centroid": [
         -58.9587,
         -27.1679
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.7
+      }
     }
   ]
 }

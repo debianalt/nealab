@@ -14,7 +14,10 @@
       "centroid": [
         -55.4452,
         -27.8922
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 15.6
+      }
     },
     {
       "dpto": "Iguazú",
@@ -24,7 +27,10 @@
       "centroid": [
         -54.5594,
         -26.0317
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 11.4
+      }
     },
     {
       "dpto": "San Pedro",
@@ -34,7 +40,10 @@
       "centroid": [
         -54.0439,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 13.5
+      }
     },
     {
       "dpto": "Candelaria",
@@ -44,7 +53,10 @@
       "centroid": [
         -55.6601,
         -27.4835
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.5
+      }
     },
     {
       "dpto": "Apóstoles",
@@ -54,7 +66,10 @@
       "centroid": [
         -55.755,
         -27.8091
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 12.6
+      }
     },
     {
       "dpto": "Montecarlo",
@@ -64,7 +79,10 @@
       "centroid": [
         -54.6364,
         -26.6156
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.4
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -74,7 +92,10 @@
       "centroid": [
         -55.2321,
         -27.0669
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.0
+      }
     },
     {
       "dpto": "G. M. Belgrano",
@@ -84,7 +105,10 @@
       "centroid": [
         -53.7615,
         -26.2508
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.3
+      }
     },
     {
       "dpto": "Oberá",
@@ -94,7 +118,10 @@
       "centroid": [
         -55.0711,
         -27.2737
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.6
+      }
     },
     {
       "dpto": "Eldorado",
@@ -104,7 +131,10 @@
       "centroid": [
         -54.4038,
         -26.3893
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.4
+      }
     },
     {
       "dpto": "L.G. San Martín",
@@ -114,7 +144,10 @@
       "centroid": [
         -55.0755,
         -26.9918
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.8
+      }
     },
     {
       "dpto": "Guaraní",
@@ -124,7 +157,10 @@
       "centroid": [
         -54.1853,
         -26.9559
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 10.0
+      }
     },
     {
       "dpto": "Cainguás",
@@ -134,7 +170,10 @@
       "centroid": [
         -54.951,
         -27.1287
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 8.7
+      }
     },
     {
       "dpto": "L. N. Alem",
@@ -144,7 +183,10 @@
       "centroid": [
         -55.5248,
         -27.5921
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.5
+      }
     },
     {
       "dpto": "Capital",
@@ -154,7 +196,10 @@
       "centroid": [
         -55.9408,
         -27.4297
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.9
+      }
     },
     {
       "dpto": "25 de Mayo",
@@ -164,7 +209,10 @@
       "centroid": [
         -54.4425,
         -27.3319
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 7.3
+      }
     },
     {
       "dpto": "San Javier",
@@ -174,7 +222,10 @@
       "centroid": [
         -55.2586,
         -27.7646
-      ]
+      ],
+      "rank": {
+        "nbi_pop_pct": 9.4
+      }
     }
   ]
 }

@@ -9,7 +9,8 @@ department in the layer's dept summary JSON (src/lib/data):
 - Census layers (4 AR provinces): household-weighted with the hexagon's
   hogares_estimados — a "% of households", not a mean of hexagons, which would
   weigh an empty rural cell like a city block. sociodemographic has no
-  household column; its pct_nbi is not a rate and it is not ranked (see SPECS).
+  household column; its NBI (and economic_activity's employment) are served as
+  percentiles, so those two rates come from local raw data (--census-rates).
 - Physical layers (24 territories): area-weighted (H3 res-9 cells are equal
   area). PM2.5 and accessibility describe the territory, not its people:
   Paraguay and Brazil have no population per hexagon here.
@@ -87,11 +88,9 @@ SPECS = {
         'dropout_sec_pct': (hog_pct('c_dropout_secondary_raw'), 1),
         'teen_preg_pct': (hog_pct('c_teen_pregnancy_raw'), 1),
     },
-    # sociodemographic.pct_nbi and economic_activity.tasa_empleo are not rates:
-    # pct_nbi is 0 in > 75 % of cells (P90 53) against 3.8–17.6 % of households in
-    # service_deprivation.c_nbi_raw, and tasa_empleo spreads evenly over 0–100
-    # (deciles 11/30/55/78/90) like a percentile. Neither is ranked; economic
-    # activity keeps night lights, which is physical.
+    # sociodemographic.pct_nbi and economic_activity.tasa_empleo are served as
+    # percentiles, not rates: their rankings come from local raw data
+    # (--census-rates, local_census_rates). Here only night lights.
     'economic_activity': {
         'viirs': ('AVG(viirs_mean_radiance)', 2),
     },
@@ -136,6 +135,65 @@ def clean(layer: str, summary: dict, tid: str) -> list:
     return dropped
 
 
+CENSUS_AR = ['misiones', 'corrientes', 'chaco', 'formosa']
+
+
+def local_census_rates() -> None:
+    """NBI (sociodemographic) and employment (economic_activity) as real rates.
+
+    The served parquets carry these as 0–100 percentiles (aggregate_radio_to_h3
+    ranks them "for petal compatibility"; the served Misiones copy also went
+    through fill_h3_coverage, which writes 0 where there is no census). The real
+    values exist locally: radio_stats_master (Misiones, per radio, with dpto and
+    total_personas) and the *_raw columns of output/<t>/sat_*.parquet for the
+    other three provinces. Population-weighted (NBI) / household-weighted
+    (employment) department rates go into the same rank block.
+    """
+    import duckdb
+    import pandas as pd
+    out = os.path.join(os.path.dirname(__file__), 'output')
+    con = duckdb.connect()
+    con.execute('INSTALL httpfs; LOAD httpfs;')
+    rs = pd.read_parquet(os.path.join(out, 'radio_stats_master.parquet'),
+                         columns=['dpto', 'total_personas', 'pct_nbi', 'tasa_empleo'])
+    for layer, field, col in [('sociodemographic', 'nbi_pop_pct', 'pct_nbi'),
+                              ('economic_activity', 'empleo_pct', 'tasa_empleo')]:
+        for tid in CENSUS_AR:
+            path = summary_path(layer, tid)
+            if not path:
+                continue
+            with open(path, encoding='utf-8') as f:
+                summary = json.load(f)
+            if tid == 'misiones':
+                g = rs.dropna(subset=[col]).assign(w=lambda d: d.total_personas.fillna(0))
+                rates = g.groupby('dpto').apply(lambda d: (d[col] * d.w).sum() / d.w.sum() if d.w.sum() else None)
+                by_name = {str(k).strip().lower(): v for k, v in rates.items()}
+                for d in summary['departments']:
+                    v = by_name.get(str(d.get('dpto', '')).strip().lower())
+                    d['rank'] = {**(d.get('rank') or {}), field: None if v is None else round(float(v), 1)}
+            else:
+                local = os.path.join(out, tid, f'sat_{layer}.parquet')
+                weight = 'densidad_hab_km2_raw' if layer == 'sociodemographic' else 'hogares_estimados'
+                hexes = pd.read_parquet(local, columns=['h3index', f'{col}_raw', weight])
+                prefix = get_territory(tid)['output_prefix']
+                urls = {f"{CDN}/{prefix}sat_dpto/sat_{layer}_{d['parquetKey']}.parquet": d['parquetKey']
+                        for d in summary['departments']}
+                url_list = ', '.join(f"'{u}'" for u in urls)
+                assign = con.execute(f'SELECT DISTINCT h3index, filename FROM read_parquet([{url_list}], filename = true)').df()
+                assign['parquetKey'] = assign.filename.map(urls)
+                m = hexes.merge(assign[['h3index', 'parquetKey']], on='h3index')
+                m = m[m[weight] > 0]
+                rates = m.groupby('parquetKey').apply(lambda d: (d[f'{col}_raw'] * d[weight]).sum() / d[weight].sum())
+                for d in summary['departments']:
+                    v = rates.get(d['parquetKey'])
+                    d['rank'] = {**(d.get('rank') or {}), field: None if v is None else round(float(v), 1)}
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(summary, f, ensure_ascii=False, indent=2)
+            vals = sorted((d['rank'][field], d.get('dpto') or d['parquetKey']) for d in summary['departments']
+                          if (d.get('rank') or {}).get(field) is not None)
+            print(f'{layer}/{tid}: {len(vals)}/{len(summary["departments"])} · min {vals[0] if vals else None} · max {vals[-1] if vals else None}')
+
+
 def summary_path(layer: str, tid: str) -> str | None:
     names = [f'sat_{layer}_dept_summary.json'] if tid == 'misiones' else [f'{tid}_sat_{layer}_summary.json']
     for n in names:
@@ -150,7 +208,11 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--layer', choices=list(SPECS))
     ap.add_argument('--clean-only', action='store_true', help='Re-apply the missing-data rules to the JSONs, no download')
+    ap.add_argument('--census-rates', action='store_true', help='NBI and employment rates from local raw census data')
     args = ap.parse_args()
+    if args.census_rates:
+        local_census_rates()
+        return
     if args.clean_only:
         for layer in ([args.layer] if args.layer else SPECS):
             for tid in TERRITORY_CONFIGS:
