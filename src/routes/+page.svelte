@@ -1251,10 +1251,31 @@
 		untrack(() => rerenderForScale());
 	});
 
+	// ── Painted variable changed (flood: the active ranking tab) → repaint ──
+	let prevColorVariable: string | null = null;
+	$effect(() => {
+		const v = hexStore.colorVariable;
+		if (v === prevColorVariable) return;
+		prevColorVariable = v;
+		untrack(() => rerenderForVariable());
+	});
+
+	async function rerenderForVariable() {
+		if (!hexStore.activeLayer) return;
+		if (!hexStore.effectiveColorClasses) await hexStore.ensureColorDomain();
+		repaintAll();
+	}
+
 	async function rerenderForScale() {
 		const layer = hexStore.activeLayer;
 		if (!layer?.regionalColorDomain) return;
 		await hexStore.ensureColorDomain();
+		repaintAll();
+	}
+
+	function repaintAll() {
+		const layer = hexStore.activeLayer;
+		if (!layer) return;
 		let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = layer.colorScale ?? 'flood';
 		if (layer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
 		const domain = hexStore.colorDomain ?? undefined;
@@ -1816,7 +1837,7 @@
 	// renders a signed change, so the level classes don't apply there.
 	function colorClassesFor(colorScale: string) {
 		const layer = hexStore.activeLayer;
-		return layer && colorScale === layer.colorScale ? layer.colorClasses : undefined;
+		return layer && colorScale === layer.colorScale ? hexStore.effectiveColorClasses : undefined;
 	}
 
 	function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {

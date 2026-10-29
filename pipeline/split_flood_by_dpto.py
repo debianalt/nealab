@@ -39,7 +39,9 @@ RADIOS_PATH = os.path.join(SCRIPT_DIR, "output", "radios_misiones.parquet")
 RADIO_STATS_PATH = os.path.join(SCRIPT_DIR, "output", "radio_stats_master.parquet")
 
 FLOOD_COLS = ["h3index", "jrc_occurrence", "jrc_recurrence", "jrc_seasonality",
-              "flood_extent_pct", "flood_risk_score"]
+              "flood_extent_pct", "flood_risk_score",
+              # relief, painted from the ranking tabs (build_flood_rank.py --hex)
+              "low_bld_n", "low_land_pct", "low_bld_new_n"]
 
 
 def h3_to_latlng(h3index: str) -> tuple[float, float]:
@@ -220,6 +222,8 @@ def main():
 
     print(f"Loading flood data from {flood_path}...")
     flood = pd.read_parquet(flood_path)
+    from build_flood_rank import join_hand_hex
+    flood = join_hand_hex(flood, t_prefix)
     flood = flood[[c for c in FLOOD_COLS if c in flood.columns]]
     flood = flood[flood["flood_risk_score"].notna()]
     print(f"  {len(flood):,} hexes with flood_risk_score")

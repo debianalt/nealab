@@ -6,6 +6,7 @@ import { i18n } from '$lib/stores/i18n.svelte';
 // nW/cm²/sr, g/kg, %, /100, pctl) are language-neutral and pass through.
 const UNIT_LABELS: Record<string, Record<string, string>> = {
 	'%/yr':     { es: '%/año',     en: '%/yr',           gn: '%/ary',    pt: '%/ano' },
+	'edificios': { es: 'edificios', en: 'buildings',      gn: 'edificios', pt: 'edifícios' },
 	'percentil': { es: 'percentil', en: 'percentile',     gn: 'percentil', pt: 'percentil' },
 	'meses':    { es: 'meses',     en: 'months',         gn: 'jasy',     pt: 'meses' },
 	'hab/km²':  { es: 'hab/km²',   en: 'inhab/km²',      gn: 'hab/km²',  pt: 'hab/km²' },

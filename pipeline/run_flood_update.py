@@ -195,6 +195,9 @@ def run(args):
     })
 
     df = df.dropna(subset=["flood_risk_score"])
+    # Relief columns painted from the ranking tabs are not raster outputs here.
+    from build_flood_rank import join_hand_hex
+    df = join_hand_hex(df, t_prefix)
     os.makedirs(t_dir, exist_ok=True)
     df.to_parquet(parquet_path, index=False)
     print(f"  Saved {len(df):,} hexagons to {parquet_path}")

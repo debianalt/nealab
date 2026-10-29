@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -206,6 +206,7 @@ export class HexStore {
 	setLayer(layerId: string | null) {
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
 		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
+		this.colorVariable = null;   // the new layer's panel sets its own
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -282,14 +283,39 @@ export class HexStore {
 	// and MIN/MAX color-domain queries throw Binder errors.
 	primaryOverride: string | null = $state(null);
 
+	// Variable the map paints instead of the primary, set by the panel (flood: the
+	// active ranking tab's per-hex relief variable). Used only when the loaded
+	// parquet has the column, so a territory not yet published keeps the primary.
+	colorVariable: string | null = $state(null);
+	loadedCols: Set<string> = $state(new Set());
+
+	setColorVariable(v: string | null) {
+		if (v === this.colorVariable) return;
+		this.colorVariable = v;
+		this.colorDomain = null;
+		// Entries are memoized per data version: invalidate all three sets.
+		this.dataVersion++;
+		this.compareDataVersion++;
+		this.regionalDataVersion++;
+	}
+
 	get effectivePrimary(): string {
+		if (this.colorVariable && this.loadedCols.has(this.colorVariable)) return this.colorVariable;
 		return this.primaryOverride ?? this.activeLayer?.primaryVariable ?? 'score';
+	}
+
+	// Classes for whatever the map paints: the colorVariable's own, else the layer's.
+	get effectiveColorClasses(): ColorClasses | undefined {
+		const layer = this.activeLayer;
+		if (!layer) return undefined;
+		return layer.variableClasses?.[this.effectivePrimary] ?? layer.colorClasses;
 	}
 
 	private static PRIMARY_SKIP = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'territorial_type']);
 
 	private updatePrimaryOverride(layer: HexLayerConfig, actualCols: Set<string>): void {
 		if (this.activeLayer?.id !== layer.id) return; // stale async schema
+		this.loadedCols = actualCols;
 		if (actualCols.has(layer.primaryVariable)) {
 			if (this.primaryOverride !== null) {
 				this.primaryOverride = null;

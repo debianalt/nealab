@@ -91,7 +91,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=38',
+		hex_flood_risk: '?v=39',
 		sat_agri_potential: '?v=36',
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=31',
@@ -112,7 +112,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 22;
+const DEPT_V = 23;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -495,6 +495,9 @@ export interface HexLayerConfig {
 	// Discrete color classes on the primaryVariable, replacing the continuous ramp
 	// (map, legend and catastro parcels). Ignored in temporal delta mode.
 	colorClasses?: ColorClasses;
+	// Classes for other variables the map can paint instead of the primary
+	// (hexStore.colorVariable, set from the active ranking tab).
+	variableClasses?: Record<string, ColorClasses>;
 	// Two color scales, switched from the legend (URL ?escala=regional):
 	// 'provincial' (default) = P2–P98 of the active territory from scaleStats —
 	// the province/department/state is the governing unit; 'regional' = this
@@ -527,10 +530,13 @@ export interface DeptRank {
 	// Several readings of the same layer, switched from tabs above the ranking; each
 	// entry overrides the base fields. The base itself is the first reading.
 	metrics?: Array<Partial<Omit<DeptRank, 'metrics'>> & { tabKey: string }>;
+	// Per-hex column the map paints while this reading is active (needs
+	// HexLayerConfig.variableClasses for it). Flood: the relief variables.
 	// Key inside the summary's metadata.rank whose `province` block (territory-wide
 	// value + label) is shown above the bars, or instead of them when no department
 	// has a value (order not stable). Change tab: 'change'.
 	province?: string;
+	hexVariable?: string;
 }
 
 export interface ColorClass {
@@ -542,6 +548,9 @@ export interface ColorClass {
 export interface ColorClasses {
 	// value === 0 is a measured value with its own class, not "Sin cobertura".
 	zero?: { color: string; labelKey: string };
+	// |value| below this also takes the zero class (fractional building counts:
+	// under half a building reads as none).
+	zeroBelow?: number;
 	steps: ColorClass[];
 	// true → a cut belongs to the class below (value > from), matching FlowChart
 	// bands; default → to the class above (value >= from).
@@ -549,7 +558,7 @@ export interface ColorClasses {
 }
 
 export function colorForClass(value: number, classes: ColorClasses): string {
-	if (value === 0 && classes.zero) return classes.zero.color;
+	if (classes.zero && (value === 0 || (classes.zeroBelow !== undefined && Math.abs(value) < classes.zeroBelow))) return classes.zero.color;
 	let color = classes.steps[0].color;
 	for (const s of classes.steps) if (classes.upperInclusive ? value > s.from : value >= s.from) color = s.color;
 	return color;
@@ -565,6 +574,39 @@ export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
 		{ from: 0, color: '#3b82f6', labelKey: 'legend.flood.low' },
 		{ from: 5, color: '#eab308', labelKey: 'legend.flood.mid' },
 		{ from: 20, color: '#dc2626', labelKey: 'legend.flood.high' },
+	],
+};
+
+// Per-hex relief variables, painted when a flood ranking tab is active
+// (deptRank.hexVariable). Same cuts in every territory. Cuts from the Misiones
+// distribution of cells with any building on low ground (p50 2, p75 7, p90 16,
+// p99 139) and of added buildings there 2016–2023 (p50 1, p75 3, p90 7, p99 41).
+export const FLOOD_LOW_BLD_CLASSES: ColorClasses = {
+	zero: { color: '#1e293b', labelKey: 'legend.lowBld.none' },
+	zeroBelow: 0.5,
+	steps: [
+		{ from: 0.5, color: '#60a5fa', labelKey: 'legend.lowBld.c1' },
+		{ from: 2.5, color: '#eab308', labelKey: 'legend.lowBld.c2' },
+		{ from: 9.5, color: '#f97316', labelKey: 'legend.lowBld.c3' },
+		{ from: 49.5, color: '#dc2626', labelKey: 'legend.lowBld.c4' },
+	],
+};
+export const FLOOD_LOW_LAND_CLASSES: ColorClasses = {
+	zero: { color: '#1e293b', labelKey: 'legend.lowLand.none' },
+	steps: [
+		{ from: 0, color: '#3b82f6', labelKey: 'legend.lowLand.c1' },
+		{ from: 25, color: '#eab308', labelKey: 'legend.lowLand.c2' },
+		{ from: 75, color: '#dc2626', labelKey: 'legend.lowLand.c3' },
+	],
+};
+export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
+	zero: { color: '#1e293b', labelKey: 'legend.lowNew.none' },
+	zeroBelow: 0.5,
+	steps: [
+		{ from: -1e9, color: '#64748b', labelKey: 'legend.lowNew.down' },
+		{ from: 0.5, color: '#60a5fa', labelKey: 'legend.lowNew.c1' },
+		{ from: 4.5, color: '#eab308', labelKey: 'legend.lowNew.c2' },
+		{ from: 19.5, color: '#dc2626', labelKey: 'legend.lowNew.c3' },
 	],
 };
 
@@ -648,6 +690,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'jrc_recurrence', labelKey: 'analysis.flood.jrcRecurrence', aggregation: 'mean', unit: '%' },
 			{ col: 'jrc_seasonality', labelKey: 'analysis.flood.jrcSeasonality', aggregation: 'mean', unit: 'meses' },
 			{ col: 'flood_extent_pct', labelKey: 'analysis.flood.currentExtent', aggregation: 'mean', unit: '%' },
+			// Relief (build_flood_rank.py --hex): painted from the ranking tabs.
+			{ col: 'low_bld_n', labelKey: 'analysis.flood.lowBld', aggregation: 'sum', unit: 'edificios' },
+			{ col: 'low_land_pct', labelKey: 'analysis.flood.lowLand', aggregation: 'mean', unit: '%' },
+			{ col: 'low_bld_new_n', labelKey: 'analysis.flood.lowBldNew', aggregation: 'sum', unit: 'edificios' },
 		],
 		primaryVariable: 'jrc_occurrence',
 		colorScale: 'flood',
@@ -661,6 +707,9 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		titleKey: 'analysis.floodRisk.title',
 		perDepartment: true,
 		colorClasses: FLOOD_OCCURRENCE_CLASSES,
+		// With a ranking tab active the hexes paint its relief variable, so a
+		// department reads like its bar; JRC stays the color on the saturated plain.
+		variableClasses: { low_bld_n: FLOOD_LOW_BLD_CLASSES, low_land_pct: FLOOD_LOW_LAND_CLASSES, low_bld_new_n: FLOOD_LOW_NEW_CLASSES },
 		// Exposure by terrain (HAND < 5 m), not JRC: JRC occurrence ranks river and
 		// reservoir shores (Capital on Yacyretá, Iguazú on Urugua-í) and misses the
 		// short floods of the plateau. pipeline/build_flood_rank.py.
@@ -669,6 +718,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.flood.title', noteKey: 'rank.flood.note',
 			extraField: 'land_hand5_pct', extraUnitKey: 'rank.unit.land', extraDecimals: 1,
 			saturatedKey: 'rank.flood.saturated',
+			hexVariable: 'low_bld_n',
 			// Chaco plain: recurrent waterlogging by radar (HAND < 1 m ranked it backwards).
 			plain: { field: 's1_land_pct', unit: '%', decimals: 1, titleKey: 'rank.flood.plain.title', noteKey: 'rank.flood.plain.note' },
 			// Three readings of the same HAND export: share of buildings (default),
@@ -678,12 +728,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				{ tabKey: 'rank.flood.tab.n', field: 'bld_hand5_n', unit: '', unitKey: 'rank.unit.buildings', decimals: 0,
 				  titleKey: 'rank.flood.title.n', noteKey: 'rank.flood.note.n',
 				  extraField: 'bld_total', extraUnitKey: 'rank.unit.bldTotal', extraDecimals: 0 },
-				{ tabKey: 'rank.flood.tab.land', field: 'land_hand5_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 1,
+				{ tabKey: 'rank.flood.tab.land', field: 'land_hand5_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 1, hexVariable: 'low_land_pct',
 				  titleKey: 'rank.flood.title.land', noteKey: 'rank.flood.note.land',
 				  extraField: 'bld_hand5_pct', extraUnitKey: 'rank.unit.bldPct', extraDecimals: 1 },
 				// Has new construction drifted to low ground? Open Buildings Temporal 2016–2023,
 				// only where the department order is stable (build_flood_rank.py --change).
-				{ tabKey: 'rank.flood.tab.change', field: 'low_tilt_pts', unit: 'pts', unitKey: 'rank.unit.pts', decimals: 1, signed: true,
+				{ tabKey: 'rank.flood.tab.change', field: 'low_tilt_pts', unit: 'pts', unitKey: 'rank.unit.pts', decimals: 1, signed: true, hexVariable: 'low_bld_new_n',
 				  titleKey: 'rank.flood.title.change', noteKey: 'rank.flood.note.change',
 				  extraField: 'low_new_n', extraUnitKey: 'rank.unit.newLow', extraDecimals: 0, province: 'change' },
 			],

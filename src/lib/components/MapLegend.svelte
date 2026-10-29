@@ -21,11 +21,19 @@
 	const isDiverging = $derived(effectiveScale === 'diverging');
 	const isGradient = $derived(isSequential || isFlood || isGreen || isWarm || isNight || isDiverging);
 
-	const title = $derived(layer ? i18n.t(layer.titleKey) : '');
+	// When the map paints a variable other than the primary (flood ranking tab),
+	// the title names it.
+	const paintedLabel = $derived.by(() => {
+		const pv = hexStore.effectivePrimary;
+		if (!layer || !hexStore.colorVariable || pv !== hexStore.colorVariable) return '';
+		const v = layer.variables?.find((x: any) => x.col === pv);
+		return v ? i18n.t(v.labelKey) : '';
+	});
+	const title = $derived(layer ? i18n.t(layer.titleKey) + (paintedLabel ? ` · ${paintedLabel}` : '') : '');
 
 	// Discrete classes replace the gradient (flood: JRC occurrence %). Not in delta
 	// mode: the change ramp is diverging, not a level.
-	const classes = $derived(!isDiverging ? layer?.colorClasses : undefined);
+	const classes = $derived(!isDiverging ? hexStore.effectiveColorClasses : undefined);
 
 	// Two-scale layers (PM2.5): provincial P2–P98 ↔ fixed regional range. The ends
 	// show the real values of the active domain so the colors carry their numbers.
@@ -131,7 +139,7 @@
 	</div>
 {:else if layer && classes}
 	<div class="legend">
-		<div class="legend-title">{title} {#if classUnit}<span class="legend-range">{classUnit}</span>{/if}</div>
+		<div class="legend-title">{title} {#if classUnit && !paintedLabel}<span class="legend-range">{classUnit}</span>{/if}</div>
 		<div class="legend-items">
 			{#if classes.zero}
 				<div class="legend-item">

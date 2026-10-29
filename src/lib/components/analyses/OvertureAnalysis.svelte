@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
@@ -187,6 +188,12 @@
 	});
 	const activeTerritoryLabel = $derived(TERRITORY_REGISTRY[activeTab]?.label ?? '');
 	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw && !rankPlain);
+	// The map paints the active reading's per-hex variable (deptRank.hexVariable), so
+	// an open department reads like its bar. No ranking (saturated plain) → primary.
+	$effect(() => {
+		const v = hasRank && !rankPlain ? (rankCfg?.hexVariable ?? null) : null;
+		untrack(() => hexStore.setColorVariable(v));
+	});
 
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
@@ -683,6 +690,13 @@
 
 		<div class="dept-active-title">{formatDept(selectedDpto)}</div>
 
+		{#if hasRank && rankMetrics.length > 1 && !rankPlain && rankCfg?.hexVariable}
+			<div class="rank-tabs rank-tabs-dept">
+				{#each rankMetrics as m, i}
+					<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
+				{/each}
+			</div>
+		{/if}
 		{#if selectedRankPos && rankCfg}
 			<div class="rank-selected">
 				<span class="rank-selected-pos">{selectedRankPos.pos}.º {i18n.t('rank.of')} {selectedRankPos.total}</span>

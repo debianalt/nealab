@@ -77,6 +77,19 @@ split_flood_by_dpto.py keeps it when it rewrites the summary.
     python pipeline/build_flood_rank.py --territory corrientes
     python pipeline/build_flood_rank.py --plain --export      # saturated territories, Sentinel-1
     python pipeline/build_flood_rank.py --change --export --all   # 4th tab, Open Buildings Temporal
+    python pipeline/build_flood_rank.py --hex --all                # per-hex columns (local tifs)
+    python pipeline/build_flood_rank.py --publish-hex --all --backup-dir C:/Users/ant/r2-flood-hand-backup-2026-10
+
+Per hexagon (`--hex`), so the map paints the variable of the active ranking tab
+when a department is open, instead of JRC occurrence:
+  low_bld_n      buildings at HAND < 5 m            (tabs % edificios, Edificios)
+  low_land_pct   % of the land at HAND < 5 m        (tab % tierra; null over water)
+  low_bld_new_n  buildings added there 2016–2023    (tab Cambio; linear trend × 7)
+Written to output/<prefix>flood_hand_hex.parquet (split_flood_by_dpto.py joins it
+on full rebuilds). `--publish-hex` joins them into the parquets the CDN serves
+(territory + every department) by h3index, after a byte backup, checks rows and
+the per-department building sums against the ranking, and uploads with the same
+short cache as the weekly CI refresh, which keeps every served column.
 """
 
 import argparse
@@ -434,6 +447,133 @@ def process_change(tid: str) -> None:
           f"low share {share[0]:.2f}→{share[-1]:.2f}% tilt {province['tilt_pts']} {label} {province['windows']} flips {flips}/{len(both)} · top: {top}")
 
 
+HEX_COLS = ['low_bld_n', 'low_land_pct', 'low_bld_new_n']
+
+
+def hex_path(tid: str) -> str:
+    prefix = get_territory(tid)['output_prefix']
+    return os.path.join(OUTPUT_DIR, f'{prefix}flood_hand_hex.parquet')
+
+
+def build_hex(tid: str) -> None:
+    from parquet_io import write_h3_parquet
+    _, t_dir, _ = territory_paths(tid)
+    hand = sorted(glob.glob(os.path.join(t_dir, f'{NAME}*.tif')))
+    chg = sorted(glob.glob(os.path.join(t_dir, f'{CHANGE_NAME}*.tif')))
+    if not hand or not chg:
+        sys.exit(f'{tid}: missing {NAME} or {CHANGE_NAME} tifs in {t_dir}')
+    a = hex_sums(hand)
+    c = hex_sums(chg, CHANGE_BANDS)
+    tt = np.array(CHANGE_YEARS, dtype=float)
+    tc = tt - tt.mean()
+    lows = c[[f'low_{y}' for y in CHANGE_YEARS]].values.astype(float)
+    slope = (lows - lows.mean(axis=1, keepdims=True)) @ tc / (tc @ tc)
+    c = pd.DataFrame({'h3index': c.h3index, 'low_bld_new_n': np.round(slope * (CHANGE_YEARS[-1] - CHANGE_YEARS[0]), 1)})
+    out = a.merge(c, on='h3index', how='outer')
+    out['low_bld_n'] = out.bld_low.fillna(0).round(1)
+    land = out.land_m2.fillna(0)
+    out['low_land_pct'] = np.where(land > 0, np.round(100 * out.low_land_m2.fillna(0) / land.where(land > 0, 1), 1), np.nan)
+    out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
+    out = out[['h3index'] + HEX_COLS]
+    write_h3_parquet(out, hex_path(tid))
+    b = out.low_bld_n[out.low_bld_n > 0]
+    n = out.low_bld_new_n[out.low_bld_new_n > 0]
+    q = lambda s: '/'.join(f'{v:.0f}' for v in s.quantile([.5, .75, .9, .99])) if len(s) else '-'
+    print(f'{tid} (hex): {len(out):,} cells · low_bld_n>0 {len(b):,} p50/75/90/99 {q(b)} · '
+          f'low_land_pct mean {out.low_land_pct.mean():.1f} · new>0 {len(n):,} p50/75/90/99 {q(n)}')
+
+
+def join_hand_hex(df: pd.DataFrame, t_prefix: str) -> pd.DataFrame:
+    """Add the per-hex relief columns from output/<prefix>flood_hand_hex.parquet, so a
+    full raster rebuild (run_flood_update.py, split_flood_by_dpto.py) keeps what the
+    UI paints. Unchanged (with a warning) when the file is missing."""
+    path = os.path.join(OUTPUT_DIR, f'{t_prefix}flood_hand_hex.parquet')
+    if not os.path.exists(path):
+        print(f'  WARNING: {path} missing — relief columns not added (run build_flood_rank.py --hex)')
+        return df
+    hx = pd.read_parquet(path)
+    out = df.drop(columns=[c for c in HEX_COLS if c in df.columns]).merge(hx, on='h3index', how='left')
+    out['low_bld_n'] = out.low_bld_n.fillna(0)
+    out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
+    return out
+
+
+def _fetch(url: str, path: str) -> None:
+    import urllib.request
+    from urllib.parse import quote
+    from datetime import datetime
+    req = urllib.request.Request(quote(url, safe=':/?=&') + f'?refresh={int(datetime.now().timestamp())}',
+                                 headers={'User-Agent': 'spatia-pipeline/1.0'})
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with urllib.request.urlopen(req, timeout=180) as r, open(path, 'wb') as f:
+        f.write(r.read())
+
+
+def _join_hex(df: pd.DataFrame, hx: pd.DataFrame, label: str) -> pd.DataFrame:
+    base = df.drop(columns=[c for c in HEX_COLS if c in df.columns])
+    out = base.merge(hx, on='h3index', how='left')
+    out['low_bld_n'] = out.low_bld_n.fillna(0)
+    out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
+    if len(out) != len(df) or set(out.h3index) != set(df.h3index):
+        sys.exit(f'{label}: row/h3index mismatch after join ({len(df)} -> {len(out)})')
+    return out
+
+
+def stage_hex(tid: str, backup_dir: str, stage_dir: str) -> list:
+    """Back up the served parquets, join the hex columns, check, write staged copies.
+    Returns [(local path, r2 key)]."""
+    from concurrent.futures import ThreadPoolExecutor
+    from parquet_io import write_h3_parquet
+    prefix, _, summary_path = territory_paths(tid)
+    hx = pd.read_parquet(hex_path(tid))
+    with open(summary_path, encoding='utf-8') as f:
+        summary = json.load(f)
+    keys = [f'data/{prefix}hex_flood_risk.parquet'] + \
+           [f"data/{prefix}flood_dpto/hex_flood_{d['parquetKey']}.parquet" for d in summary['departments']]
+
+    def one(key):
+        bk = os.path.join(backup_dir, key)
+        if not os.path.exists(bk):              # never overwrite the first (pre-change) backup
+            _fetch(f'{CDN}/{key[len("data/"):]}', bk)
+        df = pd.read_parquet(bk)
+        out = _join_hex(df, hx, key)
+        p = os.path.join(stage_dir, key)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        write_h3_parquet(out, p)
+        return key, p, float(out.low_bld_n.sum())
+
+    with ThreadPoolExecutor(8) as ex:
+        res = list(ex.map(one, keys))
+    # Department building sums must match the ranking (same split, same rasters).
+    rank_n = {f"data/{prefix}flood_dpto/hex_flood_{d['parquetKey']}.parquet": (d.get('rank') or {}).get('bld_hand5_n')
+              for d in summary['departments']}
+    bad = [(k, s, rank_n[k]) for k, _, s in res[1:]
+           if rank_n.get(k) and abs(s - rank_n[k]) > max(5, 0.02 * rank_n[k])]
+    if bad:
+        sys.exit(f'{tid}: building sums differ from the ranking in {len(bad)} depts, e.g. {bad[:3]}')
+    print(f'{tid} (stage): {len(res)} files, territory low_bld_n {res[0][2]:,.0f}, depts match the ranking')
+    return [(p, k) for k, p, _ in res]
+
+
+def publish_hex(tids: list, backup_dir: str, dry_run: bool) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+    from upload_to_r2 import upload_file
+    from update_flood_current import SHORT_CACHE
+    stage_dir = os.path.join(OUTPUT_DIR, 'flood_hand_publish')
+    staged = []
+    for t in tids:
+        staged += stage_hex(t, backup_dir, stage_dir)
+    if dry_run:
+        print(f'dry run: {len(staged)} files staged in {stage_dir}, nothing uploaded')
+        return
+    with ThreadPoolExecutor(8) as ex:
+        ok = list(ex.map(lambda pk: upload_file(pk[0], pk[1], cache_control=SHORT_CACHE), staged))
+    failed = [k for (p, k), o in zip(staged, ok) if not o]
+    if failed:
+        sys.exit(f'{len(failed)} uploads failed: {failed[:5]}')
+    print(f'uploaded {len(staged)} files')
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--territory', default='misiones')
@@ -441,6 +581,10 @@ def main() -> None:
     ap.add_argument('--export', action='store_true', help='Launch the GEE exports, wait and download first')
     ap.add_argument('--plain', action='store_true', help='Sentinel-1 ranking for the saturated (plain) territories')
     ap.add_argument('--change', action='store_true', help='4th tab: new buildings on low ground 2016–2023')
+    ap.add_argument('--hex', action='store_true', help='Per-hex columns from the local tifs')
+    ap.add_argument('--publish-hex', action='store_true', help='Join the per-hex columns into the served parquets and upload')
+    ap.add_argument('--backup-dir', help='Byte backup of the served parquets (required with --publish-hex)')
+    ap.add_argument('--dry-run', action='store_true', help='--publish-hex: stage and check, upload nothing')
     args = ap.parse_args()
     if args.plain:
         tids = [t for t in TERRITORY_CONFIGS
@@ -459,6 +603,17 @@ def main() -> None:
             process_plain(t)
         return
     tids = list(TERRITORY_CONFIGS) if args.all else [args.territory]
+
+    if args.hex:
+        for t in tids:
+            build_hex(t)
+        return
+    if args.publish_hex:
+        if not args.backup_dir:
+            sys.exit('--publish-hex needs --backup-dir')
+        big = [t for t in tids if t.endswith('_br')]
+        publish_hex([t for t in tids if t not in big] + big, args.backup_dir, args.dry_run)
+        return
 
     if args.change:
         if args.export:
