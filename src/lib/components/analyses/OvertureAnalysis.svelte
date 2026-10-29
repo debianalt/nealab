@@ -109,18 +109,36 @@
 	const activeSummaryData = $derived(allSummaries.get(activeTab) ?? deptSummary);
 
 	// Flood layer only: per-territory Sentinel-1 SAR acquisition date for the
-	// "current extent" component. The pipeline injects it into each
-	// *_flood_dept_summary.json under metadata.sar_date (ISO). Null elsewhere
-	// or until the territory has been re-processed → the SAR line is hidden.
+	// "current extent" component. The weekly NEA refresh (pipeline/
+	// update_flood_current.py) publishes it in data/flood_meta.json, read at
+	// runtime so a new image shows its date without a redeploy; territories the
+	// refresh does not cover fall back to metadata.sar_date of the bundled
+	// *_flood_dept_summary.json. Null → the SAR line is hidden.
+	let floodMeta = $state<Record<string, { sar_date?: string; processed?: string }> | null>(null);
+	$effect(() => {
+		if (analysis.id !== 'flood_risk' || floodMeta) return;
+		fetch(`https://cdn.spatia.ar/data/flood_meta.json?h=${Math.floor(Date.now() / 3_600_000)}`)
+			.then(r => (r.ok ? r.json() : null))
+			.then(j => { if (j) floodMeta = j; })
+			.catch(() => {});
+	});
 	const sarDate = $derived(
-		analysis.id === 'flood_risk' ? (activeSummaryData?.metadata?.sar_date ?? null) : null
+		analysis.id === 'flood_risk'
+			? (floodMeta?.[activeTab]?.sar_date ?? activeSummaryData?.metadata?.sar_date ?? null)
+			: null
 	);
 	// ISO (2026-03-21) → DD/MM/YYYY to match the processedDate format shown alongside.
-	const sarDateDisplay = $derived.by(() => {
-		if (!sarDate) return null;
-		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(sarDate);
-		return m ? `${m[3]}/${m[2]}/${m[1]}` : sarDate;
-	});
+	const isoToDmy = (iso: string) => {
+		const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+		return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+	};
+	const sarDateDisplay = $derived(sarDate ? isoToDmy(sarDate) : null);
+	// Processed date: the refresh's own date where it ran, the static one otherwise.
+	const processedDisplay = $derived(
+		analysis.id === 'flood_risk' && floodMeta?.[activeTab]?.processed
+			? isoToDmy(floodMeta[activeTab].processed!)
+			: (freshness?.processedDate ?? '')
+	);
 
 	// Department ranking (layerCfg.deptRank): physical metric per department from
 	// the summary's `rank` block. Only when the active territory's summary has it.
@@ -625,7 +643,7 @@
 		{#if freshness}
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
-				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				<div><strong>{i18n.t('section.processed')}:</strong> {processedDisplay}</div>
 				{@render sarFreshness()}
 			</div>
 		{/if}
@@ -729,7 +747,7 @@
 		{#if freshness}
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
-				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				<div><strong>{i18n.t('section.processed')}:</strong> {processedDisplay}</div>
 				{@render sarFreshness()}
 			</div>
 		{/if}
@@ -923,7 +941,7 @@
 		{#if freshness}
 			<div class="source-note-box">
 				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
-				<div><strong>{i18n.t('section.processed')}:</strong> {freshness.processedDate}</div>
+				<div><strong>{i18n.t('section.processed')}:</strong> {processedDisplay}</div>
 				{@render sarFreshness()}
 			</div>
 		{/if}
@@ -938,7 +956,7 @@
 
 		{#if freshness}
 			<div class="freshness">
-				<span class="freshness-label">{i18n.t('data.updatedAt')}: {freshness.processedDate}</span>
+				<span class="freshness-label">{i18n.t('data.updatedAt')}: {processedDisplay}</span>
 				<span class="freshness-source">{i18n.t(freshness.sourceKey)}</span>
 				{#if sarDateDisplay}
 					<span class="freshness-label">{i18n.t('section.sarImage')}: {sarDateDisplay} · {i18n.t('section.sarRevisit')}</span>
