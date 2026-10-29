@@ -70,7 +70,8 @@ IMMUTABLE = "public, max-age=31536000, immutable"
 def _remote_size(r2_key: str) -> int | None:
     """Content-Length of the object as R2 serves it (public bucket URL, cache-busted)."""
     import urllib.request
-    url = f"{R2_PUBLIC_BASE}/{r2_key}?verify={int(datetime.now().timestamp())}"
+    from urllib.parse import quote
+    url = f"{R2_PUBLIC_BASE}/{quote(r2_key)}?verify={int(datetime.now().timestamp())}"
     try:
         req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "spatia-pipeline/1.0"})
         with urllib.request.urlopen(req, timeout=30) as resp:

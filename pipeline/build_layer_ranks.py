@@ -106,13 +106,11 @@ ZERO_IS_MISSING = {
     'pm25_drivers': ['pm25_ug'],
 }
 MIN_COVERAGE = 0.8   # a field shows in a territory only if ≥ 80 % of departments have it
-# Inputs whose units differ by territory: c_healthcare_time_raw is minutes in
-# Misiones (0–311, median 18) but not in Corrientes (median 300, max 1,167) or
-# Chaco (145–300, capped at 300) — not comparable, so only Misiones is ranked.
-EXCLUDE = {
-    ('health_access', 'health_min'): {'corrientes', 'chaco', 'formosa'},
-    ('health_access', 'health_cov_pct'): {'corrientes', 'chaco', 'formosa'},
-}
+# Fields excluded per territory, if an input is not comparable there. Empty since
+# 29-oct-2026: health_access used proxies outside Misiones (distance × 12 min/km
+# in Corrientes, time-to-cities in Chaco and Formosa) until build_oxford_radios.py
+# put the real Oxford/MAP healthcare times in.
+EXCLUDE: dict = {}
 
 
 def clean(layer: str, summary: dict, tid: str) -> list:
@@ -153,7 +151,7 @@ def local_census_rates() -> None:
     import pandas as pd
     out = os.path.join(os.path.dirname(__file__), 'output')
     con = duckdb.connect()
-    con.execute('INSTALL httpfs; LOAD httpfs;')
+    con.execute('INSTALL httpfs; LOAD httpfs; SET enable_http_metadata_cache = false; SET enable_external_file_cache = false;')
     rs = pd.read_parquet(os.path.join(out, 'radio_stats_master.parquet'),
                          columns=['dpto', 'total_personas', 'pct_nbi', 'tasa_empleo'])
     for layer, field, col in [('sociodemographic', 'nbi_pop_pct', 'pct_nbi'),
@@ -228,7 +226,7 @@ def main() -> None:
                     print(f'{layer}/{tid}: no data for {dropped}')
         return
     con = duckdb.connect()
-    con.execute('INSTALL httpfs; LOAD httpfs;')
+    con.execute('INSTALL httpfs; LOAD httpfs; SET enable_http_metadata_cache = false; SET enable_external_file_cache = false;')
     for layer in ([args.layer] if args.layer else SPECS):
         spec = SPECS[layer]
         for tid in TERRITORY_CONFIGS:
