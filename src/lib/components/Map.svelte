@@ -937,13 +937,15 @@
 				type: 'line',
 				source: 'ar-depts',
 				layout: { visibility: 'none' },
-				// Same low-zoom overlap mitigation as itapua/AP — keeps the pink
-				// province border clean at continent view.
-				minzoom: 8,
+				// Below z8 only the active province's departments (styleActiveTerritory sets
+				// the opacity): at province zoom (Chaco ~6.5, Misiones ~7.5) the ranking's
+				// departments must be visible; all four AR provinces at once would clutter
+				// the regional view.
+				minzoom: 5,
 				paint: {
 					'line-color': '#93c5fd',
-					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.6, 13, 0.6],
-					'line-opacity': 0.5
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 8, 0.6, 13, 0.6],
+					'line-opacity': ['step', ['zoom'], 0, 8, 0.5]
 				}
 			});
 			map.on('mouseenter', 'ar-dept-fill', () => { if (!lassoActive) map.getCanvas().style.cursor = 'pointer'; });
@@ -1179,6 +1181,10 @@
 			// (e.g., territory restored from URL state before onMount completed)
 			applyTerritoryVisibility();
 			hideBasemapAdminLines();
+			// The basemap's river centreline drifts from our river-following borders
+			// and doubles them at province zoom; keep it only from z10 (small streams).
+			if (map.getLayer('waterway')) map.setLayerZoomRange('waterway', 10, 24);
+			styleActiveTerritory();
 			if (regionalModeActive) setRegionalMapMode(true);
 		});
 
@@ -2093,6 +2099,36 @@
 	export function setActiveTerritory(territoryId: string) {
 		activeTerritoryId = territoryId;
 		applyTerritoryVisibility();
+		styleActiveTerritory();
+	}
+
+	// One strong pink border (the active territory) and the rest thin and faint.
+	// Neighbouring borders come from different national sources (INDEC, DGEEC, IBGE)
+	// and follow opposite banks or the midline of shared rivers: drawn equally they
+	// read as a doubled, sloppy line along the Paraná, Uruguay and Pilcomayo.
+	const BORDER_LAYER: Record<string, string> = {
+		misiones: 'province-border', itapua_py: 'itapua-border',
+		alto_parana_py: 'alto_parana-border', corrientes: 'corrientes-border',
+	};
+	const AR_CODPROV: Record<string, string> = { misiones: '54', corrientes: '18', chaco: '22', formosa: '34' };
+	function styleActiveTerritory() {
+		if (!map) return;
+		const active = BORDER_LAYER[activeTerritoryId] ?? `${activeTerritoryId}-border`;
+		for (const l of map.getStyle().layers ?? []) {
+			if (l.type !== 'line' || !l.id.endsWith('-border') || l.id.startsWith('eudr')) continue;
+			const on = l.id === active;
+			map.setPaintProperty(l.id, 'line-opacity', on
+				? ['interpolate', ['linear'], ['zoom'], 6, 0.8, 12, 0.55, 16, 0.3]
+				: 0.22);
+			map.setPaintProperty(l.id, 'line-width', on
+				? ['interpolate', ['linear'], ['zoom'], 6, 1.4, 9, 1.1, 12, 0.9, 16, 0.6]
+				: 0.6);
+		}
+		if (map.getLayer('ar-dept-line')) {
+			const cp = AR_CODPROV[activeTerritoryId] ?? '';
+			map.setPaintProperty('ar-dept-line', 'line-opacity',
+				['step', ['zoom'], ['case', ['==', ['slice', ['to-string', ['get', 'redcode']], 0, 2], cp], 0.55, 0], 8, 0.5]);
+		}
 	}
 
 	// EUDR mode: hide the Spatia territory map (buildings/masks/borders/province)
@@ -3146,6 +3182,9 @@
 				tiles: ['/api/esri/{z}/{y}/{x}'],
 				tileSize: 256,
 				maxzoom: 17,
+				// Spatia's region only (NEA, Paraguay, PR/SC/RS): outside it MapLibre does
+				// not request Esri at all and EOX shows. Same box enforced in the proxy.
+				bounds: [-63, -34, -48, -19],
 				attribution: 'Powered by <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> · Esri, Maxar, Earthstar Geographics'
 			});
 			map.addLayer({

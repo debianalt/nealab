@@ -126,6 +126,13 @@
 			mapStore.clearDistricts();
 			mapComponent?.setDistrictHighlight([]);
 		} else {
+			// Regional mode with a per-department layer (the department ranking is of the
+			// active province): fly to the province, not the country — at country zoom
+			// the department lines (z ≥ 5 for the active province) were the only
+			// reference the ranking had on the map, and they were off-screen.
+			const perDeptLayer = untrack(() => hexStore.activeLayer?.perDepartment);
+			const hasRadiosR = untrack(() => mapStore.selectedRadios.size > 0);
+			if (perDeptLayer && !hasRadiosR) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 150);
 			// Regional mode: reload territories for current country filter
 			untrack(() => hexStore.clearCompareDept());
 			untrack(() => hexStore.clearRegionalData());
@@ -153,7 +160,10 @@
 		if (isRegional) {
 			const hasRadios = untrack(() => mapStore.selectedRadios.size > 0);
 			if (!hasRadios) {
-				const bbox = getRegionalBbox(countryFilter);
+				// Same rule as the territory effect: a per-department layer stays on the province.
+				const bbox = untrack(() => hexStore.activeLayer?.perDepartment)
+					? untrack(() => territoryStore.activeTerritory.bbox)
+					: getRegionalBbox(countryFilter);
 				setTimeout(() => mapComponent?.flyToBbox(bbox), 100);
 			}
 			mapComponent?.setRegionalMapMode(true);
