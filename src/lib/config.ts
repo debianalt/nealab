@@ -982,7 +982,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2,
 				  titleKey: 'rank.deforest.title.pct', noteKey: 'rank.deforest.note.pct',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
-				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', decimals: 0, signed: true,
+				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 0, signed: true,
 				  titleKey: 'rank.deforest.title.change', noteKey: 'rank.deforest.note.change',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
 			],
