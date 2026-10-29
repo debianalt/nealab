@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 62.3,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 1033548,
@@ -18,7 +24,13 @@
       "centroid": [
         -58.9322,
         -28.4958
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 66.0,
+        "bld_hand5_n": 30477,
+        "bld_total": 46183,
+        "land_hand5_pct": 91.6
+      }
     },
     {
       "dpto": "Berón de Astrada",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.6327,
         -27.468
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 77.4,
+        "bld_hand5_n": 2768,
+        "bld_total": 3577,
+        "land_hand5_pct": 97.0
+      }
     },
     {
       "dpto": "Capital",
@@ -40,7 +58,13 @@
       "centroid": [
         -58.7623,
         -27.5203
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 79.8,
+        "bld_hand5_n": 224684,
+        "bld_total": 281499,
+        "land_hand5_pct": 86.8
+      }
     },
     {
       "dpto": "Concepción",
@@ -51,7 +75,13 @@
       "centroid": [
         -58.0306,
         -28.3967
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 76.2,
+        "bld_hand5_n": 18513,
+        "bld_total": 24305,
+        "land_hand5_pct": 94.2
+      }
     },
     {
       "dpto": "Curuzú Cuatiá",
@@ -62,7 +92,13 @@
       "centroid": [
         -58.3339,
         -29.7036
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 38.4,
+        "bld_hand5_n": 20591,
+        "bld_total": 53574,
+        "land_hand5_pct": 71.0
+      }
     },
     {
       "dpto": "Empedrado",
@@ -73,7 +109,13 @@
       "centroid": [
         -58.6714,
         -27.8973
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.6,
+        "bld_hand5_n": 8722,
+        "bld_total": 20002,
+        "land_hand5_pct": 93.5
+      }
     },
     {
       "dpto": "Esquina",
@@ -84,7 +126,13 @@
       "centroid": [
         -59.2449,
         -29.9869
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 71.2,
+        "bld_hand5_n": 27897,
+        "bld_total": 39162,
+        "land_hand5_pct": 96.5
+      }
     },
     {
       "dpto": "General Alvear",
@@ -95,7 +143,13 @@
       "centroid": [
         -56.5272,
         -28.7794
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.4,
+        "bld_hand5_n": 1412,
+        "bld_total": 9786,
+        "land_hand5_pct": 86.7
+      }
     },
     {
       "dpto": "General Paz",
@@ -106,7 +160,13 @@
       "centroid": [
         -57.7796,
         -27.7034
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 83.8,
+        "bld_hand5_n": 14795,
+        "bld_total": 17662,
+        "land_hand5_pct": 98.9
+      }
     },
     {
       "dpto": "Goya",
@@ -117,7 +177,13 @@
       "centroid": [
         -59.2641,
         -29.4568
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 86.5,
+        "bld_hand5_n": 87740,
+        "bld_total": 101387,
+        "land_hand5_pct": 96.3
+      }
     },
     {
       "dpto": "Itatí",
@@ -128,7 +194,13 @@
       "centroid": [
         -58.08,
         -27.3391
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 61.6,
+        "bld_hand5_n": 6537,
+        "bld_total": 10608,
+        "land_hand5_pct": 94.1
+      }
     },
     {
       "dpto": "Ituzaingó",
@@ -139,7 +211,13 @@
       "centroid": [
         -56.8023,
         -27.9146
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 51.6,
+        "bld_hand5_n": 21002,
+        "bld_total": 40726,
+        "land_hand5_pct": 87.7
+      }
     },
     {
       "dpto": "Lavalle",
@@ -150,7 +228,13 @@
       "centroid": [
         -58.9358,
         -28.9914
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 59.9,
+        "bld_hand5_n": 32647,
+        "bld_total": 54472,
+        "land_hand5_pct": 88.5
+      }
     },
     {
       "dpto": "Mburucuyá",
@@ -161,7 +245,13 @@
       "centroid": [
         -58.1739,
         -28.009
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 62.3,
+        "bld_hand5_n": 7555,
+        "bld_total": 12127,
+        "land_hand5_pct": 95.5
+      }
     },
     {
       "dpto": "Mercedes",
@@ -172,7 +262,13 @@
       "centroid": [
         -57.8298,
         -29.0647
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 37.8,
+        "bld_hand5_n": 19754,
+        "bld_total": 52237,
+        "land_hand5_pct": 74.7
+      }
     },
     {
       "dpto": "Monte Caseros",
@@ -183,7 +279,13 @@
       "centroid": [
         -57.8753,
         -30.2374
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.4,
+        "bld_hand5_n": 13335,
+        "bld_total": 45326,
+        "land_hand5_pct": 54.3
+      }
     },
     {
       "dpto": "Paso de los Libres",
@@ -194,7 +296,13 @@
       "centroid": [
         -57.3125,
         -29.6014
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.0,
+        "bld_hand5_n": 12961,
+        "bld_total": 51754,
+        "land_hand5_pct": 77.0
+      }
     },
     {
       "dpto": "Saladas",
@@ -205,7 +313,13 @@
       "centroid": [
         -58.6036,
         -28.2078
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.4,
+        "bld_hand5_n": 16905,
+        "bld_total": 26244,
+        "land_hand5_pct": 94.5
+      }
     },
     {
       "dpto": "San Cosme",
@@ -216,7 +330,13 @@
       "centroid": [
         -58.5119,
         -27.3751
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 67.1,
+        "bld_hand5_n": 21245,
+        "bld_total": 31639,
+        "land_hand5_pct": 89.9
+      }
     },
     {
       "dpto": "San Luis del Palmar",
@@ -227,7 +347,13 @@
       "centroid": [
         -58.271,
         -27.5971
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 73.1,
+        "bld_hand5_n": 15366,
+        "bld_total": 21023,
+        "land_hand5_pct": 99.4
+      }
     },
     {
       "dpto": "San Martín",
@@ -238,7 +364,13 @@
       "centroid": [
         -56.9453,
         -28.8284
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.1,
+        "bld_hand5_n": 5765,
+        "bld_total": 17984,
+        "land_hand5_pct": 94.7
+      }
     },
     {
       "dpto": "San Miguel",
@@ -249,7 +381,13 @@
       "centroid": [
         -57.4244,
         -27.8736
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 53.3,
+        "bld_hand5_n": 6459,
+        "bld_total": 12128,
+        "land_hand5_pct": 95.8
+      }
     },
     {
       "dpto": "San Roque",
@@ -260,7 +398,13 @@
       "centroid": [
         -58.6052,
         -28.7076
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.4,
+        "bld_hand5_n": 14697,
+        "bld_total": 22835,
+        "land_hand5_pct": 91.2
+      }
     },
     {
       "dpto": "Santo Tomé",
@@ -271,7 +415,13 @@
       "centroid": [
         -56.2353,
         -28.2286
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.6,
+        "bld_hand5_n": 11483,
+        "bld_total": 61603,
+        "land_hand5_pct": 67.9
+      }
     },
     {
       "dpto": "Sauce",
@@ -282,7 +432,13 @@
       "centroid": [
         -58.8025,
         -30.0075
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 70.3,
+        "bld_hand5_n": 8410,
+        "bld_total": 11967,
+        "land_hand5_pct": 80.1
+      }
     }
   ]
 }

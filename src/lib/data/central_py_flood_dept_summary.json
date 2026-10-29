@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 18.8,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 27483,
@@ -18,7 +24,13 @@
       "centroid": [
         -57.3871,
         -25.2922
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.8,
+        "bld_hand5_n": 8061,
+        "bld_total": 58397,
+        "land_hand5_pct": 45.0
+      }
     },
     {
       "dpto": "Asuncion",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.6055,
         -25.2854
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.1,
+        "bld_hand5_n": 101140,
+        "bld_total": 402790,
+        "land_hand5_pct": 33.6
+      }
     },
     {
       "dpto": "Capiata",
@@ -40,7 +58,13 @@
       "centroid": [
         -57.4526,
         -25.3681
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.5,
+        "bld_hand5_n": 24536,
+        "bld_total": 168785,
+        "land_hand5_pct": 24.7
+      }
     },
     {
       "dpto": "Fdo. De La Mora",
@@ -51,7 +75,13 @@
       "centroid": [
         -57.5499,
         -25.3229
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.9,
+        "bld_hand5_n": 22597,
+        "bld_total": 90828,
+        "land_hand5_pct": 26.6
+      }
     },
     {
       "dpto": "Guarambare",
@@ -62,7 +92,13 @@
       "centroid": [
         -57.452,
         -25.4829
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.1,
+        "bld_hand5_n": 7201,
+        "bld_total": 27616,
+        "land_hand5_pct": 34.2
+      }
     },
     {
       "dpto": "Ita",
@@ -73,7 +109,13 @@
       "centroid": [
         -57.3763,
         -25.5227
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.1,
+        "bld_hand5_n": 12789,
+        "bld_total": 63765,
+        "land_hand5_pct": 39.5
+      }
     },
     {
       "dpto": "Itaugua",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.3525,
         -25.3931
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.0,
+        "bld_hand5_n": 13112,
+        "bld_total": 76994,
+        "land_hand5_pct": 20.4
+      }
     },
     {
       "dpto": "J. A. Saldivar",
@@ -95,7 +143,13 @@
       "centroid": [
         -57.4334,
         -25.4217
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.4,
+        "bld_hand5_n": 7793,
+        "bld_total": 54072,
+        "land_hand5_pct": 17.6
+      }
     },
     {
       "dpto": "Lambare",
@@ -106,7 +160,13 @@
       "centroid": [
         -57.6166,
         -25.3522
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.6,
+        "bld_hand5_n": 12492,
+        "bld_total": 99315,
+        "land_hand5_pct": 18.9
+      }
     },
     {
       "dpto": "Limpio",
@@ -117,7 +177,13 @@
       "centroid": [
         -57.4791,
         -25.1516
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 33.2,
+        "bld_hand5_n": 34762,
+        "bld_total": 104710,
+        "land_hand5_pct": 54.1
+      }
     },
     {
       "dpto": "Luque",
@@ -128,7 +194,13 @@
       "centroid": [
         -57.4571,
         -25.2466
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.3,
+        "bld_hand5_n": 41278,
+        "bld_total": 194236,
+        "land_hand5_pct": 42.7
+      }
     },
     {
       "dpto": "M. Roque Alonso",
@@ -139,7 +211,13 @@
       "centroid": [
         -57.5338,
         -25.1973
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.2,
+        "bld_hand5_n": 17474,
+        "bld_total": 66645,
+        "land_hand5_pct": 40.4
+      }
     },
     {
       "dpto": "Nemby",
@@ -150,7 +228,13 @@
       "centroid": [
         -57.5321,
         -25.3952
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.4,
+        "bld_hand5_n": 11216,
+        "bld_total": 77899,
+        "land_hand5_pct": 16.3
+      }
     },
     {
       "dpto": "Nueva Italia",
@@ -161,7 +245,13 @@
       "centroid": [
         -57.4761,
         -25.7667
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.1,
+        "bld_hand5_n": 1678,
+        "bld_total": 10455,
+        "land_hand5_pct": 82.4
+      }
     },
     {
       "dpto": "San Antonio",
@@ -172,7 +262,13 @@
       "centroid": [
         -57.5599,
         -25.4165
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.9,
+        "bld_hand5_n": 7833,
+        "bld_total": 66013,
+        "land_hand5_pct": 21.4
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -183,7 +279,13 @@
       "centroid": [
         -57.5111,
         -25.3474
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.8,
+        "bld_hand5_n": 37598,
+        "bld_total": 199954,
+        "land_hand5_pct": 22.2
+      }
     },
     {
       "dpto": "Villa Elisa",
@@ -194,7 +296,13 @@
       "centroid": [
         -57.5871,
         -25.3721
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.4,
+        "bld_hand5_n": 8287,
+        "bld_total": 66692,
+        "land_hand5_pct": 12.5
+      }
     },
     {
       "dpto": "Villeta",
@@ -205,7 +313,13 @@
       "centroid": [
         -57.6031,
         -25.706
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.8,
+        "bld_hand5_n": 10690,
+        "bld_total": 41401,
+        "land_hand5_pct": 85.4
+      }
     },
     {
       "dpto": "Ypacarai",
@@ -216,7 +330,13 @@
       "centroid": [
         -57.2577,
         -25.389
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.2,
+        "bld_hand5_n": 8143,
+        "bld_total": 26976,
+        "land_hand5_pct": 49.9
+      }
     },
     {
       "dpto": "Ypane",
@@ -227,7 +347,13 @@
       "centroid": [
         -57.5063,
         -25.4554
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.6,
+        "bld_hand5_n": 9372,
+        "bld_total": 56520,
+        "land_hand5_pct": 30.6
+      }
     }
   ]
 }

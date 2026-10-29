@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 23.2,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 992395,
@@ -18,7 +24,13 @@
       "centroid": [
         -51.0564,
         -27.5838
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.8,
+        "bld_hand5_n": 1904,
+        "bld_total": 7096,
+        "land_hand5_pct": 8.7
+      }
     },
     {
       "dpto": "Abelardo Luz",
@@ -29,7 +41,13 @@
       "centroid": [
         -52.256,
         -26.5624
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.1,
+        "bld_hand5_n": 3546,
+        "bld_total": 27020,
+        "land_hand5_pct": 12.8
+      }
     },
     {
       "dpto": "Agrolândia",
@@ -40,7 +58,13 @@
       "centroid": [
         -49.8251,
         -27.455
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 49.8,
+        "bld_hand5_n": 9594,
+        "bld_total": 19275,
+        "land_hand5_pct": 15.0
+      }
     },
     {
       "dpto": "Agronômica",
@@ -51,7 +75,13 @@
       "centroid": [
         -49.7208,
         -27.3276
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.0,
+        "bld_hand5_n": 3397,
+        "bld_total": 12117,
+        "land_hand5_pct": 14.1
+      }
     },
     {
       "dpto": "Alfredo Wagner",
@@ -62,7 +92,13 @@
       "centroid": [
         -49.3309,
         -27.706
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.7,
+        "bld_hand5_n": 4910,
+        "bld_total": 26208,
+        "land_hand5_pct": 8.2
+      }
     },
     {
       "dpto": "Alto Bela Vista",
@@ -73,7 +109,13 @@
       "centroid": [
         -51.9258,
         -27.4219
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.4,
+        "bld_hand5_n": 680,
+        "bld_total": 5986,
+        "land_hand5_pct": 5.9
+      }
     },
     {
       "dpto": "Anchieta",
@@ -84,7 +126,13 @@
       "centroid": [
         -53.3332,
         -26.5327
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.3,
+        "bld_hand5_n": 1009,
+        "bld_total": 12233,
+        "land_hand5_pct": 8.4
+      }
     },
     {
       "dpto": "Angelina",
@@ -95,7 +143,13 @@
       "centroid": [
         -49.0673,
         -27.543
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.5,
+        "bld_hand5_n": 6860,
+        "bld_total": 15783,
+        "land_hand5_pct": 9.1
+      }
     },
     {
       "dpto": "Anita Garibaldi",
@@ -106,7 +160,13 @@
       "centroid": [
         -51.0795,
         -27.7303
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.9,
+        "bld_hand5_n": 2060,
+        "bld_total": 14795,
+        "land_hand5_pct": 8.9
+      }
     },
     {
       "dpto": "Anitápolis",
@@ -117,7 +177,13 @@
       "centroid": [
         -49.1387,
         -27.8797
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 40.7,
+        "bld_hand5_n": 3943,
+        "bld_total": 9680,
+        "land_hand5_pct": 7.9
+      }
     },
     {
       "dpto": "Antônio Carlos",
@@ -128,7 +194,13 @@
       "centroid": [
         -48.8309,
         -27.4973
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 45.0,
+        "bld_hand5_n": 8590,
+        "bld_total": 19071,
+        "land_hand5_pct": 13.8
+      }
     },
     {
       "dpto": "Apiúna",
@@ -139,7 +211,13 @@
       "centroid": [
         -49.3642,
         -27.1246
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 35.1,
+        "bld_hand5_n": 5894,
+        "bld_total": 16773,
+        "land_hand5_pct": 8.5
+      }
     },
     {
       "dpto": "Arabutã",
@@ -150,7 +228,13 @@
       "centroid": [
         -52.1814,
         -27.1409
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.2,
+        "bld_hand5_n": 1442,
+        "bld_total": 11827,
+        "land_hand5_pct": 9.0
+      }
     },
     {
       "dpto": "Araquari",
@@ -161,7 +245,13 @@
       "centroid": [
         -48.7578,
         -26.462
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 54.1,
+        "bld_hand5_n": 29436,
+        "bld_total": 54380,
+        "land_hand5_pct": 64.4
+      }
     },
     {
       "dpto": "Araranguá",
@@ -172,7 +262,13 @@
       "centroid": [
         -49.4714,
         -28.9423
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.6,
+        "bld_hand5_n": 26832,
+        "bld_total": 93847,
+        "land_hand5_pct": 66.3
+      }
     },
     {
       "dpto": "Armazém",
@@ -183,7 +279,13 @@
       "centroid": [
         -49.0148,
         -28.2378
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.8,
+        "bld_hand5_n": 5278,
+        "bld_total": 15169,
+        "land_hand5_pct": 13.4
+      }
     },
     {
       "dpto": "Arroio Trinta",
@@ -194,7 +296,13 @@
       "centroid": [
         -51.3365,
         -26.9214
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.2,
+        "bld_hand5_n": 1909,
+        "bld_total": 6773,
+        "land_hand5_pct": 9.9
+      }
     },
     {
       "dpto": "Arvoredo",
@@ -205,7 +313,13 @@
       "centroid": [
         -52.4423,
         -27.0709
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.3,
+        "bld_hand5_n": 418,
+        "bld_total": 6671,
+        "land_hand5_pct": 6.8
+      }
     },
     {
       "dpto": "Ascurra",
@@ -216,7 +330,13 @@
       "centroid": [
         -49.3963,
         -26.9735
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.8,
+        "bld_hand5_n": 4223,
+        "bld_total": 11488,
+        "land_hand5_pct": 13.9
+      }
     },
     {
       "dpto": "Atalanta",
@@ -227,7 +347,13 @@
       "centroid": [
         -49.7426,
         -27.4372
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 40.7,
+        "bld_hand5_n": 3256,
+        "bld_total": 8006,
+        "land_hand5_pct": 12.4
+      }
     },
     {
       "dpto": "Aurora",
@@ -238,7 +364,13 @@
       "centroid": [
         -49.5904,
         -27.3298
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.1,
+        "bld_hand5_n": 5112,
+        "bld_total": 15916,
+        "land_hand5_pct": 8.8
+      }
     },
     {
       "dpto": "Balneário Arroio do Silva",
@@ -249,7 +381,13 @@
       "centroid": [
         -49.4752,
         -29.0196
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 57.0,
+        "bld_hand5_n": 21398,
+        "bld_total": 37543,
+        "land_hand5_pct": 88.4
+      }
     },
     {
       "dpto": "Balneário Barra do Sul",
@@ -260,7 +398,13 @@
       "centroid": [
         -48.6522,
         -26.4466
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 96.3,
+        "bld_hand5_n": 28450,
+        "bld_total": 29538,
+        "land_hand5_pct": 77.8
+      }
     },
     {
       "dpto": "Balneário Camboriú",
@@ -271,7 +415,13 @@
       "centroid": [
         -48.6221,
         -27.0044
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.1,
+        "bld_hand5_n": 35342,
+        "bld_total": 55107,
+        "land_hand5_pct": 33.7
+      }
     },
     {
       "dpto": "Balneário Gaivota",
@@ -282,7 +432,13 @@
       "centroid": [
         -49.6155,
         -29.1537
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 66.8,
+        "bld_hand5_n": 22565,
+        "bld_total": 33766,
+        "land_hand5_pct": 85.8
+      }
     },
     {
       "dpto": "Balneário Piçarras",
@@ -293,7 +449,13 @@
       "centroid": [
         -48.7333,
         -26.7596
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 41.5,
+        "bld_hand5_n": 15752,
+        "bld_total": 37930,
+        "land_hand5_pct": 37.4
+      }
     },
     {
       "dpto": "Balneário Rincão",
@@ -304,7 +466,13 @@
       "centroid": [
         -49.2544,
         -28.8269
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 60.9,
+        "bld_hand5_n": 25142,
+        "bld_total": 41258,
+        "land_hand5_pct": 56.4
+      }
     },
     {
       "dpto": "Bandeirante",
@@ -315,7 +483,13 @@
       "centroid": [
         -53.6472,
         -26.7681
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.3,
+        "bld_hand5_n": 592,
+        "bld_total": 7146,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Barra Bonita",
@@ -326,7 +500,13 @@
       "centroid": [
         -53.4252,
         -26.6682
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.7,
+        "bld_hand5_n": 886,
+        "bld_total": 4292,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Barra Velha",
@@ -337,7 +517,13 @@
       "centroid": [
         -48.7277,
         -26.6625
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 49.4,
+        "bld_hand5_n": 27842,
+        "bld_total": 56360,
+        "land_hand5_pct": 36.7
+      }
     },
     {
       "dpto": "Bela Vista do Toldo",
@@ -348,7 +534,13 @@
       "centroid": [
         -50.4868,
         -26.4182
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.1,
+        "bld_hand5_n": 3850,
+        "bld_total": 14201,
+        "land_hand5_pct": 15.5
+      }
     },
     {
       "dpto": "Belmonte",
@@ -359,7 +551,13 @@
       "centroid": [
         -53.6169,
         -26.8568
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.3,
+        "bld_hand5_n": 485,
+        "bld_total": 5204,
+        "land_hand5_pct": 10.3
+      }
     },
     {
       "dpto": "Benedito Novo",
@@ -370,7 +568,13 @@
       "centroid": [
         -49.4355,
         -26.801
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.1,
+        "bld_hand5_n": 7285,
+        "bld_total": 21342,
+        "land_hand5_pct": 9.7
+      }
     },
     {
       "dpto": "Biguaçu",
@@ -381,7 +585,13 @@
       "centroid": [
         -48.694,
         -27.4335
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 49.8,
+        "bld_hand5_n": 35980,
+        "bld_total": 72300,
+        "land_hand5_pct": 25.9
+      }
     },
     {
       "dpto": "Blumenau",
@@ -392,7 +602,13 @@
       "centroid": [
         -49.0973,
         -26.8862
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.0,
+        "bld_hand5_n": 71032,
+        "bld_total": 272775,
+        "land_hand5_pct": 13.5
+      }
     },
     {
       "dpto": "Bocaina do Sul",
@@ -403,7 +619,13 @@
       "centroid": [
         -49.9091,
         -27.7633
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.5,
+        "bld_hand5_n": 2257,
+        "bld_total": 8218,
+        "land_hand5_pct": 14.4
+      }
     },
     {
       "dpto": "Bom Jardim da Serra",
@@ -414,7 +636,13 @@
       "centroid": [
         -49.6525,
         -28.3611
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.7,
+        "bld_hand5_n": 1136,
+        "bld_total": 9673,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Bom Jesus",
@@ -425,7 +653,13 @@
       "centroid": [
         -52.3901,
         -26.7388
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.8,
+        "bld_hand5_n": 707,
+        "bld_total": 4216,
+        "land_hand5_pct": 16.6
+      }
     },
     {
       "dpto": "Bom Jesus do Oeste",
@@ -436,7 +670,13 @@
       "centroid": [
         -53.0953,
         -26.6839
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.6,
+        "bld_hand5_n": 1096,
+        "bld_total": 4857,
+        "land_hand5_pct": 10.8
+      }
     },
     {
       "dpto": "Bom Retiro",
@@ -447,7 +687,13 @@
       "centroid": [
         -49.5631,
         -27.7854
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.0,
+        "bld_hand5_n": 3876,
+        "bld_total": 16130,
+        "land_hand5_pct": 13.2
+      }
     },
     {
       "dpto": "Bombinhas",
@@ -458,7 +704,13 @@
       "centroid": [
         -48.5176,
         -27.1729
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 45.7,
+        "bld_hand5_n": 14463,
+        "bld_total": 31645,
+        "land_hand5_pct": 24.4
+      }
     },
     {
       "dpto": "Botuverá",
@@ -469,7 +721,13 @@
       "centroid": [
         -49.1237,
         -27.2187
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 40.4,
+        "bld_hand5_n": 4722,
+        "bld_total": 11694,
+        "land_hand5_pct": 8.1
+      }
     },
     {
       "dpto": "Braço do Norte",
@@ -480,7 +738,13 @@
       "centroid": [
         -49.1424,
         -28.2409
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.3,
+        "bld_hand5_n": 11762,
+        "bld_total": 46505,
+        "land_hand5_pct": 15.0
+      }
     },
     {
       "dpto": "Braço do Trombudo",
@@ -491,7 +755,13 @@
       "centroid": [
         -49.9037,
         -27.3685
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 39.4,
+        "bld_hand5_n": 3194,
+        "bld_total": 8100,
+        "land_hand5_pct": 12.3
+      }
     },
     {
       "dpto": "Brunópolis",
@@ -502,7 +772,13 @@
       "centroid": [
         -50.845,
         -27.3471
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.5,
+        "bld_hand5_n": 985,
+        "bld_total": 6354,
+        "land_hand5_pct": 12.3
+      }
     },
     {
       "dpto": "Brusque",
@@ -513,7 +789,13 @@
       "centroid": [
         -48.9098,
         -27.1252
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 38.4,
+        "bld_hand5_n": 45607,
+        "bld_total": 118637,
+        "land_hand5_pct": 14.6
+      }
     },
     {
       "dpto": "Caibi",
@@ -524,7 +806,13 @@
       "centroid": [
         -53.2633,
         -27.0255
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.6,
+        "bld_hand5_n": 2113,
+        "bld_total": 12005,
+        "land_hand5_pct": 11.7
+      }
     },
     {
       "dpto": "Calmon",
@@ -535,7 +823,13 @@
       "centroid": [
         -51.0068,
         -26.6223
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.1,
+        "bld_hand5_n": 469,
+        "bld_total": 4637,
+        "land_hand5_pct": 13.3
+      }
     },
     {
       "dpto": "Camboriú",
@@ -546,7 +840,13 @@
       "centroid": [
         -48.709,
         -27.0709
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 54.2,
+        "bld_hand5_n": 36974,
+        "bld_total": 68260,
+        "land_hand5_pct": 21.6
+      }
     },
     {
       "dpto": "Campo Alegre",
@@ -557,7 +857,13 @@
       "centroid": [
         -49.2177,
         -26.1205
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.7,
+        "bld_hand5_n": 4757,
+        "bld_total": 25400,
+        "land_hand5_pct": 16.0
+      }
     },
     {
       "dpto": "Campo Belo do Sul",
@@ -568,7 +874,13 @@
       "centroid": [
         -50.7711,
         -27.8471
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.9,
+        "bld_hand5_n": 1139,
+        "bld_total": 12750,
+        "land_hand5_pct": 12.4
+      }
     },
     {
       "dpto": "Campo Erê",
@@ -579,7 +891,13 @@
       "centroid": [
         -53.1302,
         -26.4505
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.2,
+        "bld_hand5_n": 1437,
+        "bld_total": 14131,
+        "land_hand5_pct": 12.0
+      }
     },
     {
       "dpto": "Campos Novos",
@@ -590,7 +908,13 @@
       "centroid": [
         -51.245,
         -27.4132
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.7,
+        "bld_hand5_n": 4638,
+        "bld_total": 47621,
+        "land_hand5_pct": 12.9
+      }
     },
     {
       "dpto": "Canelinha",
@@ -601,7 +925,13 @@
       "centroid": [
         -48.8023,
         -27.2346
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 46.9,
+        "bld_hand5_n": 8573,
+        "bld_total": 18273,
+        "land_hand5_pct": 23.8
+      }
     },
     {
       "dpto": "Canoinhas",
@@ -612,7 +942,13 @@
       "centroid": [
         -50.5333,
         -26.2502
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.8,
+        "bld_hand5_n": 18132,
+        "bld_total": 82984,
+        "land_hand5_pct": 25.3
+      }
     },
     {
       "dpto": "Capinzal",
@@ -623,7 +959,13 @@
       "centroid": [
         -51.6308,
         -27.412
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.2,
+        "bld_hand5_n": 3037,
+        "bld_total": 24974,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Capivari de Baixo",
@@ -634,7 +976,13 @@
       "centroid": [
         -48.9438,
         -28.4554
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 59.4,
+        "bld_hand5_n": 14850,
+        "bld_total": 25004,
+        "land_hand5_pct": 77.6
+      }
     },
     {
       "dpto": "Capão Alto",
@@ -645,7 +993,13 @@
       "centroid": [
         -50.6071,
         -28.0624
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.9,
+        "bld_hand5_n": 880,
+        "bld_total": 8087,
+        "land_hand5_pct": 12.0
+      }
     },
     {
       "dpto": "Catanduvas",
@@ -656,7 +1010,13 @@
       "centroid": [
         -51.6967,
         -27.0452
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.0,
+        "bld_hand5_n": 875,
+        "bld_total": 12572,
+        "land_hand5_pct": 10.6
+      }
     },
     {
       "dpto": "Caxambu do Sul",
@@ -667,7 +1027,13 @@
       "centroid": [
         -52.9204,
         -27.1468
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.1,
+        "bld_hand5_n": 1768,
+        "bld_total": 9257,
+        "land_hand5_pct": 8.6
+      }
     },
     {
       "dpto": "Caçador",
@@ -678,7 +1044,13 @@
       "centroid": [
         -51.085,
         -26.7629
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.2,
+        "bld_hand5_n": 9638,
+        "bld_total": 67716,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Celso Ramos",
@@ -689,7 +1061,13 @@
       "centroid": [
         -51.3082,
         -27.652
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.4,
+        "bld_hand5_n": 497,
+        "bld_total": 6717,
+        "land_hand5_pct": 7.0
+      }
     },
     {
       "dpto": "Cerro Negro",
@@ -700,7 +1078,13 @@
       "centroid": [
         -50.9319,
         -27.7764
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.3,
+        "bld_hand5_n": 1173,
+        "bld_total": 6799,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Chapadão do Lageado",
@@ -711,7 +1095,13 @@
       "centroid": [
         -49.556,
         -27.5825
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.5,
+        "bld_hand5_n": 1877,
+        "bld_total": 7999,
+        "land_hand5_pct": 9.1
+      }
     },
     {
       "dpto": "Chapecó",
@@ -722,7 +1112,13 @@
       "centroid": [
         -52.6503,
         -27.1252
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.3,
+        "bld_hand5_n": 27718,
+        "bld_total": 207811,
+        "land_hand5_pct": 11.0
+      }
     },
     {
       "dpto": "Cocal do Sul",
@@ -733,7 +1129,13 @@
       "centroid": [
         -49.3337,
         -28.5987
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.6,
+        "bld_hand5_n": 6433,
+        "bld_total": 21703,
+        "land_hand5_pct": 22.0
+      }
     },
     {
       "dpto": "Concórdia",
@@ -744,7 +1146,13 @@
       "centroid": [
         -52.0075,
         -27.2392
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.2,
+        "bld_hand5_n": 13581,
+        "bld_total": 103138,
+        "land_hand5_pct": 8.4
+      }
     },
     {
       "dpto": "Cordilheira Alta",
@@ -755,7 +1163,13 @@
       "centroid": [
         -52.6415,
         -26.9757
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.2,
+        "bld_hand5_n": 1377,
+        "bld_total": 10439,
+        "land_hand5_pct": 7.8
+      }
     },
     {
       "dpto": "Coronel Freitas",
@@ -766,7 +1180,13 @@
       "centroid": [
         -52.7249,
         -26.8832
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.2,
+        "bld_hand5_n": 5033,
+        "bld_total": 19980,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Coronel Martins",
@@ -777,7 +1197,13 @@
       "centroid": [
         -52.6718,
         -26.5349
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.6,
+        "bld_hand5_n": 914,
+        "bld_total": 4929,
+        "land_hand5_pct": 12.0
+      }
     },
     {
       "dpto": "Correia Pinto",
@@ -788,7 +1214,13 @@
       "centroid": [
         -50.3779,
         -27.5969
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.1,
+        "bld_hand5_n": 3125,
+        "bld_total": 22222,
+        "land_hand5_pct": 16.9
+      }
     },
     {
       "dpto": "Corupá",
@@ -799,7 +1231,13 @@
       "centroid": [
         -49.3268,
         -26.4399
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.1,
+        "bld_hand5_n": 5397,
+        "bld_total": 23386,
+        "land_hand5_pct": 10.8
+      }
     },
     {
       "dpto": "Criciúma",
@@ -810,7 +1248,13 @@
       "centroid": [
         -49.3798,
         -28.7156
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.3,
+        "bld_hand5_n": 58397,
+        "bld_total": 180814,
+        "land_hand5_pct": 31.2
+      }
     },
     {
       "dpto": "Cunha Porã",
@@ -821,7 +1265,13 @@
       "centroid": [
         -53.1908,
         -26.8793
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.5,
+        "bld_hand5_n": 3406,
+        "bld_total": 19495,
+        "land_hand5_pct": 11.6
+      }
     },
     {
       "dpto": "Cunhataí",
@@ -832,7 +1282,13 @@
       "centroid": [
         -53.1006,
         -26.9753
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.9,
+        "bld_hand5_n": 919,
+        "bld_total": 4855,
+        "land_hand5_pct": 9.7
+      }
     },
     {
       "dpto": "Curitibanos",
@@ -843,7 +1299,13 @@
       "centroid": [
         -50.6175,
         -27.2931
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.1,
+        "bld_hand5_n": 4973,
+        "bld_total": 49297,
+        "land_hand5_pct": 13.5
+      }
     },
     {
       "dpto": "Descanso",
@@ -854,7 +1316,13 @@
       "centroid": [
         -53.4794,
         -26.8585
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.3,
+        "bld_hand5_n": 2625,
+        "bld_total": 18321,
+        "land_hand5_pct": 10.8
+      }
     },
     {
       "dpto": "Dionísio Cerqueira",
@@ -865,7 +1333,13 @@
       "centroid": [
         -53.5209,
         -26.3335
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.1,
+        "bld_hand5_n": 1535,
+        "bld_total": 10188,
+        "land_hand5_pct": 11.8
+      }
     },
     {
       "dpto": "Dona Emma",
@@ -876,7 +1350,13 @@
       "centroid": [
         -49.7782,
         -26.9886
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.2,
+        "bld_hand5_n": 2118,
+        "bld_total": 9113,
+        "land_hand5_pct": 7.4
+      }
     },
     {
       "dpto": "Doutor Pedrinho",
@@ -887,7 +1367,13 @@
       "centroid": [
         -49.554,
         -26.7056
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.3,
+        "bld_hand5_n": 2883,
+        "bld_total": 7934,
+        "land_hand5_pct": 10.9
+      }
     },
     {
       "dpto": "Entre Rios",
@@ -898,7 +1384,13 @@
       "centroid": [
         -52.5784,
         -26.74
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.6,
+        "bld_hand5_n": 1014,
+        "bld_total": 4931,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Ermo",
@@ -909,7 +1401,13 @@
       "centroid": [
         -49.6529,
         -28.9904
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 60.2,
+        "bld_hand5_n": 2546,
+        "bld_total": 4228,
+        "land_hand5_pct": 79.9
+      }
     },
     {
       "dpto": "Erval Velho",
@@ -920,7 +1418,13 @@
       "centroid": [
         -51.4219,
         -27.2843
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.0,
+        "bld_hand5_n": 2732,
+        "bld_total": 9745,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Faxinal dos Guedes",
@@ -931,7 +1435,13 @@
       "centroid": [
         -52.2444,
         -26.8469
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.4,
+        "bld_hand5_n": 1406,
+        "bld_total": 16762,
+        "land_hand5_pct": 9.1
+      }
     },
     {
       "dpto": "Flor do Sertão",
@@ -942,7 +1452,13 @@
       "centroid": [
         -53.3373,
         -26.7639
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.6,
+        "bld_hand5_n": 607,
+        "bld_total": 3895,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Florianópolis",
@@ -953,7 +1469,13 @@
       "centroid": [
         -48.5083,
         -27.5783
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 39.9,
+        "bld_hand5_n": 148414,
+        "bld_total": 372175,
+        "land_hand5_pct": 39.0
+      }
     },
     {
       "dpto": "Formosa do Sul",
@@ -964,7 +1486,13 @@
       "centroid": [
         -52.7939,
         -26.6342
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.9,
+        "bld_hand5_n": 1717,
+        "bld_total": 6158,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Forquilhinha",
@@ -975,7 +1503,13 @@
       "centroid": [
         -49.4931,
         -28.7817
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 88.2,
+        "bld_hand5_n": 33311,
+        "bld_total": 37764,
+        "land_hand5_pct": 96.1
+      }
     },
     {
       "dpto": "Fraiburgo",
@@ -986,7 +1520,13 @@
       "centroid": [
         -50.8724,
         -27.0377
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.8,
+        "bld_hand5_n": 5373,
+        "bld_total": 39038,
+        "land_hand5_pct": 15.6
+      }
     },
     {
       "dpto": "Frei Rogério",
@@ -997,7 +1537,13 @@
       "centroid": [
         -50.7658,
         -27.192
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.2,
+        "bld_hand5_n": 940,
+        "bld_total": 5461,
+        "land_hand5_pct": 15.6
+      }
     },
     {
       "dpto": "Galvão",
@@ -1008,7 +1554,13 @@
       "centroid": [
         -52.6592,
         -26.4496
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.1,
+        "bld_hand5_n": 1718,
+        "bld_total": 5894,
+        "land_hand5_pct": 12.5
+      }
     },
     {
       "dpto": "Garopaba",
@@ -1019,7 +1571,13 @@
       "centroid": [
         -48.659,
         -28.0471
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.9,
+        "bld_hand5_n": 10466,
+        "bld_total": 38846,
+        "land_hand5_pct": 33.5
+      }
     },
     {
       "dpto": "Garuva",
@@ -1030,7 +1588,13 @@
       "centroid": [
         -48.8673,
         -26.0571
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 42.5,
+        "bld_hand5_n": 9652,
+        "bld_total": 22699,
+        "land_hand5_pct": 31.0
+      }
     },
     {
       "dpto": "Gaspar",
@@ -1041,7 +1605,13 @@
       "centroid": [
         -48.966,
         -26.9317
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.2,
+        "bld_hand5_n": 32928,
+        "bld_total": 76196,
+        "land_hand5_pct": 23.3
+      }
     },
     {
       "dpto": "Governador Celso Ramos",
@@ -1052,7 +1622,13 @@
       "centroid": [
         -48.5772,
         -27.3765
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.1,
+        "bld_hand5_n": 10902,
+        "bld_total": 25290,
+        "land_hand5_pct": 35.2
+      }
     },
     {
       "dpto": "Gravatal",
@@ -1063,7 +1639,13 @@
       "centroid": [
         -49.0197,
         -28.354
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.8,
+        "bld_hand5_n": 5532,
+        "bld_total": 19224,
+        "land_hand5_pct": 28.5
+      }
     },
     {
       "dpto": "Grão-Pará",
@@ -1074,7 +1656,13 @@
       "centroid": [
         -49.314,
         -28.1549
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.0,
+        "bld_hand5_n": 3023,
+        "bld_total": 15112,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Guabiruba",
@@ -1085,7 +1673,13 @@
       "centroid": [
         -49.0208,
         -27.1036
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 52.1,
+        "bld_hand5_n": 17159,
+        "bld_total": 32963,
+        "land_hand5_pct": 14.2
+      }
     },
     {
       "dpto": "Guaraciaba",
@@ -1096,7 +1690,13 @@
       "centroid": [
         -53.5696,
         -26.5802
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.3,
+        "bld_hand5_n": 3028,
+        "bld_total": 21202,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "Guaramirim",
@@ -1107,7 +1707,13 @@
       "centroid": [
         -48.9448,
         -26.4768
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.3,
+        "bld_hand5_n": 15555,
+        "bld_total": 45343,
+        "land_hand5_pct": 41.8
+      }
     },
     {
       "dpto": "Guarujá do Sul",
@@ -1118,7 +1724,13 @@
       "centroid": [
         -53.4842,
         -26.3983
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.0,
+        "bld_hand5_n": 1141,
+        "bld_total": 8176,
+        "land_hand5_pct": 11.7
+      }
     },
     {
       "dpto": "Guatambú",
@@ -1129,7 +1741,13 @@
       "centroid": [
         -52.7834,
         -27.1165
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.8,
+        "bld_hand5_n": 1835,
+        "bld_total": 15525,
+        "land_hand5_pct": 11.1
+      }
     },
     {
       "dpto": "Herval d'Oeste",
@@ -1140,7 +1758,13 @@
       "centroid": [
         -51.4107,
         -27.1954
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.8,
+        "bld_hand5_n": 3099,
+        "bld_total": 22426,
+        "land_hand5_pct": 8.0
+      }
     },
     {
       "dpto": "Ibiam",
@@ -1151,7 +1775,13 @@
       "centroid": [
         -51.2154,
         -27.2085
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.6,
+        "bld_hand5_n": 1645,
+        "bld_total": 5379,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Ibicaré",
@@ -1162,7 +1792,13 @@
       "centroid": [
         -51.3699,
         -27.0923
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.2,
+        "bld_hand5_n": 1259,
+        "bld_total": 8280,
+        "land_hand5_pct": 9.5
+      }
     },
     {
       "dpto": "Ibirama",
@@ -1173,7 +1809,13 @@
       "centroid": [
         -49.5286,
         -27.0181
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.8,
+        "bld_hand5_n": 6756,
+        "bld_total": 27259,
+        "land_hand5_pct": 8.7
+      }
     },
     {
       "dpto": "Ilhota",
@@ -1184,7 +1826,13 @@
       "centroid": [
         -48.8573,
         -26.859
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 46.5,
+        "bld_hand5_n": 11108,
+        "bld_total": 23896,
+        "land_hand5_pct": 34.6
+      }
     },
     {
       "dpto": "Imaruí",
@@ -1195,7 +1843,13 @@
       "centroid": [
         -48.8344,
         -28.2314
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.3,
+        "bld_hand5_n": 8431,
+        "bld_total": 26124,
+        "land_hand5_pct": 22.0
+      }
     },
     {
       "dpto": "Imbituba",
@@ -1206,7 +1860,13 @@
       "centroid": [
         -48.7026,
         -28.1948
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.2,
+        "bld_hand5_n": 16273,
+        "bld_total": 80527,
+        "land_hand5_pct": 40.9
+      }
     },
     {
       "dpto": "Imbuia",
@@ -1217,7 +1877,13 @@
       "centroid": [
         -49.4066,
         -27.5029
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.5,
+        "bld_hand5_n": 2796,
+        "bld_total": 13620,
+        "land_hand5_pct": 8.1
+      }
     },
     {
       "dpto": "Indaial",
@@ -1228,7 +1894,13 @@
       "centroid": [
         -49.2242,
         -26.9949
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 33.0,
+        "bld_hand5_n": 24264,
+        "bld_total": 73520,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Iomerê",
@@ -1239,7 +1911,13 @@
       "centroid": [
         -51.2754,
         -26.9877
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.1,
+        "bld_hand5_n": 1606,
+        "bld_total": 7613,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Ipira",
@@ -1250,7 +1928,13 @@
       "centroid": [
         -51.7984,
         -27.3708
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.6,
+        "bld_hand5_n": 2452,
+        "bld_total": 10378,
+        "land_hand5_pct": 8.2
+      }
     },
     {
       "dpto": "Iporã do Oeste",
@@ -1261,7 +1945,13 @@
       "centroid": [
         -53.4896,
         -27.0005
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.1,
+        "bld_hand5_n": 1979,
+        "bld_total": 19607,
+        "land_hand5_pct": 8.4
+      }
     },
     {
       "dpto": "Ipuaçu",
@@ -1272,7 +1962,13 @@
       "centroid": [
         -52.4763,
         -26.6784
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.4,
+        "bld_hand5_n": 2559,
+        "bld_total": 10916,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Ipumirim",
@@ -1283,7 +1979,13 @@
       "centroid": [
         -52.1529,
         -27.0402
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.5,
+        "bld_hand5_n": 2320,
+        "bld_total": 16032,
+        "land_hand5_pct": 7.9
+      }
     },
     {
       "dpto": "Iraceminha",
@@ -1294,7 +1996,13 @@
       "centroid": [
         -53.3247,
         -26.8453
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.6,
+        "bld_hand5_n": 1984,
+        "bld_total": 10118,
+        "land_hand5_pct": 11.0
+      }
     },
     {
       "dpto": "Irani",
@@ -1305,7 +2013,13 @@
       "centroid": [
         -51.9181,
         -27.0254
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.7,
+        "bld_hand5_n": 1977,
+        "bld_total": 15626,
+        "land_hand5_pct": 10.3
+      }
     },
     {
       "dpto": "Irati",
@@ -1316,7 +2030,13 @@
       "centroid": [
         -52.8902,
         -26.6276
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.6,
+        "bld_hand5_n": 1066,
+        "bld_total": 4164,
+        "land_hand5_pct": 10.1
+      }
     },
     {
       "dpto": "Irineópolis",
@@ -1327,7 +2047,13 @@
       "centroid": [
         -50.7607,
         -26.3571
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.1,
+        "bld_hand5_n": 5691,
+        "bld_total": 22693,
+        "land_hand5_pct": 24.3
+      }
     },
     {
       "dpto": "Itaiópolis",
@@ -1338,7 +2064,13 @@
       "centroid": [
         -49.8913,
         -26.4723
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.6,
+        "bld_hand5_n": 4647,
+        "bld_total": 43684,
+        "land_hand5_pct": 11.8
+      }
     },
     {
       "dpto": "Itajaí",
@@ -1349,7 +2081,13 @@
       "centroid": [
         -48.7535,
         -26.9688
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 81.9,
+        "bld_hand5_n": 134153,
+        "bld_total": 163787,
+        "land_hand5_pct": 43.0
+      }
     },
     {
       "dpto": "Itapema",
@@ -1360,7 +2098,13 @@
       "centroid": [
         -48.6344,
         -27.1084
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 65.3,
+        "bld_hand5_n": 30318,
+        "bld_total": 46430,
+        "land_hand5_pct": 28.4
+      }
     },
     {
       "dpto": "Itapiranga",
@@ -1371,7 +2115,13 @@
       "centroid": [
         -53.7081,
         -27.1144
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.7,
+        "bld_hand5_n": 2100,
+        "bld_total": 27297,
+        "land_hand5_pct": 9.5
+      }
     },
     {
       "dpto": "Itapoá",
@@ -1382,7 +2132,13 @@
       "centroid": [
         -48.6525,
         -26.0827
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.4,
+        "bld_hand5_n": 37276,
+        "bld_total": 57855,
+        "land_hand5_pct": 54.2
+      }
     },
     {
       "dpto": "Ituporanga",
@@ -1393,7 +2149,13 @@
       "centroid": [
         -49.5388,
         -27.4534
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.9,
+        "bld_hand5_n": 10916,
+        "bld_total": 43754,
+        "land_hand5_pct": 11.7
+      }
     },
     {
       "dpto": "Itá",
@@ -1404,7 +2166,13 @@
       "centroid": [
         -52.3322,
         -27.244
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.2,
+        "bld_hand5_n": 897,
+        "bld_total": 14357,
+        "land_hand5_pct": 7.8
+      }
     },
     {
       "dpto": "Içara",
@@ -1415,7 +2183,13 @@
       "centroid": [
         -49.2774,
         -28.7518
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.8,
+        "bld_hand5_n": 20063,
+        "bld_total": 72227,
+        "land_hand5_pct": 51.6
+      }
     },
     {
       "dpto": "Jaborá",
@@ -1426,7 +2200,13 @@
       "centroid": [
         -51.7725,
         -27.1415
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.0,
+        "bld_hand5_n": 2048,
+        "bld_total": 10254,
+        "land_hand5_pct": 8.8
+      }
     },
     {
       "dpto": "Jacinto Machado",
@@ -1437,7 +2217,13 @@
       "centroid": [
         -49.8482,
         -28.9949
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.1,
+        "bld_hand5_n": 12310,
+        "bld_total": 19212,
+        "land_hand5_pct": 30.2
+      }
     },
     {
       "dpto": "Jaguaruna",
@@ -1448,7 +2234,13 @@
       "centroid": [
         -49.0451,
         -28.6582
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 53.7,
+        "bld_hand5_n": 35246,
+        "bld_total": 65618,
+        "land_hand5_pct": 61.1
+      }
     },
     {
       "dpto": "Jaraguá do Sul",
@@ -1459,7 +2251,13 @@
       "centroid": [
         -49.1601,
         -26.482
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 37.2,
+        "bld_hand5_n": 59820,
+        "bld_total": 160665,
+        "land_hand5_pct": 16.5
+      }
     },
     {
       "dpto": "Jardinópolis",
@@ -1470,7 +2268,13 @@
       "centroid": [
         -52.8715,
         -26.7171
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.1,
+        "bld_hand5_n": 862,
+        "bld_total": 4079,
+        "land_hand5_pct": 11.1
+      }
     },
     {
       "dpto": "Joaçaba",
@@ -1481,7 +2285,13 @@
       "centroid": [
         -51.5931,
         -27.1516
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.3,
+        "bld_hand5_n": 3642,
+        "bld_total": 32190,
+        "land_hand5_pct": 9.3
+      }
     },
     {
       "dpto": "Joinville",
@@ -1492,7 +2302,13 @@
       "centroid": [
         -48.9516,
         -26.2444
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 58.7,
+        "bld_hand5_n": 272220,
+        "bld_total": 463989,
+        "land_hand5_pct": 35.6
+      }
     },
     {
       "dpto": "José Boiteux",
@@ -1503,7 +2319,13 @@
       "centroid": [
         -49.6462,
         -26.8595
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.6,
+        "bld_hand5_n": 1954,
+        "bld_total": 10529,
+        "land_hand5_pct": 7.2
+      }
     },
     {
       "dpto": "Jupiá",
@@ -1514,7 +2336,13 @@
       "centroid": [
         -52.7207,
         -26.3941
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.5,
+        "bld_hand5_n": 925,
+        "bld_total": 5950,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Lacerdópolis",
@@ -1525,7 +2353,13 @@
       "centroid": [
         -51.5903,
         -27.2508
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.1,
+        "bld_hand5_n": 924,
+        "bld_total": 5417,
+        "land_hand5_pct": 8.6
+      }
     },
     {
       "dpto": "Lages",
@@ -1536,7 +2370,13 @@
       "centroid": [
         -50.3409,
         -28.0214
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.5,
+        "bld_hand5_n": 30436,
+        "bld_total": 164142,
+        "land_hand5_pct": 14.1
+      }
     },
     {
       "dpto": "Laguna",
@@ -1547,7 +2387,13 @@
       "centroid": [
         -48.8261,
         -28.4866
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 54.5,
+        "bld_hand5_n": 32799,
+        "bld_total": 60155,
+        "land_hand5_pct": 77.0
+      }
     },
     {
       "dpto": "Lajeado Grande",
@@ -1558,7 +2404,13 @@
       "centroid": [
         -52.5521,
         -26.855
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.3,
+        "bld_hand5_n": 748,
+        "bld_total": 3887,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "Laurentino",
@@ -1569,7 +2421,13 @@
       "centroid": [
         -49.7337,
         -27.2081
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.0,
+        "bld_hand5_n": 3212,
+        "bld_total": 14578,
+        "land_hand5_pct": 9.6
+      }
     },
     {
       "dpto": "Lauro Müller",
@@ -1580,7 +2438,13 @@
       "centroid": [
         -49.4517,
         -28.3846
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.3,
+        "bld_hand5_n": 3192,
+        "bld_total": 23938,
+        "land_hand5_pct": 11.5
+      }
     },
     {
       "dpto": "Lebon Régis",
@@ -1591,7 +2455,13 @@
       "centroid": [
         -50.7025,
         -26.8585
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.9,
+        "bld_hand5_n": 3770,
+        "bld_total": 17253,
+        "land_hand5_pct": 13.5
+      }
     },
     {
       "dpto": "Leoberto Leal",
@@ -1602,7 +2472,13 @@
       "centroid": [
         -49.2571,
         -27.4723
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.3,
+        "bld_hand5_n": 2841,
+        "bld_total": 9363,
+        "land_hand5_pct": 7.6
+      }
     },
     {
       "dpto": "Lindóia do Sul",
@@ -1613,7 +2489,13 @@
       "centroid": [
         -52.0526,
         -27.0316
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.9,
+        "bld_hand5_n": 1955,
+        "bld_total": 11595,
+        "land_hand5_pct": 8.3
+      }
     },
     {
       "dpto": "Lontras",
@@ -1624,7 +2506,13 @@
       "centroid": [
         -49.5075,
         -27.1893
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 35.6,
+        "bld_hand5_n": 7736,
+        "bld_total": 21701,
+        "land_hand5_pct": 13.2
+      }
     },
     {
       "dpto": "Luiz Alves",
@@ -1635,7 +2523,13 @@
       "centroid": [
         -48.8912,
         -26.7275
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 39.1,
+        "bld_hand5_n": 7819,
+        "bld_total": 19997,
+        "land_hand5_pct": 15.8
+      }
     },
     {
       "dpto": "Luzerna",
@@ -1646,7 +2540,13 @@
       "centroid": [
         -51.5057,
         -27.0904
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.6,
+        "bld_hand5_n": 1720,
+        "bld_total": 9255,
+        "land_hand5_pct": 9.6
+      }
     },
     {
       "dpto": "Macieira",
@@ -1657,7 +2557,13 @@
       "centroid": [
         -51.3531,
         -26.8035
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.8,
+        "bld_hand5_n": 1292,
+        "bld_total": 4202,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Mafra",
@@ -1668,7 +2574,13 @@
       "centroid": [
         -49.8897,
         -26.2006
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.9,
+        "bld_hand5_n": 7879,
+        "bld_total": 79754,
+        "land_hand5_pct": 16.1
+      }
     },
     {
       "dpto": "Major Gercino",
@@ -1679,7 +2591,13 @@
       "centroid": [
         -49.0529,
         -27.4279
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 39.9,
+        "bld_hand5_n": 3384,
+        "bld_total": 8481,
+        "land_hand5_pct": 9.2
+      }
     },
     {
       "dpto": "Major Vieira",
@@ -1690,7 +2608,13 @@
       "centroid": [
         -50.3617,
         -26.4815
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.0,
+        "bld_hand5_n": 4760,
+        "bld_total": 16973,
+        "land_hand5_pct": 19.7
+      }
     },
     {
       "dpto": "Maracajá",
@@ -1701,7 +2625,13 @@
       "centroid": [
         -49.4554,
         -28.8639
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 58.5,
+        "bld_hand5_n": 6477,
+        "bld_total": 11078,
+        "land_hand5_pct": 68.7
+      }
     },
     {
       "dpto": "Maravilha",
@@ -1712,7 +2642,13 @@
       "centroid": [
         -53.1983,
         -26.76
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.3,
+        "bld_hand5_n": 7168,
+        "bld_total": 33614,
+        "land_hand5_pct": 12.3
+      }
     },
     {
       "dpto": "Marema",
@@ -1723,7 +2659,13 @@
       "centroid": [
         -52.6299,
         -26.8125
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.8,
+        "bld_hand5_n": 1235,
+        "bld_total": 6224,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "Massaranduba",
@@ -1734,7 +2676,13 @@
       "centroid": [
         -48.9885,
         -26.627
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.6,
+        "bld_hand5_n": 9729,
+        "bld_total": 31803,
+        "land_hand5_pct": 20.8
+      }
     },
     {
       "dpto": "Matos Costa",
@@ -1745,7 +2693,13 @@
       "centroid": [
         -51.1417,
         -26.4812
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.3,
+        "bld_hand5_n": 588,
+        "bld_total": 5188,
+        "land_hand5_pct": 11.5
+      }
     },
     {
       "dpto": "Meleiro",
@@ -1756,7 +2710,13 @@
       "centroid": [
         -49.6019,
         -28.8416
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 79.0,
+        "bld_hand5_n": 10434,
+        "bld_total": 13201,
+        "land_hand5_pct": 82.3
+      }
     },
     {
       "dpto": "Mirim Doce",
@@ -1767,7 +2727,13 @@
       "centroid": [
         -50.1752,
         -27.1855
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 31.9,
+        "bld_hand5_n": 1860,
+        "bld_total": 5832,
+        "land_hand5_pct": 14.0
+      }
     },
     {
       "dpto": "Modelo",
@@ -1778,7 +2744,13 @@
       "centroid": [
         -53.051,
         -26.7748
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.0,
+        "bld_hand5_n": 1573,
+        "bld_total": 7847,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "Mondaí",
@@ -1789,7 +2761,13 @@
       "centroid": [
         -53.4468,
         -27.0994
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.7,
+        "bld_hand5_n": 3240,
+        "bld_total": 17289,
+        "land_hand5_pct": 11.7
+      }
     },
     {
       "dpto": "Monte Carlo",
@@ -1800,7 +2778,13 @@
       "centroid": [
         -50.9276,
         -27.1937
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.4,
+        "bld_hand5_n": 901,
+        "bld_total": 8646,
+        "land_hand5_pct": 12.5
+      }
     },
     {
       "dpto": "Monte Castelo",
@@ -1811,7 +2795,13 @@
       "centroid": [
         -50.2915,
         -26.6607
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.6,
+        "bld_hand5_n": 2240,
+        "bld_total": 13467,
+        "land_hand5_pct": 16.5
+      }
     },
     {
       "dpto": "Morro Grande",
@@ -1822,7 +2812,13 @@
       "centroid": [
         -49.7405,
         -28.7219
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 60.8,
+        "bld_hand5_n": 4128,
+        "bld_total": 6785,
+        "land_hand5_pct": 23.1
+      }
     },
     {
       "dpto": "Morro da Fumaça",
@@ -1833,7 +2829,13 @@
       "centroid": [
         -49.2429,
         -28.6377
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 45.7,
+        "bld_hand5_n": 10923,
+        "bld_total": 23916,
+        "land_hand5_pct": 42.7
+      }
     },
     {
       "dpto": "Navegantes",
@@ -1844,7 +2846,13 @@
       "centroid": [
         -48.7273,
         -26.8287
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 83.8,
+        "bld_hand5_n": 63182,
+        "bld_total": 75384,
+        "land_hand5_pct": 59.7
+      }
     },
     {
       "dpto": "Nova Erechim",
@@ -1855,7 +2863,13 @@
       "centroid": [
         -52.9068,
         -26.9085
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.5,
+        "bld_hand5_n": 479,
+        "bld_total": 8704,
+        "land_hand5_pct": 8.3
+      }
     },
     {
       "dpto": "Nova Itaberaba",
@@ -1866,7 +2880,13 @@
       "centroid": [
         -52.8331,
         -26.961
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.3,
+        "bld_hand5_n": 2393,
+        "bld_total": 11223,
+        "land_hand5_pct": 10.1
+      }
     },
     {
       "dpto": "Nova Trento",
@@ -1877,7 +2897,13 @@
       "centroid": [
         -49.0415,
         -27.3133
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 49.5,
+        "bld_hand5_n": 11270,
+        "bld_total": 22771,
+        "land_hand5_pct": 9.6
+      }
     },
     {
       "dpto": "Nova Veneza",
@@ -1888,7 +2914,13 @@
       "centroid": [
         -49.5849,
         -28.6847
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 45.7,
+        "bld_hand5_n": 9956,
+        "bld_total": 21772,
+        "land_hand5_pct": 41.8
+      }
     },
     {
       "dpto": "Novo Horizonte",
@@ -1899,7 +2931,13 @@
       "centroid": [
         -52.7965,
         -26.4949
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.4,
+        "bld_hand5_n": 1165,
+        "bld_total": 5999,
+        "land_hand5_pct": 10.2
+      }
     },
     {
       "dpto": "Orleans",
@@ -1910,7 +2948,13 @@
       "centroid": [
         -49.372,
         -28.2797
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.7,
+        "bld_hand5_n": 6381,
+        "bld_total": 36138,
+        "land_hand5_pct": 11.3
+      }
     },
     {
       "dpto": "Otacílio Costa",
@@ -1921,7 +2965,13 @@
       "centroid": [
         -49.9716,
         -27.5173
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.3,
+        "bld_hand5_n": 2099,
+        "bld_total": 22576,
+        "land_hand5_pct": 16.2
+      }
     },
     {
       "dpto": "Ouro",
@@ -1932,7 +2982,13 @@
       "centroid": [
         -51.6819,
         -27.2835
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.2,
+        "bld_hand5_n": 2313,
+        "bld_total": 15214,
+        "land_hand5_pct": 8.2
+      }
     },
     {
       "dpto": "Ouro Verde",
@@ -1943,7 +2999,13 @@
       "centroid": [
         -52.2787,
         -26.7117
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.4,
+        "bld_hand5_n": 1118,
+        "bld_total": 4786,
+        "land_hand5_pct": 11.5
+      }
     },
     {
       "dpto": "Paial",
@@ -1954,7 +3016,13 @@
       "centroid": [
         -52.4877,
         -27.213
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.6,
+        "bld_hand5_n": 340,
+        "bld_total": 5181,
+        "land_hand5_pct": 7.0
+      }
     },
     {
       "dpto": "Painel",
@@ -1965,7 +3033,13 @@
       "centroid": [
         -50.0724,
         -27.9636
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.1,
+        "bld_hand5_n": 1018,
+        "bld_total": 7211,
+        "land_hand5_pct": 11.6
+      }
     },
     {
       "dpto": "Palhoça",
@@ -1976,7 +3050,13 @@
       "centroid": [
         -48.6617,
         -27.7719
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 75.9,
+        "bld_hand5_n": 142456,
+        "bld_total": 187735,
+        "land_hand5_pct": 41.2
+      }
     },
     {
       "dpto": "Palma Sola",
@@ -1987,7 +3067,13 @@
       "centroid": [
         -53.3146,
         -26.3736
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.9,
+        "bld_hand5_n": 1288,
+        "bld_total": 11789,
+        "land_hand5_pct": 11.1
+      }
     },
     {
       "dpto": "Palmeira",
@@ -1998,7 +3084,13 @@
       "centroid": [
         -50.1615,
         -27.5626
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.4,
+        "bld_hand5_n": 761,
+        "bld_total": 6685,
+        "land_hand5_pct": 17.6
+      }
     },
     {
       "dpto": "Palmitos",
@@ -2009,7 +3101,13 @@
       "centroid": [
         -53.18,
         -27.0925
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.7,
+        "bld_hand5_n": 5821,
+        "bld_total": 31121,
+        "land_hand5_pct": 10.6
+      }
     },
     {
       "dpto": "Papanduva",
@@ -2020,7 +3118,13 @@
       "centroid": [
         -50.1723,
         -26.5027
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.2,
+        "bld_hand5_n": 7748,
+        "bld_total": 33465,
+        "land_hand5_pct": 15.8
+      }
     },
     {
       "dpto": "Paraíso",
@@ -2031,7 +3135,13 @@
       "centroid": [
         -53.6766,
         -26.6626
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.7,
+        "bld_hand5_n": 1028,
+        "bld_total": 8779,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "Passo de Torres",
@@ -2042,7 +3152,13 @@
       "centroid": [
         -49.722,
         -29.2674
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 81.4,
+        "bld_hand5_n": 20846,
+        "bld_total": 25614,
+        "land_hand5_pct": 85.3
+      }
     },
     {
       "dpto": "Passos Maia",
@@ -2053,7 +3169,13 @@
       "centroid": [
         -51.9611,
         -26.7062
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.9,
+        "bld_hand5_n": 1332,
+        "bld_total": 8935,
+        "land_hand5_pct": 12.4
+      }
     },
     {
       "dpto": "Paulo Lopes",
@@ -2064,7 +3186,13 @@
       "centroid": [
         -48.7603,
         -27.9647
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 35.3,
+        "bld_hand5_n": 5092,
+        "bld_total": 14411,
+        "land_hand5_pct": 19.9
+      }
     },
     {
       "dpto": "Pedras Grandes",
@@ -2075,7 +3203,13 @@
       "centroid": [
         -49.2044,
         -28.4792
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.1,
+        "bld_hand5_n": 2844,
+        "bld_total": 10500,
+        "land_hand5_pct": 11.6
+      }
     },
     {
       "dpto": "Penha",
@@ -2086,7 +3220,13 @@
       "centroid": [
         -48.6508,
         -26.8078
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.8,
+        "bld_hand5_n": 20968,
+        "bld_total": 47863,
+        "land_hand5_pct": 40.3
+      }
     },
     {
       "dpto": "Peritiba",
@@ -2097,7 +3237,13 @@
       "centroid": [
         -51.8753,
         -27.3515
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.3,
+        "bld_hand5_n": 1601,
+        "bld_total": 7185,
+        "land_hand5_pct": 8.8
+      }
     },
     {
       "dpto": "Pescaria Brava",
@@ -2108,7 +3254,13 @@
       "centroid": [
         -48.8838,
         -28.4018
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.7,
+        "bld_hand5_n": 4055,
+        "bld_total": 14651,
+        "land_hand5_pct": 35.0
+      }
     },
     {
       "dpto": "Petrolândia",
@@ -2119,7 +3271,13 @@
       "centroid": [
         -49.6827,
         -27.5458
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.0,
+        "bld_hand5_n": 5610,
+        "bld_total": 17550,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Pinhalzinho",
@@ -2130,7 +3288,13 @@
       "centroid": [
         -52.9766,
         -26.8294
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.0,
+        "bld_hand5_n": 2243,
+        "bld_total": 24948,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Pinheiro Preto",
@@ -2141,7 +3305,13 @@
       "centroid": [
         -51.2359,
         -27.0495
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.6,
+        "bld_hand5_n": 875,
+        "bld_total": 5605,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Piratuba",
@@ -2152,7 +3322,13 @@
       "centroid": [
         -51.7727,
         -27.4612
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.5,
+        "bld_hand5_n": 1136,
+        "bld_total": 10805,
+        "land_hand5_pct": 6.4
+      }
     },
     {
       "dpto": "Planalto Alegre",
@@ -2163,7 +3339,13 @@
       "centroid": [
         -52.8688,
         -27.0521
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.5,
+        "bld_hand5_n": 741,
+        "bld_total": 5941,
+        "land_hand5_pct": 7.5
+      }
     },
     {
       "dpto": "Pomerode",
@@ -2174,7 +3356,13 @@
       "centroid": [
         -49.1731,
         -26.7279
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 39.8,
+        "bld_hand5_n": 16719,
+        "bld_total": 42056,
+        "land_hand5_pct": 14.5
+      }
     },
     {
       "dpto": "Ponte Alta",
@@ -2185,7 +3373,13 @@
       "centroid": [
         -50.299,
         -27.4103
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.8,
+        "bld_hand5_n": 788,
+        "bld_total": 8043,
+        "land_hand5_pct": 14.8
+      }
     },
     {
       "dpto": "Ponte Alta do Norte",
@@ -2196,7 +3390,13 @@
       "centroid": [
         -50.4187,
         -27.1804
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.3,
+        "bld_hand5_n": 1171,
+        "bld_total": 4447,
+        "land_hand5_pct": 14.7
+      }
     },
     {
       "dpto": "Ponte Serrada",
@@ -2207,7 +3407,13 @@
       "centroid": [
         -51.9283,
         -26.8619
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.8,
+        "bld_hand5_n": 2164,
+        "bld_total": 13706,
+        "land_hand5_pct": 11.1
+      }
     },
     {
       "dpto": "Porto Belo",
@@ -2218,7 +3424,13 @@
       "centroid": [
         -48.6166,
         -27.1748
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 81.2,
+        "bld_hand5_n": 24769,
+        "bld_total": 30500,
+        "land_hand5_pct": 45.6
+      }
     },
     {
       "dpto": "Porto União",
@@ -2229,7 +3441,13 @@
       "centroid": [
         -51.008,
         -26.3837
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.3,
+        "bld_hand5_n": 10046,
+        "bld_total": 45036,
+        "land_hand5_pct": 18.2
+      }
     },
     {
       "dpto": "Pouso Redondo",
@@ -2240,7 +3458,13 @@
       "centroid": [
         -49.9773,
         -27.2862
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.0,
+        "bld_hand5_n": 7324,
+        "bld_total": 28199,
+        "land_hand5_pct": 15.9
+      }
     },
     {
       "dpto": "Praia Grande",
@@ -2251,7 +3475,13 @@
       "centroid": [
         -49.9896,
         -29.1818
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 48.5,
+        "bld_hand5_n": 6323,
+        "bld_total": 13051,
+        "land_hand5_pct": 30.1
+      }
     },
     {
       "dpto": "Presidente Castello Branco",
@@ -2262,7 +3492,13 @@
       "centroid": [
         -51.7809,
         -27.2331
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.4,
+        "bld_hand5_n": 918,
+        "bld_total": 4979,
+        "land_hand5_pct": 8.8
+      }
     },
     {
       "dpto": "Presidente Getúlio",
@@ -2273,7 +3509,13 @@
       "centroid": [
         -49.7146,
         -27.0626
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.9,
+        "bld_hand5_n": 8308,
+        "bld_total": 29785,
+        "land_hand5_pct": 10.1
+      }
     },
     {
       "dpto": "Presidente Nereu",
@@ -2284,7 +3526,13 @@
       "centroid": [
         -49.3555,
         -27.2685
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.8,
+        "bld_hand5_n": 2157,
+        "bld_total": 6193,
+        "land_hand5_pct": 7.2
+      }
     },
     {
       "dpto": "Princesa",
@@ -2295,7 +3543,13 @@
       "centroid": [
         -53.6113,
         -26.433
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.7,
+        "bld_hand5_n": 993,
+        "bld_total": 6774,
+        "land_hand5_pct": 10.8
+      }
     },
     {
       "dpto": "Quilombo",
@@ -2306,7 +3560,13 @@
       "centroid": [
         -52.7183,
         -26.7293
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.3,
+        "bld_hand5_n": 3418,
+        "bld_total": 18640,
+        "land_hand5_pct": 9.5
+      }
     },
     {
       "dpto": "Rancho Queimado",
@@ -2317,7 +3577,13 @@
       "centroid": [
         -49.0899,
         -27.6742
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.5,
+        "bld_hand5_n": 2983,
+        "bld_total": 12190,
+        "land_hand5_pct": 9.4
+      }
     },
     {
       "dpto": "Rio Fortuna",
@@ -2328,7 +3594,13 @@
       "centroid": [
         -49.1907,
         -28.0933
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.6,
+        "bld_hand5_n": 3484,
+        "bld_total": 13627,
+        "land_hand5_pct": 10.6
+      }
     },
     {
       "dpto": "Rio Negrinho",
@@ -2339,7 +3611,13 @@
       "centroid": [
         -49.5963,
         -26.4427
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.4,
+        "bld_hand5_n": 4992,
+        "bld_total": 48147,
+        "land_hand5_pct": 12.8
+      }
     },
     {
       "dpto": "Rio Rufino",
@@ -2350,7 +3628,13 @@
       "centroid": [
         -49.7533,
         -27.9144
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.7,
+        "bld_hand5_n": 1331,
+        "bld_total": 4987,
+        "land_hand5_pct": 10.8
+      }
     },
     {
       "dpto": "Rio das Antas",
@@ -2361,7 +3645,13 @@
       "centroid": [
         -51.0632,
         -26.9091
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.1,
+        "bld_hand5_n": 2458,
+        "bld_total": 12893,
+        "land_hand5_pct": 12.2
+      }
     },
     {
       "dpto": "Rio do Campo",
@@ -2372,7 +3662,13 @@
       "centroid": [
         -50.1315,
         -26.8924
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.2,
+        "bld_hand5_n": 3994,
+        "bld_total": 14687,
+        "land_hand5_pct": 13.5
+      }
     },
     {
       "dpto": "Rio do Oeste",
@@ -2383,7 +3679,13 @@
       "centroid": [
         -49.8417,
         -27.1589
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.8,
+        "bld_hand5_n": 4867,
+        "bld_total": 18142,
+        "land_hand5_pct": 14.9
+      }
     },
     {
       "dpto": "Rio do Sul",
@@ -2394,7 +3696,13 @@
       "centroid": [
         -49.6301,
         -27.1962
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.2,
+        "bld_hand5_n": 16672,
+        "bld_total": 74971,
+        "land_hand5_pct": 11.2
+      }
     },
     {
       "dpto": "Rio dos Cedros",
@@ -2405,7 +3713,13 @@
       "centroid": [
         -49.3686,
         -26.6179
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.3,
+        "bld_hand5_n": 7519,
+        "bld_total": 21948,
+        "land_hand5_pct": 11.3
+      }
     },
     {
       "dpto": "Riqueza",
@@ -2416,7 +3730,13 @@
       "centroid": [
         -53.3445,
         -26.9786
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.3,
+        "bld_hand5_n": 2363,
+        "bld_total": 10613,
+        "land_hand5_pct": 11.0
+      }
     },
     {
       "dpto": "Rodeio",
@@ -2427,7 +3747,13 @@
       "centroid": [
         -49.3509,
         -26.8949
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.0,
+        "bld_hand5_n": 7214,
+        "bld_total": 20051,
+        "land_hand5_pct": 15.3
+      }
     },
     {
       "dpto": "Romelândia",
@@ -2438,7 +3764,13 @@
       "centroid": [
         -53.3171,
         -26.6483
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.3,
+        "bld_hand5_n": 1810,
+        "bld_total": 11093,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Salete",
@@ -2449,7 +3781,13 @@
       "centroid": [
         -50.0106,
         -26.9698
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.0,
+        "bld_hand5_n": 3818,
+        "bld_total": 13644,
+        "land_hand5_pct": 9.3
+      }
     },
     {
       "dpto": "Saltinho",
@@ -2460,7 +3798,13 @@
       "centroid": [
         -53.0221,
         -26.5905
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.2,
+        "bld_hand5_n": 1362,
+        "bld_total": 7930,
+        "land_hand5_pct": 9.1
+      }
     },
     {
       "dpto": "Salto Veloso",
@@ -2471,7 +3815,13 @@
       "centroid": [
         -51.4279,
         -26.8958
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.2,
+        "bld_hand5_n": 1937,
+        "bld_total": 6869,
+        "land_hand5_pct": 8.6
+      }
     },
     {
       "dpto": "Sangão",
@@ -2482,7 +3832,13 @@
       "centroid": [
         -49.126,
         -28.6513
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.6,
+        "bld_hand5_n": 4598,
+        "bld_total": 16058,
+        "land_hand5_pct": 36.7
+      }
     },
     {
       "dpto": "Santa Cecília",
@@ -2493,7 +3849,13 @@
       "centroid": [
         -50.4462,
         -26.9262
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.0,
+        "bld_hand5_n": 2691,
+        "bld_total": 19265,
+        "land_hand5_pct": 14.2
+      }
     },
     {
       "dpto": "Santa Helena",
@@ -2504,7 +3866,13 @@
       "centroid": [
         -53.618,
         -26.9222
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.5,
+        "bld_hand5_n": 284,
+        "bld_total": 5191,
+        "land_hand5_pct": 9.5
+      }
     },
     {
       "dpto": "Santa Rosa de Lima",
@@ -2515,7 +3883,13 @@
       "centroid": [
         -49.1817,
         -28.0118
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.7,
+        "bld_hand5_n": 1240,
+        "bld_total": 5975,
+        "land_hand5_pct": 8.1
+      }
     },
     {
       "dpto": "Santa Rosa do Sul",
@@ -2526,7 +3900,13 @@
       "centroid": [
         -49.7439,
         -29.1215
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 40.6,
+        "bld_hand5_n": 6346,
+        "bld_total": 15648,
+        "land_hand5_pct": 53.9
+      }
     },
     {
       "dpto": "Santa Terezinha",
@@ -2537,7 +3917,13 @@
       "centroid": [
         -50.0053,
         -26.6677
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.3,
+        "bld_hand5_n": 2806,
+        "bld_total": 21129,
+        "land_hand5_pct": 9.6
+      }
     },
     {
       "dpto": "Santa Terezinha do Progresso",
@@ -2548,7 +3934,13 @@
       "centroid": [
         -53.1696,
         -26.5925
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.0,
+        "bld_hand5_n": 639,
+        "bld_total": 5816,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Santiago do Sul",
@@ -2559,7 +3951,13 @@
       "centroid": [
         -52.697,
         -26.6309
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.2,
+        "bld_hand5_n": 1052,
+        "bld_total": 3598,
+        "land_hand5_pct": 9.8
+      }
     },
     {
       "dpto": "Santo Amaro da Imperatriz",
@@ -2570,7 +3968,13 @@
       "centroid": [
         -48.7966,
         -27.7417
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 42.2,
+        "bld_hand5_n": 15964,
+        "bld_total": 37866,
+        "land_hand5_pct": 15.3
+      }
     },
     {
       "dpto": "Saudades",
@@ -2581,7 +3985,13 @@
       "centroid": [
         -53.0399,
         -26.8972
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.6,
+        "bld_hand5_n": 3112,
+        "bld_total": 17683,
+        "land_hand5_pct": 11.3
+      }
     },
     {
       "dpto": "Schroeder",
@@ -2592,7 +4002,13 @@
       "centroid": [
         -49.0605,
         -26.3681
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.2,
+        "bld_hand5_n": 6725,
+        "bld_total": 25645,
+        "land_hand5_pct": 16.5
+      }
     },
     {
       "dpto": "Seara",
@@ -2603,7 +4019,13 @@
       "centroid": [
         -52.3408,
         -27.1478
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.5,
+        "bld_hand5_n": 3758,
+        "bld_total": 29962,
+        "land_hand5_pct": 7.3
+      }
     },
     {
       "dpto": "Serra Alta",
@@ -2614,7 +4036,13 @@
       "centroid": [
         -53.0254,
         -26.6928
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.2,
+        "bld_hand5_n": 475,
+        "bld_total": 6611,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Siderópolis",
@@ -2625,7 +4053,13 @@
       "centroid": [
         -49.527,
         -28.5834
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.2,
+        "bld_hand5_n": 6425,
+        "bld_total": 21270,
+        "land_hand5_pct": 14.8
+      }
     },
     {
       "dpto": "Sombrio",
@@ -2636,7 +4070,13 @@
       "centroid": [
         -49.6558,
         -29.0702
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 34.3,
+        "bld_hand5_n": 12478,
+        "bld_total": 36328,
+        "land_hand5_pct": 56.9
+      }
     },
     {
       "dpto": "Sul Brasil",
@@ -2647,7 +4087,13 @@
       "centroid": [
         -52.9469,
         -26.6951
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.9,
+        "bld_hand5_n": 948,
+        "bld_total": 6358,
+        "land_hand5_pct": 11.3
+      }
     },
     {
       "dpto": "São Bento do Sul",
@@ -2658,7 +4104,13 @@
       "centroid": [
         -49.3501,
         -26.2947
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.5,
+        "bld_hand5_n": 15820,
+        "bld_total": 90468,
+        "land_hand5_pct": 11.9
+      }
     },
     {
       "dpto": "São Bernardino",
@@ -2669,7 +4121,13 @@
       "centroid": [
         -52.9877,
         -26.4877
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.1,
+        "bld_hand5_n": 1639,
+        "bld_total": 6053,
+        "land_hand5_pct": 11.2
+      }
     },
     {
       "dpto": "São Bonifácio",
@@ -2680,7 +4138,13 @@
       "centroid": [
         -48.9391,
         -27.9564
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 44.1,
+        "bld_hand5_n": 4132,
+        "bld_total": 9368,
+        "land_hand5_pct": 9.7
+      }
     },
     {
       "dpto": "São Carlos",
@@ -2691,7 +4155,13 @@
       "centroid": [
         -53.0313,
         -27.0302
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.3,
+        "bld_hand5_n": 3324,
+        "bld_total": 19251,
+        "land_hand5_pct": 9.9
+      }
     },
     {
       "dpto": "São Cristóvão do Sul",
@@ -2702,7 +4172,13 @@
       "centroid": [
         -50.3497,
         -27.2952
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.2,
+        "bld_hand5_n": 606,
+        "bld_total": 6587,
+        "land_hand5_pct": 14.3
+      }
     },
     {
       "dpto": "São Domingos",
@@ -2713,7 +4189,13 @@
       "centroid": [
         -52.5547,
         -26.5393
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.2,
+        "bld_hand5_n": 3565,
+        "bld_total": 15383,
+        "land_hand5_pct": 12.5
+      }
     },
     {
       "dpto": "São Francisco do Sul",
@@ -2724,7 +4206,13 @@
       "centroid": [
         -48.6405,
         -26.2616
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 54.9,
+        "bld_hand5_n": 53776,
+        "bld_total": 98009,
+        "land_hand5_pct": 55.5
+      }
     },
     {
       "dpto": "São Joaquim",
@@ -2735,7 +4223,13 @@
       "centroid": [
         -50.0142,
         -28.2986
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.8,
+        "bld_hand5_n": 4339,
+        "bld_total": 40082,
+        "land_hand5_pct": 9.2
+      }
     },
     {
       "dpto": "São José",
@@ -2746,7 +4240,13 @@
       "centroid": [
         -48.6562,
         -27.5784
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 33.4,
+        "bld_hand5_n": 52330,
+        "bld_total": 156467,
+        "land_hand5_pct": 27.7
+      }
     },
     {
       "dpto": "São José do Cedro",
@@ -2757,7 +4257,13 @@
       "centroid": [
         -53.5306,
         -26.4806
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.7,
+        "bld_hand5_n": 3870,
+        "bld_total": 23143,
+        "land_hand5_pct": 11.4
+      }
     },
     {
       "dpto": "São José do Cerrito",
@@ -2768,7 +4274,13 @@
       "centroid": [
         -50.6503,
         -27.5983
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.0,
+        "bld_hand5_n": 3985,
+        "bld_total": 21008,
+        "land_hand5_pct": 11.5
+      }
     },
     {
       "dpto": "São João Batista",
@@ -2779,7 +4291,13 @@
       "centroid": [
         -48.859,
         -27.329
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 44.2,
+        "bld_hand5_n": 14392,
+        "bld_total": 32574,
+        "land_hand5_pct": 17.9
+      }
     },
     {
       "dpto": "São João do Itaperiú",
@@ -2790,7 +4308,13 @@
       "centroid": [
         -48.7979,
         -26.591
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.6,
+        "bld_hand5_n": 2542,
+        "bld_total": 8308,
+        "land_hand5_pct": 34.8
+      }
     },
     {
       "dpto": "São João do Oeste",
@@ -2801,7 +4325,13 @@
       "centroid": [
         -53.5918,
         -27.0918
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.3,
+        "bld_hand5_n": 1993,
+        "bld_total": 14997,
+        "land_hand5_pct": 9.0
+      }
     },
     {
       "dpto": "São João do Sul",
@@ -2812,7 +4342,13 @@
       "centroid": [
         -49.8135,
         -29.2056
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 41.0,
+        "bld_hand5_n": 6876,
+        "bld_total": 16777,
+        "land_hand5_pct": 76.5
+      }
     },
     {
       "dpto": "São Lourenço do Oeste",
@@ -2823,7 +4359,13 @@
       "centroid": [
         -52.8596,
         -26.4656
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.4,
+        "bld_hand5_n": 3090,
+        "bld_total": 32898,
+        "land_hand5_pct": 9.2
+      }
     },
     {
       "dpto": "São Ludgero",
@@ -2834,7 +4376,13 @@
       "centroid": [
         -49.1683,
         -28.3531
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.2,
+        "bld_hand5_n": 5189,
+        "bld_total": 17748,
+        "land_hand5_pct": 13.1
+      }
     },
     {
       "dpto": "São Martinho",
@@ -2845,7 +4393,13 @@
       "centroid": [
         -48.9719,
         -28.1243
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 38.7,
+        "bld_hand5_n": 3077,
+        "bld_total": 7946,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "São Miguel da Boa Vista",
@@ -2856,7 +4410,13 @@
       "centroid": [
         -53.2399,
         -26.6897
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.1,
+        "bld_hand5_n": 701,
+        "bld_total": 4625,
+        "land_hand5_pct": 9.9
+      }
     },
     {
       "dpto": "São Miguel do Oeste",
@@ -2867,7 +4427,13 @@
       "centroid": [
         -53.5121,
         -26.7273
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.2,
+        "bld_hand5_n": 4296,
+        "bld_total": 46877,
+        "land_hand5_pct": 10.3
+      }
     },
     {
       "dpto": "São Pedro de Alcântara",
@@ -2878,7 +4444,13 @@
       "centroid": [
         -48.837,
         -27.5915
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.9,
+        "bld_hand5_n": 4182,
+        "bld_total": 11336,
+        "land_hand5_pct": 10.6
+      }
     },
     {
       "dpto": "Taió",
@@ -2889,7 +4461,13 @@
       "centroid": [
         -50.0925,
         -27.0785
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.6,
+        "bld_hand5_n": 8193,
+        "bld_total": 34694,
+        "land_hand5_pct": 15.0
+      }
     },
     {
       "dpto": "Tangará",
@@ -2900,7 +4478,13 @@
       "centroid": [
         -51.1473,
         -27.147
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.8,
+        "bld_hand5_n": 2686,
+        "bld_total": 15120,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Tigrinhos",
@@ -2911,7 +4495,13 @@
       "centroid": [
         -53.1565,
         -26.6761
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.0,
+        "bld_hand5_n": 1082,
+        "bld_total": 4709,
+        "land_hand5_pct": 11.5
+      }
     },
     {
       "dpto": "Tijucas",
@@ -2922,7 +4512,13 @@
       "centroid": [
         -48.701,
         -27.2474
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 87.4,
+        "bld_hand5_n": 43002,
+        "bld_total": 49219,
+        "land_hand5_pct": 43.6
+      }
     },
     {
       "dpto": "Timbé do Sul",
@@ -2933,7 +4529,13 @@
       "centroid": [
         -49.8685,
         -28.8074
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 43.9,
+        "bld_hand5_n": 4556,
+        "bld_total": 10370,
+        "land_hand5_pct": 18.9
+      }
     },
     {
       "dpto": "Timbó",
@@ -2944,7 +4546,13 @@
       "centroid": [
         -49.2687,
         -26.808
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.3,
+        "bld_hand5_n": 14254,
+        "bld_total": 50412,
+        "land_hand5_pct": 23.0
+      }
     },
     {
       "dpto": "Timbó Grande",
@@ -2955,7 +4563,13 @@
       "centroid": [
         -50.6656,
         -26.6244
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.1,
+        "bld_hand5_n": 1145,
+        "bld_total": 10270,
+        "land_hand5_pct": 12.2
+      }
     },
     {
       "dpto": "Treviso",
@@ -2966,7 +4580,13 @@
       "centroid": [
         -49.49,
         -28.4992
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.3,
+        "bld_hand5_n": 2809,
+        "bld_total": 7745,
+        "land_hand5_pct": 13.9
+      }
     },
     {
       "dpto": "Treze Tílias",
@@ -2977,7 +4597,13 @@
       "centroid": [
         -51.4492,
         -26.9647
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.8,
+        "bld_hand5_n": 2039,
+        "bld_total": 12877,
+        "land_hand5_pct": 10.2
+      }
     },
     {
       "dpto": "Treze de Maio",
@@ -2988,7 +4614,13 @@
       "centroid": [
         -49.1542,
         -28.5663
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.4,
+        "bld_hand5_n": 3733,
+        "bld_total": 14706,
+        "land_hand5_pct": 21.0
+      }
     },
     {
       "dpto": "Trombudo Central",
@@ -2999,7 +4631,13 @@
       "centroid": [
         -49.8113,
         -27.3121
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 32.8,
+        "bld_hand5_n": 4246,
+        "bld_total": 12936,
+        "land_hand5_pct": 14.1
+      }
     },
     {
       "dpto": "Três Barras",
@@ -3010,7 +4648,13 @@
       "centroid": [
         -50.2553,
         -26.17
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 33.6,
+        "bld_hand5_n": 8323,
+        "bld_total": 24755,
+        "land_hand5_pct": 26.9
+      }
     },
     {
       "dpto": "Tubarão",
@@ -3021,7 +4665,13 @@
       "centroid": [
         -49.0372,
         -28.4818
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 58.0,
+        "bld_hand5_n": 65577,
+        "bld_total": 113130,
+        "land_hand5_pct": 49.1
+      }
     },
     {
       "dpto": "Tunápolis",
@@ -3032,7 +4682,13 @@
       "centroid": [
         -53.6478,
         -26.9891
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.8,
+        "bld_hand5_n": 879,
+        "bld_total": 11247,
+        "land_hand5_pct": 10.0
+      }
     },
     {
       "dpto": "Turvo",
@@ -3043,7 +4699,13 @@
       "centroid": [
         -49.7035,
         -28.9031
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 77.1,
+        "bld_hand5_n": 17491,
+        "bld_total": 22686,
+        "land_hand5_pct": 71.6
+      }
     },
     {
       "dpto": "União do Oeste",
@@ -3054,7 +4716,13 @@
       "centroid": [
         -52.8559,
         -26.7867
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.4,
+        "bld_hand5_n": 1132,
+        "bld_total": 6493,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Urubici",
@@ -3065,7 +4733,13 @@
       "centroid": [
         -49.5776,
         -28.0389
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 33.8,
+        "bld_hand5_n": 8171,
+        "bld_total": 24179,
+        "land_hand5_pct": 9.8
+      }
     },
     {
       "dpto": "Urupema",
@@ -3076,7 +4750,13 @@
       "centroid": [
         -49.9013,
         -28.0237
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.7,
+        "bld_hand5_n": 1605,
+        "bld_total": 5602,
+        "land_hand5_pct": 10.5
+      }
     },
     {
       "dpto": "Urussanga",
@@ -3087,7 +4767,13 @@
       "centroid": [
         -49.3284,
         -28.4927
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 28.5,
+        "bld_hand5_n": 8821,
+        "bld_total": 30925,
+        "land_hand5_pct": 14.4
+      }
     },
     {
       "dpto": "Vargem",
@@ -3098,7 +4784,13 @@
       "centroid": [
         -50.9505,
         -27.4668
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.6,
+        "bld_hand5_n": 1415,
+        "bld_total": 6263,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Vargem Bonita",
@@ -3109,7 +4801,13 @@
       "centroid": [
         -51.7565,
         -26.9453
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.9,
+        "bld_hand5_n": 1428,
+        "bld_total": 7976,
+        "land_hand5_pct": 12.5
+      }
     },
     {
       "dpto": "Vargeão",
@@ -3120,7 +4818,13 @@
       "centroid": [
         -52.1241,
         -26.7784
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.9,
+        "bld_hand5_n": 871,
+        "bld_total": 6728,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Vidal Ramos",
@@ -3131,7 +4835,13 @@
       "centroid": [
         -49.3476,
         -27.3881
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.0,
+        "bld_hand5_n": 3873,
+        "bld_total": 16149,
+        "land_hand5_pct": 8.4
+      }
     },
     {
       "dpto": "Videira",
@@ -3142,7 +4852,13 @@
       "centroid": [
         -51.1267,
         -27.0067
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.7,
+        "bld_hand5_n": 6476,
+        "bld_total": 55548,
+        "land_hand5_pct": 12.2
+      }
     },
     {
       "dpto": "Vitor Meireles",
@@ -3153,7 +4869,13 @@
       "centroid": [
         -49.8451,
         -26.8265
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.9,
+        "bld_hand5_n": 3588,
+        "bld_total": 11985,
+        "land_hand5_pct": 9.1
+      }
     },
     {
       "dpto": "Witmarsum",
@@ -3164,7 +4886,13 @@
       "centroid": [
         -49.8417,
         -26.9372
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.7,
+        "bld_hand5_n": 2991,
+        "bld_total": 10056,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Xanxerê",
@@ -3175,7 +4903,13 @@
       "centroid": [
         -52.41,
         -26.8723
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.9,
+        "bld_hand5_n": 6922,
+        "bld_total": 53647,
+        "land_hand5_pct": 10.7
+      }
     },
     {
       "dpto": "Xavantina",
@@ -3186,7 +4920,13 @@
       "centroid": [
         -52.3219,
         -27.0213
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.6,
+        "bld_hand5_n": 841,
+        "bld_total": 12771,
+        "land_hand5_pct": 7.3
+      }
     },
     {
       "dpto": "Xaxim",
@@ -3197,7 +4937,13 @@
       "centroid": [
         -52.529,
         -26.9704
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.6,
+        "bld_hand5_n": 5869,
+        "bld_total": 40091,
+        "land_hand5_pct": 9.3
+      }
     },
     {
       "dpto": "Zortéa",
@@ -3208,7 +4954,13 @@
       "centroid": [
         -51.5355,
         -27.4767
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.1,
+        "bld_hand5_n": 880,
+        "bld_total": 5814,
+        "land_hand5_pct": 10.6
+      }
     },
     {
       "dpto": "Água Doce",
@@ -3219,7 +4971,13 @@
       "centroid": [
         -51.6125,
         -26.7646
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.4,
+        "bld_hand5_n": 2381,
+        "bld_total": 15469,
+        "land_hand5_pct": 15.4
+      }
     },
     {
       "dpto": "Águas Frias",
@@ -3230,7 +4988,13 @@
       "centroid": [
         -52.8524,
         -26.8517
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.7,
+        "bld_hand5_n": 1310,
+        "bld_total": 6314,
+        "land_hand5_pct": 10.4
+      }
     },
     {
       "dpto": "Águas Mornas",
@@ -3241,7 +5005,13 @@
       "centroid": [
         -48.936,
         -27.7337
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 35.2,
+        "bld_hand5_n": 6005,
+        "bld_total": 17066,
+        "land_hand5_pct": 9.2
+      }
     },
     {
       "dpto": "Águas de Chapecó",
@@ -3252,7 +5022,13 @@
       "centroid": [
         -52.9569,
         -27.0545
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.0,
+        "bld_hand5_n": 1815,
+        "bld_total": 11373,
+        "land_hand5_pct": 9.4
+      }
     }
   ]
 }

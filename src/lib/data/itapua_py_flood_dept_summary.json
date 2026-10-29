@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 7.4,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 173048,
@@ -18,7 +24,13 @@
       "centroid": [
         -55.7265,
         -26.5885
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.8,
+        "bld_hand5_n": 991,
+        "bld_total": 17003,
+        "land_hand5_pct": 19.4
+      }
     },
     {
       "dpto": "Bella Vista",
@@ -29,7 +41,13 @@
       "centroid": [
         -55.5357,
         -27.0099
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.8,
+        "bld_hand5_n": 770,
+        "bld_total": 13220,
+        "land_hand5_pct": 13.9
+      }
     },
     {
       "dpto": "Cambyreta",
@@ -40,7 +58,13 @@
       "centroid": [
         -55.7692,
         -27.3574
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.8,
+        "bld_hand5_n": 4295,
+        "bld_total": 48904,
+        "land_hand5_pct": 17.8
+      }
     },
     {
       "dpto": "Capitan Meza",
@@ -51,7 +75,13 @@
       "centroid": [
         -55.366,
         -26.781
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.2,
+        "bld_hand5_n": 849,
+        "bld_total": 20271,
+        "land_hand5_pct": 12.9
+      }
     },
     {
       "dpto": "Capitan Miranda",
@@ -62,7 +92,13 @@
       "centroid": [
         -55.8316,
         -27.1851
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.5,
+        "bld_hand5_n": 968,
+        "bld_total": 12913,
+        "land_hand5_pct": 15.6
+      }
     },
     {
       "dpto": "Carlos A Lopez",
@@ -73,7 +109,13 @@
       "centroid": [
         -54.9007,
         -26.3711
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.6,
+        "bld_hand5_n": 580,
+        "bld_total": 15905,
+        "land_hand5_pct": 12.3
+      }
     },
     {
       "dpto": "Carmen Del Parana",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.1043,
         -27.2063
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.5,
+        "bld_hand5_n": 1689,
+        "bld_total": 8256,
+        "land_hand5_pct": 27.3
+      }
     },
     {
       "dpto": "Coronel Bogado",
@@ -95,7 +143,13 @@
       "centroid": [
         -56.3025,
         -27.1517
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 30.5,
+        "bld_hand5_n": 5854,
+        "bld_total": 19209,
+        "land_hand5_pct": 62.0
+      }
     },
     {
       "dpto": "Edelira",
@@ -106,7 +160,13 @@
       "centroid": [
         -55.4019,
         -26.5783
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.3,
+        "bld_hand5_n": 806,
+        "bld_total": 24488,
+        "land_hand5_pct": 12.6
+      }
     },
     {
       "dpto": "Encarnacion",
@@ -117,7 +177,13 @@
       "centroid": [
         -55.9027,
         -27.2664
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.5,
+        "bld_hand5_n": 6097,
+        "bld_total": 81654,
+        "land_hand5_pct": 17.5
+      }
     },
     {
       "dpto": "Fram",
@@ -128,7 +194,13 @@
       "centroid": [
         -56.0199,
         -27.0776
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.1,
+        "bld_hand5_n": 1488,
+        "bld_total": 11335,
+        "land_hand5_pct": 20.8
+      }
     },
     {
       "dpto": "Gral Artigas",
@@ -139,7 +211,13 @@
       "centroid": [
         -56.3764,
         -26.9113
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.9,
+        "bld_hand5_n": 2764,
+        "bld_total": 11554,
+        "land_hand5_pct": 85.0
+      }
     },
     {
       "dpto": "Gral. Delgado",
@@ -150,7 +228,13 @@
       "centroid": [
         -56.5589,
         -27.0775
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.1,
+        "bld_hand5_n": 1898,
+        "bld_total": 7572,
+        "land_hand5_pct": 76.1
+      }
     },
     {
       "dpto": "Hohenau",
@@ -161,7 +245,13 @@
       "centroid": [
         -55.7431,
         -27.0076
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.2,
+        "bld_hand5_n": 890,
+        "bld_total": 14303,
+        "land_hand5_pct": 20.9
+      }
     },
     {
       "dpto": "Isla",
@@ -172,7 +262,13 @@
       "centroid": [
         -56.4113,
         -27.5124
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 88.6,
+        "bld_hand5_n": 7,
+        "bld_total": 8,
+        "land_hand5_pct": null
+      }
     },
     {
       "dpto": "Isla Yacyreta",
@@ -183,7 +279,13 @@
       "centroid": [
         -56.4984,
         -27.3923
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 52.5,
+        "bld_hand5_n": 2369,
+        "bld_total": 4509,
+        "land_hand5_pct": 82.7
+      }
     },
     {
       "dpto": "Jesus",
@@ -194,7 +296,13 @@
       "centroid": [
         -55.7819,
         -27.0611
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.4,
+        "bld_hand5_n": 183,
+        "bld_total": 5365,
+        "land_hand5_pct": 15.1
+      }
     },
     {
       "dpto": "La Paz",
@@ -205,7 +313,13 @@
       "centroid": [
         -55.9087,
         -26.9859
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.4,
+        "bld_hand5_n": 311,
+        "bld_total": 4186,
+        "land_hand5_pct": 17.5
+      }
     },
     {
       "dpto": "Leandro Oviedo",
@@ -216,7 +330,13 @@
       "centroid": [
         -56.2351,
         -26.7511
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.1,
+        "bld_hand5_n": 731,
+        "bld_total": 3459,
+        "land_hand5_pct": 56.9
+      }
     },
     {
       "dpto": "Mayor Otano",
@@ -227,7 +347,13 @@
       "centroid": [
         -54.7725,
         -26.2766
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.2,
+        "bld_hand5_n": 474,
+        "bld_total": 11252,
+        "land_hand5_pct": 12.4
+      }
     },
     {
       "dpto": "Natalio",
@@ -238,7 +364,13 @@
       "centroid": [
         -55.1448,
         -26.7566
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.1,
+        "bld_hand5_n": 643,
+        "bld_total": 15743,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Nueva Alborada",
@@ -249,7 +381,13 @@
       "centroid": [
         -55.6641,
         -27.2813
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.8,
+        "bld_hand5_n": 811,
+        "bld_total": 6900,
+        "land_hand5_pct": 15.1
+      }
     },
     {
       "dpto": "Obligado",
@@ -260,7 +398,13 @@
       "centroid": [
         -55.7096,
         -26.9258
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.9,
+        "bld_hand5_n": 990,
+        "bld_total": 20039,
+        "land_hand5_pct": 16.8
+      }
     },
     {
       "dpto": "Pirapo",
@@ -271,7 +415,13 @@
       "centroid": [
         -55.5412,
         -26.8448
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.2,
+        "bld_hand5_n": 420,
+        "bld_total": 9899,
+        "land_hand5_pct": 13.6
+      }
     },
     {
       "dpto": "San Cosme Y Damian",
@@ -282,7 +432,13 @@
       "centroid": [
         -56.4964,
         -27.2634
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.5,
+        "bld_hand5_n": 920,
+        "bld_total": 6817,
+        "land_hand5_pct": 75.4
+      }
     },
     {
       "dpto": "San Juan",
@@ -293,7 +449,13 @@
       "centroid": [
         -55.9921,
         -27.2953
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.9,
+        "bld_hand5_n": 581,
+        "bld_total": 6497,
+        "land_hand5_pct": 15.8
+      }
     },
     {
       "dpto": "San Pedro Del Parana",
@@ -304,7 +466,13 @@
       "centroid": [
         -56.0222,
         -26.7302
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.1,
+        "bld_hand5_n": 3337,
+        "bld_total": 25470,
+        "land_hand5_pct": 55.7
+      }
     },
     {
       "dpto": "San Rafael Del Parana",
@@ -315,7 +483,13 @@
       "centroid": [
         -55.1254,
         -26.4147
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.0,
+        "bld_hand5_n": 1215,
+        "bld_total": 20195,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Tomas Romero P.",
@@ -326,7 +500,13 @@
       "centroid": [
         -55.3026,
         -26.471
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.7,
+        "bld_hand5_n": 1440,
+        "bld_total": 30806,
+        "land_hand5_pct": 12.2
+      }
     },
     {
       "dpto": "Trinidad",
@@ -337,7 +517,13 @@
       "centroid": [
         -55.7362,
         -27.1502
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.2,
+        "bld_hand5_n": 222,
+        "bld_total": 6953,
+        "land_hand5_pct": 19.0
+      }
     },
     {
       "dpto": "Yatytay",
@@ -348,7 +534,13 @@
       "centroid": [
         -55.0802,
         -26.6686
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.3,
+        "bld_hand5_n": 516,
+        "bld_total": 11907,
+        "land_hand5_pct": 12.3
+      }
     }
   ]
 }

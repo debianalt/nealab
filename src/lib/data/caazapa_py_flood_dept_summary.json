@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 20.1,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 102393,
@@ -18,7 +24,13 @@
       "centroid": [
         -55.7149,
         -25.8946
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.3,
+        "bld_hand5_n": 6228,
+        "bld_total": 34107,
+        "land_hand5_pct": 24.1
+      }
     },
     {
       "dpto": "Buena Vista",
@@ -29,7 +41,13 @@
       "centroid": [
         -56.0994,
         -26.2322
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.6,
+        "bld_hand5_n": 889,
+        "bld_total": 5354,
+        "land_hand5_pct": 41.7
+      }
     },
     {
       "dpto": "Caazapa",
@@ -40,7 +58,13 @@
       "centroid": [
         -56.2958,
         -26.1818
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.1,
+        "bld_hand5_n": 5365,
+        "bld_total": 26650,
+        "land_hand5_pct": 61.7
+      }
     },
     {
       "dpto": "Dr. Moises Bertoni",
@@ -51,7 +75,13 @@
       "centroid": [
         -56.6033,
         -26.3929
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 44.5,
+        "bld_hand5_n": 1930,
+        "bld_total": 4332,
+        "land_hand5_pct": 85.4
+      }
     },
     {
       "dpto": "Fulgencio Yegros",
@@ -62,7 +92,13 @@
       "centroid": [
         -56.5582,
         -26.5504
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.1,
+        "bld_hand5_n": 1229,
+        "bld_total": 6441,
+        "land_hand5_pct": 87.7
+      }
     },
     {
       "dpto": "Gral. Higinio Morinigo",
@@ -73,7 +109,13 @@
       "centroid": [
         -56.1095,
         -26.0705
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 50.0,
+        "bld_hand5_n": 2853,
+        "bld_total": 5702,
+        "land_hand5_pct": 64.8
+      }
     },
     {
       "dpto": "Maciel",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.5239,
         -26.2202
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.0,
+        "bld_hand5_n": 1281,
+        "bld_total": 4409,
+        "land_hand5_pct": 74.5
+      }
     },
     {
       "dpto": "San Juan Nepomuceno",
@@ -95,7 +143,13 @@
       "centroid": [
         -55.9164,
         -26.2413
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.1,
+        "bld_hand5_n": 6837,
+        "bld_total": 27281,
+        "land_hand5_pct": 38.7
+      }
     },
     {
       "dpto": "Tavai",
@@ -106,7 +160,13 @@
       "centroid": [
         -55.5292,
         -26.1886
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.2,
+        "bld_hand5_n": 857,
+        "bld_total": 16627,
+        "land_hand5_pct": 18.9
+      }
     },
     {
       "dpto": "Yuty",
@@ -117,7 +177,13 @@
       "centroid": [
         -56.2385,
         -26.5335
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.3,
+        "bld_hand5_n": 4085,
+        "bld_total": 30691,
+        "land_hand5_pct": 65.0
+      }
     }
   ]
 }

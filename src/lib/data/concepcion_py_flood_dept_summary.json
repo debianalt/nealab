@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 29.2,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 191663,
@@ -18,7 +24,13 @@
       "centroid": [
         -57.2214,
         -23.4376
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.2,
+        "bld_hand5_n": 2595,
+        "bld_total": 8876,
+        "land_hand5_pct": 48.8
+      }
     },
     {
       "dpto": "Concepcion",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.2705,
         -22.794
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 51.0,
+        "bld_hand5_n": 46085,
+        "bld_total": 90337,
+        "land_hand5_pct": 55.1
+      }
     },
     {
       "dpto": "Horqueta",
@@ -40,7 +58,13 @@
       "centroid": [
         -56.738,
         -23.2761
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.3,
+        "bld_hand5_n": 8123,
+        "bld_total": 56773,
+        "land_hand5_pct": 27.4
+      }
     },
     {
       "dpto": "Loreto",
@@ -51,7 +75,13 @@
       "centroid": [
         -57.1591,
         -23.2164
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.0,
+        "bld_hand5_n": 5099,
+        "bld_total": 21287,
+        "land_hand5_pct": 58.5
+      }
     },
     {
       "dpto": "San Carlos",
@@ -62,7 +92,13 @@
       "centroid": [
         -57.3248,
         -22.3586
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 36.5,
+        "bld_hand5_n": 600,
+        "bld_total": 1645,
+        "land_hand5_pct": 37.4
+      }
     },
     {
       "dpto": "San Lazaro",
@@ -73,7 +109,13 @@
       "centroid": [
         -57.7556,
         -22.2371
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 58.4,
+        "bld_hand5_n": 8253,
+        "bld_total": 14122,
+        "land_hand5_pct": 80.5
+      }
     },
     {
       "dpto": "Yby Yau",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.374,
         -23.015
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.3,
+        "bld_hand5_n": 2063,
+        "bld_total": 22121,
+        "land_hand5_pct": 24.0
+      }
     }
   ]
 }

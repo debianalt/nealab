@@ -128,7 +128,15 @@
 	const hasRank = $derived.by(() => {
 		if (!rankCfg) return false;
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
+		if (summary?.metadata?.rank?.saturated) return false;
 		return !!summary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null);
+	});
+	// The pipeline flags territories where the metric does not separate departments
+	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %) — say so instead of bars.
+	const rankSaturated = $derived.by(() => {
+		if (!rankCfg?.saturatedKey) return false;
+		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
+		return !!summary?.metadata?.rank?.saturated;
 	});
 
 	const deptList = $derived.by(() => {
@@ -760,6 +768,10 @@
 			</div>
 		{/if}
 
+		{#if rankSaturated && rankCfg?.saturatedKey}
+			<p class="rank-note rank-saturated">{i18n.t(rankCfg.saturatedKey)}</p>
+		{/if}
+
 		{#if !isCategorical}
 			<div class="score-info-box">
 				<span class="score-range">{scoreRangeLabel}</span>
@@ -1066,6 +1078,7 @@
 	.rank-value { font-size: 10px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; }
 	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; }
 	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
+	.rank-saturated { font-size: 10px; margin: 0 0 12px; padding: 8px; border: 1px solid rgba(148,163,184,0.2); border-radius: 4px; }
 	.rank-selected { font-size: 11px; color: #cbd5e1; margin: -4px 0 10px; }
 	.rank-selected-pos { font-weight: 700; color: #f87171; }
 	.rank-selected-q { font-size: 9px; color: #64748b; margin-top: 2px; }

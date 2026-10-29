@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 91.8,
+      "saturated": true
+    }
   },
   "province": {
     "total_hexes": 772479,
@@ -18,7 +24,13 @@
       "centroid": [
         -57.65,
         -24.8221
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 53.3,
+        "bld_hand5_n": 17036,
+        "bld_total": 31992,
+        "land_hand5_pct": 97.9
+      }
     },
     {
       "dpto": "Pozo Colorado",
@@ -29,7 +41,13 @@
       "centroid": [
         -58.8319,
         -23.1789
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.6,
+        "bld_hand5_n": 43661,
+        "bld_total": 43823,
+        "land_hand5_pct": 99.7
+      }
     },
     {
       "dpto": "Puerto Pinasco",
@@ -40,7 +58,13 @@
       "centroid": [
         -58.3595,
         -22.6069
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 91.8,
+        "bld_hand5_n": 4359,
+        "bld_total": 4748,
+        "land_hand5_pct": 99.0
+      }
     },
     {
       "dpto": "Villa Hayes",
@@ -51,7 +75,13 @@
       "centroid": [
         -58.7311,
         -24.2046
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 87.7,
+        "bld_hand5_n": 48228,
+        "bld_total": 54986,
+        "land_hand5_pct": 99.8
+      }
     }
   ]
 }

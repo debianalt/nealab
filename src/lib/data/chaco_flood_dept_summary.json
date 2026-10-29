@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 99.9,
+      "saturated": true
+    }
   },
   "province": {
     "total_hexes": 1116998,
@@ -18,7 +24,13 @@
       "centroid": [
         -61.9758,
         -25.7528
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 52211,
+        "bld_total": 52239,
+        "land_hand5_pct": 99.9
+      }
     },
     {
       "dpto": "Bermejo",
@@ -29,7 +41,13 @@
       "centroid": [
         -58.7058,
         -26.9556
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 85.6,
+        "bld_hand5_n": 25686,
+        "bld_total": 29992,
+        "land_hand5_pct": 99.2
+      }
     },
     {
       "dpto": "Chacabuco",
@@ -40,7 +58,13 @@
       "centroid": [
         -61.3184,
         -27.1102
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 41533,
+        "bld_total": 41556,
+        "land_hand5_pct": 99.2
+      }
     },
     {
       "dpto": "Comandante Fernández",
@@ -51,7 +75,13 @@
       "centroid": [
         -60.4707,
         -26.7877
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 118448,
+        "bld_total": 118448,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Doce de Octubre",
@@ -62,7 +92,13 @@
       "centroid": [
         -61.4322,
         -27.3779
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.5,
+        "bld_hand5_n": 39597,
+        "bld_total": 39791,
+        "land_hand5_pct": 97.4
+      }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
@@ -73,7 +109,13 @@
       "centroid": [
         -61.3311,
         -27.8232
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 15696,
+        "bld_total": 15792,
+        "land_hand5_pct": 97.1
+      }
     },
     {
       "dpto": "General Belgrano",
@@ -84,7 +126,13 @@
       "centroid": [
         -61.0789,
         -26.8336
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 15999,
+        "bld_total": 15999,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "General Donovan",
@@ -95,7 +143,13 @@
       "centroid": [
         -59.3554,
         -27.1287
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 89.9,
+        "bld_hand5_n": 15580,
+        "bld_total": 17333,
+        "land_hand5_pct": 98.9
+      }
     },
     {
       "dpto": "General Güemes",
@@ -106,7 +160,13 @@
       "centroid": [
         -61.3388,
         -25.2304
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.3,
+        "bld_hand5_n": 92069,
+        "bld_total": 92733,
+        "land_hand5_pct": 99.9
+      }
     },
     {
       "dpto": "Independencia",
@@ -117,7 +177,13 @@
       "centroid": [
         -60.7636,
         -26.7302
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 28097,
+        "bld_total": 28097,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Libertad",
@@ -128,7 +194,13 @@
       "centroid": [
         -59.2734,
         -27.3501
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 17617,
+        "bld_total": 17717,
+        "land_hand5_pct": 99.9
+      }
     },
     {
       "dpto": "Libertador General San Martín",
@@ -139,7 +211,13 @@
       "centroid": [
         -59.5033,
         -26.3674
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 94.9,
+        "bld_hand5_n": 58976,
+        "bld_total": 62143,
+        "land_hand5_pct": 98.5
+      }
     },
     {
       "dpto": "Maipú",
@@ -150,7 +228,13 @@
       "centroid": [
         -60.4591,
         -26.3255
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 29619,
+        "bld_total": 29629,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
@@ -161,7 +245,13 @@
       "centroid": [
         -60.6678,
         -27.7404
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 69821,
+        "bld_total": 69821,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Nueve de Julio",
@@ -172,7 +262,13 @@
       "centroid": [
         -61.2742,
         -26.9367
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 40064,
+        "bld_total": 40121,
+        "land_hand5_pct": 99.2
+      }
     },
     {
       "dpto": "O'Higgins",
@@ -183,7 +279,13 @@
       "centroid": [
         -60.6956,
         -27.2459
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 23377,
+        "bld_total": 23377,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Presidencia de la Plaza",
@@ -194,7 +296,13 @@
       "centroid": [
         -59.7921,
         -27.0351
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 16050,
+        "bld_total": 16050,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Primero de Mayo",
@@ -205,7 +313,13 @@
       "centroid": [
         -58.9668,
         -27.1625
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 95.4,
+        "bld_hand5_n": 18483,
+        "bld_total": 19378,
+        "land_hand5_pct": 99.7
+      }
     },
     {
       "dpto": "Quitilipi",
@@ -216,7 +330,13 @@
       "centroid": [
         -60.1843,
         -26.6681
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.8,
+        "bld_hand5_n": 36676,
+        "bld_total": 36736,
+        "land_hand5_pct": 99.8
+      }
     },
     {
       "dpto": "San Fernando",
@@ -227,7 +347,13 @@
       "centroid": [
         -59.1247,
         -27.711
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 97.2,
+        "bld_hand5_n": 395139,
+        "bld_total": 406424,
+        "land_hand5_pct": 99.1
+      }
     },
     {
       "dpto": "San Lorenzo",
@@ -238,7 +364,13 @@
       "centroid": [
         -60.3762,
         -27.3894
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 18375,
+        "bld_total": 18375,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Sargento Cabral",
@@ -249,7 +381,13 @@
       "centroid": [
         -59.5391,
         -26.7861
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 94.7,
+        "bld_hand5_n": 18054,
+        "bld_total": 19068,
+        "land_hand5_pct": 98.7
+      }
     },
     {
       "dpto": "Tapenagá",
@@ -260,7 +398,13 @@
       "centroid": [
         -59.837,
         -27.6559
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 5728,
+        "bld_total": 5728,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Veinticinco de Mayo",
@@ -271,7 +415,13 @@
       "centroid": [
         -60.0344,
         -26.8147
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 83.3,
+        "bld_hand5_n": 27721,
+        "bld_total": 33270,
+        "land_hand5_pct": 99.8
+      }
     }
   ]
 }

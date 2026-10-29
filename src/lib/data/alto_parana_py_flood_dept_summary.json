@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 8.1,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 147913,
@@ -18,7 +24,13 @@
       "centroid": [
         -54.6798,
         -25.4996
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.3,
+        "bld_hand5_n": 28648,
+        "bld_total": 233060,
+        "land_hand5_pct": 17.9
+      }
     },
     {
       "dpto": "DOMINGO MARTÍNEZ DE IRALA",
@@ -29,7 +41,13 @@
       "centroid": [
         -54.6903,
         -25.8581
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.7,
+        "bld_hand5_n": 432,
+        "bld_total": 5627,
+        "land_hand5_pct": 15.6
+      }
     },
     {
       "dpto": "DR. JUAN LEÓN MALLORQUÍN",
@@ -40,7 +58,13 @@
       "centroid": [
         -55.2546,
         -25.4838
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.8,
+        "bld_hand5_n": 2196,
+        "bld_total": 14796,
+        "land_hand5_pct": 33.7
+      }
     },
     {
       "dpto": "DR. RAÚL PEÑA",
@@ -51,7 +75,13 @@
       "centroid": [
         -55.2248,
         -26.1351
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.0,
+        "bld_hand5_n": 282,
+        "bld_total": 6980,
+        "land_hand5_pct": 13.4
+      }
     },
     {
       "dpto": "HERNANDARIAS",
@@ -62,7 +92,13 @@
       "centroid": [
         -54.7778,
         -25.315
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.2,
+        "bld_hand5_n": 11521,
+        "bld_total": 75989,
+        "land_hand5_pct": 22.0
+      }
     },
     {
       "dpto": "IRUÑA",
@@ -73,7 +109,13 @@
       "centroid": [
         -55.0334,
         -26.1329
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.3,
+        "bld_hand5_n": 209,
+        "bld_total": 6287,
+        "land_hand5_pct": 13.2
+      }
     },
     {
       "dpto": "ITAKYRY",
@@ -84,7 +126,13 @@
       "centroid": [
         -55.1527,
         -24.8145
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.0,
+        "bld_hand5_n": 1661,
+        "bld_total": 27633,
+        "land_hand5_pct": 18.7
+      }
     },
     {
       "dpto": "JUAN E. O'LEARY",
@@ -95,7 +143,13 @@
       "centroid": [
         -55.3652,
         -25.4802
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.1,
+        "bld_hand5_n": 1192,
+        "bld_total": 16781,
+        "land_hand5_pct": 21.6
+      }
     },
     {
       "dpto": "LOS CEDRALES",
@@ -106,7 +160,13 @@
       "centroid": [
         -54.7513,
         -25.686
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.0,
+        "bld_hand5_n": 1046,
+        "bld_total": 8703,
+        "land_hand5_pct": 19.0
+      }
     },
     {
       "dpto": "MBARACAYÚ",
@@ -117,7 +177,13 @@
       "centroid": [
         -54.6894,
         -25.0155
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.1,
+        "bld_hand5_n": 804,
+        "bld_total": 9965,
+        "land_hand5_pct": 14.3
+      }
     },
     {
       "dpto": "MINGA GUAZÚ",
@@ -128,7 +194,13 @@
       "centroid": [
         -54.8419,
         -25.5034
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.2,
+        "bld_hand5_n": 8216,
+        "bld_total": 67184,
+        "land_hand5_pct": 23.1
+      }
     },
     {
       "dpto": "MINGA PORÁ",
@@ -139,7 +211,13 @@
       "centroid": [
         -54.8655,
         -24.7622
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.3,
+        "bld_hand5_n": 1213,
+        "bld_total": 14612,
+        "land_hand5_pct": 15.2
+      }
     },
     {
       "dpto": "NARANJAL",
@@ -150,7 +228,13 @@
       "centroid": [
         -55.1993,
         -25.955
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.5,
+        "bld_hand5_n": 458,
+        "bld_total": 10264,
+        "land_hand5_pct": 15.7
+      }
     },
     {
       "dpto": "PRESIDENTE FRANCO",
@@ -161,7 +245,13 @@
       "centroid": [
         -54.6407,
         -25.5984
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.2,
+        "bld_hand5_n": 5943,
+        "bld_total": 64817,
+        "land_hand5_pct": 14.3
+      }
     },
     {
       "dpto": "SAN ALBERTO",
@@ -172,7 +262,13 @@
       "centroid": [
         -54.6907,
         -24.8488
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.6,
+        "bld_hand5_n": 1326,
+        "bld_total": 15453,
+        "land_hand5_pct": 15.7
+      }
     },
     {
       "dpto": "SAN CRISTÓBAL",
@@ -183,7 +279,13 @@
       "centroid": [
         -55.3863,
         -25.786
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.7,
+        "bld_hand5_n": 750,
+        "bld_total": 11217,
+        "land_hand5_pct": 23.7
+      }
     },
     {
       "dpto": "SANTA FE DEL PARANÁ",
@@ -194,7 +296,13 @@
       "centroid": [
         -54.6285,
         -25.1892
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.1,
+        "bld_hand5_n": 258,
+        "bld_total": 6278,
+        "land_hand5_pct": 11.9
+      }
     },
     {
       "dpto": "SANTA RITA",
@@ -205,7 +313,13 @@
       "centroid": [
         -55.1347,
         -25.7742
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.4,
+        "bld_hand5_n": 1875,
+        "bld_total": 34508,
+        "land_hand5_pct": 17.0
+      }
     },
     {
       "dpto": "SANTA ROSA DEL MONDAY",
@@ -216,7 +330,13 @@
       "centroid": [
         -54.9234,
         -25.8456
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.5,
+        "bld_hand5_n": 656,
+        "bld_total": 10125,
+        "land_hand5_pct": 15.8
+      }
     },
     {
       "dpto": "TAVAPY",
@@ -227,7 +347,13 @@
       "centroid": [
         -55.0715,
         -25.6246
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.8,
+        "bld_hand5_n": 1150,
+        "bld_total": 7773,
+        "land_hand5_pct": 37.1
+      }
     },
     {
       "dpto": "YGUAZÚ",
@@ -238,7 +364,13 @@
       "centroid": [
         -55.1002,
         -25.4178
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.8,
+        "bld_hand5_n": 1272,
+        "bld_total": 11752,
+        "land_hand5_pct": 22.3
+      }
     },
     {
       "dpto": "ÑACUNDAY",
@@ -249,7 +381,13 @@
       "centroid": [
         -54.7817,
         -26.0694
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.6,
+        "bld_hand5_n": 325,
+        "bld_total": 7091,
+        "land_hand5_pct": 12.8
+      }
     }
   ]
 }

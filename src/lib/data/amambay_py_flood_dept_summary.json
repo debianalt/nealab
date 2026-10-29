@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 20.6,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 89536,
@@ -18,7 +24,13 @@
       "centroid": [
         -56.4516,
         -22.4794
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.6,
+        "bld_hand5_n": 3021,
+        "bld_total": 14641,
+        "land_hand5_pct": 36.7
+      }
     },
     {
       "dpto": "Pedro Juan Caballero",
@@ -29,7 +41,13 @@
       "centroid": [
         -55.9532,
         -22.7878
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.0,
+        "bld_hand5_n": 14768,
+        "bld_total": 122826,
+        "land_hand5_pct": 14.4
+      }
     }
   ]
 }

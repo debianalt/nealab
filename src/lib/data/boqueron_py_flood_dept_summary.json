@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 99.6,
+      "saturated": true
+    }
   },
   "province": {
     "total_hexes": 930865,
@@ -18,7 +24,13 @@
       "centroid": [
         -61.0505,
         -21.147
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 21025,
+        "bld_total": 21148,
+        "land_hand5_pct": 97.5
+      }
     },
     {
       "dpto": "Mcal. Estigarribia",
@@ -29,7 +41,13 @@
       "centroid": [
         -60.2955,
         -22.3753
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 64871,
+        "bld_total": 64871,
+        "land_hand5_pct": 100.0
+      }
     },
     {
       "dpto": "Pedro P. Pena",
@@ -40,7 +58,13 @@
       "centroid": [
         -61.3586,
         -22.7109
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.6,
+        "bld_hand5_n": 21654,
+        "bld_total": 21741,
+        "land_hand5_pct": 99.8
+      }
     }
   ]
 }

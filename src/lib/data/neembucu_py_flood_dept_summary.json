@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 96.1,
+      "saturated": true
+    }
   },
   "province": {
     "total_hexes": 126524,
@@ -18,7 +24,13 @@
       "centroid": [
         -58.0673,
         -26.1792
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 35.8,
+        "bld_hand5_n": 2693,
+        "bld_total": 7522,
+        "land_hand5_pct": 94.1
+      }
     },
     {
       "dpto": "Cerrito",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.6181,
         -27.3071
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 66.0,
+        "bld_hand5_n": 3363,
+        "bld_total": 5092,
+        "land_hand5_pct": 92.6
+      }
     },
     {
       "dpto": "Desmochados",
@@ -40,7 +58,13 @@
       "centroid": [
         -58.1202,
         -27.0699
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 1759,
+        "bld_total": 1759,
+        "land_hand5_pct": 99.9
+      }
     },
     {
       "dpto": "Gral. Jose E. Diaz",
@@ -51,7 +75,13 @@
       "centroid": [
         -58.3445,
         -27.1743
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 96.1,
+        "bld_hand5_n": 4396,
+        "bld_total": 4574,
+        "land_hand5_pct": 96.8
+      }
     },
     {
       "dpto": "Guazucua",
@@ -62,7 +92,13 @@
       "centroid": [
         -57.7628,
         -26.9901
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.0,
+        "bld_hand5_n": 2886,
+        "bld_total": 2916,
+        "land_hand5_pct": 99.8
+      }
     },
     {
       "dpto": "Humaita",
@@ -73,7 +109,13 @@
       "centroid": [
         -58.4843,
         -27.0913
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 82.1,
+        "bld_hand5_n": 2663,
+        "bld_total": 3242,
+        "land_hand5_pct": 96.6
+      }
     },
     {
       "dpto": "Isla Umbu",
@@ -84,7 +126,13 @@
       "centroid": [
         -58.3151,
         -26.9693
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 97.7,
+        "bld_hand5_n": 4843,
+        "bld_total": 4956,
+        "land_hand5_pct": 98.1
+      }
     },
     {
       "dpto": "Laureles",
@@ -95,7 +143,13 @@
       "centroid": [
         -57.5847,
         -27.1657
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 97.1,
+        "bld_hand5_n": 3433,
+        "bld_total": 3536,
+        "land_hand5_pct": 99.1
+      }
     },
     {
       "dpto": "Mayor Martinez",
@@ -106,7 +160,13 @@
       "centroid": [
         -58.1322,
         -27.1896
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 88.2,
+        "bld_hand5_n": 3574,
+        "bld_total": 4050,
+        "land_hand5_pct": 93.9
+      }
     },
     {
       "dpto": "Paso De Patria",
@@ -117,7 +177,13 @@
       "centroid": [
         -58.5293,
         -27.2188
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 68.7,
+        "bld_hand5_n": 1697,
+        "bld_total": 2472,
+        "land_hand5_pct": 98.2
+      }
     },
     {
       "dpto": "Pilar",
@@ -128,7 +194,13 @@
       "centroid": [
         -58.1939,
         -26.8895
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 76.1,
+        "bld_hand5_n": 29592,
+        "bld_total": 38896,
+        "land_hand5_pct": 96.9
+      }
     },
     {
       "dpto": "San Juan Bta. Del Neembuc",
@@ -139,7 +211,13 @@
       "centroid": [
         -57.8486,
         -26.6114
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 97.0,
+        "bld_hand5_n": 5221,
+        "bld_total": 5383,
+        "land_hand5_pct": 98.5
+      }
     },
     {
       "dpto": "Tacuaras",
@@ -150,7 +228,13 @@
       "centroid": [
         -57.8674,
         -26.8246
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 98.3,
+        "bld_hand5_n": 4336,
+        "bld_total": 4411,
+        "land_hand5_pct": 99.2
+      }
     },
     {
       "dpto": "Villa Franca",
@@ -161,7 +245,13 @@
       "centroid": [
         -57.9582,
         -26.3386
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 73.9,
+        "bld_hand5_n": 1737,
+        "bld_total": 2350,
+        "land_hand5_pct": 98.3
+      }
     },
     {
       "dpto": "Villa Oliva",
@@ -172,7 +262,13 @@
       "centroid": [
         -57.7172,
         -26.0372
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 85.1,
+        "bld_hand5_n": 5353,
+        "bld_total": 6288,
+        "land_hand5_pct": 98.3
+      }
     },
     {
       "dpto": "Villalvin",
@@ -183,7 +279,13 @@
       "centroid": [
         -57.9088,
         -27.1691
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 97.8,
+        "bld_hand5_n": 2162,
+        "bld_total": 2210,
+        "land_hand5_pct": 97.1
+      }
     }
   ]
 }

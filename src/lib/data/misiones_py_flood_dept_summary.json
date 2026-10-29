@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 17.4,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 92975,
@@ -18,7 +24,13 @@
       "centroid": [
         -57.0271,
         -27.3752
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 47.4,
+        "bld_hand5_n": 8783,
+        "bld_total": 18526,
+        "land_hand5_pct": 92.4
+      }
     },
     {
       "dpto": "San Ignacio",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.1465,
         -26.948
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 18.9,
+        "bld_hand5_n": 5910,
+        "bld_total": 31341,
+        "land_hand5_pct": 70.1
+      }
     },
     {
       "dpto": "San Juan Bautista",
@@ -40,7 +58,13 @@
       "centroid": [
         -57.4083,
         -26.7032
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.4,
+        "bld_hand5_n": 3187,
+        "bld_total": 22097,
+        "land_hand5_pct": 87.9
+      }
     },
     {
       "dpto": "San Miguel",
@@ -51,7 +75,13 @@
       "centroid": [
         -56.9666,
         -26.5712
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.4,
+        "bld_hand5_n": 1047,
+        "bld_total": 6001,
+        "land_hand5_pct": 69.5
+      }
     },
     {
       "dpto": "San Patricio",
@@ -62,7 +92,13 @@
       "centroid": [
         -56.83,
         -26.9861
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.8,
+        "bld_hand5_n": 317,
+        "bld_total": 3595,
+        "land_hand5_pct": 29.8
+      }
     },
     {
       "dpto": "Santa Maria",
@@ -73,7 +109,13 @@
       "centroid": [
         -56.8895,
         -26.73
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.3,
+        "bld_hand5_n": 682,
+        "bld_total": 8262,
+        "land_hand5_pct": 64.9
+      }
     },
     {
       "dpto": "Santa Rosa",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.7961,
         -26.863
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.2,
+        "bld_hand5_n": 1291,
+        "bld_total": 17829,
+        "land_hand5_pct": 61.4
+      }
     },
     {
       "dpto": "Santiago",
@@ -95,7 +143,13 @@
       "centroid": [
         -56.7856,
         -27.1365
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.9,
+        "bld_hand5_n": 771,
+        "bld_total": 7745,
+        "land_hand5_pct": 69.2
+      }
     },
     {
       "dpto": "Villa Florida",
@@ -106,7 +160,13 @@
       "centroid": [
         -57.126,
         -26.4599
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 29.2,
+        "bld_hand5_n": 1461,
+        "bld_total": 5000,
+        "land_hand5_pct": 80.5
+      }
     },
     {
       "dpto": "Yabebyry",
@@ -117,7 +177,13 @@
       "centroid": [
         -57.1858,
         -27.2565
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 88.4,
+        "bld_hand5_n": 2149,
+        "bld_total": 2432,
+        "land_hand5_pct": 98.8
+      }
     }
   ]
 }

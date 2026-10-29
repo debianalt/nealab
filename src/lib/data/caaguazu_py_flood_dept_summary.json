@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 8.3,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 135727,
@@ -18,7 +24,13 @@
       "centroid": [
         -55.8336,
         -25.2078
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.1,
+        "bld_hand5_n": 312,
+        "bld_total": 7628,
+        "land_hand5_pct": 15.3
+      }
     },
     {
       "dpto": "Caaguazu",
@@ -29,7 +41,13 @@
       "centroid": [
         -56.0544,
         -25.4114
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.7,
+        "bld_hand5_n": 3652,
+        "bld_total": 97445,
+        "land_hand5_pct": 15.2
+      }
     },
     {
       "dpto": "Carayao",
@@ -40,7 +58,13 @@
       "centroid": [
         -56.3237,
         -25.1867
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.9,
+        "bld_hand5_n": 2257,
+        "bld_total": 14234,
+        "land_hand5_pct": 38.4
+      }
     },
     {
       "dpto": "Cecilio Baez",
@@ -51,7 +75,13 @@
       "centroid": [
         -56.2426,
         -25.0903
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 13.1,
+        "bld_hand5_n": 900,
+        "bld_total": 6874,
+        "land_hand5_pct": 30.1
+      }
     },
     {
       "dpto": "Coronel Oviedo",
@@ -62,7 +92,13 @@
       "centroid": [
         -56.425,
         -25.4853
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 24.1,
+        "bld_hand5_n": 24655,
+        "bld_total": 102315,
+        "land_hand5_pct": 53.1
+      }
     },
     {
       "dpto": "J.e. Estigarribia",
@@ -73,7 +109,13 @@
       "centroid": [
         -55.5923,
         -25.397
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.2,
+        "bld_hand5_n": 3633,
+        "bld_total": 39428,
+        "land_hand5_pct": 23.0
+      }
     },
     {
       "dpto": "Jose D. Ocampos",
@@ -84,7 +126,13 @@
       "centroid": [
         -55.4401,
         -25.4462
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.4,
+        "bld_hand5_n": 932,
+        "bld_total": 8150,
+        "land_hand5_pct": 24.9
+      }
     },
     {
       "dpto": "Juan M. Frutos",
@@ -95,7 +143,13 @@
       "centroid": [
         -55.8218,
         -25.3584
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.3,
+        "bld_hand5_n": 1333,
+        "bld_total": 25281,
+        "land_hand5_pct": 15.7
+      }
     },
     {
       "dpto": "La Pastora",
@@ -106,7 +160,13 @@
       "centroid": [
         -56.5158,
         -25.2586
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.0,
+        "bld_hand5_n": 332,
+        "bld_total": 4760,
+        "land_hand5_pct": 46.6
+      }
     },
     {
       "dpto": "Mcal. Fco. Solano Lopez",
@@ -117,7 +177,13 @@
       "centroid": [
         -55.2739,
         -25.0975
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 8.3,
+        "bld_hand5_n": 831,
+        "bld_total": 10053,
+        "land_hand5_pct": 26.3
+      }
     },
     {
       "dpto": "Nueva Londres",
@@ -128,7 +194,13 @@
       "centroid": [
         -56.5604,
         -25.4156
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 31.6,
+        "bld_hand5_n": 1642,
+        "bld_total": 5201,
+        "land_hand5_pct": 57.8
+      }
     },
     {
       "dpto": "R.i. 3 Corrales",
@@ -139,7 +211,13 @@
       "centroid": [
         -56.2321,
         -25.3589
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.4,
+        "bld_hand5_n": 315,
+        "bld_total": 7107,
+        "land_hand5_pct": 23.2
+      }
     },
     {
       "dpto": "Raul  A. Oviedo",
@@ -150,7 +228,13 @@
       "centroid": [
         -55.5263,
         -25.1612
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.6,
+        "bld_hand5_n": 1732,
+        "bld_total": 31007,
+        "land_hand5_pct": 22.1
+      }
     },
     {
       "dpto": "Repatriacion",
@@ -161,7 +245,13 @@
       "centroid": [
         -55.8057,
         -25.5791
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.9,
+        "bld_hand5_n": 1520,
+        "bld_total": 25615,
+        "land_hand5_pct": 19.9
+      }
     },
     {
       "dpto": "San Joaquin",
@@ -172,7 +262,13 @@
       "centroid": [
         -56.0418,
         -25.04
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.9,
+        "bld_hand5_n": 466,
+        "bld_total": 11898,
+        "land_hand5_pct": 11.9
+      }
     },
     {
       "dpto": "San Jose De Los Arroyos",
@@ -183,7 +279,13 @@
       "centroid": [
         -56.6953,
         -25.5351
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.7,
+        "bld_hand5_n": 4715,
+        "bld_total": 17020,
+        "land_hand5_pct": 59.3
+      }
     },
     {
       "dpto": "Santa Rosa Del Mbutuy",
@@ -194,7 +296,13 @@
       "centroid": [
         -56.2548,
         -24.9208
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.7,
+        "bld_hand5_n": 1657,
+        "bld_total": 11244,
+        "land_hand5_pct": 26.0
+      }
     },
     {
       "dpto": "Simon Bolivar",
@@ -205,7 +313,13 @@
       "centroid": [
         -56.3306,
         -25.0237
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.1,
+        "bld_hand5_n": 585,
+        "bld_total": 5254,
+        "land_hand5_pct": 46.4
+      }
     },
     {
       "dpto": "Yhu",
@@ -216,7 +330,13 @@
       "centroid": [
         -55.6461,
         -24.8291
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.5,
+        "bld_hand5_n": 2324,
+        "bld_total": 42284,
+        "land_hand5_pct": 21.9
+      }
     }
   ]
 }

@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 95.2,
+      "saturated": true
+    }
   },
   "province": {
     "total_hexes": 825760,
@@ -18,7 +24,13 @@
       "centroid": [
         -61.282,
         -24.0314
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 96.8,
+        "bld_hand5_n": 19274,
+        "bld_total": 19902,
+        "land_hand5_pct": 99.7
+      }
     },
     {
       "dpto": "Formosa",
@@ -29,7 +41,13 @@
       "centroid": [
         -58.3773,
         -25.9403
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 82.0,
+        "bld_hand5_n": 179679,
+        "bld_total": 219228,
+        "land_hand5_pct": 98.9
+      }
     },
     {
       "dpto": "Laishi",
@@ -40,7 +58,13 @@
       "centroid": [
         -58.564,
         -26.464
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 94.1,
+        "bld_hand5_n": 19355,
+        "bld_total": 20574,
+        "land_hand5_pct": 99.4
+      }
     },
     {
       "dpto": "Matacos",
@@ -51,7 +75,13 @@
       "centroid": [
         -62.0788,
         -23.8556
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.1,
+        "bld_hand5_n": 15233,
+        "bld_total": 15364,
+        "land_hand5_pct": 99.8
+      }
     },
     {
       "dpto": "Patiño",
@@ -62,7 +92,13 @@
       "centroid": [
         -59.96,
         -24.8796
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.0,
+        "bld_hand5_n": 88072,
+        "bld_total": 88938,
+        "land_hand5_pct": 99.7
+      }
     },
     {
       "dpto": "Pilagás",
@@ -73,7 +109,13 @@
       "centroid": [
         -58.6617,
         -25.1055
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 92.3,
+        "bld_hand5_n": 19041,
+        "bld_total": 20629,
+        "land_hand5_pct": 99.1
+      }
     },
     {
       "dpto": "Pilcomayo",
@@ -84,7 +126,13 @@
       "centroid": [
         -58.0588,
         -25.3715
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 87.5,
+        "bld_hand5_n": 90148,
+        "bld_total": 103013,
+        "land_hand5_pct": 98.8
+      }
     },
     {
       "dpto": "Pirané",
@@ -95,7 +143,13 @@
       "centroid": [
         -59.1602,
         -25.7667
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 95.2,
+        "bld_hand5_n": 71539,
+        "bld_total": 75132,
+        "land_hand5_pct": 99.4
+      }
     },
     {
       "dpto": "Ramón Lista",
@@ -106,7 +160,13 @@
       "centroid": [
         -62.1402,
         -23.121
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 11291,
+        "bld_total": 11303,
+        "land_hand5_pct": 99.2
+      }
     }
   ]
 }

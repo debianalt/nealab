@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 17.4,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 51330,
@@ -18,7 +24,13 @@
       "centroid": [
         -56.9749,
         -25.1249
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 21.7,
+        "bld_hand5_n": 1123,
+        "bld_total": 5183,
+        "land_hand5_pct": 45.6
+      }
     },
     {
       "dpto": "Altos",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.2162,
         -25.2535
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.4,
+        "bld_hand5_n": 1682,
+        "bld_total": 16203,
+        "land_hand5_pct": 20.5
+      }
     },
     {
       "dpto": "Arroyos Y Esteros",
@@ -40,7 +58,13 @@
       "centroid": [
         -57.1667,
         -25.0377
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.2,
+        "bld_hand5_n": 3523,
+        "bld_total": 20498,
+        "land_hand5_pct": 67.2
+      }
     },
     {
       "dpto": "Atyra",
@@ -51,7 +75,13 @@
       "centroid": [
         -57.1465,
         -25.2552
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.5,
+        "bld_hand5_n": 2188,
+        "bld_total": 14138,
+        "land_hand5_pct": 44.4
+      }
     },
     {
       "dpto": "Caacupe",
@@ -62,7 +92,13 @@
       "centroid": [
         -57.123,
         -25.3728
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.2,
+        "bld_hand5_n": 4854,
+        "bld_total": 43398,
+        "land_hand5_pct": 13.9
+      }
     },
     {
       "dpto": "Caraguatay",
@@ -73,7 +109,13 @@
       "centroid": [
         -56.7413,
         -25.2197
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.9,
+        "bld_hand5_n": 1946,
+        "bld_total": 13067,
+        "land_hand5_pct": 76.4
+      }
     },
     {
       "dpto": "Emboscada",
@@ -84,7 +126,13 @@
       "centroid": [
         -57.3634,
         -25.1251
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 7.9,
+        "bld_hand5_n": 1283,
+        "bld_total": 16272,
+        "land_hand5_pct": 43.1
+      }
     },
     {
       "dpto": "Eusebio Ayala",
@@ -95,7 +143,13 @@
       "centroid": [
         -56.9779,
         -25.3584
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.4,
+        "bld_hand5_n": 4902,
+        "bld_total": 25296,
+        "land_hand5_pct": 41.8
+      }
     },
     {
       "dpto": "Isla Pucu",
@@ -106,7 +160,13 @@
       "centroid": [
         -56.8997,
         -25.3029
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 23.2,
+        "bld_hand5_n": 1794,
+        "bld_total": 7729,
+        "land_hand5_pct": 25.8
+      }
     },
     {
       "dpto": "Itacurubi De La Cordiller",
@@ -117,7 +177,13 @@
       "centroid": [
         -56.8691,
         -25.469
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.9,
+        "bld_hand5_n": 1993,
+        "bld_total": 11138,
+        "land_hand5_pct": 27.8
+      }
     },
     {
       "dpto": "Juan De Mena",
@@ -128,7 +194,13 @@
       "centroid": [
         -56.769,
         -24.9889
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.2,
+        "bld_hand5_n": 1404,
+        "bld_total": 7323,
+        "land_hand5_pct": 88.7
+      }
     },
     {
       "dpto": "Loma Grande",
@@ -139,7 +211,13 @@
       "centroid": [
         -57.1903,
         -25.1474
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.4,
+        "bld_hand5_n": 849,
+        "bld_total": 3343,
+        "land_hand5_pct": 76.0
+      }
     },
     {
       "dpto": "Mbacayaty Del Yhaguy",
@@ -150,7 +228,13 @@
       "centroid": [
         -56.7022,
         -25.3348
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.8,
+        "bld_hand5_n": 1499,
+        "bld_total": 5383,
+        "land_hand5_pct": 74.9
+      }
     },
     {
       "dpto": "Nueva Colombia",
@@ -161,7 +245,13 @@
       "centroid": [
         -57.265,
         -25.1587
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.3,
+        "bld_hand5_n": 1258,
+        "bld_total": 7721,
+        "land_hand5_pct": 33.9
+      }
     },
     {
       "dpto": "Piribebuy",
@@ -172,7 +262,13 @@
       "centroid": [
         -57.0402,
         -25.4664
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.3,
+        "bld_hand5_n": 2914,
+        "bld_total": 23734,
+        "land_hand5_pct": 13.3
+      }
     },
     {
       "dpto": "San Bernardino",
@@ -183,7 +279,13 @@
       "centroid": [
         -57.292,
         -25.2873
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 22.1,
+        "bld_hand5_n": 6575,
+        "bld_total": 29721,
+        "land_hand5_pct": 21.9
+      }
     },
     {
       "dpto": "San Jose Obrero",
@@ -194,7 +296,13 @@
       "centroid": [
         -56.883,
         -25.1174
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 17.4,
+        "bld_hand5_n": 807,
+        "bld_total": 4640,
+        "land_hand5_pct": 84.4
+      }
     },
     {
       "dpto": "Santa Elena",
@@ -205,7 +313,13 @@
       "centroid": [
         -56.8196,
         -25.3944
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.4,
+        "bld_hand5_n": 639,
+        "bld_total": 6137,
+        "land_hand5_pct": 47.7
+      }
     },
     {
       "dpto": "Tobati",
@@ -216,7 +330,13 @@
       "centroid": [
         -57.0467,
         -25.2186
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 31.6,
+        "bld_hand5_n": 7689,
+        "bld_total": 24325,
+        "land_hand5_pct": 59.1
+      }
     },
     {
       "dpto": "Valenzuela",
@@ -227,7 +347,13 @@
       "centroid": [
         -56.8582,
         -25.5916
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 11.1,
+        "bld_hand5_n": 889,
+        "bld_total": 8029,
+        "land_hand5_pct": 30.6
+      }
     }
   ]
 }

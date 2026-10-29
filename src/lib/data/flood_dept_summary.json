@@ -4,7 +4,9 @@
     "sar_window_days": 12,
     "rank": {
       "metric": "bld_hand5_pct",
-      "definition": "% de edificios (y de la tierra, sin agua permanente) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)"
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 8.1,
+      "saturated": false
     }
   },
   "province": {
@@ -24,10 +26,10 @@
         -27.3788
       ],
       "rank": {
-        "bld_hand5_pct": 8.2,
-        "bld_hand5_n": 2783,
-        "bld_total": 33864,
-        "land_hand5_pct": 11.0
+        "bld_hand5_pct": 7.6,
+        "bld_hand5_n": 3464,
+        "bld_total": 45723,
+        "land_hand5_pct": 10.9
       }
     },
     {
@@ -41,9 +43,9 @@
         -27.889
       ],
       "rank": {
-        "bld_hand5_pct": 8.8,
-        "bld_hand5_n": 3799,
-        "bld_total": 43160,
+        "bld_hand5_pct": 8.6,
+        "bld_hand5_n": 4245,
+        "bld_total": 49315,
         "land_hand5_pct": 21.5
       }
     },
@@ -58,10 +60,10 @@
         -27.1478
       ],
       "rank": {
-        "bld_hand5_pct": 3.8,
-        "bld_hand5_n": 2255,
-        "bld_total": 59009,
-        "land_hand5_pct": 10.7
+        "bld_hand5_pct": 3.4,
+        "bld_hand5_n": 2369,
+        "bld_total": 68967,
+        "land_hand5_pct": 10.8
       }
     },
     {
@@ -75,9 +77,9 @@
         -27.4614
       ],
       "rank": {
-        "bld_hand5_pct": 13.0,
-        "bld_hand5_n": 4106,
-        "bld_total": 31556,
+        "bld_hand5_pct": 14.0,
+        "bld_hand5_n": 4686,
+        "bld_total": 33584,
         "land_hand5_pct": 20.5
       }
     },
@@ -92,10 +94,10 @@
         -27.551
       ],
       "rank": {
-        "bld_hand5_pct": 15.6,
-        "bld_hand5_n": 34883,
-        "bld_total": 224137,
-        "land_hand5_pct": 24.6
+        "bld_hand5_pct": 15.0,
+        "bld_hand5_n": 44656,
+        "bld_total": 297848,
+        "land_hand5_pct": 24.5
       }
     },
     {
@@ -109,9 +111,9 @@
         -27.9327
       ],
       "rank": {
-        "bld_hand5_pct": 7.0,
-        "bld_hand5_n": 741,
-        "bld_total": 10525,
+        "bld_hand5_pct": 5.2,
+        "bld_hand5_n": 513,
+        "bld_total": 9944,
         "land_hand5_pct": 21.9
       }
     },
@@ -126,9 +128,9 @@
         -26.3158
       ],
       "rank": {
-        "bld_hand5_pct": 7.3,
-        "bld_hand5_n": 4540,
-        "bld_total": 62392,
+        "bld_hand5_pct": 6.8,
+        "bld_hand5_n": 5097,
+        "bld_total": 74452,
         "land_hand5_pct": 12.9
       }
     },
@@ -143,9 +145,9 @@
         -25.99
       ],
       "rank": {
-        "bld_hand5_pct": 10.8,
-        "bld_hand5_n": 5064,
-        "bld_total": 46702,
+        "bld_hand5_pct": 10.9,
+        "bld_hand5_n": 6000,
+        "bld_total": 55006,
         "land_hand5_pct": 11.8
       }
     },
@@ -160,9 +162,9 @@
         -27.0261
       ],
       "rank": {
-        "bld_hand5_pct": 6.6,
-        "bld_hand5_n": 7214,
-        "bld_total": 108788,
+        "bld_hand5_pct": 5.7,
+        "bld_hand5_n": 5947,
+        "bld_total": 103443,
         "land_hand5_pct": 9.8
       }
     },
@@ -177,10 +179,10 @@
         -25.8747
       ],
       "rank": {
-        "bld_hand5_pct": 12.6,
-        "bld_hand5_n": 8724,
-        "bld_total": 69276,
-        "land_hand5_pct": 14.1
+        "bld_hand5_pct": 12.3,
+        "bld_hand5_n": 10820,
+        "bld_total": 88197,
+        "land_hand5_pct": 14.0
       }
     },
     {
@@ -194,9 +196,9 @@
         -27.6306
       ],
       "rank": {
-        "bld_hand5_pct": 7.9,
-        "bld_hand5_n": 7162,
-        "bld_total": 90676,
+        "bld_hand5_pct": 8.5,
+        "bld_hand5_n": 5060,
+        "bld_total": 59399,
         "land_hand5_pct": 15.7
       }
     },
@@ -211,10 +213,10 @@
         -26.8934
       ],
       "rank": {
-        "bld_hand5_pct": 8.1,
-        "bld_hand5_n": 6741,
-        "bld_total": 83464,
-        "land_hand5_pct": 14.4
+        "bld_hand5_pct": 7.5,
+        "bld_hand5_n": 4160,
+        "bld_total": 55327,
+        "land_hand5_pct": 14.3
       }
     },
     {
@@ -228,9 +230,9 @@
         -26.6591
       ],
       "rank": {
-        "bld_hand5_pct": 9.5,
-        "bld_hand5_n": 2746,
-        "bld_total": 28841,
+        "bld_hand5_pct": 8.9,
+        "bld_hand5_n": 3190,
+        "bld_total": 35698,
         "land_hand5_pct": 12.4
       }
     },
@@ -245,9 +247,9 @@
         -27.4769
       ],
       "rank": {
-        "bld_hand5_pct": 8.5,
-        "bld_hand5_n": 15433,
-        "bld_total": 182366,
+        "bld_hand5_pct": 7.6,
+        "bld_hand5_n": 8986,
+        "bld_total": 118415,
         "land_hand5_pct": 12.1
       }
     },
@@ -262,9 +264,9 @@
         -27.177
       ],
       "rank": {
-        "bld_hand5_pct": 11.1,
-        "bld_hand5_n": 10611,
-        "bld_total": 95468,
+        "bld_hand5_pct": 9.5,
+        "bld_hand5_n": 5849,
+        "bld_total": 61863,
         "land_hand5_pct": 15.9
       }
     },
@@ -279,10 +281,10 @@
         -27.7779
       ],
       "rank": {
-        "bld_hand5_pct": 8.6,
-        "bld_hand5_n": 3883,
-        "bld_total": 45129,
-        "land_hand5_pct": 19.9
+        "bld_hand5_pct": 8.1,
+        "bld_hand5_n": 2191,
+        "bld_total": 27199,
+        "land_hand5_pct": 19.8
       }
     },
     {
@@ -297,8 +299,8 @@
       ],
       "rank": {
         "bld_hand5_pct": 7.3,
-        "bld_hand5_n": 2494,
-        "bld_total": 34199,
+        "bld_hand5_n": 3266,
+        "bld_total": 44687,
         "land_hand5_pct": 9.6
       }
     }

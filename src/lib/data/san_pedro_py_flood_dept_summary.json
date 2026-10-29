@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 20.0,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 216922,
@@ -18,7 +24,13 @@
       "centroid": [
         -56.8064,
         -24.7729
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 31.7,
+        "bld_hand5_n": 3484,
+        "bld_total": 10982,
+        "land_hand5_pct": 85.2
+      }
     },
     {
       "dpto": "Antequera",
@@ -29,7 +41,13 @@
       "centroid": [
         -57.1759,
         -24.0898
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 64.5,
+        "bld_hand5_n": 3103,
+        "bld_total": 4812,
+        "land_hand5_pct": 91.9
+      }
     },
     {
       "dpto": "Chore",
@@ -40,7 +58,13 @@
       "centroid": [
         -56.5798,
         -24.1731
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.5,
+        "bld_hand5_n": 5044,
+        "bld_total": 40509,
+        "land_hand5_pct": 29.2
+      }
     },
     {
       "dpto": "Elizardo Aquino",
@@ -51,7 +75,13 @@
       "centroid": [
         -56.7926,
         -24.3791
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 20.0,
+        "bld_hand5_n": 4465,
+        "bld_total": 22327,
+        "land_hand5_pct": 36.3
+      }
     },
     {
       "dpto": "Isidoro Resquin",
@@ -62,7 +92,13 @@
       "centroid": [
         -56.2033,
         -24.0048
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 15.3,
+        "bld_hand5_n": 3683,
+        "bld_total": 24058,
+        "land_hand5_pct": 27.2
+      }
     },
     {
       "dpto": "Itacurubi Del Rosario",
@@ -73,7 +109,13 @@
       "centroid": [
         -56.8005,
         -24.5834
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 19.0,
+        "bld_hand5_n": 3185,
+        "bld_total": 16766,
+        "land_hand5_pct": 65.3
+      }
     },
     {
       "dpto": "Lima",
@@ -84,7 +126,13 @@
       "centroid": [
         -56.5628,
         -23.9744
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 10.0,
+        "bld_hand5_n": 1189,
+        "bld_total": 11909,
+        "land_hand5_pct": 54.1
+      }
     },
     {
       "dpto": "Nueva Germania",
@@ -95,7 +143,13 @@
       "centroid": [
         -56.3187,
         -23.7386
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.5,
+        "bld_hand5_n": 13081,
+        "bld_total": 51265,
+        "land_hand5_pct": 35.2
+      }
     },
     {
       "dpto": "S.pedro De Ycuamandyyu",
@@ -106,7 +160,13 @@
       "centroid": [
         -57.0756,
         -23.7732
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 31.0,
+        "bld_hand5_n": 12772,
+        "bld_total": 41137,
+        "land_hand5_pct": 60.5
+      }
     },
     {
       "dpto": "San Estanislao",
@@ -117,7 +177,13 @@
       "centroid": [
         -56.253,
         -24.5391
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 9.7,
+        "bld_hand5_n": 12238,
+        "bld_total": 126658,
+        "land_hand5_pct": 17.4
+      }
     },
     {
       "dpto": "San Pablo",
@@ -128,7 +194,13 @@
       "centroid": [
         -56.9206,
         -24.1324
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 27.8,
+        "bld_hand5_n": 1105,
+        "bld_total": 3977,
+        "land_hand5_pct": 81.9
+      }
     },
     {
       "dpto": "Tacuati",
@@ -139,7 +211,13 @@
       "centroid": [
         -56.6173,
         -23.5428
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 16.5,
+        "bld_hand5_n": 2867,
+        "bld_total": 17382,
+        "land_hand5_pct": 24.8
+      }
     },
     {
       "dpto": "Union",
@@ -150,7 +228,13 @@
       "centroid": [
         -56.5294,
         -24.86
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 26.6,
+        "bld_hand5_n": 1863,
+        "bld_total": 7015,
+        "land_hand5_pct": 57.5
+      }
     },
     {
       "dpto": "Villa Del Rosario",
@@ -161,7 +245,13 @@
       "centroid": [
         -57.0898,
         -24.5655
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 25.9,
+        "bld_hand5_n": 3774,
+        "bld_total": 14558,
+        "land_hand5_pct": 89.1
+      }
     },
     {
       "dpto": "Yataity Del Norte",
@@ -172,7 +262,13 @@
       "centroid": [
         -56.3394,
         -24.8232
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 14.6,
+        "bld_hand5_n": 1887,
+        "bld_total": 12942,
+        "land_hand5_pct": 19.1
+      }
     }
   ]
 }

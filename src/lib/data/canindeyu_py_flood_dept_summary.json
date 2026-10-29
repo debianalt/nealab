@@ -1,7 +1,13 @@
 {
   "metadata": {
     "sar_date": "2026-06-13",
-    "sar_window_days": 12
+    "sar_window_days": 12,
+    "rank": {
+      "metric": "bld_hand5_pct",
+      "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
+      "median": 6.0,
+      "saturated": false
+    }
   },
   "province": {
     "total_hexes": 142250,
@@ -18,7 +24,13 @@
       "centroid": [
         -55.0288,
         -24.1423
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 5.0,
+        "bld_hand5_n": 902,
+        "bld_total": 17985,
+        "land_hand5_pct": 15.3
+      }
     },
     {
       "dpto": "Curuguaty",
@@ -29,7 +41,13 @@
       "centroid": [
         -55.73,
         -24.3845
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.0,
+        "bld_hand5_n": 5028,
+        "bld_total": 83942,
+        "land_hand5_pct": 16.2
+      }
     },
     {
       "dpto": "F. Caballero Alvarez",
@@ -40,7 +58,13 @@
       "centroid": [
         -54.7012,
         -24.3622
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 6.4,
+        "bld_hand5_n": 3373,
+        "bld_total": 52924,
+        "land_hand5_pct": 13.5
+      }
     },
     {
       "dpto": "Itanara",
@@ -51,7 +75,13 @@
       "centroid": [
         -55.666,
         -23.7674
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 12.7,
+        "bld_hand5_n": 359,
+        "bld_total": 2825,
+        "land_hand5_pct": 19.4
+      }
     },
     {
       "dpto": "Salto Del Guaira",
@@ -62,7 +92,13 @@
       "centroid": [
         -54.4478,
         -24.1957
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 4.0,
+        "bld_hand5_n": 1227,
+        "bld_total": 30847,
+        "land_hand5_pct": 13.0
+      }
     },
     {
       "dpto": "Villa Igatimi",
@@ -73,7 +109,13 @@
       "centroid": [
         -55.4935,
         -24.142
-      ]
+      ],
+      "rank": {
+        "bld_hand5_pct": 3.0,
+        "bld_hand5_n": 646,
+        "bld_total": 21225,
+        "land_hand5_pct": 17.9
+      }
     }
   ]
 }

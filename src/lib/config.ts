@@ -519,6 +519,7 @@ export interface DeptRank {
 	extraField?: string;  // optional second value (e.g. hectares), shown dimmed
 	extraUnitKey?: string; // i18n key
 	extraDecimals?: number;
+	saturatedKey?: string; // i18n note shown instead of bars when the summary flags metadata.rank.saturated
 }
 
 export interface ColorClass {
@@ -656,6 +657,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			field: 'bld_hand5_pct', unit: '%', decimals: 1,
 			titleKey: 'rank.flood.title', noteKey: 'rank.flood.note',
 			extraField: 'land_hand5_pct', extraUnitKey: 'rank.unit.land', extraDecimals: 1,
+			saturatedKey: 'rank.flood.saturated',
 		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
