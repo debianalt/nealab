@@ -2839,6 +2839,14 @@
 		return `rgb(${r},${g},${b})`;
 	}
 
+	// In Satélite mode the zero class (a measured 0, e.g. 0 % water — 97 % of Eldorado)
+	// is drawn transparent so the imagery shows through; only hexes with a reading > 0
+	// stay painted. "Sin cobertura" (nodata gray) keeps its color in both modes.
+	const hexFillOpacity = (o: number): any =>
+		mapStore.basemapMode === 'satellite' ? ['case', ['==', ['get', 'zero'], true], 0, o] : o;
+	const hexLineOpacity = (o: number): any =>
+		mapStore.basemapMode === 'satellite' ? ['case', ['==', ['get', 'zero'], true], 0, o * 0.32] : o * 0.32;
+
 	// Track last state to avoid redundant setPaintProperty calls
 	let _hexLayerInitialized = false;
 
@@ -2901,6 +2909,7 @@
 					h3index: entry.h3index,
 					value: entry.value,
 					color: getColor(entry.value as number),
+					zero: entry.value === 0 && !!classes?.zero,
 					type_label: entry.properties?.type_label
 				},
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
@@ -2917,8 +2926,8 @@
 			map.setPaintProperty('hex-line', 'line-width', 0.5);
 			_hexLayerInitialized = true;
 		}
-		map.setPaintProperty('hex-fill', 'fill-opacity', mapStore.hexOpacity);
-		map.setPaintProperty('hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
+		map.setPaintProperty('hex-fill', 'fill-opacity', hexFillOpacity(mapStore.hexOpacity));
+		map.setPaintProperty('hex-line', 'line-opacity', hexLineOpacity(mapStore.hexOpacity));
 
 		const bgSrc = map.getSource('territory-bg') as maplibregl.GeoJSONSource | undefined;
 		if (bgSrc) {
@@ -2987,7 +2996,7 @@
 			}
 			features[fi++] = {
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), type_label: entry.properties?.type_label },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			};
 		}
@@ -2995,10 +3004,10 @@
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('compare-hex-fill', 'fill-color', ['get', 'color']);
-		map.setPaintProperty('compare-hex-fill', 'fill-opacity', mapStore.hexOpacity);
+		map.setPaintProperty('compare-hex-fill', 'fill-opacity', hexFillOpacity(mapStore.hexOpacity));
 		map.setPaintProperty('compare-hex-line', 'line-color', '#374151');
 		map.setPaintProperty('compare-hex-line', 'line-width', 0.5);
-		map.setPaintProperty('compare-hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
+		map.setPaintProperty('compare-hex-line', 'line-opacity', hexLineOpacity(mapStore.hexOpacity));
 	}
 
 	export function clearCompareHexChoropleth() {
@@ -3054,17 +3063,17 @@
 			}
 			features.push({
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), type_label: entry.properties?.type_label },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			});
 		}
 
 		src.setData({ type: 'FeatureCollection', features });
 		map.setPaintProperty('regional-hex-fill', 'fill-color', ['get', 'color']);
-		map.setPaintProperty('regional-hex-fill', 'fill-opacity', mapStore.hexOpacity);
+		map.setPaintProperty('regional-hex-fill', 'fill-opacity', hexFillOpacity(mapStore.hexOpacity));
 		map.setPaintProperty('regional-hex-line', 'line-color', '#374151');
 		map.setPaintProperty('regional-hex-line', 'line-width', 0.5);
-		map.setPaintProperty('regional-hex-line', 'line-opacity', mapStore.hexOpacity * 0.32);
+		map.setPaintProperty('regional-hex-line', 'line-opacity', hexLineOpacity(mapStore.hexOpacity));
 	}
 
 	export function clearRegionalHexChoropleth() {
@@ -3089,8 +3098,8 @@
 			if (!map.getLayer(fill)) continue;
 			const cur = map.getPaintProperty(fill, 'fill-opacity');
 			if (typeof cur === 'number' && cur === 0) continue; // slot not in use → leave hidden
-			map.setPaintProperty(fill, 'fill-opacity', o);
-			if (map.getLayer(line)) map.setPaintProperty(line, 'line-opacity', o * 0.32);
+			map.setPaintProperty(fill, 'fill-opacity', hexFillOpacity(o));
+			if (map.getLayer(line)) map.setPaintProperty(line, 'line-opacity', hexLineOpacity(o));
 		}
 	}
 
@@ -3149,6 +3158,7 @@
 		for (const id of ['satellite-layer', 'satellite-esri-layer']) {
 			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', active ? 'visible' : 'none');
 		}
+		applyHexOpacity();
 	}
 
 	export function highlightHexagon(h3index: string) {
