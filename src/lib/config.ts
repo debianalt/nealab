@@ -667,6 +667,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			saturatedKey: 'rank.flood.saturated',
 			// Chaco plain: recurrent waterlogging by radar (HAND < 1 m ranked it backwards).
 			plain: { field: 's1_land_pct', unit: '%', decimals: 1, titleKey: 'rank.flood.plain.title', noteKey: 'rank.flood.plain.note' },
+			// Three readings of the same HAND export: share of buildings (default),
+			// number of buildings (magnitude, follows population), share of land (rural).
+			metrics: [
+				{ tabKey: 'rank.flood.tab.pct' },
+				{ tabKey: 'rank.flood.tab.n', field: 'bld_hand5_n', unit: '', unitKey: 'rank.unit.buildings', decimals: 0,
+				  titleKey: 'rank.flood.title.n', noteKey: 'rank.flood.note.n',
+				  extraField: 'bld_total', extraUnitKey: 'rank.unit.bldTotal', extraDecimals: 0 },
+				{ tabKey: 'rank.flood.tab.land', field: 'land_hand5_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 1,
+				  titleKey: 'rank.flood.title.land', noteKey: 'rank.flood.note.land',
+				  extraField: 'bld_hand5_pct', extraUnitKey: 'rank.unit.bldPct', extraDecimals: 1 },
+			],
 		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
