@@ -3145,6 +3145,11 @@
 	// Sentinel-2 satellite underlay (EOX cloudless, served via /api/satellite proxy). Added
 	// lazily below the hex/label layers so it reads as a reference basemap. Additive — never
 	// setStyle (which would wipe the ~40 mounted layers).
+	// Spatia's region (NEA, Paraguay, PR/SC/RS) — the Esri proxy enforces the same box.
+	const SATELLITE_BOUNDS: [number, number, number, number] = [-63, -34, -48, -19];
+	// Slightly under half: imagery as reference under the hexes, not competing with them.
+	const SATELLITE_OPACITY = 0.45;
+
 	export function setSatellite(active: boolean) {
 		if (!map) return;
 		if (active && !map.getSource('satellite')) {
@@ -3153,6 +3158,9 @@
 				tiles: ['/api/satellite/{z}/{x}/{y}.jpg'],
 				tileSize: 256,
 				maxzoom: 16,
+				// Same box as Esri: outside Spatia's region the satellite mode keeps the dark
+				// basemap instead of showing EOX's worldwide mosaic.
+				bounds: SATELLITE_BOUNDS,
 				attribution: 'Sentinel-2 cloudless 2024 © EOX — modified Copernicus Sentinel data 2024'
 			});
 			// Insert just below hex-fill (above the gray "missing hex" territory-bg, so the
@@ -3167,7 +3175,7 @@
 				// highlights so it has more punch. (Resolution stays 10 m — no real sharpen.)
 				// Linear, not nearest: past z14 nearest showed each 10 m pixel as a block.
 				paint: {
-					'raster-opacity': 1,
+					'raster-opacity': SATELLITE_OPACITY,
 					'raster-contrast': 0.28,
 					'raster-saturation': 0.35,
 					'raster-brightness-max': 0.94,
@@ -3187,14 +3195,14 @@
 				maxzoom: 17,
 				// Spatia's region only (NEA, Paraguay, PR/SC/RS): outside it MapLibre does
 				// not request Esri at all and EOX shows. Same box enforced in the proxy.
-				bounds: [-63, -34, -48, -19],
+				bounds: SATELLITE_BOUNDS,
 				attribution: 'Powered by <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> · Esri, Maxar, Earthstar Geographics'
 			});
 			map.addLayer({
 				id: 'satellite-esri-layer',
 				type: 'raster',
 				source: 'satellite-esri',
-				paint: { 'raster-opacity': 1, 'raster-resampling': 'linear' }
+				paint: { 'raster-opacity': SATELLITE_OPACITY, 'raster-resampling': 'linear' }
 			}, beforeId);
 		}
 		for (const id of ['satellite-layer', 'satellite-esri-layer']) {
