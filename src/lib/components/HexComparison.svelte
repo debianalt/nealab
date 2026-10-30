@@ -56,16 +56,16 @@
 	const hasMagnitude = $derived(
 		selected.some(([, d]) => d.data?.n_edificios != null)
 	);
-	// Only the variables that actually carry a _raw estimate get a % row in the
-	// magnitude table. Layers whose values are already raw (economic_activity:
-	// %, nW, edif/km²) have no _raw → table shows just Edificios + Hogares.
+	// Only the percentile variables that carry a _raw estimate get a row with the
+	// real value in the magnitude table. Raw-valued variables (economic_activity's
+	// nW and edif/km²) already show their value in the rows above.
 	const rawVars = $derived(
-		componentVars.filter(v => selected.some(([, d]) => Number.isFinite(d.data?.[`${v.col}_raw`])))
+		componentVars.filter(v => v.unit === 'percentil' && selected.some(([, d]) => Number.isFinite(d.data?.[`${v.col}_raw`])))
 	);
-	// The percentile reading note only applies to layers displayed as provincial
-	// percentiles (all components unit 'percentil'), not raw-value layers.
+	// The percentile reading note applies wherever some component is shown as a
+	// provincial percentile (economic_activity mixes them with raw nW and edif/km²).
 	const isPercentileLayer = $derived(
-		componentVars.length > 0 && componentVars.every(v => v.unit === 'percentil')
+		componentVars.some(v => v.unit === 'percentil')
 	);
 	// Goalpost-normalized layers show absolute /100 values (frozen regional bounds) —
 	// the opposite reading to the petal (relative to territory avg). Note disambiguates.
@@ -145,9 +145,11 @@
 				{#each componentVars as v}
 					{@const val = hexData.data?.[v.col]}
 					{@const rawVal = v.rawCol ? hexData.data?.[v.rawCol] : null}
-					{@const hasData = (typeof val === 'string' && val.length > 0)
+					{@const noCensus = /* percentile 0 without a real rate = hexagon with no census data (Misiones economic_activity fills those with 0) */
+						v.unit === 'percentil' && val === 0 && !Number.isFinite(hexData.data?.[`${v.col}_raw`])}
+					{@const hasData = !noCensus && ((typeof val === 'string' && val.length > 0)
 						|| (typeof val === 'number' && Number.isFinite(val))
-						|| (typeof rawVal === 'number' && Number.isFinite(rawVal))}
+						|| (typeof rawVal === 'number' && Number.isFinite(rawVal)))}
 					{@const isStr = typeof val === 'string' && val.length > 0}
 					{@const numVal = typeof val === 'number' ? val : 0}
 					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : numVal}

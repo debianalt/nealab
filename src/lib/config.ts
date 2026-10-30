@@ -99,7 +99,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_capital: '?v=28',
 		sat_education_flow: '?v=28',
 		sat_sociodemographic: '?v=24',
-		sat_economic_activity: '?v=28',
+		sat_economic_activity: '?v=29',
 		sat_accessibility: '?v=27',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
@@ -112,7 +112,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 23;
+const DEPT_V = 24;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -1032,9 +1032,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		parquet: 'sat_economic_activity',
 		variables: [
 			{ col: 'score', labelKey: 'analysis.economic.score', aggregation: 'mean' },
-			{ col: 'tasa_empleo', labelKey: 'radio.empleo', aggregation: 'mean', unit: '%' },
-			{ col: 'tasa_actividad', labelKey: 'radio.actividad', aggregation: 'mean', unit: '%' },
-			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%' },
+			// Census rates served as provincial percentiles (aggregate_radio_to_h3.py);
+			// the real rate is <col>_raw, shown in the hex panel's table.
+			{ col: 'tasa_empleo', labelKey: 'radio.empleo', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
+			{ col: 'tasa_actividad', labelKey: 'radio.actividad', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
+			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
 			{ col: 'viirs_mean_radiance', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr' },
 			{ col: 'building_density_per_km2', labelKey: 'radio.buildingDensity', aggregation: 'mean', unit: 'edif/km²' },
 		],
