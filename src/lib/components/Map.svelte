@@ -3,7 +3,7 @@
 	import maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, colorForClass, type ColorClasses } from '$lib/config';
+	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -89,12 +89,12 @@
 			// which otherwise can't re-run once the map finishes initializing — getMap() is
 			// not reactive). Bubbles up to the mapContainer that +page listens on.
 			map.getContainer().dispatchEvent(new CustomEvent('map-ready', { bubbles: true }));
-			// Terrain DEM source (AWS Terrain Tiles, Terrarium encoding)
+			// Terrain DEM source (Mapterhorn on R2, Terrarium encoding)
 			map.addSource('terrain-dem', {
 				type: 'raster-dem',
 				tiles: [getTilesUrl('terrain')],
 				encoding: 'terrarium',
-				tileSize: 256
+				...TERRAIN_DEM
 			});
 
 			// Activate 3D terrain

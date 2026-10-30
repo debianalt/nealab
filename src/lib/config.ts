@@ -9,7 +9,9 @@ function getBase(): string {
 
 export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrientes_plantations' | 'chaco_plantations' | 'formosa_plantations' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
 	if (name === 'terrain') {
-		return '/api/terrain/{z}/{x}/{y}.png';
+		// Mapterhorn (Copernicus GLO-30 in the region) cut to TERRAIN_DEM.bounds, z0-11,
+		// one object per tile so each is edge-cached; replaced the /api/terrain proxy.
+		return `${getBase()}/data/terrain/mapterhorn-v1/{z}/{x}/{y}.webp`;
 	}
 	const files: Record<string, string> = {
 		buildings: 'tiles/buildings-v5.pmtiles',
@@ -78,6 +80,15 @@ export const CHM_LABELS: Record<number, string> = {
 	2: 'Agrícola/pasturas',
 	3: 'Urbano/periurbano',
 } as const;
+
+// Visualisation only: no analysis reads this DEM (slope, TWI, HAND come from the pipeline).
+export const TERRAIN_DEM = {
+	tileSize: 512,
+	maxzoom: 11,
+	bounds: [-64, -34, -47.5, -19] as [number, number, number, number],
+	attribution:
+		'Relieve: <a href="https://mapterhorn.com/attribution" target="_blank" rel="noopener">© Mapterhorn</a> · Copernicus GLO-30 © DLR e.V. 2010-2014, © Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA'
+};
 
 export const TERRAIN_CONFIG = {
 	exaggeration: 1.5,
