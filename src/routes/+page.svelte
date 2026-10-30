@@ -1037,7 +1037,10 @@
 		// The celeste outline of the selected dept is redundant with its hexagons, and the
 		// generalized admin line visibly cuts across rivers on the satellite basemap → only
 		// draw it in compare mode (to mark the primary vs the amber compared dept).
-		mapComponent?.setDeptOutline(territoryStore.compareModeActive ? feat : null);
+		// Census layers are the exception: they are dasymetric (hexes only where people
+		// live), so below the LOD gate a rural dept is scattered dots with no visible edge.
+		const sparseLayer = lensStore.activeAnalysis?.rigorBadge === 'census';
+		mapComponent?.setDeptOutline(territoryStore.compareModeActive || sparseLayer ? feat : null);
 
 		const compareDpto = hexStore.compareDpto;
 		const compareTp = hexStore.compareTerritoryPrefix;
