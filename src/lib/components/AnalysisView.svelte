@@ -5,7 +5,6 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
-	import { lp } from '$lib/utils/locale-path';
 	import OvertureAnalysis from './analyses/OvertureAnalysis.svelte';
 	import CatastroAnalysis from './analyses/CatastroAnalysis.svelte';
 
@@ -63,13 +62,6 @@
 				</div>
 			</div>
 		</div>
-
-		{#if analysis.id === 'eudr'}
-			<div class="eudr-link flex flex-col gap-2 mb-3">
-				<a href={lp('/eudr/informe', i18n.locale)} class="eudr-btn">{i18n.t('eudr.informe.cta_from_layer')}</a>
-				<a href={lp('/eudr/check', i18n.locale)} class="eudr-btn">{i18n.t('eudr.check.cta_from_layer')}</a>
-			</div>
-		{/if}
 
 		{#if analysis.status === 'coming_soon'}
 			<div class="coming-soon-card">
@@ -180,7 +172,4 @@
 	.plant-legend span { display: inline-flex; align-items: center; gap: 4px; }
 	.plant-legend .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
 	.plant-note { margin-top: 6px; font-size: 9px; color: #94a3b8; line-height: 1.4; }
-	.eudr-link { padding: 4px 0; }
-	.eudr-btn { display: block; text-align: center; padding: 8px 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: #d4d4d4; font-size: 11px; text-decoration: none; transition: all 0.15s; }
-	.eudr-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
 </style>

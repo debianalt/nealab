@@ -414,8 +414,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.lossPost2020': { es: 'Pérdida post-2020 (%)', en: 'Post-2020 loss (%)', gn: 'Pérdida post-2020', pt: 'Perda pós-2020 (%)' },
 	'eudr.firePost2020': { es: 'Fuego post-2020, total (%)', en: 'Post-2020 fire, total (%)', gn: 'Fuego post-2020, opavave', pt: 'Fogo pós-2020, total (%)' },
 	'eudr.fireNativePost2020': { es: 'Fuego sobre nativa leñosa (%)', en: 'Fire on native woody cover (%)', gn: 'Fuego ka’aguy ypykuére (%)', pt: 'Fogo sobre nativa lenhosa (%)' },
-	'eudr.forest2020': { es: 'Cobertura forestal 2020 (%)', en: 'Forest cover 2020 (%)', gn: "Ka'aguy 2020 (%)", pt: 'Cobertura florestal 2020 (%)' },
-	'eudr.forestCurrent': { es: 'Cobertura forestal actual (%)', en: 'Current forest cover (%)', gn: "Ka'aguy ko'ãga (%)", pt: 'Cobertura florestal atual (%)' },
+	'eudr.forest2020': { es: 'Cobertura arbórea 2000 (%)', en: 'Tree cover 2000 (%)', gn: "Ka'aguy 2000 (%)", pt: 'Cobertura arbórea 2000 (%)' },
+	'eudr.forestCurrent': { es: 'Cobertura arbórea actual, aprox. (%)', en: 'Current tree cover, approx. (%)', gn: "Ka'aguy ko'ãga (%)", pt: 'Cobertura arbórea atual, aprox. (%)' },
 
 	// ── Migrated radio/catastro to H3 ──
 	'analysis.scores.type': { es: 'Tipo de consolidación', en: 'Consolidation type', gn: 'Tipo', pt: 'Tipo de consolidação' },
@@ -915,8 +915,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.vintage': { es: 'Datos satelitales', en: 'Satellite data', gn: 'Datos satelitales', pt: 'Dados satelitais' },
 	'eudr.check.refreshed': { es: 'Última actualización', en: 'Last refreshed', gn: 'Última actualización', pt: 'Última atualização' },
 	'eudr.check.methodology_link': { es: 'Ver metodología completa →', en: 'View full methodology →', gn: 'Ehecha metodología →', pt: 'Ver metodologia completa →' },
-	'eudr.check.cta_from_layer': { es: 'Análisis detallado por punto o polígono (res-9) →', en: 'Detailed point or polygon analysis (res-9) →', gn: 'Análisis detallado →', pt: 'Análise detalhada por ponto ou polígono (res-9) →' },
-	'eudr.informe.cta_from_layer': { es: 'Informe: cosecha o deforestación (MapBiomas) →', en: 'Report: harvest or deforestation (MapBiomas) →', gn: 'Informe: kytĩ térã deforestación (MapBiomas) →', pt: 'Relatório: colheita ou desmatamento (MapBiomas) →' },
 	'eudr.check.poly_title': { es: 'Analizar un polígono', en: 'Analyze a polygon', gn: 'Polígono', pt: 'Analisar um polígono' },
 	'eudr.check.poly_upload': { es: 'Subir GeoJSON (parcela / lote)', en: 'Upload GeoJSON (plot / lot)', gn: 'Embohasa GeoJSON', pt: 'Enviar GeoJSON (parcela / lote)' },
 	'eudr.check.poly_draw': { es: '🎯 Dibujar con lazo', en: '🎯 Draw with lasso', gn: '🎯 Embokuatia lazo-pe', pt: '🎯 Desenhar com laço' },
