@@ -8,7 +8,9 @@
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
 	import misionesBoundary from '$lib/data/misiones_boundary.json';
-	import { ensureArBoundaries, getArFeatures } from '$lib/utils/deptBoundaries';
+	import { ensureArBoundaries, getArFeatures, ensureBrBoundaries, getBrFeatures, normDeptName } from '$lib/utils/deptBoundaries';
+	import { deptFillStyle, FILL_NA } from '$lib/utils/deptFill';
+	import type { DeptFill } from '$lib/stores/hex.svelte';
 	import { pointInPolygon } from '$lib/utils/geometry';
 	import misionesMask from '$lib/data/misiones_mask.json';
 	import itapuaBoundary from '$lib/data/itapua_boundary.json';
@@ -966,6 +968,40 @@
 				}));
 			});
 
+			// ── BR municipality picker (active state only, fetched on demand) ──
+			// Same role as the AR/PY pickers: the selection surface in the province view,
+			// painted with the ranking reading (setDeptFill).
+			map.addSource('br-depts', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } as any });
+			map.addLayer({
+				id: 'br-dept-fill',
+				type: 'fill',
+				source: 'br-depts',
+				layout: { visibility: 'none' },
+				paint: { 'fill-color': '#60a5fa', 'fill-opacity': 0.05 }
+			});
+			map.addLayer({
+				id: 'br-dept-line',
+				type: 'line',
+				source: 'br-depts',
+				layout: { visibility: 'none' },
+				paint: {
+					'line-color': '#93c5fd',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 0.3, 9, 0.6],
+					'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.3, 9, 0.5]
+				}
+			});
+			map.on('mouseenter', 'br-dept-fill', () => { if (!lassoActive) map.getCanvas().style.cursor = 'pointer'; });
+			map.on('mouseleave', 'br-dept-fill', () => { if (!lassoActive) map.getCanvas().style.cursor = ''; });
+			map.on('click', 'br-dept-fill', (e) => {
+				if (lassoActive) return;
+				const name = e.features![0].properties!.district;
+				if (!name || !brLoadedFor) return;
+				container.dispatchEvent(new CustomEvent('dept-map-select', {
+					bubbles: true,
+					detail: { name, territory: brLoadedFor }
+				}));
+			});
+
 			// ── Selected department outline (real polygon, single-dept mode) ──
 			map.addSource('dept-outline', {
 				type: 'geojson',
@@ -1125,6 +1161,7 @@
 			if (map.getLayer('waterway')) map.setLayerZoomRange('waterway', 10, 24);
 			styleActiveTerritory();
 			if (regionalModeActive) setRegionalMapMode(true);
+			applyDeptFill();   // the panel can set it before the style loads (deep link)
 		});
 
 		return () => {
@@ -1146,6 +1183,28 @@
 		document.body.appendChild(tooltip);
 
 		let leaveTimeout: ReturnType<typeof setTimeout> | null = null;
+
+		// Province view: department name, value and position of the painted reading.
+		const fillLayers = ['ar-dept-fill', 'br-dept-fill', ...Object.values(PY_FILL_LAYER),
+			...PY_FILL_TERRITORIES.map(tid => `${tid}-district-fill`)];
+		for (const lyr of fillLayers) {
+			map.on('mousemove', lyr, (e) => {
+				if (lassoActive || !deptFill) return;
+				const p = e.features![0].properties!;
+				const hit = deptFillLookup.get(normDeptName(p.nombre ?? p.district));
+				if (!hit || (lyr === 'ar-dept-fill' && String(p.redcode ?? '').slice(0, 2) !== AR_CODPROV[deptFill.territory])) {
+					tooltip.style.display = 'none';
+					return;
+				}
+				const v = hit.value == null ? '—'
+					: (deptFill.signed && hit.value > 0 ? '+' : '') + hit.value.toLocaleString(i18n.locale, { minimumFractionDigits: deptFill.decimals, maximumFractionDigits: deptFill.decimals }) + ' ' + deptFill.unit;
+				tooltip.innerHTML = `<b style="color:#e2e8f0">${formatDept(hit.name)}</b><br>${v} · ${hit.pos}.º ${i18n.t('rank.of')} ${deptFill.values.length}`;
+				tooltip.style.display = 'block';
+				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
+				tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
+			});
+			map.on('mouseleave', lyr, () => { if (deptFill) tooltip.style.display = 'none'; });
+		}
 
 		map.on('mousemove', 'buildings-3d', (e) => {
 			if (lassoActive) return; // keep crosshair, skip tooltip
@@ -2039,6 +2098,9 @@
 		activeTerritoryId = territoryId;
 		applyTerritoryVisibility();
 		styleActiveTerritory();
+		if (!map) return;
+		// The picker can be switched on before the territory (deep link): re-apply it.
+		setDeptPickerVisible(pickerVisible);
 	}
 
 	// One strong pink border (the active territory) and the rest thin and faint.
@@ -2154,10 +2216,114 @@
 		if (!feats || !map) return;
 		const src = map.getSource('ar-depts') as any;
 		if (src?.setData) src.setData({ type: 'FeatureCollection', features: feats });
+		applyDeptFill();
+	}
+
+	// ── Province view: departments painted with the active ranking reading ──
+	// Itapúa and Alto Paraná district layers were created before the PY loop with
+	// the stripped id; the other PY territories use `${tid}-district-fill`.
+	const PY_FILL_LAYER: Record<string, string> = { itapua_py: 'itapua-district-fill', alto_parana_py: 'alto_parana-district-fill' };
+	const PY_FILL_TERRITORIES = ['concepcion_py', 'san_pedro_py', 'cordillera_py', 'guaira_py', 'caaguazu_py', 'caazapa_py',
+		'misiones_py', 'paraguari_py', 'central_py', 'neembucu_py', 'amambay_py', 'canindeyu_py',
+		'presidente_hayes_py', 'boqueron_py', 'alto_paraguay_py'];
+	let deptFill: DeptFill | null = null;
+	let deptFillLookup = new Map<string, { name: string; value: number | null; pos: number }>();
+	let brLoadedFor: string | null = null;
+	let pickerVisible = false;
+
+	export function setDeptFill(f: DeptFill | null) {
+		deptFill = f;
+		applyDeptFill();
+	}
+
+	function pyFillLayer(tid: string): string {
+		return PY_FILL_LAYER[tid] ?? `${tid}-district-fill`;
+	}
+
+	// One match expression per paint property, keyed by the polygon's own name.
+	function fillExprs(names: string[], key: (n: string) => string, nameExpr: any, fallback: { color: string; opacity: number }) {
+		const color: any[] = ['match', nameExpr];
+		const opacity: any[] = ['match', nameExpr];
+		const seen = new Set<string>();
+		for (const n of names) {
+			if (!n) continue;
+			const label = key(n);
+			if (seen.has(label)) continue;
+			seen.add(label);
+			const s = deptFillStyle(deptFillLookup.get(normDeptName(n))?.value, deptFill!);
+			color.push(label, s.color);
+			opacity.push(label, s.opacity);
+		}
+		if (!seen.size) return { color: fallback.color as any, opacity: fallback.opacity as any };
+		color.push(fallback.color);
+		opacity.push(fallback.opacity);
+		return { color: color as any, opacity: opacity as any };
+	}
+
+	function applyDeptFill() {
+		if (!map?.getStyle()) return;
+		const reset = (id: string, opacity: number) => {
+			if (!map.getLayer(id)) return;
+			map.setPaintProperty(id, 'fill-color', '#60a5fa');
+			map.setPaintProperty(id, 'fill-opacity', opacity);
+		};
+		reset('ar-dept-fill', 0.05);
+		reset('br-dept-fill', 0.05);
+		for (const id of [...Object.values(PY_FILL_LAYER), ...PY_FILL_TERRITORIES.map(t => `${t}-district-fill`)]) reset(id, 0.06);
+		deptFillLookup = new Map();
+		const f = deptFill;
+		if (!f) return;
+		f.values.forEach((d, i) => deptFillLookup.set(normDeptName(d.name), { name: d.name, value: d.value, pos: i + 1 }));
+		const tid = f.territory;
+		const cp = AR_CODPROV[tid];
+		if (cp) {
+			// The AR source holds the four provinces: paint only the active one.
+			const feats = (getArFeatures() ?? []).filter(x => String(x.properties.redcode).slice(0, 2) === cp);
+			const e = fillExprs(feats.map(x => x.properties.nombre), n => n, ['get', 'nombre'], FILL_NA);
+			const inProv = ['==', ['slice', ['to-string', ['get', 'redcode']], 0, 2], cp];
+			map.setPaintProperty('ar-dept-fill', 'fill-color', ['case', inProv, e.color, 'rgba(0,0,0,0)'] as any);
+			map.setPaintProperty('ar-dept-fill', 'fill-opacity', ['case', inProv, e.opacity, 0] as any);
+		} else if (tid.endsWith('_br')) {
+			if (brLoadedFor !== tid) return;   // loadBrDeptSource re-applies once the polygons land
+			const e = fillExprs((getBrFeatures(tid) ?? []).map(x => x.properties.district), n => n, ['get', 'district'], FILL_NA);
+			map.setPaintProperty('br-dept-fill', 'fill-color', e.color);
+			map.setPaintProperty('br-dept-fill', 'fill-opacity', e.opacity);
+		} else if (tid.endsWith('_py')) {
+			// Vector tiles: the polygon names are not known here, so key by the summary's
+			// names in lower case (Alto Paraná tiles are upper case, accents match).
+			const id = pyFillLayer(tid);
+			if (!map.getLayer(id)) return;
+			const e = fillExprs(f.values.map(d => d.name), n => n.toLowerCase(), ['downcase', ['get', 'district']], FILL_NA);
+			map.setPaintProperty(id, 'fill-color', e.color);
+			map.setPaintProperty(id, 'fill-opacity', e.opacity);
+		}
+	}
+
+	async function loadBrDeptSource(tid: string) {
+		await ensureBrBoundaries(tid);
+		const feats = getBrFeatures(tid);
+		if (!feats || !map || activeTerritoryId !== tid) return;
+		const src = map.getSource('br-depts') as any;
+		if (brLoadedFor !== tid && src?.setData) {
+			src.setData({ type: 'FeatureCollection', features: feats });
+			brLoadedFor = tid;
+		}
+		applyBrPickerVisibility();
+		applyDeptFill();
+	}
+
+	function applyBrPickerVisibility() {
+		const on = pickerVisible && activeTerritoryId.endsWith('_br') && brLoadedFor === activeTerritoryId;
+		for (const id of ['br-dept-fill', 'br-dept-line']) {
+			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none');
+		}
 	}
 
 	export function setDeptPickerVisible(visible: boolean) {
 		if (!map) return;
+		pickerVisible = visible;
+		applyBrPickerVisibility();
+		if (visible && activeTerritoryId.endsWith('_br') && brLoadedFor !== activeTerritoryId) loadBrDeptSource(activeTerritoryId);
 		// AR departments (always shown together since they don't overlap)
 		for (const id of ['ar-dept-fill', 'ar-dept-line']) {
 			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none');
@@ -2184,9 +2350,13 @@
 			'boqueron_py-district-fill',         'boqueron_py-district-line',
 			'alto_paraguay_py-district-fill',    'alto_paraguay_py-district-line',
 		];
+		// Itapúa and Alto Paraná layers carry the stripped id (itapua-district-*), so
+		// match through pyFillLayer, not a prefix of the territory id.
+		const activeFill = activeTerritoryId.endsWith('_py') ? pyFillLayer(activeTerritoryId) : '';
+		const activeLine = activeFill.replace(/-fill$/, '-line');
 		for (const id of allPyDistrictLayers) {
 			if (!map.getLayer(id)) continue;
-			const isActiveTerrLayer = id.startsWith(activeTerritoryId);
+			const isActiveTerrLayer = id === activeFill || id === activeLine;
 			map.setLayoutProperty(id, 'visibility', (visible && isActiveTerrLayer) ? 'visible' : 'none');
 		}
 	}

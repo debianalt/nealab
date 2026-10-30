@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
+	import { untrack, onDestroy } from 'svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
@@ -215,6 +215,23 @@
 		const i = deptList.findIndex((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === selectedDpto);
 		return i < 0 ? null : { pos: i + 1, total: deptList.length, dept: deptList[i] };
 	});
+
+	// Province view: the map paints the departments with the bars' values and scale.
+	// Only while the bars are shown; an open department shows its hexagons instead.
+	$effect(() => {
+		const show = hasRank && rankBars && !!rankCfg && !selectedDpto && !!activeTab;
+		const f = show ? {
+			territory: activeTab,
+			values: deptList.map((d: any) => ({ name: d.dpto ?? d.distrito ?? d.municipio, value: d.rank?.[rankCfg!.field] ?? null })),
+			max: rankMax,
+			signed: !!rankCfg!.signed,
+			decimals: rankCfg!.decimals,
+			unit: rankUnit,
+			title: i18n.t(rankCfg!.titleKey),
+		} : null;
+		untrack(() => hexStore.setDeptFill(f));
+	});
+	onDestroy(() => hexStore.setDeptFill(null));
 
 	// Dept filter — BR states list 300-500 municipalities; without a filter the
 	// list buries every chart below it. Reset on territory tab switch.

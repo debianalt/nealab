@@ -20,6 +20,21 @@ export function getArFeatures(): any[] | null {
 	return arFeatures;
 }
 
+// Department names differ in case, accents and numerals between the polygons
+// (INDEC, DGEEC, IBGE) and the summaries: compare them through this key.
+// Chaco's summaries spell out four numbered departments ("Doce de Octubre")
+// that the INDEC polygons write with digits ("12 de Octubre"); Misiones'
+// summaries abbreviate three ("G. M. Belgrano" for General Manuel Belgrano).
+const DEPT_ALIASES: Record<string, string> = {
+	docedeoctubre: '12deoctubre', nuevedejulio: '9dejulio',
+	primerodemayo: '1demayo', veinticincodemayo: '25demayo',
+	gmbelgrano: 'generalmanuelbelgrano', lnalem: 'leandronalem', lgsanmartin: 'libertadorgeneralsanmartin',
+};
+export function normDeptName(s: string | null | undefined): string {
+	const k = (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+	return DEPT_ALIASES[k] ?? k;
+}
+
 // territoryPrefix → INDEC codprov (2-digit). Used to disambiguate dept names
 // across provinces (e.g., "General Belgrano" exists in multiple provinces).
 const AR_PROVINCE_PREFIX: Record<string, string> = {
@@ -58,6 +73,10 @@ export async function ensureBrBoundaries(territoryId: string): Promise<void> {
 	try { await promise; } catch { /* swallow: findDeptFeature returns null → polygon outline silently absent */ }
 }
 
+export function getBrFeatures(territoryId: string): any[] | null {
+	return brBoundariesCache.get(territoryId)?.features ?? null;
+}
+
 export function findDeptFeature(deptName: string, territoryPrefix: string): any | null {
 	if (!deptName) return null;
 
@@ -66,9 +85,10 @@ export function findDeptFeature(deptName: string, territoryPrefix: string): any 
 	if (provincePrefix) {
 		// null until ensureArBoundaries() resolves — callers (loadDept hole-fill,
 		// outline render) already tolerate null, same as the BR branch below.
+		const key = normDeptName(deptName);
 		return (arFeatures ?? []).find(f =>
-			f.properties.nombre === deptName &&
-			String(f.properties.redcode).startsWith(provincePrefix)
+			String(f.properties.redcode).startsWith(provincePrefix) &&
+			normDeptName(f.properties.nombre) === key
 		) || null;
 	}
 

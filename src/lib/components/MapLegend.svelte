@@ -2,12 +2,26 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
+	import { deptFillClasses, FILL_NA } from '$lib/utils/deptFill';
 
 	let { hexStore }: { hexStore: HexStore } = $props();
 
 	const PALETTE = ['#1565c0', '#7e57c2', '#4db6ac', '#66bb6a', '#c0ca33', '#ffb74d', '#e65100', '#78909c'];
 
 	const layer = $derived(hexStore.activeLayer);
+
+	// Province view: the departments painted with the ranking reading (deptFill).
+	const fill = $derived(hexStore.deptFill);
+	const fillBy = $derived(fill ? i18n.t(fill.territory.endsWith('_br') ? 'legend.deptFill.byMun' : fill.territory.endsWith('_py') ? 'legend.deptFill.byDist' : 'legend.deptFill.byDept') : '');
+	const fillRows = $derived.by(() => {
+		if (!fill) return [];
+		const f = (x: number) => (fill.signed && x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toLocaleString(i18n.locale, { minimumFractionDigits: fill.decimals, maximumFractionDigits: fill.decimals });
+		return deptFillClasses(fill.signed).map(c => ({
+			color: c.color, opacity: c.opacity,
+			label: c.lo < 0 && c.hi > 0 ? `≈ 0 (± ${f(c.hi * fill.max).replace('+', '')})` : `${f(c.lo * fill.max)} – ${f(c.hi * fill.max)}`,
+		}));
+	});
+	const fillHasNull = $derived(!!fill?.values.some(v => v.value == null));
 	// Use diverging scale when temporal delta mode is active, otherwise use layer's configured scale
 	const effectiveScale = $derived(
 		layer?.temporal && hexStore.temporalMode === 'delta' ? 'diverging' : layer?.colorScale
@@ -124,7 +138,26 @@
 	);
 </script>
 
-{#if layer && (isCategorical && typeEntries.length > 0)}
+{#if layer && fill}
+	<div class="legend">
+		<div class="legend-title">{fill.title}</div>
+		<div class="legend-sub">{fill.unit ? `${fillBy} · ${fill.unit}` : fillBy}</div>
+		<div class="legend-items">
+			{#each fillRows as row}
+				<div class="legend-item">
+					<span class="legend-swatch" style:background={row.color} style:opacity={row.opacity}></span>
+					<span class="legend-label">{row.label}</span>
+				</div>
+			{/each}
+			{#if fillHasNull}
+				<div class="legend-item">
+					<span class="legend-swatch" style:background={FILL_NA.color} style:opacity={FILL_NA.opacity}></span>
+					<span class="legend-label">{i18n.t('legend.deptFill.na')}</span>
+				</div>
+			{/if}
+		</div>
+	</div>
+{:else if layer && (isCategorical && typeEntries.length > 0)}
 	<div class="legend">
 		<div class="legend-title">{title}</div>
 		<div class="legend-items">
@@ -231,6 +264,12 @@
 		letter-spacing: 0.04em;
 		line-height: 1.3;
 	}
+	.legend-sub {
+		font-size: 10px;
+		color: var(--text-secondary, #94a3b8);
+		margin: -2px 0 6px;
+	}
+
 	.legend-items {
 		display: flex;
 		flex-direction: column;

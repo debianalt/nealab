@@ -116,6 +116,16 @@ export interface HexZone {
 
 const NON_NUMERIC_COLS = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'score', 'flood_risk_score', 'risk_score', 'territorial_type']);
 
+export interface DeptFill {
+	territory: string;                                    // territory id
+	values: { name: string; value: number | null }[];    // ranking order
+	max: number;                                          // max |value|, the bars' scale
+	signed: boolean;
+	decimals: number;
+	unit: string;
+	title: string;                                        // the reading's question
+}
+
 export class HexStore {
 	activeLayer: HexLayerConfig | null = $state(null);
 	visibleData: Map<string, Record<string, any>> = $state(new Map());
@@ -207,6 +217,7 @@ export class HexStore {
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
 		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
 		this.colorVariable = null;   // the new layer's panel sets its own
+		this.deptFill = null;
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -277,6 +288,14 @@ export class HexStore {
 	// parquet has the column, so a territory not yet published keeps the primary.
 	colorVariable: string | null = $state(null);
 	loadedCols: Set<string> = $state(new Set());
+
+	// Province view: the departments painted with the active ranking reading
+	// (same values and linear scale as the bars). Set by the panel, null otherwise.
+	deptFill: DeptFill | null = $state(null);
+
+	setDeptFill(f: DeptFill | null) {
+		this.deptFill = f;
+	}
 
 	setColorVariable(v: string | null) {
 		if (v === this.colorVariable) return;

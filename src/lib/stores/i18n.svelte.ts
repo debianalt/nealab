@@ -101,6 +101,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.range': { es: 'Score 0–100', en: 'Score 0–100', gn: 'Score 0–100', pt: 'Score 0–100' },
 	'legend.highValue': { es: 'Valor alto', en: 'High value', gn: 'Valor yvate', pt: 'Valor alto' },
 	'unit.pctlProv': { es: 'percentil prov.', en: 'prov. percentile', gn: 'percentil prov.', pt: 'percentil prov.' },
+	'legend.deptFill.byDept': { es: 'por departamento', en: 'by department', gn: 'departamento rupi', pt: 'por departamento' },
+	'legend.deptFill.byDist': { es: 'por distrito', en: 'by district', gn: 'distrito rupi', pt: 'por distrito' },
+	'legend.deptFill.byMun': { es: 'por municipio', en: 'by municipality', gn: 'municipio rupi', pt: 'por município' },
+	'legend.deptFill.na': { es: 'Sin dato', en: 'No value', gn: 'Ndaipóri dato', pt: 'Sem dado' },
 	'legend.noData': { es: 'Sin cobertura', en: 'No data', gn: "Ndaipóri dato", pt: 'Sem cobertura' },
 	// ── Analysis section headings ──
 	// Generic spinner label for panels that had 'Cargando…' hardcoded in all four locales.

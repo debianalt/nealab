@@ -36,7 +36,7 @@
 	import { isInsidePresidenteHayes } from '$lib/utils/presidente_hayes-pip';
 	import { isInsideBoqueron } from '$lib/utils/boqueron-pip';
 	import { isInsideAltoParaguay } from '$lib/utils/alto_paraguay-pip';
-	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
+	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, isArDeptTerritory, normDeptName } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
@@ -352,9 +352,8 @@
 			const summary = await loadDeptSummary(a.id, t.parquetPrefix);
 			const depts = summary?.departments as any[] | undefined;
 			if (!depts?.length) return;
-			const norm = (s: string) => (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
-			const key = norm(name);
-			const entry = depts.find(d => norm(d.dpto ?? d.distrito ?? d.municipio ?? '') === key);
+			const key = normDeptName(name);
+			const entry = depts.find(d => normDeptName(d.dpto ?? d.distrito ?? d.municipio) === key);
 			if (!entry?.parquetKey || !entry?.centroid) return;
 			handleSelectFloodDpto(entry.dpto ?? entry.distrito ?? entry.municipio, entry.parquetKey, entry.centroid as [number, number]);
 		}) as EventListener);
@@ -990,6 +989,12 @@
 		if (show && isArDeptTerritory(hexStore.territoryPrefix)) mapComponent?.loadArDeptSource();
 		// Pre-fetch colorDomain so first dept click doesn't wait for the global parquet query
 		if (a?.perDepartment) hexStore.ensureColorDomain().catch(() => {});
+	});
+
+	// Province view: paint the departments with the ranking reading the panel shows.
+	$effect(() => {
+		const f = hexStore.deptFill;
+		mapComponent?.setDeptFill(f);
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────
@@ -1853,8 +1858,7 @@
 						loadDeptSummary(hexStore.activeLayer!.id, hexStore.territoryPrefix).then(summary => {
 							const depts = summary?.departments as any[] | undefined;
 							if (!depts?.length) return;
-							const norm = (s: string) => (s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
-							const entry = depts.find(d => norm(d.dpto ?? d.distrito ?? d.municipio ?? '') === norm(name));
+							const entry = depts.find(d => normDeptName(d.dpto ?? d.distrito ?? d.municipio) === normDeptName(name));
 							if (!entry?.centroid) { handleSelectFloodDpto(name, parquetKey, [0, 0]); return; }
 							handleSelectFloodDpto(name, parquetKey, entry.centroid as [number, number]);
 						});
