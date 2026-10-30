@@ -2,140 +2,131 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 79419,
-    "avg_score": 42.3,
     "unassigned": 387
   },
   "departments": [
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 53.5,
       "hex_count": 27122,
       "centroid": [
         -60.6287,
         -26.0385
       ],
       "rank": {
-        "nbi_pct": 21.6,
-        "nbi_n": 4298,
+        "nbi_pct": 22.1,
+        "nbi_n": 4927,
         "cloacas_pct": 88.2,
-        "cloacas_n": 17579,
-        "hacin_pct": 11.5,
-        "hacin_n": 2292
+        "cloacas_n": 19642,
+        "hacin_pct": 12.9,
+        "hacin_n": 2867
       }
     },
     {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 51.0,
       "hex_count": 2476,
       "centroid": [
         -60.0606,
         -26.9388
       ],
       "rank": {
-        "nbi_pct": 18.6,
-        "nbi_n": 1862,
-        "cloacas_pct": 65.1,
-        "cloacas_n": 6503,
-        "hacin_pct": 17.8,
-        "hacin_n": 1782
+        "nbi_pct": 18.8,
+        "nbi_n": 1857,
+        "cloacas_pct": 65.2,
+        "cloacas_n": 6421,
+        "hacin_pct": 18.0,
+        "hacin_n": 1772
       }
     },
     {
       "dpto": "Maipú",
       "parquetKey": "maipu",
-      "avg_score": 47.3,
       "hex_count": 3171,
       "centroid": [
         -60.4481,
         -26.4666
       ],
       "rank": {
-        "nbi_pct": 19.2,
-        "nbi_n": 1621,
+        "nbi_pct": 19.6,
+        "nbi_n": 1648,
         "cloacas_pct": 82.3,
-        "cloacas_n": 6954,
-        "hacin_pct": 12.6,
-        "hacin_n": 1067
+        "cloacas_n": 6933,
+        "hacin_pct": 12.8,
+        "hacin_n": 1077
       }
     },
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 45.0,
       "hex_count": 6326,
       "centroid": [
         -59.2624,
         -26.5636
       ],
       "rank": {
-        "nbi_pct": 11.4,
-        "nbi_n": 2438,
-        "cloacas_pct": 74.0,
-        "cloacas_n": 15773,
-        "hacin_pct": 13.4,
-        "hacin_n": 2855
+        "nbi_pct": 11.6,
+        "nbi_n": 2462,
+        "cloacas_pct": 74.1,
+        "cloacas_n": 15679,
+        "hacin_pct": 13.7,
+        "hacin_n": 2895
       }
     },
     {
       "dpto": "Quitilipi",
       "parquetKey": "quitilipi",
-      "avg_score": 43.2,
       "hex_count": 2462,
       "centroid": [
         -60.1745,
         -26.6802
       ],
       "rank": {
-        "nbi_pct": 14.7,
-        "nbi_n": 1527,
-        "cloacas_pct": 64.8,
-        "cloacas_n": 6759,
-        "hacin_pct": 12.5,
-        "hacin_n": 1298
+        "nbi_pct": 14.6,
+        "nbi_n": 1500,
+        "cloacas_pct": 64.7,
+        "cloacas_n": 6629,
+        "hacin_pct": 12.4,
+        "hacin_n": 1275
       }
     },
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 42.9,
       "hex_count": 1202,
       "centroid": [
         -60.105,
         -27.5908
       ],
       "rank": {
-        "nbi_pct": 11.9,
-        "nbi_n": 163,
-        "cloacas_pct": 70.8,
-        "cloacas_n": 963,
-        "hacin_pct": 13.6,
-        "hacin_n": 185
+        "nbi_pct": 12.1,
+        "nbi_n": 153,
+        "cloacas_pct": 68.7,
+        "cloacas_n": 868,
+        "hacin_pct": 14.3,
+        "hacin_n": 181
       }
     },
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 42.5,
       "hex_count": 1295,
       "centroid": [
         -59.8639,
         -26.9787
       ],
       "rank": {
-        "nbi_pct": 13.1,
-        "nbi_n": 580,
-        "cloacas_pct": 57.0,
+        "nbi_pct": 13.2,
+        "nbi_n": 579,
+        "cloacas_pct": 57.4,
         "cloacas_n": 2517,
-        "hacin_pct": 13.6,
-        "hacin_n": 600
+        "hacin_pct": 13.8,
+        "hacin_n": 604
       }
     },
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 41.7,
       "hex_count": 1620,
       "centroid": [
         -59.5185,
@@ -143,89 +134,84 @@
       ],
       "rank": {
         "nbi_pct": 8.9,
-        "nbi_n": 558,
-        "cloacas_pct": 87.6,
-        "cloacas_n": 5507,
-        "hacin_pct": 10.2,
-        "hacin_n": 643
+        "nbi_n": 561,
+        "cloacas_pct": 87.7,
+        "cloacas_n": 5506,
+        "hacin_pct": 10.3,
+        "hacin_n": 644
       }
     },
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 40.7,
       "hex_count": 4869,
       "centroid": [
         -60.9495,
         -26.4947
       ],
       "rank": {
-        "nbi_pct": 15.7,
-        "nbi_n": 1807,
+        "nbi_pct": 15.8,
+        "nbi_n": 1787,
         "cloacas_pct": 95.8,
-        "cloacas_n": 10992,
-        "hacin_pct": 12.5,
+        "cloacas_n": 10839,
+        "hacin_pct": 12.7,
         "hacin_n": 1432
       }
     },
     {
       "dpto": "9 de Julio",
       "parquetKey": "9_de_julio",
-      "avg_score": 37.1,
       "hex_count": 1886,
       "centroid": [
         -61.094,
         -27.0465
       ],
       "rank": {
-        "nbi_pct": 9.0,
-        "nbi_n": 895,
-        "cloacas_pct": 95.3,
-        "cloacas_n": 9437,
-        "hacin_pct": 10.0,
-        "hacin_n": 990
+        "nbi_pct": 9.1,
+        "nbi_n": 897,
+        "cloacas_pct": 95.4,
+        "cloacas_n": 9396,
+        "hacin_pct": 10.2,
+        "hacin_n": 1007
       }
     },
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
-      "avg_score": 36.0,
       "hex_count": 2003,
       "centroid": [
         -60.746,
         -26.5928
       ],
       "rank": {
-        "nbi_pct": 26.7,
-        "nbi_n": 1787,
-        "cloacas_pct": 93.2,
-        "cloacas_n": 6232,
-        "hacin_pct": 12.5,
-        "hacin_n": 834
+        "nbi_pct": 26.9,
+        "nbi_n": 1722,
+        "cloacas_pct": 93.1,
+        "cloacas_n": 5950,
+        "hacin_pct": 12.7,
+        "hacin_n": 812
       }
     },
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 35.8,
       "hex_count": 1625,
       "centroid": [
         -60.3845,
         -27.2115
       ],
       "rank": {
-        "nbi_pct": 12.6,
-        "nbi_n": 676,
-        "cloacas_pct": 94.4,
-        "cloacas_n": 5083,
-        "hacin_pct": 10.6,
-        "hacin_n": 571
+        "nbi_pct": 12.8,
+        "nbi_n": 679,
+        "cloacas_pct": 94.3,
+        "cloacas_n": 4994,
+        "hacin_pct": 10.8,
+        "hacin_n": 570
       }
     },
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "avg_score": 32.5,
       "hex_count": 1018,
       "centroid": [
         -61.281,
@@ -233,89 +219,84 @@
       ],
       "rank": {
         "nbi_pct": 9.4,
-        "nbi_n": 281,
-        "cloacas_pct": 96.8,
-        "cloacas_n": 2884,
-        "hacin_pct": 8.0,
+        "nbi_n": 271,
+        "cloacas_pct": 96.9,
+        "cloacas_n": 2802,
+        "hacin_pct": 8.3,
         "hacin_n": 239
       }
     },
     {
       "dpto": "12 de Octubre",
       "parquetKey": "12_de_octubre",
-      "avg_score": 32.2,
       "hex_count": 1955,
       "centroid": [
         -61.2476,
         -27.3058
       ],
       "rank": {
-        "nbi_pct": 17.8,
-        "nbi_n": 1342,
+        "nbi_pct": 18.2,
+        "nbi_n": 1331,
         "cloacas_pct": 96.9,
-        "cloacas_n": 7290,
-        "hacin_pct": 10.3,
-        "hacin_n": 772
+        "cloacas_n": 7069,
+        "hacin_pct": 10.4,
+        "hacin_n": 756
       }
     },
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 32.1,
       "hex_count": 743,
       "centroid": [
         -61.0058,
         -26.9294
       ],
       "rank": {
-        "nbi_pct": 19.1,
-        "nbi_n": 750,
-        "cloacas_pct": 94.5,
-        "cloacas_n": 3721,
-        "hacin_pct": 11.7,
-        "hacin_n": 461
+        "nbi_pct": 19.4,
+        "nbi_n": 734,
+        "cloacas_pct": 94.3,
+        "cloacas_n": 3560,
+        "hacin_pct": 11.8,
+        "hacin_n": 446
       }
     },
     {
       "dpto": "Chacabuco",
       "parquetKey": "chacabuco",
-      "avg_score": 31.2,
       "hex_count": 1697,
       "centroid": [
         -61.1724,
         -27.2451
       ],
       "rank": {
-        "nbi_pct": 8.0,
-        "nbi_n": 921,
-        "cloacas_pct": 88.5,
-        "cloacas_n": 10185,
-        "hacin_pct": 9.6,
-        "hacin_n": 1100
+        "nbi_pct": 8.1,
+        "nbi_n": 931,
+        "cloacas_pct": 88.9,
+        "cloacas_n": 10178,
+        "hacin_pct": 9.7,
+        "hacin_n": 1110
       }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 31.1,
       "hex_count": 1344,
       "centroid": [
         -61.1354,
         -27.8402
       ],
       "rank": {
-        "nbi_pct": 9.0,
-        "nbi_n": 329,
+        "nbi_pct": 9.2,
+        "nbi_n": 323,
         "cloacas_pct": 96.4,
-        "cloacas_n": 3509,
+        "cloacas_n": 3383,
         "hacin_pct": 8.7,
-        "hacin_n": 317
+        "hacin_n": 304
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 30.8,
       "hex_count": 1149,
       "centroid": [
         -59.1935,
@@ -323,89 +304,84 @@
       ],
       "rank": {
         "nbi_pct": 9.3,
-        "nbi_n": 409,
-        "cloacas_pct": 45.0,
-        "cloacas_n": 1979,
-        "hacin_pct": 10.1,
-        "hacin_n": 444
+        "nbi_n": 397,
+        "cloacas_pct": 43.6,
+        "cloacas_n": 1868,
+        "hacin_pct": 10.3,
+        "hacin_n": 440
       }
     },
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 30.8,
       "hex_count": 1729,
       "centroid": [
         -60.6361,
         -27.2059
       ],
       "rank": {
-        "nbi_pct": 19.4,
-        "nbi_n": 1293,
-        "cloacas_pct": 93.4,
-        "cloacas_n": 6217,
-        "hacin_pct": 12.9,
-        "hacin_n": 857
+        "nbi_pct": 20.4,
+        "nbi_n": 1277,
+        "cloacas_pct": 93.1,
+        "cloacas_n": 5833,
+        "hacin_pct": 13.4,
+        "hacin_n": 842
       }
     },
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 30.7,
       "hex_count": 2635,
       "centroid": [
         -60.3662,
         -26.7051
       ],
       "rank": {
-        "nbi_pct": 12.4,
-        "nbi_n": 4222,
-        "cloacas_pct": 64.3,
-        "cloacas_n": 21845,
-        "hacin_pct": 9.6,
-        "hacin_n": 3252
+        "nbi_pct": 12.7,
+        "nbi_n": 4279,
+        "cloacas_pct": 64.1,
+        "cloacas_n": 21582,
+        "hacin_pct": 9.7,
+        "hacin_n": 3258
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 29.3,
       "hex_count": 2056,
       "centroid": [
         -58.6749,
         -26.9131
       ],
       "rank": {
-        "nbi_pct": 8.3,
-        "nbi_n": 790,
-        "cloacas_pct": 81.5,
-        "cloacas_n": 7743,
-        "hacin_pct": 10.5,
-        "hacin_n": 1001
+        "nbi_pct": 8.4,
+        "nbi_n": 785,
+        "cloacas_pct": 81.4,
+        "cloacas_n": 7618,
+        "hacin_pct": 10.7,
+        "hacin_n": 1002
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
-      "avg_score": 27.2,
       "hex_count": 1381,
       "centroid": [
         -59.4059,
         -27.0776
       ],
       "rank": {
-        "nbi_pct": 8.5,
-        "nbi_n": 414,
-        "cloacas_pct": 89.7,
-        "cloacas_n": 4390,
+        "nbi_pct": 8.3,
+        "nbi_n": 396,
+        "cloacas_pct": 89.6,
+        "cloacas_n": 4284,
         "hacin_pct": 10.2,
-        "hacin_n": 499
+        "hacin_n": 489
       }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 27.0,
       "hex_count": 2748,
       "centroid": [
         -60.718,
@@ -413,47 +389,45 @@
       ],
       "rank": {
         "nbi_pct": 8.6,
-        "nbi_n": 1747,
-        "cloacas_pct": 68.6,
-        "cloacas_n": 13879,
+        "nbi_n": 1723,
+        "cloacas_pct": 68.5,
+        "cloacas_n": 13693,
         "hacin_pct": 9.6,
-        "hacin_n": 1941
+        "hacin_n": 1925
       }
     },
     {
       "dpto": "1° de Mayo",
       "parquetKey": "1°_de_mayo",
-      "avg_score": 26.8,
       "hex_count": 1129,
       "centroid": [
         -58.9587,
         -27.1679
       ],
       "rank": {
-        "nbi_pct": 9.2,
-        "nbi_n": 445,
-        "cloacas_pct": 92.8,
-        "cloacas_n": 4497,
-        "hacin_pct": 10.8,
-        "hacin_n": 525
+        "nbi_pct": 9.1,
+        "nbi_n": 432,
+        "cloacas_pct": 92.7,
+        "cloacas_n": 4398,
+        "hacin_pct": 10.9,
+        "hacin_n": 519
       }
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 22.6,
       "hex_count": 3391,
       "centroid": [
         -58.9957,
         -27.5283
       ],
       "rank": {
-        "nbi_pct": 6.9,
-        "nbi_n": 9795,
-        "cloacas_pct": 42.4,
-        "cloacas_n": 60247,
-        "hacin_pct": 8.2,
-        "hacin_n": 11670
+        "nbi_pct": 7.0,
+        "nbi_n": 9914,
+        "cloacas_pct": 42.6,
+        "cloacas_n": 60538,
+        "hacin_pct": 8.3,
+        "hacin_n": 11764
       }
     }
   ]

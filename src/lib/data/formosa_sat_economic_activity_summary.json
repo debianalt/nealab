@@ -15,7 +15,7 @@
       ],
       "rank": {
         "viirs": 10.7,
-        "empleo_pct": 55.0,
+        "empleo_pct": 55.1,
         "univ_pct": 10.5
       }
     },
@@ -29,7 +29,7 @@
       ],
       "rank": {
         "viirs": 2.36,
-        "empleo_pct": 48.3,
+        "empleo_pct": 48.5,
         "univ_pct": 5.3
       }
     },
@@ -71,8 +71,8 @@
       ],
       "rank": {
         "viirs": 1.67,
-        "empleo_pct": 46.9,
-        "univ_pct": 4.3
+        "empleo_pct": 47.0,
+        "univ_pct": 4.4
       }
     },
     {
@@ -99,7 +99,7 @@
       ],
       "rank": {
         "viirs": 0.97,
-        "empleo_pct": 45.3,
+        "empleo_pct": 45.4,
         "univ_pct": 3.3
       }
     },
@@ -127,8 +127,8 @@
       ],
       "rank": {
         "viirs": 0.11,
-        "empleo_pct": 35.0,
-        "univ_pct": 6.7
+        "empleo_pct": 33.3,
+        "univ_pct": 6.2
       }
     }
   ]

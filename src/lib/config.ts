@@ -94,12 +94,12 @@ export function getParquetUrl(name: string): string {
 		hex_flood_risk: '?v=39',
 		sat_agri_potential: '?v=36',
 		sat_forestry_aptitude: '?v=40',
-		sat_service_deprivation: '?v=31',
-		sat_health_access: '?v=29',
-		sat_education_capital: '?v=28',
-		sat_education_flow: '?v=28',
-		sat_sociodemographic: '?v=24',
-		sat_economic_activity: '?v=30',
+		sat_service_deprivation: '?v=32',
+		sat_health_access: '?v=30',
+		sat_education_capital: '?v=29',
+		sat_education_flow: '?v=29',
+		sat_sociodemographic: '?v=25',
+		sat_economic_activity: '?v=31',
 		sat_accessibility: '?v=27',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
@@ -112,7 +112,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 25;
+const DEPT_V = 26;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -463,7 +463,7 @@ export interface HexVariable {
 	unit?: string;
 	rawUnit?: string; // unit of the _raw physical value when it differs from `unit` (e.g. percentil display, hab/km² or min raw)
 	scale?: number;   // multiply the stored value for display (e.g. DW land-cover fractions 0–1 → % with scale 100)
-	baseCol?: string; // column with the people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
+	baseCol?: string; // column with the households/people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
 	hideIfZero?: boolean;
 }
 
@@ -493,6 +493,9 @@ export interface HexLayerConfig {
 	// the global parquet — avoids a slow remote scan (carbon: 1 row-group, 2.7 MB
 	// column = 3.6 s) AND makes colors identical cross-territory (more comparable).
 	fixedColorDomain?: [number, number];
+	// Color from P2 to P98 of the painted column instead of MIN–MAX: real census
+	// rates are skewed (NBI 0–100 %, most hexagons under 30 %).
+	quantileDomain?: boolean;
 	// Discrete color classes on the primaryVariable, replacing the continuous ramp
 	// (map, legend and catastro parcels). Ignored in temporal delta mode.
 	colorClasses?: ColorClasses;
@@ -812,15 +815,16 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		},
 		parquet: 'sat_service_deprivation',
 		variables: [
-			// No K-means classification for this layer (compute_satellite_scores emits no
-			// type/type_label) → the "Clasificación" row is intentionally omitted.
-			{ col: 'c_nbi', labelKey: 'sat.deprivation.nbi', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_sin_cloacas', labelKey: 'sat.deprivation.sinCloacas', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_piso', labelKey: 'sat.deprivation.piso', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_hacinamiento', labelKey: 'sat.deprivation.hacinamiento', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_hacinamiento_crit', labelKey: 'sat.deprivation.hacinamientoCrit', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_sin_computadora', labelKey: 'sat.deprivation.sinComputadora', aggregation: 'mean', unit: 'percentil' },
+			// Real Census 2022 rates, % of households (pipeline/build_census_rates.py).
+			// No K-means classification for this layer → no "Clasificación" row.
+			{ col: 'c_nbi', labelKey: 'sat.deprivation.nbi', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_sin_cloacas', labelKey: 'sat.deprivation.sinCloacas', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_piso', labelKey: 'sat.deprivation.piso', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_hacinamiento', labelKey: 'sat.deprivation.hacinamiento', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_hacinamiento_crit', labelKey: 'sat.deprivation.hacinamientoCrit', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_sin_computadora', labelKey: 'sat.deprivation.sinComputadora', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
 		],
+		quantileDomain: true,
 		primaryVariable: 'c_nbi',
 		colorScale: 'flood',
 		aggregation: 'mean',
@@ -840,13 +844,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		},
 		parquet: 'sat_health_access',
 		variables: [
-			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'percentil', rawUnit: 'min' },
-			{ col: 'c_health_coverage', labelKey: 'sat.health.coverage', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_nbi', labelKey: 'sat.health.nbi', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_elderly', labelKey: 'sat.health.elderly', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_children', labelKey: 'sat.health.children', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_pop_density', labelKey: 'sat.health.popDensity', aggregation: 'mean', unit: 'percentil', rawUnit: 'hab/km²' },
+			// Oxford/MAP minutes and real Census 2022 rates (pipeline/build_census_rates.py).
+			{ col: 'c_healthcare_time', labelKey: 'sat.health.time', aggregation: 'mean', unit: 'min' },
+			{ col: 'c_health_coverage', labelKey: 'sat.health.coverage', aggregation: 'mean', unit: '%', baseCol: 'pob_total' },
+			{ col: 'c_nbi', labelKey: 'sat.health.nbi', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'c_elderly', labelKey: 'sat.health.elderly', aggregation: 'mean', unit: '%', baseCol: 'pob_total' },
+			{ col: 'c_children', labelKey: 'sat.health.children', aggregation: 'mean', unit: '%', baseCol: 'pob_total' },
+			{ col: 'c_pop_density', labelKey: 'sat.health.popDensity', aggregation: 'mean', unit: 'hab/km²' },
 		],
+		quantileDomain: true,
 		primaryVariable: 'c_healthcare_time',
 		colorScale: 'flood',
 		aggregation: 'mean',
@@ -869,11 +875,13 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		},
 		parquet: 'sat_education_capital',
 		variables: [
-			{ col: 'c_no_schooling', labelKey: 'sat.eduCap.noSchooling', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_secondary_plus', labelKey: 'sat.eduCap.secondaryPlus', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_higher_edu', labelKey: 'sat.eduCap.higherEdu', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_university', labelKey: 'sat.eduCap.university', aggregation: 'mean', unit: 'percentil' },
+			// Real Census 2022 rates, % of people aged 18+ (pipeline/build_census_rates.py).
+			{ col: 'c_no_schooling', labelKey: 'sat.eduCap.noSchooling', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
+			{ col: 'c_secondary_plus', labelKey: 'sat.eduCap.secondaryPlus', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
+			{ col: 'c_higher_edu', labelKey: 'sat.eduCap.higherEdu', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
+			{ col: 'c_university', labelKey: 'sat.eduCap.university', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 		],
+		quantileDomain: true,
 		primaryVariable: 'c_no_schooling',
 		colorScale: 'flood',
 		aggregation: 'mean',
@@ -896,10 +904,13 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		},
 		parquet: 'sat_education_flow',
 		variables: [
-			{ col: 'c_dropout_primary', labelKey: 'sat.eduFlow.dropoutPrimary', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_dropout_secondary', labelKey: 'sat.eduFlow.dropoutSecondary', aggregation: 'mean', unit: 'percentil' },
-			{ col: 'c_teen_pregnancy', labelKey: 'sat.eduFlow.teenPregnancy', aggregation: 'mean', unit: 'percentil' },
+			// Real Census 2022 rates (pipeline/build_census_rates.py). Teen motherhood
+			// (c_teen_pregnancy) stays in the parquet for the department ranking only:
+			// its base, girls 14–17, has a median of 19 per radio.
+			{ col: 'c_dropout_primary', labelKey: 'sat.eduFlow.dropoutPrimary', aggregation: 'mean', unit: '%', baseCol: 'pob_6_12' },
+			{ col: 'c_dropout_secondary', labelKey: 'sat.eduFlow.dropoutSecondary', aggregation: 'mean', unit: '%', baseCol: 'pob_13_18' },
 		],
+		quantileDomain: true,
 		primaryVariable: 'c_dropout_primary',
 		colorScale: 'flood',
 		aggregation: 'mean',
@@ -951,24 +962,24 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Migrated from radio/catastro to H3 ──
 	sociodemographic: {
 		id: 'sociodemographic',
-		// NBI rate from local raw census data (served pct_nbi is a percentile) —
-		// pipeline/build_layer_ranks.py --census-rates.
+		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'nbi_pop_pct', unit: '%', decimals: 1,
+			field: 'nbi_pct', unit: '%', decimals: 1,
 			titleKey: 'rank.socio.title', noteKey: 'rank.socio.note',
 		},
 		parquet: 'sat_sociodemographic',
 		variables: [
-			{ col: 'score', labelKey: 'analysis.socio.score', aggregation: 'mean' },
 			{ col: 'type', labelKey: 'analysis.socio.type', aggregation: 'mean' },
 			{ col: 'type_label', labelKey: 'analysis.socio.typeLabel', aggregation: 'mean' },
-			{ col: 'densidad_hab_km2',   labelKey: 'radio.densidad.pctl',    aggregation: 'mean', unit: 'pctl' },
-			{ col: 'pct_nbi',            labelKey: 'radio.nbi.pctl',          aggregation: 'mean', unit: 'pctl' },
-			{ col: 'pct_hacinamiento',   labelKey: 'radio.hacinamiento.pctl', aggregation: 'mean', unit: 'pctl' },
-			{ col: 'pct_propietario',    labelKey: 'radio.propietario.pctl',  aggregation: 'mean', unit: 'pctl' },
-			{ col: 'tamano_medio_hogar', labelKey: 'radio.tamHogar.pctl',     aggregation: 'mean', unit: 'pctl' },
-			{ col: 'pct_computadora',    labelKey: 'radio.computadora.pctl',  aggregation: 'mean', unit: 'pctl' },
+			// Real Census 2022 values (pipeline/build_census_rates.py).
+			{ col: 'densidad_hab_km2',   labelKey: 'radio.densidad',    aggregation: 'mean', unit: 'hab/km²' },
+			{ col: 'pct_nbi',            labelKey: 'radio.nbi',          aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'pct_hacinamiento',   labelKey: 'radio.hacinamiento', aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'pct_propietario',    labelKey: 'radio.propietario',  aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
+			{ col: 'tamano_medio_hogar', labelKey: 'radio.tamHogar',     aggregation: 'mean', unit: 'personas' },
+			{ col: 'pct_computadora',    labelKey: 'radio.computadora',  aggregation: 'mean', unit: '%', baseCol: 'hog_total' },
 		],
+		quantileDomain: true,
 		primaryVariable: 'pct_nbi',
 		colorScale: 'flood',
 		aggregation: 'mean',

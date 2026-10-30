@@ -8,7 +8,6 @@
 	import { unitLabel } from '$lib/utils/units';
 	import { formatDept } from '$lib/utils/format';
 	import { loadDeptList, type DeptItem } from '$lib/utils/deptSummaries';
-	import PetalChart from './PetalChart.svelte';
 
 	let {
 		territoryStore,
@@ -64,16 +63,9 @@
 		activeLayer?.variables.filter(v => !NON_NUMERIC.has(v.col)) ?? []
 	);
 
-	const petalVars = $derived(compareVars.filter(v => v.unit === 'percentil'));
-	const hasPetal  = $derived(petalVars.length >= 3);
-	const petalLayers = $derived.by(() => {
-		if (!hasPetal || stats.length !== 2) return [];
-		return [
-			{ values: petalVars.map(v => stats[0].values[v.col] ?? 0), color: '#60a5fa' },
-			{ values: petalVars.map(v => stats[1].values[v.col] ?? 0), color: '#fbbf24' },
-		];
-	});
-	const petalLabels = $derived(petalVars.map(v => i18n.t(v.labelKey)));
+	// Rates over a base (census: % of households, of people 18+…) average as
+	// Σ rate·base / Σ base — the area's real rate, not a mean of hexagons.
+	const baseOf = $derived(new Map(compareVars.filter(v => v.baseCol).map(v => [v.col, v.baseCol!])));
 
 	// Preload dept lists for ALL available territories when analysis changes
 	$effect(() => {
@@ -136,7 +128,12 @@
 
 			const rawCols = [...rawColMap.values()].filter(c => available.has(c));
 			const allCols = [...new Set([...validCols, ...rawCols])];
-			const selects = allCols.map(col => `AVG("${col}") AS "${col}"`).join(', ');
+			const selects = allCols.map(col => {
+				const base = baseOf.get(col);
+				return base && available.has(base)
+					? `SUM("${col}" * "${base}") / NULLIF(SUM(CASE WHEN "${col}" IS NOT NULL THEN "${base}" END), 0) AS "${col}"`
+					: `AVG("${col}") AS "${col}"`;
+			}).join(', ');
 			const queryResult = await query(`SELECT ${selects} FROM '${url}'`);
 			const values: Record<string, number | null> = {};
 			const rawValues: Record<string, number | null> = {};
@@ -164,11 +161,20 @@
 		for (const v of compareVars) {
 			if (v.rawCol) rawCols.add(v.rawCol);
 		}
+		const isNum = (v: unknown): v is number => typeof v === 'number' && !isNaN(v);
 		for (const col of [...cols, ...rawCols]) {
-			const nums = [...data.values()]
-				.map(d => d[col])
-				.filter((v): v is number => typeof v === 'number' && !isNaN(v));
-			const avg = nums.length > 0 ? nums.reduce((a, b) => a + b, 0) / nums.length : null;
+			const base = baseOf.get(col);
+			let avg: number | null = null;
+			if (base) {
+				let num = 0, den = 0;
+				for (const d of data.values()) {
+					if (isNum(d[col]) && isNum(d[base])) { num += d[col] * d[base]; den += d[base]; }
+				}
+				avg = den > 0 ? num / den : null;
+			} else {
+				const nums = [...data.values()].map(d => d[col]).filter(isNum);
+				avg = nums.length > 0 ? nums.reduce((a, b) => a + b, 0) / nums.length : null;
+			}
 			if (rawCols.has(col)) rawValues[col] = avg;
 			else values[col] = avg;
 		}
@@ -304,17 +310,6 @@
 					{@const compareDptoF = compareDpto ? formatDept(compareDpto) : null}
 					{@const primaryLabel = dptoF ? (dptoF.length > 10 ? dptoF.slice(0, 9) + '.' : dptoF) : stats[0].territory.shortLabel}
 					{@const compareLabel = compareDptoF ? (compareDptoF.length > 10 ? compareDptoF.slice(0, 9) + '.' : compareDptoF) : stats[1].territory.shortLabel}
-					{#if hasPetal}
-						<div class="petal-section">
-							<div class="petal-legend">
-								<span class="petal-dot" style="background:#60a5fa"></span>
-								<span class="petal-leg-label">{stats[0].territory.flag} {primaryLabel}</span>
-								<span class="petal-dot" style="background:#fbbf24"></span>
-								<span class="petal-leg-label">{stats[1].territory.flag} {compareLabel}</span>
-							</div>
-							<PetalChart layers={petalLayers} labels={petalLabels} size={200} />
-						</div>
-					{/if}
 					<table class="stats-table">
 						<thead>
 							<tr>
@@ -340,8 +335,6 @@
 						</tbody>
 					</table>
 					{@const deptLabel = (t: typeof stats[0]['territory']) => t.country === 'py' ? 'Dist.' : t.country === 'br' ? 'Mun.' : 'Dept.'}
-					{@const crossTerritory = stats[0].territory.id !== stats[1].territory.id}
-					{@const hasPercentil = compareVars.some(v => v.unit === 'percentil')}
 					<p class="note">
 						{#if dpto && compareDpto}
 							{deptLabel(stats[0].territory)} {formatDept(dpto)} ({stats[0].territory.flag}) vs {deptLabel(stats[1].territory)} {formatDept(compareDpto)} ({stats[1].territory.flag})
@@ -351,9 +344,6 @@
 							Prom. {stats[0].territory.flag} vs prom. {stats[1].territory.flag}
 						{/if}
 					</p>
-					{#if crossTerritory && hasPercentil}
-						<p class="note note-warn">{i18n.t('panel.percentileNote')}</p>
-					{/if}
 				{/if}
 			</div>
 		{/if}
@@ -547,24 +537,4 @@
 		text-align: left;
 	}
 
-	.petal-section {
-		margin: 8px 0 4px;
-	}
-	.petal-legend {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		justify-content: center;
-		margin-bottom: 2px;
-	}
-	.petal-dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		flex-shrink: 0;
-	}
-	.petal-leg-label {
-		font-size: 9px;
-		color: rgba(255,255,255,0.65);
-	}
 </style>

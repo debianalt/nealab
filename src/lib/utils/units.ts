@@ -12,6 +12,7 @@ const UNIT_LABELS: Record<string, Record<string, string>> = {
 	'hab/km²':  { es: 'hab/km²',   en: 'inhab/km²',      gn: 'hab/km²',  pt: 'hab/km²' },
 	'viv/km²':  { es: 'viv/km²',   en: 'dwellings/km²',  gn: 'óga/km²',  pt: 'dom/km²' },
 	'edif/km²': { es: 'edif/km²',  en: 'bldg/km²',       gn: 'óga/km²',  pt: 'edif/km²' },
+	'personas': { es: 'personas',  en: 'people',         gn: 'tapicha',  pt: 'pessoas' },
 };
 
 export function unitLabel(u: string | null | undefined): string {

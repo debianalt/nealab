@@ -1454,7 +1454,11 @@ export class HexStore {
 			const pv = this.effectivePrimary;
 			// No WHERE … IS NOT NULL: MIN/MAX already ignore NULLs, and the predicate
 			// blocks DuckDB's footer-statistics pushdown (forces a full column scan).
-			const sql = `SELECT MIN(${pv}) as lo, MAX(${pv}) as hi FROM '${dataUrl}'`;
+			// Census rates are skewed: P2–P98 keeps the map from washing out (the
+			// census parquets are small, so the column scan is cheap).
+			const sql = layer.quantileDomain
+				? `SELECT quantile_cont(${pv}, 0.02) as lo, quantile_cont(${pv}, 0.98) as hi FROM '${dataUrl}'`
+				: `SELECT MIN(${pv}) as lo, MAX(${pv}) as hi FROM '${dataUrl}'`;
 			const result = await query(sql);
 			const row = result.get(0)!.toJSON() as Record<string, any>;
 			const lo = Number(row.lo) || 0;

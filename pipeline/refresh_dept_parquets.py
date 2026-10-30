@@ -24,6 +24,7 @@ import argparse
 import json
 import os
 import sys
+import time
 import urllib.request
 
 import pandas as pd
@@ -35,9 +36,18 @@ CDN = 'https://cdn.spatia.ar/data'
 SRC_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'src', 'lib', 'data')
 
 
+# The CDN edge caches every URL, query string included, and a plain GET of an
+# unversioned key can return a copy cached before the last upload (30-oct-2026:
+# health_access served its 1-jul file to the pipeline a day after the 29-oct fix;
+# a HEAD still says DYNAMIC). The site always asks with ?v; scripts add a
+# per-run buster.
+FRESH = f'fresh={int(time.time())}'
+
+
 def fetch(url: str, path: str) -> None:
     from urllib.parse import quote
     url = quote(url, safe=':/?=&')   # parquetKeys like "1°_de_mayo"
+    url += ('&' if '?' in url else '?') + FRESH
     req = urllib.request.Request(url, headers={'User-Agent': 'spatia-pipeline/1.0'})
     with urllib.request.urlopen(req, timeout=120) as r, open(path, 'wb') as f:
         f.write(r.read())

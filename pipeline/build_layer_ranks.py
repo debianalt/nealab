@@ -6,13 +6,11 @@ Each value is a physical reading of the layer per department, computed from
 the dept parquets the CDN serves and written into the `rank` block of each
 department in the layer's dept summary JSON (src/lib/data):
 
-- Census layers (4 AR provinces): household-weighted with the hexagon's
-  hogares_estimados — a "% of households", not a mean of hexagons, which would
-  weigh an empty rural cell like a city block. sociodemographic has no
-  household column and its NBI is served as a percentile, so that rate comes
-  from local raw data (--census-rates). economic_activity carries real rates
-  and the people each one is over (pob_14_mas, pob_18_mas — see
-  build_econ_census_rates.py), so its department rate is Σ rate·base / Σ base.
+- Census layers (4 AR provinces): the hexagons carry real Census 2022 rates and
+  the households or people each one is over (hog_total, pob_total, pob_18_mas,
+  … — build_census_rates.py), so a department rate is Σ rate·base / Σ base and a
+  count is Σ rate/100·base: the same as summing the radios, not a mean of
+  hexagons, which would weigh an empty rural cell like a city block.
 - Physical layers (24 territories): area-weighted (H3 res-9 cells are equal
   area). PM2.5 and accessibility describe the territory, not its people:
   Paraguay and Brazil have no population per hexagon here.
@@ -32,21 +30,20 @@ import h3
 
 sys.path.insert(0, os.path.dirname(__file__))
 from config import TERRITORY_CONFIGS, get_territory
+from refresh_dept_parquets import FRESH   # CDN edge-cache buster
 
 CDN = 'https://cdn.spatia.ar/data'
 SRC_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'src', 'lib', 'data')
 HA = h3.average_hexagon_area(9, unit='km^2') * 100
 HIGH_SCORE = 70
 
-HOG = 'COALESCE(hogares_estimados, 0)'
+def rate(col: str, base: str) -> str:
+    """Department rate: Σ rate·base / Σ base over the hexagons that have the rate."""
+    return f'SUM({col} * {base}) / NULLIF(SUM(CASE WHEN {col} IS NOT NULL THEN {base} END), 0)'
 
 
-def hog_pct(col: str) -> str:
-    return f'SUM({col} * {HOG}) / NULLIF(SUM({HOG}), 0)'
-
-
-def hog_count(col: str) -> str:
-    return f'SUM({col} / 100.0 * {HOG})'
+def count(col: str, base: str) -> str:
+    return f'SUM({col} / 100.0 * {base})'
 
 
 # layer → {rank field: (SQL aggregate, decimals)}
@@ -74,27 +71,31 @@ SPECS = {
         'high_pct': (f'100 * AVG(CASE WHEN score >= {HIGH_SCORE} THEN 1.0 ELSE 0 END)', 1),
     },
     'service_deprivation': {
-        'nbi_pct': (hog_pct('c_nbi_raw'), 1), 'nbi_n': (hog_count('c_nbi_raw'), 0),
-        'cloacas_pct': (hog_pct('c_sin_cloacas_raw'), 1), 'cloacas_n': (hog_count('c_sin_cloacas_raw'), 0),
-        'hacin_pct': (hog_pct('c_hacinamiento_raw'), 1), 'hacin_n': (hog_count('c_hacinamiento_raw'), 0),
+        'nbi_pct': (rate('c_nbi', 'hog_total'), 1), 'nbi_n': (count('c_nbi', 'hog_total'), 0),
+        'cloacas_pct': (rate('c_sin_cloacas', 'hog_total'), 1), 'cloacas_n': (count('c_sin_cloacas', 'hog_total'), 0),
+        'hacin_pct': (rate('c_hacinamiento', 'hog_total'), 1), 'hacin_n': (count('c_hacinamiento', 'hog_total'), 0),
     },
+    # Minutes weighted by people: the time the average resident needs.
     'health_access': {
-        'health_min': (hog_pct('c_healthcare_time_raw'), 0),
-        'health_cov_pct': (hog_pct('c_health_coverage_raw'), 1),
+        'health_min': (rate('c_healthcare_time', 'pob_total'), 0),
+        'health_cov_pct': (rate('c_health_coverage', 'pob_total'), 1),
     },
     'education_capital': {
-        'noschool_pct': (hog_pct('c_no_schooling_raw'), 1),
-        'univ_pct': (hog_pct('c_university_raw'), 1),
+        'noschool_pct': (rate('c_no_schooling', 'pob_18_mas'), 1),
+        'univ_pct': (rate('c_university', 'pob_18_mas'), 1),
     },
+    # Teen motherhood is not shown per hexagon (girls 14–17: median 19 per radio);
+    # summed per department it is a readable rate.
     'education_flow': {
-        'dropout_sec_pct': (hog_pct('c_dropout_secondary_raw'), 1),
-        'teen_preg_pct': (hog_pct('c_teen_pregnancy_raw'), 1),
+        'dropout_sec_pct': (rate('c_dropout_secondary', 'pob_13_18'), 1),
+        'teen_preg_pct': (rate('c_teen_pregnancy', 'muj_14_17'), 1),
     },
-    # Ocupados / población de 14+ and universitario completo / población de 18+,
-    # identical definitions in the 4 provinces.
+    'sociodemographic': {
+        'nbi_pct': (rate('pct_nbi', 'hog_total'), 1),
+    },
     'economic_activity': {
-        'empleo_pct': ('SUM(tasa_empleo * pob_14_mas) / NULLIF(SUM(pob_14_mas), 0)', 1),
-        'univ_pct': ('SUM(pct_universitario * pob_18_mas) / NULLIF(SUM(pob_18_mas), 0)', 1),
+        'empleo_pct': (rate('tasa_empleo', 'pob_14_mas'), 1),
+        'univ_pct': (rate('pct_universitario', 'pob_18_mas'), 1),
         'viirs': ('AVG(viirs_mean_radiance)', 2),
     },
 }
@@ -136,64 +137,6 @@ def clean(layer: str, summary: dict, tid: str) -> list:
     return dropped
 
 
-CENSUS_AR = ['misiones', 'corrientes', 'chaco', 'formosa']
-
-
-def local_census_rates() -> None:
-    """NBI (sociodemographic) as a real rate.
-
-    The served parquets carry these as 0–100 percentiles (aggregate_radio_to_h3
-    ranks them "for petal compatibility"; the served Misiones copy also went
-    through fill_h3_coverage, which writes 0 where there is no census). The real
-    values exist locally: radio_stats_master (Misiones, per radio, with dpto and
-    total_personas) and the *_raw columns of output/<t>/sat_*.parquet for the
-    other three provinces. Population-weighted department rates go into the
-    same rank block.
-    """
-    import duckdb
-    import pandas as pd
-    out = os.path.join(os.path.dirname(__file__), 'output')
-    con = duckdb.connect()
-    con.execute('INSTALL httpfs; LOAD httpfs; SET enable_http_metadata_cache = false; SET enable_external_file_cache = false;')
-    rs = pd.read_parquet(os.path.join(out, 'radio_stats_master.parquet'),
-                         columns=['dpto', 'total_personas', 'pct_nbi'])
-    for layer, field, col in [('sociodemographic', 'nbi_pop_pct', 'pct_nbi')]:
-        for tid in CENSUS_AR:
-            path = summary_path(layer, tid)
-            if not path:
-                continue
-            with open(path, encoding='utf-8') as f:
-                summary = json.load(f)
-            if tid == 'misiones':
-                g = rs.dropna(subset=[col]).assign(w=lambda d: d.total_personas.fillna(0))
-                rates = g.groupby('dpto').apply(lambda d: (d[col] * d.w).sum() / d.w.sum() if d.w.sum() else None)
-                by_name = {str(k).strip().lower(): v for k, v in rates.items()}
-                for d in summary['departments']:
-                    v = by_name.get(str(d.get('dpto', '')).strip().lower())
-                    d['rank'] = {**(d.get('rank') or {}), field: None if v is None else round(float(v), 1)}
-            else:
-                local = os.path.join(out, tid, f'sat_{layer}.parquet')
-                weight = 'densidad_hab_km2_raw'
-                hexes = pd.read_parquet(local, columns=['h3index', f'{col}_raw', weight])
-                prefix = get_territory(tid)['output_prefix']
-                urls = {f"{CDN}/{prefix}sat_dpto/sat_{layer}_{d['parquetKey']}.parquet": d['parquetKey']
-                        for d in summary['departments']}
-                url_list = ', '.join(f"'{u}'" for u in urls)
-                assign = con.execute(f'SELECT DISTINCT h3index, filename FROM read_parquet([{url_list}], filename = true)').df()
-                assign['parquetKey'] = assign.filename.map(urls)
-                m = hexes.merge(assign[['h3index', 'parquetKey']], on='h3index')
-                m = m[m[weight] > 0]
-                rates = m.groupby('parquetKey').apply(lambda d: (d[f'{col}_raw'] * d[weight]).sum() / d[weight].sum())
-                for d in summary['departments']:
-                    v = rates.get(d['parquetKey'])
-                    d['rank'] = {**(d.get('rank') or {}), field: None if v is None else round(float(v), 1)}
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(summary, f, ensure_ascii=False, indent=2)
-            vals = sorted((d['rank'][field], d.get('dpto') or d['parquetKey']) for d in summary['departments']
-                          if (d.get('rank') or {}).get(field) is not None)
-            print(f'{layer}/{tid}: {len(vals)}/{len(summary["departments"])} · min {vals[0] if vals else None} · max {vals[-1] if vals else None}')
-
-
 def summary_path(layer: str, tid: str) -> str | None:
     names = [f'sat_{layer}_dept_summary.json'] if tid == 'misiones' else [f'{tid}_sat_{layer}_summary.json']
     for n in names:
@@ -208,11 +151,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--layer', choices=list(SPECS))
     ap.add_argument('--clean-only', action='store_true', help='Re-apply the missing-data rules to the JSONs, no download')
-    ap.add_argument('--census-rates', action='store_true', help='NBI rate from local raw census data')
     args = ap.parse_args()
-    if args.census_rates:
-        local_census_rates()
-        return
     if args.clean_only:
         for layer in ([args.layer] if args.layer else SPECS):
             for tid in TERRITORY_CONFIGS:
@@ -238,7 +177,7 @@ def main() -> None:
             with open(path, encoding='utf-8') as f:
                 summary = json.load(f)
             prefix = get_territory(tid)['output_prefix']
-            urls = {f"{CDN}/{prefix}sat_dpto/sat_{layer}_{d['parquetKey']}.parquet": d['parquetKey']
+            urls = {f"{CDN}/{prefix}sat_dpto/sat_{layer}_{d['parquetKey']}.parquet?{FRESH}": d['parquetKey']
                     for d in summary['departments']}
             url_list = ', '.join(f"'{u}'" for u in urls)
             sel = ', '.join(f'{expr} AS {field}' for field, (expr, _) in spec.items())

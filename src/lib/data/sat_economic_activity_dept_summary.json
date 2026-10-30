@@ -14,7 +14,7 @@
       ],
       "rank": {
         "viirs": 0.54,
-        "empleo_pct": 59.0,
+        "empleo_pct": 58.9,
         "univ_pct": 4.8
       }
     },
@@ -28,7 +28,7 @@
       ],
       "rank": {
         "viirs": 0.99,
-        "empleo_pct": 56.3,
+        "empleo_pct": 56.4,
         "univ_pct": 6.9
       }
     },
@@ -43,7 +43,7 @@
       "rank": {
         "viirs": 1.17,
         "empleo_pct": 56.1,
-        "univ_pct": 8.1
+        "univ_pct": 8.0
       }
     },
     {
@@ -168,8 +168,8 @@
       ],
       "rank": {
         "viirs": 0.51,
-        "empleo_pct": 60.2,
-        "univ_pct": 4.2
+        "empleo_pct": 60.3,
+        "univ_pct": 4.1
       }
     },
     {
@@ -196,7 +196,7 @@
       ],
       "rank": {
         "viirs": 0.4,
-        "empleo_pct": 56.1,
+        "empleo_pct": 56.0,
         "univ_pct": 3.6
       }
     },
@@ -210,7 +210,7 @@
       ],
       "rank": {
         "viirs": 0.44,
-        "empleo_pct": 52.8,
+        "empleo_pct": 52.9,
         "univ_pct": 4.3
       }
     },
@@ -239,7 +239,7 @@
       "rank": {
         "viirs": 0.6,
         "empleo_pct": 52.0,
-        "univ_pct": 6.2
+        "univ_pct": 6.1
       }
     }
   ]

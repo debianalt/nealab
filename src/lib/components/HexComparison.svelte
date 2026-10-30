@@ -16,8 +16,8 @@
 	const selected = $derived([...hexStore.selectedHexes.entries()]);
 	const layer = $derived(hexStore.activeLayer);
 	const isCensus = $derived(layer ? CENSUS_ANALYSES.has(layer.id) : false);
-	// service_deprivation is census but its 6 components are 0–100 percentiles, ideal
-	// for the petal (visual hex-to-hex comparison) — keep it visible.
+	// service_deprivation keeps the petal: six household rates, each read against
+	// the provincial average (visual hex-to-hex comparison).
 	const PETAL_HIDDEN = new Set([...CENSUS_ANALYSES].filter(id => id !== 'service_deprivation'));
 	const showPetals = $derived(layer ? !PETAL_HIDDEN.has(layer.id) : true);
 	const variables = $derived(layer?.variables ?? []);
@@ -51,26 +51,29 @@
 		return Math.round(v).toLocaleString('es-AR');
 	}
 
-	// Show the magnitude/% table only when the layer carries dasymetric magnitude
-	// (n_edificios / hogares_estimados present in the parquet after regeneration).
-	const hasMagnitude = $derived(
-		selected.some(([, d]) => d.data?.n_edificios != null)
-	);
-	// Only the percentile variables that carry a _raw estimate get a row with the
-	// real value in the magnitude table. Raw-valued variables (economic_activity's
-	// nW and edif/km²) already show their value in the rows above.
-	const rawVars = $derived(
-		componentVars.filter(v => v.unit === 'percentil' && selected.some(([, d]) => Number.isFinite(d.data?.[`${v.col}_raw`])))
-	);
-	// People each % is computed over (economic_activity: pob_14_mas, pob_18_mas),
-	// one table row per distinct base column.
+	/** Estimated households/people behind a rate: never "0" next to a rate. */
+	function fmtBase(v: unknown): string {
+		if (typeof v === 'number' && v > 0 && v < 1) return '<1';
+		return fmtInt(v);
+	}
+
+	// Rates, minutes, densities and people per household read best with one
+	// decimal (6.6 %, not 6.60 %), none from 100 up; other units keep the adaptive
+	// precision.
+	const ONE_DECIMAL = new Set(['%', 'min', 'personas', 'hab/km²']);
+	function fmtValue(v: number, unit: string | undefined): string {
+		if (!unit || !ONE_DECIMAL.has(unit) || !Number.isFinite(v)) return fmtSmart(v);
+		return v.toFixed(Math.abs(v) >= 100 ? 0 : 1);
+	}
+
+	// Show the magnitude table when the layer carries dasymetric magnitude
+	// (n_edificios) or the bases its rates are over (sociodemographic has no
+	// building count, only hog_total).
+	const hasBuildings = $derived(selected.some(([, d]) => d.data?.n_edificios != null));
+	// Households/people each % is computed over (census layers: hog_total,
+	// pob_18_mas, …), one table row per distinct base column.
 	const baseCols = $derived(
 		[...new Set(componentVars.map(v => v.baseCol).filter((c): c is string => !!c))]
-	);
-	// The percentile reading note applies wherever some component is shown as a
-	// provincial percentile.
-	const isPercentileLayer = $derived(
-		componentVars.some(v => v.unit === 'percentil')
 	);
 	// Goalpost-normalized layers show absolute /100 values (frozen regional bounds) —
 	// the opposite reading to the petal (relative to territory avg). Note disambiguates.
@@ -150,11 +153,9 @@
 				{#each componentVars as v}
 					{@const val = hexData.data?.[v.col]}
 					{@const rawVal = v.rawCol ? hexData.data?.[v.rawCol] : null}
-					{@const noCensus = /* percentile 0 without a real rate = hexagon with no census data (0-filled by fill_h3_coverage) */
-						v.unit === 'percentil' && val === 0 && !Number.isFinite(hexData.data?.[`${v.col}_raw`])}
-					{@const hasData = !noCensus && ((typeof val === 'string' && val.length > 0)
+					{@const hasData = (typeof val === 'string' && val.length > 0)
 						|| (typeof val === 'number' && Number.isFinite(val))
-						|| (typeof rawVal === 'number' && Number.isFinite(rawVal)))}
+						|| (typeof rawVal === 'number' && Number.isFinite(rawVal))}
 					{@const isStr = typeof val === 'string' && val.length > 0}
 					{@const numVal = typeof val === 'number' ? val : 0}
 					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : numVal}
@@ -163,22 +164,19 @@
 						{#if !hasData}
 							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
 						{:else}
-							<span class="cd-val-data">{isStr ? val : fmtSmart(displayVal * (v.scale ?? 1)) + (v.unit ? ` ${unitLabel(v.unit)}` : ' /100')}</span>
+							<span class="cd-val-data">{isStr ? val : fmtValue(displayVal * (v.scale ?? 1), v.unit) + (v.unit ? ` ${unitLabel(v.unit)}` : ' /100')}</span>
 						{/if}
 					</div>
 				{/each}
 			</div>
 		{/each}
-		{#if isPercentileLayer}
-			<div class="cd-note">{i18n.t('hex.percentileNote')}</div>
-		{/if}
 		{#if isGoalpostLayer}
 			<div class="cd-note">{i18n.t('hex.goalpostNote')}</div>
 		{/if}
 	{/if}
 
 	<!-- Magnitude (buildings, est. population) + estimated % per variable -->
-	{#if hasMagnitude}
+	{#if hasBuildings || baseCols.length > 0}
 		<div class="mag-section">
 			<div class="mag-title">{i18n.t('hex.magTable')}</div>
 			<table class="mag-table">
@@ -193,25 +191,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>{i18n.t('hex.buildings')}</td>
-						{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
-					</tr>
-					{#if isPercentileLayer}
-						{#each rawVars as v}
-							<tr>
-								<td>{i18n.t(v.labelKey)}</td>
-								{#each selected as [, d]}
-									{@const raw = d.data?.[`${v.col}_raw`]}
-									<td>{typeof raw === 'number' && Number.isFinite(raw) ? `${fmtSmart(raw)} ${v.rawUnit ?? '%'}` : '—'}</td>
-								{/each}
-							</tr>
-						{/each}
+					{#if hasBuildings}
+						<tr>
+							<td>{i18n.t('hex.buildings')}</td>
+							{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
+						</tr>
 					{/if}
 					{#each baseCols as col}
 						<tr>
 							<td>{i18n.t(`hex.base.${col}`)}</td>
-							{#each selected as [, d]}<td>{fmtInt(d.data?.[col])}</td>{/each}
+							{#each selected as [, d]}<td>{fmtBase(d.data?.[col])}</td>{/each}
 						</tr>
 					{/each}
 				</tbody>

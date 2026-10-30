@@ -2,50 +2,46 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 39178,
-    "avg_score": 42.4,
     "unassigned": 63
   },
   "departments": [
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 56.6,
       "hex_count": 4527,
       "centroid": [
         -62.2609,
         -22.9514
       ],
       "rank": {
-        "nbi_pct": 43.6,
-        "nbi_n": 1298,
-        "cloacas_pct": 78.2,
-        "cloacas_n": 2330,
-        "hacin_pct": 45.0,
-        "hacin_n": 1341
+        "nbi_pct": 39.7,
+        "nbi_n": 1865,
+        "cloacas_pct": 80.4,
+        "cloacas_n": 3780,
+        "hacin_pct": 42.4,
+        "hacin_n": 1994
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 53.8,
       "hex_count": 2758,
       "centroid": [
         -61.4778,
         -24.2184
       ],
       "rank": {
-        "nbi_pct": 24.8,
-        "nbi_n": 1240,
-        "cloacas_pct": 87.0,
-        "cloacas_n": 4356,
-        "hacin_pct": 24.3,
-        "hacin_n": 1216
+        "nbi_pct": 24.7,
+        "nbi_n": 1215,
+        "cloacas_pct": 87.1,
+        "cloacas_n": 4282,
+        "hacin_pct": 24.6,
+        "hacin_n": 1208
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 51.5,
       "hex_count": 8728,
       "centroid": [
         -59.0809,
@@ -53,89 +49,84 @@
       ],
       "rank": {
         "nbi_pct": 13.2,
-        "nbi_n": 3658,
+        "nbi_n": 3642,
         "cloacas_pct": 94.6,
-        "cloacas_n": 26244,
-        "hacin_pct": 13.9,
-        "hacin_n": 3861
+        "cloacas_n": 26007,
+        "hacin_pct": 14.1,
+        "hacin_n": 3879
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 39.2,
       "hex_count": 5802,
       "centroid": [
         -59.0324,
         -25.6655
       ],
       "rank": {
-        "nbi_pct": 9.8,
-        "nbi_n": 2397,
-        "cloacas_pct": 85.0,
-        "cloacas_n": 20746,
-        "hacin_pct": 12.3,
-        "hacin_n": 3002
+        "nbi_pct": 9.9,
+        "nbi_n": 2368,
+        "cloacas_pct": 85.1,
+        "cloacas_n": 20412,
+        "hacin_pct": 12.5,
+        "hacin_n": 2988
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 37.3,
       "hex_count": 1032,
       "centroid": [
         -61.9734,
         -23.902
       ],
       "rank": {
-        "nbi_pct": 19.5,
-        "nbi_n": 1009,
-        "cloacas_pct": 91.3,
-        "cloacas_n": 4717,
-        "hacin_pct": 19.7,
-        "hacin_n": 1019
+        "nbi_pct": 20.0,
+        "nbi_n": 1029,
+        "cloacas_pct": 91.0,
+        "cloacas_n": 4692,
+        "hacin_pct": 20.1,
+        "hacin_n": 1037
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 36.8,
       "hex_count": 2170,
       "centroid": [
         -58.7089,
         -24.9733
       ],
       "rank": {
-        "nbi_pct": 9.1,
-        "nbi_n": 570,
-        "cloacas_pct": 96.1,
-        "cloacas_n": 6028,
-        "hacin_pct": 11.8,
-        "hacin_n": 742
+        "nbi_pct": 9.2,
+        "nbi_n": 566,
+        "cloacas_pct": 96.0,
+        "cloacas_n": 5884,
+        "hacin_pct": 12.0,
+        "hacin_n": 736
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 35.7,
       "hex_count": 3789,
       "centroid": [
         -58.414,
         -26.4014
       ],
       "rank": {
-        "nbi_pct": 10.7,
-        "nbi_n": 680,
-        "cloacas_pct": 88.6,
-        "cloacas_n": 5656,
-        "hacin_pct": 13.7,
-        "hacin_n": 872
+        "nbi_pct": 10.8,
+        "nbi_n": 675,
+        "cloacas_pct": 88.5,
+        "cloacas_n": 5512,
+        "hacin_pct": 13.8,
+        "hacin_n": 860
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 34.1,
       "hex_count": 5197,
       "centroid": [
         -58.1397,
@@ -144,28 +135,27 @@
       "rank": {
         "nbi_pct": 9.6,
         "nbi_n": 2886,
-        "cloacas_pct": 57.8,
-        "cloacas_n": 17438,
-        "hacin_pct": 12.1,
-        "hacin_n": 3656
+        "cloacas_pct": 57.6,
+        "cloacas_n": 17345,
+        "hacin_pct": 12.2,
+        "hacin_n": 3666
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 28.7,
       "hex_count": 5112,
       "centroid": [
         -58.174,
         -26.172
       ],
       "rank": {
-        "nbi_pct": 9.8,
-        "nbi_n": 8624,
+        "nbi_pct": 9.9,
+        "nbi_n": 8697,
         "cloacas_pct": 26.5,
-        "cloacas_n": 23406,
-        "hacin_pct": 10.9,
-        "hacin_n": 9641
+        "cloacas_n": 23338,
+        "hacin_pct": 11.1,
+        "hacin_n": 9759
       }
     }
   ]

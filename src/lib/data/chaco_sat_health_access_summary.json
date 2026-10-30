@@ -2,14 +2,12 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 79419,
-    "avg_score": 41.9,
     "unassigned": 387
   },
   "departments": [
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 59.2,
       "hex_count": 27122,
       "centroid": [
         -60.6287,
@@ -17,13 +15,12 @@
       ],
       "rank": {
         "health_min": 5,
-        "health_cov_pct": 30.8
+        "health_cov_pct": 28.1
       }
     },
     {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 43.5,
       "hex_count": 2476,
       "centroid": [
         -60.0606,
@@ -31,13 +28,12 @@
       ],
       "rank": {
         "health_min": 4,
-        "health_cov_pct": 28.7
+        "health_cov_pct": 27.1
       }
     },
     {
       "dpto": "Maipú",
       "parquetKey": "maipu",
-      "avg_score": 42.4,
       "hex_count": 3171,
       "centroid": [
         -60.4481,
@@ -45,13 +41,12 @@
       ],
       "rank": {
         "health_min": 6,
-        "health_cov_pct": 30.5
+        "health_cov_pct": 29.5
       }
     },
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 39.5,
       "hex_count": 4869,
       "centroid": [
         -60.9495,
@@ -59,13 +54,12 @@
       ],
       "rank": {
         "health_min": 6,
-        "health_cov_pct": 31.4
+        "health_cov_pct": 30.4
       }
     },
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 38.9,
       "hex_count": 1620,
       "centroid": [
         -59.5185,
@@ -73,13 +67,12 @@
       ],
       "rank": {
         "health_min": 5,
-        "health_cov_pct": 37.2
+        "health_cov_pct": 36.8
       }
     },
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 38.1,
       "hex_count": 6326,
       "centroid": [
         -59.2624,
@@ -87,13 +80,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 36.9
+        "health_cov_pct": 35.3
       }
     },
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
-      "avg_score": 37.7,
       "hex_count": 2003,
       "centroid": [
         -60.746,
@@ -101,27 +93,25 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 27.0
+        "health_cov_pct": 26.3
       }
     },
     {
       "dpto": "9 de Julio",
       "parquetKey": "9_de_julio",
-      "avg_score": 37.5,
       "hex_count": 1886,
       "centroid": [
         -61.094,
         -27.0465
       ],
       "rank": {
-        "health_min": 4,
-        "health_cov_pct": 36.5
+        "health_min": 5,
+        "health_cov_pct": 34.3
       }
     },
     {
       "dpto": "Quitilipi",
       "parquetKey": "quitilipi",
-      "avg_score": 36.5,
       "hex_count": 2462,
       "centroid": [
         -60.1745,
@@ -129,13 +119,12 @@
       ],
       "rank": {
         "health_min": 4,
-        "health_cov_pct": 34.4
+        "health_cov_pct": 32.7
       }
     },
     {
       "dpto": "Chacabuco",
       "parquetKey": "chacabuco",
-      "avg_score": 33.7,
       "hex_count": 1697,
       "centroid": [
         -61.1724,
@@ -143,13 +132,12 @@
       ],
       "rank": {
         "health_min": 2,
-        "health_cov_pct": 45.4
+        "health_cov_pct": 43.1
       }
     },
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 32.2,
       "hex_count": 1729,
       "centroid": [
         -60.6361,
@@ -157,13 +145,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 28.2
+        "health_cov_pct": 26.5
       }
     },
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 31.4,
       "hex_count": 2635,
       "centroid": [
         -60.3662,
@@ -171,13 +158,12 @@
       ],
       "rank": {
         "health_min": 2,
-        "health_cov_pct": 46.2
+        "health_cov_pct": 43.5
       }
     },
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 30.2,
       "hex_count": 743,
       "centroid": [
         -61.0058,
@@ -185,13 +171,12 @@
       ],
       "rank": {
         "health_min": 2,
-        "health_cov_pct": 29.2
+        "health_cov_pct": 27.4
       }
     },
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 29.9,
       "hex_count": 1295,
       "centroid": [
         -59.8639,
@@ -199,13 +184,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 34.5
+        "health_cov_pct": 33.7
       }
     },
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 29.4,
       "hex_count": 1625,
       "centroid": [
         -60.3845,
@@ -213,13 +197,12 @@
       ],
       "rank": {
         "health_min": 4,
-        "health_cov_pct": 32.3
+        "health_cov_pct": 30.6
       }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 29.0,
       "hex_count": 1344,
       "centroid": [
         -61.1354,
@@ -227,13 +210,12 @@
       ],
       "rank": {
         "health_min": 4,
-        "health_cov_pct": 40.3
+        "health_cov_pct": 39.6
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 28.8,
       "hex_count": 2056,
       "centroid": [
         -58.6749,
@@ -241,13 +223,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 46.1
+        "health_cov_pct": 45.0
       }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 28.6,
       "hex_count": 2748,
       "centroid": [
         -60.718,
@@ -255,13 +236,12 @@
       ],
       "rank": {
         "health_min": 2,
-        "health_cov_pct": 39.8
+        "health_cov_pct": 38.1
       }
     },
     {
       "dpto": "12 de Octubre",
       "parquetKey": "12_de_octubre",
-      "avg_score": 28.0,
       "hex_count": 1955,
       "centroid": [
         -61.2476,
@@ -269,13 +249,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 37.0
+        "health_cov_pct": 35.9
       }
     },
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "avg_score": 28.0,
       "hex_count": 1018,
       "centroid": [
         -61.281,
@@ -283,13 +262,12 @@
       ],
       "rank": {
         "health_min": 4,
-        "health_cov_pct": 35.3
+        "health_cov_pct": 34.4
       }
     },
     {
       "dpto": "1° de Mayo",
       "parquetKey": "1°_de_mayo",
-      "avg_score": 26.0,
       "hex_count": 1129,
       "centroid": [
         -58.9587,
@@ -297,13 +275,12 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 48.3
+        "health_cov_pct": 47.6
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
-      "avg_score": 23.7,
       "hex_count": 1381,
       "centroid": [
         -59.4059,
@@ -311,41 +288,38 @@
       ],
       "rank": {
         "health_min": 3,
-        "health_cov_pct": 47.1
+        "health_cov_pct": 47.0
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 21.1,
       "hex_count": 1149,
       "centroid": [
         -59.1935,
         -27.304
       ],
       "rank": {
-        "health_min": 3,
-        "health_cov_pct": 53.5
+        "health_min": 2,
+        "health_cov_pct": 52.9
       }
     },
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 21.1,
       "hex_count": 1202,
       "centroid": [
         -60.105,
         -27.5908
       ],
       "rank": {
-        "health_min": 16,
-        "health_cov_pct": 49.9
+        "health_min": 13,
+        "health_cov_pct": 49.1
       }
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 20.9,
       "hex_count": 3391,
       "centroid": [
         -58.9957,
@@ -353,7 +327,7 @@
       ],
       "rank": {
         "health_min": 1,
-        "health_cov_pct": 57.5
+        "health_cov_pct": 55.8
       }
     }
   ]

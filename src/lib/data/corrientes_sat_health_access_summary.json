@@ -2,14 +2,12 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 133856,
-    "avg_score": 41.1,
     "unassigned": 1548
   },
   "departments": [
     {
       "dpto": "San Roque",
       "parquetKey": "san_roque",
-      "avg_score": 57.5,
       "hex_count": 1643,
       "centroid": [
         -58.5733,
@@ -17,13 +15,12 @@
       ],
       "rank": {
         "health_min": 41,
-        "health_cov_pct": 35.2
+        "health_cov_pct": 34.7
       }
     },
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "avg_score": 56.4,
       "hex_count": 1613,
       "centroid": [
         -58.6938,
@@ -31,41 +28,38 @@
       ],
       "rank": {
         "health_min": 12,
-        "health_cov_pct": 34.9
+        "health_cov_pct": 34.6
       }
     },
     {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 50.7,
       "hex_count": 2155,
       "centroid": [
         -59.0107,
         -28.5133
       ],
       "rank": {
-        "health_min": 6,
-        "health_cov_pct": 38.8
+        "health_min": 7,
+        "health_cov_pct": 37.9
       }
     },
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "avg_score": 49.9,
       "hex_count": 21648,
       "centroid": [
         -59.2346,
         -29.7806
       ],
       "rank": {
-        "health_min": 67,
-        "health_cov_pct": 37.6
+        "health_min": 14,
+        "health_cov_pct": 40.8
       }
     },
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 49.5,
       "hex_count": 5259,
       "centroid": [
         -59.2645,
@@ -73,41 +67,38 @@
       ],
       "rank": {
         "health_min": 6,
-        "health_cov_pct": 44.4
+        "health_cov_pct": 42.8
       }
     },
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "avg_score": 49.4,
       "hex_count": 1173,
       "centroid": [
         -57.2695,
         -27.7065
       ],
       "rank": {
-        "health_min": 17,
-        "health_cov_pct": 32.6
+        "health_min": 16,
+        "health_cov_pct": 31.5
       }
     },
     {
       "dpto": "General Paz",
       "parquetKey": "general_paz",
-      "avg_score": 49.4,
       "hex_count": 1582,
       "centroid": [
         -57.4525,
         -27.5917
       ],
       "rank": {
-        "health_min": 15,
-        "health_cov_pct": 39.4
+        "health_min": 14,
+        "health_cov_pct": 38.8
       }
     },
     {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
-      "avg_score": 49.0,
       "hex_count": 899,
       "centroid": [
         -58.2423,
@@ -115,55 +106,51 @@
       ],
       "rank": {
         "health_min": 8,
-        "health_cov_pct": 34.8
+        "health_cov_pct": 34.3
       }
     },
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 48.6,
       "hex_count": 2032,
       "centroid": [
         -58.0893,
         -28.2861
       ],
       "rank": {
-        "health_min": 13,
-        "health_cov_pct": 27.7
+        "health_min": 12,
+        "health_cov_pct": 26.6
       }
     },
     {
       "dpto": "San Luis del Palmar",
       "parquetKey": "san_luis_del_palmar",
-      "avg_score": 48.3,
       "hex_count": 1821,
       "centroid": [
         -58.2535,
         -27.5477
       ],
       "rank": {
-        "health_min": 9,
-        "health_cov_pct": 41.1
+        "health_min": 8,
+        "health_cov_pct": 40.9
       }
     },
     {
       "dpto": "Lavalle",
       "parquetKey": "lavalle",
-      "avg_score": 48.2,
       "hex_count": 2794,
       "centroid": [
         -59.0791,
         -28.9281
       ],
       "rank": {
-        "health_min": 9,
-        "health_cov_pct": 25.8
+        "health_min": 8,
+        "health_cov_pct": 25.6
       }
     },
     {
       "dpto": "Empedrado",
       "parquetKey": "empedrado",
-      "avg_score": 46.4,
       "hex_count": 1980,
       "centroid": [
         -58.5321,
@@ -171,13 +158,12 @@
       ],
       "rank": {
         "health_min": 12,
-        "health_cov_pct": 49.6
+        "health_cov_pct": 49.2
       }
     },
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "avg_score": 44.5,
       "hex_count": 598,
       "centroid": [
         -58.1494,
@@ -185,13 +171,12 @@
       ],
       "rank": {
         "health_min": 10,
-        "health_cov_pct": 36.5
+        "health_cov_pct": 36.6
       }
     },
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 43.4,
       "hex_count": 14481,
       "centroid": [
         -58.3444,
@@ -199,13 +184,12 @@
       ],
       "rank": {
         "health_min": 14,
-        "health_cov_pct": 49.6
+        "health_cov_pct": 47.9
       }
     },
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 41.2,
       "hex_count": 13273,
       "centroid": [
         -56.0137,
@@ -213,13 +197,12 @@
       ],
       "rank": {
         "health_min": 5,
-        "health_cov_pct": 54.3
+        "health_cov_pct": 53.5
       }
     },
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "avg_score": 40.2,
       "hex_count": 365,
       "centroid": [
         -57.5828,
@@ -227,27 +210,25 @@
       ],
       "rank": {
         "health_min": 12,
-        "health_cov_pct": 40.8
+        "health_cov_pct": 40.3
       }
     },
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 39.0,
       "hex_count": 13179,
       "centroid": [
         -58.6302,
         -30.0717
       ],
       "rank": {
-        "health_min": 64,
-        "health_cov_pct": 54.8
+        "health_min": 6,
+        "health_cov_pct": 40.4
       }
     },
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "avg_score": 36.7,
       "hex_count": 1320,
       "centroid": [
         -58.5155,
@@ -255,13 +236,12 @@
       ],
       "rank": {
         "health_min": 8,
-        "health_cov_pct": 47.7
+        "health_cov_pct": 47.5
       }
     },
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 36.6,
       "hex_count": 5648,
       "centroid": [
         -56.874,
@@ -269,55 +249,51 @@
       ],
       "rank": {
         "health_min": 5,
-        "health_cov_pct": 47.1
+        "health_cov_pct": 47.5
       }
     },
     {
       "dpto": "General Alvear",
       "parquetKey": "general_alvear",
-      "avg_score": 34.6,
       "hex_count": 715,
       "centroid": [
         -56.5038,
         -28.8562
       ],
       "rank": {
-        "health_min": 6,
-        "health_cov_pct": 46.2
+        "health_min": 5,
+        "health_cov_pct": 44.8
       }
     },
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 33.3,
       "hex_count": 27392,
       "centroid": [
         -57.9972,
         -30.0419
       ],
       "rank": {
-        "health_min": 46,
-        "health_cov_pct": 50.9
+        "health_min": 43,
+        "health_cov_pct": 51.3
       }
     },
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "avg_score": 33.1,
       "hex_count": 1307,
       "centroid": [
         -56.9849,
         -28.8545
       ],
       "rank": {
-        "health_min": 8,
-        "health_cov_pct": 41.7
+        "health_min": 7,
+        "health_cov_pct": 40.8
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 33.0,
       "hex_count": 2146,
       "centroid": [
         -58.757,
@@ -325,35 +301,33 @@
       ],
       "rank": {
         "health_min": 1,
-        "health_cov_pct": 55.8
+        "health_cov_pct": 53.8
       }
     },
     {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
-      "avg_score": 32.7,
       "hex_count": 3430,
       "centroid": [
         -58.1608,
         -29.1446
       ],
       "rank": {
-        "health_min": 9,
-        "health_cov_pct": 49.2
+        "health_min": 8,
+        "health_cov_pct": 48.0
       }
     },
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 30.1,
       "hex_count": 3855,
       "centroid": [
         -57.5418,
         -30.0344
       ],
       "rank": {
-        "health_min": 4,
-        "health_cov_pct": 47.3
+        "health_min": 3,
+        "health_cov_pct": 45.7
       }
     }
   ]

@@ -84,6 +84,8 @@
 		// A fixed color domain narrower than 0–100 (EUDR: 0–20 %) must show its real ends.
 		const fd = layer.fixedColorDomain;
 		if (fd && (!u || SCORE_UNITS.has(u))) return `${fd[0]}–${fd[1]}${u === '%' ? ' %' : ''}`;
+		// P2–P98 domain (census rates): the ends are printed under the gradient.
+		if (layer.quantileDomain) return unitLabel(u);
 		if (!u || SCORE_UNITS.has(u)) return '0–100';
 		return unitLabel(u);
 	});
@@ -122,6 +124,16 @@
 	// Peor/Mejor instead. Non-danger temporal layers (carbon, censo: sequential) are not
 	// flipped, so their static low/high labels still fit the change ramp.
 	const isDangerDelta = $derived(isDiverging && layer?.colorScale === 'flood');
+	// P2–P98 domain (census rates): the real values at both ends of the ramp.
+	// Values beyond them take the end color, hence ≤ / ≥.
+	const quantileEnds = $derived.by(() => {
+		const d = hexStore.colorDomain;
+		if (!layer?.quantileDomain || !d || isDiverging) return null;
+		const dec = d[1] - d[0] >= 10 ? 0 : 1;
+		const f = (x: number) => x.toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+		const u = classUnit ? ` ${classUnit}` : '';
+		return [`≤ ${f(d[0])}${u}`, `≥ ${f(d[1])}${u}`];
+	});
 	const lowLabel = $derived(
 		isDangerDelta ? i18n.t('temporal.legend.worse')
 		: layer?.legendLowKey ? i18n.t(layer.legendLowKey)
@@ -221,6 +233,12 @@
 			<span>{lowLabel}</span>
 			<span>{highLabel}</span>
 		</div>
+		{#if quantileEnds}
+			<div class="gradient-labels gradient-values">
+				<span>{quantileEnds[0]}</span>
+				<span>{quantileEnds[1]}</span>
+			</div>
+		{/if}
 		<div class="nodata-row">
 			<span class="nodata-swatch"></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
@@ -329,6 +347,10 @@
 		font-size: 8px;
 		color: rgba(255,255,255,0.55);
 		margin-top: 3px;
+	}
+	.gradient-values {
+		margin-top: 1px;
+		color: rgba(255,255,255,0.8);
 	}
 	.legend-range {
 		font-size: 8px;
