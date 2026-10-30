@@ -1053,67 +1053,6 @@
 				}
 			}
 
-			// EUDR mode: NOA+NEA province outlines (pink). Hidden unless EUDR active.
-			map.addSource('eudr-provinces-main', {
-				type: 'geojson',
-				data: '/data/eudr_provinces_boundary.json'
-			});
-			map.addLayer({
-				id: 'eudr-provinces-line',
-				type: 'line',
-				source: 'eudr-provinces-main',
-				layout: { visibility: 'none' },
-				paint: { 'line-color': '#ec4899', 'line-width': 1.5, 'line-opacity': 0.85 }
-			});
-
-			// Admin-2 (depts/distritos/municipios) for the EUDR area — thin white,
-			// drawn ABOVE the hexagon choropleth so users can orient inside it.
-			map.addSource('eudr-admin2', {
-				type: 'geojson',
-				data: '/data/eudr_admin2_boundary.json'
-			});
-			map.addLayer({
-				id: 'eudr-admin2-line',
-				type: 'line',
-				source: 'eudr-admin2',
-				layout: { visibility: 'none' },
-				paint: { 'line-color': '#ffffff', 'line-width': 0.6, 'line-opacity': 0.32 }
-			});
-
-			// Invisible click target on admin-2 polygons — lets the user pick a
-			// statistically meaningful unit (dept/distrito/municipio) to load.
-			map.addLayer({
-				id: 'eudr-admin2-fill',
-				type: 'fill',
-				source: 'eudr-admin2',
-				layout: { visibility: 'none' },
-				paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.0001 }
-			});
-			map.on('mouseenter', 'eudr-admin2-fill', () => { map.getCanvas().style.cursor = 'pointer'; });
-			map.on('mouseleave', 'eudr-admin2-fill', () => { map.getCanvas().style.cursor = ''; });
-			map.on('click', 'eudr-admin2-fill', (e) => {
-				const feat = e.features?.[0];
-				if (!feat) return;
-				container.dispatchEvent(new CustomEvent('eudr-unit-select', {
-					bubbles: true,
-					detail: { name: feat.properties?.name, country: feat.properties?.country, geometry: feat.geometry }
-				}));
-			});
-
-			// EUDR focus: NEA + cross-border (PY/BR) area of interest — yellow,
-			// thicker, drawn above admin-2 and the pink Argentina context.
-			map.addSource('eudr-focus', {
-				type: 'geojson',
-				data: '/data/eudr_focus_boundary.json'
-			});
-			map.addLayer({
-				id: 'eudr-focus-line',
-				type: 'line',
-				source: 'eudr-focus',
-				layout: { visibility: 'none' },
-				paint: { 'line-color': '#facc15', 'line-width': 2.5, 'line-opacity': 0.95 }
-			});
-
 			// ── Compare territory hex choropleth (dept comparison mode) ─────
 			map.addSource('compare-hexagons', {
 				type: 'geojson',
@@ -2118,7 +2057,7 @@
 		if (!map || !style) return;
 		const active = BORDER_LAYER[activeTerritoryId] ?? `${activeTerritoryId}-border`;
 		for (const l of style.layers ?? []) {
-			if (l.type !== 'line' || !l.id.endsWith('-border') || l.id.startsWith('eudr')) continue;
+			if (l.type !== 'line' || !l.id.endsWith('-border')) continue;
 			const on = l.id === active;
 			map.setPaintProperty(l.id, 'line-opacity', on
 				? ['interpolate', ['linear'], ['zoom'], 6, 0.8, 12, 0.55, 16, 0.3]
@@ -2134,32 +2073,9 @@
 		}
 	}
 
-	// EUDR mode: hide the Spatia territory map (buildings/masks/borders/province)
-	// and show only the NOA+NEA province outlines. These are restored on exit by
-	// applyTerritoryVisibility() — so ONLY layers it restores belong here.
-	//
-	// Deliberately EXCLUDED (do NOT add them back): the dept-picker layers
-	// (ar-dept-fill/line + every *-district-fill/line) are owned reactively by
-	// setDeptPickerVisible — its $effect already hides them while EUDR is active
-	// (show=false when activeAnalysis.id==='eudr') and restores them on exit. The
-	// selected-dept outlines (dept-outline-line / compare-dept-outline-line) are
-	// data-driven via setDeptOutline (empty while no dept is selected, as in EUDR).
-	// Hiding any of these here too made applyTerritoryVisibility the wrong owner and
-	// left them stuck-hidden after leaving EUDR → dept/distrito clicks died.
-	const EUDR_HIDDEN_LAYERS = [
-		'buildings-3d', 'itapua-buildings-3d', 'corrientes-buildings-3d', 'alto_parana-buildings-3d',
-		'chaco-buildings-3d', 'formosa-buildings-3d',
-		'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d',
-		'mask-fill', 'itapua-mask-fill', 'corrientes-mask-fill', 'alto_parana-mask-fill',
-		'province-border', 'corrientes-border', 'alto_parana-border', 'itapua-border',
-		'chaco-border', 'formosa-border', 'parana_br-border', 'santa_catarina_br-border', 'rio_grande_sul_br-border',
-		'province-fill', 'province-line',
-	];
-
 	// Basemap (CartoDB) admin lines come from a different source than our GADM
 	// boundaries and visibly drift, producing a duplicate/blurry outline next to
-	// our pink province borders. Hide them once after load — same effect EUDR mode
-	// applied locally, now applied to regular mode too.
+	// our province borders. Hide them once after load.
 	function hideBasemapAdminLines() {
 		if (!map) return;
 		const ids = (map.getStyle().layers ?? [])
@@ -2168,28 +2084,6 @@
 		for (const id of ids) {
 			try { map.setLayoutProperty(id, 'visibility', 'none'); } catch {}
 		}
-	}
-
-	export function setEudrMode(active: boolean) {
-		if (!map) return;
-		const apply = () => {
-			const eudrLayers = ['eudr-provinces-line', 'eudr-admin2-line', 'eudr-admin2-fill', 'eudr-focus-line'];
-			if (active) {
-				for (const l of EUDR_HIDDEN_LAYERS) {
-					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
-				}
-				hideBasemapAdminLines();
-				for (const l of eudrLayers) {
-					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'visible');
-				}
-			} else {
-				for (const l of eudrLayers) {
-					if (map.getLayer(l)) map.setLayoutProperty(l, 'visibility', 'none');
-				}
-				applyTerritoryVisibility();
-			}
-		};
-		if (map.isStyleLoaded()) apply(); else map.once('idle', apply);
 	}
 
 	function regionalProvinceClickHandler(e: any) {

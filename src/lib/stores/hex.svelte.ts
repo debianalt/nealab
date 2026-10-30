@@ -238,17 +238,6 @@ export class HexStore {
 		this.clearCompareDept();
 		this.clearRegionalData();
 
-		// EUDR: global dataset over many provinces — too heavy to load whole.
-		// Load on demand by viewport (see loadEudrViewport). Start empty.
-		if (cfg.id === 'eudr') {
-			this.visibleData = new Map();
-			this.boundaryCache = new Map();
-			this.centroidCache = new Map();
-			this.dataVersion++;
-			this.loading = false;
-			return;
-		}
-
 		// Per-department layers: don't load all data, wait for department selection.
 		// Background-fetch all dept parquets so the first click is fast.
 		if (cfg.perDepartment) {
@@ -362,6 +351,17 @@ export class HexStore {
 		// Only sat_* parquets are territory-specific; EUDR etc. use a fixed global URL
 		if (!this.territoryPrefix || !layer.parquet?.startsWith('sat_')) return url;
 		return url.replace('/data/', `/data/${this.territoryPrefix}`);
+	}
+
+	// EUDR is one cross-border parquet (AR + PY + BR units) with a `province` key
+	// such as 'ar_misiones', 'py_itapúa', 'br_rio_grande_do_sul'. Keep only the
+	// active territory's rows so the layer loads like any per-territory layer.
+	private territoryWhere(layer: HexLayerConfig): string {
+		if (layer.id !== 'eudr') return '';
+		const t = TERRITORY_REGISTRY[this.territoryId];
+		if (!t) return '';
+		const key = `${t.country}_${t.id.replace(/_(py|br)$/, '')}`;
+		return ` WHERE replace(strip_accents(province), 'rio_grande_do_sul', 'rio_grande_sul') = '${key}'`;
 	}
 
 	/** Per-department parquet URL for a layer (mirrors the dispatch in loadDepartment). */
@@ -1137,8 +1137,7 @@ export class HexStore {
 	async loadVisibleData() {
 		const layer = this.activeLayer;
 		if (!layer || !isReady()) return;
-		// EUDR never bulk-loads — viewport-only (see loadEudrViewport)
-		if (layer.perDepartment || layer.id === 'eudr') return;
+		if (layer.perDepartment) return;
 
 		this.loading = true;
 		this.loadError = null;
@@ -1176,7 +1175,7 @@ export class HexStore {
 		}
 		const cols = [...allCols].join(', ');
 		const result = await query(
-			`SELECT h3index${cols ? `, ${cols}` : ''} FROM '${url}'`
+			`SELECT h3index${cols ? `, ${cols}` : ''} FROM '${url}'${this.territoryWhere(layer)}`
 		);
 
 		const data = new Map<string, Record<string, any>>();
@@ -1217,69 +1216,6 @@ export class HexStore {
 
 		// Persist in module-level cache for instant re-activation
 		layerDataCache.set(layer.id, { data, centroids, boundaries, provincialAvg: null });
-	}
-
-	// EUDR: load only the H3 cells in the current viewport (scalable —
-	// never loads the whole multi-province dataset at once).
-	async loadEudrViewport(cells: string[], filterProvinces = true) {
-		const layer = this.activeLayer;
-		if (!layer || layer.id !== 'eudr' || !isReady()) return;
-		if (cells.length === 0) {
-			this.visibleData = new Map();
-			this.boundaryCache = new Map();
-			this.centroidCache = new Map();
-			this.dataVersion++;
-			return;
-		}
-		this.loading = true;
-		try {
-			const url = getEudrParquetUrl(layer.parquet);
-			const colNames = layer.variables.map(v => v.col);
-			const inList = cells.map(c => `'${c}'`).join(',');
-			// NOA (Salta/Jujuy/Tucumán/Catamarca/Sgo. del Estero) + Entre Ríos fuera del alcance
-			// NEA — sólo se filtran al PANEAR (filterProvinces=true). En el click-en-unidad NO se
-			// filtra: deptos chaqueños gigantes (Almirante Brown, Güemes) tienen celdas de borde
-			// etiquetadas con provincia NOA que igual pertenecen al depto y deben cargar.
-			const provFilter = filterProvinces
-				? `AND province NOT IN ('ar_salta','ar_jujuy','ar_tucumán','ar_catamarca','ar_santiago_del_estero','ar_entre_ríos')`
-				: '';
-			const result = await query(
-				`SELECT h3index, ${colNames.join(', ')} FROM '${url}' WHERE h3index IN (${inList})
-					${provFilter}`
-			);
-			const data = new Map<string, Record<string, any>>();
-			const centroids = new Map<string, [number, number]>();
-			const boundaries = new Map<string, number[][]>();
-			const h3Vec = result.getChild('h3index');
-			const colVecs = Object.fromEntries(colNames.map(c => [c, result.getChild(c)]));
-			for (let i = 0; i < result.numRows; i++) {
-				const h3index = String(h3Vec!.get(i));
-				const values: Record<string, any> = {};
-				for (const c of colNames) {
-					const v = colVecs[c]?.get(i);
-					if (v === null || v === undefined) continue;
-					const n = Number(v);
-					values[c] = Number.isFinite(n) && typeof v !== 'string' ? n : String(v);
-				}
-				data.set(h3index, values);
-				try {
-					const [lat, lng] = cellToLatLng(h3index);
-					centroids.set(h3index, [lng, lat]);
-					const boundary = cellToBoundary(h3index);
-					const coords = boundary.map(([lat, lng]) => [lng, lat]);
-					coords.push(coords[0]);
-					boundaries.set(h3index, coords);
-				} catch { /* skip invalid h3 */ }
-			}
-			this.visibleData = data;
-			this.centroidCache = centroids;
-			this.boundaryCache = boundaries;
-			this.dataVersion++;
-		} catch (e) {
-			console.warn('EUDR viewport load failed:', e);
-		} finally {
-			this.loading = false;
-		}
 	}
 
 	// ── Selection ────────────────────────────────────────────────────────
@@ -1438,9 +1374,10 @@ export class HexStore {
 				this.provincialAvg = numVars.map(() => 1);
 			} else {
 				const aggExprs = availableVars.map(v => `AVG(${v.col}) as avg_${v.col}`).join(', ');
+				const tw = this.territoryWhere(layer);
 				const whereClause = actualCols.has(layer.primaryVariable)
-					? `WHERE ${layer.primaryVariable} IS NOT NULL`
-					: '';
+					? (tw ? `${tw} AND ${layer.primaryVariable} IS NOT NULL` : `WHERE ${layer.primaryVariable} IS NOT NULL`)
+					: tw;
 				const sql = `SELECT ${aggExprs} FROM '${dataUrl}' ${whereClause}`;
 				const result = await query(sql);
 				const row = result.get(0)!.toJSON() as Record<string, any>;

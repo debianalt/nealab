@@ -739,72 +739,6 @@
 		analysisDataLoaded = true;
 	});
 
-	// ── EUDR: viewport-based hex loading + click-to-load admin-2 unit ──
-	// Never loads the whole multi-province dataset. Below the zoom threshold no
-	// hexes load (view too wide); above it, only the cells in view are queried.
-	// When an admin-2 unit is selected by clicking, viewport loading is paused
-	// and the unit's cells are loaded — Moran/LISA/Histogram then run over a
-	// statistically meaningful region instead of a random viewport rectangle.
-	const EUDR_ZOOM_MIN = 8;
-	const EUDR_MAX_CELLS = 8000;
-
-	let eudrUnit: { name: string; country: string } | null = $state(null);
-	// Cobertura 2020 (MapBiomas) de las celdas con pérdida arbórea en una unidad EUDR.
-	// EMPÍRICO: clasifica por qué cobertura había en 2020, sin afirmar "deforestación"
-	// ni cumplimiento (la pérdida Hansen puede ser cosecha, fuego, manejo o conversión).
-	// Set una sola vez en el click handler (no $effect) → sin cascade reactivo.
-	let eudrUnitStats: { plantation: number; forest: number; savanna: number; other: number; conversion: number; lossTotal: number } | null = $state(null);
-
-	// Clasifica la cobertura 2020 por clase MapBiomas real: 'plantation' (clase 9),
-	// 'forest' (bosque, formación forestal clase 3), 'savanna' (monte/sabana nativa,
-	// clases 4+6), 'other' (agro/pasturas/mosaico). NUNCA se asume nativo sin dato.
-	function classifyEudrCover2020(pn: number | null, p20: number | null, f20: number | null, s20: number | null): 'plantation' | 'forest' | 'savanna' | 'other' | 'nodata' {
-		const T = 40;
-		if (pn == null && p20 == null && f20 == null && s20 == null) return 'nodata';
-		if (p20 != null || f20 != null || s20 != null) {
-			if ((p20 ?? 0) >= T) return 'plantation';
-			if ((f20 ?? 0) >= T) return 'forest';
-			if ((s20 ?? 0) >= T) return 'savanna';
-			return 'other';
-		}
-		// sin baseline 2020: solo afirmamos plantación si el estado actual la muestra
-		return (pn ?? 0) >= T ? 'plantation' : 'other';
-	}
-
-	async function computeEudrUnitPlantation(cells: string[]) {
-		eudrUnitStats = null;
-		try {
-			const { getEudrParquetUrl, getEudrPlantationRes7Url } = await import('$lib/config');
-			const inList = cells.map((c) => `'${c}'`).join(',');
-			const sql = `SELECT e.deforestation_post_2020 AS def, p.plantation_pct AS pn,
-				p.plantation_2020_pct AS p20, p.native_2020_pct AS f20, p.savanna_2020_pct AS s20
-				FROM read_parquet('${getEudrParquetUrl('eudr_deforestation')}') e
-				LEFT JOIN read_parquet('${getEudrPlantationRes7Url()}') p USING (h3index)
-				WHERE e.h3index IN (${inList})`;
-			const rows: any[] = (await query(sql)).toArray();
-			let plantation = 0, forest = 0, savanna = 0, other = 0, conversion = 0, lossTotal = 0;
-			const T = 40;
-			for (const r of rows) {
-				if (Number(r.def) > 0) {
-					lossTotal++;
-					const pn = r.pn == null ? null : Number(r.pn);
-					const p20 = r.p20 == null ? null : Number(r.p20);
-					const f20 = r.f20 == null ? null : Number(r.f20);
-					const s20 = r.s20 == null ? null : Number(r.s20);
-					const k = classifyEudrCover2020(pn, p20, f20, s20);
-					if (k === 'plantation') plantation++;
-					else if (k === 'forest') forest++;
-					else if (k === 'savanna') savanna++;
-					else if (k === 'other') other++;
-					// k === 'nodata' → celda sin cobertura MapBiomas (PY/BR)
-					// observación de posible conversión: era bosque nativo en 2020, hoy plantación
-					if ((f20 ?? 0) >= T && (pn ?? 0) >= T) conversion++;
-				}
-			}
-			eudrUnitStats = { plantation, forest, savanna, other, conversion, lossTotal };
-		} catch { eudrUnitStats = null; }
-	}
-
 	// ── Regional/compare viewport-loading (B) ────────────────────────────
 	// Giant PY territories (Chaco/Boquerón 700K-850K hex) make a full-global load of the
 	// regional/compare slots freeze. Instead, load only the H3 cells in the current viewport.
@@ -818,118 +752,6 @@
 	const LOD_DETAIL_MAX_CELLS = 12000;
 	let regionalViewportTooWide = $state(false);
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
-
-	function handleEudrUnitSelect(detail: any) {
-		// Loads the clicked admin-2 unit's hexes + zooms to it. The effect loop this used
-		// to trigger came from the Sidebar per-hex stat panels recomputing over EUDR data
-		// — those are now gated off for EUDR (Sidebar.svelte), so this is safe again.
-		const { name, country, geometry } = detail ?? {};
-		if (!geometry) return;
-		const polys: number[][][][] = geometry.type === 'MultiPolygon'
-			? geometry.coordinates
-			: [geometry.coordinates];
-		const cellSet = new Set<string>();
-		let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
-		for (const polyCoords of polys) {
-			try {
-				const cells = polygonToCells(polyCoords, 7, true);
-				for (const c of cells) cellSet.add(c);
-			} catch {}
-			for (const ring of polyCoords) for (const [lng, lat] of ring) {
-				if (lng < minLng) minLng = lng;
-				if (lat < minLat) minLat = lat;
-				if (lng > maxLng) maxLng = lng;
-				if (lat > maxLat) maxLat = lat;
-			}
-		}
-		if (cellSet.size === 0) return;
-		const unitCells = Array.from(cellSet);
-		hexStore.loadEudrViewport(unitCells, false); // unidad NEA completa, sin filtro de provincia (celdas de borde)
-		eudrUnit = { name, country };
-		computeEudrUnitPlantation(unitCells);
-		const m = mapComponent?.getMap();
-		if (m && isFinite(minLng)) {
-			m.fitBounds([[minLng, minLat], [maxLng, maxLat]] as any, { padding: 80, duration: 1000 });
-		}
-	}
-
-	function clearEudrUnit() {
-		eudrUnit = null;
-		eudrUnitStats = null;
-		// Resume viewport mode: reload cells for the current view
-		const m = mapComponent?.getMap();
-		if (!m) return;
-		if (m.getZoom() < EUDR_ZOOM_MIN) { hexStore.loadEudrViewport([]); return; }
-		const b = m.getBounds();
-		const rect = [[
-			[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
-			[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
-			[b.getWest(), b.getSouth()],
-		]];
-		let cells: string[] = [];
-		try { cells = polygonToCells(rect, 7, true); } catch { cells = []; }
-		if (cells.length === 0 || cells.length > EUDR_MAX_CELLS) { hexStore.loadEudrViewport([]); return; }
-		hexStore.loadEudrViewport(cells);
-	}
-
-	// Clear unit selection when leaving the EUDR layer
-	$effect(() => {
-		if (lensStore.activeAnalysis?.id !== 'eudr' && eudrUnit) {
-			eudrUnit = null;
-			eudrUnitStats = null;
-		}
-	});
-	$effect(() => {
-		const isEudr = lensStore.activeAnalysis?.id === 'eudr';
-		const map = mapComponent?.getMap();
-		if (!isEudr || !map) return;
-
-		// EUDR: hide Spatia territory map, show NOA+NEA province outlines (pink)
-		mapComponent?.setEudrMode(true);
-
-		const loadViewport = () => {
-			if (eudrUnit) return; // unit mode: keep the unit's hexes, ignore pans
-			const m = mapComponent?.getMap();
-			if (!m) return;
-			if (m.getZoom() < EUDR_ZOOM_MIN) { hexStore.loadEudrViewport([]); return; }
-			const b = m.getBounds();
-			const rect = [[
-				[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
-				[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
-				[b.getWest(), b.getSouth()],
-			]];
-			let cells: string[] = [];
-			try { cells = polygonToCells(rect, 7, true); } catch { cells = []; }
-			if (cells.length === 0 || cells.length > EUDR_MAX_CELLS) { hexStore.loadEudrViewport([]); return; }
-			hexStore.loadEudrViewport(cells);
-		};
-
-		map.on('moveend', loadViewport);
-
-		// Listen for admin-2 unit clicks dispatched from Map.svelte
-		const container = map.getContainer();
-		const unitHandler = (e: Event) => handleEudrUnitSelect((e as CustomEvent).detail);
-		container.addEventListener('eudr-unit-select', unitHandler);
-
-		// Jump to a covered area on activation so hexes appear immediately.
-		// untrack: loadViewport() reads eudrUnit + mutates dataVersion via
-		// loadEudrViewport. Without untrack this effect would depend on eudrUnit and
-		// tear itself down + rebuild on every admin-2 unit click (setEudrMode churn),
-		// and on the counter it writes → effect_update_depth_exceeded. The intended
-		// deps are ONLY activeAnalysis(isEudr) + map, read above. Same pattern as the
-		// regional/compare and LOD viewport effects below.
-		if (map.getZoom() < EUDR_ZOOM_MIN) {
-			map.flyTo({ center: [-54.5, -26.8], zoom: 8, duration: 1000 });
-		} else {
-			untrack(() => loadViewport());
-		}
-		return () => {
-			map.off('moveend', loadViewport);
-			container.removeEventListener('eudr-unit-select', unitHandler);
-			mapComponent?.setEudrMode(false);
-			untrack(() => hexStore.loadEudrViewport([])); // clear EUDR hexes when leaving the layer
-		};
-	});
 
 	function handleShowLisa(entries: { h3index: string; value: number; boundary?: number[][] }[]) {
 		if (entries.length === 0) {
@@ -1159,8 +981,8 @@
 	$effect(() => {
 		const a = lensStore.activeAnalysis;
 		const dpto = hexStore.selectedDpto;
-		// EUDR uses viewport-based hex loading (no dept-picker selection),
-		// and the blue AR-dept polygons don't match our GADM lines anyway.
+		// EUDR loads the whole territory from one cross-border parquet and has no
+		// per-department parquets, so a dept click would request files that don't exist.
 		const show = !!a && a.spatialUnit !== 'catastro' && a.id !== 'eudr' && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
 		// Lazy-fill the AR dept polygons (deferred out of the initial bundle) once the
@@ -1967,47 +1789,6 @@
 		<div bind:this={mapContainer} class="flex-1 relative min-h-0">
 			<MapComponent bind:this={mapComponent} {mapStore} />
 			<MapLegend {hexStore} />
-
-			<!-- EUDR unit lock indicator + plantation breakdown + back button -->
-			{#if lensStore.activeAnalysis?.id === 'eudr' && eudrUnit}
-				<div class="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-black/80 backdrop-blur-md border border-yellow-400/40 text-[12px] shadow-lg max-w-[400px]">
-					<div class="flex items-center gap-3">
-						<span class="text-white/90">📍 <b>{eudrUnit.name}</b> <span class="text-white/40">· {eudrUnit.country}</span></span>
-						<button onclick={clearEudrUnit} class="text-yellow-400 hover:text-white underline cursor-pointer bg-transparent border-0 p-0 text-[12px] whitespace-nowrap">
-							← Volver
-						</button>
-					</div>
-					{#if eudrUnitStats}
-						{@const withData = eudrUnitStats.plantation + eudrUnitStats.forest + eudrUnitStats.savanna + eudrUnitStats.other}
-						{#if eudrUnitStats.lossTotal === 0}
-							<div class="mt-2 pt-2 border-t border-white/10 text-[11px] text-white/50">Sin pérdida de cobertura arbórea post-2020 en esta unidad.</div>
-						{:else if withData < eudrUnitStats.lossTotal * 0.5}
-							<!-- La mayoría de las celdas con pérdida no tienen dato de plantación → no
-							     mostramos un % engañoso (Paraguay / Brasil). -->
-							<div class="mt-2 pt-2 border-t border-white/10 text-[10px] text-white/40 leading-relaxed">
-								Sin dato de plantación para esta zona (Paraguay/Brasil) — la cobertura plantación/nativo
-								de MapBiomas está en el <b>NEA argentino</b> (Misiones, Corrientes, Chaco, Formosa). No se
-								puede distinguir plantación de bosque nativo aquí.
-							</div>
-						{:else}
-							{@const pct = (n: number) => Math.round((n / withData) * 100)}
-							<div class="mt-2 pt-2 border-t border-white/10 leading-relaxed">
-								<div class="text-[9px] uppercase tracking-wider text-white/35 mb-1">Cobertura en 2020 (MapBiomas) de las celdas con pérdida arbórea post-2020</div>
-								<div class="flex flex-col gap-0.5 text-[11px]">
-									<span class="text-emerald-300">🌳 <b>{pct(eudrUnitStats.forest)}%</b> bosque <span class="text-white/35">(formación forestal)</span></span>
-									<span class="text-lime-300">🌿 <b>{pct(eudrUnitStats.savanna)}%</b> monte / sabana nativa</span>
-									<span class="text-amber-300">🌲 <b>{pct(eudrUnitStats.plantation)}%</b> plantación forestal</span>
-									<span class="text-white/55">▫️ <b>{pct(eudrUnitStats.other)}%</b> otra cobertura <span class="text-white/35">(agro, pasturas, mosaico)</span></span>
-									{#if eudrUnitStats.conversion > 0}
-										<span class="text-amber-200/80 text-[10px] mt-0.5">↳ {eudrUnitStats.conversion} celda{eudrUnitStats.conversion === 1 ? '' : 's'}: bosque en 2020 → plantación hoy (posible conversión — verificar)</span>
-									{/if}
-								</div>
-								<div class="text-[9px] text-white/30 mt-1 leading-snug">{withData.toLocaleString()} de {eudrUnitStats.lossTotal.toLocaleString()} celdas (~5 km²) con dato. Señal indicativa — no determina la causa de la pérdida (cosecha, fuego, conversión) ni constituye veredicto de cumplimiento EUDR.</div>
-							</div>
-						{/if}
-					{/if}
-				</div>
-			{/if}
 
 			{#if hexStore.loading}
 				<div class="loading-overlay">

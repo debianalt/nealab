@@ -221,8 +221,8 @@
 		</div>
 	{:else if lensStore.activeLens && lensStore.activeAnalysis}
 		<!-- Compare selector sticky above chart scroll; charts always visible below.
-		     Only for comparable analyses — EUDR and other non-comparable layers
-		     are global/local and have no cross-territory comparison. -->
+		     Only for comparable analyses — non-comparable layers (EUDR, census) have
+		     no cross-territory comparison. -->
 		{#if lensStore.activeAnalysis.comparable}
 			<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
 		{/if}
@@ -244,12 +244,7 @@
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
-			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable && hexStore.activeLayer?.id !== 'eudr'}
-				<!-- EUDR excluded: it's a global deforestation-screening layer loaded by
-				     viewport/unit, NOT a per-territory statistical analysis. Rendering the
-				     per-hex stat stack (Moran/histogram/bivariate/parallel) over EUDR data
-				     is meaningless AND triggered a Svelte effect_update_depth_exceeded loop
-				     on admin-2 unit selection that froze all reactivity. -->
+			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
 				<button class="charts-divider charts-toggle" onclick={() => chartsOpen = !chartsOpen}>
 					Gráficos {chartsOpen ? '▾' : '▸'}
 				</button>

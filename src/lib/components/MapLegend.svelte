@@ -67,6 +67,9 @@
 		const pv = hexStore.effectivePrimary; // may be a per-territory fallback column
 		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
 		const u = v?.unit;
+		// A fixed color domain narrower than 0–100 (EUDR: 0–20 %) must show its real ends.
+		const fd = layer.fixedColorDomain;
+		if (fd && (!u || SCORE_UNITS.has(u))) return `${fd[0]}–${fd[1]}${u === '%' ? ' %' : ''}`;
 		if (!u || SCORE_UNITS.has(u)) return '0–100';
 		return unitLabel(u);
 	});

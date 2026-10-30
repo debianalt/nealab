@@ -1163,31 +1163,33 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		colorClasses: DEFOREST_LOSS_CLASSES,
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
-	// ── EUDR deforestation risk (H3 res-7, 31 units: AR 10 prov + PY 18 deptos + BR 3 estados) ──
-	// Global cross-border layer: loads its own parquet by viewport (loadEudrViewport)
-	// over a 1486-unit admin-2 click surface across AR-NEA + PY + BR. Available in
-	// every territory. EUDR mode swaps the dept-picker for eudr-admin2-fill; the
-	// dept-picker layers restore via their reactive owner (setDeptPickerVisible), NOT
-	// via EUDR_HIDDEN_LAYERS — see the note there.
+	// ── EUDR: pérdida arbórea posterior a 2020 (H3 res-7, 31 unidades: AR 10 prov + PY 18 deptos + BR 3 estados) ──
+	// Un solo parquet transfronterizo; hexStore.territoryWhere() deja sólo las filas del
+	// territorio activo, y la capa carga como cualquier otra. Sin parquets por depto:
+	// el selector de depto queda oculto (+page.svelte).
+	// Variable principal = la fracción física (tier 1), no risk_score, que es un
+	// promedio ponderado 70/20/10 (lo sigue usando sólo /eudr/check).
+	// Dominio de color fijo 0-20 %: P98 del parquet completo = 19,7 % (mediana 0,
+	// P90 5,4 %); con MIN/MAX (0-100) casi todo el mapa quedaría en el primer color.
 	eudr: {
 		id: 'eudr',
 		parquet: 'eudr_deforestation',
 		variables: [
-			{ col: 'risk_score', labelKey: 'eudr.riskScore', aggregation: 'mean' },
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'fire_native_post_2020_pct', labelKey: 'eudr.fireNativePost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'fire_post_2020_pct', labelKey: 'eudr.firePost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'forest_cover_2020', labelKey: 'eudr.forest2020', aggregation: 'mean', unit: '%' },
 			{ col: 'forest_cover_current', labelKey: 'eudr.forestCurrent', aggregation: 'mean', unit: '%' },
 		],
-		primaryVariable: 'risk_score',
+		primaryVariable: 'loss_post_2020_pct',
 		colorScale: 'flood',
+		fixedColorDomain: [0, 20],
 		aggregation: 'mean',
 		petalVars: [
-			{ col: 'risk_score', labelKey: 'eudr.riskScore', aggregation: 'mean' },
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean' },
 			{ col: 'fire_native_post_2020_pct', labelKey: 'eudr.fireNativePost2020', aggregation: 'mean' },
 			{ col: 'forest_cover_2020', labelKey: 'eudr.forest2020', aggregation: 'mean' },
+			{ col: 'forest_cover_current', labelKey: 'eudr.forestCurrent', aggregation: 'mean' },
 		],
 		titleKey: 'trade.eudr.analysis_title',
 		perDepartment: false,
@@ -1384,10 +1386,9 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'economia',
 		titleKey: 'trade.eudr.analysis_title',
 		descKey: 'trade.eudr.analysis_desc',
-		// EUDR is a global cross-border dataset (31 units: AR 10 prov + PY 18 deptos +
-		// BR 3 estados), NOT a per-territory comparable analysis. Loads its own parquet
-		// by viewport (loadEudrViewport); available in every territory. The admin-2
-		// click surface (eudr_admin2_boundary.json) covers AR-NEA + PY + BR (1486 units).
+		// EUDR is one cross-border parquet (31 units: AR 10 prov + PY 18 deptos +
+		// BR 3 estados), NOT a comparable analysis. Each territory loads its own rows
+		// (hexStore.territoryWhere); available in every territory.
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 		rigorBadge: 'physical',
 		status: 'available',

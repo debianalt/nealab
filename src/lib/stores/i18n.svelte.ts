@@ -88,8 +88,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.eduCap.high': { es: 'Bajo capital', en: 'Low capital', gn: 'Michĩ capital', pt: 'Baixo capital' },
 	'legend.eduFlow.low': { es: 'Buen desempeño', en: 'Good performance', gn: 'Porã', pt: 'Bom desempenho' },
 	'legend.eduFlow.high': { es: 'Mal desempeño', en: 'Poor performance', gn: 'Vai', pt: 'Mau desempenho' },
-	'legend.eudr.low': { es: 'Bajo riesgo EUDR', en: 'Low EUDR risk', gn: 'Michĩ EUDR', pt: 'Baixo risco EUDR' },
-	'legend.eudr.high': { es: 'Alto riesgo EUDR', en: 'High EUDR risk', gn: 'Yvate EUDR', pt: 'Alto risco EUDR' },
+	'legend.eudr.low': { es: 'Sin pérdida post-2020', en: 'No post-2020 loss', gn: 'Pérdida post-2020 ỹre', pt: 'Sem perda pós-2020' },
+	'legend.eudr.high': { es: 'Mayor pérdida post-2020', en: 'Higher post-2020 loss', gn: 'Pérdida post-2020 tuichave', pt: 'Maior perda pós-2020' },
 	'legend.accessibility.low': { es: 'Cerca de la capital', en: 'Near capital', gn: 'Peteĩ', pt: 'Perto da capital' },
 	'legend.accessibility.high': { es: 'Lejos de la capital', en: 'Far from capital', gn: 'Mombyry', pt: 'Longe da capital' },
 	'legend.socio.low': { es: 'Bajo NBI', en: 'Low NBI', gn: 'Michĩ NBI', pt: 'Baixo NBI' },
@@ -454,8 +454,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'radio.distPrimaria': { es: 'Dist. ruta (km)', en: 'Dist. primary road (km)', gn: 'Tape', pt: 'Dist. rodovia (km)' },
 
 	// ── EUDR in analysis menu ──
-	'trade.eudr.analysis_title': { es: 'EUDR · Riesgo de deforestación (NEA argentino + Paraguay + sur de Brasil)', en: 'EUDR · Deforestation risk (NE Argentina + Paraguay + southern Brazil)', gn: 'EUDR · Deforestación (NEA Argentina + Paraguay + Brasil sur)', pt: 'EUDR · Risco de desmatamento (NEA argentino + Paraguai + sul do Brasil)' },
-	'trade.eudr.analysis_desc': { es: 'Verificación de deforestación para parcelas de producción (Hansen GFC 30 m + MODIS fire)', en: 'Deforestation verification for production plots (Hansen GFC 30m + MODIS fire)', gn: 'EUDR', pt: 'Verificação de desmatamento para parcelas de produção (Hansen GFC 30 m + MODIS fire)' },
+	'trade.eudr.analysis_title': { es: 'EUDR · Pérdida de bosque post-2020 (NEA argentino + Paraguay + sur de Brasil)', en: 'EUDR · Post-2020 forest loss (NE Argentina + Paraguay + southern Brazil)', gn: "EUDR · Ka'aguy ñehundi 2020 rire (NEA Argentina + Paraguay + Brasil sur)", pt: 'EUDR · Perda florestal pós-2020 (NEA argentino + Paraguai + sul do Brasil)' },
+	'trade.eudr.analysis_desc': { es: 'Pérdida de cobertura arbórea posterior a 2020 por hexágono (Hansen GFC 30 m + MODIS fuego)', en: 'Tree-cover loss after 2020 per hexagon (Hansen GFC 30 m + MODIS fire)', gn: 'EUDR', pt: 'Perda de cobertura arbórea posterior a 2020 por hexágono (Hansen GFC 30 m + MODIS fogo)' },
 
 	// ── Temporal toggle ──
 	'temporal.current': { es: 'Actual', en: 'Current', gn: "Ko'ãga", pt: 'Atual' },
@@ -911,9 +911,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.check.vintage': { es: 'Datos satelitales', en: 'Satellite data', gn: 'Datos satelitales', pt: 'Dados satelitais' },
 	'eudr.check.refreshed': { es: 'Última actualización', en: 'Last refreshed', gn: 'Última actualización', pt: 'Última atualização' },
 	'eudr.check.methodology_link': { es: 'Ver metodología completa →', en: 'View full methodology →', gn: 'Ehecha metodología →', pt: 'Ver metodologia completa →' },
-	'eudr.layer_hint': { es: 'Acercá el zoom y paneá: el riesgo de deforestación se carga por hexágono solo en el área visible (escalable a cualquier región).', en: 'Zoom in and pan: deforestation risk loads per hexagon only for the visible area (scales to any region).', gn: 'Emboja ha emongarê: riesgo oñembyaty hexágono rupive área ojehecháva.', pt: 'Aproxime o zoom e navegue: o risco de desmatamento carrega por hexágono apenas na área visível (escalável a qualquer região).' },
-	'eudr.check.cta_from_layer': { es: '🔎 Análisis detallado por punto o polígono (res-9) →', en: '🔎 Detailed point or polygon analysis (res-9) →', gn: '🔎 Análisis detallado →', pt: '🔎 Análise detalhada por ponto ou polígono (res-9) →' },
-	'eudr.informe.cta_from_layer': { es: '📖 Informe: cosecha o deforestación (MapBiomas) →', en: '📖 Report: harvest or deforestation (MapBiomas) →', gn: '📖 Informe: kytĩ térã deforestación (MapBiomas) →', pt: '📖 Relatório: colheita ou desmatamento (MapBiomas) →' },
+	'eudr.check.cta_from_layer': { es: 'Análisis detallado por punto o polígono (res-9) →', en: 'Detailed point or polygon analysis (res-9) →', gn: 'Análisis detallado →', pt: 'Análise detalhada por ponto ou polígono (res-9) →' },
+	'eudr.informe.cta_from_layer': { es: 'Informe: cosecha o deforestación (MapBiomas) →', en: 'Report: harvest or deforestation (MapBiomas) →', gn: 'Informe: kytĩ térã deforestación (MapBiomas) →', pt: 'Relatório: colheita ou desmatamento (MapBiomas) →' },
 	'eudr.check.poly_title': { es: 'Analizar un polígono', en: 'Analyze a polygon', gn: 'Polígono', pt: 'Analisar um polígono' },
 	'eudr.check.poly_upload': { es: 'Subir GeoJSON (parcela / lote)', en: 'Upload GeoJSON (plot / lot)', gn: 'Embohasa GeoJSON', pt: 'Enviar GeoJSON (parcela / lote)' },
 	'eudr.check.poly_draw': { es: '🎯 Dibujar con lazo', en: '🎯 Draw with lasso', gn: '🎯 Embokuatia lazo-pe', pt: '🎯 Desenhar com laço' },
