@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import maplibregl from 'maplibre-gl';
+	import * as maplibregl from '$lib/maplibre';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -1846,7 +1846,7 @@
 			if (map.getLayer('selected-line')) map.setFilter('selected-line', emptyFilter);
 		} else {
 			const redcodes = radios.map(r => r.redcode);
-			const matchExpr: any[] = ['match', ['get', 'redcode']];
+			const matchExpr: any = ['match', ['get', 'redcode']];
 			for (const r of radios) {
 				matchExpr.push(r.redcode, r.color);
 			}
@@ -1916,7 +1916,7 @@
 				continue;
 			}
 			const names = ds.map(d => d.distrito);
-			const matchExpr: any[] = ['match', ['get', 'district']];
+			const matchExpr: any = ['match', ['get', 'district']];
 			for (const d of ds) matchExpr.push(d.distrito, d.color);
 			matchExpr.push('#60a5fa'); // fallback
 			// setDistrictHighlight solely owns -selected- visibility: show the
@@ -2636,7 +2636,7 @@
 			if (!catastroActive) showCatastroLayer();
 			catastroClickMode = 'flood';
 
-			const matchExpr: any[] = ['match', ['get', 'h3index']];
+			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
 			matchExpr.push(0);
 
@@ -2682,7 +2682,7 @@
 		const h3Filter: any = ['in', ['get', 'h3index'], ['literal', parcels.map(p => p.h3index)]];
 
 		// Color match: h3index → parcel color
-		const colorMatch: any[] = ['match', ['get', 'h3index']];
+		const colorMatch: any = ['match', ['get', 'h3index']];
 		for (const p of parcels) { colorMatch.push(p.h3index, p.color); }
 		colorMatch.push('#ffffff');
 
@@ -2732,7 +2732,7 @@
 			if (!catastroActive) showCatastroLayer();
 			catastroClickMode = 'scores';
 
-			const matchExpr: any[] = ['match', ['get', 'h3index']];
+			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
 			matchExpr.push(0);
 
@@ -2796,7 +2796,7 @@
 		for (const v of values) { if (v < minVal) minVal = v; if (v > maxVal) maxVal = v; }
 		const range = maxVal - minVal || 1;
 
-		const matchExpr: any[] = ['match', ['to-string', ['get', 'redcode']]];
+		const matchExpr: any = ['match', ['to-string', ['get', 'redcode']]];
 		for (const entry of entries) {
 			if (entry.value === 0) {
 				matchExpr.push(String(entry.redcode), 'rgb(30,41,59)');
@@ -3293,7 +3293,7 @@
 			map.setFilter('hex-selected', ['==', ['get', 'h3index'], '']);
 		} else {
 			const ids = hexes.map(h => h.h3index);
-			const matchExpr: any[] = ['match', ['get', 'h3index']];
+			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const h of hexes) matchExpr.push(h.h3index, h.color);
 			matchExpr.push('#ffffff');
 			map.setPaintProperty('hex-selected', 'line-color', matchExpr);
@@ -3306,7 +3306,7 @@
 			return;
 		}
 		const cIds = compareHexes.map(h => h.h3index);
-		const cMatch: any[] = ['match', ['get', 'h3index']];
+		const cMatch: any = ['match', ['get', 'h3index']];
 		for (const h of compareHexes) cMatch.push(h.h3index, h.color);
 		cMatch.push('#f59e0b');
 		map.setPaintProperty('compare-hex-selected', 'line-color', cMatch);
@@ -3483,7 +3483,7 @@
 
 		// Collect all redcodes and build match expression for colors
 		const allRedcodes: string[] = [];
-		const matchExpr: any[] = ['match', ['get', 'redcode']];
+		const matchExpr: any = ['match', ['get', 'redcode']];
 		for (const zone of zones) {
 			for (const rc of zone.redcodes) {
 				allRedcodes.push(rc);

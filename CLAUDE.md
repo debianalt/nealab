@@ -7,7 +7,7 @@
 - TailwindCSS 4
 - Cloudflare: Pages, Workers, R2, D1
 - DuckDB-WASM (parquet queries from R2)
-- MapLibre GL 5 + PMTiles
+- MapLibre GL 6 + PMTiles. Importar siempre `import * as maplibregl from '$lib/maplibre'`, nunca `'maplibre-gl'` directo: la 6 es sólo ESM y ese módulo registra el worker (`setWorkerUrl`); sin él el mapa no carga. Filtros siempre como expresiones (`['geometry-type']`, `['get', …]`), no la sintaxis legacy (`'$type'`).
 - Claude SDK (Haiku) via Pages Function proxy (`functions/api/chat.ts`)
 
 ## Project Structure

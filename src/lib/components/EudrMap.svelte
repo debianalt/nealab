@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import maplibregl from 'maplibre-gl';
+	import * as maplibregl from '$lib/maplibre';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 
 	interface Props {

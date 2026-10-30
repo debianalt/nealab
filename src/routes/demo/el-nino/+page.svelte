@@ -531,7 +531,7 @@
 		const base = (import.meta.env.DEV && page.url.searchParams.get('src')) || CDN;
 		let cancelled = false;
 		(async () => {
-			const [{ default: maplibregl }, { Protocol }] = await Promise.all([import('maplibre-gl'), import('pmtiles')]);
+			const [maplibregl, { Protocol }] = await Promise.all([import('$lib/maplibre'), import('pmtiles')]);
 			if (cancelled) return;
 			maplibregl.addProtocol('pmtiles', new Protocol().tile);
 			let t: Tabla;
@@ -681,7 +681,7 @@
 					},
 					paint: { 'text-color': '#ebe8e1', 'text-halo-color': 'rgba(19, 20, 23, 0.92)', 'text-halo-width': 1.6 } });
 				map.addSource('lasso', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', '$type', 'Polygon'],
+				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', ['geometry-type'], 'Polygon'],
 					paint: { 'fill-color': SEL, 'fill-opacity': 0.1 } });
 				map.addLayer({ id: 'lasso-line', type: 'line', source: 'lasso',
 					paint: { 'line-color': SEL, 'line-width': 2, 'line-dasharray': [3, 1.5] } });
