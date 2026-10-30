@@ -102,6 +102,13 @@ jobs:
             pipeline/output/pm25_model_results.json
           retention-days: 30
 
+      - name: Purge CDN cache
+        if: always()
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python scripts/cdn_cache.py purge
+
       - name: Notify on failure
         if: failure()
         run: echo "::error::PM2.5 drivers pipeline failed."

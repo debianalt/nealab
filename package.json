@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "preview:cf": "npm run build && npx wrangler pages dev build/",
     "deploy": "npm run build && npx wrangler pages deploy build/ --project-name neahub",
-    "push-deploy": "git push origin main && npm run deploy -- --branch main"
+    "push-deploy": "git push origin main && npm run deploy -- --branch main",
+    "purge-cdn": "python scripts/cdn_cache.py purge"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.8",
