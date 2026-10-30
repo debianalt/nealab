@@ -1,4 +1,4 @@
-// Sentinel-2 cloudless tile proxy (EOX). Mirrors functions/api/terrain to dodge CORS,
+// Sentinel-2 cloudless tile proxy (EOX). Proxied (not direct) to dodge CORS,
 // cache on Cloudflare, and keep the client pointed at our own origin.
 // MapLibre requests XYZ as {z}/{x}/{y}; EOX WMTS GoogleMapsCompatible is {z}/{TileRow}/{TileCol}
 // = {z}/{y}/{x}, so x and y are swapped when building the upstream URL.

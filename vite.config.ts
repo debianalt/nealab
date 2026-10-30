@@ -23,11 +23,6 @@ export default defineConfig({
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/r2/, '')
 			},
-			'/api/terrain': {
-				target: 'https://s3.amazonaws.com',
-				changeOrigin: true,
-				rewrite: (path) => path.replace('/api/terrain', '/elevation-tiles-prod/terrarium')
-			},
 			'/api': {
 				target: 'http://localhost:8788',
 				changeOrigin: true
