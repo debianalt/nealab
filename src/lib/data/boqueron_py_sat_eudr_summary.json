@@ -1,0 +1,59 @@
+{
+  "territory": "boqueron_py",
+  "province": {
+    "total_hexes": 482943,
+    "avg_score": 3.99,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Pedro P. Pena",
+      "parquetKey": "pedro_p_pena",
+      "centroid": [
+        -61.3642,
+        -22.7396
+      ],
+      "avg_score": 5.21,
+      "hex_count": 321612,
+      "rank": {
+        "loss_ha": 176429,
+        "loss_pct_forest": 13.05,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Mcal. Estigarribia",
+      "parquetKey": "mcal_estigarribia",
+      "centroid": [
+        -60.3036,
+        -22.3771
+      ],
+      "avg_score": 0.96,
+      "hex_count": 137865,
+      "rank": {
+        "loss_ha": 13922,
+        "loss_pct_forest": 4.45,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Gral. Eugenio A. Garay",
+      "parquetKey": "gral_eugenio_a_garay",
+      "centroid": [
+        -61.0698,
+        -21.1398
+      ],
+      "avg_score": null,
+      "hex_count": 23466,
+      "rank": null,
+      "coverage": 0.053
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

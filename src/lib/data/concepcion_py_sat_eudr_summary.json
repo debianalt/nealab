@@ -1,0 +1,122 @@
+{
+  "territory": "concepcion_py",
+  "province": {
+    "total_hexes": 191663,
+    "avg_score": 4.85,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Concepcion",
+      "parquetKey": "concepcion",
+      "centroid": [
+        -57.2752,
+        -22.8011
+      ],
+      "avg_score": 4.9,
+      "hex_count": 103939,
+      "rank": {
+        "loss_ha": 53648,
+        "loss_pct_forest": 10.65,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Yby Yau",
+      "parquetKey": "yby_yau",
+      "centroid": [
+        -56.3726,
+        -23.0159
+      ],
+      "avg_score": 7.93,
+      "hex_count": 21665,
+      "rank": {
+        "loss_ha": 18096,
+        "loss_pct_forest": 18.81,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Horqueta",
+      "parquetKey": "horqueta",
+      "centroid": [
+        -56.7402,
+        -23.283
+      ],
+      "avg_score": 4.58,
+      "hex_count": 26825,
+      "rank": {
+        "loss_ha": 12932,
+        "loss_pct_forest": 11.44,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Carlos",
+      "parquetKey": "san_carlos",
+      "centroid": [
+        -57.3306,
+        -22.3583
+      ],
+      "avg_score": 3.98,
+      "hex_count": 16747,
+      "rank": {
+        "loss_ha": 7024,
+        "loss_pct_forest": 7.39,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Loreto",
+      "parquetKey": "loreto",
+      "centroid": [
+        -57.1715,
+        -23.2161
+      ],
+      "avg_score": 3.45,
+      "hex_count": 9686,
+      "rank": {
+        "loss_ha": 3518,
+        "loss_pct_forest": 13.59,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Lazaro",
+      "parquetKey": "san_lazaro",
+      "centroid": [
+        -57.7533,
+        -22.2364
+      ],
+      "avg_score": 1.76,
+      "hex_count": 11310,
+      "rank": {
+        "loss_ha": 2099,
+        "loss_pct_forest": 3.72,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Belen",
+      "parquetKey": "belen",
+      "centroid": [
+        -57.2183,
+        -23.4372
+      ],
+      "avg_score": 3.4,
+      "hex_count": 1491,
+      "rank": {
+        "loss_ha": 534,
+        "loss_pct_forest": 12.73,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

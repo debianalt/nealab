@@ -1,0 +1,167 @@
+{
+  "territory": "caazapa_py",
+  "province": {
+    "total_hexes": 102393,
+    "avg_score": 3.82,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Tavai",
+      "parquetKey": "tavai",
+      "centroid": [
+        -55.53,
+        -26.195
+      ],
+      "avg_score": 4.82,
+      "hex_count": 13470,
+      "rank": {
+        "loss_ha": 6844,
+        "loss_pct_forest": 8.25,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Juan Nepomuceno",
+      "parquetKey": "san_juan_nepomuceno",
+      "centroid": [
+        -55.9173,
+        -26.2417
+      ],
+      "avg_score": 5.6,
+      "hex_count": 10884,
+      "rank": {
+        "loss_ha": 6418,
+        "loss_pct_forest": 10.41,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Yuty",
+      "parquetKey": "yuty",
+      "centroid": [
+        -56.2397,
+        -26.5325
+      ],
+      "avg_score": 2.96,
+      "hex_count": 19207,
+      "rank": {
+        "loss_ha": 5991,
+        "loss_pct_forest": 8.52,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Abai",
+      "parquetKey": "abai",
+      "centroid": [
+        -55.7178,
+        -25.8957
+      ],
+      "avg_score": 2.12,
+      "hex_count": 23364,
+      "rank": {
+        "loss_ha": 5219,
+        "loss_pct_forest": 5.1,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Maciel",
+      "parquetKey": "maciel",
+      "centroid": [
+        -56.528,
+        -26.2225
+      ],
+      "avg_score": 8.59,
+      "hex_count": 4792,
+      "rank": {
+        "loss_ha": 4334,
+        "loss_pct_forest": 32.04,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Dr. Moises Bertoni",
+      "parquetKey": "dr_moises_bertoni",
+      "centroid": [
+        -56.5977,
+        -26.3929
+      ],
+      "avg_score": 4.86,
+      "hex_count": 7730,
+      "rank": {
+        "loss_ha": 3958,
+        "loss_pct_forest": 20.59,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Fulgencio Yegros",
+      "parquetKey": "fulgencio_yegros",
+      "centroid": [
+        -56.5581,
+        -26.5506
+      ],
+      "avg_score": 3.0,
+      "hex_count": 9598,
+      "rank": {
+        "loss_ha": 3034,
+        "loss_pct_forest": 12.08,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Caazapa",
+      "parquetKey": "caazapa",
+      "centroid": [
+        -56.2983,
+        -26.1867
+      ],
+      "avg_score": 2.93,
+      "hex_count": 9308,
+      "rank": {
+        "loss_ha": 2871,
+        "loss_pct_forest": 9.12,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Gral. Higinio Morinigo",
+      "parquetKey": "gral_higinio_morinigo",
+      "centroid": [
+        -56.1114,
+        -26.0729
+      ],
+      "avg_score": 7.25,
+      "hex_count": 2765,
+      "rank": {
+        "loss_ha": 2111,
+        "loss_pct_forest": 18.81,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Buena Vista",
+      "parquetKey": "buena_vista",
+      "centroid": [
+        -56.0981,
+        -26.2335
+      ],
+      "avg_score": 3.47,
+      "hex_count": 1275,
+      "rank": {
+        "loss_ha": 466,
+        "loss_pct_forest": 8.12,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

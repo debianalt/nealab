@@ -1,0 +1,167 @@
+{
+  "territory": "misiones_py",
+  "province": {
+    "total_hexes": 92975,
+    "avg_score": 0.61,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "San Ignacio",
+      "parquetKey": "san_ignacio",
+      "centroid": [
+        -57.1427,
+        -26.9445
+      ],
+      "avg_score": 0.84,
+      "hex_count": 16735,
+      "rank": {
+        "loss_ha": 1473,
+        "loss_pct_forest": 7.87,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santiago",
+      "parquetKey": "santiago",
+      "centroid": [
+        -56.7915,
+        -27.1361
+      ],
+      "avg_score": 1.14,
+      "hex_count": 10349,
+      "rank": {
+        "loss_ha": 1239,
+        "loss_pct_forest": 10.18,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Rosa",
+      "parquetKey": "santa_rosa",
+      "centroid": [
+        -56.7968,
+        -26.8686
+      ],
+      "avg_score": 1.15,
+      "hex_count": 9138,
+      "rank": {
+        "loss_ha": 1110,
+        "loss_pct_forest": 5.85,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ayolas",
+      "parquetKey": "ayolas",
+      "centroid": [
+        -57.0272,
+        -27.3756
+      ],
+      "avg_score": 0.83,
+      "hex_count": 9478,
+      "rank": {
+        "loss_ha": 828,
+        "loss_pct_forest": 4.52,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Maria",
+      "parquetKey": "santa_maria",
+      "centroid": [
+        -56.8905,
+        -26.73
+      ],
+      "avg_score": 1.07,
+      "hex_count": 4060,
+      "rank": {
+        "loss_ha": 457,
+        "loss_pct_forest": 6.58,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Juan Bautista",
+      "parquetKey": "san_juan_bautista",
+      "centroid": [
+        -57.426,
+        -26.6948
+      ],
+      "avg_score": 0.12,
+      "hex_count": 23961,
+      "rank": {
+        "loss_ha": 299,
+        "loss_pct_forest": 1.44,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Miguel",
+      "parquetKey": "san_miguel",
+      "centroid": [
+        -56.9666,
+        -26.5689
+      ],
+      "avg_score": 0.4,
+      "hex_count": 6276,
+      "rank": {
+        "loss_ha": 266,
+        "loss_pct_forest": 2.95,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Patricio",
+      "parquetKey": "san_patricio",
+      "centroid": [
+        -56.8303,
+        -26.9867
+      ],
+      "avg_score": 2.12,
+      "hex_count": 728,
+      "rank": {
+        "loss_ha": 163,
+        "loss_pct_forest": 15.81,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Yabebyry",
+      "parquetKey": "yabebyry",
+      "centroid": [
+        -57.1846,
+        -27.2526
+      ],
+      "avg_score": 0.07,
+      "hex_count": 9241,
+      "rank": {
+        "loss_ha": 73,
+        "loss_pct_forest": 0.78,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Villa Florida",
+      "parquetKey": "villa_florida",
+      "centroid": [
+        -57.1253,
+        -26.4611
+      ],
+      "avg_score": 0.06,
+      "hex_count": 3009,
+      "rank": {
+        "loss_ha": 18,
+        "loss_pct_forest": 0.39,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

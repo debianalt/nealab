@@ -1,0 +1,47 @@
+{
+  "territory": "amambay_py",
+  "province": {
+    "total_hexes": 89407,
+    "avg_score": 5.33,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Bella Vista",
+      "parquetKey": "bella_vista",
+      "centroid": [
+        -56.4511,
+        -22.475
+      ],
+      "avg_score": 6.87,
+      "hex_count": 38024,
+      "rank": {
+        "loss_ha": 27506,
+        "loss_pct_forest": 15.04,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Pedro Juan Caballero",
+      "parquetKey": "pedro_juan_caballero",
+      "centroid": [
+        -55.9568,
+        -22.7892
+      ],
+      "avg_score": 4.19,
+      "hex_count": 51383,
+      "rank": {
+        "loss_ha": 22654,
+        "loss_pct_forest": 12.19,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

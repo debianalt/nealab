@@ -980,9 +980,7 @@
 	$effect(() => {
 		const a = lensStore.activeAnalysis;
 		const dpto = hexStore.selectedDpto;
-		// EUDR loads the whole territory from one cross-border parquet and has no
-		// per-department parquets, so a dept click would request files that don't exist.
-		const show = !!a && a.spatialUnit !== 'catastro' && a.id !== 'eudr' && !dpto;
+		const show = !!a && a.spatialUnit !== 'catastro' && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
 		// Lazy-fill the AR dept polygons (deferred out of the initial bundle) once the
 		// picker is shown for an AR territory — PY/BR use their own district layers.

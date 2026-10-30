@@ -1,0 +1,347 @@
+{
+  "territory": "alto_parana_py",
+  "province": {
+    "total_hexes": 147913,
+    "avg_score": 0.83,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Itakyry",
+      "parquetKey": "itakyry",
+      "centroid": [
+        -55.1516,
+        -24.8215
+      ],
+      "avg_score": 1.5,
+      "hex_count": 20221,
+      "rank": {
+        "loss_ha": 3205,
+        "loss_pct_forest": 3.64,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Hernandarias",
+      "parquetKey": "hernandarias",
+      "centroid": [
+        -54.7802,
+        -25.3136
+      ],
+      "avg_score": 2.04,
+      "hex_count": 8051,
+      "rank": {
+        "loss_ha": 1731,
+        "loss_pct_forest": 7.29,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Juan E. O'Leary",
+      "parquetKey": "juan_e_oleary",
+      "centroid": [
+        -55.3633,
+        -25.4804
+      ],
+      "avg_score": 3.41,
+      "hex_count": 2364,
+      "rank": {
+        "loss_ha": 849,
+        "loss_pct_forest": 11.86,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Cristóbal",
+      "parquetKey": "san_cristobal",
+      "centroid": [
+        -55.3862,
+        -25.7898
+      ],
+      "avg_score": 0.78,
+      "hex_count": 9768,
+      "rank": {
+        "loss_ha": 807,
+        "loss_pct_forest": 2.17,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Yguazú",
+      "parquetKey": "yguazu",
+      "centroid": [
+        -55.0999,
+        -25.4145
+      ],
+      "avg_score": 0.75,
+      "hex_count": 8295,
+      "rank": {
+        "loss_ha": 655,
+        "loss_pct_forest": 3.17,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Dr. Juan León Mallorquín",
+      "parquetKey": "dr_juan_leon_mallorquin",
+      "centroid": [
+        -55.2555,
+        -25.4849
+      ],
+      "avg_score": 2.01,
+      "hex_count": 2799,
+      "rank": {
+        "loss_ha": 592,
+        "loss_pct_forest": 6.76,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Minga Porá",
+      "parquetKey": "minga_pora",
+      "centroid": [
+        -54.8684,
+        -24.7658
+      ],
+      "avg_score": 0.56,
+      "hex_count": 9057,
+      "rank": {
+        "loss_ha": 533,
+        "loss_pct_forest": 2.31,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Iruña",
+      "parquetKey": "iruna",
+      "centroid": [
+        -55.0381,
+        -26.1334
+      ],
+      "avg_score": 0.88,
+      "hex_count": 5643,
+      "rank": {
+        "loss_ha": 521,
+        "loss_pct_forest": 4.14,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Minga Guazú",
+      "parquetKey": "minga_guazu",
+      "centroid": [
+        -54.8404,
+        -25.5054
+      ],
+      "avg_score": 0.97,
+      "hex_count": 5048,
+      "rank": {
+        "loss_ha": 515,
+        "loss_pct_forest": 3.98,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Tavapy",
+      "parquetKey": "tavapy",
+      "centroid": [
+        -55.0691,
+        -25.6222
+      ],
+      "avg_score": 0.99,
+      "hex_count": 4566,
+      "rank": {
+        "loss_ha": 475,
+        "loss_pct_forest": 2.9,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Rita",
+      "parquetKey": "santa_rita",
+      "centroid": [
+        -55.1372,
+        -25.7706
+      ],
+      "avg_score": 0.64,
+      "hex_count": 6228,
+      "rank": {
+        "loss_ha": 422,
+        "loss_pct_forest": 3.27,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ñacunday",
+      "parquetKey": "nacunday",
+      "centroid": [
+        -54.7844,
+        -26.0741
+      ],
+      "avg_score": 0.42,
+      "hex_count": 9053,
+      "rank": {
+        "loss_ha": 399,
+        "loss_pct_forest": 1.05,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Naranjal",
+      "parquetKey": "naranjal",
+      "centroid": [
+        -55.208,
+        -25.9527
+      ],
+      "avg_score": 0.52,
+      "hex_count": 6626,
+      "rank": {
+        "loss_ha": 366,
+        "loss_pct_forest": 2.42,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Mbaracayú",
+      "parquetKey": "mbaracayu",
+      "centroid": [
+        -54.6833,
+        -25.0093
+      ],
+      "avg_score": 0.29,
+      "hex_count": 11587,
+      "rank": {
+        "loss_ha": 358,
+        "loss_pct_forest": 1.19,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Alberto",
+      "parquetKey": "san_alberto",
+      "centroid": [
+        -54.6794,
+        -24.8378
+      ],
+      "avg_score": 0.32,
+      "hex_count": 10527,
+      "rank": {
+        "loss_ha": 351,
+        "loss_pct_forest": 1.13,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Los Cedrales",
+      "parquetKey": "los_cedrales",
+      "centroid": [
+        -54.7516,
+        -25.6831
+      ],
+      "avg_score": 0.53,
+      "hex_count": 4204,
+      "rank": {
+        "loss_ha": 236,
+        "loss_pct_forest": 2.74,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Dr. Raúl Peña",
+      "parquetKey": "dr_raul_pena",
+      "centroid": [
+        -55.2241,
+        -26.1362
+      ],
+      "avg_score": 0.78,
+      "hex_count": 2569,
+      "rank": {
+        "loss_ha": 212,
+        "loss_pct_forest": 3.19,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Fe Del Paraná",
+      "parquetKey": "santa_fe_del_parana",
+      "centroid": [
+        -54.6299,
+        -25.1914
+      ],
+      "avg_score": 0.21,
+      "hex_count": 8382,
+      "rank": {
+        "loss_ha": 185,
+        "loss_pct_forest": 1.21,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Rosa Del Monday",
+      "parquetKey": "santa_rosa_del_monday",
+      "centroid": [
+        -54.9236,
+        -25.8464
+      ],
+      "avg_score": 0.22,
+      "hex_count": 6533,
+      "rank": {
+        "loss_ha": 154,
+        "loss_pct_forest": 1.02,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Domingo Martínez De Irala",
+      "parquetKey": "domingo_martinez_de_irala",
+      "centroid": [
+        -54.6889,
+        -25.8607
+      ],
+      "avg_score": 0.36,
+      "hex_count": 3552,
+      "rank": {
+        "loss_ha": 134,
+        "loss_pct_forest": 1.31,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ciudad Del Este",
+      "parquetKey": "ciudad_del_este",
+      "centroid": [
+        -54.6775,
+        -25.5031
+      ],
+      "avg_score": 0.79,
+      "hex_count": 1573,
+      "rank": {
+        "loss_ha": 131,
+        "loss_pct_forest": 3.56,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Presidente Franco",
+      "parquetKey": "presidente_franco",
+      "centroid": [
+        -54.6414,
+        -25.5971
+      ],
+      "avg_score": 0.89,
+      "hex_count": 1267,
+      "rank": {
+        "loss_ha": 119,
+        "loss_pct_forest": 2.89,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

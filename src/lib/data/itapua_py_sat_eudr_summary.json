@@ -1,0 +1,482 @@
+{
+  "territory": "itapua_py",
+  "province": {
+    "total_hexes": 173048,
+    "avg_score": 1.75,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "San Pedro Del Parana",
+      "parquetKey": "san_pedro_del_parana",
+      "centroid": [
+        -56.0239,
+        -26.7295
+      ],
+      "avg_score": 4.7,
+      "hex_count": 15050,
+      "rank": {
+        "loss_ha": 7453,
+        "loss_pct_forest": 10.97,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Gral Artigas",
+      "parquetKey": "gral_artigas",
+      "centroid": [
+        -56.3772,
+        -26.9109
+      ],
+      "avg_score": 3.28,
+      "hex_count": 15510,
+      "rank": {
+        "loss_ha": 5365,
+        "loss_pct_forest": 20.96,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Alto Vera",
+      "parquetKey": "alto_vera",
+      "centroid": [
+        -55.7222,
+        -26.5954
+      ],
+      "avg_score": 3.7,
+      "hex_count": 13092,
+      "rank": {
+        "loss_ha": 5097,
+        "loss_pct_forest": 5.95,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Rafael Del Parana",
+      "parquetKey": "san_rafael_del_parana",
+      "centroid": [
+        -55.1388,
+        -26.4058
+      ],
+      "avg_score": 0.97,
+      "hex_count": 16122,
+      "rank": {
+        "loss_ha": 1652,
+        "loss_pct_forest": 2.87,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Carlos A Lopez",
+      "parquetKey": "carlos_a_lopez",
+      "centroid": [
+        -54.9021,
+        -26.3704
+      ],
+      "avg_score": 1.45,
+      "hex_count": 8756,
+      "rank": {
+        "loss_ha": 1335,
+        "loss_pct_forest": 3.79,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Coronel Bogado",
+      "parquetKey": "coronel_bogado",
+      "centroid": [
+        -56.306,
+        -27.1479
+      ],
+      "avg_score": 1.52,
+      "hex_count": 6066,
+      "rank": {
+        "loss_ha": 970,
+        "loss_pct_forest": 7.6,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Leandro Oviedo",
+      "parquetKey": "leandro_oviedo",
+      "centroid": [
+        -56.2346,
+        -26.7503
+      ],
+      "avg_score": 5.26,
+      "hex_count": 1381,
+      "rank": {
+        "loss_ha": 765,
+        "loss_pct_forest": 15.06,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Capitan Meza",
+      "parquetKey": "capitan_meza",
+      "centroid": [
+        -55.3725,
+        -26.7763
+      ],
+      "avg_score": 0.84,
+      "hex_count": 8347,
+      "rank": {
+        "loss_ha": 742,
+        "loss_pct_forest": 2.71,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Gral. Delgado",
+      "parquetKey": "gral_delgado",
+      "centroid": [
+        -56.5565,
+        -27.0741
+      ],
+      "avg_score": 1.45,
+      "hex_count": 4846,
+      "rank": {
+        "loss_ha": 740,
+        "loss_pct_forest": 13.0,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Mayor Otano",
+      "parquetKey": "mayor_otano",
+      "centroid": [
+        -54.7762,
+        -26.2756
+      ],
+      "avg_score": 2.02,
+      "hex_count": 3257,
+      "rank": {
+        "loss_ha": 691,
+        "loss_pct_forest": 4.22,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Trinidad",
+      "parquetKey": "trinidad",
+      "centroid": [
+        -55.735,
+        -27.1495
+      ],
+      "avg_score": 2.73,
+      "hex_count": 2375,
+      "rank": {
+        "loss_ha": 683,
+        "loss_pct_forest": 6.17,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Cosme Y Damian",
+      "parquetKey": "san_cosme_y_damian",
+      "centroid": [
+        -56.4868,
+        -27.2628
+      ],
+      "avg_score": 0.83,
+      "hex_count": 7180,
+      "rank": {
+        "loss_ha": 631,
+        "loss_pct_forest": 5.41,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Tomas Romero P.",
+      "parquetKey": "tomas_romero_p",
+      "centroid": [
+        -55.2933,
+        -26.4732
+      ],
+      "avg_score": 0.87,
+      "hex_count": 6723,
+      "rank": {
+        "loss_ha": 620,
+        "loss_pct_forest": 3.21,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Obligado",
+      "parquetKey": "obligado",
+      "centroid": [
+        -55.7125,
+        -26.9229
+      ],
+      "avg_score": 1.26,
+      "hex_count": 4236,
+      "rank": {
+        "loss_ha": 564,
+        "loss_pct_forest": 4.18,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Edelira",
+      "parquetKey": "edelira",
+      "centroid": [
+        -55.4008,
+        -26.58
+      ],
+      "avg_score": 0.68,
+      "hex_count": 7388,
+      "rank": {
+        "loss_ha": 529,
+        "loss_pct_forest": 2.38,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Pirapo",
+      "parquetKey": "pirapo",
+      "centroid": [
+        -55.5412,
+        -26.8461
+      ],
+      "avg_score": 0.67,
+      "hex_count": 7336,
+      "rank": {
+        "loss_ha": 518,
+        "loss_pct_forest": 2.13,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Hohenau",
+      "parquetKey": "hohenau",
+      "centroid": [
+        -55.7418,
+        -27.0077
+      ],
+      "avg_score": 1.46,
+      "hex_count": 2994,
+      "rank": {
+        "loss_ha": 460,
+        "loss_pct_forest": 5.38,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Encarnacion",
+      "parquetKey": "encarnacion",
+      "centroid": [
+        -55.8985,
+        -27.2646
+      ],
+      "avg_score": 1.22,
+      "hex_count": 3415,
+      "rank": {
+        "loss_ha": 439,
+        "loss_pct_forest": 4.7,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Natalio",
+      "parquetKey": "natalio",
+      "centroid": [
+        -55.1481,
+        -26.7574
+      ],
+      "avg_score": 1.02,
+      "hex_count": 3554,
+      "rank": {
+        "loss_ha": 383,
+        "loss_pct_forest": 2.96,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Yatytay",
+      "parquetKey": "yatytay",
+      "centroid": [
+        -55.0816,
+        -26.6682
+      ],
+      "avg_score": 1.05,
+      "hex_count": 3122,
+      "rank": {
+        "loss_ha": 345,
+        "loss_pct_forest": 3.73,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Nueva Alborada",
+      "parquetKey": "nueva_alborada",
+      "centroid": [
+        -55.665,
+        -27.2813
+      ],
+      "avg_score": 1.27,
+      "hex_count": 2534,
+      "rank": {
+        "loss_ha": 340,
+        "loss_pct_forest": 3.99,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Cambyreta",
+      "parquetKey": "cambyreta",
+      "centroid": [
+        -55.7699,
+        -27.3561
+      ],
+      "avg_score": 1.52,
+      "hex_count": 2077,
+      "rank": {
+        "loss_ha": 332,
+        "loss_pct_forest": 3.99,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Capitan Miranda",
+      "parquetKey": "capitan_miranda",
+      "centroid": [
+        -55.8331,
+        -27.1821
+      ],
+      "avg_score": 1.32,
+      "hex_count": 1969,
+      "rank": {
+        "loss_ha": 273,
+        "loss_pct_forest": 6.53,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "La Paz",
+      "parquetKey": "la_paz",
+      "centroid": [
+        -55.9091,
+        -26.9867
+      ],
+      "avg_score": 0.85,
+      "hex_count": 2509,
+      "rank": {
+        "loss_ha": 224,
+        "loss_pct_forest": 3.47,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Bella Vista",
+      "parquetKey": "bella_vista",
+      "centroid": [
+        -55.5355,
+        -27.0111
+      ],
+      "avg_score": 0.67,
+      "hex_count": 3149,
+      "rank": {
+        "loss_ha": 222,
+        "loss_pct_forest": 2.05,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Fram",
+      "parquetKey": "fram",
+      "centroid": [
+        -56.0203,
+        -27.0764
+      ],
+      "avg_score": 0.38,
+      "hex_count": 3545,
+      "rank": {
+        "loss_ha": 142,
+        "loss_pct_forest": 2.1,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Isla Yacyreta",
+      "parquetKey": "isla_yacyreta",
+      "centroid": [
+        -56.5119,
+        -27.3952
+      ],
+      "avg_score": 0.1,
+      "hex_count": 8785,
+      "rank": {
+        "loss_ha": 97,
+        "loss_pct_forest": 1.89,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Carmen Del Parana",
+      "parquetKey": "carmen_del_parana",
+      "centroid": [
+        -56.1055,
+        -27.2074
+      ],
+      "avg_score": 0.3,
+      "hex_count": 3013,
+      "rank": {
+        "loss_ha": 95,
+        "loss_pct_forest": 1.29,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Jesus",
+      "parquetKey": "jesus",
+      "centroid": [
+        -55.7803,
+        -27.0605
+      ],
+      "avg_score": 0.58,
+      "hex_count": 1387,
+      "rank": {
+        "loss_ha": 85,
+        "loss_pct_forest": 2.97,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Juan",
+      "parquetKey": "san_juan",
+      "centroid": [
+        -55.9922,
+        -27.2954
+      ],
+      "avg_score": 0.78,
+      "hex_count": 901,
+      "rank": {
+        "loss_ha": 74,
+        "loss_pct_forest": 2.69,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Isla",
+      "parquetKey": "isla",
+      "centroid": [
+        -56.4098,
+        -27.5135
+      ],
+      "avg_score": 0.0,
+      "hex_count": 2429,
+      "rank": {
+        "loss_ha": 0,
+        "loss_pct_forest": 0.0,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

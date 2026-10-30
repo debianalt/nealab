@@ -1,0 +1,302 @@
+{
+  "territory": "caaguazu_py",
+  "province": {
+    "total_hexes": 135727,
+    "avg_score": 2.93,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Yhu",
+      "parquetKey": "yhu",
+      "centroid": [
+        -55.6355,
+        -24.8194
+      ],
+      "avg_score": 3.64,
+      "hex_count": 27067,
+      "rank": {
+        "loss_ha": 10366,
+        "loss_pct_forest": 8.49,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Carayao",
+      "parquetKey": "carayao",
+      "centroid": [
+        -56.3183,
+        -25.1893
+      ],
+      "avg_score": 5.19,
+      "hex_count": 9778,
+      "rank": {
+        "loss_ha": 5348,
+        "loss_pct_forest": 8.72,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Caaguazu",
+      "parquetKey": "caaguazu",
+      "centroid": [
+        -56.0534,
+        -25.4075
+      ],
+      "avg_score": 3.72,
+      "hex_count": 10114,
+      "rank": {
+        "loss_ha": 3959,
+        "loss_pct_forest": 10.01,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Mcal. Fco. Solano Lopez",
+      "parquetKey": "mcal_fco_solano_lopez",
+      "centroid": [
+        -55.2805,
+        -25.0871
+      ],
+      "avg_score": 2.38,
+      "hex_count": 13563,
+      "rank": {
+        "loss_ha": 3398,
+        "loss_pct_forest": 7.14,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Repatriacion",
+      "parquetKey": "repatriacion",
+      "centroid": [
+        -55.7998,
+        -25.576
+      ],
+      "avg_score": 2.37,
+      "hex_count": 8988,
+      "rank": {
+        "loss_ha": 2242,
+        "loss_pct_forest": 7.97,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Raul  A. Oviedo",
+      "parquetKey": "raul__a_oviedo",
+      "centroid": [
+        -55.526,
+        -25.1647
+      ],
+      "avg_score": 1.38,
+      "hex_count": 14838,
+      "rank": {
+        "loss_ha": 2163,
+        "loss_pct_forest": 5.11,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Coronel Oviedo",
+      "parquetKey": "coronel_oviedo",
+      "centroid": [
+        -56.4242,
+        -25.4906
+      ],
+      "avg_score": 2.07,
+      "hex_count": 9135,
+      "rank": {
+        "loss_ha": 1995,
+        "loss_pct_forest": 6.45,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Joaquin",
+      "parquetKey": "san_joaquin",
+      "centroid": [
+        -56.0375,
+        -25.0351
+      ],
+      "avg_score": 4.02,
+      "hex_count": 4431,
+      "rank": {
+        "loss_ha": 1876,
+        "loss_pct_forest": 10.8,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Simon Bolivar",
+      "parquetKey": "simon_bolivar",
+      "centroid": [
+        -56.3273,
+        -25.0226
+      ],
+      "avg_score": 4.05,
+      "hex_count": 3997,
+      "rank": {
+        "loss_ha": 1705,
+        "loss_pct_forest": 9.18,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Rosa Del Mbutuy",
+      "parquetKey": "santa_rosa_del_mbutuy",
+      "centroid": [
+        -56.2558,
+        -24.9235
+      ],
+      "avg_score": 3.72,
+      "hex_count": 3829,
+      "rank": {
+        "loss_ha": 1498,
+        "loss_pct_forest": 9.03,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Juan M. Frutos",
+      "parquetKey": "juan_m_frutos",
+      "centroid": [
+        -55.825,
+        -25.3574
+      ],
+      "avg_score": 2.29,
+      "hex_count": 5778,
+      "rank": {
+        "loss_ha": 1392,
+        "loss_pct_forest": 12.38,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "J.e. Estigarribia",
+      "parquetKey": "je_estigarribia",
+      "centroid": [
+        -55.5968,
+        -25.401
+      ],
+      "avg_score": 1.88,
+      "hex_count": 6574,
+      "rank": {
+        "loss_ha": 1298,
+        "loss_pct_forest": 9.54,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "R.i. 3 Corrales",
+      "parquetKey": "ri_3_corrales",
+      "centroid": [
+        -56.2343,
+        -25.3597
+      ],
+      "avg_score": 3.08,
+      "hex_count": 2925,
+      "rank": {
+        "loss_ha": 949,
+        "loss_pct_forest": 5.84,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "La Pastora",
+      "parquetKey": "la_pastora",
+      "centroid": [
+        -56.5132,
+        -25.26
+      ],
+      "avg_score": 3.92,
+      "hex_count": 2247,
+      "rank": {
+        "loss_ha": 928,
+        "loss_pct_forest": 9.14,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Cecilio Baez",
+      "parquetKey": "cecilio_baez",
+      "centroid": [
+        -56.2428,
+        -25.0895
+      ],
+      "avg_score": 4.24,
+      "hex_count": 1515,
+      "rank": {
+        "loss_ha": 676,
+        "loss_pct_forest": 7.38,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Jose De Los Arroyos",
+      "parquetKey": "san_jose_de_los_arroyos",
+      "centroid": [
+        -56.6955,
+        -25.5352
+      ],
+      "avg_score": 1.13,
+      "hex_count": 5299,
+      "rank": {
+        "loss_ha": 633,
+        "loss_pct_forest": 4.83,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "3 De Febrero",
+      "parquetKey": "3_de_febrero",
+      "centroid": [
+        -55.8351,
+        -25.2076
+      ],
+      "avg_score": 3.04,
+      "hex_count": 1819,
+      "rank": {
+        "loss_ha": 583,
+        "loss_pct_forest": 10.35,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Jose D. Ocampos",
+      "parquetKey": "jose_d_ocampos",
+      "centroid": [
+        -55.4392,
+        -25.4429
+      ],
+      "avg_score": 3.04,
+      "hex_count": 1546,
+      "rank": {
+        "loss_ha": 495,
+        "loss_pct_forest": 11.92,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Nueva Londres",
+      "parquetKey": "nueva_londres",
+      "centroid": [
+        -56.5598,
+        -25.4168
+      ],
+      "avg_score": 1.66,
+      "hex_count": 2284,
+      "rank": {
+        "loss_ha": 398,
+        "loss_pct_forest": 5.95,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

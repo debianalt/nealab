@@ -1,0 +1,152 @@
+{
+  "territory": "formosa",
+  "province": {
+    "total_hexes": 825760,
+    "avg_score": 2.92,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "centroid": [
+        -60.0089,
+        -24.8951
+      ],
+      "avg_score": 4.49,
+      "hex_count": 288652,
+      "rank": {
+        "loss_ha": 136656,
+        "loss_pct_forest": 8.75,
+        "fire_native_ha": 418813
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "centroid": [
+        -61.2886,
+        -24.027
+      ],
+      "avg_score": 5.42,
+      "hex_count": 150491,
+      "rank": {
+        "loss_ha": 85927,
+        "loss_pct_forest": 13.04,
+        "fire_native_ha": 91866
+      }
+    },
+    {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "centroid": [
+        -59.1628,
+        -25.7727
+      ],
+      "avg_score": 1.46,
+      "hex_count": 95406,
+      "rank": {
+        "loss_ha": 14709,
+        "loss_pct_forest": 3.12,
+        "fire_native_ha": 82220
+      }
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "centroid": [
+        -62.0811,
+        -23.8673
+      ],
+      "avg_score": 1.26,
+      "hex_count": 43310,
+      "rank": {
+        "loss_ha": 5761,
+        "loss_pct_forest": 3.12,
+        "fire_native_ha": 0
+      }
+    },
+    {
+      "dpto": "Ramón Lista",
+      "parquetKey": "ramon_lista",
+      "centroid": [
+        -62.1413,
+        -23.111
+      ],
+      "avg_score": 0.78,
+      "hex_count": 40559,
+      "rank": {
+        "loss_ha": 3349,
+        "loss_pct_forest": 2.69,
+        "fire_native_ha": 873
+      }
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "centroid": [
+        -58.6711,
+        -25.1016
+      ],
+      "avg_score": 0.63,
+      "hex_count": 37365,
+      "rank": {
+        "loss_ha": 2494,
+        "loss_pct_forest": 1.94,
+        "fire_native_ha": 103489
+      }
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "centroid": [
+        -58.0456,
+        -25.3808
+      ],
+      "avg_score": 0.27,
+      "hex_count": 58522,
+      "rank": {
+        "loss_ha": 1672,
+        "loss_pct_forest": 1.42,
+        "fire_native_ha": 331935
+      }
+    },
+    {
+      "dpto": "Formosa",
+      "parquetKey": "formosa",
+      "centroid": [
+        -58.3872,
+        -25.9345
+      ],
+      "avg_score": 0.21,
+      "hex_count": 71783,
+      "rank": {
+        "loss_ha": 1622,
+        "loss_pct_forest": 0.98,
+        "fire_native_ha": 256082
+      }
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "centroid": [
+        -58.5513,
+        -26.4647
+      ],
+      "avg_score": 0.35,
+      "hex_count": 39672,
+      "rank": {
+        "loss_ha": 1475,
+        "loss_pct_forest": 1.56,
+        "fire_native_ha": 69716
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "territory": "presidente_hayes_py",
+  "province": {
+    "total_hexes": 772479,
+    "avg_score": 2.1,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Pozo Colorado",
+      "parquetKey": "pozo_colorado",
+      "centroid": [
+        -58.8214,
+        -23.1741
+      ],
+      "avg_score": 2.68,
+      "hex_count": 306577,
+      "rank": {
+        "loss_ha": 86670,
+        "loss_pct_forest": 7.42,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Villa Hayes",
+      "parquetKey": "villa_hayes",
+      "centroid": [
+        -58.6721,
+        -24.2215
+      ],
+      "avg_score": 1.84,
+      "hex_count": 345937,
+      "rank": {
+        "loss_ha": 67083,
+        "loss_pct_forest": 5.68,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Puerto Pinasco",
+      "parquetKey": "puerto_pinasco",
+      "centroid": [
+        -58.3619,
+        -22.6175
+      ],
+      "avg_score": 1.57,
+      "hex_count": 96548,
+      "rank": {
+        "loss_ha": 15963,
+        "loss_pct_forest": 2.68,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Benjamin Aceval",
+      "parquetKey": "benjamin_aceval",
+      "centroid": [
+        -57.6409,
+        -24.821
+      ],
+      "avg_score": 0.57,
+      "hex_count": 23417,
+      "rank": {
+        "loss_ha": 1399,
+        "loss_pct_forest": 2.51,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

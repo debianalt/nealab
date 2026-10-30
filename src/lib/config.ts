@@ -116,6 +116,7 @@ export function getParquetUrl(name: string): string {
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=5',
 		sat_censo_temporal: '?v=1',
+		sat_eudr: '?v=1',
 	};
 	const bust = busts[name] || '';
 	return `${getBase()}/data/${name}.parquet${bust}`;
@@ -234,8 +235,8 @@ export const PARQUETS = {
 	get radio_stats_parana_br()         { return `${getBase()}/data/setores_stats_parana_br.parquet`; },
 	get radio_stats_santa_catarina_br() { return `${getBase()}/data/setores_stats_santa_catarina_br.parquet`; },
 	get radio_stats_rio_grande_sul_br() { return `${getBase()}/data/setores_stats_rio_grande_sul_br.parquet`; },
-	// EUDR deforestation (H3 res-7, 10 provinces)
-	get eudr_deforestation() { return getEudrParquetUrl('eudr_deforestation'); },
+	// EUDR post-2020 loss, res-9 per territory (dept splits in {prefix}sat_dpto/)
+	get sat_eudr() { return getParquetUrl('sat_eudr'); },
 	// Itapua district-level satellite scores
 	get district_stats_itapua() { return `${getBase()}/data/itapua_py/district_stats_itapua.parquet`; },
 	// Alto Paraná district-level satellite scores
@@ -1187,17 +1188,18 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		colorClasses: DEFOREST_LOSS_CLASSES,
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
-	// ── EUDR: pérdida arbórea posterior a 2020 (H3 res-7, 31 unidades: AR 10 prov + PY 18 deptos + BR 3 estados) ──
-	// Un solo parquet transfronterizo; hexStore.territoryWhere() deja sólo las filas del
-	// territorio activo, y la capa carga como cualquier otra. Sin parquets por depto:
-	// el selector de depto queda oculto (+page.svelte).
+	// ── EUDR: pérdida arbórea posterior a 2020 (H3 res-9, por departamento) ──
+	// pipeline/build_eudr_dpto.py parte el grid res-9 de /eudr/check con los departamentos
+	// de la capa de deforestación: {prefijo}sat_dpto/sat_eudr_{key}.parquet + resumen con
+	// ranking. El grid no llega al norte del Chaco paraguayo: Alto Paraguay sin capa, y
+	// en Boquerón Gral. Eugenio A. Garay (5 % de sus hexágonos) queda sin barra.
 	// Variable principal = la fracción física (tier 1), no risk_score, que es un
 	// promedio ponderado 70/20/10 (lo sigue usando sólo /eudr/check).
-	// Dominio de color fijo 0-20 %: P98 del parquet completo = 19,7 % (mediana 0,
-	// P90 5,4 %); con MIN/MAX (0-100) casi todo el mapa quedaría en el primer color.
+	// Dominio de color fijo 0-40 %: P98 en res-9 = 40 % (mediana y P90 = 0); con
+	// MIN/MAX (0-100) casi todo el mapa quedaría en el primer color.
 	eudr: {
 		id: 'eudr',
-		parquet: 'eudr_deforestation',
+		parquet: 'sat_eudr',
 		variables: [
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean', unit: '%' },
 			{ col: 'fire_native_post_2020_pct', labelKey: 'eudr.fireNativePost2020', aggregation: 'mean', unit: '%' },
@@ -1207,7 +1209,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		],
 		primaryVariable: 'loss_post_2020_pct',
 		colorScale: 'flood',
-		fixedColorDomain: [0, 20],
+		fixedColorDomain: [0, 40],
 		aggregation: 'mean',
 		petalVars: [
 			{ col: 'loss_post_2020_pct', labelKey: 'eudr.lossPost2020', aggregation: 'mean' },
@@ -1216,10 +1218,23 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'forest_cover_current', labelKey: 'eudr.forestCurrent', aggregation: 'mean' },
 		],
 		titleKey: 'trade.eudr.analysis_title',
-		perDepartment: false,
+		perDepartment: true,
+		// Three readings of the post-2020 loss (pipeline/build_eudr_dpto.py).
+		deptRank: {
+			field: 'loss_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+			titleKey: 'rank.eudr.title.ha', noteKey: 'rank.eudr.note.ha',
+			metrics: [
+				{ tabKey: 'rank.deforest.tab.ha' },
+				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%', unitKey: 'rank.unit.pct', decimals: 1,
+				  titleKey: 'rank.eudr.title.pct', noteKey: 'rank.eudr.note.pct',
+				  extraField: 'loss_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0 },
+				{ tabKey: 'rank.eudr.tab.fire', field: 'fire_native_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+				  titleKey: 'rank.eudr.title.fire', noteKey: 'rank.eudr.note.fire' },
+			],
+		},
 		legendLowKey: 'legend.eudr.low',
 		legendHighKey: 'legend.eudr.high',
-		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'available', itapua_py: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'available', itapua_py: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'unavailable'},
 	},
 };
 
@@ -1410,10 +1425,9 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'economia',
 		titleKey: 'trade.eudr.analysis_title',
 		descKey: 'trade.eudr.analysis_desc',
-		// EUDR is one cross-border parquet (31 units: AR 10 prov + PY 18 deptos +
-		// BR 3 estados), NOT a comparable analysis. Each territory loads its own rows
-		// (hexStore.territoryWhere); available in every territory.
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		// Per-department res-9 split of the cross-border EUDR grid (build_eudr_dpto.py),
+		// NOT a comparable analysis. The grid misses the northern Paraguayan Chaco.
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'unavailable'},
 		rigorBadge: 'physical',
 		status: 'available',
 		spatialUnit: 'hexagon',
@@ -1661,8 +1675,8 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'data.source.censo' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
 	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
-	// EUDR: fecha real de refresh viene de data/eudr/meta.json (getEudrMetaUrl) — esto es fallback.
-	eudr_deforestation: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '24/07/2026', sourceKey: 'data.source.satellite' },
+	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.
+	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '24/07/2026', sourceKey: 'data.source.satellite' },
 };
 
 // ── EUDR Configuration ──────────────────────────────────────────────────

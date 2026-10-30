@@ -1,0 +1,272 @@
+{
+  "territory": "misiones",
+  "province": {
+    "total_hexes": 311688,
+    "avg_score": 5.75,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "dpto": "Guaraní",
+      "parquetKey": "guarani",
+      "centroid": [
+        -54.2688,
+        -27.0274
+      ],
+      "avg_score": 7.06,
+      "hex_count": 34994,
+      "rank": {
+        "loss_ha": 26030,
+        "loss_pct_forest": 8.47,
+        "fire_native_ha": 816
+      }
+    },
+    {
+      "dpto": "San Pedro",
+      "parquetKey": "san_pedro",
+      "centroid": [
+        -53.9658,
+        -26.6398
+      ],
+      "avg_score": 5.14,
+      "hex_count": 42018,
+      "rank": {
+        "loss_ha": 22762,
+        "loss_pct_forest": 5.57,
+        "fire_native_ha": 222
+      }
+    },
+    {
+      "dpto": "G. M. Belgrano",
+      "parquetKey": "g_m_belgrano",
+      "centroid": [
+        -53.9584,
+        -26.0076
+      ],
+      "avg_score": 4.93,
+      "hex_count": 32321,
+      "rank": {
+        "loss_ha": 16773,
+        "loss_pct_forest": 5.59,
+        "fire_native_ha": 568
+      }
+    },
+    {
+      "dpto": "25 de Mayo",
+      "parquetKey": "25_de_mayo",
+      "centroid": [
+        -54.6382,
+        -27.3768
+      ],
+      "avg_score": 7.83,
+      "hex_count": 17551,
+      "rank": {
+        "loss_ha": 14469,
+        "loss_pct_forest": 9.88,
+        "fire_native_ha": 405
+      }
+    },
+    {
+      "dpto": "L.G. San Martín",
+      "parquetKey": "lg_san_martin",
+      "centroid": [
+        -54.9218,
+        -26.8934
+      ],
+      "avg_score": 8.29,
+      "hex_count": 15687,
+      "rank": {
+        "loss_ha": 13695,
+        "loss_pct_forest": 10.86,
+        "fire_native_ha": 4022
+      }
+    },
+    {
+      "dpto": "Montecarlo",
+      "parquetKey": "montecarlo",
+      "centroid": [
+        -54.5675,
+        -26.6682
+      ],
+      "avg_score": 7.09,
+      "hex_count": 18299,
+      "rank": {
+        "loss_ha": 13675,
+        "loss_pct_forest": 8.07,
+        "fire_native_ha": 2351
+      }
+    },
+    {
+      "dpto": "Cainguás",
+      "parquetKey": "cainguas",
+      "centroid": [
+        -54.8072,
+        -27.1483
+      ],
+      "avg_score": 6.9,
+      "hex_count": 16680,
+      "rank": {
+        "loss_ha": 12126,
+        "loss_pct_forest": 9.29,
+        "fire_native_ha": 157
+      }
+    },
+    {
+      "dpto": "Eldorado",
+      "parquetKey": "eldorado",
+      "centroid": [
+        -54.4402,
+        -26.3193
+      ],
+      "avg_score": 6.14,
+      "hex_count": 18060,
+      "rank": {
+        "loss_ha": 11682,
+        "loss_pct_forest": 7.03,
+        "fire_native_ha": 48
+      }
+    },
+    {
+      "dpto": "Oberá",
+      "parquetKey": "obera",
+      "centroid": [
+        -55.0808,
+        -27.4651
+      ],
+      "avg_score": 5.94,
+      "hex_count": 17020,
+      "rank": {
+        "loss_ha": 10641,
+        "loss_pct_forest": 7.98,
+        "fire_native_ha": 0
+      }
+    },
+    {
+      "dpto": "San Ignacio",
+      "parquetKey": "san_ignacio",
+      "centroid": [
+        -55.3377,
+        -27.1764
+      ],
+      "avg_score": 5.58,
+      "hex_count": 17701,
+      "rank": {
+        "loss_ha": 10405,
+        "loss_pct_forest": 7.06,
+        "fire_native_ha": 36
+      }
+    },
+    {
+      "dpto": "Iguazú",
+      "parquetKey": "iguazu",
+      "centroid": [
+        -54.4076,
+        -25.8818
+      ],
+      "avg_score": 3.37,
+      "hex_count": 27863,
+      "rank": {
+        "loss_ha": 9894,
+        "loss_pct_forest": 3.75,
+        "fire_native_ha": 1382
+      }
+    },
+    {
+      "dpto": "L. N. Alem",
+      "parquetKey": "l_n_alem",
+      "centroid": [
+        -55.3895,
+        -27.6277
+      ],
+      "avg_score": 5.92,
+      "hex_count": 11668,
+      "rank": {
+        "loss_ha": 7274,
+        "loss_pct_forest": 7.84,
+        "fire_native_ha": 0
+      }
+    },
+    {
+      "dpto": "Capital",
+      "parquetKey": "capital",
+      "centroid": [
+        -55.8579,
+        -27.5524
+      ],
+      "avg_score": 6.3,
+      "hex_count": 7736,
+      "rank": {
+        "loss_ha": 5136,
+        "loss_pct_forest": 15.81,
+        "fire_native_ha": 107
+      }
+    },
+    {
+      "dpto": "San Javier",
+      "parquetKey": "san_javier",
+      "centroid": [
+        -55.1659,
+        -27.775
+      ],
+      "avg_score": 6.41,
+      "hex_count": 6995,
+      "rank": {
+        "loss_ha": 4721,
+        "loss_pct_forest": 9.08,
+        "fire_native_ha": 0
+      }
+    },
+    {
+      "dpto": "Candelaria",
+      "parquetKey": "candelaria",
+      "centroid": [
+        -55.5827,
+        -27.4641
+      ],
+      "avg_score": 3.7,
+      "hex_count": 9543,
+      "rank": {
+        "loss_ha": 3718,
+        "loss_pct_forest": 5.42,
+        "fire_native_ha": 218
+      }
+    },
+    {
+      "dpto": "Concepción",
+      "parquetKey": "concepcion",
+      "centroid": [
+        -55.4678,
+        -27.9377
+      ],
+      "avg_score": 4.23,
+      "hex_count": 7516,
+      "rank": {
+        "loss_ha": 3351,
+        "loss_pct_forest": 6.85,
+        "fire_native_ha": 15
+      }
+    },
+    {
+      "dpto": "Apóstoles",
+      "parquetKey": "apostoles",
+      "centroid": [
+        -55.682,
+        -27.8934
+      ],
+      "avg_score": 2.44,
+      "hex_count": 10036,
+      "rank": {
+        "loss_ha": 2575,
+        "loss_pct_forest": 5.09,
+        "fire_native_ha": 25
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

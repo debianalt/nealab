@@ -258,7 +258,22 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 	},
 };
 
+// EUDR (pipeline/build_eudr_dpto.py): sat_eudr_dept_summary.json (Misiones) and
+// {territory}_sat_eudr_summary.json; no file for a territory → no layer there.
+const EUDR_SUMMARIES = import.meta.glob('$lib/data/*sat_eudr*summary.json');
+
 export async function loadDeptSummary(analysisId: string, territoryPrefix: string): Promise<any> {
+	if (analysisId === 'eudr') {
+		const name = territoryPrefix ? `${territoryPrefix.slice(0, -1)}_sat_eudr_summary` : 'sat_eudr_dept_summary';
+		const loader = Object.entries(EUDR_SUMMARIES).find(([p]) => p.endsWith(`/${name}.json`))?.[1];
+		if (!loader) return null;
+		try {
+			const mod: any = await loader();
+			return mod.default ?? mod;
+		} catch {
+			return null;
+		}
+	}
 	const summaries = territoryPrefix ? (TERRITORY_SUMMARIES[territoryPrefix] ?? null) : SAT_SUMMARIES;
 	if (!summaries) return null;
 	const loader = summaries[analysisId];

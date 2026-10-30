@@ -1,0 +1,317 @@
+{
+  "territory": "central_py",
+  "province": {
+    "total_hexes": 27483,
+    "avg_score": 1.8,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Villeta",
+      "parquetKey": "villeta",
+      "centroid": [
+        -57.6064,
+        -25.7011
+      ],
+      "avg_score": 2.23,
+      "hex_count": 9166,
+      "rank": {
+        "loss_ha": 2155,
+        "loss_pct_forest": 13.18,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ita",
+      "parquetKey": "ita",
+      "centroid": [
+        -57.3749,
+        -25.52
+      ],
+      "avg_score": 2.31,
+      "hex_count": 1945,
+      "rank": {
+        "loss_ha": 473,
+        "loss_pct_forest": 10.54,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Itaugua",
+      "parquetKey": "itaugua",
+      "centroid": [
+        -57.3532,
+        -25.3941
+      ],
+      "avg_score": 3.39,
+      "hex_count": 1218,
+      "rank": {
+        "loss_ha": 435,
+        "loss_pct_forest": 10.93,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Luque",
+      "parquetKey": "luque",
+      "centroid": [
+        -57.4568,
+        -25.2476
+      ],
+      "avg_score": 2.11,
+      "hex_count": 1595,
+      "rank": {
+        "loss_ha": 354,
+        "loss_pct_forest": 7.78,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Aregua",
+      "parquetKey": "aregua",
+      "centroid": [
+        -57.3871,
+        -25.2913
+      ],
+      "avg_score": 2.92,
+      "hex_count": 1123,
+      "rank": {
+        "loss_ha": 345,
+        "loss_pct_forest": 8.15,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ypacarai",
+      "parquetKey": "ypacarai",
+      "centroid": [
+        -57.2585,
+        -25.3887
+      ],
+      "avg_score": 2.49,
+      "hex_count": 1197,
+      "rank": {
+        "loss_ha": 314,
+        "loss_pct_forest": 7.86,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Nueva Italia",
+      "parquetKey": "nueva_italia",
+      "centroid": [
+        -57.4757,
+        -25.7512
+      ],
+      "avg_score": 0.71,
+      "hex_count": 4022,
+      "rank": {
+        "loss_ha": 301,
+        "loss_pct_forest": 6.2,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Limpio",
+      "parquetKey": "limpio",
+      "centroid": [
+        -57.4784,
+        -25.1533
+      ],
+      "avg_score": 1.29,
+      "hex_count": 1313,
+      "rank": {
+        "loss_ha": 179,
+        "loss_pct_forest": 5.09,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Asuncion",
+      "parquetKey": "asuncion",
+      "centroid": [
+        -57.6069,
+        -25.2858
+      ],
+      "avg_score": 0.99,
+      "hex_count": 1465,
+      "rank": {
+        "loss_ha": 152,
+        "loss_pct_forest": 10.88,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Ypane",
+      "parquetKey": "ypane",
+      "centroid": [
+        -57.5063,
+        -25.4553
+      ],
+      "avg_score": 2.05,
+      "hex_count": 509,
+      "rank": {
+        "loss_ha": 110,
+        "loss_pct_forest": 7.25,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Guarambare",
+      "parquetKey": "guarambare",
+      "centroid": [
+        -57.452,
+        -25.4829
+      ],
+      "avg_score": 2.8,
+      "hex_count": 312,
+      "rank": {
+        "loss_ha": 92,
+        "loss_pct_forest": 18.54,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Capiata",
+      "parquetKey": "capiata",
+      "centroid": [
+        -57.4524,
+        -25.3673
+      ],
+      "avg_score": 0.95,
+      "hex_count": 833,
+      "rank": {
+        "loss_ha": 84,
+        "loss_pct_forest": 5.16,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "J. A. Saldivar",
+      "parquetKey": "j_a_saldivar",
+      "centroid": [
+        -57.4334,
+        -25.4217
+      ],
+      "avg_score": 1.41,
+      "hex_count": 374,
+      "rank": {
+        "loss_ha": 55,
+        "loss_pct_forest": 6.58,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Antonio",
+      "parquetKey": "san_antonio",
+      "centroid": [
+        -57.5599,
+        -25.4165
+      ],
+      "avg_score": 1.31,
+      "hex_count": 315,
+      "rank": {
+        "loss_ha": 43,
+        "loss_pct_forest": 8.11,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Nemby",
+      "parquetKey": "nemby",
+      "centroid": [
+        -57.5321,
+        -25.3952
+      ],
+      "avg_score": 1.13,
+      "hex_count": 283,
+      "rank": {
+        "loss_ha": 34,
+        "loss_pct_forest": 6.8,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "M. Roque Alonso",
+      "parquetKey": "m_roque_alonso",
+      "centroid": [
+        -57.5338,
+        -25.1973
+      ],
+      "avg_score": 0.7,
+      "hex_count": 455,
+      "rank": {
+        "loss_ha": 33,
+        "loss_pct_forest": 4.16,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "centroid": [
+        -57.5107,
+        -25.3477
+      ],
+      "avg_score": 0.31,
+      "hex_count": 607,
+      "rank": {
+        "loss_ha": 20,
+        "loss_pct_forest": 3.6,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Lambare",
+      "parquetKey": "lambare",
+      "centroid": [
+        -57.6166,
+        -25.3522
+      ],
+      "avg_score": 0.46,
+      "hex_count": 310,
+      "rank": {
+        "loss_ha": 15,
+        "loss_pct_forest": 4.51,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Villa Elisa",
+      "parquetKey": "villa_elisa",
+      "centroid": [
+        -57.5871,
+        -25.3721
+      ],
+      "avg_score": 0.51,
+      "hex_count": 220,
+      "rank": {
+        "loss_ha": 12,
+        "loss_pct_forest": 3.75,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Fdo. De La Mora",
+      "parquetKey": "fdo_de_la_mora",
+      "centroid": [
+        -57.5499,
+        -25.3229
+      ],
+      "avg_score": 0.32,
+      "hex_count": 221,
+      "rank": {
+        "loss_ha": 8,
+        "loss_pct_forest": 11.33,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}

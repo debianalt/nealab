@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getEudrParquetUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -370,17 +370,6 @@ export class HexStore {
 		// Only sat_* parquets are territory-specific; EUDR etc. use a fixed global URL
 		if (!this.territoryPrefix || !layer.parquet?.startsWith('sat_')) return url;
 		return url.replace('/data/', `/data/${this.territoryPrefix}`);
-	}
-
-	// EUDR is one cross-border parquet (AR + PY + BR units) with a `province` key
-	// such as 'ar_misiones', 'py_itapúa', 'br_rio_grande_do_sul'. Keep only the
-	// active territory's rows so the layer loads like any per-territory layer.
-	private territoryWhere(layer: HexLayerConfig): string {
-		if (layer.id !== 'eudr') return '';
-		const t = TERRITORY_REGISTRY[this.territoryId];
-		if (!t) return '';
-		const key = `${t.country}_${t.id.replace(/_(py|br)$/, '')}`;
-		return ` WHERE replace(strip_accents(province), 'rio_grande_do_sul', 'rio_grande_sul') = '${key}'`;
 	}
 
 	/** Per-department parquet URL for a layer (mirrors the dispatch in loadDepartment). */
@@ -842,11 +831,7 @@ export class HexStore {
 			this._globalLoadState.set(stateKey, 'loading');
 		}
 		try {
-		// EUDR is a single global dataset (10 provinces) at data/eudr/, not a
-		// per-territory parquet — ignore the territory prefix entirely.
-		const url = layer.id === 'eudr'
-			? getEudrParquetUrl(layer.parquet)
-			: getSatGlobalUrl(layer.id, prefix);
+		const url = getSatGlobalUrl(layer.id, prefix);
 		// Project to only the columns the regional/compare UI needs (choropleth +
 		// ComparisonPanel + petal + categorical) instead of SELECT * — the global carries
 		// ~20 unused baseline/delta/pca columns. Inspect schema first to tolerate drift.
@@ -1194,7 +1179,7 @@ export class HexStore {
 		}
 		const cols = [...allCols].join(', ');
 		const result = await query(
-			`SELECT h3index${cols ? `, ${cols}` : ''} FROM '${url}'${this.territoryWhere(layer)}`
+			`SELECT h3index${cols ? `, ${cols}` : ''} FROM '${url}'`
 		);
 
 		const data = new Map<string, Record<string, any>>();
@@ -1393,10 +1378,9 @@ export class HexStore {
 				this.provincialAvg = numVars.map(() => 1);
 			} else {
 				const aggExprs = availableVars.map(v => `AVG(${v.col}) as avg_${v.col}`).join(', ');
-				const tw = this.territoryWhere(layer);
 				const whereClause = actualCols.has(layer.primaryVariable)
-					? (tw ? `${tw} AND ${layer.primaryVariable} IS NOT NULL` : `WHERE ${layer.primaryVariable} IS NOT NULL`)
-					: tw;
+					? `WHERE ${layer.primaryVariable} IS NOT NULL`
+					: '';
 				const sql = `SELECT ${aggExprs} FROM '${dataUrl}' ${whereClause}`;
 				const result = await query(sql);
 				const row = result.get(0)!.toJSON() as Record<string, any>;

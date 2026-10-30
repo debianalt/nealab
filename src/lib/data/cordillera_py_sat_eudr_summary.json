@@ -1,0 +1,317 @@
+{
+  "territory": "cordillera_py",
+  "province": {
+    "total_hexes": 51330,
+    "avg_score": 1.54,
+    "unassigned": 0
+  },
+  "departments": [
+    {
+      "distrito": "Juan De Mena",
+      "parquetKey": "juan_de_mena",
+      "centroid": [
+        -56.7701,
+        -24.9869
+      ],
+      "avg_score": 0.94,
+      "hex_count": 10887,
+      "rank": {
+        "loss_ha": 1077,
+        "loss_pct_forest": 3.33,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Eusebio Ayala",
+      "parquetKey": "eusebio_ayala",
+      "centroid": [
+        -56.9762,
+        -25.3608
+      ],
+      "avg_score": 3.39,
+      "hex_count": 2873,
+      "rank": {
+        "loss_ha": 1025,
+        "loss_pct_forest": 9.12,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Arroyos Y Esteros",
+      "parquetKey": "arroyos_y_esteros",
+      "centroid": [
+        -57.1657,
+        -25.0372
+      ],
+      "avg_score": 0.91,
+      "hex_count": 5898,
+      "rank": {
+        "loss_ha": 562,
+        "loss_pct_forest": 3.43,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Valenzuela",
+      "parquetKey": "valenzuela",
+      "centroid": [
+        -56.8551,
+        -25.5913
+      ],
+      "avg_score": 2.46,
+      "hex_count": 2022,
+      "rank": {
+        "loss_ha": 523,
+        "loss_pct_forest": 9.5,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Caacupe",
+      "parquetKey": "caacupe",
+      "centroid": [
+        -57.1229,
+        -25.3732
+      ],
+      "avg_score": 3.94,
+      "hex_count": 1249,
+      "rank": {
+        "loss_ha": 518,
+        "loss_pct_forest": 8.82,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Bernardino",
+      "parquetKey": "san_bernardino",
+      "centroid": [
+        -57.2908,
+        -25.2889
+      ],
+      "avg_score": 3.48,
+      "hex_count": 1410,
+      "rank": {
+        "loss_ha": 517,
+        "loss_pct_forest": 7.78,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Tobati",
+      "parquetKey": "tobati",
+      "centroid": [
+        -57.0454,
+        -25.218
+      ],
+      "avg_score": 1.64,
+      "hex_count": 2861,
+      "rank": {
+        "loss_ha": 495,
+        "loss_pct_forest": 5.71,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Piribebuy",
+      "parquetKey": "piribebuy",
+      "centroid": [
+        -57.0428,
+        -25.4661
+      ],
+      "avg_score": 2.27,
+      "hex_count": 2027,
+      "rank": {
+        "loss_ha": 484,
+        "loss_pct_forest": 7.32,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Caraguatay",
+      "parquetKey": "caraguatay",
+      "centroid": [
+        -56.7397,
+        -25.2179
+      ],
+      "avg_score": 0.75,
+      "hex_count": 5731,
+      "rank": {
+        "loss_ha": 452,
+        "loss_pct_forest": 2.45,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Altos",
+      "parquetKey": "altos",
+      "centroid": [
+        -57.2174,
+        -25.2525
+      ],
+      "avg_score": 3.07,
+      "hex_count": 1354,
+      "rank": {
+        "loss_ha": 439,
+        "loss_pct_forest": 7.95,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Mbacayaty Del Yhaguy",
+      "parquetKey": "mbacayaty_del_yhaguy",
+      "centroid": [
+        -56.7007,
+        -25.3325
+      ],
+      "avg_score": 1.15,
+      "hex_count": 3150,
+      "rank": {
+        "loss_ha": 381,
+        "loss_pct_forest": 3.78,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Itacurubi De La Cordiller",
+      "parquetKey": "itacurubi_de_la_cordiller",
+      "centroid": [
+        -56.8701,
+        -25.4677
+      ],
+      "avg_score": 2.97,
+      "hex_count": 1147,
+      "rank": {
+        "loss_ha": 359,
+        "loss_pct_forest": 7.68,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Emboscada",
+      "parquetKey": "emboscada",
+      "centroid": [
+        -57.3593,
+        -25.1259
+      ],
+      "avg_score": 1.4,
+      "hex_count": 2055,
+      "rank": {
+        "loss_ha": 302,
+        "loss_pct_forest": 3.4,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Atyra",
+      "parquetKey": "atyra",
+      "centroid": [
+        -57.1453,
+        -25.2524
+      ],
+      "avg_score": 1.89,
+      "hex_count": 1285,
+      "rank": {
+        "loss_ha": 256,
+        "loss_pct_forest": 5.17,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Isla Pucu",
+      "parquetKey": "isla_pucu",
+      "centroid": [
+        -56.9,
+        -25.302
+      ],
+      "avg_score": 1.82,
+      "hex_count": 1183,
+      "rank": {
+        "loss_ha": 227,
+        "loss_pct_forest": 5.83,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Nueva Colombia",
+      "parquetKey": "nueva_colombia",
+      "centroid": [
+        -57.2658,
+        -25.1606
+      ],
+      "avg_score": 1.89,
+      "hex_count": 1026,
+      "rank": {
+        "loss_ha": 204,
+        "loss_pct_forest": 4.84,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "1 De Marzo",
+      "parquetKey": "1_de_marzo",
+      "centroid": [
+        -56.9751,
+        -25.1246
+      ],
+      "avg_score": 2.06,
+      "hex_count": 810,
+      "rank": {
+        "loss_ha": 176,
+        "loss_pct_forest": 6.45,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Santa Elena",
+      "parquetKey": "santa_elena",
+      "centroid": [
+        -56.8205,
+        -25.3962
+      ],
+      "avg_score": 1.12,
+      "hex_count": 1171,
+      "rank": {
+        "loss_ha": 139,
+        "loss_pct_forest": 4.47,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "San Jose Obrero",
+      "parquetKey": "san_jose_obrero",
+      "centroid": [
+        -56.8842,
+        -25.1148
+      ],
+      "avg_score": 0.6,
+      "hex_count": 2180,
+      "rank": {
+        "loss_ha": 137,
+        "loss_pct_forest": 2.36,
+        "fire_native_ha": null
+      }
+    },
+    {
+      "distrito": "Loma Grande",
+      "parquetKey": "loma_grande",
+      "centroid": [
+        -57.1909,
+        -25.1471
+      ],
+      "avg_score": 0.34,
+      "hex_count": 1011,
+      "rank": {
+        "loss_ha": 36,
+        "loss_pct_forest": 1.04,
+        "fire_native_ha": null
+      }
+    }
+  ],
+  "metadata": {
+    "source": "data/eudr/hires/eudr_res9_combined.parquet (H3 res-9)",
+    "rank": {
+      "metric": "loss_ha",
+      "definition": "Pérdida de cobertura arbórea Hansen GFC posterior al 31-12-2020 (2021–2025): ha, % de la cobertura arbórea 2000, y ha quemadas sobre vegetación nativa leñosa (MODIS MCD64A1 × MapBiomas)"
+    }
+  }
+}
