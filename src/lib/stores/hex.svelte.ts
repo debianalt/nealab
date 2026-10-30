@@ -396,7 +396,7 @@ export class HexStore {
 		this.updatePrimaryOverride(layer, actualCols);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			'n_edificios', 'hogares_estimados',
-			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`]),
+			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])];
 		if (layer.temporal) {
 			for (const v of [...layer.variables.map(v => v.col), layer.primaryVariable]) {
@@ -853,7 +853,7 @@ export class HexStore {
 		const actualCols = await getParquetCols(url);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			'n_edificios', 'hogares_estimados',
-			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`]),
+			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])]
 			.filter((c): c is string => !!c && actualCols.has(c))
 			.filter((c, i, a) => a.indexOf(c) === i);

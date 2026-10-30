@@ -2,14 +2,12 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 68049,
-    "avg_score": 50.0,
     "unassigned": 8681
   },
   "departments": [
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 72.1,
       "hex_count": 2090,
       "centroid": [
         -58.756,
@@ -17,13 +15,13 @@
       ],
       "rank": {
         "viirs": 25.76,
-        "empleo_pct": 53.6
+        "empleo_pct": 53.4,
+        "univ_pct": 11.7
       }
     },
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 68.9,
       "hex_count": 2488,
       "centroid": [
         -57.8087,
@@ -31,13 +29,13 @@
       ],
       "rank": {
         "viirs": 3.43,
-        "empleo_pct": 43.6
+        "empleo_pct": 52.6,
+        "univ_pct": 5.7
       }
     },
     {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
-      "avg_score": 59.5,
       "hex_count": 3164,
       "centroid": [
         -58.1652,
@@ -45,13 +43,13 @@
       ],
       "rank": {
         "viirs": 2.43,
-        "empleo_pct": 53.7
+        "empleo_pct": 53.6,
+        "univ_pct": 6.7
       }
     },
     {
       "dpto": "General Alvear",
       "parquetKey": "general_alvear",
-      "avg_score": 57.5,
       "hex_count": 653,
       "centroid": [
         -56.5109,
@@ -59,13 +57,13 @@
       ],
       "rank": {
         "viirs": 1.73,
-        "empleo_pct": 49.9
+        "empleo_pct": 49.0,
+        "univ_pct": 4.6
       }
     },
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "avg_score": 57.0,
       "hex_count": 1242,
       "centroid": [
         -58.5243,
@@ -73,13 +71,13 @@
       ],
       "rank": {
         "viirs": 3.24,
-        "empleo_pct": 53.3
+        "empleo_pct": 53.4,
+        "univ_pct": 9.3
       }
     },
     {
       "dpto": "Lavalle",
       "parquetKey": "lavalle",
-      "avg_score": 56.4,
       "hex_count": 2680,
       "centroid": [
         -59.0779,
@@ -87,13 +85,13 @@
       ],
       "rank": {
         "viirs": 1.76,
-        "empleo_pct": 51.0
+        "empleo_pct": 50.9,
+        "univ_pct": 5.3
       }
     },
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 54.6,
       "hex_count": 2917,
       "centroid": [
         -58.3625,
@@ -101,13 +99,13 @@
       ],
       "rank": {
         "viirs": 3.11,
-        "empleo_pct": 48.7
+        "empleo_pct": 48.4,
+        "univ_pct": 7.7
       }
     },
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "avg_score": 53.8,
       "hex_count": 332,
       "centroid": [
         -57.5785,
@@ -115,13 +113,13 @@
       ],
       "rank": {
         "viirs": 1.1,
-        "empleo_pct": 47.1
+        "empleo_pct": 46.7,
+        "univ_pct": 4.4
       }
     },
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 52.6,
       "hex_count": 5447,
       "centroid": [
         -56.8685,
@@ -129,13 +127,13 @@
       ],
       "rank": {
         "viirs": 1.16,
-        "empleo_pct": 53.3
+        "empleo_pct": 52.1,
+        "univ_pct": 6.6
       }
     },
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "avg_score": 51.5,
       "hex_count": 1208,
       "centroid": [
         -56.9713,
@@ -143,13 +141,13 @@
       ],
       "rank": {
         "viirs": 2.1,
-        "empleo_pct": 49.6
+        "empleo_pct": 49.1,
+        "univ_pct": 5.2
       }
     },
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 51.1,
       "hex_count": 13122,
       "centroid": [
         -55.9812,
@@ -157,13 +155,13 @@
       ],
       "rank": {
         "viirs": 0.94,
-        "empleo_pct": 51.1
+        "empleo_pct": 51.3,
+        "univ_pct": 6.4
       }
     },
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 49.3,
       "hex_count": 1915,
       "centroid": [
         -57.2015,
@@ -171,13 +169,13 @@
       ],
       "rank": {
         "viirs": 5.32,
-        "empleo_pct": 50.7
+        "empleo_pct": 50.3,
+        "univ_pct": 7.1
       }
     },
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "avg_score": 47.2,
       "hex_count": 458,
       "centroid": [
         -58.147,
@@ -185,13 +183,13 @@
       ],
       "rank": {
         "viirs": 2.29,
-        "empleo_pct": 47.3
+        "empleo_pct": 47.4,
+        "univ_pct": 5.1
       }
     },
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 47.0,
       "hex_count": 687,
       "centroid": [
         -58.8204,
@@ -199,13 +197,13 @@
       ],
       "rank": {
         "viirs": 1.55,
-        "empleo_pct": 62.3
+        "empleo_pct": 48.5,
+        "univ_pct": 5.8
       }
     },
     {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 46.2,
       "hex_count": 2066,
       "centroid": [
         -59.009,
@@ -213,13 +211,13 @@
       ],
       "rank": {
         "viirs": 2.06,
-        "empleo_pct": 52.2
+        "empleo_pct": 52.1,
+        "univ_pct": 5.7
       }
     },
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 44.2,
       "hex_count": 4951,
       "centroid": [
         -59.2692,
@@ -227,13 +225,13 @@
       ],
       "rank": {
         "viirs": 2.71,
-        "empleo_pct": 48.0
+        "empleo_pct": 47.8,
+        "univ_pct": 6.8
       }
     },
     {
       "dpto": "General Paz",
       "parquetKey": "general_paz",
-      "avg_score": 43.3,
       "hex_count": 1348,
       "centroid": [
         -57.4659,
@@ -241,13 +239,13 @@
       ],
       "rank": {
         "viirs": 1.22,
-        "empleo_pct": 48.7
+        "empleo_pct": 48.2,
+        "univ_pct": 5.2
       }
     },
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 39.0,
       "hex_count": 1796,
       "centroid": [
         -58.101,
@@ -255,13 +253,13 @@
       ],
       "rank": {
         "viirs": 1.36,
-        "empleo_pct": 47.8
+        "empleo_pct": 47.7,
+        "univ_pct": 3.8
       }
     },
     {
       "dpto": "Empedrado",
       "parquetKey": "empedrado",
-      "avg_score": 38.4,
       "hex_count": 1812,
       "centroid": [
         -58.5528,
@@ -269,13 +267,13 @@
       ],
       "rank": {
         "viirs": 1.25,
-        "empleo_pct": 46.1
+        "empleo_pct": 46.0,
+        "univ_pct": 4.1
       }
     },
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "avg_score": 36.0,
       "hex_count": 1082,
       "centroid": [
         -57.2898,
@@ -283,13 +281,13 @@
       ],
       "rank": {
         "viirs": 0.84,
-        "empleo_pct": 44.1
+        "empleo_pct": 43.7,
+        "univ_pct": 3.3
       }
     },
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "avg_score": 35.7,
       "hex_count": 2545,
       "centroid": [
         -59.2055,
@@ -297,13 +295,13 @@
       ],
       "rank": {
         "viirs": 1.88,
-        "empleo_pct": 41.0
+        "empleo_pct": 49.0,
+        "univ_pct": 6.4
       }
     },
     {
       "dpto": "San Roque",
       "parquetKey": "san_roque",
-      "avg_score": 34.5,
       "hex_count": 1509,
       "centroid": [
         -58.5728,
@@ -311,13 +309,13 @@
       ],
       "rank": {
         "viirs": 1.46,
-        "empleo_pct": 45.2
+        "empleo_pct": 45.1,
+        "univ_pct": 4.1
       }
     },
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "avg_score": 29.9,
       "hex_count": 1428,
       "centroid": [
         -58.6838,
@@ -325,13 +323,13 @@
       ],
       "rank": {
         "viirs": 2.11,
-        "empleo_pct": 42.5
+        "empleo_pct": 42.6,
+        "univ_pct": 5.3
       }
     },
     {
       "dpto": "San Luis del Palmar",
       "parquetKey": "san_luis_del_palmar",
-      "avg_score": 28.4,
       "hex_count": 1628,
       "centroid": [
         -58.2652,
@@ -339,13 +337,13 @@
       ],
       "rank": {
         "viirs": 1.64,
-        "empleo_pct": 44.4
+        "empleo_pct": 44.6,
+        "univ_pct": 5.5
       }
     },
     {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
-      "avg_score": 24.6,
       "hex_count": 800,
       "centroid": [
         -58.2378,
@@ -353,7 +351,8 @@
       ],
       "rank": {
         "viirs": 1.6,
-        "empleo_pct": 42.2
+        "empleo_pct": 42.3,
+        "univ_pct": 4.1
       }
     }
   ]

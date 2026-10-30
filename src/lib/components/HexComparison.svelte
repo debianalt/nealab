@@ -62,8 +62,13 @@
 	const rawVars = $derived(
 		componentVars.filter(v => v.unit === 'percentil' && selected.some(([, d]) => Number.isFinite(d.data?.[`${v.col}_raw`])))
 	);
+	// People each % is computed over (economic_activity: pob_14_mas, pob_18_mas),
+	// one table row per distinct base column.
+	const baseCols = $derived(
+		[...new Set(componentVars.map(v => v.baseCol).filter((c): c is string => !!c))]
+	);
 	// The percentile reading note applies wherever some component is shown as a
-	// provincial percentile (economic_activity mixes them with raw nW and edif/km²).
+	// provincial percentile.
 	const isPercentileLayer = $derived(
 		componentVars.some(v => v.unit === 'percentil')
 	);
@@ -145,7 +150,7 @@
 				{#each componentVars as v}
 					{@const val = hexData.data?.[v.col]}
 					{@const rawVal = v.rawCol ? hexData.data?.[v.rawCol] : null}
-					{@const noCensus = /* percentile 0 without a real rate = hexagon with no census data (Misiones economic_activity fills those with 0) */
+					{@const noCensus = /* percentile 0 without a real rate = hexagon with no census data (0-filled by fill_h3_coverage) */
 						v.unit === 'percentil' && val === 0 && !Number.isFinite(hexData.data?.[`${v.col}_raw`])}
 					{@const hasData = !noCensus && ((typeof val === 'string' && val.length > 0)
 						|| (typeof val === 'number' && Number.isFinite(val))
@@ -203,9 +208,18 @@
 							</tr>
 						{/each}
 					{/if}
+					{#each baseCols as col}
+						<tr>
+							<td>{i18n.t(`hex.base.${col}`)}</td>
+							{#each selected as [, d]}<td>{fmtInt(d.data?.[col])}</td>{/each}
+						</tr>
+					{/each}
 				</tbody>
 			</table>
 			<div class="mag-note">{i18n.t('hex.estPctNote')}</div>
+			{#if baseCols.length > 0}
+				<div class="mag-note">{i18n.t('hex.baseNote')}</div>
+			{/if}
 		</div>
 	{/if}
 

@@ -2,14 +2,12 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 79009,
-    "avg_score": 50.0,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 71.0,
       "hex_count": 3391,
       "centroid": [
         -58.9957,
@@ -17,13 +15,13 @@
       ],
       "rank": {
         "viirs": 19.27,
-        "empleo_pct": 59.1
+        "empleo_pct": 58.8,
+        "univ_pct": 11.6
       }
     },
     {
       "dpto": "1° de Mayo",
       "parquetKey": "1°_de_mayo",
-      "avg_score": 67.9,
       "hex_count": 1129,
       "centroid": [
         -58.9587,
@@ -31,13 +29,13 @@
       ],
       "rank": {
         "viirs": 2.95,
-        "empleo_pct": 58.5
+        "empleo_pct": 58.2,
+        "univ_pct": 7.7
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 67.6,
       "hex_count": 1149,
       "centroid": [
         -59.1935,
@@ -45,13 +43,13 @@
       ],
       "rank": {
         "viirs": 3.37,
-        "empleo_pct": 55.8
+        "empleo_pct": 55.8,
+        "univ_pct": 6.7
       }
     },
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "avg_score": 60.9,
       "hex_count": 1018,
       "centroid": [
         -61.281,
@@ -59,13 +57,13 @@
       ],
       "rank": {
         "viirs": 1.78,
-        "empleo_pct": 60.6
+        "empleo_pct": 60.4,
+        "univ_pct": 5.3
       }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 56.6,
       "hex_count": 2748,
       "centroid": [
         -60.718,
@@ -73,13 +71,13 @@
       ],
       "rank": {
         "viirs": 3.93,
-        "empleo_pct": 57.0
+        "empleo_pct": 56.9,
+        "univ_pct": 6.8
       }
     },
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 55.2,
       "hex_count": 4869,
       "centroid": [
         -60.9495,
@@ -87,13 +85,13 @@
       ],
       "rank": {
         "viirs": 1.43,
-        "empleo_pct": 56.0
+        "empleo_pct": 55.8,
+        "univ_pct": 4.7
       }
     },
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "avg_score": 55.1,
       "hex_count": 27122,
       "centroid": [
         -60.6287,
@@ -101,13 +99,13 @@
       ],
       "rank": {
         "viirs": 0.45,
-        "empleo_pct": 53.0
+        "empleo_pct": 51.8,
+        "univ_pct": 5.4
       }
     },
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 54.6,
       "hex_count": 1202,
       "centroid": [
         -60.105,
@@ -115,13 +113,13 @@
       ],
       "rank": {
         "viirs": 0.63,
-        "empleo_pct": 50.6
+        "empleo_pct": 49.3,
+        "univ_pct": 3.5
       }
     },
     {
       "dpto": "12 de Octubre",
       "parquetKey": "12_de_octubre",
-      "avg_score": 53.5,
       "hex_count": 1955,
       "centroid": [
         -61.2476,
@@ -129,13 +127,13 @@
       ],
       "rank": {
         "viirs": 3.25,
-        "empleo_pct": 54.9
+        "empleo_pct": 54.7,
+        "univ_pct": 5.4
       }
     },
     {
       "dpto": "Chacabuco",
       "parquetKey": "chacabuco",
-      "avg_score": 52.2,
       "hex_count": 1697,
       "centroid": [
         -61.1724,
@@ -143,13 +141,13 @@
       ],
       "rank": {
         "viirs": 5.91,
-        "empleo_pct": 60.6
+        "empleo_pct": 60.4,
+        "univ_pct": 8.1
       }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 51.1,
       "hex_count": 1344,
       "centroid": [
         -61.1354,
@@ -157,13 +155,13 @@
       ],
       "rank": {
         "viirs": 2.2,
-        "empleo_pct": 57.1
+        "empleo_pct": 57.2,
+        "univ_pct": 5.0
       }
     },
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 51.0,
       "hex_count": 2635,
       "centroid": [
         -60.3662,
@@ -171,13 +169,13 @@
       ],
       "rank": {
         "viirs": 8.18,
-        "empleo_pct": 55.1
+        "empleo_pct": 55.1,
+        "univ_pct": 9.0
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
-      "avg_score": 49.9,
       "hex_count": 1381,
       "centroid": [
         -59.4059,
@@ -185,13 +183,13 @@
       ],
       "rank": {
         "viirs": 1.76,
-        "empleo_pct": 53.8
+        "empleo_pct": 54.0,
+        "univ_pct": 4.8
       }
     },
     {
       "dpto": "9 de Julio",
       "parquetKey": "9_de_julio",
-      "avg_score": 48.4,
       "hex_count": 1886,
       "centroid": [
         -61.094,
@@ -199,13 +197,13 @@
       ],
       "rank": {
         "viirs": 5.99,
-        "empleo_pct": 55.8
+        "empleo_pct": 55.7,
+        "univ_pct": 5.9
       }
     },
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 47.9,
       "hex_count": 1295,
       "centroid": [
         -59.8639,
@@ -213,13 +211,13 @@
       ],
       "rank": {
         "viirs": 1.78,
-        "empleo_pct": 53.6
+        "empleo_pct": 53.5,
+        "univ_pct": 5.4
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 47.1,
       "hex_count": 2056,
       "centroid": [
         -58.6749,
@@ -227,13 +225,13 @@
       ],
       "rank": {
         "viirs": 2.5,
-        "empleo_pct": 53.7
+        "empleo_pct": 53.6,
+        "univ_pct": 4.7
       }
     },
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
-      "avg_score": 45.0,
       "hex_count": 2003,
       "centroid": [
         -60.746,
@@ -241,13 +239,13 @@
       ],
       "rank": {
         "viirs": 3.29,
-        "empleo_pct": 52.1
+        "empleo_pct": 52.0,
+        "univ_pct": 4.3
       }
     },
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 43.3,
       "hex_count": 1625,
       "centroid": [
         -60.3845,
@@ -255,13 +253,13 @@
       ],
       "rank": {
         "viirs": 1.84,
-        "empleo_pct": 47.5
+        "empleo_pct": 47.4,
+        "univ_pct": 5.1
       }
     },
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 42.8,
       "hex_count": 1620,
       "centroid": [
         -59.5185,
@@ -269,13 +267,13 @@
       ],
       "rank": {
         "viirs": 2.06,
-        "empleo_pct": 51.9
+        "empleo_pct": 51.8,
+        "univ_pct": 3.9
       }
     },
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 35.1,
       "hex_count": 6326,
       "centroid": [
         -59.2624,
@@ -283,13 +281,13 @@
       ],
       "rank": {
         "viirs": 1.46,
-        "empleo_pct": 49.7
+        "empleo_pct": 49.3,
+        "univ_pct": 5.1
       }
     },
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 34.7,
       "hex_count": 1706,
       "centroid": [
         -60.6361,
@@ -297,13 +295,13 @@
       ],
       "rank": {
         "viirs": 2.33,
-        "empleo_pct": 50.3
+        "empleo_pct": 50.1,
+        "univ_pct": 4.3
       }
     },
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 34.4,
       "hex_count": 743,
       "centroid": [
         -61.0058,
@@ -311,13 +309,13 @@
       ],
       "rank": {
         "viirs": 3.71,
-        "empleo_pct": 51.2
+        "empleo_pct": 51.3,
+        "univ_pct": 4.1
       }
     },
     {
       "dpto": "Quitilipi",
       "parquetKey": "quitilipi",
-      "avg_score": 33.2,
       "hex_count": 2462,
       "centroid": [
         -60.1745,
@@ -325,13 +323,13 @@
       ],
       "rank": {
         "viirs": 2.21,
-        "empleo_pct": 52.5
+        "empleo_pct": 52.3,
+        "univ_pct": 6.5
       }
     },
     {
       "dpto": "Maipú",
       "parquetKey": "maipu",
-      "avg_score": 32.1,
       "hex_count": 3171,
       "centroid": [
         -60.4481,
@@ -339,13 +337,13 @@
       ],
       "rank": {
         "viirs": 1.3,
-        "empleo_pct": 50.9
+        "empleo_pct": 50.9,
+        "univ_pct": 4.6
       }
     },
     {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 29.9,
       "hex_count": 2476,
       "centroid": [
         -60.0606,
@@ -353,7 +351,8 @@
       ],
       "rank": {
         "viirs": 2.07,
-        "empleo_pct": 52.8
+        "empleo_pct": 52.7,
+        "univ_pct": 4.8
       }
     }
   ]

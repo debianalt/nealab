@@ -99,7 +99,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_capital: '?v=28',
 		sat_education_flow: '?v=28',
 		sat_sociodemographic: '?v=24',
-		sat_economic_activity: '?v=29',
+		sat_economic_activity: '?v=30',
 		sat_accessibility: '?v=27',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
@@ -112,7 +112,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 24;
+const DEPT_V = 25;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -463,6 +463,7 @@ export interface HexVariable {
 	unit?: string;
 	rawUnit?: string; // unit of the _raw physical value when it differs from `unit` (e.g. percentil display, hab/km² or min raw)
 	scale?: number;   // multiply the stored value for display (e.g. DW land-cover fractions 0–1 → % with scale 100)
+	baseCol?: string; // column with the people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
 	hideIfZero?: boolean;
 }
 
@@ -1018,25 +1019,24 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	},
 	economic_activity: {
 		id: 'economic_activity',
-		// Department ranking — pipeline/build_layer_ranks.py.
-		// Employment rate from local raw census data (served tasa_empleo is a
-		// percentile) — build_layer_ranks.py --census-rates; night lights from the parquet.
+		// Department ranking — pipeline/build_layer_ranks.py: Σ rate·base / Σ base over
+		// the department's hexagons (same INDEC definition in the 4 provinces).
 		deptRank: {
 			field: 'empleo_pct', unit: '%', decimals: 1,
 			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note',
 			metrics: [
 				{ tabKey: 'rank.econ.tab.empleo' },
+				{ tabKey: 'rank.econ.tab.univ', field: 'univ_pct', noteKey: 'rank.econ.note.univ' },
 				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs' },
 			],
 		},
 		parquet: 'sat_economic_activity',
 		variables: [
-			{ col: 'score', labelKey: 'analysis.economic.score', aggregation: 'mean' },
-			// Census rates served as provincial percentiles (aggregate_radio_to_h3.py);
-			// the real rate is <col>_raw, shown in the hex panel's table.
-			{ col: 'tasa_empleo', labelKey: 'radio.empleo', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
-			{ col: 'tasa_actividad', labelKey: 'radio.actividad', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
-			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: 'percentil', rawUnit: '%' },
+			// Real Census 2022 rates (pipeline/build_econ_census_rates.py); baseCol = the
+			// estimated people each one is over, shown in the hex panel's table.
+			{ col: 'tasa_empleo', labelKey: 'radio.empleo', aggregation: 'mean', unit: '%', baseCol: 'pob_14_mas' },
+			{ col: 'tasa_actividad', labelKey: 'radio.actividad', aggregation: 'mean', unit: '%', baseCol: 'pob_14_mas' },
+			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 			{ col: 'viirs_mean_radiance', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr' },
 			{ col: 'building_density_per_km2', labelKey: 'radio.buildingDensity', aggregation: 'mean', unit: 'edif/km²' },
 		],

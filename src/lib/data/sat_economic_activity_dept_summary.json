@@ -1,14 +1,12 @@
 {
   "province": {
     "total_hexes": 319871,
-    "avg_score": 10.5,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Guaraní",
       "parquetKey": "guarani",
-      "avg_score": 20.4,
       "hex_count": 35130,
       "centroid": [
         -54.2709,
@@ -16,13 +14,13 @@
       ],
       "rank": {
         "viirs": 0.54,
-        "empleo_pct": 42.2
+        "empleo_pct": 59.0,
+        "univ_pct": 4.8
       }
     },
     {
       "dpto": "L. N. Alem",
       "parquetKey": "l._n._alem",
-      "avg_score": 19.2,
       "hex_count": 11662,
       "centroid": [
         -55.3896,
@@ -30,13 +28,13 @@
       ],
       "rank": {
         "viirs": 0.99,
-        "empleo_pct": 43.4
+        "empleo_pct": 56.3,
+        "univ_pct": 6.9
       }
     },
     {
       "dpto": "Oberá",
       "parquetKey": "obera",
-      "avg_score": 17.5,
       "hex_count": 17196,
       "centroid": [
         -55.0739,
@@ -44,13 +42,13 @@
       ],
       "rank": {
         "viirs": 1.17,
-        "empleo_pct": 42.2
+        "empleo_pct": 56.1,
+        "univ_pct": 8.1
       }
     },
     {
       "dpto": "Cainguás",
       "parquetKey": "cainguas",
-      "avg_score": 17.1,
       "hex_count": 16729,
       "centroid": [
         -54.7984,
@@ -58,13 +56,13 @@
       ],
       "rank": {
         "viirs": 0.87,
-        "empleo_pct": 41.4
+        "empleo_pct": 57.0,
+        "univ_pct": 4.6
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 16.8,
       "hex_count": 10560,
       "centroid": [
         -55.8527,
@@ -72,13 +70,13 @@
       ],
       "rank": {
         "viirs": 5.4,
-        "empleo_pct": 46.7
+        "empleo_pct": 60.0,
+        "univ_pct": 11.8
       }
     },
     {
       "dpto": "San Javier",
       "parquetKey": "san_javier",
-      "avg_score": 15.2,
       "hex_count": 7291,
       "centroid": [
         -55.1695,
@@ -86,13 +84,13 @@
       ],
       "rank": {
         "viirs": 0.69,
-        "empleo_pct": 38.5
+        "empleo_pct": 52.2,
+        "univ_pct": 3.7
       }
     },
     {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 14.0,
       "hex_count": 17796,
       "centroid": [
         -54.6331,
@@ -100,13 +98,13 @@
       ],
       "rank": {
         "viirs": 0.49,
-        "empleo_pct": 42.9
+        "empleo_pct": 58.6,
+        "univ_pct": 3.3
       }
     },
     {
       "dpto": "Apóstoles",
       "parquetKey": "apostoles",
-      "avg_score": 10.8,
       "hex_count": 11412,
       "centroid": [
         -55.6761,
@@ -114,13 +112,13 @@
       ],
       "rank": {
         "viirs": 1.08,
-        "empleo_pct": 41.8
+        "empleo_pct": 56.3,
+        "univ_pct": 6.1
       }
     },
     {
       "dpto": "Candelaria",
       "parquetKey": "candelaria",
-      "avg_score": 9.6,
       "hex_count": 10141,
       "centroid": [
         -55.5863,
@@ -128,13 +126,13 @@
       ],
       "rank": {
         "viirs": 1.01,
-        "empleo_pct": 37.9
+        "empleo_pct": 51.9,
+        "univ_pct": 4.8
       }
     },
     {
       "dpto": "L.G. San Martín",
       "parquetKey": "l.g._san_martin",
-      "avg_score": 8.9,
       "hex_count": 15689,
       "centroid": [
         -54.928,
@@ -142,13 +140,13 @@
       ],
       "rank": {
         "viirs": 1.0,
-        "empleo_pct": 40.4
+        "empleo_pct": 53.9,
+        "univ_pct": 6.5
       }
     },
     {
       "dpto": "San Ignacio",
       "parquetKey": "san_ignacio",
-      "avg_score": 8.6,
       "hex_count": 18049,
       "centroid": [
         -55.3353,
@@ -156,13 +154,13 @@
       ],
       "rank": {
         "viirs": 0.86,
-        "empleo_pct": 39.4
+        "empleo_pct": 53.1,
+        "univ_pct": 5.2
       }
     },
     {
       "dpto": "G. M. Belgrano",
       "parquetKey": "g._m._belgrano",
-      "avg_score": 7.6,
       "hex_count": 32315,
       "centroid": [
         -53.9559,
@@ -170,13 +168,13 @@
       ],
       "rank": {
         "viirs": 0.51,
-        "empleo_pct": 42.5
+        "empleo_pct": 60.2,
+        "univ_pct": 4.2
       }
     },
     {
       "dpto": "Eldorado",
       "parquetKey": "eldorado",
-      "avg_score": 6.3,
       "hex_count": 18167,
       "centroid": [
         -54.4436,
@@ -184,13 +182,13 @@
       ],
       "rank": {
         "viirs": 0.92,
-        "empleo_pct": 39.6
+        "empleo_pct": 52.7,
+        "univ_pct": 7.6
       }
     },
     {
       "dpto": "San Pedro",
       "parquetKey": "san_pedro",
-      "avg_score": 4.8,
       "hex_count": 42071,
       "centroid": [
         -53.9669,
@@ -198,13 +196,13 @@
       ],
       "rank": {
         "viirs": 0.4,
-        "empleo_pct": 38.4
+        "empleo_pct": 56.1,
+        "univ_pct": 3.6
       }
     },
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 4.7,
       "hex_count": 8526,
       "centroid": [
         -55.4696,
@@ -212,13 +210,13 @@
       ],
       "rank": {
         "viirs": 0.44,
-        "empleo_pct": 39.4
+        "empleo_pct": 52.8,
+        "univ_pct": 4.3
       }
     },
     {
       "dpto": "Iguazú",
       "parquetKey": "iguazu",
-      "avg_score": 3.9,
       "hex_count": 28678,
       "centroid": [
         -54.4021,
@@ -226,13 +224,13 @@
       ],
       "rank": {
         "viirs": 0.88,
-        "empleo_pct": 42.1
+        "empleo_pct": 57.5,
+        "univ_pct": 6.5
       }
     },
     {
       "dpto": "Montecarlo",
       "parquetKey": "montecarlo",
-      "avg_score": 3.9,
       "hex_count": 18459,
       "centroid": [
         -54.5696,
@@ -240,7 +238,8 @@
       ],
       "rank": {
         "viirs": 0.6,
-        "empleo_pct": 38.9
+        "empleo_pct": 52.0,
+        "univ_pct": 6.2
       }
     }
   ]

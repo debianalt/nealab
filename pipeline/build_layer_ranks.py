@@ -9,8 +9,10 @@ department in the layer's dept summary JSON (src/lib/data):
 - Census layers (4 AR provinces): household-weighted with the hexagon's
   hogares_estimados — a "% of households", not a mean of hexagons, which would
   weigh an empty rural cell like a city block. sociodemographic has no
-  household column; its NBI (and economic_activity's employment) are served as
-  percentiles, so those two rates come from local raw data (--census-rates).
+  household column and its NBI is served as a percentile, so that rate comes
+  from local raw data (--census-rates). economic_activity carries real rates
+  and the people each one is over (pob_14_mas, pob_18_mas — see
+  build_econ_census_rates.py), so its department rate is Σ rate·base / Σ base.
 - Physical layers (24 territories): area-weighted (H3 res-9 cells are equal
   area). PM2.5 and accessibility describe the territory, not its people:
   Paraguay and Brazil have no population per hexagon here.
@@ -88,10 +90,11 @@ SPECS = {
         'dropout_sec_pct': (hog_pct('c_dropout_secondary_raw'), 1),
         'teen_preg_pct': (hog_pct('c_teen_pregnancy_raw'), 1),
     },
-    # sociodemographic.pct_nbi and economic_activity.tasa_empleo are served as
-    # percentiles, not rates: their rankings come from local raw data
-    # (--census-rates, local_census_rates). Here only night lights.
+    # Ocupados / población de 14+ and universitario completo / población de 18+,
+    # identical definitions in the 4 provinces.
     'economic_activity': {
+        'empleo_pct': ('SUM(tasa_empleo * pob_14_mas) / NULLIF(SUM(pob_14_mas), 0)', 1),
+        'univ_pct': ('SUM(pct_universitario * pob_18_mas) / NULLIF(SUM(pob_18_mas), 0)', 1),
         'viirs': ('AVG(viirs_mean_radiance)', 2),
     },
 }
@@ -137,15 +140,15 @@ CENSUS_AR = ['misiones', 'corrientes', 'chaco', 'formosa']
 
 
 def local_census_rates() -> None:
-    """NBI (sociodemographic) and employment (economic_activity) as real rates.
+    """NBI (sociodemographic) as a real rate.
 
     The served parquets carry these as 0–100 percentiles (aggregate_radio_to_h3
     ranks them "for petal compatibility"; the served Misiones copy also went
     through fill_h3_coverage, which writes 0 where there is no census). The real
     values exist locally: radio_stats_master (Misiones, per radio, with dpto and
     total_personas) and the *_raw columns of output/<t>/sat_*.parquet for the
-    other three provinces. Population-weighted (NBI) / household-weighted
-    (employment) department rates go into the same rank block.
+    other three provinces. Population-weighted department rates go into the
+    same rank block.
     """
     import duckdb
     import pandas as pd
@@ -153,9 +156,8 @@ def local_census_rates() -> None:
     con = duckdb.connect()
     con.execute('INSTALL httpfs; LOAD httpfs; SET enable_http_metadata_cache = false; SET enable_external_file_cache = false;')
     rs = pd.read_parquet(os.path.join(out, 'radio_stats_master.parquet'),
-                         columns=['dpto', 'total_personas', 'pct_nbi', 'tasa_empleo'])
-    for layer, field, col in [('sociodemographic', 'nbi_pop_pct', 'pct_nbi'),
-                              ('economic_activity', 'empleo_pct', 'tasa_empleo')]:
+                         columns=['dpto', 'total_personas', 'pct_nbi'])
+    for layer, field, col in [('sociodemographic', 'nbi_pop_pct', 'pct_nbi')]:
         for tid in CENSUS_AR:
             path = summary_path(layer, tid)
             if not path:
@@ -171,7 +173,7 @@ def local_census_rates() -> None:
                     d['rank'] = {**(d.get('rank') or {}), field: None if v is None else round(float(v), 1)}
             else:
                 local = os.path.join(out, tid, f'sat_{layer}.parquet')
-                weight = 'densidad_hab_km2_raw' if layer == 'sociodemographic' else 'hogares_estimados'
+                weight = 'densidad_hab_km2_raw'
                 hexes = pd.read_parquet(local, columns=['h3index', f'{col}_raw', weight])
                 prefix = get_territory(tid)['output_prefix']
                 urls = {f"{CDN}/{prefix}sat_dpto/sat_{layer}_{d['parquetKey']}.parquet": d['parquetKey']
@@ -206,7 +208,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--layer', choices=list(SPECS))
     ap.add_argument('--clean-only', action='store_true', help='Re-apply the missing-data rules to the JSONs, no download')
-    ap.add_argument('--census-rates', action='store_true', help='NBI and employment rates from local raw census data')
+    ap.add_argument('--census-rates', action='store_true', help='NBI rate from local raw census data')
     args = ap.parse_args()
     if args.census_rates:
         local_census_rates()

@@ -2,14 +2,12 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 39115,
-    "avg_score": 50.0,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 72.4,
       "hex_count": 5112,
       "centroid": [
         -58.174,
@@ -17,13 +15,13 @@
       ],
       "rank": {
         "viirs": 10.7,
-        "empleo_pct": 55.3
+        "empleo_pct": 55.0,
+        "univ_pct": 10.5
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 60.1,
       "hex_count": 1032,
       "centroid": [
         -61.9734,
@@ -31,13 +29,13 @@
       ],
       "rank": {
         "viirs": 2.36,
-        "empleo_pct": 49.0
+        "empleo_pct": 48.3,
+        "univ_pct": 5.3
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 53.6,
       "hex_count": 8728,
       "centroid": [
         -59.0809,
@@ -45,13 +43,13 @@
       ],
       "rank": {
         "viirs": 1.35,
-        "empleo_pct": 50.5
+        "empleo_pct": 50.2,
+        "univ_pct": 5.1
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 52.3,
       "hex_count": 5802,
       "centroid": [
         -59.0324,
@@ -59,13 +57,13 @@
       ],
       "rank": {
         "viirs": 1.87,
-        "empleo_pct": 50.9
+        "empleo_pct": 50.8,
+        "univ_pct": 4.9
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 51.6,
       "hex_count": 2170,
       "centroid": [
         -58.7089,
@@ -73,13 +71,13 @@
       ],
       "rank": {
         "viirs": 1.67,
-        "empleo_pct": 47.1
+        "empleo_pct": 46.9,
+        "univ_pct": 4.3
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 50.2,
       "hex_count": 5197,
       "centroid": [
         -58.1397,
@@ -87,13 +85,13 @@
       ],
       "rank": {
         "viirs": 3.55,
-        "empleo_pct": 52.9
+        "empleo_pct": 52.9,
+        "univ_pct": 5.8
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 49.3,
       "hex_count": 2758,
       "centroid": [
         -61.4778,
@@ -101,13 +99,13 @@
       ],
       "rank": {
         "viirs": 0.97,
-        "empleo_pct": 46.1
+        "empleo_pct": 45.3,
+        "univ_pct": 3.3
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 47.7,
       "hex_count": 3789,
       "centroid": [
         -58.414,
@@ -115,13 +113,13 @@
       ],
       "rank": {
         "viirs": 1.0,
-        "empleo_pct": 48.2
+        "empleo_pct": 48.1,
+        "univ_pct": 4.5
       }
     },
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 13.8,
       "hex_count": 4527,
       "centroid": [
         -62.2609,
@@ -129,7 +127,8 @@
       ],
       "rank": {
         "viirs": 0.11,
-        "empleo_pct": 31.3
+        "empleo_pct": 35.0,
+        "univ_pct": 6.7
       }
     }
   ]
