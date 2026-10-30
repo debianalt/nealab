@@ -28,7 +28,6 @@
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
-	import CensoTemporalDeptList from './CensoTemporalDeptList.svelte';
 
 	// X-axis label for the distribution panels: physical unit when the primary
 	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
@@ -227,10 +226,7 @@
 			<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
 		{/if}
 		<div class="chart-scroll">
-			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} />
-			{#if hexStore.activeLayer?.id === 'censo_temporal'}
-				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
-			{/if}
+			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} {onCensoDeptSelect} />
 			<!-- FlowChart: perDepartment temporal layers (score or flowBands data
 			     arrives with the dept selection) plus global temporal layers that
 			     declare flowBands (censo_temporal bands raw density territory-wide).

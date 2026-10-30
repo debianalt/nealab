@@ -9,6 +9,7 @@
 	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
+	import CensoTemporalDeptList from '$lib/components/CensoTemporalDeptList.svelte';
 	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { query } from '$lib/stores/duckdb';
@@ -20,11 +21,13 @@
 		hexStore,
 		territoryStore,
 		onSelectDpto,
+		onCensoDeptSelect,
 	}: {
 		analysis: AnalysisConfig;
 		hexStore: HexStore;
 		territoryStore: TerritoryStore;
 		onSelectDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
+		onCensoDeptSelect?: (feature: any | null) => void;
 	} = $props();
 
 	const layerCfg = $derived(HEX_LAYER_REGISTRY[analysis.id]);
@@ -1055,6 +1058,11 @@
 			     so this renders for that layer only and is inert for every other global layer. -->
 			{#if isTemporal}
 				<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
+			{/if}
+
+			<!-- Department ranking, first data block as in the perDepartment layers. -->
+			{#if analysis.id === 'censo_temporal'}
+				<CensoTemporalDeptList {hexStore} onSelectDept={onCensoDeptSelect} />
 			{/if}
 
 			{#if selectedHexes.size === 0}

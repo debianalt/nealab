@@ -20,6 +20,7 @@
 		onSelectCatastroDpto,
 		onSelectScoresCatastroDpto,
 		onSelectRadioAnalysisDpto,
+		onCensoDeptSelect,
 	}: {
 		lensStore: LensStore;
 		mapStore: MapStore;
@@ -32,6 +33,7 @@
 		onSelectCatastroDpto?: (centroid: [number, number] | null, deptCode?: string | null) => void;
 		onSelectScoresCatastroDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
 		onSelectRadioAnalysisDpto?: (dpto: string, analysisId: string, centroid: [number, number]) => void;
+		onCensoDeptSelect?: (feature: any | null) => void;
 	} = $props();
 
 	const analysis = $derived(lensStore.activeAnalysis);
@@ -72,7 +74,7 @@
 		{:else if analysis.spatialUnit === 'catastro'}
 			<CatastroAnalysis {lensStore} {mapStore} {onRemoveRadio} {onSelectCatastroDpto} />
 		{:else if HEX_LAYER_REGISTRY[analysis.id]}
-			<OvertureAnalysis {analysis} {hexStore} {territoryStore} onSelectDpto={onSelectFloodDpto} />
+			<OvertureAnalysis {analysis} {hexStore} {territoryStore} onSelectDpto={onSelectFloodDpto} {onCensoDeptSelect} />
 			{#if showPlantControl}
 				<div class="plant-control">
 					<label class="plant-toggle">
