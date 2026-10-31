@@ -1,12 +1,14 @@
 import type { DeptFill } from '$lib/stores/hex.svelte';
+import { SELLO_HEX } from '$lib/utils/sello';
 
 // Province view: departments painted with the active ranking reading, on the
-// bars' own linear scale (|value| / max) and colors (red, green below zero on
-// signed readings). Over the dark basemap "more" reads as more opaque red; a
-// yellow-to-red ramp would make the lowest values the brightest.
+// bars' own linear scale (|value| / max) and colors (tierra, río below zero on
+// signed readings: the Sello's diverging pair, not red/green, which collapses
+// under deuteranopia). Over the dark basemap "more" reads as more opaque tierra.
+// Keep in sync with the ranking bars (OvertureAnalysis RANK_TOWARD/RANK_AWAY).
 export interface FillClass { color: string; opacity: number; lo: number; hi: number }   // lo/hi: fraction of max
 
-const RED = '#dc2626', GREEN = '#22c55e';
+const RED = SELLO_HEX.cat[0], GREEN = SELLO_HEX.cat[1];   // tierra, río
 export const FILL_NA = { color: '#64748b', opacity: 0.18 };
 
 const UNSIGNED: FillClass[] = [0.12, 0.26, 0.4, 0.55, 0.7].map((opacity, i) => ({ color: RED, opacity, lo: i / 5, hi: (i + 1) / 5 }));

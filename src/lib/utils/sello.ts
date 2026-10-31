@@ -64,3 +64,35 @@ export const BIVAR_HEX = [
 	'#b3d0ef', '#b19b9c', '#ab705b',
 	'#78afe8', '#768298', '#735d58',
 ] as const;
+
+// ── Map ramps (S4) ─────────────────────────────────────────────────────────────
+// Validated against the dark basemap (#0e1117). On the dark map "more" is
+// brighter: low steps recede, high steps carry the eye.
+// Risk and pressure (flood, census deprivation, isolation, PM2.5, deforestation,
+// EUDR): tierra, one hue.
+export const MAP_TIERRA = ['#8a3a22', '#b24c29', '#d0623a', '#e5835a', '#f3ab8c'] as const;
+// Aptitude and cover (agriculture, forestry, tree cover): selva, one hue.
+export const MAP_SELVA = ['#1a5a40', '#217a55', '#2a9468', '#4fb184', '#86cda6', '#c0e6cf'] as const;
+// Change (delta mode), left → right: worse (tierra) · no change (gris) · better
+// (río). Danger layers flip the delta sign upstream so an increase lands left.
+export const MAP_DIV = ['#ea9070', '#c4572f', '#8f3f24', '#5c6370', '#35659f', '#3d7fc4', '#7fb0e6'] as const;
+
+/** Colour at t ∈ [0, 1] along evenly spaced stops (linear RGB blend between neighbours). */
+export function rampColor(stops: readonly string[], t: number): string {
+	const x = Math.max(0, Math.min(1, Number.isFinite(t) ? t : 0)) * (stops.length - 1);
+	const i = Math.min(stops.length - 2, Math.floor(x));
+	const f = x - i;
+	const a = hexRgb(stops[i]), b = hexRgb(stops[i + 1]);
+	return `rgb(${Math.round(a[0] + (b[0] - a[0]) * f)},${Math.round(a[1] + (b[1] - a[1]) * f)},${Math.round(a[2] + (b[2] - a[2]) * f)})`;
+}
+
+/** Diverging colour for a signed value: −1 → MAP_DIV[0] (worse), 0 → gris, +1 → MAP_DIV[6]. */
+export function divColor(t: number): string {
+	return rampColor(MAP_DIV, (Math.max(-1, Math.min(1, t)) + 1) / 2);
+}
+
+export const rampGradient = (stops: readonly string[]): string => `linear-gradient(to right, ${stops.join(', ')})`;
+
+function hexRgb(h: string): [number, number, number] {
+	return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+}

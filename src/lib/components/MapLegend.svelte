@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { MAP_TIERRA, MAP_SELVA, MAP_DIV, rampGradient } from '$lib/utils/sello';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
@@ -106,20 +107,20 @@
 
 	const gradient = $derived(
 		isFlood
-			? 'linear-gradient(to right, #3b82f6, #eab308, #dc2626)'
+			? rampGradient(MAP_TIERRA)
 			: isGreen
-			? 'linear-gradient(to right, #bbf7d0, #166534, #14532d)'
+			? rampGradient(MAP_SELVA)
 			: isWarm
 			? 'linear-gradient(to right, #78350f, #f59e0b, #fde725)'
 			: isNight
 			? 'linear-gradient(to right, #0b1026, #f59e0b, #fff7d6)'
 			: isDiverging
-			? 'linear-gradient(to right, #ef4444, #a3a3a3, #22c55e)'
+			? rampGradient(MAP_DIV)
 			: 'linear-gradient(to right, #5b21b6, #21918c, #fde725)'
 	);
 
 	// Danger layers (colorScale 'flood', higher = worse) get their delta sign flipped in
-	// the choropleth so an INCREASE renders red. In that mode the static layer labels
+	// the choropleth so an INCREASE renders tierra (left end). In that mode the static layer labels
 	// ("Baja/Alta presión…") would read backwards, so the diverging ends must be labeled
 	// Peor/Mejor instead. Non-danger temporal layers (carbon, censo: sequential) are not
 	// flipped, so their static low/high labels still fit the change ramp.

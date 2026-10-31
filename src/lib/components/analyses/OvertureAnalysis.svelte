@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { MAP_TIERRA, MAP_SELVA, MAP_DIV, rampGradient, TIERRA as RANK_TOWARD, RIO as RANK_AWAY } from '$lib/utils/sello';
 	import { untrack, onDestroy } from 'svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
@@ -261,14 +262,14 @@
 	function getScoreColor(score: number): string {
 		if (isCategorical) return getTypeColor(Math.round(score));
 		if (colorScale === 'flood') {
-			if (score >= 10) return '#dc2626';
-			if (score >= 4)  return '#eab308';
-			return '#3b82f6';
+			if (score >= 10) return MAP_TIERRA[4];
+			if (score >= 4)  return MAP_TIERRA[2];
+			return MAP_TIERRA[0];
 		}
 		if (colorScale === 'green') {
-			if (score >= 70) return '#22c55e';
-			if (score >= 40) return '#166534';
-			return '#1e293b';
+			if (score >= 70) return MAP_SELVA[5];
+			if (score >= 40) return MAP_SELVA[3];
+			return MAP_SELVA[0];
 		}
 		if (colorScale === 'warm') {
 			if (score >= 70) return '#fde725';
@@ -296,9 +297,9 @@
 
 	const legendGradient = $derived(
 		colorScale === 'flood'
-			? 'linear-gradient(to right, #3b82f6, #eab308, #dc2626)'
+			? rampGradient(MAP_TIERRA)
 			: colorScale === 'green'
-			? 'linear-gradient(to right, #1e293b, #166534, #22c55e, #bbf7d0)'
+			? rampGradient(MAP_SELVA)
 			: colorScale === 'warm'
 			? 'linear-gradient(to right, #0f172a, #f59e0b, #fde725)'
 			: 'linear-gradient(to right, #440154, #21918c, #fde725)'
@@ -545,7 +546,7 @@
 
 	const effectiveLegendGradient = $derived(
 		isTemporal && tMode === 'delta'
-			? 'linear-gradient(to right, #dc2626, #737373, #22c55e)'
+			? rampGradient(MAP_DIV)
 			: legendGradient
 	);
 	const effectiveLegendLabels = $derived(
@@ -875,7 +876,7 @@
 							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
 							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 							<div class="dept-bar-wrap rank-bar-wrap">
-								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? '#22c55e' : '#dc2626'}></div>
+								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? RANK_AWAY : RANK_TOWARD}></div>
 							</div>
 							<div class="rank-value">{fmtRank(v, rankCfg.decimals, rankCfg.signed)} {v == null ? '' : rankUnit}</div>
 							{#if rankCfg.extraField}
@@ -1194,12 +1195,12 @@
 	.rank-extra { font-size: 11px; color: #94a3b8; min-width: 48px; text-align: right; flex-shrink: 0; }
 	.rank-note { font-size: 11.5px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
 	.rank-province { border-left: 3px solid #64748b; background: rgba(148,163,184,0.08); border-radius: 4px; padding: 6px 8px; margin: 0 0 8px; }
-	.rank-province-toward { border-left-color: #dc2626; }
-	.rank-province-away { border-left-color: #22c55e; }
+	.rank-province-toward { border-left-color: var(--s-cat-1); }
+	.rank-province-away { border-left-color: var(--s-cat-2); }
 	.rank-province-head { font-size: 12.5px; color: #e2e8f0; line-height: 1.35; }
 	.rank-province-val { font-weight: 600; }
-	.rank-province-toward .rank-province-val { color: #f87171; }
-	.rank-province-away .rank-province-val { color: #4ade80; }
+	.rank-province-toward .rank-province-val { color: var(--s-ink-1); }
+	.rank-province-away .rank-province-val { color: var(--s-ink-1); }
 	.rank-province-detail { font-size: 12px; color: #94a3b8; line-height: 1.4; margin-top: 3px; }
 	.rank-nobars { font-size: 12px; color: #cbd5e1; line-height: 1.4; margin: 0 0 4px; }
 	.rank-territory { font-weight: 400; color: #94a3b8; }

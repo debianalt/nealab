@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
-	import { LISA_HEX, SELLO_HEX } from '$lib/utils/sello';
+	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor } from '$lib/utils/sello';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -2978,32 +2978,20 @@
 			if (idx < 0) return 'rgb(55,65,81)';
 			return CATEGORICAL_PALETTE[idx % CATEGORICAL_PALETTE.length];
 		}
-		let r: number, g: number, b: number;
+		// Sello ramps (sello.ts): tierra = risk/pressure, selva = aptitude/cover,
+		// río · gris · tierra = change. 'warm', 'night' and the default viridis keep
+		// their own ramps (night lights metaphor; density is neither risk nor aptitude).
 		if (colorScale === 'diverging') {
 			const absMax = Math.max(Math.abs(minVal), Math.abs(maxVal)) || 1;
-			const t = value / absMax;
-			if (t < 0) {
-				const s = -t;
-				r = Math.round(163 + s * 76); g = Math.round(163 - s * 95); b = Math.round(163 - s * 95);
-			} else {
-				const s = t;
-				r = Math.round(163 - s * 129); g = Math.round(163 + s * 34); b = Math.round(163 - s * 69);
-			}
-		} else {
-			const t = Math.max(0, Math.min(1, (value - minVal) / range));
-			if (colorScale === 'flood') {
-				r = Math.round(t < 0.5 ? 59 + t * 2 * (234 - 59) : 234 + (t - 0.5) * 2 * (220 - 234));
-				g = Math.round(t < 0.5 ? 130 + t * 2 * (179 - 130) : 179 + (t - 0.5) * 2 * (38 - 179));
-				b = Math.round(t < 0.5 ? 246 + t * 2 * (8 - 246) : 8 + (t - 0.5) * 2 * (38 - 8));
-			} else if (colorScale === 'green') {
-				// Inverted vs the house "high value = brighter" convention: green saturation
-				// reads as vegetation density, so high coverage/score = the dark saturated green
-				// and low = pale (matches the land_use methodology text "más verde = más árboles").
-				const tg = 1 - t;
-				r = Math.round(tg < 0.5 ? 20 + tg * 2 * (22 - 20) : 22 + (tg - 0.5) * 2 * (187 - 22));
-				g = Math.round(tg < 0.5 ? 83 + tg * 2 * (101 - 83) : 101 + (tg - 0.5) * 2 * (247 - 101));
-				b = Math.round(tg < 0.5 ? 45 + tg * 2 * (52 - 45) : 52 + (tg - 0.5) * 2 * (208 - 52));
-			} else if (colorScale === 'warm') {
+			return divColor(value / absMax);
+		}
+		const t0 = Math.max(0, Math.min(1, (value - minVal) / range));
+		if (colorScale === 'flood') return rampColor(MAP_TIERRA, t0);
+		if (colorScale === 'green') return rampColor(MAP_SELVA, t0);
+		const t = t0;
+		let r: number, g: number, b: number;
+		{
+			if (colorScale === 'warm') {
 				r = Math.round(t < 0.5 ? 120 + t * 2 * (245 - 120) : 245 + (t - 0.5) * 2 * (253 - 245));
 				g = Math.round(t < 0.5 ? 53 + t * 2 * (158 - 53) : 158 + (t - 0.5) * 2 * (231 - 158));
 				b = Math.round(t < 0.5 ? 15 + t * 2 * (11 - 15) : 11 + (t - 0.5) * 2 * (37 - 11));
