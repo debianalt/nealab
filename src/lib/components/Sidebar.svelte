@@ -58,6 +58,7 @@
 		onMoranBrush,
 		onHistogramBrush,
 		onBivariateBrush,
+		onShowBivariateMap,
 		onFlowBrush,
 		onRadioCensusBrush,
 		onCensoDeptSelect,
@@ -90,6 +91,7 @@
 		onMoranBrush?: (h3s: string[]) => void;
 		onHistogramBrush?: (h3s: string[]) => void;
 		onBivariateBrush?: (h3s: string[]) => void;
+		onShowBivariateMap?: (entries: { h3index: string; value: number | null; nodata?: boolean }[]) => void;
 		onFlowBrush?: (h3s: string[]) => void;
 		onRadioCensusBrush?: (redcodes: string[]) => void;
 		onCensoDeptSelect?: (feature: any | null) => void;
@@ -266,6 +268,7 @@
 						deptKey={hexStore.selectedParquetKey}
 						deptUrl={(id, key) => hexStore.deptUrlForLayer(id, key)}
 						onBrushSelect={onBivariateBrush ?? (() => {})}
+						onShowBivariateMap={onShowBivariateMap ?? (() => {})}
 					/>
 				{/if}
 			{/if}

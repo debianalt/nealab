@@ -71,6 +71,21 @@ export function measure(node: HTMLElement, onSize: (w: number, h: number) => voi
 
 export const dockBoost = (docked: boolean): number => (docked ? 1.2 : 1);
 
+// 3×3 bivariate palette (Joshua Stevens), index = class − 1 with
+// class = 1 + yTercile·3 + xTercile: rows from low Y to high Y, X grows to the right.
+export const BIVAR_COLORS = [
+	'#e8e8e8', '#ace4e4', '#5ac8c8',
+	'#dfb0d6', '#a5add3', '#5698b9',
+	'#be64ac', '#8c62aa', '#3b4994',
+] as const;
+
+export function quantile(sorted: number[], q: number): number {
+	if (sorted.length === 0) return NaN;
+	const pos = (sorted.length - 1) * q;
+	const lo = Math.floor(pos), hi = Math.ceil(pos);
+	return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+}
+
 export function median(values: number[]): number {
 	if (values.length === 0) return NaN;
 	const s = [...values].sort((a, b) => a - b);

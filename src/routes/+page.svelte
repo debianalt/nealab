@@ -782,6 +782,17 @@
 		mapComponent?.setHexChoropleth(entries, 'lisa');
 	}
 
+	// Bivariate 3×3 map: classes 1-9 painted over the layer; [] restores it.
+	let bivariateMapOn = $state(false);
+	function handleShowBivariateMap(entries: { h3index: string; value: number | null; nodata?: boolean }[]) {
+		bivariateMapOn = entries.length > 0;
+		if (entries.length === 0) { handleShowLisa([]); return; }
+		mapComponent?.setHexChoropleth(
+			entries.map(e => ({ ...e, boundary: hexStore.boundaryCache.get(e.h3index) })),
+			'bivariate'
+		);
+	}
+
 	function handleMoranBrush(h3s: string[]) {
 		if (h3s.length === 0) {
 			mapComponent?.clearHexZoneHighlight();
@@ -1819,7 +1830,7 @@
 		<!-- Map container -->
 		<div bind:this={mapContainer} class="flex-1 relative min-h-0">
 			<MapComponent bind:this={mapComponent} {mapStore} />
-			<MapLegend {hexStore} />
+			{#if !bivariateMapOn}<MapLegend {hexStore} />{/if}
 
 			{#if hexStore.loading}
 				<div class="loading-overlay">
@@ -1930,6 +1941,7 @@
 			onMoranBrush={handleMoranBrush}
 			onHistogramBrush={handleHistogramBrush}
 			onBivariateBrush={handleBivariateBrush}
+			onShowBivariateMap={handleShowBivariateMap}
 			onFlowBrush={handleFlowBrush}
 			onRadioCensusBrush={handleRadioCensusBrush}
 			onCensoDeptSelect={handleCensoDeptSelect}

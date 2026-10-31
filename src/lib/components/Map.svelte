@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
+	import { BIVAR_COLORS } from '$lib/utils/chartType';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -2965,7 +2966,8 @@
 		// Legacy: value=0 era usado como proxy de nodata. Tras la refactorización,
 		// setHexChoropleth maneja nodata explícitamente antes de llamar a esta función.
 		// Este branch permanece como red de seguridad para callsites legacy.
-		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa') return NODATA_COLOR;
+		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa' && colorScale !== 'bivariate') return NODATA_COLOR;
+		if (colorScale === 'bivariate') return BIVAR_COLORS[Math.round(value) - 1] ?? NODATA_COLOR;
 		if (colorScale === 'lisa') {
 			const LISA: Record<number, string> = { 1: '#3b82f6', 2: '#60a5fa', 3: '#f97316', 4: '#ef4444' };
 			return LISA[Math.round(value)] ?? 'rgb(55,65,81)';
@@ -3031,7 +3033,7 @@
 	// Track last state to avoid redundant setPaintProperty calls
 	let _hexLayerInitialized = false;
 
-	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' = 'flood', domain?: [number, number], classes?: ColorClasses) {
+	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' | 'bivariate' = 'flood', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
