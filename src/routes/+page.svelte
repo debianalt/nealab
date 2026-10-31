@@ -108,6 +108,16 @@
 		];
 	}
 
+	// Start view: the map marks no territory and draws the whole-area outline.
+	$effect(() => {
+		const home = territoryStore.homeView;
+		mapComponent?.setHomeView(home);
+	});
+	// Choosing a lens loads the default territory's data: it is no longer the start view.
+	$effect(() => {
+		if (lensStore.activeLens) untrack(() => { territoryStore.homeView = false; });
+	});
+
 	// Sync territory prefix + fly map + reload data whenever territory changes
 	$effect(() => {
 		const t = territoryStore.activeTerritory;
@@ -268,8 +278,13 @@
 		// Option A: map-click territory switching
 		mapContainer?.addEventListener('territory-map-select', ((e: CustomEvent) => {
 			const { territory } = e.detail;
-			if (territory && territory !== territoryStore.activeTerritory.id) {
+			if (!territory) return;
+			// From the start view the click also picks the default territory (Misiones).
+			if (territory !== territoryStore.activeTerritory.id || territoryStore.homeView) {
 				territoryStore.setTerritory(territory);
+				// In regional mode the territory effect keeps the camera; a click on the
+				// map is a pick, so frame it.
+				setTimeout(() => mapComponent?.flyToBbox(TERRITORY_REGISTRY[territory].bbox), 120);
 			}
 		}) as EventListener);
 
@@ -281,6 +296,7 @@
 			// Add radio FIRST so selectedRadios.size > 0 when the territory-change
 			// effect fires — prevents flyToBbox from running on the first building click.
 			showAbout = false;
+			territoryStore.homeView = false; // a building click picks its territory, even the default one
 			mapStore.addRadio(redcode, {
 				census,
 				enriched: null,
@@ -1761,6 +1777,7 @@
 		lensStore.reset();
 		territoryStore.setTerritory(getDefaultTerritory().id);
 		territoryStore.enterRegionalMode(null);
+		territoryStore.homeView = true;
 		// After the territory/regional effects (which may queue their own flyToBbox at 100–150 ms).
 		setTimeout(() => mapComponent?.flyToBbox(getRegionalBbox(null)), 300);
 	}

@@ -40,10 +40,9 @@
 	import presidenteHayesPyBoundary from '$lib/data/presidente_hayes_py_boundary.json';
 	import boqueronPyBoundary from '$lib/data/boqueron_py_boundary.json';
 	import altoParaguayPyBoundary from '$lib/data/alto_paraguay_py_boundary.json';
-	import { isInsideMisiones } from '$lib/utils/misiones-pip';
-	import { isInsideItapua } from '$lib/utils/itapua-pip';
-	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
-	import { isInsideAltoParana } from '$lib/utils/alto_parana-pip';
+	import { territoryAt } from '$lib/utils/territoryAt';
+	import { territoryRef } from '$lib/utils/territoryRef';
+	import regionOutline from '$lib/data/region_outline.json';
 
 	let { mapStore }: { mapStore: MapStore } = $props();
 
@@ -56,6 +55,10 @@
 	let lassoActive = false;
 	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
+	// Start view ("Spatia" / fresh load): no territory picked yet — every border thin,
+	// the outline of the whole area strong (setHomeView).
+	let homeView = true;
+	let hoverTerritoryId: string | null = null;
 	let regionalModeActive = false;
 	// Forestry plantations overlay (DNDFI). Visibility is driven from the right panel
 	// (mapStore.plantationsVisible), only when forestry_aptitude is active with a dept
@@ -360,6 +363,21 @@
 					}
 				});
 			}
+
+			// Outline of the whole area (NEA + Paraguay + southern Brazil), shown on the
+			// start view — pipeline/build_region_outline.py.
+			map.addSource('region-outline', { type: 'geojson', data: regionOutline as any });
+			map.addLayer({
+				id: 'region-outline',
+				type: 'line',
+				source: 'region-outline',
+				layout: { 'line-join': 'round', 'line-cap': 'round', visibility: homeView ? 'visible' : 'none' },
+				paint: {
+					'line-color': '#f472b6',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.6, 8, 1.4, 12, 1.0],
+					'line-opacity': 0.85,
+				},
+			});
 
 			// Buildings source (PMTiles)
 			map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
@@ -1662,33 +1680,70 @@
 			if (!lassoActive) map.getCanvas().style.cursor = '';
 		});
 
-		// General mousemove: show pointer over blank territory areas (Option A nav hint)
-		map.on('mousemove', (e) => {
-			if (lassoActive) return;
-			const canvas = map.getCanvas();
-			if (canvas.style.cursor !== '') return; // specific layer handler already set it
-			const { lat, lng } = e.lngLat;
-			const inTerritory = isInsideItapua(lat, lng) || isInsideMisiones(lat, lng) || isInsideCorrientes(lat, lng) || isInsideAltoParana(lat, lng);
-			canvas.style.cursor = inTerritory ? 'pointer' : '';
-		});
-
-		// General click: switch territory scope when clicking blank area inside a territory
+		// General mousemove over blank areas: pointer, brighter border and a small
+		// "<territory> · click to pick" label for any of the 24 territories. One
+		// point-in-polygon pass per animation frame at most.
 		const TERRITORY_LAYERS = ['hex-fill', 'compare-hex-fill', 'regional-hex-fill',
 			'buildings-3d', 'corrientes-buildings-3d', 'itapua-buildings-3d', 'alto_parana-buildings-3d',
 			'chaco-buildings-3d', 'formosa-buildings-3d',
 			'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d',
 			'buildings-flat', 'province-fill', 'itapua-district-fill', 'alto_parana-district-fill'];
+		const pickLabel = document.createElement('div');
+		pickLabel.style.cssText = `
+			position: fixed; display: none; pointer-events: none; z-index: 9999;
+			background: rgba(15,23,42,0.92); border: 1px solid rgba(244,114,182,0.45);
+			border-radius: 6px; padding: 4px 9px; font-size: 11px; color: #e2e8f0;
+			box-shadow: 0 2px 12px rgba(0,0,0,0.5); white-space: nowrap;
+		`;
+		document.body.appendChild(pickLabel);
+		const clearHover = () => {
+			pickLabel.style.display = 'none';
+			if (hoverTerritoryId !== null) { hoverTerritoryId = null; styleActiveTerritory(); map.triggerRepaint(); }
+		};
+		let hoverFrame = 0;
+		map.on('mousemove', (e) => {
+			if (hoverFrame) return;
+			hoverFrame = requestAnimationFrame(() => {
+				hoverFrame = 0;
+				const canvas = map.getCanvas();
+				if (lassoActive) { clearHover(); return; }
+				// A layer with its own click (buildings, hexes, dept picker) wins, as in the click handler.
+				const own = TERRITORY_LAYERS.filter(l => map.getLayer(l));
+				if (own.length > 0 && map.queryRenderedFeatures(e.point, { layers: own }).length > 0) {
+					delete canvas.dataset.pick;
+					clearHover();
+					return;
+				}
+				if (canvas.style.cursor !== '' && !canvas.dataset.pick) { clearHover(); return; }
+				const { lat, lng } = e.lngLat;
+				const tid = territoryAt(lat, lng);
+				const show = !!tid && (homeView || tid !== activeTerritoryId);
+				canvas.style.cursor = show ? 'pointer' : '';
+				if (show) canvas.dataset.pick = '1'; else delete canvas.dataset.pick;
+				if (!show) { clearHover(); return; }
+				const ref = territoryRef(tid!, i18n.locale);
+				pickLabel.textContent = i18n.t('map.hover.pick').replace('{name}', ref.charAt(0).toUpperCase() + ref.slice(1));
+				pickLabel.style.left = (e.originalEvent.clientX + 14) + 'px';
+				pickLabel.style.top = (e.originalEvent.clientY + 14) + 'px';
+				pickLabel.style.display = 'block';
+				// Paint changes from a rAF callback don't always schedule a frame on an idle map.
+				if (hoverTerritoryId !== tid) { hoverTerritoryId = tid; styleActiveTerritory(); map.triggerRepaint(); }
+			});
+		});
+		map.getCanvas().addEventListener('mouseleave', () => {
+			delete map.getCanvas().dataset.pick;
+			clearHover();
+		});
+
+		// General click: switch territory scope when clicking blank area inside a territory
 		map.on('click', (e) => {
 			if (lassoActive) return;
 			const activeLayers = TERRITORY_LAYERS.filter(l => map.getLayer(l));
 			if (activeLayers.length > 0 && map.queryRenderedFeatures(e.point, { layers: activeLayers }).length > 0) return;
 			const { lat, lng } = e.lngLat;
-			let territory: string | null = null;
-			if (isInsideItapua(lat, lng)) territory = 'itapua_py';
-			else if (isInsideAltoParana(lat, lng)) territory = 'alto_parana_py';
-			else if (isInsideMisiones(lat, lng)) territory = 'misiones';
-			else if (isInsideCorrientes(lat, lng)) territory = 'corrientes';
+			const territory = territoryAt(lat, lng);
 			if (territory) {
+				clearHover();
 				container.dispatchEvent(new CustomEvent('territory-map-select', {
 					bubbles: true,
 					detail: { territory }
@@ -2094,6 +2149,12 @@
 		}
 	}
 
+	export function setHomeView(on: boolean) {
+		if (homeView === on) return;
+		homeView = on;
+		styleActiveTerritory();
+	}
+
 	export function setActiveTerritory(territoryId: string) {
 		activeTerritoryId = territoryId;
 		applyTerritoryVisibility();
@@ -2117,19 +2178,27 @@
 		// restored from the URL); the map 'load' handler calls it again.
 		const style = map?.getStyle();
 		if (!map || !style) return;
-		const active = BORDER_LAYER[activeTerritoryId] ?? `${activeTerritoryId}-border`;
+		// Start view: no active border, only the outline of the whole area.
+		const borderOf = (id: string | null) => (id ? BORDER_LAYER[id] ?? `${id}-border` : null);
+		const active = homeView ? null : borderOf(activeTerritoryId);
+		const hover = borderOf(hoverTerritoryId);
 		for (const l of style.layers ?? []) {
 			if (l.type !== 'line' || !l.id.endsWith('-border')) continue;
 			const on = l.id === active;
+			const hovered = !on && l.id === hover;
+			// Instant: a 300 ms fade lags the hover a whole step behind on an idle map.
+			map.setPaintProperty(l.id, 'line-opacity-transition', { duration: 0, delay: 0 });
+			map.setPaintProperty(l.id, 'line-width-transition', { duration: 0, delay: 0 });
 			map.setPaintProperty(l.id, 'line-opacity', on
 				? ['interpolate', ['linear'], ['zoom'], 6, 0.8, 12, 0.55, 16, 0.3]
-				: 0.22);
+				: hovered ? 0.75 : 0.22);
 			map.setPaintProperty(l.id, 'line-width', on
 				? ['interpolate', ['linear'], ['zoom'], 6, 1.4, 9, 1.1, 12, 0.9, 16, 0.6]
-				: 0.6);
+				: hovered ? 1.4 : 0.6);
 		}
+		if (map.getLayer('region-outline')) map.setLayoutProperty('region-outline', 'visibility', homeView ? 'visible' : 'none');
 		if (map.getLayer('ar-dept-line')) {
-			const cp = AR_CODPROV[activeTerritoryId] ?? '';
+			const cp = homeView ? '' : AR_CODPROV[activeTerritoryId] ?? '';
 			map.setPaintProperty('ar-dept-line', 'line-opacity',
 				['step', ['zoom'], ['case', ['==', ['slice', ['to-string', ['get', 'redcode']], 0, 2], cp], 0.55, 0], 8, 0.5]);
 		}

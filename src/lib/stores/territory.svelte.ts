@@ -7,12 +7,17 @@ export class TerritoryStore {
 	regionalMode: boolean = $state(true);
 	// null = trinational scope (all available territories, no country-first funnel)
 	countryFilter: CountryId | null = $state(null);
+	// Start view (fresh load / "Spatia"): no territory picked by the user yet, so the
+	// map marks none and draws the outline of the whole area. Picking one, by click,
+	// building, URL or a lens, ends it.
+	homeView: boolean = $state(true);
 
 	setTerritory(id: string) {
 		const t = TERRITORY_REGISTRY[id];
 		if (!t || !t.available) return;
 		this.activeTerritory = t;
 		this.countryFilter = t.country;
+		this.homeView = false;
 		// Exit compare mode when switching primary territory (but NOT regional mode — Option D)
 		this.compareTerritory = null;
 		this.compareModeActive = false;
