@@ -938,12 +938,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
 			field: 'trees_pct', unit: '%', decimals: 1,
-			titleKey: 'rank.landuse.title', noteKey: 'rank.landuse.note',
+			titleKey: 'rank.landuse.title', noteKey: 'rank.landuse.note.trees',
 			extraField: 'trees_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0,
 			metrics: [
 				{ tabKey: 'rank.landuse.tab.trees' },
-				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha' },
-				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha' },
+				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha', noteKey: 'rank.landuse.note.crops' },
+				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha', noteKey: 'rank.landuse.note.built' },
 			],
 		},
 		parquet: 'sat_land_use',
