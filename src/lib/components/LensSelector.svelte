@@ -17,8 +17,9 @@
 			class:active
 			style:--lc={cfg.color}
 			onclick={() => { onPick?.(); lensStore.setLens(id); }}
+			title={active ? i18n.t('lens.close') : undefined}
 		>
-			{cfg.label[i18n.locale as 'es' | 'en' | 'gn' | 'pt']}
+			{cfg.label[i18n.locale as 'es' | 'en' | 'gn' | 'pt']}{#if active}<span class="lens-x" aria-hidden="true">×</span>{/if}
 		</button>
 	{/each}
 </div>
@@ -49,6 +50,14 @@
 		color: #ffffff;
 		font-weight: 700;
 		border-bottom-color: var(--lc);
+	}
+	.lens-x {
+		margin-left: 6px;
+		font-weight: 400;
+		opacity: 0.55;
+	}
+	.lens-btn.active:hover .lens-x {
+		opacity: 1;
 	}
 
 	@media (max-width: 768px) {

@@ -22,6 +22,12 @@ export class LensStore {
 		this.activeAnalysis = null;
 	}
 
+	/** No lens, no layer: the map as it opens. */
+	reset(): void {
+		this.activeLens = null;
+		this.activeAnalysis = null;
+	}
+
 	clearSelection(): void {
 		// No-op (kept for compatibility with clearAll in +page.svelte)
 	}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import ComparisonChart from './ComparisonChart.svelte';
@@ -136,6 +137,10 @@
 	$effect(() => {
 		const lens = lensStore.activeLens;
 		if (lens !== null && lens !== prevLens) collapsed = false;
+		// Lens closed (its × or "Spatia"): back to the start map, panel folded as on
+		// load — unless something selected on the base map still needs it.
+		if (lens === null && prevLens !== null && untrack(() =>
+			!showAbout && mapStore.selectedRadios.size === 0 && lassoStore.zones.length === 0)) collapsed = true;
 		prevLens = lens;
 	});
 

@@ -39,7 +39,7 @@
 	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, isArDeptTerritory, normDeptName } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
-	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
+	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getDefaultTerritory, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
@@ -1751,6 +1751,20 @@
 		showAbout = true;
 	}
 
+	// "Spatia" = home, always the same place: the map as spatia.ar opens — no lens,
+	// no layer, no selection, default territory in the trinational regional view,
+	// the same NEA framing the regional effect applies on load, side panel closed,
+	// clean URL.
+	function goHome() {
+		clearAll();
+		showAbout = false;
+		lensStore.reset();
+		territoryStore.setTerritory(getDefaultTerritory().id);
+		territoryStore.enterRegionalMode(null);
+		// After the territory/regional effects (which may queue their own flyToBbox at 100–150 ms).
+		setTimeout(() => mapComponent?.flyToBbox(getRegionalBbox(null)), 300);
+	}
+
 </script>
 
 <!-- Canonical for the map only: app.html is shared by every route, and a second canonical
@@ -1766,8 +1780,10 @@
 		<div class="app-header flex items-center justify-between px-4 py-2.5 border-b border-border z-10 shrink-0"
 			style="background: rgba(10,12,18,0.88); backdrop-filter: blur(8px);">
 			<div class="flex items-center gap-4">
-				<h1 class="app-title text-[15px] font-bold text-white tracking-wide cursor-pointer hover:opacity-80 transition-opacity" onclick={clearAll}>
-					{i18n.t('header.title')}
+				<h1 class="app-title text-[15px] font-bold text-white tracking-wide">
+					<button class="app-home cursor-pointer hover:opacity-80 transition-opacity" onclick={goHome} title={i18n.t('header.home')}>
+						{i18n.t('header.title')}
+					</button>
 				</h1>
 				<button
 					class="text-[12px] text-white/70 hover:text-white cursor-pointer transition-colors border border-white/20 rounded px-2 py-0.5"
@@ -1985,6 +2001,14 @@
 		.app-title {
 			font-size: 13px;
 		}
+	}
+	.app-home {
+		background: none;
+		border: none;
+		padding: 0;
+		font: inherit;
+		color: inherit;
+		letter-spacing: inherit;
 	}
 
 	.itapua-hover-badge {

@@ -3,6 +3,8 @@ export type Locale = 'es' | 'en' | 'gn' | 'pt';
 const dict: Record<string, Record<Locale, string>> = {
 	// Header
 	'header.title': { es: 'Spatia', en: 'Spatia', gn: 'Spatia', pt: 'Spatia' },
+	'header.home': { es: 'Volver al mapa inicial (vista del NEA)', en: 'Back to the start map (NEA view)', gn: 'Volver al mapa inicial (vista del NEA)', pt: 'Voltar ao mapa inicial (vista do NEA)' },
+	'lens.close': { es: 'Cerrar: volver a los edificios y radios censales', en: 'Close: back to buildings and census tracts', gn: 'Cerrar: volver a los edificios y radios censales', pt: 'Fechar: voltar aos edifícios e setores censitários' },
 	'header.whatIsThis': { es: '¿Qué es esto?', en: 'What is this?', gn: "Mba'épa ko?", pt: 'O que é isso?' },
 	'header.subtitle': { es: 'Análisis geoespacial', en: 'Geospatial analysis', gn: "Yvy Rekokatu", pt: 'Análise geoespacial' },
 	'header.nav.map': { es: 'Mapa', en: 'Map', gn: 'Mapa', pt: 'Mapa' },
