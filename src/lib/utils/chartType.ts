@@ -3,14 +3,16 @@
 // (or to the expanded floating window), so a viewBox font-size would grow and
 // shrink with the width. Charts multiply these sizes by `k = viewBoxW / renderedW`
 // to keep text at the same pixel size everywhere.
+import { FONT } from './sello';
+
 export const CHART_PX = { tick: 11, label: 12 } as const;
 
-// Minimum text contrast on the dark panel (#0f172a-ish): below ~0.5 white
-// alpha the text fails legibility on a laptop screen.
+// Text ink for the charts: the Sello tokens (src/app.css), which switch to dark
+// ink on paper. Contrast on the panel: label 15.6:1, tick ~10:1, hint 7.5:1.
 export const INK = {
-	tick: 'rgba(255,255,255,0.62)',
-	label: 'rgba(255,255,255,0.82)',
-	hint: 'rgba(255,255,255,0.5)',
+	tick: 'var(--s-ink-2)',
+	label: 'var(--s-ink-1)',
+	hint: 'var(--s-ink-3)',
 } as const;
 
 // viewBox units per screen pixel, from the box the SVG renders in. With
@@ -25,7 +27,7 @@ export function svgScale(viewBoxW: number, viewBoxH: number, renderedW: number, 
 // Axis titles can be long ("Edificios en zona baja (HAND < 5 m)"): trim to the
 // pixels available with an ellipsis, keeping `suffix` whole at the end.
 let measureCtx: CanvasRenderingContext2D | null = null;
-export function fitLabel(text: string, maxPx: number, fontPx: number, family = 'system-ui, sans-serif', suffix = ''): string {
+export function fitLabel(text: string, maxPx: number, fontPx: number, family: string = FONT.sans, suffix = ''): string {
 	if (typeof document === 'undefined' || maxPx <= 0) return text + suffix;
 	measureCtx ??= document.createElement('canvas').getContext('2d');
 	if (!measureCtx) return text + suffix;

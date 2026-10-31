@@ -14,7 +14,62 @@
 	--color-btn-border: #334155;
 	--color-accent-active: rgba(96, 165, 250, 0.2);
 	--color-cyan-active: rgba(34, 211, 238, 0.2);
+
+	/* Sello de Spatia: type. Variable fonts, latin subset; a woff2 downloads only
+	   when some rendered text uses that family (Newsreader only with the data views). */
+	--font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 }
+
+/* Sello de Spatia: data colors («Tierra colorada»), validated with the dataviz
+   validate_palette.js against the panel (#0b0d14) and paper (#fcfcfb).
+   Categorical in fixed order: 1 tierra · 2 río · 3 selva · 4 yerba-oro
+   (selva↔oro is ΔE 7.9 under CVD: label them directly when they meet).
+   Keep in sync with SELLO_HEX in src/lib/utils/sello.ts (MapLibre needs hex). */
+:root {
+	--s-cat-1: #c4572f; --s-cat-2: #3d7fc4; --s-cat-3: #2a9468; --s-cat-4: #b5871c;
+	/* sequential tierra, low → high (5 steps for charts; the map gets its own) */
+	--s-seq-1: #74301f; --s-seq-2: #9b4126; --s-seq-3: #c4572f; --s-seq-4: #de7a4f; --s-seq-5: #f1a483;
+	/* diverging río · gris · tierra: 1 = strongest río (better), 4 = neutral, 7 = strongest tierra (worse) */
+	--s-div-1: #7fb0e6; --s-div-2: #3d7fc4; --s-div-3: #35659f; --s-div-4: #5c6370;
+	--s-div-5: #8f3f24; --s-div-6: #c4572f; --s-div-7: #ea9070;
+	/* ink: text never wears a series color */
+	--s-ink-1: #e8e6e3; --s-ink-2: #b9bec6; --s-ink-3: #9aa1ab;
+	--s-grid: rgba(255, 255, 255, 0.1);
+	--s-surface: #0b0d14;
+}
+
+/* Paper: the same roles, light variants. */
+@media print {
+	:root {
+		--s-cat-1: #b4482a; --s-cat-2: #2b6fb0; --s-cat-3: #237a55; --s-cat-4: #a67c12;
+		--s-seq-1: #e38c6d; --s-seq-2: #cc6443; --s-seq-3: #b4482a; --s-seq-4: #86331d; --s-seq-5: #5a2011;
+		--s-div-1: #1b4a7a; --s-div-2: #2b6fb0; --s-div-3: #8fb3da; --s-div-4: #a2a7af;
+		--s-div-5: #e7a58d; --s-div-6: #b4482a; --s-div-7: #7a2f1a;
+		--s-ink-1: #1f2328; --s-ink-2: #3f454d; --s-ink-3: #5b6169;
+		--s-grid: rgba(0, 0, 0, 0.12);
+		--s-surface: #fcfcfb;
+	}
+	html, body { background: #fcfcfb !important; color: #1f2328 !important; }
+	/* The data panel prints as a white sheet with dark ink. */
+	/* Browsers drop backgrounds when printing (data swatches are SVG fills, which
+	   stay); only the sheet itself is forced white so screen previews match. */
+	.sidebar, .chart-frame {
+		background: #fcfcfb !important; color: #1f2328 !important;
+		box-shadow: none !important; backdrop-filter: none !important;
+	}
+	.sidebar *, .chart-frame * { border-color: rgba(0, 0, 0, 0.15) !important; }
+	.sidebar *, .chart-frame * { color: #1f2328 !important; }
+	.sidebar .sello-muted, .chart-frame .sello-muted { color: #5b6169 !important; }
+}
+
+/* Numbers and titles in the data views: serif with tabular figures. */
+.num {
+	font-family: var(--font-serif);
+	font-variant-numeric: tabular-nums lining-nums;
+}
+.tnum { font-variant-numeric: tabular-nums; }
 
 html, body {
 	margin: 0;
@@ -23,7 +78,7 @@ html, body {
 	overflow: hidden;
 	background: var(--color-bg);
 	color: var(--color-text);
-	font-family: 'JetBrains Mono', monospace;
+	font-family: var(--font-sans);
 }
 
 /* MapLibre overrides */

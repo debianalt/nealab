@@ -136,7 +136,7 @@
 		left: 12px;
 		z-index: 5;
 		pointer-events: none;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 11px;
 		color: rgba(255, 255, 255, 0.75);
 		background: rgba(10, 12, 18, 0.85);
@@ -154,7 +154,7 @@
 		grid-template-columns: auto auto;
 		align-items: center;
 		gap: 2px 6px;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 10px;
 		color: rgba(255, 255, 255, 0.7);
 		background: rgba(10, 12, 18, 0.82);

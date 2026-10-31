@@ -202,7 +202,7 @@
 			<text
 				x={svgX(medianPct)} y={PAD_T - 3 * k}
 				text-anchor={medianPct > 80 ? 'end' : medianPct < 20 ? 'start' : 'middle'}
-				fill={INK.tick} font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+				fill={INK.tick} font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 				pointer-events="none"
 			>{i18n.t('chart.median')}</text>
 		{/if}
@@ -251,7 +251,7 @@
 			<text
 				x={svgX(tick)} y={PAD_T + plotH + (CHART_PX.tick + 2) * k}
 				text-anchor={tick === 0 ? 'start' : tick === 100 ? 'end' : 'middle'} fill={INK.tick}
-				font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+				font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 			>{fmtTick(pctToVal(tick))}</text>
 		{/each}
 
@@ -259,7 +259,7 @@
 		<text
 			x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
 			text-anchor="middle" fill={INK.label}
-			font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+			font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 		><title>{xLabel}</title>{fitLabel(xLabel, plotW / k, CHART_PX.label)}</text>
 	</svg>
 	</div>

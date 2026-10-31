@@ -232,7 +232,7 @@
 		background: #0a0f1a;
 		min-height: 100vh;
 		color: #e2e8f0;
-		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-family: var(--font-sans);
 		padding: 24px;
 		box-sizing: border-box;
 	}

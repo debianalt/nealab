@@ -6,7 +6,7 @@
 	<title>{page.status} — Spatia</title>
 </svelte:head>
 
-<div class="min-h-screen bg-[#0a0c12] flex items-center justify-center font-mono">
+<div class="min-h-screen bg-[#0a0c12] flex items-center justify-center font-sans">
 	<div class="text-center space-y-6 px-8">
 		<p class="text-6xl font-bold text-white/20">{page.status}</p>
 		<p class="text-white/60 text-sm max-w-md">

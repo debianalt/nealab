@@ -1219,7 +1219,7 @@
 
 	/* ── Hex detail ── */
 	.hex-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-	.hex-id { font-family: monospace; font-size: 12px; color: #d4d4d4; }
+	.hex-id { font-family: var(--font-mono); font-size: 12px; color: #d4d4d4; }
 	.risk-badge { font-size: 11.5px; font-weight: 700; color: #000; padding: 2px 8px; border-radius: 9999px; }
 	.score-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 	.score-label { font-size: 11.5px; color: #d4d4d4; white-space: nowrap; }

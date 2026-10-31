@@ -204,11 +204,11 @@
 							<rect x={x + bw * 0.15} y={Math.min(y0, y1)} width={bw * 0.7} height={Math.max(1, Math.abs(y1 - y0))}
 								fill={activeBand === i ? '#34d399' : '#38bdf8'} opacity={activeBand !== null && activeBand !== i ? 0.35 : 0.85} rx="1.5" />
 							<text x={x + bw / 2} y={Math.min(y0, y1) - 3 * k} text-anchor="middle" fill={INK.label}
-								font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{fmt(b.mean)}</text>
+								font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{fmt(b.mean)}</text>
 							<text x={x + bw / 2} y={PAD_T + plotH + (CHART_PX.tick + 2) * k} text-anchor="middle" fill={INK.tick}
-								font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{b.label}</text>
+								font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{b.label}</text>
 							<text x={x + bw / 2} y={PAD_T + plotH + (2 * CHART_PX.tick + 4) * k} text-anchor="middle" fill={INK.hint}
-								font-size={(CHART_PX.tick - 1) * k} font-family="system-ui, sans-serif">{fmtN(b.n)}</text>
+								font-size={(CHART_PX.tick - 1) * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{fmtN(b.n)}</text>
 						</g>
 					{/each}
 					{#if isFinite(overall)}
@@ -216,7 +216,7 @@
 							stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3 2" pointer-events="none" />
 					{/if}
 					<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (2 * CHART_PX.tick + CHART_PX.label + 9) * k} text-anchor="middle"
-						fill={INK.label} font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+						fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 					>{fitLabel(`${i18n.t(dist.key)} (${dist.unit})`, plotW / k, CHART_PX.label)}</text>
 				</svg>
 			</div>

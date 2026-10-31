@@ -230,9 +230,9 @@
 
 			<!-- Y axis labels: #1 top (mejor), #N bottom (peor) -->
 			<text x={PAD_L - 3} y={rankY(1) + 3} text-anchor="end"
-				fill="rgba(255,255,255,0.22)" font-size="7" font-family="system-ui, sans-serif">#1</text>
+				fill="rgba(255,255,255,0.22)" font-size="7" font-family="'IBM Plex Sans', system-ui, sans-serif">#1</text>
 			<text x={PAD_L - 3} y={rankY(totalDepts) + 3} text-anchor="end"
-				fill="rgba(255,255,255,0.22)" font-size="7" font-family="system-ui, sans-serif">#{totalDepts}</text>
+				fill="rgba(255,255,255,0.22)" font-size="7" font-family="'IBM Plex Sans', system-ui, sans-serif">#{totalDepts}</text>
 
 			<!-- Grey context lines -->
 			{#each allDeptNames as name}
@@ -278,14 +278,14 @@
 						: (i === hoverColIdx ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.28)')}
 					font-size="6.5"
 					font-weight={col.analysisId === activeAnalysisId ? '700' : '400'}
-					font-family="system-ui, sans-serif"
+					font-family="'IBM Plex Sans', system-ui, sans-serif"
 				>{col.label}</text>
 			{/each}
 
 			<!-- Bottom axis: rank label -->
 			<text x={PAD_L + plotW / 2} y={SVG_H - 2}
 				text-anchor="middle" fill="rgba(255,255,255,0.18)"
-				font-size="6.5" font-family="system-ui, sans-serif">{i18n.t('chart.bump.axis')}</text>
+				font-size="6.5" font-family="'IBM Plex Sans', system-ui, sans-serif">{i18n.t('chart.bump.axis')}</text>
 		</svg>
 		<div class="bump-note">
 			{@html i18n.t('chart.bump.note')}

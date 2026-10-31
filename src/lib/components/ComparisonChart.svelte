@@ -206,7 +206,7 @@
 		font-size: 12px; color: #cbd5e1; margin-bottom: 2px;
 	}
 	.pop-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-	.pop-code { color: #d4d4d4; font-family: monospace; }
+	.pop-code { color: #d4d4d4; font-family: var(--font-mono); }
 	.pop-val { font-weight: 600; }
 
 	.ref-note {
@@ -239,7 +239,7 @@
 		display: flex; gap: 4px; padding: 2px 0;
 	}
 	.rt-col { flex: 1; }
-	.rt-zone { flex: 0.9; display: flex; align-items: center; gap: 4px; font-family: monospace; font-size: 12px; color: #d4d4d4; }
+	.rt-zone { flex: 0.9; display: flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 12px; color: #d4d4d4; }
 	.rt-num { text-align: right; color: #cbd5e1; font-size: 12px; font-variant-numeric: tabular-nums; }
 	.rt-actions { flex: 0.8; display: flex; gap: 3px; justify-content: flex-end; }
 	.r-dot-sm {

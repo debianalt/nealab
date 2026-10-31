@@ -150,7 +150,7 @@
 		overflow-x: hidden;
 		background: #0a0a0a;
 		color: #ffffff;
-		font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-family: var(--font-sans);
 		font-size: 13px;
 		line-height: 1.7;
 		z-index: 50;
@@ -351,7 +351,7 @@
 		}
 		.print-brand {
 			display: block !important;
-			font-family: 'JetBrains Mono', ui-monospace, monospace;
+			font-family: var(--font-mono);
 			font-size: 8pt;
 			color: #000000;
 			letter-spacing: 0.05em;
@@ -368,7 +368,7 @@
 			padding: 0;
 			color: #000000;
 			background: #ffffff;
-			font-family: 'JetBrains Mono', ui-monospace, monospace;
+			font-family: var(--font-sans);
 			font-size: 9.5pt;
 			line-height: 1.55;
 			z-index: auto;

@@ -423,7 +423,7 @@
 	.moran-arrow { font-size: 11px; }
 	.moran-badge {
 		margin-left: auto;
-		font-family: monospace;
+		font-family: var(--font-mono);
 		font-size: 11px;
 		color: #f59e0b;
 	}
@@ -456,7 +456,7 @@
 		gap: 6px;
 		flex-wrap: wrap;
 		font-size: 12px;
-		font-family: monospace;
+		font-family: var(--font-mono);
 	}
 	.moran-I { color: #f59e0b; font-weight: bold; }
 	.moran-dim { color: #9ca3af; }
@@ -497,7 +497,7 @@
 		background: none;
 		color: #9ca3af;
 		cursor: pointer;
-		font-family: monospace;
+		font-family: var(--font-sans);
 		transition: all 0.12s;
 	}
 	.moran-view-btn:hover { color: #d4d4d4; border-color: #4b5563; }

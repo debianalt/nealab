@@ -443,7 +443,7 @@
 						y={c.yHi ? PAD_T + (CHART_PX.tick + 1) * k : PAD_T + plotH - 4 * k}
 						text-anchor={c.xHi ? 'end' : 'start'}
 						fill={activeQuad === c.q ? '#fb923c' : INK.tick}
-						font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+						font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 						stroke="rgba(15,23,42,0.92)" stroke-width={3 * k} stroke-linejoin="round" paint-order="stroke"
 						class="bv-quad"
 						onmousedown={(e) => e.stopPropagation()}
@@ -456,27 +456,27 @@
 			{#each [0, 0.5, 1] as f}
 				<text x={svgX(xAt(f))} y={PAD_T + plotH + (CHART_PX.tick + 2) * k}
 					text-anchor={f === 0 ? 'start' : f === 1 ? 'end' : 'middle'} fill={INK.tick}
-					font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{fmtTick(xAt(f))}</text>
+					font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{fmtTick(xAt(f))}</text>
 			{/each}
 
 			<!-- Y axis ticks (physical values at 0/50/100 % of the domain) -->
 			{#each [0, 0.5, 1] as f}
 				<text x={PAD_L - 3 * k} y={svgY(yAt(f)) + 4 * k}
 					text-anchor="end" fill={INK.tick}
-					font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{fmtTick(yAt(f))}</text>
+					font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{fmtTick(yAt(f))}</text>
 			{/each}
 
 			<!-- X axis title -->
 			<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
 				text-anchor="middle" fill={INK.label}
-				font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+				font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 			><title>{xLabel}</title>{fitLabel(`X: ${xLabel}`, plotW / k, CHART_PX.label)}</text>
 
 			<!-- Y axis title (rotated) -->
 			<text
 				x={CHART_PX.label * k} y={PAD_T + plotH / 2}
 				text-anchor="middle" fill={INK.label}
-				font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+				font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 				transform={`rotate(-90, ${CHART_PX.label * k}, ${PAD_T + plotH / 2})`}
 			><title>{yLabel}</title>{fitLabel(`Y: ${yLabel}`, plotH / k, CHART_PX.label)}</text>
 		</svg>

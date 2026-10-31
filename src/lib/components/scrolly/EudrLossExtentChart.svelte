@@ -97,7 +97,7 @@
 	.title .unit {
 		font-size: 0.74rem;
 		color: #898781;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 	}
 	.rows {
 		display: flex;
@@ -115,7 +115,7 @@
 		opacity: 0.4;
 	}
 	.rl {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.82rem;
 		text-align: right;
 		color: #c3c2b7;
@@ -148,7 +148,7 @@
 	}
 	.val {
 		margin-left: 0.55rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.78rem;
 		font-weight: 600;
 		color: #fff;

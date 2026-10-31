@@ -231,7 +231,7 @@
 <style>
 	.hex-comparison { font-size: 12.5px; }
 	.cd-hex-block { margin: 8px 0; padding: 6px 0; border-top: 1px solid rgba(255,255,255,0.06); }
-	.cd-hex-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #e2e8f0; font-family: monospace; margin-bottom: 5px; }
+	.cd-hex-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #e2e8f0; font-family: var(--font-mono); margin-bottom: 5px; }
 	.cd-type { font-size: 12px; color: #e2e8f0; font-weight: 500; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 3px; font-family: sans-serif; }
 	.cd-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
 	.cd-label { font-size: 11.5px; color: #d4d4d4; flex: 0 1 auto; min-width: 100px; }
@@ -287,7 +287,7 @@
 		border-radius: 50%;
 		flex-shrink: 0;
 	}
-	.hc-label { font-family: monospace; font-weight: 500; }
+	.hc-label { font-family: var(--font-sans); font-weight: 500; }
 	.hc-remove {
 		background: none;
 		border: none;
@@ -304,7 +304,7 @@
 	.mag-table { width: 100%; border-collapse: collapse; }
 	.mag-table th, .mag-table td { padding: 3px 4px; text-align: right; font-size: 12px; color: #e2e8f0; white-space: nowrap; }
 	.mag-table th:first-child, .mag-table td:first-child { text-align: left; color: #d4d4d4; font-size: 11.5px; font-weight: 400; }
-	.mag-table thead th { font-family: monospace; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); }
+	.mag-table thead th { font-family: var(--font-sans); font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); }
 	.mag-table thead th .hc-dot { width: 7px; height: 7px; margin-right: 3px; vertical-align: middle; }
 	.mag-table tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(255,255,255,0.04); }
 	.mag-note { font-size: 11px; color: rgba(255,255,255,0.55); font-style: italic; margin-top: 5px; line-height: 1.3; }

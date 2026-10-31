@@ -455,7 +455,7 @@
 	.radios-header { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
 	.radio-chip { display: inline-flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2px 6px 2px 4px; font-size: 11.5px; }
 	.chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-	.chip-code { font-family: monospace; font-weight: 600; color: #e2e8f0; }
+	.chip-code { font-family: var(--font-mono); font-weight: 600; color: #e2e8f0; }
 	.chip-x { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
 	.chip-x:hover { color: #ef4444; }
 	.clear-btn { background: none; border: 1px solid rgba(239,68,68,0.3); color: #ef4444; font-size: 11px; padding: 2px 8px; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
@@ -464,7 +464,7 @@
 	/* Radio metrics */
 	.radio-metrics { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; }
 	.radio-metrics-header { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
-	.radio-code { font-family: monospace; font-size: 11.5px; color: #a3a3a3; }
+	.radio-code { font-family: var(--font-mono); font-size: 11.5px; color: #a3a3a3; }
 	.mini-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11.5px; color: #d4d4d4; }
 	.mini-stats strong { color: #e2e8f0; }
 	.new-badge { color: #4ade80; font-weight: 600; }

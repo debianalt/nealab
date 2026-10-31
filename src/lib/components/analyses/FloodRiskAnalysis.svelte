@@ -372,7 +372,7 @@
 		margin-bottom: 10px;
 	}
 	.hex-id {
-		font-family: monospace;
+		font-family: var(--font-mono);
 		font-size: 12px;
 		color: #d4d4d4;
 	}
@@ -566,7 +566,7 @@
 	.parcel-chip { display: inline-flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2px 6px 2px 4px; font-size: 11.5px; }
 	.chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.chip-tipo { font-weight: 600; color: #e2e8f0; }
-	.chip-score { font-weight: 700; font-family: monospace; }
+	.chip-score { font-weight: 700; font-family: var(--font-mono); }
 	.chip-x { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
 	.chip-x:hover { color: #ef4444; }
 	.parcel-detail-header { display: flex; align-items: center; gap: 4px; font-size: 12px; margin: 6px 0 3px; padding-top: 4px; border-top: 1px solid #1e293b; }
@@ -583,12 +583,12 @@
 	.raw-values { margin-top: 4px; }
 	.raw-row { display: flex; justify-content: space-between; padding: 1px 0; font-size: 11.5px; }
 	.raw-label { color: #a3a3a3; }
-	.raw-val { color: #e2e8f0; font-weight: 600; font-family: monospace; }
+	.raw-val { color: #e2e8f0; font-weight: 600; font-family: var(--font-mono); }
 	.metrics-table { margin: 8px 0 10px; }
 	.metric-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11.5px; }
 	.metric-row:last-child { border-bottom: none; }
 	.metric-label { color: #a3a3a3; }
-	.metric-val { color: #e2e8f0; font-weight: 600; font-family: monospace; }
+	.metric-val { color: #e2e8f0; font-weight: 600; font-family: var(--font-mono); }
 	.flood-legend {
 		margin: 12px 0;
 	}

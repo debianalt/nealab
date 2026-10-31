@@ -79,6 +79,11 @@
 	});
 </script>
 
+<svelte:head>
+	<!-- Only this story uses Roboto Condensed (scrolly charts): loaded here, not site-wide. -->
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</svelte:head>
+
 <Seo
 	title={locale === 'pt'
 		? 'Colheita ou desmatamento · pré-diagnóstico EUDR com MapBiomas — Spatia'
@@ -294,7 +299,7 @@
 		padding: clamp(4rem, 15vh, 10rem) 1.5rem 4.5rem;
 	}
 	.kicker {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.72rem;
 		text-transform: uppercase;
 		letter-spacing: 0.22em;
@@ -332,7 +337,7 @@
 		gap: 0.25rem;
 	}
 	.stat .sv {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
 		font-weight: 700;
 		color: #fff;
@@ -347,7 +352,7 @@
 		max-width: 14ch;
 	}
 	.hero-meta {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.74rem;
 		color: #6b6a64;
 		display: flex;
@@ -356,7 +361,7 @@
 	}
 	.scroll-hint {
 		margin-top: 2.6rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.72rem;
 		text-transform: uppercase;
 		letter-spacing: 0.16em;
@@ -411,7 +416,7 @@
 	/* drop-cap on the lead */
 	.lead-prose :global(p:first-child::first-letter) {
 		float: left;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 3.6rem;
 		line-height: 0.82;
 		font-weight: 700;
@@ -429,7 +434,7 @@
 		gap: 1.5rem;
 	}
 	.sec-num {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 1rem;
 		font-weight: 700;
 		color: #199e70;
@@ -454,7 +459,7 @@
 		padding: 4.5rem 1.5rem 2.5rem;
 	}
 	.fh-label {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.74rem;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
@@ -467,7 +472,7 @@
 		margin: 0.8rem 0 0.6rem;
 	}
 	.fh-hint {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.8rem;
 		color: #898781;
 		margin: 0;
@@ -511,7 +516,7 @@
 	.cta-btn {
 		display: inline-block;
 		margin-top: 1.4rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.9rem;
 		color: #0a0a0a;
 		background: #22c39a;
@@ -535,7 +540,7 @@
 		color: #898781;
 	}
 	.src-h {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.82rem;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;

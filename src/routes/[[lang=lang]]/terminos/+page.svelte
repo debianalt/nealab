@@ -146,7 +146,7 @@
 		overflow-x: hidden;
 		background: #0a0a0a;
 		color: #ffffff;
-		font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-family: var(--font-sans);
 		font-size: 13px;
 		line-height: 1.7;
 		z-index: 50;

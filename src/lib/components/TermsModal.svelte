@@ -82,7 +82,7 @@
 		max-width: 560px;
 		width: 100%;
 		padding: 48px 40px 40px;
-		font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-family: var(--font-sans);
 		max-height: calc(100vh - 64px);
 		overflow-y: auto;
 		display: flex;

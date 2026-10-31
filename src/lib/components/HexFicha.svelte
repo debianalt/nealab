@@ -148,7 +148,7 @@
 <style>
 	.fi { font-size: 12.5px; color: #e2e8f0; }
 	.fi-head { padding: 2px 2px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 6px; }
-	.fi-code { font-family: monospace; font-size: 13px; color: #f8fafc; }
+	.fi-code { font-family: var(--font-mono); font-size: 13px; color: #f8fafc; }
 	.fi-place { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
 	.fi-actions { display: flex; gap: 6px; margin-top: 6px; }
 	.fi-btn {

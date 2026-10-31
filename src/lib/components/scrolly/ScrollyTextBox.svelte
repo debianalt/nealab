@@ -67,7 +67,7 @@
 	}
 
 	.box-title {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 1.08rem;
 		font-weight: 700;
 		letter-spacing: 0.01em;
@@ -103,7 +103,7 @@
 	.box-content :global(.sbl) {
 		display: flex;
 		justify-content: space-between;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.74rem;
 	}
 	.box-content :global(.sbl .lp) {
@@ -114,7 +114,7 @@
 	}
 	.box-content :global(.sbcap) {
 		margin-top: 0.4rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.68rem;
 		color: rgba(255, 255, 255, 0.4);
 	}
@@ -137,7 +137,7 @@
 		color: #0a0a0a;
 	}
 	.box-content :global(.num) {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-weight: 700;
 		color: #22c39a;
 	}
@@ -146,7 +146,7 @@
 		margin-top: 0.9rem;
 		padding-top: 0.7rem;
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.72rem;
 	}
 

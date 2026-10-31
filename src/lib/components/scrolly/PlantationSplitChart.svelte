@@ -132,7 +132,7 @@
 		flex-wrap: wrap;
 	}
 	.hero-num {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: clamp(2.6rem, 7vw, 4rem);
 		font-weight: 700;
 		line-height: 1;
@@ -184,7 +184,7 @@
 		transition: opacity 0.18s ease;
 	}
 	.zerocol {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.72rem;
 		text-align: right;
 		color: #898781;
@@ -194,7 +194,7 @@
 		opacity: 0.38;
 	}
 	.rl {
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.82rem;
 		text-align: right;
 		color: #c3c2b7;
@@ -224,7 +224,7 @@
 	}
 	.seg span {
 		padding: 0 0.5rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.74rem;
 		font-weight: 600;
 		color: rgba(255, 255, 255, 0.95);
@@ -259,7 +259,7 @@
 		border: 1px solid #383835;
 		border-radius: 6px;
 		padding: 0.55rem 0.7rem;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-size: 0.74rem;
 		color: #fff;
 		display: flex;

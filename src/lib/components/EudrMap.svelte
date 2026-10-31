@@ -378,7 +378,7 @@
 	:global(.eudr-label) {
 		color: rgba(255, 255, 255, 0.6);
 		font-size: 11px;
-		font-family: 'JetBrains Mono', monospace;
+		font-family: var(--font-mono);
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;

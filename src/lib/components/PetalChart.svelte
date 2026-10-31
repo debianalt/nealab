@@ -131,7 +131,7 @@
 	<circle cx={cx} cy={cy} r={refR}
 		fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-dasharray="4 3" />
 	<text x={cx + refR + 4} y={cy - 4}
-		fill="rgba(255,255,255,0.55)" font-size="10" font-family="system-ui, sans-serif">
+		fill="rgba(255,255,255,0.55)" font-size="10" font-family="'IBM Plex Sans', system-ui, sans-serif">
 		prov.
 	</text>
 
@@ -169,7 +169,7 @@
 		{@const offsetY = -(lines.length - 1) * (LABEL_PX + 2) / 2}
 		<text x={pos.x} y={pos.y + offsetY}
 			text-anchor={pos.anchor} dominant-baseline="middle"
-			fill="#e2e8f0" font-size={LABEL_PX} font-weight="500" font-family="system-ui, sans-serif">
+			fill="#e2e8f0" font-size={LABEL_PX} font-weight="500" font-family="'IBM Plex Sans', system-ui, sans-serif">
 			{#each lines as line, li}
 				<tspan x={pos.x} dy={li === 0 ? 0 : LABEL_PX + 2}>{line}</tspan>
 			{/each}

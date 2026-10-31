@@ -94,7 +94,7 @@
 		margin: 0 auto;
 		padding: 32px 24px 64px;
 		color: #e2e8f0;
-		font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+		font-family: var(--font-sans);
 		font-size: 14px;
 		line-height: 1.6;
 	}

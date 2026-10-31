@@ -151,7 +151,7 @@
 					<line x1={svgX(0)} y1={svgY(0)} x2={svgX(1)} y2={svgY(1)}
 						stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3 2" />
 					<text x={svgX(0.62)} y={svgY(0.62) + 12 * k} fill={INK.hint}
-						font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+						font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 						transform={`rotate(${-Math.atan2(plotH, plotW) * 180 / Math.PI}, ${svgX(0.62)}, ${svgY(0.62) + 12 * k})`}
 					>{i18n.t('chart.conc.even')}</text>
 
@@ -170,16 +170,16 @@
 					{#each [0, 0.25, 0.5, 0.75, 1] as f}
 						<text x={svgX(f)} y={PAD_T + plotH + (CHART_PX.tick + 2) * k}
 							text-anchor={f === 0 ? 'start' : f === 1 ? 'end' : 'middle'} fill={INK.tick}
-							font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{f * 100}%</text>
+							font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{f * 100}%</text>
 						<text x={PAD_L - 3 * k} y={svgY(f) + 4 * k} text-anchor="end" fill={INK.tick}
-							font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{f * 100}%</text>
+							font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{f * 100}%</text>
 					{/each}
 					<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
-						text-anchor="middle" fill={INK.label} font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+						text-anchor="middle" fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 					>{fitLabel(i18n.t('chart.conc.axisX'), plotW / k, CHART_PX.label)}</text>
 					<!-- Y title bottom-right: a concentration curve never goes below the diagonal. -->
 					<text x={svgX(1) - 4 * k} y={PAD_T + plotH - 6 * k} text-anchor="end" fill={INK.label}
-						font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+						font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 					><title>{label}</title>{fitLabel(i18n.t('chart.conc.axisY').replace('{v}', label), plotW / k * 0.9, CHART_PX.label)}</text>
 				</svg>
 			</div>
