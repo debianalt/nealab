@@ -8,6 +8,23 @@ import { query, registerBuffer } from '$lib/stores/duckdb';
 import { layerDeptUrl } from '$lib/utils/layerDeptUrl';
 import { unitLabel } from '$lib/utils/units';
 import type { FichaContext } from '$lib/stores/ficha.svelte';
+import { quantile } from '$lib/utils/chartType';
+
+// Where a value sits within one comparison area. Today only the department (or
+// the whole territory for layers not split by department) is filled, from the
+// file the layer panel reads; province and region will arrive with this same
+// shape from the Hexoma or a precomputed JSON.
+export interface FichaScope {
+	id: 'dept' | 'territory' | 'prov' | 'region';
+	n: number;
+	p10: number; p25: number; p50: number; p75: number; p90: number;
+	mean: number;
+	min: number; max: number;
+	// Kept apart because the mid-rank percentile hides ties: with 60 % zeros a
+	// zero cell is P30, yet it is not "higher than 30 in 100" — it equals 60.
+	below: number;   // % of cells with a strictly lower value
+	equal: number;   // % of cells with the same value
+}
 
 export interface FichaVar {
 	labelKey: string;
@@ -16,6 +33,7 @@ export interface FichaVar {
 	unit: string;              // display unit ('' when none)
 	pctlDept: number | null;   // 0-100: share of the department's cells below this one
 	meanDept: number | null;   // department mean, same units as value
+	scopes: FichaScope[];      // position of the value in each comparison area (display units)
 	nodata: boolean;
 }
 
@@ -50,14 +68,27 @@ async function fetchAndRegister(url: string): Promise<string | null> {
 	return name;
 }
 
-function percentile(sortedAsc: number[], v: number): number {
-	// share strictly below + half the ties (mid-rank), in %
+// Share of cells strictly below v and equal to v, in %.
+function rankOf(sortedAsc: number[], v: number): { below: number; equal: number } {
 	let lo = 0, hi = sortedAsc.length;
 	while (lo < hi) { const m = (lo + hi) >> 1; if (sortedAsc[m] < v) lo = m + 1; else hi = m; }
-	const below = lo;
 	let eqEnd = lo;
 	while (eqEnd < sortedAsc.length && sortedAsc[eqEnd] === v) eqEnd++;
-	return (100 * (below + (eqEnd - below) / 2)) / sortedAsc.length;
+	const n = sortedAsc.length;
+	return { below: (100 * lo) / n, equal: (100 * (eqEnd - lo)) / n };
+}
+
+// Distribution summary of one area, in display units (× scale).
+function scopeOf(id: FichaScope['id'], sortedAsc: number[], v: number | null, scale: number): FichaScope {
+	const q = (p: number) => quantile(sortedAsc, p) * scale;
+	const mean = sortedAsc.reduce((a, x) => a + x, 0) / sortedAsc.length;
+	const r = v === null ? { below: NaN, equal: NaN } : rankOf(sortedAsc, v);
+	return {
+		id, n: sortedAsc.length,
+		p10: q(0.1), p25: q(0.25), p50: q(0.5), p75: q(0.75), p90: q(0.9),
+		mean: mean * scale, min: sortedAsc[0] * scale, max: sortedAsc[sortedAsc.length - 1] * scale,
+		below: r.below, equal: r.equal,
+	};
 }
 
 // The column a variable displays (raw physical value when declared) and its scale/unit.
@@ -131,13 +162,15 @@ export async function loadFicha(
 				const has = isText ? (raw as string).length > 0 : Number.isFinite(num);
 				all.sort((x, y) => x - y);
 				const mean = all.length ? all.reduce((s, x) => s + x, 0) / all.length : NaN;
+				const scopes = all.length && !isText ? [scopeOf(scope, all, has ? num : null, spec.scale)] : [];
 				fv.push({
 					labelKey: v.labelKey,
 					value: has && !isText ? num * spec.scale : null,
 					text: has && isText ? (raw as string) : null,
 					unit: spec.unit,
-					pctlDept: has && !isText && all.length ? percentile(all, num) : null,
+					pctlDept: has && !isText && scopes.length ? scopes[0].below + scopes[0].equal / 2 : null,
 					meanDept: Number.isFinite(mean) ? mean * spec.scale : null,
+					scopes,
 					nodata: !has,
 				});
 			}

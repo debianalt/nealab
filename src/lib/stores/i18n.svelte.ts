@@ -209,6 +209,25 @@ const dict: Record<string, Record<Locale, string>> = {
 	'ficha.colMeanTerr': { es: 'Prom. territ.', en: 'Terr. mean', gn: 'Prom. territ.', pt: 'Média territ.' }, // gn: pendiente
 	'ficha.scopeTerr': { es: 'Esta capa no está dividida por departamento: percentil y promedio son del territorio entero.', en: 'This layer is not split by department: percentile and mean refer to the whole territory.', gn: 'Esta capa no está dividida por departamento: percentil y promedio son del territorio entero.', pt: 'Esta camada não é dividida por departamento: percentil e média são do território inteiro.' }, // gn: pendiente
 	'ficha.pending': { es: 'Próximamente: posición en la provincia y en la región, e informe en PDF.', en: 'Coming soon: position within the province and the region, and a PDF report.', gn: 'Próximamente: posición en la provincia y en la región, e informe en PDF.', pt: 'Em breve: posição na província e na região, e relatório em PDF.' }, // gn: pendiente
+	'ficha.legend2': { es: 'Cada capa: el valor de este hexágono, la mediana y el promedio del departamento, y dónde cae el hexágono entre todos los del departamento.', en: 'Each layer: the value in this hexagon, the department median and mean, and where the hexagon falls among all hexagons in the department.', gn: 'Cada capa: el valor de este hexágono, la mediana y el promedio del departamento, y dónde cae el hexágono entre todos los del departamento.', pt: 'Cada camada: o valor deste hexágono, a mediana e a média do departamento, e onde o hexágono fica entre todos os do departamento.' }, // gn: pendiente
+	'ficha.lg.band': { es: '8 de cada 10 (P10–P90)', en: '8 in 10 (P10–P90)', gn: '8 de cada 10 (P10–P90)', pt: '8 de cada 10 (P10–P90)' }, // gn: pendiente
+	'ficha.lg.box': { es: 'la mitad central (P25–P75)', en: 'middle half (P25–P75)', gn: 'la mitad central (P25–P75)', pt: 'metade central (P25–P75)' }, // gn: pendiente
+	'ficha.lg.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
+	'ficha.lg.mean': { es: 'promedio', en: 'mean', gn: 'promedio', pt: 'média' }, // gn: pendiente
+	'ficha.lg.hex': { es: 'este hexágono', en: 'this hexagon', gn: 'este hexágono', pt: 'este hexágono' }, // gn: pendiente
+	'ficha.ctx': { es: 'mediana {med} · promedio {mean}', en: 'median {med} · mean {mean}', gn: 'mediana {med} · promedio {mean}', pt: 'mediana {med} · média {mean}' }, // gn: pendiente
+	'ficha.w.higher': { es: 'Más alto que {n} de cada 100 hexágonos {of}.', en: 'Higher than {n} in 100 hexagons {of}.', gn: 'Más alto que {n} de cada 100 hexágonos {of}.', pt: 'Maior que {n} de cada 100 hexágonos {of}.' }, // gn: pendiente
+	'ficha.w.lower': { es: 'Más bajo que {n} de cada 100 hexágonos {of}.', en: 'Lower than {n} in 100 hexagons {of}.', gn: 'Más bajo que {n} de cada 100 hexágonos {of}.', pt: 'Menor que {n} de cada 100 hexágonos {of}.' }, // gn: pendiente
+	'ficha.w.equal': { es: 'Igual que {n} de cada 100 hexágonos {of}', en: 'Same as {n} in 100 hexagons {of}', gn: 'Igual que {n} de cada 100 hexágonos {of}', pt: 'Igual a {n} de cada 100 hexágonos {of}' }, // gn: pendiente
+	'ficha.w.andHigher': { es: '; más alto que {n}.', en: '; higher than {n}.', gn: '; más alto que {n}.', pt: '; maior que {n}.' }, // gn: pendiente
+	'ficha.w.andLower': { es: '; más bajo que {n}.', en: '; lower than {n}.', gn: '; más bajo que {n}.', pt: '; menor que {n}.' }, // gn: pendiente
+	'ficha.of.ar': { es: 'del departamento {name}', en: 'in {name} department', gn: 'del departamento {name}', pt: 'do departamento {name}' }, // gn: pendiente
+	'ficha.of.py': { es: 'del distrito {name}', en: 'in {name} district', gn: 'del distrito {name}', pt: 'do distrito {name}' }, // gn: pendiente
+	'ficha.of.br': { es: 'del municipio {name}', en: 'in the municipality of {name}', gn: 'del municipio {name}', pt: 'do município {name}' }, // gn: pendiente
+	'ficha.sqrt': { es: 'escala √', en: '√ scale', gn: 'escala √', pt: 'escala √' }, // gn: pendiente
+	'ficha.allVars': { es: 'Todas las variables ({n})', en: 'All variables ({n})', gn: 'Todas las variables ({n})', pt: 'Todas as variáveis ({n})' }, // gn: pendiente
+	'ficha.colMedianDept': { es: 'Med. depto.', en: 'Dept. median', gn: 'Med. depto.', pt: 'Med. depto.' }, // gn: pendiente
+	'ficha.colMedianTerr': { es: 'Med. territ.', en: 'Terr. median', gn: 'Med. territ.', pt: 'Med. territ.' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
 	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente
