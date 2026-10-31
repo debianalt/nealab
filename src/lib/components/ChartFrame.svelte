@@ -11,6 +11,7 @@
 		collapsible = true,
 		defaultCollapsed = false,
 		expanded = $bindable(false),
+		htmlExport = false,
 	}: {
 		title: string;
 		children: Snippet;
@@ -20,6 +21,9 @@
 		collapsible?: boolean;
 		defaultCollapsed?: boolean;
 		expanded?: boolean;
+		// The body is HTML (fact sheet, ranking list), not one SVG chart: PNG renders
+		// the whole body (html-to-image) and SVG is not offered.
+		htmlExport?: boolean;
 	} = $props();
 
 	// Collapse hides the body via CSS (not {#if}) so chart state — brush selections,
@@ -130,6 +134,58 @@
 	function findSvg(): SVGElement | null {
 		return host?.querySelector('.chart-frame-body svg') ?? null;
 	}
+	// Image items only when there is something to export (a bivariate plot has no
+	// SVG until its Y axis is picked): checked each time the menu opens.
+	let hasSvg = $state(false);
+	function toggleExportMenu() {
+		exportMenuOpen = !exportMenuOpen;
+		if (exportMenuOpen) hasSvg = !!findSvg();
+	}
+	let pngBusy = $state(false);
+	async function handleExportHtmlPng() {
+		const body = host?.querySelector('.chart-frame-body') as HTMLElement | null;
+		if (!body || pngBusy) return;
+		pngBusy = true;
+		try {
+			const { toPng } = await import('html-to-image');
+			const bg = getComputedStyle(document.documentElement).getPropertyValue('--s-surface').trim() || '#0b0d14';
+			// Leave out controls marked data-export-hide (links, close buttons) and
+			// unroll the inner boxes that actually scroll (ranking list), so the image
+			// holds every row; restored right after. Only scrolling boxes: a blanket
+			// overflow: visible broke the ellipsis on long department names.
+			body.classList.add('chart-frame-exporting');
+			const unrolled: [HTMLElement, string][] = [];
+			for (const el of body.querySelectorAll<HTMLElement>('*')) {
+				const oy = getComputedStyle(el).overflowY;
+				if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) {
+					unrolled.push([el, el.getAttribute('style') ?? '']);
+					el.style.maxHeight = 'none';
+					el.style.overflowY = 'visible';
+					el.style.overflowX = 'hidden';
+				}
+			}
+			await new Promise(r => requestAnimationFrame(() => r(null)));
+			let url: string;
+			try {
+				url = await toPng(body, {
+					pixelRatio: 2, backgroundColor: bg, cacheBust: false,
+					height: body.scrollHeight, width: body.clientWidth,
+				});
+			} finally {
+				for (const [el, st] of unrolled) el.setAttribute('style', st);
+			}
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = `${csvFilename}_${timestamp()}.png`;
+			a.click();
+		} catch (e) {
+			console.error('PNG export failed', e);
+		} finally {
+			body.classList.remove('chart-frame-exporting');
+			pngBusy = false;
+			exportMenuOpen = false;
+		}
+	}
 
 	function timestamp(): string {
 		const d = new Date();
@@ -220,13 +276,17 @@
 				<button
 					class="chart-frame-btn"
 					title="Exportar"
-					onclick={() => { exportMenuOpen = !exportMenuOpen; }}
+					onclick={toggleExportMenu}
 					aria-label="Exportar"
 				>↓</button>
 				{#if exportMenuOpen}
 					<div class="chart-frame-export-menu">
-						<button class="chart-frame-export-item" onclick={handleExportPng}>↓ PNG</button>
-						<button class="chart-frame-export-item" onclick={handleExportSvg}>↓ SVG</button>
+						{#if htmlExport}
+							<button class="chart-frame-export-item" onclick={handleExportHtmlPng} disabled={pngBusy}>{pngBusy ? '…' : '↓ PNG'}</button>
+						{:else if hasSvg}
+							<button class="chart-frame-export-item" onclick={handleExportPng}>↓ PNG</button>
+							<button class="chart-frame-export-item" onclick={handleExportSvg}>↓ SVG</button>
+						{/if}
 						{#if csvRows}
 							<button class="chart-frame-export-item" onclick={handleExportCsv}>↓ CSV</button>
 						{/if}
@@ -394,6 +454,9 @@
 	}
 
 	/* Charts have fixed-aspect SVGs by default; scale them up when expanded */
+	.chart-frame-body:global(.chart-frame-exporting) :global([data-export-hide]) {
+		display: none !important;
+	}
 	.chart-frame-expanded .chart-frame-body :global(svg) {
 		width: 100%;
 		height: auto;

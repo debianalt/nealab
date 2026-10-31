@@ -124,12 +124,12 @@
 </script>
 
 {#if h3 && ctx}
-	<ChartFrame bind:expanded={docked} title={i18n.t('ficha.title')} csvRows={csvRows} csvFilename={`spatia_ficha_${h3}`} collapsible={false}>
+	<ChartFrame bind:expanded={docked} title={i18n.t('ficha.title')} htmlExport csvRows={csvRows} csvFilename={`spatia_ficha_${h3}`} collapsible={false}>
 		<div class="fi">
 			<div class="fi-head">
 				<div class="fi-code">{h3}</div>
 				<div class="fi-place">{ctx.deptName ? formatDept(ctx.deptName) + ' · ' : ''}{territoryLabel}</div>
-				<div class="fi-actions">
+				<div class="fi-actions" data-export-hide>
 					<button class="fi-btn" onclick={copyLink}>{copied ? i18n.t('ficha.copied') : i18n.t('ficha.copyLink')}</button>
 					<button class="fi-btn" onclick={() => fichaStore.close()}>× {i18n.t('ficha.close')}</button>
 				</div>

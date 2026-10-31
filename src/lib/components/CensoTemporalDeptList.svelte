@@ -136,7 +136,7 @@
 	}
 </script>
 
-<ChartFrame title={`${i18n.t(reading.titleKey)}${territoryLabel ? ` · ${territoryLabel}` : ''}`} csvRows={csvRows} csvFilename="spatia_censo_deptos">
+<ChartFrame title={`${i18n.t(reading.titleKey)}${territoryLabel ? ` · ${territoryLabel}` : ''}`} csvRows={csvRows} csvFilename="spatia_censo_deptos" htmlExport>
 	<div class="cd-panel">
 		{#if error}
 			<p class="cd-msg">{i18n.t('side.censoTemporal.error')}</p>
