@@ -23,7 +23,7 @@ BASE = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:5174'
 CELLS = sys.argv[2:] or ['89a946191b3ffff']  # Capital (Misiones)
 INIT = "localStorage.setItem('spatia_terms_v1','true');localStorage.setItem('spatia_welcomed_v1','true');"
 GPU = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist']
-ROWS = "[...document.querySelectorAll('.fi-layer summary')].map(s => s.innerText.replace(/\\s+/g,' ').trim())"
+ROWS = "[...document.querySelectorAll('.fi-card')].map(s => s.innerText.replace(/\\s+/g,' ').trim())"
 HEAD = "document.querySelector('.fi-head')?.innerText.replace(/\\s+/g,' ')"
 
 
@@ -43,7 +43,7 @@ async def main():
         for cell in CELLS:
             pg, errs = await open_page(browser, f'?h3={cell}')
             t0 = time.time()
-            await pg.wait_for_selector('.fi-layer', timeout=60000)
+            await pg.wait_for_selector('.fi-card', timeout=60000)
             await pg.wait_for_function("!document.querySelector('.fi-state')", timeout=60000)
             print(f'\n?h3={cell}  ({time.time() - t0:.1f}s after load)  {await pg.evaluate(HEAD)}')
             for row in await pg.evaluate(ROWS):
@@ -58,7 +58,7 @@ async def main():
         await pg.wait_for_timeout(3000)
         if await pg.locator('.hc-ficha-btn').count():
             await pg.locator('.hc-ficha-btn').click(force=True)
-            await pg.wait_for_selector('.fi-layer', timeout=60000)
+            await pg.wait_for_selector('.fi-card', timeout=60000)
             print('\nIn-app button OK:', await pg.evaluate(HEAD), '| layers:', len(await pg.evaluate(ROWS)))
         else:
             print('\nIn-app button: no hexagon under the click (map not loaded or point off-hex)')
