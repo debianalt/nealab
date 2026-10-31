@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DIV } from '$lib/utils/sello';
+	import { DIV, MAP_TIERRA, inkOn } from '$lib/utils/sello';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, svgScale, dockBoost, measure } from '$lib/utils/chartType';
 	import type { FlowBands } from '$lib/config';
@@ -24,7 +24,7 @@
 		baselineCol: 'score_baseline',
 		breaks: [33, 67],
 		labels: ['Bajo', 'Medio', 'Alto'],
-		colors: ['#fb923c', '#f59e0b', '#22d3ee'],
+		colors: [MAP_TIERRA[0], MAP_TIERRA[2], MAP_TIERRA[4]],
 		higherIsWorse: false,
 		note: 'Flujo de hexágonos entre bandas: Bajo (<33) · Medio (33–67) · Alto (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
 	};
@@ -262,20 +262,20 @@
 					{#if leftBandH[band] > 30 * k}
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy - 2 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy + 10 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.65)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{fromTotals[band].toLocaleString()} · {Math.round(fromTotals[band] / total * 100)}%</text>
 					{:else if leftBandH[band] > 15 * k}
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy + 4 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
@@ -300,20 +300,20 @@
 					{#if rightBandH[band] > 30 * k}
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy - 2 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy + 10 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.65)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{toTotals[band].toLocaleString()} · {Math.round(toTotals[band] / total * 100)}%</text>
 					{:else if rightBandH[band] > 15 * k}
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy + 4 * k}
-							text-anchor="middle" fill="rgba(0,0,0,0.75)"
+							text-anchor="middle" fill={inkOn(cfg.colors[band])}
 							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>

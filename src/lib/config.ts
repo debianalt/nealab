@@ -1,4 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3 } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -587,9 +588,9 @@ export function colorForClass(value: number, classes: ColorClasses): string {
 export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
 	zero: { color: '#1e293b', labelKey: 'legend.flood.none' },
 	steps: [
-		{ from: 0, color: '#3b82f6', labelKey: 'legend.flood.low' },
-		{ from: 5, color: '#eab308', labelKey: 'legend.flood.mid' },
-		{ from: 20, color: '#dc2626', labelKey: 'legend.flood.high' },
+		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.flood.low' },
+		{ from: 5, color: MAP_CLASS_3[1], labelKey: 'legend.flood.mid' },
+		{ from: 20, color: MAP_CLASS_3[2], labelKey: 'legend.flood.high' },
 	],
 };
 
@@ -601,18 +602,18 @@ export const FLOOD_LOW_BLD_CLASSES: ColorClasses = {
 	zero: { color: '#1e293b', labelKey: 'legend.lowBld.none' },
 	zeroBelow: 0.5,
 	steps: [
-		{ from: 0.5, color: '#60a5fa', labelKey: 'legend.lowBld.c1' },
-		{ from: 2.5, color: '#eab308', labelKey: 'legend.lowBld.c2' },
-		{ from: 9.5, color: '#f97316', labelKey: 'legend.lowBld.c3' },
-		{ from: 49.5, color: '#dc2626', labelKey: 'legend.lowBld.c4' },
+		{ from: 0.5, color: MAP_CLASS_4[0], labelKey: 'legend.lowBld.c1' },
+		{ from: 2.5, color: MAP_CLASS_4[1], labelKey: 'legend.lowBld.c2' },
+		{ from: 9.5, color: MAP_CLASS_4[2], labelKey: 'legend.lowBld.c3' },
+		{ from: 49.5, color: MAP_CLASS_4[3], labelKey: 'legend.lowBld.c4' },
 	],
 };
 export const FLOOD_LOW_LAND_CLASSES: ColorClasses = {
 	zero: { color: '#1e293b', labelKey: 'legend.lowLand.none' },
 	steps: [
-		{ from: 0, color: '#3b82f6', labelKey: 'legend.lowLand.c1' },
-		{ from: 25, color: '#eab308', labelKey: 'legend.lowLand.c2' },
-		{ from: 75, color: '#dc2626', labelKey: 'legend.lowLand.c3' },
+		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.lowLand.c1' },
+		{ from: 25, color: MAP_CLASS_3[1], labelKey: 'legend.lowLand.c2' },
+		{ from: 75, color: MAP_CLASS_3[2], labelKey: 'legend.lowLand.c3' },
 	],
 };
 export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
@@ -620,22 +621,22 @@ export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
 	zeroBelow: 0.5,
 	steps: [
 		{ from: -1e9, color: '#64748b', labelKey: 'legend.lowNew.down' },
-		{ from: 0.5, color: '#60a5fa', labelKey: 'legend.lowNew.c1' },
-		{ from: 4.5, color: '#eab308', labelKey: 'legend.lowNew.c2' },
-		{ from: 19.5, color: '#dc2626', labelKey: 'legend.lowNew.c3' },
+		{ from: 0.5, color: MAP_CLASS_3[0], labelKey: 'legend.lowNew.c1' },
+		{ from: 4.5, color: MAP_CLASS_3[1], labelKey: 'legend.lowNew.c2' },
+		{ from: 19.5, color: MAP_CLASS_3[2], labelKey: 'legend.lowNew.c3' },
 	],
 };
 
-// Hansen loss rate (%/yr, 2015–2024). Same cuts and colors as the layer's
+// Hansen loss rate (%/yr, 2015–2024). Same cuts and colors (MAP_CLASS_3) as the layer's
 // flowBands so map and flow chart classify a hexagon alike. 0 = no loss
 // detected — in Eldorado half the hexagons, median tree cover 98 %: standing
 // forest, previously painted "Sin cobertura".
 export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 	zero: { color: '#1e293b', labelKey: 'legend.deforest.none' },
 	steps: [
-		{ from: 0, color: '#22d3ee', labelKey: 'legend.deforest.low' },
-		{ from: 0.5, color: '#f59e0b', labelKey: 'legend.deforest.mid' },
-		{ from: 2, color: '#f87171', labelKey: 'legend.deforest.high' },
+		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.deforest.low' },
+		{ from: 0.5, color: MAP_CLASS_3[1], labelKey: 'legend.deforest.mid' },
+		{ from: 2, color: MAP_CLASS_3[2], labelKey: 'legend.deforest.high' },
 	],
 	upperInclusive: true,
 };
@@ -1061,7 +1062,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			baselineCol: 'pob_dens_baseline',
 			breaks: [300, 1500],
 			labels: ['Rural', 'Cluster urbano', 'Centro urbano'],
-			colors: ['#a3e635', '#f59e0b', '#22d3ee'],
+			colors: [...MAP_VIRIDIS_3],   // = the map's viridis density ramp
 			higherIsWorse: false,
 			upLabel: 'densificaron',
 			downLabel: 'perdieron densidad',
@@ -1161,7 +1162,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			baselineCol: 'c_pm25_mean_baseline',
 			breaks: [10, 15, 25, 35],
 			labels: ['Muy baja', 'Baja', 'Moderada', 'Alta', 'Muy alta'],
-			colors: ['#22d3ee', '#a3e635', '#f59e0b', '#fb923c', '#f87171'],
+			colors: [...MAP_CLASS_5],
 			higherIsWorse: true,
 			unit: 'µg/m³',
 			note: 'Bandas de PM2.5 (µg/m³, media anual) según metas intermedias OMS 2021: ≤10 · 10–15 · 15–25 · 25–35 · >35 · Clic en un flujo o banda para ver esos hexágonos en el mapa',
@@ -1211,7 +1212,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			baselineCol: 'c_loss_rate_baseline',
 			breaks: [0.5, 2],
 			labels: ['Baja', 'Media', 'Alta'],
-			colors: ['#22d3ee', '#f59e0b', '#f87171'],
+			colors: [...MAP_CLASS_3],   // = DEFOREST_LOSS_CLASSES
 			higherIsWorse: true,
 			unit: '%/año',
 			note: 'Bandas de pérdida forestal (%/año, Hansen): Baja (≤0.5) · Media (0.5–2) · Alta (>2) · Clic en un flujo o banda para ver esos hexágonos en el mapa',

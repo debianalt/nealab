@@ -96,3 +96,24 @@ export const rampGradient = (stops: readonly string[]): string => `linear-gradie
 function hexRgb(h: string): [number, number, number] {
 	return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 }
+
+// Fixed classes for hazards (flood, deforestation, PM2.5 bands): tierra → oro,
+// lightness rising with the class, so on the dark map the worst class is the
+// brightest. Two hues on purpose (one-hue tierra classes lost the class-to-class
+// contrast of the old traffic light). Validated on #0e1117: 3 and 4 classes pass
+// CVD and normal vision (all pairs ≥ 15); 5 classes: adjacent ΔE 12 normal, so
+// they are always labelled (Flow bands carry their names).
+export const MAP_CLASS_3 = ['#a2452a', '#df7440', '#f2c46b'] as const;
+export const MAP_CLASS_4 = ['#8a3a22', '#d0602f', '#efa046', '#fbe3a6'] as const;
+export const MAP_CLASS_5 = ['#7a3120', '#b84e2b', '#e2793b', '#eeac52', '#fbe6ae'] as const;
+// Density bands match the map's viridis ramp (Map.computeHexColor default branch).
+export const MAP_VIRIDIS_3 = ['#5b21b6', '#21918c', '#fde725'] as const;
+
+/** Readable ink on a coloured fill (labels drawn on bands, swatches). */
+export function inkOn(hex: string): string {
+	const [r, g, b] = hexRgb(hex).map(c => {
+		const s = c / 255;
+		return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+	});
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.22 ? 'rgba(0,0,0,0.78)' : 'rgba(255,255,255,0.92)';
+}
