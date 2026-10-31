@@ -12,6 +12,7 @@
 	import CensoTemporalDeptList from '$lib/components/CensoTemporalDeptList.svelte';
 	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
+	import { withRef } from '$lib/utils/territoryRef';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
 	import { ANALYSIS_CONTENT, resolveMethod } from '$lib/content/methodology';
@@ -651,7 +652,7 @@
 				<div class="petal-wrapper">
 					<PetalChart layers={hexPetalLayers} labels={petalLabels} size={240} />
 				</div>
-				<p class="petal-hint">{i18n.t('analysis.petalHint')}</p>
+				<p class="petal-hint">{analysis.comparable ? i18n.t('analysis.petalHint.fixed') : withRef(i18n.t('analysis.petalHint.local'), hexStore.territoryId, i18n.locale)}</p>
 			</div>
 		{/if}
 		{#if CENSUS_ANALYSES.has(analysis.id) && componentVars.length > 0}
@@ -886,16 +887,16 @@
 					{/each}
 				</div>
 				{:else}
-					<p class="rank-nobars">{i18n.t('rank.change.noBars')}</p>
+					<p class="rank-nobars">{withRef(i18n.t('rank.change.noBars'), activeTab || hexStore.territoryId, i18n.locale)}</p>
 				{/if}
-				<p class="rank-note">{i18n.t(rankCfg.noteKey)}</p>
+				<p class="rank-note">{withRef(i18n.t(rankCfg.noteKey), activeTab || hexStore.territoryId, i18n.locale)}</p>
 			</div>
 		{/if}
 
 		{#if rankSaturated && rankCfg?.saturatedKey}
 			<div class="dept-section rank-section rank-saturated">
 				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
-				<div class="rank-saturated-head">{i18n.t('rank.saturated.head')}</div>
+				<div class="rank-saturated-head">{withRef(i18n.t('rank.saturated.head'), activeTab || hexStore.territoryId, i18n.locale)}</div>
 				<p class="rank-note">{i18n.t(rankCfg.saturatedKey)}</p>
 			</div>
 		{/if}
@@ -927,7 +928,7 @@
 			<div class="section-title">{i18n.t('analysis.flood.topDepts')}</div>
 			{#if deptList.length === 0 && isPerDept}
 				<div class="dept-row" style="color: var(--text-secondary); font-style: italic; padding: 8px 0;">
-					{hexStore.territoryPrefix ? i18n.t('analysis.noDeptData') : i18n.t('common.loading')}
+					{hexStore.territoryPrefix ? withRef(i18n.t('analysis.noDeptData'), hexStore.territoryId, i18n.locale) : i18n.t('common.loading')}
 				</div>
 			{:else}
 				{#if !selectedDpto}
@@ -965,7 +966,7 @@
 						<p class="explain-text">{i18n.t('common.loading')}</p>
 					{:else if calibrationData.length > 0}
 						<table class="calib-table">
-							<thead><tr><th>Territorio</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
+							<thead><tr><th>Provincia, departamento o estado</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
 							<tbody>
 							{#each calibrationData as d}
 								<tr>
@@ -978,7 +979,7 @@
 							{/each}
 							</tbody>
 						</table>
-						<p class="explain-text" style="margin-top:4px">Distribuciones similares entre territorios confirman que los goalposts están bien calibrados.</p>
+						<p class="explain-text" style="margin-top:4px">Distribuciones similares entre provincias, departamentos y estados confirman que los goalposts están bien calibrados.</p>
 					{/if}
 				</div>
 			</details>

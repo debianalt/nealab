@@ -2,6 +2,7 @@
 	import { getAnalysesForLens, LENS_CONFIG, type AnalysisConfig, type TerritoryConfig } from '$lib/config';
 	import type { LensStore } from '$lib/stores/lens.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
 
 	let {
 		lensStore,
@@ -112,7 +113,7 @@
 							{:else if coverage === 'pending'}
 								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
 							{:else if coverage === 'unavailable'}
-								<span class="item-badge">🚫 {i18n.t('analysis.coverage.unavailable')}</span>
+								<span class="item-badge">🚫 {withRef(i18n.t('analysis.coverage.unavailable'), activeTerritory?.id ?? '', i18n.locale)}</span>
 							{/if}
 						</button>
 					{/each}
@@ -122,9 +123,7 @@
 			{#if localGroup.length > 0}
 				<div class="group-label local">
 					{activeTerritory?.flag ?? ''}
-					{i18n
-						.t('menu.group.localOnly')
-						.replace('{territory}', activeTerritory?.label ?? i18n.t('menu.group.thisTerritory'))}
+					{withRef(i18n.t('menu.group.localOnly'), activeTerritory?.id ?? '', i18n.locale)}
 				</div>
 				{#each localBuckets as bucket}
 					<div class="subgroup-label">{i18n.t(bucket.labelKey)}</div>
@@ -152,7 +151,7 @@
 							{:else if coverage === 'pending'}
 								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
 							{:else if coverage === 'unavailable'}
-								<span class="item-badge">🚫 {i18n.t('analysis.coverage.unavailable')}</span>
+								<span class="item-badge">🚫 {withRef(i18n.t('analysis.coverage.unavailable'), activeTerritory?.id ?? '', i18n.locale)}</span>
 							{/if}
 						</button>
 					{/each}

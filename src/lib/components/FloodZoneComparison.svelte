@@ -5,6 +5,7 @@
 	import { PARQUETS } from '$lib/config';
 	import { initDuckDB, query } from '$lib/stores/duckdb';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
 
 	let {
 		lassoStore,
@@ -189,7 +190,8 @@
 		<div class="loading">{i18n.t('flood.loadingProfile')}</div>
 	{:else if petalLayers.length > 0}
 		<div class="section-title">{i18n.t('flood.profileTitle')}</div>
-		<p class="petal-note">{i18n.t('flood.petalNote')}</p>
+		<!-- Only Misiones radios carry the six flood-census columns: the reference is always its average. -->
+		<p class="petal-note">{withRef(i18n.t('flood.petalNote'), 'misiones', i18n.locale)}</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={320} />
 		<div class="petal-defs">
 			<div>{@html i18n.t('flood.def.freq')}</div>

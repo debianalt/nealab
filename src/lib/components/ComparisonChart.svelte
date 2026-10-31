@@ -3,6 +3,7 @@
 	import { getPetalVars, normalizeValues, getProvincialAvg, territoryFromRedcode } from '$lib/utils/petal';
 	import PetalChart from './PetalChart.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
 
 	let {
 		radios,
@@ -115,7 +116,7 @@
 
 	<!-- Petal chart (normalized: 50 = provincial avg) -->
 	{#if petalLayers.length > 0}
-		<p class="ref-note">{i18n.t('zone.petalNote')}</p>
+		<p class="ref-note">{withRef(i18n.t('zone.petalNote'), activeTerritory, i18n.locale)}</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={300} />
 	{/if}
 

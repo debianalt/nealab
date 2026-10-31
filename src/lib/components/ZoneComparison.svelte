@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { PETAL_VARS, type LassoStore, type Zone } from '$lib/stores/lasso.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
+	import { territoryRef } from '$lib/utils/territoryRef';
 	import { downloadCsvFromRows, downloadGeoJsonFromPolygon } from '$lib/utils/data-export';
 	import PetalChart from './PetalChart.svelte';
 
@@ -17,6 +19,14 @@
 	const zones = $derived(lassoStore.zones);
 	const petalLayers = $derived(lassoStore.petalLayers);
 	const petalLabels = $derived(lassoStore.petalLabels);
+	// Each zone is normalized against the province (BR: state) that gives it the
+	// most population; name it, and name each one when the zones differ.
+	const refNote = $derived.by(() => {
+		const refs = [...new Set(zones.map(z => z.refTerritory))];
+		if (refs.length <= 1) return withRef(i18n.t('zone.petalNote'), refs[0] ?? '', i18n.locale);
+		const list = zones.map(z => `${i18n.t('zone.title')} ${z.id}: ${territoryRef(z.refTerritory, i18n.locale)}`).join(' · ');
+		return i18n.t('zone.petalNoteMulti').replace('{list}', list);
+	});
 
 	function downloadZoneSummary() {
 		if (zones.length === 0) return;
@@ -105,7 +115,7 @@
 	</div>
 
 	{#if petalLayers.length > 0}
-		<p class="ref-note">{i18n.t('zone.petalNote')}</p>
+		<p class="ref-note">{refNote}</p>
 		<PetalChart layers={petalLayers} labels={petalLabels} size={300} />
 	{/if}
 

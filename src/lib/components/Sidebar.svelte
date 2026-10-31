@@ -18,6 +18,7 @@
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { LENS_CONFIG, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
 	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
@@ -236,7 +237,7 @@
 					data={hexStore.visibleData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
 					bands={hexStore.activeLayer.flowBands ?? null}
-					emptyHint={hexStore.activeLayer.perDepartment ? 'seleccioná un departamento' : 'cargando datos del territorio…'}
+					emptyHint={hexStore.activeLayer.perDepartment ? 'seleccioná un departamento' : withRef(i18n.t('analysis.loadingTerritory'), hexStore.territoryId, i18n.locale)}
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}

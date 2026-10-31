@@ -22,6 +22,7 @@ export interface Zone {
 	redcodes: string[];
 	polygon: [number, number][];
 	stats: ZoneStats;
+	refTerritory: string;       // territory whose average the petal is normalized against
 }
 
 export class LassoStore {
@@ -160,7 +161,7 @@ export class LassoStore {
 			const normalizedValues = normalizeValues(rawValues, provAvg);
 
 			this.zones = [...this.zones, {
-				id, color, redcodes, polygon,
+				id, color, redcodes, polygon, refTerritory: dominant,
 				stats: { population: totalPop, area_km2: totalArea, radioCount: redcodes.length, rawValues, normalizedValues },
 			}];
 		} catch (e) {
@@ -207,7 +208,7 @@ export class LassoStore {
 			const normalizedValues = normalizeValues(rawValues, provAvg);
 
 			this.zones = [...this.zones, {
-				id, color, redcodes, polygon,
+				id, color, redcodes, polygon, refTerritory: territory,
 				stats: { population: totalPop, area_km2: totalArea, radioCount: redcodes.length, rawValues, normalizedValues },
 			}];
 		} catch (e) {

@@ -35,7 +35,7 @@
 	] as { province: string | null; bounds: [[number, number], [number, number]] }[];
 
 	const stepDefs = [
-		{ key: 'stepOverview', title: { es: 'El territorio', en: 'The territory' } },
+		{ key: 'stepOverview', title: { es: 'El NEA', en: 'Northeast Argentina' } },
 		{ key: 'stepMisiones', title: { es: 'Misiones', en: 'Misiones' } },
 		{ key: 'stepCorrientes', title: { es: 'Corrientes', en: 'Corrientes' } },
 		{ key: 'stepChaco', title: { es: 'Chaco', en: 'Chaco' } },

@@ -3,6 +3,7 @@
 	import PetalChart from './PetalChart.svelte';
 	import { ANALYSIS_REGISTRY } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
+	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
 
@@ -86,14 +87,6 @@
 	// work were stripped of the variable, so the parquet's residual type_label
 	// (e.g. "Sin cobertura censal") is not surfaced.
 	const hasClassification = $derived(variables.some(v => v.col === 'type_label'));
-	// Baseline noun for the petal reference, by territory admin level (the petal
-	// normalizes against the territory average): AR=provincia, PY=departamento, BR=estado.
-	const adminAvgKey = $derived.by(() => {
-		const p = (hexStore.territoryPrefix || '').replace(/\/$/, '');
-		if (p.endsWith('_py')) return 'hex.provAvgDept';
-		if (p.endsWith('_br')) return 'hex.provAvgState';
-		return 'hex.provAvgProvince';
-	});
 
 	function downloadSelectedCsv() {
 		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
@@ -135,7 +128,7 @@
 	{#if petalLayers.length > 0 && petalLabels.length >= 3 && showPetals}
 		<PetalChart layers={petalLayers} labels={petalLabels} size={340} />
 		<div class="hc-ref-note">
-			<span class="hc-ref-dash"></span> {i18n.t('hex.petalRelative')} 50 = {i18n.t(adminAvgKey)}
+			<span class="hc-ref-dash"></span> {i18n.t('hex.petalRelative')} 50 = {withRef(i18n.t('hex.avgOf'), hexStore.territoryId, i18n.locale)}
 		</div>
 	{/if}
 
@@ -171,7 +164,7 @@
 			</div>
 		{/each}
 		{#if isGoalpostLayer}
-			<div class="cd-note">{i18n.t('hex.goalpostNote')}</div>
+			<div class="cd-note">{withRef(i18n.t('hex.goalpostNote'), hexStore.territoryId, i18n.locale)}</div>
 		{/if}
 	{/if}
 
