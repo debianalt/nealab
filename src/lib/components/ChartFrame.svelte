@@ -8,21 +8,20 @@
 		csvRows,
 		csvColumns,
 		csvFilename = 'spatia_chart',
-		initialSize = { w: 900, h: 600 },
 		collapsible = true,
 		defaultCollapsed = false,
+		expanded = $bindable(false),
 	}: {
 		title: string;
 		children: Snippet;
 		csvRows?: () => Array<Record<string, unknown>>;
 		csvColumns?: string[];
 		csvFilename?: string;
-		initialSize?: { w: number; h: number };
 		collapsible?: boolean;
 		defaultCollapsed?: boolean;
+		expanded?: boolean;
 	} = $props();
 
-	let expanded = $state(false);
 	// Collapse hides the body via CSS (not {#if}) so chart state — brush selections,
 	// computed layouts — survives toggling, same rationale as the expand portal.
 	let collapsed = $state(collapsible && defaultCollapsed);
@@ -32,9 +31,65 @@
 		collapsed = !collapsed;
 	}
 	let exportMenuOpen = $state(false);
-	let pos = $state({ x: 120, y: 80 });
-	let size = $state({ w: initialSize.w, h: initialSize.h });
 	let host: HTMLDivElement | undefined = $state();
+
+	// Expanded = docked beside the map (split view): the chart takes the right
+	// side, the map stays live on the left and pads its camera to that width.
+	const DOCK_KEY = 'spatia_dock_w';
+	const frameId = Math.random().toString(36).slice(2);
+	function defaultDockW(): number {
+		if (typeof window === 'undefined') return 600;
+		if (window.innerWidth < 768) return window.innerWidth;
+		try {
+			const saved = Number(localStorage.getItem(DOCK_KEY));
+			if (saved > 0) return clampDock(saved);
+		} catch {}
+		return clampDock(window.innerWidth * 0.5);
+	}
+	function clampDock(w: number): number {
+		if (window.innerWidth < 768) return window.innerWidth;
+		return Math.round(Math.max(420, Math.min(w, window.innerWidth - 320, 1100)));
+	}
+	let dockW = $state(600);
+
+	function announceDock(width: number) {
+		window.dispatchEvent(new CustomEvent('spatia:chart-dock', { detail: { width, id: frameId } }));
+	}
+
+	function toggleExpanded() {
+		exportMenuOpen = false;
+		if (expanded) { expanded = false; return; }
+		dockW = defaultDockW();
+		expanded = true;
+	}
+
+	// One docked chart at a time; closing tells the map to drop its padding.
+	$effect(() => {
+		if (!expanded) return;
+		announceDock(dockW);
+		const onOther = (e: Event) => {
+			const d = (e as CustomEvent<{ width: number; id: string }>).detail;
+			if (d?.id !== frameId && d?.width > 0) expanded = false;
+		};
+		window.addEventListener('spatia:chart-dock', onOther);
+		return () => {
+			window.removeEventListener('spatia:chart-dock', onOther);
+			announceDock(0);
+		};
+	});
+
+	function startResize(e: MouseEvent) {
+		e.preventDefault();
+		const onMove = (ev: MouseEvent) => { dockW = clampDock(window.innerWidth - ev.clientX); };
+		const onUp = () => {
+			window.removeEventListener('mousemove', onMove);
+			window.removeEventListener('mouseup', onUp);
+			try { localStorage.setItem(DOCK_KEY, String(dockW)); } catch {}
+			announceDock(dockW);
+		};
+		window.addEventListener('mousemove', onMove);
+		window.addEventListener('mouseup', onUp);
+	}
 
 	// Move DOM node to document.body when expanded, restore on collapse.
 	// Critical: keeps Svelte component state (brush selections, computed values)
@@ -108,34 +163,18 @@
 		exportMenuOpen = false;
 	}
 
-	function startDrag(e: MouseEvent) {
-		if (!expanded) return;
-		const startX = e.clientX, startY = e.clientY;
-		const startPos = { ...pos };
-		const onMove = (ev: MouseEvent) => {
-			const maxX = window.innerWidth - 200;
-			const maxY = window.innerHeight - 80;
-			pos.x = Math.max(-size.w + 200, Math.min(maxX, startPos.x + (ev.clientX - startX)));
-			pos.y = Math.max(0, Math.min(maxY, startPos.y + (ev.clientY - startY)));
-		};
-		const onUp = () => {
-			window.removeEventListener('mousemove', onMove);
-			window.removeEventListener('mouseup', onUp);
-		};
-		window.addEventListener('mousemove', onMove);
-		window.addEventListener('mouseup', onUp);
-	}
-
 	$effect(() => {
 		if (!expanded) return;
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
+				// Esc closes the docked chart only, not the page selection (+page clearAll).
+				e.stopPropagation();
 				expanded = false;
 				exportMenuOpen = false;
 			}
 		};
-		window.addEventListener('keydown', onKey);
-		return () => window.removeEventListener('keydown', onKey);
+		window.addEventListener('keydown', onKey, true);
+		return () => window.removeEventListener('keydown', onKey, true);
 	});
 
 	$effect(() => {
@@ -159,16 +198,16 @@
 	bind:this={host}
 	class="chart-frame"
 	class:chart-frame-expanded={expanded}
-	style:--pos-x="{pos.x}px"
-	style:--pos-y="{pos.y}px"
-	style:--size-w="{size.w}px"
-	style:--size-h="{size.h}px"
+	style:--dock-w="{dockW}px"
 	use:portal={expanded}
 >
+	{#if expanded}
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="chart-frame-dock-handle" onmousedown={startResize} title="Arrastrá para cambiar el ancho"></div>
+	{/if}
 	<div
 		class="chart-frame-header"
 		class:chart-frame-header-clickable={collapsible && !expanded}
-		onmousedown={startDrag}
 		onclick={toggleCollapsed}
 		role="presentation"
 	>
@@ -196,8 +235,8 @@
 			</div>
 			<button
 				class="chart-frame-btn"
-				title={expanded ? 'Contraer (Esc)' : 'Expandir'}
-				onclick={() => { expanded = !expanded; exportMenuOpen = false; }}
+				title={expanded ? 'Cerrar (Esc)' : 'Ver en grande junto al mapa'}
+				onclick={toggleExpanded}
 				aria-label={expanded ? 'Contraer' : 'Expandir'}
 			>{expanded ? '×' : '⤢'}</button>
 		</div>
@@ -220,22 +259,29 @@
 
 	.chart-frame-expanded {
 		position: fixed;
-		top: var(--pos-y);
-		left: var(--pos-x);
-		width: var(--size-w);
-		height: var(--size-h);
-		min-width: 320px;
-		min-height: 200px;
-		max-width: 95vw;
-		max-height: 92vh;
+		top: 48px;
+		right: 0;
+		bottom: 0;
+		width: var(--dock-w);
 		z-index: 1000;
 		background: #0a0e1a;
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-		resize: both;
+		border: none;
+		border-left: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: 0;
+		box-shadow: -12px 0 40px rgba(0, 0, 0, 0.55);
 		overflow: hidden;
 		margin: 0;
 	}
+	.chart-frame-dock-handle {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 6px;
+		cursor: ew-resize;
+		z-index: 2;
+	}
+	.chart-frame-dock-handle:hover { background: rgba(96, 165, 250, 0.35); }
 
 	.chart-frame-header {
 		display: flex;
@@ -251,11 +297,9 @@
 	}
 
 	.chart-frame-expanded .chart-frame-header {
-		cursor: grab;
-		padding: 8px 12px;
-		font-size: 13px;
+		padding: 10px 16px;
+		font-size: 14px;
 	}
-	.chart-frame-expanded .chart-frame-header:active { cursor: grabbing; }
 
 	.chart-frame-title {
 		text-transform: uppercase;
@@ -345,7 +389,8 @@
 	}
 
 	.chart-frame-expanded .chart-frame-body {
-		padding: 10px 14px 14px;
+		padding: 12px 18px 18px;
+		font-size: 13px;
 	}
 
 	/* Charts have fixed-aspect SVGs by default; scale them up when expanded */

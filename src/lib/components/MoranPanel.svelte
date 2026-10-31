@@ -3,7 +3,7 @@
 	import * as d3 from 'd3';
 	import { gridDisk, getResolution } from 'h3-js';
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, fitLabel } from '$lib/utils/chartType';
+	import { CHART_PX, INK, fitLabel, dockBoost } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -16,8 +16,22 @@
 	} = $props();
 
 	const allH3s = $derived([...data.keys()]);
+	let docked = $state(false);
 
-	let container: HTMLDivElement;
+	// The viewBox is fixed at draw time, so docking the chart beside the map would
+	// just magnify it. Redraw when the box changes size noticeably (clears the brush).
+	let drawnW = 0;
+	$effect(() => {
+		if (!container) return;
+		const ro = new ResizeObserver(() => {
+			const w = container!.clientWidth;
+			if (w > 0 && drawnW > 0 && Math.abs(w - drawnW) / drawnW > 0.15) draw();
+		});
+		ro.observe(container);
+		return () => ro.disconnect();
+	});
+
+	let container: HTMLDivElement | undefined = $state();
 	let computing = $state(false);
 	let brushCount = $state(0);
 	let lisaMode = $state(false);
@@ -162,6 +176,8 @@
 		// same approach the other 5 charts use declaratively.
 		const W = container.clientWidth || 250;
 		const H = container.clientHeight || 180;
+		drawnW = container.clientWidth;
+		const fs = (px: number) => `${px * dockBoost(docked)}px`;
 		const m = { top: 10, right: 12, bottom: 36, left: 46 };
 		const w = W - m.left - m.right;
 		const h = H - m.top - m.bottom;
@@ -210,7 +226,7 @@
 			.attr('cx', d => x(d.std)).attr('cy', d => y(d.lag))
 			.attr('r', 2).attr('fill', d => QUAD_COLORS[d.quad]).attr('opacity', 0.5);
 
-		const fontSize = `${CHART_PX.tick}px`;
+		const fontSize = fs(CHART_PX.tick);
 		g.append('text').attr('x', w - 4).attr('y', 14)
 			.attr('text-anchor', 'end').attr('fill', '#ef4444').attr('font-size', fontSize).text(i18n.t('chart.moran.qHH'));
 		g.append('text').attr('x', 4).attr('y', h - 5)
@@ -224,21 +240,21 @@
 		const family = getComputedStyle(container).fontFamily;
 		const xTitle = label || variable;
 		svg.append('text').attr('x', m.left + w / 2).attr('y', H - 4)
-			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', `${CHART_PX.label}px`)
-			.text(fitLabel(xTitle, w, CHART_PX.label, family, ` ${i18n.t('chart.moran.std')}`))
+			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', fs(CHART_PX.label))
+			.text(fitLabel(xTitle, w, CHART_PX.label * dockBoost(docked), family, ` ${i18n.t('chart.moran.std')}`))
 			.append('title').text(xTitle);
 		svg.append('text').attr('x', 12).attr('y', m.top + h / 2)
-			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', `${CHART_PX.label}px`)
+			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', fs(CHART_PX.label))
 			.attr('transform', `rotate(-90,12,${m.top + h / 2})`)
-			.text(fitLabel(i18n.t('chart.moran.lag'), h, CHART_PX.label, family));
+			.text(fitLabel(i18n.t('chart.moran.lag'), h, CHART_PX.label * dockBoost(docked), family));
 
 		g.append('g').attr('transform', `translate(0,${h})`)
 			.call(d3.axisBottom(x).ticks(5))
-			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', `${CHART_PX.tick}px`))
+			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', fs(CHART_PX.tick)))
 			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
 		g.append('g')
 			.call(d3.axisLeft(y).ticks(5))
-			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', `${CHART_PX.tick}px`))
+			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', fs(CHART_PX.tick)))
 			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
 
 		// Manual brush — d3.brush can be blocked by overflow:auto scroll containers
@@ -334,7 +350,7 @@
 
 </script>
 
-<ChartFrame title={i18n.t('chart.moran.title')} csvRows={csvRows} csvFilename="spatia_moran" {defaultCollapsed}>
+<ChartFrame bind:expanded={docked} title={i18n.t('chart.moran.title')} csvRows={csvRows} csvFilename="spatia_moran" {defaultCollapsed}>
 	<div class="moran-body">
 			{#if computing}
 				<div class="moran-loading">

@@ -40,6 +40,37 @@ export function fitLabel(text: string, maxPx: number, fontPx: number, family = '
 	return text.slice(0, lo).trimEnd() + '…' + suffix;
 }
 
+// Charts docked beside the map (ChartFrame `bind:expanded`) get one step
+// bigger text: they multiply their k by this.
+// Svelte action: reports the box a chart renders in. Its own ResizeObserver plus
+// a re-read when a chart docks/undocks: bind:clientWidth could keep the panel
+// width after ChartFrame moves the node to <body> (text came out ×2.5).
+export function measure(node: HTMLElement, onSize: (w: number, h: number) => void) {
+	const read = () => onSize(node.clientWidth, node.clientHeight);
+	const ro = new ResizeObserver(read);
+	ro.observe(node);
+	// The observer can miss the move into the docked panel: re-read after layout.
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	const later = () => {
+		requestAnimationFrame(read);
+		clearTimeout(timer);
+		timer = setTimeout(read, 250);
+	};
+	window.addEventListener('spatia:chart-dock', later);
+	window.addEventListener('resize', later);
+	read();
+	return {
+		destroy() {
+			ro.disconnect();
+			clearTimeout(timer);
+			window.removeEventListener('spatia:chart-dock', later);
+			window.removeEventListener('resize', later);
+		},
+	};
+}
+
+export const dockBoost = (docked: boolean): number => (docked ? 1.2 : 1);
+
 export function median(values: number[]): number {
 	if (values.length === 0) return NaN;
 	const s = [...values].sort((a, b) => a - b);

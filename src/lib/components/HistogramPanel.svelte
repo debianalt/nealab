@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, svgScale, median, fitLabel } from '$lib/utils/chartType';
+	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -82,7 +82,8 @@
 
 	// Rendered width → viewBox units per pixel, so text stays at real pixel size.
 	let renderedW = $state(0), renderedH = $state(0);
-	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH));
+	let docked = $state(false);
+	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH) * dockBoost(docked));
 
 	// Median as the reference line (the old line sat at mid-range, which means nothing).
 	const medianPct = $derived.by(() => {
@@ -171,7 +172,7 @@
 	});
 </script>
 
-<ChartFrame title="Distribución" csvRows={csvRows} csvFilename="spatia_histogram">
+<ChartFrame bind:expanded={docked} title="Distribución" csvRows={csvRows} csvFilename="spatia_histogram">
 	<div class="hpanel">
 	<div class="hpanel-subheader">
 		{#if brushLo !== null}
@@ -181,7 +182,7 @@
 		{/if}
 		<span class="hpanel-unit">{totalHexes.toLocaleString()} {i18n.t('chart.hexShort')}</span>
 	</div>
-	<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
+	<div use:measure={(w, h) => { renderedW = w; renderedH = h; }}>
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<svg
 		width="100%"

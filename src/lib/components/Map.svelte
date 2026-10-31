@@ -1182,7 +1182,16 @@
 			applyDeptFill();   // the panel can set it before the style loads (deep link)
 		});
 
+		// A chart docked beside the map covers its right side: pad the camera so
+		// the selection stays in the visible part (ChartFrame emits the width).
+		const onChartDock = (e: Event) => {
+			const width = (e as CustomEvent<{ width: number }>).detail?.width ?? 0;
+			map?.easeTo({ padding: { top: 0, bottom: 0, left: 0, right: width }, duration: 300 });
+		};
+		window.addEventListener('spatia:chart-dock', onChartDock);
+
 		return () => {
+			window.removeEventListener('spatia:chart-dock', onChartDock);
 			maplibregl.removeProtocol('pmtiles');
 			map.remove();
 		};

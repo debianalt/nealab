@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, svgScale } from '$lib/utils/chartType';
+	import { CHART_PX, INK, svgScale, dockBoost, measure } from '$lib/utils/chartType';
 	import type { FlowBands } from '$lib/config';
 
 	let {
@@ -42,7 +42,8 @@
 	let renderedW = $state(0), renderedH = $state(0);
 	// SVG_H depends on k (footer lines), so the height side of the fit uses the
 	// band area alone: a lower bound that never wins while the width drives.
-	const k = $derived(svgScale(SVG_W, PAD_T + plotH, renderedW, renderedH));
+	let docked = $state(false);
+	const k = $derived(svgScale(SVG_W, PAD_T + plotH, renderedW, renderedH) * dockBoost(docked));
 	const LINE = $derived((CHART_PX.tick + 4) * k);
 
 	// pd.cut semantics (right-closed): value lands in the lowest band whose
@@ -202,7 +203,7 @@
 	const reverseBands = $derived([...bandIdx].reverse());
 </script>
 
-<ChartFrame title="Evolución" csvRows={csvRows} csvFilename="spatia_flow">
+<ChartFrame bind:expanded={docked} title="Evolución" csvRows={csvRows} csvFilename="spatia_flow">
 	<div class="fc-panel">
 	<div class="fc-subheader">
 		{#if activeFlow !== null}
@@ -221,7 +222,7 @@
 	</div>
 
 	{#if total > 0}
-		<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
+		<div use:measure={(w, h) => { renderedW = w; renderedH = h; }}>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<svg
 			width="100%"

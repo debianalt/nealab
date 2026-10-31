@@ -6,7 +6,7 @@
 	import { normDeptName } from '$lib/utils/deptBoundaries';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, svgScale, median, fitLabel } from '$lib/utils/chartType';
+	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -127,7 +127,8 @@
 	});
 
 	let renderedW = $state(0), renderedH = $state(0);
-	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH));
+	let docked = $state(false);
+	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH) * dockBoost(docked));
 
 	const allPoints = $derived.by(() => {
 		if (!selectedB || bData.size === 0) return [] as { x: number; y: number; h3: string }[];
@@ -295,7 +296,7 @@
 	}
 </script>
 
-<ChartFrame title="Bivariado" csvRows={csvRows} csvFilename="spatia_bivariate" {defaultCollapsed}>
+<ChartFrame bind:expanded={docked} title="Bivariado" csvRows={csvRows} csvFilename="spatia_bivariate" {defaultCollapsed}>
 	<div class="bvpanel">
 	<div class="bvpanel-subheader">
 		{#if brushRect !== null}
@@ -332,7 +333,7 @@
 	{:else if selectedB && allPoints.length === 0 && bData.size > 0}
 		<div class="bvpanel-state">{i18n.t('chart.bivariate.noCommon')}</div>
 	{:else if selectedB && allPoints.length > 0}
-		<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
+		<div use:measure={(w, h) => { renderedW = w; renderedH = h; }}>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<svg
 			width="100%"
