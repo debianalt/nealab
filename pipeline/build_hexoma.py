@@ -17,6 +17,9 @@ Usage (from neahub/):
     python pipeline/build_hexoma.py --territories misiones --layers land_use
     python pipeline/build_hexoma.py --skip-registry       # reuse output/hexoma/registry.json
 
+Ends by computing distributions and per-hexagon ranks (build_hexoma_distribuciones.py)
+unless --skip-distribuciones.
+
 Env: HEXOMA_PG (default postgresql://postgres@localhost:5432) — server, no db name.
 """
 from __future__ import annotations
@@ -504,7 +507,7 @@ def report(conn) -> None:
         cur.execute("""SELECT c.relname, pg_size_pretty(pg_total_relation_size(c.oid)), pg_total_relation_size(c.oid)
                        FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
                        WHERE n.nspname = 'public' AND c.relkind = 'r'
-                         AND (c.relname LIKE 'capa\\_%%' OR c.relname IN ('hexagonos','cargas','departamentos','territorios','limites','limites_sub','ficha_claves'))
+                         AND (c.relname LIKE 'capa\\_%%' OR c.relname LIKE 'rango\\_%%' OR c.relname IN ('hexagonos','cargas','departamentos','territorios','limites','limites_sub','ficha_claves'))
                        ORDER BY 3 DESC""")
         for name, pretty, _ in cur.fetchall():
             log(f'  {name:<34} {pretty:>10}')
@@ -523,6 +526,7 @@ def main() -> None:
     ap.add_argument('--skip-registry', action='store_true')
     ap.add_argument('--reset', action='store_true', help='drop and recreate the Hexoma tables first')
     ap.add_argument('--workers', type=int, default=1, help='territories loaded in parallel (one process each)')
+    ap.add_argument('--skip-distribuciones', action='store_true', help='do not recompute distribuciones / rango_*')
     ap.add_argument('--no-finalize', action='store_true', help=argparse.SUPPRESS)  # used by the worker processes
     args = ap.parse_args()
 
@@ -542,9 +546,11 @@ def main() -> None:
     if args.reset:
         # only this script's own, regenerable tables; never touches other databases
         with conn.cursor() as cur:
-            cur.execute('DROP VIEW IF EXISTS v_hexoma')
+            cur.execute('DROP VIEW IF EXISTS v_hexoma, v_hexoma_rangos')
             for layer in layers:
-                cur.execute(sql.SQL('DROP TABLE IF EXISTS {}').format(sql.Identifier(f'capa_{layer["id"]}')))
+                cur.execute(sql.SQL('DROP TABLE IF EXISTS {}, {}').format(
+                    sql.Identifier(f'capa_{layer["id"]}'), sql.Identifier(f'rango_{layer["id"]}')))
+            cur.execute('DROP TABLE IF EXISTS distribuciones')
             cur.execute('DROP TABLE IF EXISTS ficha_enlace, hexagonos, ficha_claves, limites_sub, limites, departamentos, territorios, cargas')
         conn.commit()
         log('reset: Hexoma tables dropped')
@@ -616,6 +622,9 @@ def main() -> None:
             cur.execute(sql.SQL('VACUUM FULL {}').format(sql.Identifier(rel)))
         cur.execute('VACUUM (ANALYZE)')
     log(f'v_hexoma: {ncols} columnas')
+    if not args.skip_distribuciones:
+        from build_hexoma_distribuciones import run as build_distribuciones
+        build_distribuciones()
     report(conn)
     log(f'total {time.time() - t_all:.0f} s')
 
