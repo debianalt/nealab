@@ -11,7 +11,9 @@
 	import { HexStore } from '$lib/stores/hex.svelte';
 	import { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { initDuckDB, query, isReady, getInitError } from '$lib/stores/duckdb';
-	import { cellToLatLng, polygonToCells } from 'h3-js';
+	import { cellToLatLng, cellToBoundary, polygonToCells, isValidCell } from 'h3-js';
+	import { fichaStore } from '$lib/stores/ficha.svelte';
+	import { pointInPolygon } from '$lib/utils/geometry';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
 	import { isInsideCorrientes } from '$lib/utils/corrientes-pip';
@@ -36,7 +38,7 @@
 	import { isInsidePresidenteHayes } from '$lib/utils/presidente_hayes-pip';
 	import { isInsideBoqueron } from '$lib/utils/boqueron-pip';
 	import { isInsideAltoParaguay } from '$lib/utils/alto_paraguay-pip';
-	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, isArDeptTerritory, normDeptName } from '$lib/utils/deptBoundaries';
+	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, getArFeatures, isArDeptTerritory, normDeptName } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
 	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getDefaultTerritory, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
@@ -71,6 +73,7 @@
 		if (hexStore.selectedDpto) params.set('dept', hexStore.selectedDpto);
 		if (hexStore.temporalMode !== 'current') params.set('tm', hexStore.temporalMode);
 		if (hexStore.scaleMode !== 'provincial') params.set('escala', hexStore.scaleMode);
+		if (fichaStore.h3) params.set('h3', fichaStore.h3);
 		if (territoryStore.countryFilter && territoryStore.countryFilter !== 'ar') params.set('cf', territoryStore.countryFilter);
 		const qs = params.toString();
 		window.history.replaceState({}, '', qs ? `?${qs}` : window.location.pathname);
@@ -83,6 +86,7 @@
 		const _analysis = lensStore.activeAnalysis;
 		const _dept = hexStore.selectedDpto;
 		const _tm = hexStore.temporalMode;
+		const _h3 = fichaStore.h3;
 		const _escala = hexStore.scaleMode;
 		if (typeof window !== 'undefined') updateUrlState();
 	});
@@ -261,6 +265,10 @@
 			// (setLayer and the territory effect both clear selectedDpto). The
 			// dept summary gives back the parquetKey + centroid the click flow
 			// would have passed.
+			// ?h3=<cell>: open its fact sheet. NEA AR for now (the 4 provinces with
+			// dept polygons): locate the department by the cell centroid.
+			const h3p = params.get('h3');
+			if (h3p && isValidCell(h3p)) tick().then(() => openFichaFromLink(h3p));
 			const dept = params.get('dept');
 			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
 				tick().then(async () => {
@@ -792,6 +800,37 @@
 		if (entries.length === 0) { handleShowLisa([]); return; }
 		lastClassMap = { entries, scale: 'bivariate' };
 		paintClassMap();
+	}
+
+	const AR_CODPROV: Record<string, [string, string]> = {
+		'54': ['', 'misiones'], '18': ['corrientes/', 'corrientes'], '22': ['chaco/', 'chaco'], '34': ['formosa/', 'formosa'],
+	};
+	// The linked cell's outline is ours: clear it when the fact sheet closes.
+	let fichaMarked = false;
+	$effect(() => {
+		if (!fichaStore.h3 && fichaMarked) { fichaMarked = false; mapComponent?.clearHexZoneHighlight(); }
+	});
+	async function openFichaFromLink(h3: string) {
+		await ensureArBoundaries();
+		const [lat, lng] = cellToLatLng(h3);
+		const inside = (f: any) => {
+			const g = f.geometry;
+			const polys = g?.type === 'Polygon' ? [g.coordinates] : g?.type === 'MultiPolygon' ? g.coordinates : [];
+			return polys.some((p: number[][][]) => pointInPolygon([lng, lat], p[0] as [number, number][]));
+		};
+		const f = (getArFeatures() ?? []).find(inside);
+		const terr = f ? AR_CODPROV[String(f.properties.redcode).slice(0, 2)] : undefined;
+		if (!f || !terr) return;
+		if (territoryStore.activeTerritory.id !== terr[1]) territoryStore.setTerritory(terr[1]);
+		fichaStore.open(h3, { territoryPrefix: terr[0], territoryId: terr[1], deptName: f.properties.nombre, deptKey: normDeptName(f.properties.nombre) });
+		setTimeout(() => {
+			mapComponent?.flyToCoords(lat, lng, 13);
+			// Mark the cell: with no layer open nothing else outlines it.
+			const ring = cellToBoundary(h3).map(([la, lo]) => [lo, la]);
+			ring.push(ring[0]);
+			mapComponent?.setHexZoneHighlight([{ h3indices: [h3], color: '#f472b6' }], new Map([[h3, ring]]));
+			fichaMarked = true;
+		}, 300);
 	}
 
 	function handleMoranBrush(h3s: string[]) { applyChartHighlight(h3s, '#fbbf24'); }

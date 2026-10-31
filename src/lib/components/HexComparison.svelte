@@ -6,6 +6,19 @@
 	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
+	import { fichaStore } from '$lib/stores/ficha.svelte';
+
+	// Full fact sheet (every layer) for the last hexagon tapped.
+	function openFicha() {
+		const last = selected[selected.length - 1];
+		if (!last) return;
+		fichaStore.open(last[0], {
+			territoryPrefix: hexStore.territoryPrefix,
+			territoryId: hexStore.territoryId,
+			deptName: hexStore.selectedDpto,
+			deptKey: hexStore.selectedParquetKey,
+		});
+	}
 
 	let {
 		hexStore,
@@ -206,6 +219,7 @@
 	{/if}
 
 	{#if selected.length > 0}
+		<button class="hc-ficha-btn" onclick={openFicha}>{i18n.t('ficha.open')} →</button>
 		<div class="hc-download-row">
 			<button class="hc-dl-btn" onclick={downloadSelectedCsv}>↓ CSV</button>
 			<button class="hc-dl-btn" onclick={downloadSelectedGeoJson}>↓ GeoJSON</button>
@@ -352,4 +366,10 @@
 		text-align: right;
 		flex-shrink: 0;
 	}
+	.hc-ficha-btn {
+		display: block; width: 100%; margin: 10px 0 6px; padding: 7px 8px;
+		font-size: 12.5px; font-family: inherit; font-weight: 600; color: #e2e8f0; cursor: pointer;
+		background: rgba(96,165,250,0.14); border: 1px solid rgba(96,165,250,0.5); border-radius: 4px;
+	}
+	.hc-ficha-btn:hover { background: rgba(96,165,250,0.26); }
 </style>

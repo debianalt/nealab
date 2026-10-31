@@ -26,6 +26,8 @@
 	import HistogramPanel from './HistogramPanel.svelte';
 	import ConcentrationCurve from './ConcentrationCurve.svelte';
 	import DistanceProfile from './DistanceProfile.svelte';
+	import HexFicha from './HexFicha.svelte';
+	import { fichaStore } from '$lib/stores/ficha.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
@@ -100,6 +102,8 @@
 	} = $props();
 
 	let collapsed = $state(true);
+	// Opening a hexagon fact sheet (button or ?h3= link) shows the panel.
+	$effect(() => { if (fichaStore.h3) collapsed = false; });
 	// Charts (histogram/Moran/bivariate/bump/parallel) compute synchronously over the
 	// whole dept hex set — seconds of main-thread block on every dept select. Collapsed
 	// by default so selecting a department is instant; they mount/compute on expand.
@@ -167,7 +171,11 @@
 		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4 L18 12 L10 20"/></svg>
 	</button>
 
-	{#if showAbout}
+	{#if fichaStore.h3}
+		<div class="chart-scroll">
+			<HexFicha deptUrl={(id, key) => hexStore.deptUrlForLayer(id, key, fichaStore.ctx?.territoryPrefix)} />
+		</div>
+	{:else if showAbout}
 		<!-- Welcome panel (triggered by header button) -->
 		<div class="chart-scroll welcome-panel">
 			<div class="welcome-brand">Spatia</div>

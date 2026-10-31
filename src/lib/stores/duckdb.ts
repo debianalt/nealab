@@ -67,6 +67,13 @@ export async function query(sql: string): Promise<Table> {
 	return await conn.query(sql);
 }
 
+// Register downloaded bytes as a virtual file: lets a caller fetch several parquets
+// in parallel and then query them locally (one serial HTTP query per file is slow).
+export async function registerBuffer(name: string, bytes: Uint8Array): Promise<void> {
+	if (!db) throw new Error('DuckDB not initialized. Call initDuckDB() first.');
+	await db.registerFileBuffer(name, bytes);
+}
+
 export function isReady(): boolean {
 	return db !== null && conn !== null;
 }

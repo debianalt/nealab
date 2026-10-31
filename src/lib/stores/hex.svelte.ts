@@ -411,16 +411,16 @@ export class HexStore {
 	}
 
 	/** Per-department parquet URL of another layer in the active territory (bivariate Y axis). */
-	deptUrlForLayer(layerId: string, parquetKey: string): string | null {
+	deptUrlForLayer(layerId: string, parquetKey: string, territoryPrefix = this.territoryPrefix): string | null {
 		const layer = HEX_LAYER_REGISTRY[layerId];
-		return layer ? this.deptUrlFor(layer, parquetKey) : null;
+		return layer ? this.deptUrlFor(layer, parquetKey, territoryPrefix) : null;
 	}
 
 	/** Per-department parquet URL for a layer (mirrors the dispatch in loadDepartment). */
-	private deptUrlFor(layer: HexLayerConfig, parquetKey: string): string {
-		if (layer.id === 'flood_risk') return getFloodDptoUrl(parquetKey, this.territoryPrefix);
-		if (layer.parquet?.startsWith('sat_')) return getSatDptoUrl(layer.id, parquetKey, this.territoryPrefix);
-		return getScoresDptoUrl(parquetKey, this.territoryPrefix);
+	private deptUrlFor(layer: HexLayerConfig, parquetKey: string, territoryPrefix = this.territoryPrefix): string {
+		if (layer.id === 'flood_risk') return getFloodDptoUrl(parquetKey, territoryPrefix);
+		if (layer.parquet?.startsWith('sat_')) return getSatDptoUrl(layer.id, parquetKey, territoryPrefix);
+		return getScoresDptoUrl(parquetKey, territoryPrefix);
 	}
 
 	/** Columns the dept UI actually consumes — used to project instead of SELECT *. */
