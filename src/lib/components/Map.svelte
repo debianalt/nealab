@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
+	import { LISA_HEX, SELLO_HEX } from '$lib/utils/sello';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -855,7 +856,7 @@
 				type: 'fill',
 				source: 'radios',
 				'source-layer': 'radios',
-				paint: { 'fill-color': '#fbbf24', 'fill-opacity': 0.40 },
+				paint: { 'fill-color': SELLO_HEX.cat[0], 'fill-opacity': 0.40 }, // chart selection = tierra (sello.ts SELECT)
 				filter: emptyFilter
 			});
 			map.addLayer({
@@ -863,7 +864,7 @@
 				type: 'line',
 				source: 'radios',
 				'source-layer': 'radios',
-				paint: { 'line-color': '#fbbf24', 'line-width': 1.5, 'line-opacity': 0.9 },
+				paint: { 'line-color': SELLO_HEX.cat[0], 'line-width': 1.5, 'line-opacity': 0.9 },
 				filter: emptyFilter
 			});
 			// Building outlines tinted by zone color (visible in 3D)
@@ -2969,7 +2970,7 @@
 		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa' && colorScale !== 'bivariate') return NODATA_COLOR;
 		if (colorScale === 'bivariate') return BIVAR_COLORS[Math.round(value) - 1] ?? NODATA_COLOR;
 		if (colorScale === 'lisa') {
-			const LISA: Record<number, string> = { 1: '#3b82f6', 2: '#60a5fa', 3: '#f97316', 4: '#ef4444' };
+			const LISA = LISA_HEX;
 			return LISA[Math.round(value)] ?? 'rgb(55,65,81)';
 		}
 		if (colorScale === 'categorical') {

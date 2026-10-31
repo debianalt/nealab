@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { RIO, SELECT, INK_3 } from '$lib/utils/sello';
 	import { query } from '$lib/stores/duckdb';
 	import { cellToParent, getResolution } from 'h3-js';
 	import { i18n } from '$lib/stores/i18n.svelte';
@@ -202,7 +203,7 @@
 						<g class="dp-band" onclick={() => selectBand(i)}>
 							<rect x={x} y={PAD_T} width={bw} height={plotH} fill="transparent" />
 							<rect x={x + bw * 0.15} y={Math.min(y0, y1)} width={bw * 0.7} height={Math.max(1, Math.abs(y1 - y0))}
-								fill={activeBand === i ? '#34d399' : '#38bdf8'} opacity={activeBand !== null && activeBand !== i ? 0.35 : 0.85} rx="1.5" />
+								fill={activeBand === i ? SELECT : RIO} opacity={activeBand !== null && activeBand !== i ? 0.35 : 0.85} rx="1.5" />
 							<text x={x + bw / 2} y={Math.min(y0, y1) - 3 * k} text-anchor="middle" fill={INK.label}
 								font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif">{fmt(b.mean)}</text>
 							<text x={x + bw / 2} y={PAD_T + plotH + (CHART_PX.tick + 2) * k} text-anchor="middle" fill={INK.tick}
@@ -213,7 +214,7 @@
 					{/each}
 					{#if isFinite(overall)}
 						<line x1={PAD_L} x2={PAD_L + plotW} y1={vy(overall)} y2={vy(overall)}
-							stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3 2" pointer-events="none" />
+							stroke={INK_3} stroke-width="1" stroke-dasharray="3 2" pointer-events="none" />
 					{/if}
 					<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (2 * CHART_PX.tick + CHART_PX.label + 9) * k} text-anchor="middle"
 						fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
@@ -228,21 +229,21 @@
 <style>
 	.dp-panel { padding: 2px 0; }
 	.dp-picker { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; padding: 0 2px; }
-	.dp-label { font-size: 11px; color: rgba(255,255,255,0.6); white-space: nowrap; }
+	.dp-label { font-size: 11px; color: var(--s-ink-2); white-space: nowrap; }
 	.dp-select {
 		flex: 1; min-width: 0;
 		background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 3px;
 		color: rgba(255,255,255,0.85); font-size: 12px; font-family: inherit; padding: 2px 4px; cursor: pointer;
 	}
 	.dp-select option { background: #1e293b; color: #e2e8f0; }
-	.dp-head { margin: 2px 2px 4px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.85); }
-	.dp-head strong { color: #38bdf8; font-size: 15px; }
+	.dp-head { margin: 2px 2px 4px; font-size: 13px; line-height: 1.5; color: var(--s-ink-1); }
+	.dp-head strong { color: var(--s-ink-1); font-family: var(--font-serif); font-variant-numeric: tabular-nums; font-size: 16px; font-weight: 600; }
 	.dp-sub { padding: 0 2px; min-height: 16px; }
-	.dp-sel { font-size: 11px; color: #34d399; }
-	.dp-hint { font-size: 11px; color: rgba(255,255,255,0.5); font-style: italic; }
-	.dp-state { font-size: 11px; color: rgba(255,255,255,0.5); padding: 12px 2px; font-style: italic; }
+	.dp-sel { font-size: 11px; color: var(--s-ink-1); }
+	.dp-hint { font-size: 11px; color: var(--s-ink-3); font-style: italic; }
+	.dp-state { font-size: 11px; color: var(--s-ink-3); padding: 12px 2px; font-style: italic; }
 	.dp-error { color: #f87171; }
-	.dp-note { font-size: 11px; line-height: 1.45; color: rgba(255,255,255,0.5); padding: 4px 2px 0; }
+	.dp-note { font-size: 11px; line-height: 1.45; color: var(--s-ink-3); padding: 4px 2px 0; }
 	.dp-band { cursor: pointer; }
 	.dp-band:hover rect:nth-child(2) { opacity: 1; }
 	:global(.chart-frame-expanded) .dp-head { font-size: 16px; }

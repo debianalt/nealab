@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { DIV } from '$lib/utils/sello';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, svgScale, dockBoost, measure } from '$lib/utils/chartType';
 	import type { FlowBands } from '$lib/config';
@@ -146,9 +147,8 @@
 				const h3s = matrix[from][to];
 				if (!h3s.length) continue;
 				const fh = (h3s.length / total) * plotH;
-				const color = to === from
-					? 'rgba(148,163,184,0.55)'
-					: isBetter(to, from) ? '#22d3ee' : '#f87171';
+				// Diverging río · gris · tierra: improved / unchanged / worsened.
+				const color = to === from ? DIV[3] : isBetter(to, from) ? DIV[1] : DIV[5];
 				result.push({
 					from, to, count: h3s.length, h3s,
 					y1: lc[from] + fh / 2,
@@ -263,20 +263,20 @@
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy - 2 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy + 10 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
-							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="system-ui,sans-serif"
+							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{fromTotals[band].toLocaleString()} · {Math.round(fromTotals[band] / total * 100)}%</text>
 					{:else if leftBandH[band] > 15 * k}
 						<text
 							x={LEFT_X + BAND_W / 2} y={cy + 4 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 					{/if}
@@ -301,20 +301,20 @@
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy - 2 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy + 10 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
-							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="system-ui,sans-serif"
+							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{toTotals[band].toLocaleString()} · {Math.round(toTotals[band] / total * 100)}%</text>
 					{:else if rightBandH[band] > 15 * k}
 						<text
 							x={RIGHT_X + BAND_W / 2} y={cy + 4 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="'IBM Plex Sans', system-ui, sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 					{/if}
@@ -323,21 +323,21 @@
 
 			<!-- Period labels -->
 			<text x={LEFT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
-				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="system-ui,sans-serif"
+				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 			>{temporalPeriods?.baseline ?? 'Baseline'}</text>
 			<text x={RIGHT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
-				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="system-ui,sans-serif"
+				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
 			>{temporalPeriods?.current ?? 'Actual'}</text>
 
 			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
 			{#each magnitude as line, li}
 				<text x={SVG_W / 2} y={PAD_T + plotH + (li + 1) * LINE} text-anchor="middle"
-					font-size={CHART_PX.tick * k} font-family="system-ui,sans-serif" fill="rgba(226,232,240,0.88)"
+					font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif" fill={INK.label}
 				>{line}</text>
 			{/each}
 			<text x={SVG_W / 2} y={PAD_T + plotH + (magnitude.length + 1) * LINE} text-anchor="middle"
-				font-size={CHART_PX.tick * k} font-family="system-ui,sans-serif"
-			><tspan fill="#22d3ee">↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}</tspan><tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}</tspan><tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill="rgba(148,163,184,0.95)">={stable.toLocaleString()} estables</tspan></text>
+				font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif" fill={INK.label}
+			><tspan fill={DIV[1]}>■</tspan> ↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[5]}>■</tspan> ↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[3]}>■</tspan> ={stable.toLocaleString()} estables</text>
 		</svg>
 		</div>
 		<div class="fc-note">{cfg.note}</div>
@@ -360,7 +360,7 @@
 	}
 	.fc-active {
 		font-size: 11px;
-		color: #a78bfa;
+		color: var(--s-ink-1);
 		display: flex;
 		align-items: baseline;
 		gap: 5px;

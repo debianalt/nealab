@@ -25,6 +25,10 @@ export const INK_1 = 'var(--s-ink-1)';
 export const INK_2 = 'var(--s-ink-2)';
 export const INK_3 = 'var(--s-ink-3)';
 export const GRID = 'var(--s-grid)';
+export const AXIS = 'var(--s-axis)';
+// What the reader picked (chart brush, the hexagon in the ficha): tierra in the
+// chart and the same tierra outline on the map.
+export const SELECT = TIERRA;
 export const SURFACE = 'var(--s-surface)';
 
 export const FONT = {
@@ -41,3 +45,22 @@ export const SELLO_HEX = {
 	ink: ['#e8e6e3', '#b9bec6', '#9aa1ab'],
 	surface: '#0b0d14',
 } as const;
+
+// Moran «Cuadrantes» by class code (MoranPanel toggleLisa): 1 LL río · 2 LH light
+// río · 3 HL light tierra · 4 HH tierra. LISA for the chart (CSS vars, print
+// swaps them), LISA_HEX for the map (= :root --s-lisa-*).
+export const LISA = ['var(--s-lisa-1)', 'var(--s-lisa-2)', 'var(--s-lisa-3)', 'var(--s-lisa-4)'] as const;
+export const LISA_HEX: Record<number, string> = { 1: '#3d7fc4', 2: '#7fb0e6', 3: '#ea9070', 4: '#c4572f' };
+
+// 3×3 bivariate: tierra (X) × río (Y), multiplicative mix with light poles so the
+// high-high class still clears 3:1 on the dark map. Index = class − 1 with
+// class = 1 + yTercile·3 + xTercile (rows low Y → high Y, X grows to the right).
+// Validated --pairs all on #0e1117: CVD worst ΔE 8.8 (Stevens' grid: 2.2),
+// normal-vision worst 11.1 (Stevens: 7.6), all 9 ≥ 3:1 (Stevens: one at 2.3).
+// No 3×3 reaches the 15 normal-vision floor across all pairs: the legend grid
+// stays next to the map.
+export const BIVAR_HEX = [
+	'#f2f0ed', '#efb39b', '#e8825a',
+	'#b3d0ef', '#b19b9c', '#ab705b',
+	'#78afe8', '#768298', '#735d58',
+] as const;

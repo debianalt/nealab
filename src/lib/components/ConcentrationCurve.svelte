@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { RIO, SELECT, INK_3, SURFACE } from '$lib/utils/sello';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, svgScale, fitLabel, dockBoost, measure } from '$lib/utils/chartType';
@@ -149,7 +150,7 @@
 					onmousedown={startDrag} ondblclick={clearCut} style="cursor: crosshair; display: block;">
 					<!-- Even split reference -->
 					<line x1={svgX(0)} y1={svgY(0)} x2={svgX(1)} y2={svgY(1)}
-						stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3 2" />
+						stroke={INK_3} stroke-width="1" stroke-dasharray="3 2" />
 					<text x={svgX(0.62)} y={svgY(0.62) + 12 * k} fill={INK.hint}
 						font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 						transform={`rotate(${-Math.atan2(plotH, plotW) * 180 / Math.PI}, ${svgX(0.62)}, ${svgY(0.62) + 12 * k})`}
@@ -158,13 +159,13 @@
 					<!-- Selected top share -->
 					{#if cut !== null}
 						<rect x={svgX(0)} y={PAD_T} width={svgX(cut) - svgX(0)} height={plotH}
-							fill="#34d399" opacity="0.08" pointer-events="none" />
+							fill={SELECT} opacity="0.1" pointer-events="none" />
 						<line x1={svgX(cut)} x2={svgX(cut)} y1={PAD_T} y2={PAD_T + plotH}
-							stroke="#34d399" stroke-width="1.2" pointer-events="none" />
-						<circle cx={svgX(cut)} cy={svgY(shareAt(cut))} r={3 * k} fill="#34d399" pointer-events="none" />
+							stroke={SELECT} stroke-width="1.2" pointer-events="none" />
+						<circle cx={svgX(cut)} cy={svgY(shareAt(cut))} r={4 * k} fill={SELECT} stroke={SURFACE} stroke-width={2 * k} pointer-events="none" />
 					{/if}
 
-					<polyline points={pts} fill="none" stroke="#f472b6" stroke-width="2" stroke-linejoin="round" />
+					<polyline points={pts} fill="none" stroke={RIO} stroke-width={2 * k} stroke-linejoin="round" />
 
 					<!-- Axes ticks -->
 					{#each [0, 0.25, 0.5, 0.75, 1] as f}
@@ -195,13 +196,13 @@
 		margin: 2px 2px 6px;
 		font-size: 13px;
 		line-height: 1.5;
-		color: rgba(255,255,255,0.85);
+		color: var(--s-ink-1);
 	}
-	.cc-head :global(strong) { color: #f472b6; font-size: 15px; }
+	.cc-head :global(strong) { color: var(--s-ink-1); font-family: var(--font-serif); font-variant-numeric: tabular-nums; font-size: 16px; font-weight: 600; }
 	.cc-sub { padding: 0 2px; margin-bottom: 2px; min-height: 16px; }
-	.cc-sel { font-size: 11px; color: #34d399; }
-	.cc-hint { font-size: 11px; color: rgba(255,255,255,0.5); font-style: italic; }
-	.cc-empty { font-size: 11px; color: rgba(255,255,255,0.5); padding: 10px 2px; font-style: italic; }
+	.cc-sel { font-size: 11px; color: var(--s-ink-1); }
+	.cc-hint { font-size: 11px; color: var(--s-ink-3); font-style: italic; }
+	.cc-empty { font-size: 11px; color: var(--s-ink-3); padding: 10px 2px; font-style: italic; }
 	:global(.chart-frame-expanded) .cc-head { font-size: 16px; }
 	:global(.chart-frame-expanded) .cc-head :global(strong) { font-size: 19px; }
 </style>

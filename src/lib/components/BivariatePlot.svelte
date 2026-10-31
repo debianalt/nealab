@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { RIO, SELECT, SURFACE } from '$lib/utils/sello';
 	import { query } from '$lib/stores/duckdb';
 	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getHexAxisLabel } from '$lib/config';
 	import { cellToParent, getResolution } from 'h3-js';
@@ -417,7 +418,7 @@
 				<circle
 					cx={svgX(pt.x)} cy={svgY(pt.y)}
 					r="1.4"
-					fill={inBrush ? '#fb923c' : mapOn ? BIVAR_COLORS[classOf(pt) - 1] : '#94a3b8'}
+					fill={inBrush ? SELECT : mapOn ? BIVAR_COLORS[classOf(pt) - 1] : RIO}
 					opacity={(brushRect !== null || activeCell) && !inBrush ? 0.1 : mapOn ? 0.85 : 0.5}
 				/>
 			{/each}
@@ -428,8 +429,8 @@
 					x={svgX(brushRect.x0)} y={svgY(brushRect.y1)}
 					width={Math.max(0, svgX(brushRect.x1) - svgX(brushRect.x0))}
 					height={Math.max(0, svgY(brushRect.y0) - svgY(brushRect.y1))}
-					fill="#fb923c" opacity="0.07"
-					stroke="#fb923c" stroke-width="1" stroke-opacity="0.4"
+					fill={SELECT} opacity="0.08"
+					stroke={SELECT} stroke-width="1" stroke-opacity="0.5"
 					pointer-events="none"
 				/>
 			{/if}
@@ -442,9 +443,9 @@
 						x={c.xHi ? PAD_L + plotW - 3 * k : PAD_L + 3 * k}
 						y={c.yHi ? PAD_T + (CHART_PX.tick + 1) * k : PAD_T + plotH - 4 * k}
 						text-anchor={c.xHi ? 'end' : 'start'}
-						fill={activeQuad === c.q ? '#fb923c' : INK.tick}
+						fill={activeQuad === c.q ? INK.label : INK.tick} font-weight={activeQuad === c.q ? 600 : 400}
 						font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
-						stroke="rgba(15,23,42,0.92)" stroke-width={3 * k} stroke-linejoin="round" paint-order="stroke"
+						stroke={SURFACE} stroke-width={3 * k} stroke-linejoin="round" paint-order="stroke"
 						class="bv-quad"
 						onmousedown={(e) => e.stopPropagation()}
 						onclick={() => selectQuadrant(c.q, c.xHi, c.yHi)}
@@ -520,11 +521,11 @@
 	}
 	.bvpanel-count {
 		font-size: 11px;
-		color: #fb923c;
+		color: var(--s-ink-1);
 	}
 	.bvpanel-hint {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: var(--s-ink-3);
 		font-style: italic;
 	}
 	.bvpanel-picker {
@@ -583,7 +584,7 @@
 		padding: 4px 2px 0;
 	}
 	.bv-quad { cursor: pointer; }
-	.bv-quad:hover { fill: #fdba74; }
+	.bv-quad:hover { fill: var(--s-ink-1); }
 	/* Docked beside the map the scatter grows with the width: cap it so the 3×3
 	   legend stays in view (measure() reads the capped box). */
 	:global(.chart-frame-expanded) .bv-svgwrap :global(svg) { max-height: 52vh; }
@@ -635,7 +636,7 @@
 		padding: 0;
 	}
 	.bv-cell:hover { border-color: rgba(255,255,255,0.7); }
-	.bv-cell-on { border-color: #fb923c; }
+	.bv-cell-on { border-color: var(--s-cat-1); }
 	.bvpanel-empty-prompt {
 		font-size: 11px;
 		color: rgba(255,255,255,0.55);

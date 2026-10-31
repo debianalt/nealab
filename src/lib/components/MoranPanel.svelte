@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { LISA, INK_1, SELECT, SURFACE, AXIS } from '$lib/utils/sello';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import * as d3 from 'd3';
 	import { gridDisk, getResolution } from 'h3-js';
@@ -160,8 +161,10 @@
 		return 0.5 * (1 + sign * y);
 	}
 
+	// Cuadrantes in río · tierra: clusters in the full hue (HH tierra, LL río),
+	// outliers in a light tint. Same colours on the map (Map.svelte reads LISA_HEX).
 	const QUAD_COLORS: Record<string, string> = {
-		'HH': '#ef4444', 'LL': '#3b82f6', 'HL': '#f97316', 'LH': '#60a5fa'
+		'LL': LISA[0], 'LH': LISA[1], 'HL': LISA[2], 'HH': LISA[3]
 	};
 
 	function draw() {
@@ -203,38 +206,42 @@
 		const y = d3.scaleLinear().domain([-ext, ext]).range([h, 0]);
 
 		g.append('rect').attr('x', x(0)).attr('y', 0).attr('width', w - x(0)).attr('height', y(0))
-			.attr('fill', '#ef44441a');
+			.attr('fill', QUAD_COLORS.HH).attr('fill-opacity', 0.07);
 		g.append('rect').attr('x', 0).attr('y', y(0)).attr('width', x(0)).attr('height', h - y(0))
-			.attr('fill', '#3b82f61a');
+			.attr('fill', QUAD_COLORS.LL).attr('fill-opacity', 0.07);
 		g.append('rect').attr('x', x(0)).attr('y', y(0)).attr('width', w - x(0)).attr('height', h - y(0))
-			.attr('fill', '#f973161a');
+			.attr('fill', QUAD_COLORS.HL).attr('fill-opacity', 0.07);
 		g.append('rect').attr('x', 0).attr('y', 0).attr('width', x(0)).attr('height', y(0))
-			.attr('fill', '#60a5fa1a');
+			.attr('fill', QUAD_COLORS.LH).attr('fill-opacity', 0.07);
 
 		g.append('line').attr('x1', 0).attr('x2', w).attr('y1', y(0)).attr('y2', y(0))
-			.attr('stroke', '#334155').attr('stroke-width', 0.5);
+			.attr('stroke', AXIS).attr('stroke-width', 0.75);
 		g.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', h)
-			.attr('stroke', '#334155').attr('stroke-width', 0.5);
+			.attr('stroke', AXIS).attr('stroke-width', 0.75);
 
 		g.append('line')
 			.attr('x1', x(-ext)).attr('y1', y(-ext * I))
 			.attr('x2', x(ext)).attr('y2', y(ext * I))
-			.attr('stroke', '#f59e0b').attr('stroke-width', 1.5)
+			.attr('stroke', INK_1).attr('stroke-width', 1.5)
 			.attr('stroke-dasharray', '6,4').attr('opacity', 0.7);
 
 		const dots = g.selectAll('circle').data(sample).join('circle')
 			.attr('cx', d => x(d.std)).attr('cy', d => y(d.lag))
 			.attr('r', 2).attr('fill', d => QUAD_COLORS[d.quad]).attr('opacity', 0.5);
 
+		// Quadrant names in ink, each with its colour swatch (text never wears the series colour).
 		const fontSize = fs(CHART_PX.tick);
-		g.append('text').attr('x', w - 4).attr('y', 14)
-			.attr('text-anchor', 'end').attr('fill', '#ef4444').attr('font-size', fontSize).text(i18n.t('chart.moran.qHH'));
-		g.append('text').attr('x', 4).attr('y', h - 5)
-			.attr('fill', '#3b82f6').attr('font-size', fontSize).text(i18n.t('chart.moran.qLL'));
-		g.append('text').attr('x', w - 4).attr('y', h - 5)
-			.attr('text-anchor', 'end').attr('fill', '#f97316').attr('font-size', fontSize).text(i18n.t('chart.moran.qHL'));
-		g.append('text').attr('x', 4).attr('y', 14)
-			.attr('fill', '#60a5fa').attr('font-size', fontSize).text(i18n.t('chart.moran.qLH'));
+		const quadLabel = (q: string, lx: number, ly: number, end: boolean) => {
+			const t = g.append('text').attr('x', lx).attr('y', ly)
+				.attr('text-anchor', end ? 'end' : 'start').attr('fill', INK.tick).attr('font-size', fontSize)
+				.attr('stroke', SURFACE).attr('stroke-width', 3).attr('stroke-linejoin', 'round').attr('paint-order', 'stroke');
+			t.append('tspan').attr('fill', QUAD_COLORS[q]).text('■ ');
+			t.append('tspan').text(i18n.t(`chart.moran.q${q}`));
+		};
+		quadLabel('HH', w - 4, 14, true);
+		quadLabel('LL', 4, h - 5, false);
+		quadLabel('HL', w - 4, h - 5, true);
+		quadLabel('LH', 4, 14, false);
 
 		// Axis titles trimmed to the plot: the panel font is wide and labels are long.
 		const family = getComputedStyle(container).fontFamily;
@@ -251,18 +258,18 @@
 		g.append('g').attr('transform', `translate(0,${h})`)
 			.call(d3.axisBottom(x).ticks(5))
 			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', fs(CHART_PX.tick)))
-			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
+			.call(g => g.selectAll('line,path').attr('stroke', AXIS));
 		g.append('g')
 			.call(d3.axisLeft(y).ticks(5))
 			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', fs(CHART_PX.tick)))
-			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
+			.call(g => g.selectAll('line,path').attr('stroke', AXIS));
 
 		// Manual brush — d3.brush can be blocked by overflow:auto scroll containers
 		let bx0 = 0, by0 = 0, bx1 = 0, by1 = 0;
 		const brushRect = g.append('rect')
 			.attr('class', 'brush-rect')
-			.attr('fill', 'rgba(251,191,36,0.1)')
-			.attr('stroke', '#fbbf24')
+			.attr('fill', SELECT).attr('fill-opacity', 0.1)
+			.attr('stroke', SELECT)
 			.attr('stroke-width', 0.8)
 			.attr('pointer-events', 'none')
 			.style('display', 'none');
@@ -384,7 +391,7 @@
 				<div bind:this={container} class="moran-plot"></div>
 				<div class="moran-quads">
 					{#each ['HH', 'LL', 'HL', 'LH'] as q}
-						<span style="color: {QUAD_COLORS[q]}">{i18n.t(`chart.moran.q${q}`)}: {result.points.filter(p => p.quad === q).length.toLocaleString(i18n.locale)}</span>
+						<span><i class="moran-sw" style:background={QUAD_COLORS[q]}></i>{i18n.t(`chart.moran.q${q}`)}: {result.points.filter(p => p.quad === q).length.toLocaleString(i18n.locale)}</span>
 					{/each}
 				</div>
 			{:else if data.size > 0}
@@ -397,7 +404,7 @@
 
 <style>
 	.moran-read {
-		font-size: 12px; color: #cbd5e1; line-height: 1.4;
+		font-size: 12px; color: var(--s-ink-1); line-height: 1.4;
 		margin: 2px 0 6px;
 	}
 	.moran-wrap {
@@ -425,7 +432,7 @@
 		margin-left: auto;
 		font-family: var(--font-mono);
 		font-size: 11px;
-		color: #f59e0b;
+		color: var(--s-ink-2);
 	}
 	.moran-body {
 		margin-top: 6px;
@@ -458,11 +465,11 @@
 		font-size: 12px;
 		font-family: var(--font-mono);
 	}
-	.moran-I { color: #f59e0b; font-weight: bold; }
-	.moran-dim { color: #9ca3af; }
-	.moran-sig { color: #4ade80; }
-	.moran-insig { color: #f87171; }
-	.moran-sel { color: #fbbf24; font-size: 11px; }
+	.moran-I { color: var(--s-ink-1); font-weight: 600; }
+	.moran-dim { color: var(--s-ink-3); }
+	.moran-sig { color: var(--s-ink-1); }
+	.moran-insig { color: var(--s-ink-3); }
+	.moran-sel { color: var(--s-ink-1); font-size: 11px; }
 	.moran-btn-clear {
 		font-size: 11px;
 		color: #fbbf24;
@@ -529,7 +536,8 @@
 		gap: 2px 12px;
 		font-size: 11px;
 	}
-	.moran-quads span { white-space: nowrap; }
+	.moran-quads span { white-space: nowrap; color: var(--s-ink-2); }
+	.moran-sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
 	.moran-empty {
 		font-size: 12px;
 		color: #9ca3af;

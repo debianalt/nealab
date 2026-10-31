@@ -34,9 +34,13 @@
 	/* diverging río · gris · tierra: 1 = strongest río (better), 4 = neutral, 7 = strongest tierra (worse) */
 	--s-div-1: #7fb0e6; --s-div-2: #3d7fc4; --s-div-3: #35659f; --s-div-4: #5c6370;
 	--s-div-5: #8f3f24; --s-div-6: #c4572f; --s-div-7: #ea9070;
+	/* Moran quadrants by class code: 1 LL río · 2 LH light río · 3 HL light tierra · 4 HH tierra.
+	   Outliers are the light tint in both modes (on paper the diverging extremes are the dark end). */
+	--s-lisa-1: #3d7fc4; --s-lisa-2: #7fb0e6; --s-lisa-3: #ea9070; --s-lisa-4: #c4572f;
 	/* ink: text never wears a series color */
 	--s-ink-1: #e8e6e3; --s-ink-2: #b9bec6; --s-ink-3: #9aa1ab;
 	--s-grid: rgba(255, 255, 255, 0.1);
+	--s-axis: rgba(255, 255, 255, 0.28);
 	--s-surface: #0b0d14;
 }
 
@@ -47,8 +51,10 @@
 		--s-seq-1: #e38c6d; --s-seq-2: #cc6443; --s-seq-3: #b4482a; --s-seq-4: #86331d; --s-seq-5: #5a2011;
 		--s-div-1: #1b4a7a; --s-div-2: #2b6fb0; --s-div-3: #8fb3da; --s-div-4: #a2a7af;
 		--s-div-5: #e7a58d; --s-div-6: #b4482a; --s-div-7: #7a2f1a;
+		--s-lisa-1: #2b6fb0; --s-lisa-2: #8fb3da; --s-lisa-3: #e7a58d; --s-lisa-4: #b4482a;
 		--s-ink-1: #1f2328; --s-ink-2: #3f454d; --s-ink-3: #5b6169;
 		--s-grid: rgba(0, 0, 0, 0.12);
+		--s-axis: rgba(0, 0, 0, 0.35);
 		--s-surface: #fcfcfb;
 	}
 	html, body { background: #fcfcfb !important; color: #1f2328 !important; }

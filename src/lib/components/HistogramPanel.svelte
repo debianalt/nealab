@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { RIO, SELECT, INK_2 } from '$lib/utils/sello';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure } from '$lib/utils/chartType';
@@ -197,7 +198,7 @@
 			<line
 				x1={svgX(medianPct)} x2={svgX(medianPct)}
 				y1={PAD_T} y2={PAD_T + plotH}
-				stroke="rgba(255,255,255,0.45)" stroke-width="1" stroke-dasharray="3 2"
+				stroke={INK_2} stroke-width="1" stroke-dasharray="3 2"
 			/>
 			<text
 				x={svgX(medianPct)} y={PAD_T - 3 * k}
@@ -219,7 +220,7 @@
 			<rect
 				x={bx + 0.5} y={by}
 				width={bw - 1} height={bh}
-				fill={inBrush ? '#34d399' : '#94a3b8'}
+				fill={inBrush ? SELECT : RIO}
 				opacity={brushLo !== null && !inBrush ? 0.2 : 0.85}
 			/>
 		{/each}
@@ -229,8 +230,8 @@
 			<rect
 				x={svgX(brushLo)} y={PAD_T}
 				width={Math.max(0, svgX(brushHi) - svgX(brushLo))} height={plotH}
-				fill="#34d399" opacity="0.07"
-				stroke="#34d399" stroke-width="1" stroke-opacity="0.35"
+				fill={SELECT} opacity="0.08"
+				stroke={SELECT} stroke-width="1" stroke-opacity="0.5"
 				pointer-events="none"
 			/>
 		{/if}
@@ -279,16 +280,16 @@
 	}
 	.hpanel-count {
 		font-size: 11px;
-		color: #34d399;
+		color: var(--s-ink-1);
 	}
 	.hpanel-unit {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: var(--s-ink-3);
 		margin-left: auto;
 	}
 	.hpanel-hint {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: var(--s-ink-3);
 		font-style: italic;
 	}
 </style>

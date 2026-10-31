@@ -2,6 +2,7 @@
 	import { onMount, untrack, tick } from 'svelte';
 	import MapComponent from '$lib/components/Map.svelte';
 	import MapLegend from '$lib/components/MapLegend.svelte';
+	import { SELLO_HEX } from '$lib/utils/sello';
 	import Controls from '$lib/components/Controls.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import LensSelector from '$lib/components/LensSelector.svelte';
@@ -833,9 +834,9 @@
 		}, 300);
 	}
 
-	function handleMoranBrush(h3s: string[]) { applyChartHighlight(h3s, '#fbbf24'); }
+	function handleMoranBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
 
-	function handleHistogramBrush(h3s: string[]) { applyChartHighlight(h3s, '#34d399'); }
+	function handleHistogramBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
 
 	function handleRadioCensusBrush(redcodes: string[]) {
 		if (redcodes.length === 0) {
@@ -845,9 +846,9 @@
 		mapComponent?.setRadioBrushHighlight(redcodes);
 	}
 
-	function handleBivariateBrush(h3s: string[]) { applyChartHighlight(h3s, '#fb923c'); }
+	function handleBivariateBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
 
-	function handleFlowBrush(h3s: string[]) { applyChartHighlight(h3s, '#a78bfa'); }
+	function handleFlowBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
 
 	// Charts select res-9 cells of the whole department; the map may be drawing the
 	// coarse overview or a res-9 viewport. Project to what is drawn, and keep the last
