@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getAnalysesForLens, LENS_CONFIG, type AnalysisConfig, type TerritoryConfig } from '$lib/config';
+	import { getAnalysesForLens, LENS_CONFIG, TERRITORY_REGISTRY, type AnalysisConfig, type TerritoryConfig } from '$lib/config';
 	import type { LensStore } from '$lib/stores/lens.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
@@ -22,6 +22,26 @@
 	// when switching territory.
 	const comparableGroup = $derived(analyses.filter(a => a.comparable));
 	const localGroup = $derived(analyses.filter(a => !a.comparable));
+
+	// `comparable` = fixed goalposts, comparable across every territory it covers.
+	// The census layers (INDEC) cover only the Argentine provinces, so the header
+	// must say so instead of promising Argentina, Paraguay and Brazil.
+	function countriesCovered(a: AnalysisConfig): Set<string> {
+		const out = new Set<string>();
+		for (const t of Object.values(TERRITORY_REGISTRY)) {
+			const c = a.coverage?.[t.id] ?? (t.id === 'misiones' ? 'available' : 'pending');
+			if (c !== 'unavailable') out.add(t.country);
+		}
+		return out;
+	}
+	const comparableScopes = $derived.by(() => {
+		const arOnly = comparableGroup.filter(a => { const c = countriesCovered(a); return c.size === 1 && c.has('ar'); });
+		const cross = comparableGroup.filter(a => !arOnly.includes(a));
+		return [
+			{ headerKey: 'menu.group.comparable', buckets: groupBySubtheme(cross) },
+			{ headerKey: 'menu.group.comparableAr', buckets: groupBySubtheme(arOnly) },
+		].filter(g => g.buckets.length > 0);
+	});
 
 	// Sub-theme grouping within each domain. Values are dict keys, not text — these
 	// headers render on every menu open and used to be Spanish in all four locales.
@@ -74,9 +94,37 @@
 		return order.map(labelKey => ({ labelKey, items: buckets[labelKey] }));
 	}
 
-	const comparableBuckets = $derived(groupBySubtheme(comparableGroup));
 	const localBuckets = $derived(groupBySubtheme(localGroup));
 </script>
+
+{#snippet item(analysis: AnalysisConfig)}
+		{@const coverage = getCoverage(analysis)}
+		<button
+			class="analysis-item"
+			class:available={analysis.status === 'available' && coverage === 'available'}
+			class:coming-soon={analysis.status === 'coming_soon' || coverage !== 'available'}
+			disabled={analysis.status === 'coming_soon' || coverage !== 'available'}
+			onclick={() => onSelectAnalysis(analysis)}
+		>
+			<div class="item-title">{i18n.t(analysis.titleKey)}</div>
+			<div class="item-desc">{i18n.t(analysis.descKey)}</div>
+			{#if analysis.rigorBadge}
+				<span class="item-rigor"
+					class:rigor-physical={analysis.rigorBadge === 'physical'}
+					class:rigor-modeled={analysis.rigorBadge === 'modeled'}
+					class:rigor-census={analysis.rigorBadge === 'census'}>
+					{i18n.t(RIGOR_KEYS[analysis.rigorBadge])}
+				</span>
+			{/if}
+			{#if analysis.status === 'coming_soon'}
+				<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
+			{:else if coverage === 'pending'}
+				<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
+			{:else if coverage === 'unavailable'}
+				<span class="item-badge">🚫 {withRef(i18n.t('analysis.coverage.unavailable'), activeTerritory?.id ?? '', i18n.locale)}</span>
+			{/if}
+		</button>
+{/snippet}
 
 {#if cfg && lens}
 	<div class="analysis-menu">
@@ -85,40 +133,15 @@
 		</div>
 
 		<div class="analysis-list">
-			{#if comparableGroup.length > 0}
-				<div class="group-label">{i18n.t('menu.group.comparable')}</div>
-				{#each comparableBuckets as bucket}
+			{#each comparableScopes as g}
+				<div class="group-label">{i18n.t(g.headerKey)}</div>
+				{#each g.buckets as bucket}
 					<div class="subgroup-label">{i18n.t(bucket.labelKey)}</div>
 					{#each bucket.items as analysis}
-						{@const coverage = getCoverage(analysis)}
-						<button
-							class="analysis-item"
-							class:available={analysis.status === 'available' && coverage === 'available'}
-							class:coming-soon={analysis.status === 'coming_soon' || coverage !== 'available'}
-							disabled={analysis.status === 'coming_soon' || coverage !== 'available'}
-							onclick={() => onSelectAnalysis(analysis)}
-						>
-							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
-							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
-							{#if analysis.rigorBadge}
-								<span class="item-rigor"
-									class:rigor-physical={analysis.rigorBadge === 'physical'}
-									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
-									class:rigor-census={analysis.rigorBadge === 'census'}>
-									{i18n.t(RIGOR_KEYS[analysis.rigorBadge])}
-								</span>
-							{/if}
-							{#if analysis.status === 'coming_soon'}
-								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
-							{:else if coverage === 'pending'}
-								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
-							{:else if coverage === 'unavailable'}
-								<span class="item-badge">🚫 {withRef(i18n.t('analysis.coverage.unavailable'), activeTerritory?.id ?? '', i18n.locale)}</span>
-							{/if}
-						</button>
+						{@render item(analysis)}
 					{/each}
 				{/each}
-			{/if}
+			{/each}
 
 			{#if localGroup.length > 0}
 				<div class="group-label local">
@@ -128,32 +151,7 @@
 				{#each localBuckets as bucket}
 					<div class="subgroup-label">{i18n.t(bucket.labelKey)}</div>
 					{#each bucket.items as analysis}
-						{@const coverage = getCoverage(analysis)}
-						<button
-							class="analysis-item"
-							class:available={analysis.status === 'available' && coverage === 'available'}
-							class:coming-soon={analysis.status === 'coming_soon' || coverage !== 'available'}
-							disabled={analysis.status === 'coming_soon' || coverage !== 'available'}
-							onclick={() => onSelectAnalysis(analysis)}
-						>
-							<div class="item-title">{i18n.t(analysis.titleKey)}</div>
-							<div class="item-desc">{i18n.t(analysis.descKey)}</div>
-							{#if analysis.rigorBadge}
-								<span class="item-rigor"
-									class:rigor-physical={analysis.rigorBadge === 'physical'}
-									class:rigor-modeled={analysis.rigorBadge === 'modeled'}
-									class:rigor-census={analysis.rigorBadge === 'census'}>
-									{i18n.t(RIGOR_KEYS[analysis.rigorBadge])}
-								</span>
-							{/if}
-							{#if analysis.status === 'coming_soon'}
-								<span class="item-badge">{i18n.t('analysis.status.comingSoon')}</span>
-							{:else if coverage === 'pending'}
-								<span class="item-badge">⏳ {i18n.t('analysis.coverage.pending')}</span>
-							{:else if coverage === 'unavailable'}
-								<span class="item-badge">🚫 {withRef(i18n.t('analysis.coverage.unavailable'), activeTerritory?.id ?? '', i18n.locale)}</span>
-							{/if}
-						</button>
+						{@render item(analysis)}
 					{/each}
 				{/each}
 			{/if}

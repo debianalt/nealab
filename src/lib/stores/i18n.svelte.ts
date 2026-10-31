@@ -118,6 +118,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	// map's gn readers already saw exactly this text, so nothing regresses, and English
 	// was never the right fallback for them. Grep `gn: pendiente` for the full list.
 	'menu.group.comparable': { es: '↔ Comparables entre Argentina, Paraguay y Brasil', en: '↔ Comparable across Argentina, Paraguay and Brazil', gn: '↔ Comparables entre Argentina, Paraguay y Brasil', pt: '↔ Comparáveis entre Argentina, Paraguai e Brasil' },
+	'menu.group.comparableAr': { es: '↔ Comparables entre provincias argentinas (censo INDEC)', en: '↔ Comparable across Argentine provinces (INDEC census)', gn: '↔ Comparables entre provincias argentinas (censo INDEC)', pt: '↔ Comparáveis entre províncias argentinas (censo INDEC)' }, // gn: pendiente
 	'menu.group.localOnly': { es: 'Solo {inRef}', en: 'Only {inRef}', gn: 'Solo {inRef}', pt: 'Apenas {inRef}' },
 	'menu.sub.waterRisk': { es: 'Riesgo hídrico', en: 'Water risk', gn: 'Riesgo hídrico', pt: 'Risco hídrico' }, // gn: pendiente
 	'menu.sub.naturalCover': { es: 'Cobertura natural', en: 'Natural cover', gn: 'Cobertura natural', pt: 'Cobertura natural' }, // gn: pendiente
@@ -228,6 +229,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'ficha.allVars': { es: 'Todas las variables ({n})', en: 'All variables ({n})', gn: 'Todas las variables ({n})', pt: 'Todas as variáveis ({n})' }, // gn: pendiente
 	'ficha.colMedianDept': { es: 'Med. depto.', en: 'Dept. median', gn: 'Med. depto.', pt: 'Med. depto.' }, // gn: pendiente
 	'ficha.colMedianTerr': { es: 'Med. territ.', en: 'Terr. median', gn: 'Med. territ.', pt: 'Med. territ.' }, // gn: pendiente
+	'censo.deptScope': { es: 'Gráficos y mapa: departamento {name}', en: 'Charts and map: {name} department', gn: 'Gráficos y mapa: departamento {name}', pt: 'Gráficos e mapa: departamento {name}' }, // gn: pendiente
+	'censo.deptScopeAll': { es: 'ver {ref} completa', en: 'show all of {ref}', gn: 'ver {ref} completa', pt: 'ver {ref} inteira' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
 	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente
