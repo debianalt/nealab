@@ -182,6 +182,16 @@ const dict: Record<string, Record<Locale, string>> = {
 	'chart.conc.axisY': { es: '% del total de {v}', en: '% of total {v}', gn: '% del total de {v}', pt: '% do total de {v}' }, // gn: pendiente
 	'chart.conc.empty': { es: 'sin valores mayores que cero', en: 'no values above zero', gn: 'sin valores mayores que cero', pt: 'sem valores acima de zero' }, // gn: pendiente
 	'chart.analysisCoarse': { es: 'Distrito muy grande: los gráficos se calculan sobre celdas agregadas (res {res}), no sobre cada hexágono.', en: 'Very large district: charts use aggregated cells (res {res}), not each hexagon.', gn: 'Distrito muy grande: los gráficos se calculan sobre celdas agregadas (res {res}), no sobre cada hexágono.', pt: 'Distrito muito grande: os gráficos usam células agregadas (res {res}), não cada hexágono.' }, // gn: pendiente
+	'chart.dist.title': { es: 'Perfil por distancia', en: 'Distance profile', gn: 'Perfil por distancia', pt: 'Perfil por distância' }, // gn: pendiente
+	'chart.dist.to': { es: 'Distancia a:', en: 'Distance to:', gn: 'Distancia a:', pt: 'Distância a:' }, // gn: pendiente
+	'chart.dist.loading': { es: 'cargando distancias…', en: 'loading distances…', gn: 'cargando distancias…', pt: 'carregando distâncias…' }, // gn: pendiente
+	'chart.dist.noData': { es: 'Esta distancia no está calculada en este territorio.', en: 'This distance is not computed for this territory.', gn: 'Esta distancia no está calculada en este territorio.', pt: 'Esta distância não está calculada neste território.' }, // gn: pendiente
+	'chart.dist.near': { es: 'Cerca', en: 'Near', gn: 'Cerca', pt: 'Perto' }, // gn: pendiente
+	'chart.dist.peak': { es: 'Máximo', en: 'Peak', gn: 'Máximo', pt: 'Máximo' }, // gn: pendiente
+	'chart.dist.far': { es: 'lejos', en: 'far', gn: 'lejos', pt: 'longe' }, // gn: pendiente
+	'chart.dist.hint': { es: 'tocá una barra para ver esos hexágonos en el mapa', en: 'tap a bar to see those hexagons on the map', gn: 'tocá una barra para ver esos hexágonos en el mapa', pt: 'toque uma barra para ver esses hexágonos no mapa' }, // gn: pendiente
+	'chart.dist.clear': { es: 'tocá de nuevo para limpiar', en: 'tap again to clear', gn: 'tocá de nuevo para limpiar', pt: 'toque de novo para limpar' }, // gn: pendiente
+	'chart.dist.note': { es: 'Barras: promedio de {v} en cada banda de distancia; debajo, cuántos hexágonos hay. Línea punteada: promedio del área.', en: 'Bars: mean {v} in each distance band; below, how many hexagons. Dashed line: area mean.', gn: 'Barras: promedio de {v} en cada banda de distancia; debajo, cuántos hexágonos hay. Línea punteada: promedio del área.', pt: 'Barras: média de {v} em cada faixa de distância; abaixo, quantos hexágonos. Linha tracejada: média da área.' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
 	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente

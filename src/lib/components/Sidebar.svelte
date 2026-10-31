@@ -17,7 +17,7 @@
 	import type { LassoStore } from '$lib/stores/lasso.svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
-	import { LENS_CONFIG, getHexAxisLabel, isAdditiveVar, type AnalysisConfig, type LensId } from '$lib/config';
+	import { LENS_CONFIG, ANALYSIS_REGISTRY, getHexAxisLabel, getHexPrimaryUnit, isAdditiveVar, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
 	import { lp } from '$lib/utils/locale-path';
@@ -25,6 +25,7 @@
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
 	import ConcentrationCurve from './ConcentrationCurve.svelte';
+	import DistanceProfile from './DistanceProfile.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
@@ -108,6 +109,10 @@
 	const primaryAxisLabel = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary));
 	const primaryName = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary, false));
 
+	// The distance profile joins the accessibility layer: only where it exists.
+	const accessibilityAvailable = $derived(
+		(ANALYSIS_REGISTRY.find(a => a.id === 'accessibility')?.coverage as Record<string, string> | undefined)?.[hexStore.territoryId] !== 'unavailable'
+	);
 	let chartsOpen = $state(true);
 
 	// Auto-open when actual results exist
@@ -282,6 +287,19 @@
 						onBrushSelect={onBivariateBrush ?? (() => {})}
 						onShowBivariateMap={onShowBivariateMap ?? (() => {})}
 					/>
+					{#if hexStore.activeLayer.id !== 'accessibility' && accessibilityAvailable}
+						<DistanceProfile
+							data={hexStore.chartData}
+							variable={hexStore.effectivePrimary}
+							xLabel={primaryAxisLabel}
+							valueUnit={getHexPrimaryUnit(hexStore.activeLayer, hexStore.effectivePrimary)}
+							territoryPrefix={hexStore.territoryPrefix}
+							deptName={hexStore.selectedDpto}
+							deptKey={hexStore.selectedParquetKey}
+							deptUrl={(id, key) => hexStore.deptUrlForLayer(id, key)}
+							onBrushSelect={onHistogramBrush ?? (() => {})}
+						/>
+					{/if}
 				{/if}
 			{/if}
 		</div>

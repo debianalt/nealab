@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { query } from '$lib/stores/duckdb';
-	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, getHexAxisLabel } from '$lib/config';
+	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getHexAxisLabel } from '$lib/config';
 	import { cellToParent, getResolution } from 'h3-js';
-	import { loadDeptSummary } from '$lib/utils/deptSummaries';
-	import { normDeptName } from '$lib/utils/deptBoundaries';
+	import { layerDeptUrl } from '$lib/utils/layerDeptUrl';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure, quantile, BIVAR_COLORS } from '$lib/utils/chartType';
@@ -59,19 +58,7 @@
 		return 9;
 	});
 
-	// Y's parquet for the open department (its own key: census layers name some
-	// departments differently), else the territory-wide parquet.
-	async function yUrl(b: string): Promise<string> {
-		if (deptName && deptKey) {
-			const summary = await loadDeptSummary(b, territoryPrefix);
-			const want = normDeptName(deptName);
-			const d = (summary?.departments as any[] | undefined)?.find(
-				(x) => normDeptName(x.dpto ?? x.distrito ?? x.municipio) === want);
-			const url = deptUrl(b, d?.parquetKey ?? deptKey);
-			if (url) return url;
-		}
-		return getSatGlobalUrl(b, territoryPrefix);
-	}
+	const yUrl = (b: string) => layerDeptUrl(b, territoryPrefix, deptName, deptKey, deptUrl);
 
 	let selectedB = $state('');
 	let bVar = $state('');
