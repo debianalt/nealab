@@ -5,6 +5,9 @@ export interface FichaContext {
 	territoryId: string;
 	deptName: string | null;
 	deptKey: string | null;
+	// layer → parquetKey of the department file that holds the cell, when it is not the
+	// one deptName leads to (?h3= links; src/lib/data/ficha_link_index.json).
+	keys?: Record<string, string>;
 }
 
 class FichaStore {

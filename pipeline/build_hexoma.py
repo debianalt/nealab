@@ -111,6 +111,15 @@ CREATE TABLE IF NOT EXISTS ficha_claves (
     parquet_key   text NOT NULL,
     PRIMARY KEY (redcode, capa)
 );
+CREATE TABLE IF NOT EXISTS ficha_enlace (
+    h3            h3index NOT NULL,
+    territorio    text,
+    territorio_id smallint,
+    departamento  text NOT NULL,
+    k             text NOT NULL,
+    o             jsonb
+);
+COMMENT ON TABLE ficha_enlace IS 'src/lib/data/ficha_link_index.json (pipeline/build_ficha_link_index.py): celdas cuyo archivo de departamento no es el del polígono que contiene su centro. Clave por capa = o->>capa, si no k. Es lo que usa el enlace ?h3= de la ficha.';
 CREATE TABLE IF NOT EXISTS hexagonos (
     h3            h3index  NOT NULL,
     territorio_id smallint NOT NULL REFERENCES territorios,
@@ -375,6 +384,30 @@ def load_limites(conn, reg: dict, terr_ids: dict[str, int]) -> None:
     conn.commit()
 
 
+def load_ficha_enlace(conn) -> None:
+    """The fact-sheet link index; its territory resolved after hexagonos exist (see main)."""
+    path = ROOT / 'src' / 'lib' / 'data' / 'ficha_link_index.json'
+    with conn.cursor() as cur:
+        cur.execute('TRUNCATE ficha_enlace')
+        if path.exists():
+            cells = json.loads(path.read_text(encoding='utf-8'))['cells']
+            from psycopg2.extras import execute_values
+            execute_values(cur, 'INSERT INTO ficha_enlace (h3, territorio, departamento, k, o) VALUES %s',
+                           [(h, e.get('t'), e['n'], e['k'], json.dumps(e['o']) if e.get('o') else None)
+                            for h, e in cells.items()], page_size=5000)
+    conn.commit()
+
+
+def resolve_ficha_enlace(conn) -> None:
+    """Entries without `t` belong to the territory of the polygon holding the cell centre."""
+    with conn.cursor() as cur:
+        cur.execute("""UPDATE ficha_enlace fe SET territorio_id = coalesce(
+                (SELECT territorio_id FROM territorios WHERE territorio = fe.territorio),
+                (SELECT l.territorio_id FROM hexagonos h JOIN limites l USING (redcode)
+                 WHERE h.h3 = fe.h3 LIMIT 1))""")
+    conn.commit()
+
+
 def rebuild_hexagonos(conn, terr_id: int, layer_ids: list[str]) -> int:
     with conn.cursor() as cur:
         existing = [l for l in layer_ids if table_columns(cur, f'capa_{l}')]
@@ -407,8 +440,10 @@ def set_principal(conn, terr_id: int, layer_id: str) -> int:
                 LEFT JOIN hexagonos hx ON hx.h3 = c.h3 AND hx.territorio_id = %(t)s
                 LEFT JOIN departamentos d ON d.depto_id = c.depto_id
                 LEFT JOIN ficha_claves fk ON fk.redcode = hx.redcode AND fk.capa = %(capa)s
+                LEFT JOIN ficha_enlace fe ON fe.h3 = c.h3 AND fe.territorio_id = %(t)s
                 WHERE c.territorio_id = %(t)s
-                ORDER BY c.h3, (d.parquet_key = fk.parquet_key) DESC NULLS LAST, c.depto_id)
+                ORDER BY c.h3, (d.parquet_key = coalesce(fe.o->>%(capa)s, fe.k)) DESC NULLS LAST,
+                         (d.parquet_key = fk.parquet_key) DESC NULLS LAST, c.depto_id)
             UPDATE {t} c SET principal = (c.depto_id = ch.depto_id)
             FROM choice ch WHERE c.territorio_id = %(t)s AND c.h3 = ch.h3""").format(t=table),
                     {'t': terr_id, 'capa': layer_id})
@@ -422,7 +457,7 @@ def set_principal(conn, terr_id: int, layer_id: str) -> int:
 
 
 def rebuild_view(conn, layers: list[dict]) -> int:
-    sel = [sql.SQL('hx.h3, t.pais, t.territorio, lim.nombre AS departamento, hx.redcode')]
+    sel = [sql.SQL('hx.h3, t.pais, t.territorio, coalesce(fe.departamento, lim.nombre) AS departamento, hx.redcode')]
     joins = []
     comments = []
     with conn.cursor() as cur:
@@ -455,6 +490,7 @@ def rebuild_view(conn, layers: list[dict]) -> int:
         cur.execute(sql.SQL("""CREATE VIEW v_hexoma AS SELECT {} FROM hexagonos hx
             JOIN territorios t USING (territorio_id)
             LEFT JOIN limites lim ON lim.redcode = hx.redcode
+            LEFT JOIN ficha_enlace fe ON fe.h3 = hx.h3 AND fe.territorio_id = hx.territorio_id
             {}""").format(sql.SQL(', ').join(sel), sql.SQL('\n').join(joins)))
         cur.execute("COMMENT ON VIEW v_hexoma IS 'El hexoma de cada celda: los valores que muestra la ficha del hexágono de spatia.ar ((rawCol ?? col) × scale), una columna <capa>__<variable> por variable. Sin dato = NULL. Lo exhaustivo (todas las columnas, temporales) está en las tablas capa_*.'")
         for name, txt in comments:
@@ -509,7 +545,7 @@ def main() -> None:
             cur.execute('DROP VIEW IF EXISTS v_hexoma')
             for layer in layers:
                 cur.execute(sql.SQL('DROP TABLE IF EXISTS {}').format(sql.Identifier(f'capa_{layer["id"]}')))
-            cur.execute('DROP TABLE IF EXISTS hexagonos, ficha_claves, limites_sub, limites, departamentos, territorios, cargas')
+            cur.execute('DROP TABLE IF EXISTS ficha_enlace, hexagonos, ficha_claves, limites_sub, limites, departamentos, territorios, cargas')
         conn.commit()
         log('reset: Hexoma tables dropped')
     ensure_schema(conn)
@@ -524,6 +560,8 @@ def main() -> None:
             terr_ids[tid] = upsert_territory(cur, tid, reg['territories'][tid])
     conn.commit()
     load_limites(conn, reg, terr_ids)
+    if not args.no_finalize:  # workers reuse what the parent loaded
+        load_ficha_enlace(conn)
 
     if args.workers > 1 and len(territories) > 1:
         def run_one(tid: str) -> int:
@@ -550,6 +588,7 @@ def main() -> None:
             log(f"{tid:<12} {layer['id']:<24} {r['rows']:>10,} filas  {len(r['cols']):>3} cols  {r['secs']:6.1f} s")
         t0 = time.time()
         n = rebuild_hexagonos(conn, terr_id, [l['id'] for l in layers])
+        resolve_ficha_enlace(conn)
         dups = {}
         with conn.cursor() as cur:
             present_layers = [l['id'] for l in layers if table_columns(cur, f'capa_{l["id"]}')]
@@ -569,7 +608,13 @@ def main() -> None:
     ncols = rebuild_view(conn, layers)
     conn.autocommit = True
     with conn.cursor() as cur:
-        cur.execute('VACUUM (ANALYZE)')  # reloads leave dead rows; VACUUM lets the next run reuse the space
+        # Reloads (DELETE + COPY) leave a dead copy of every row: a full reload doubled the base
+        # (5 → 10 GB). Rewrite the tables where dead rows pass 20 %, then refresh statistics.
+        cur.execute("""SELECT relname FROM pg_stat_user_tables
+                       WHERE n_dead_tup > 0.2 * greatest(n_live_tup, 1)""")
+        for (rel,) in cur.fetchall():
+            cur.execute(sql.SQL('VACUUM FULL {}').format(sql.Identifier(rel)))
+        cur.execute('VACUUM (ANALYZE)')
     log(f'v_hexoma: {ncols} columnas')
     report(conn)
     log(f'total {time.time() - t_all:.0f} s')

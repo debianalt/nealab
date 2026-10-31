@@ -820,10 +820,23 @@
 			return polys.some((p: number[][][]) => pointInPolygon([lng, lat], p[0] as [number, number][]));
 		};
 		const f = (getArFeatures() ?? []).find(inside);
-		const terr = f ? AR_CODPROV[String(f.properties.redcode).slice(0, 2)] : undefined;
-		if (!f || !terr) return;
-		if (territoryStore.activeTerritory.id !== terr[1]) territoryStore.setTerritory(terr[1]);
-		fichaStore.open(h3, { territoryPrefix: terr[0], territoryId: terr[1], deptName: f.properties.nombre, deptKey: normDeptName(f.properties.nombre) });
+		const polyTerr = f ? AR_CODPROV[String(f.properties.redcode).slice(0, 2)] : undefined;
+		// The dept files assign cells by census-radio areal majority, not by these polygons:
+		// for ~23K cells (3.5 % of Misiones) the centre rule opens the wrong file or none.
+		// The index (pipeline/build_ficha_link_index.py) names the right one; lazy-loaded.
+		type LinkEntry = { t?: string; n: string; k: string; o?: Record<string, string> };
+		let e: LinkEntry | undefined;
+		try {
+			const idx = (await import('$lib/data/ficha_link_index.json')).default as { cells: Record<string, LinkEntry> };
+			e = idx.cells[h3];
+		} catch { /* index missing → centre rule only */ }
+		const tid = e?.t ?? polyTerr?.[1];
+		if (!tid || (!e && !f)) return;
+		const prefix = TERRITORY_REGISTRY[tid]?.parquetPrefix ?? polyTerr?.[0] ?? '';
+		const deptName: string = e?.n ?? f!.properties.nombre;
+		const keys = e ? Object.fromEntries(Object.keys(HEX_LAYER_REGISTRY).map(id => [id, e!.o?.[id] ?? e!.k])) : undefined;
+		if (territoryStore.activeTerritory.id !== tid) territoryStore.setTerritory(tid);
+		fichaStore.open(h3, { territoryPrefix: prefix, territoryId: tid, deptName, deptKey: normDeptName(deptName), keys });
 		setTimeout(() => {
 			mapComponent?.flyToCoords(lat, lng, 13);
 			// Mark the cell: with no layer open nothing else outlines it.

@@ -114,10 +114,18 @@ export async function loadFicha(
 		const layer = HEX_LAYER_REGISTRY[a.id];
 		try {
 			const perDept = !!layer.perDepartment && !!ctx.deptName;
-			const url = perDept
-				? await layerDeptUrl(a.id, ctx.territoryPrefix, ctx.deptName, ctx.deptKey, deptUrl)
-				: getSatGlobalUrl(a.id, ctx.territoryPrefix);
-			const name = await fetchAndRegister(url);
+			// A link-index key names the file that holds the cell; layers where the cell is in
+			// no file (census cells without buildings) may lack a file under that key → fall
+			// back to the department-name route, which then reports "sin dato" as usual.
+			const key = perDept ? ctx.keys?.[a.id] : undefined;
+			const keyUrl = key ? deptUrl(a.id, key) : null;
+			let name = keyUrl ? await fetchAndRegister(keyUrl) : null;
+			if (!name) {
+				const url = perDept
+					? await layerDeptUrl(a.id, ctx.territoryPrefix, ctx.deptName, ctx.deptKey, deptUrl)
+					: getSatGlobalUrl(a.id, ctx.territoryPrefix);
+				name = await fetchAndRegister(url);
+			}
 			return { a, layer, name, scope: (perDept ? 'dept' : 'territory') as 'dept' | 'territory' };
 		} catch {
 			return { a, layer, name: null, scope: 'territory' as const };
