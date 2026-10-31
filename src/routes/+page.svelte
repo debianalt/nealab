@@ -873,12 +873,20 @@
 		);
 	}
 
-	// censo_temporal dept list: outline the picked department and fly to it. The
+	// censo_temporal dept list: outline the picked department, fly to it and narrow
+	// charts + map to its cells (hexStore.deptFilter). The
 	// outline survives the selectedDpto $effect because censo_temporal never sets
 	// selectedDpto; the list clears it (feature=null) on deselect/unmount.
 	function handleCensoDeptSelect(feature: any | null) {
 		mapComponent?.setDeptOutline(feature ?? null);
-		if (!feature?.geometry) return;
+		if (!feature?.geometry) { hexStore.setDeptFilter(null); return; }
+		// Charts and map narrow to the department, as with the per-department layers.
+		const outer: [number, number][][] = feature.geometry.type === 'Polygon'
+			? [feature.geometry.coordinates[0]]
+			: feature.geometry.coordinates.map((p: number[][][]) => p[0]);
+		const cells = new Set<string>();
+		for (const ring of outer) for (const h of hexStore.findHexesInPolygon(ring as [number, number][])) cells.add(h);
+		hexStore.setDeptFilter(cells, feature.properties?.nombre ?? null);
 		let w = 180, s = 90, e = -180, n = -90;
 		const polys = feature.geometry.type === 'Polygon'
 			? [feature.geometry.coordinates]

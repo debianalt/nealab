@@ -20,6 +20,7 @@
 	import { LENS_CONFIG, ANALYSIS_REGISTRY, getHexAxisLabel, getHexPrimaryUnit, isAdditiveVar, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
+	import { formatDept } from '$lib/utils/format';
 	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
@@ -242,6 +243,12 @@
 			     arrives with the dept selection) plus global temporal layers that
 			     declare flowBands (censo_temporal bands raw density territory-wide).
 			     Rendered first: it is the most legible chart of the temporal stack. -->
+			{#if hexStore.deptFilterName}
+				<div class="charts-scope">
+					<span>{i18n.t('censo.deptScope').replace('{name}', formatDept(hexStore.deptFilterName))}</span>
+					<button class="charts-scope-all" onclick={() => onCensoDeptSelect?.(null)}>× {withRef(i18n.t('censo.deptScopeAll'), hexStore.territoryId, i18n.locale)}</button>
+				</div>
+			{/if}
 			{#if hexStore.activeLayer?.temporal && (hexStore.activeLayer?.perDepartment || hexStore.activeLayer?.flowBands)}
 				<FlowChart
 					data={hexStore.chartData}
@@ -478,5 +485,16 @@
 			bottom: auto;
 		}
 	}
+	.charts-scope {
+		display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px;
+		margin: 6px 2px 8px; padding: 6px 8px; border-left: 3px solid var(--s-cat-1);
+		background: rgba(255,255,255,0.04); border-radius: 3px;
+		font-size: 12.5px; color: var(--s-ink-1);
+	}
+	.charts-scope-all {
+		font: inherit; font-size: 12px; color: var(--s-ink-2); background: none; border: none;
+		padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+	}
+	.charts-scope-all:hover { color: var(--s-ink-1); }
 	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
 </style>

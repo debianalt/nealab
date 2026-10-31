@@ -104,6 +104,12 @@
 			?? null;
 	}
 
+	// The scope line above the charts can drop the department filter on its own:
+	// unmark the row so list and map agree.
+	$effect(() => {
+		if (!hexStore.deptFilter && expandedCode) expandedCode = null;
+	});
+
 	function toggleRow(r: Row) {
 		if (expandedCode === r.code) { expandedCode = null; onSelectDept?.(null); return; }
 		expandedCode = r.code;
@@ -199,15 +205,15 @@
 	.rank-tab { font-size: 12px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: #94a3b8; cursor: pointer; font-family: inherit; }
 	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: #fecaca; }
 	.rank-selected { font-size: 12.5px; color: #cbd5e1; margin: -4px 0 8px; }
-	.rank-selected-pos { font-weight: 700; color: #f87171; }
+	.rank-selected-pos { font-weight: 700; color: var(--s-ink-1); }
 	.rank-row { display: flex; align-items: center; gap: 5px; width: 100%; padding: 3px 2px; margin-bottom: 1px; background: none; border: none; border-radius: 4px; cursor: pointer; font-family: inherit; text-align: left; transition: background 0.15s; }
 	.rank-row:hover { background: rgba(96,165,250,0.1); }
 	.rank-row.active { background: rgba(255,255,255,0.09); }
 	.rank-pos { font-size: 11.5px; color: #64748b; width: 14px; text-align: right; flex-shrink: 0; }
 	.rank-name { font-size: 11.5px; color: #d4d4d4; width: 100px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.rank-bar-wrap { flex: 1; height: 6px; background: rgba(100,116,139,0.15); border-radius: 2px; overflow: hidden; }
-	.rank-bar { display: block; height: 100%; border-radius: 2px; background: #22c55e; transition: width 0.3s; }
-	.rank-bar.down { background: #dc2626; }
+	.rank-bar { display: block; height: 100%; border-radius: 2px; background: var(--s-cat-2); transition: width 0.3s; }   /* growth: río, as the map's change ramp */
+	.rank-bar.down { background: var(--s-cat-1); }   /* loss: tierra */
 	.rank-value { font-size: 12px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 	.rank-extra { font-size: 11.5px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 	.rank-note { font-size: 11.5px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
@@ -217,7 +223,7 @@
 	.cd-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
 	.cd-bar-val { font-size: 11px; color: rgba(226,232,240,0.75); white-space: nowrap; }
 	.cd-bar-track { width: 60%; flex: 1; display: flex; align-items: flex-end; }
-	.cd-bar-fill { width: 100%; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 2px 2px 0 0; min-height: 1px; }
-	.cd-bar-fill.viv { background: linear-gradient(to top, #7c3aed, #a78bfa); }
+	.cd-bar-fill { width: 100%; background: var(--s-cat-2); border-radius: 2px 2px 0 0; min-height: 1px; }
+	.cd-bar-fill.viv { background: var(--s-cat-3); }
 	.cd-bar-year { font-size: 11px; color: rgba(255,255,255,0.55); }
 </style>

@@ -152,7 +152,27 @@ export class HexStore {
 	// Coarse res when even the analysis had to aggregate (giant districts), else null.
 	analysisResLevel: number | null = $state(null);
 	get chartData(): Map<string, Record<string, any>> {
-		return this.analysisData ?? this.visibleData;
+		const src = this.analysisData ?? this.visibleData;
+		const f = this.deptFilter;
+		if (!f) return src;
+		const c = this._deptChart;
+		if (c && c.src === src && c.filter === f) return c.out;
+		const out = new Map<string, Record<string, any>>();
+		for (const h of f) { const d = src.get(h); if (d) out.set(h, d); }
+		this._deptChart = { src, filter: f, out };
+		return out;
+	}
+	// Territory-wide layers (censo_temporal) narrowed to one department picked in
+	// their own list: charts and map read only these cells, like the per-department
+	// layers. Cells assigned by centre-in-polygon, the rule of ?h3= and the Hexoma.
+	deptFilter: Set<string> | null = $state.raw(null);
+	deptFilterName: string | null = $state(null);
+	private _deptChart: { src: Map<string, Record<string, any>>; filter: Set<string>; out: Map<string, Record<string, any>> } | null = null;
+	setDeptFilter(h3s: Iterable<string> | null, name: string | null = null) {
+		this.deptFilter = h3s ? new Set(h3s) : null;
+		this.deptFilterName = h3s ? name : null;
+		this._deptChart = null;
+		this.dataVersion++;
 	}
 	selectedHexes: Map<string, HexSelectionData> = $state(new Map());
 	hexZones: HexZone[] = $state([]);
@@ -246,6 +266,8 @@ export class HexStore {
 	}
 
 	setLayer(layerId: string | null) {
+		this.deptFilter = null;
+		this.deptFilterName = null;
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
 		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
 		this.colorVariable = null;   // the new layer's panel sets its own
@@ -379,6 +401,8 @@ export class HexStore {
 	setTerritoryPrefix(prefix: string) {
 		if (this.territoryPrefix === prefix) return;
 		this.territoryPrefix = prefix;
+		this.deptFilter = null;
+		this.deptFilterName = null;
 		this.primaryOverride = null;
 		layerDataCache.clear(); // keyed by layerId only → must clear to avoid serving the
 		                        // previous province's data under the same layer id.
@@ -1453,14 +1477,16 @@ export class HexStore {
 			? getTemporalCol(this.effectivePrimary, this.temporalMode)
 			: this.effectivePrimary;
 		const isDelta = this.activeLayer.temporal && this.temporalMode === 'delta';
-		// Diverging delta ramp is red(−)→green(+), i.e. assumes higher = better. For
+		// Diverging delta ramp is tierra(−)→río(+), i.e. assumes higher = better. For
 		// "danger" layers (colorScale 'flood', higher = worse: deforestation, PM2.5) an
-		// INCREASE must read red, not green. Flip the delta sign so the ramp + the
+		// INCREASE must read tierra (worse), not río. Flip the delta sign so the ramp + the
 		// worse/better legend labels stay correct. Layers where higher = better/neutral
 		// (carbon, censo density: sequential) keep the raw sign.
 		const invertDelta = isDelta && this.activeLayer.colorScale === 'flood';
 		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
+		const deptOnly = this.deptFilter;
 		for (const [h3index, data] of this.visibleData) {
+			if (deptOnly && !deptOnly.has(h3index)) continue;
 			const raw = data[effectivePrimary];
 			const hasData = raw !== undefined && raw !== null &&
 				(typeof raw !== 'number' || Number.isFinite(raw));
