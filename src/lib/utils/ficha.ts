@@ -161,7 +161,11 @@ export async function loadFicha(
 				const vec = tbl.getChild(colName);
 				const all: number[] = [];
 				for (let i = 0; i < tbl.numRows; i++) {
-					const x = Number(vec?.get(i));
+					// Number(null) is 0: without this check every "sin dato" cell entered the
+					// department's median, mean and percentile as a zero.
+					const r = vec?.get(i);
+					if (r === null || r === undefined) continue;
+					const x = Number(r);
 					if (Number.isFinite(x)) all.push(x);
 				}
 				const raw = row >= 0 ? vec?.get(row) : null;
