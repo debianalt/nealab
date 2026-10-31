@@ -179,14 +179,14 @@
 </div>
 
 <style>
-	.chart-root { font-size: 11px; line-height: 1.3; }
+	.chart-root { font-size: 12.5px; line-height: 1.3; }
 	.radio-header {
 		display: flex; justify-content: space-between; align-items: center;
 		margin-bottom: 6px;
 	}
-	.radio-title { font-size: 10px; font-weight: 600; color: #e2e8f0; }
+	.radio-title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
 	.radio-clear-btn {
-		font-size: 9px; padding: 2px 6px; border-radius: 4px;
+		font-size: 11.5px; padding: 2px 6px; border-radius: 4px;
 		background: rgba(255,255,255,0.06); border: 1px solid #334155;
 		color: #d4d4d4; cursor: pointer; transition: all 0.15s;
 	}
@@ -195,27 +195,27 @@
 		display: inline-flex; align-items: center; gap: 3px;
 		padding: 1px 6px; border-radius: 9999px;
 		border: 1px solid; background: transparent;
-		font-size: 10px; cursor: pointer; transition: opacity 0.15s;
+		font-size: 12px; cursor: pointer; transition: opacity 0.15s;
 	}
 	.chip:hover { opacity: 0.7; }
 	.chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-	.chip-x { font-size: 12px; margin-left: 1px; }
+	.chip-x { font-size: 13px; margin-left: 1px; }
 
 	.pop-row {
 		display: flex; align-items: center; gap: 4px;
-		font-size: 10px; color: #cbd5e1; margin-bottom: 2px;
+		font-size: 12px; color: #cbd5e1; margin-bottom: 2px;
 	}
 	.pop-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 	.pop-code { color: #d4d4d4; font-family: monospace; }
 	.pop-val { font-weight: 600; }
 
 	.ref-note {
-		font-size: 8px; color: rgba(255,255,255,0.45);
+		font-size: 11px; color: rgba(255,255,255,0.55);
 		text-align: center; margin: 4px 0 0;
 	}
 
 	.census-warn {
-		font-size: 9px; line-height: 1.4;
+		font-size: 11.5px; line-height: 1.4;
 		color: #fde68a;
 		background: rgba(250,204,21,0.10);
 		border: 1px solid rgba(250,204,21,0.35);
@@ -232,15 +232,15 @@
 		margin-bottom: 3px;
 	}
 	.r-table-header .rt-col {
-		font-size: 9px; font-weight: 600;
+		font-size: 11.5px; font-weight: 600;
 		color: #a3a3a3; text-transform: uppercase;
 	}
 	.r-table-row {
 		display: flex; gap: 4px; padding: 2px 0;
 	}
 	.rt-col { flex: 1; }
-	.rt-zone { flex: 0.9; display: flex; align-items: center; gap: 4px; font-family: monospace; font-size: 10px; color: #d4d4d4; }
-	.rt-num { text-align: right; color: #cbd5e1; font-size: 10px; font-variant-numeric: tabular-nums; }
+	.rt-zone { flex: 0.9; display: flex; align-items: center; gap: 4px; font-family: monospace; font-size: 12px; color: #d4d4d4; }
+	.rt-num { text-align: right; color: #cbd5e1; font-size: 12px; font-variant-numeric: tabular-nums; }
 	.rt-actions { flex: 0.8; display: flex; gap: 3px; justify-content: flex-end; }
 	.r-dot-sm {
 		display: inline-block; width: 6px; height: 6px;
@@ -249,7 +249,7 @@
 	.r-dl-btn {
 		background: rgba(255,255,255,0.04);
 		border: 1px solid rgba(255,255,255,0.1);
-		color: #94a3b8; font-size: 8px;
+		color: #94a3b8; font-size: 11px;
 		padding: 1px 4px; border-radius: 3px;
 		cursor: pointer; font-family: inherit;
 		transition: all 0.15s;
@@ -268,7 +268,7 @@
 		background: rgba(59,130,246,0.15);
 		border: 1px solid rgba(59,130,246,0.3);
 		border-radius: 4px;
-		color: #60a5fa; font-size: 9px; font-weight: 600;
+		color: #60a5fa; font-size: 11.5px; font-weight: 600;
 		cursor: pointer; font-family: inherit;
 		transition: all 0.15s;
 	}
@@ -283,7 +283,7 @@
 	}
 	.dim-label {
 		width: 65px; flex-shrink: 0;
-		color: #d4d4d4; font-size: 9px;
+		color: #d4d4d4; font-size: 11.5px;
 		text-align: right; padding-top: 1px;
 	}
 	.dim-bars-container {
@@ -303,7 +303,7 @@
 		width: 32px; flex-shrink: 0;
 	}
 	.dim-val {
-		font-size: 8px; font-weight: 600;
+		font-size: 11px; font-weight: 600;
 		line-height: 7px; color: #cbd5e1;
 	}
 
@@ -311,13 +311,13 @@
 		display: flex; flex-direction: column; gap: 1px;
 		margin-top: 12px; padding-top: 8px;
 		border-top: 1px solid rgba(255,255,255,0.06);
-		font-size: 8px; color: rgba(255,255,255,0.35); line-height: 1.4;
+		font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.4;
 	}
 	.sources-title {
-		font-weight: 600; color: rgba(255,255,255,0.45);
+		font-weight: 600; color: rgba(255,255,255,0.55);
 		margin-bottom: 1px;
 	}
 	.sources-note {
-		color: rgba(255,255,255,0.25); font-style: italic;
+		color: rgba(255,255,255,0.55); font-style: italic;
 	}
 </style>

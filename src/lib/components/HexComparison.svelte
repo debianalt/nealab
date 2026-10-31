@@ -215,18 +215,18 @@
 </div>
 
 <style>
-	.hex-comparison { font-size: 11px; }
+	.hex-comparison { font-size: 12.5px; }
 	.cd-hex-block { margin: 8px 0; padding: 6px 0; border-top: 1px solid rgba(255,255,255,0.06); }
-	.cd-hex-id { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #e2e8f0; font-family: monospace; margin-bottom: 5px; }
-	.cd-type { font-size: 10px; color: #e2e8f0; font-weight: 500; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 3px; font-family: sans-serif; }
+	.cd-hex-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #e2e8f0; font-family: monospace; margin-bottom: 5px; }
+	.cd-type { font-size: 12px; color: #e2e8f0; font-weight: 500; background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 3px; font-family: sans-serif; }
 	.cd-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-	.cd-label { font-size: 9px; color: #d4d4d4; flex: 0 0 auto; min-width: 100px; }
+	.cd-label { font-size: 11.5px; color: #d4d4d4; flex: 0 1 auto; min-width: 100px; }
 	.cd-bar-track { flex: 1; height: 5px; background: #1e293b; border-radius: 3px; overflow: hidden; }
 	.cd-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; min-width: 2px; }
-	.cd-val { font-size: 8px; font-weight: 600; color: #cbd5e1; width: 24px; text-align: right; flex-shrink: 0; }
-	.cd-val-data { font-size: 10px; font-weight: 600; color: #e2e8f0; text-align: right; margin-left: auto; white-space: nowrap; }
+	.cd-val { font-size: 11px; font-weight: 600; color: #cbd5e1; width: 24px; text-align: right; flex-shrink: 0; }
+	.cd-val-data { font-size: 12px; font-weight: 600; color: #e2e8f0; text-align: right; margin-left: auto; white-space: nowrap; }
 	.cd-val-nodata { color: #94a3b8; font-style: italic; font-weight: 500; }
-	.cd-note { font-size: 8.5px; color: rgba(255,255,255,0.45); font-style: italic; line-height: 1.35; margin: 6px 0 2px; }
+	.cd-note { font-size: 11px; color: rgba(255,255,255,0.55); font-style: italic; line-height: 1.35; margin: 6px 0 2px; }
 	.hc-header {
 		display: flex;
 		justify-content: space-between;
@@ -234,12 +234,12 @@
 		margin-bottom: 8px;
 	}
 	.hc-title {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 600;
 		color: #e2e8f0;
 	}
 	.hc-clear {
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 2px 6px;
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
@@ -264,7 +264,7 @@
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
 		border: 1px solid #334155;
-		font-size: 10px;
+		font-size: 12px;
 		color: #e2e8f0;
 	}
 	.hc-dot {
@@ -279,32 +279,32 @@
 		border: none;
 		color: #a3a3a3;
 		cursor: pointer;
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 0 2px;
 		line-height: 1;
 	}
 	.hc-remove:hover { color: #ef4444; }
 
 	.mag-section { margin: 10px 0 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
-	.mag-title { font-size: 10px; font-weight: 600; color: #e2e8f0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+	.mag-title { font-size: 12px; font-weight: 600; color: #e2e8f0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
 	.mag-table { width: 100%; border-collapse: collapse; }
-	.mag-table th, .mag-table td { padding: 3px 4px; text-align: right; font-size: 10px; color: #e2e8f0; white-space: nowrap; }
-	.mag-table th:first-child, .mag-table td:first-child { text-align: left; color: #d4d4d4; font-size: 9px; font-weight: 400; }
+	.mag-table th, .mag-table td { padding: 3px 4px; text-align: right; font-size: 12px; color: #e2e8f0; white-space: nowrap; }
+	.mag-table th:first-child, .mag-table td:first-child { text-align: left; color: #d4d4d4; font-size: 11.5px; font-weight: 400; }
 	.mag-table thead th { font-family: monospace; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); }
 	.mag-table thead th .hc-dot { width: 7px; height: 7px; margin-right: 3px; vertical-align: middle; }
 	.mag-table tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(255,255,255,0.04); }
-	.mag-note { font-size: 8px; color: rgba(255,255,255,0.4); font-style: italic; margin-top: 5px; line-height: 1.3; }
+	.mag-note { font-size: 11px; color: rgba(255,255,255,0.55); font-style: italic; margin-top: 5px; line-height: 1.3; }
 
 	.hc-download-row { margin-top: 8px; display: flex; gap: 6px; }
-	.hc-dl-btn { flex: 1; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 9px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.hc-dl-btn { flex: 1; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
 	.hc-dl-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
 
 	.hc-ref-note {
 		display: flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 9px;
-		color: rgba(255,255,255,0.45);
+		font-size: 11.5px;
+		color: rgba(255,255,255,0.55);
 		margin: -4px 0 8px;
 		justify-content: center;
 	}
@@ -317,7 +317,7 @@
 	.hc-bars-section { margin-top: 4px; }
 	.hc-var-row { margin-bottom: 6px; }
 	.hc-var-label {
-		font-size: 9px;
+		font-size: 11.5px;
 		color: #d4d4d4;
 		margin-bottom: 2px;
 	}
@@ -345,7 +345,7 @@
 		min-width: 2px;
 	}
 	.hc-bar-val {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 600;
 		color: #cbd5e1;
 		width: 32px;

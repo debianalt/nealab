@@ -357,9 +357,9 @@
 		scrollbar-color: #334155 transparent;
 	}
 	.charts-divider {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 700;
-		color: rgba(255,255,255,0.35);
+		color: rgba(255,255,255,0.55);
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		margin: 12px 0 2px;
@@ -380,7 +380,7 @@
 		overflow: hidden;
 	}
 	.faq-q {
-		font-size: 10px;
+		font-size: 12px;
 		font-weight: 600;
 		color: #ffffff;
 		padding: 6px 8px;
@@ -391,14 +391,14 @@
 		align-items: center;
 		gap: 4px;
 	}
-	.faq-q::before { content: '\25B8'; font-size: 8px; transition: transform 0.15s; }
+	.faq-q::before { content: '\25B8'; font-size: 11px; transition: transform 0.15s; }
 	.faq-item[open] > .faq-q::before { transform: rotate(90deg); }
 	.faq-q::-webkit-details-marker { display: none; }
 	.faq-a {
 		padding: 2px 8px 8px;
 	}
 	.faq-a p {
-		font-size: 10px;
+		font-size: 12px;
 		color: rgba(255,255,255,0.8);
 		margin: 0;
 		line-height: 1.5;
@@ -425,21 +425,21 @@
 	.welcome-brand { font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
 	.welcome-subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: -10px; font-weight: 300; }
 	.welcome-desc { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; font-weight: 300; }
-	.welcome-divider { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 10px; }
+	.welcome-divider { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 10px; }
 	.welcome-lenses { display: flex; flex-direction: column; gap: 8px; }
 	.welcome-lens { display: flex; flex-direction: column; gap: 2px; padding-left: 10px; border-left: 2px solid rgba(255,255,255,0.1); }
-	.lens-name { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-	.lens-items { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6; font-weight: 300; }
-	.welcome-stats { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.6; font-weight: 300; }
+	.lens-name { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+	.lens-items { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; font-weight: 300; }
+	.welcome-stats { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; font-weight: 300; }
 	.welcome-steps { display: flex; flex-direction: column; gap: 8px; }
 	.welcome-step { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; font-weight: 300; }
-	.step-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 700; margin-right: 6px; }
-	.welcome-footer { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-weight: 400; }
+	.step-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 12.5px; font-weight: 700; margin-right: 6px; }
+	.welcome-footer { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-weight: 400; }
 	.welcome-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-	.welcome-link { color: rgba(255,255,255,0.55); font-size: 10px; text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+	.welcome-link { color: rgba(255,255,255,0.55); font-size: 12px; text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
 	.welcome-link:hover { color: #ffffff; }
-	.welcome-link-sep { color: rgba(255,255,255,0.2); font-size: 10px; }
-	.dashboard-link { display: block; font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6; text-decoration: none; font-weight: 300; }
+	.welcome-link-sep { color: rgba(255,255,255,0.55); font-size: 12px; }
+	.dashboard-link { display: block; font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; text-decoration: none; font-weight: 300; }
 	.dashboard-link:hover { color: rgba(255,255,255,0.8); }
 	.expand-btn {
 		position: absolute;
@@ -470,5 +470,5 @@
 			bottom: auto;
 		}
 	}
-	.charts-res-note { font-size: 11px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
+	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
 </style>

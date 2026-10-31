@@ -130,8 +130,8 @@
 </div>
 
 <style>
-	.zone-comparison { font-size: 11px; }
-	.ref-note { font-size: 8px; color: #64748b; text-align: center; margin: 4px 0 2px; }
+	.zone-comparison { font-size: 12.5px; }
+	.ref-note { font-size: 11px; color: #64748b; text-align: center; margin: 4px 0 2px; }
 	.zone-header {
 		display: flex;
 		justify-content: space-between;
@@ -139,12 +139,12 @@
 		margin-bottom: 8px;
 	}
 	.zone-title {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 600;
 		color: #e2e8f0;
 	}
 	.zone-clear-btn {
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 2px 6px;
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
@@ -169,7 +169,7 @@
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
 		border: 1px solid #334155;
-		font-size: 10px;
+		font-size: 12px;
 		color: #e2e8f0;
 	}
 	.zone-dot {
@@ -191,7 +191,7 @@
 		border: none;
 		color: #a3a3a3;
 		cursor: pointer;
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 0 2px;
 		line-height: 1;
 	}
@@ -206,7 +206,7 @@
 		margin-bottom: 3px;
 	}
 	.zone-table-header .zt-col {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
 		color: #a3a3a3;
 		text-transform: uppercase;
@@ -218,13 +218,13 @@
 	}
 	.zt-col { flex: 1; }
 	.zt-zone { flex: 0.6; display: flex; align-items: center; gap: 4px; }
-	.zt-num { text-align: right; color: #cbd5e1; font-size: 10px; }
+	.zt-num { text-align: right; color: #cbd5e1; font-size: 12px; }
 	.zt-actions { flex: 0.8; display: flex; gap: 3px; justify-content: flex-end; }
-	.zone-dl-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 8px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.zone-dl-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
 	.zone-dl-btn:hover { background: rgba(96,165,250,0.15); border-color: rgba(96,165,250,0.4); color: #60a5fa; }
 
 	.zone-download-row { margin-top: 6px; }
-	.zone-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 9px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.zone-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
 	.zone-download-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
 
 	.dim-section { margin: 8px 0; }
@@ -238,7 +238,7 @@
 		width: 65px;
 		flex-shrink: 0;
 		color: #d4d4d4;
-		font-size: 9px;
+		font-size: 11.5px;
 		text-align: right;
 		padding-top: 1px;
 	}
@@ -269,7 +269,7 @@
 		flex-shrink: 0;
 	}
 	.dim-val {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 600;
 		line-height: 7px;
 		color: #cbd5e1;

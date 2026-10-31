@@ -370,7 +370,7 @@
 	}
 
 	.compare-row-btn {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
 		color: #93c5fd;
 		background: none;
@@ -386,7 +386,7 @@
 		border: 1px solid rgba(255, 255, 255, 0.15);
 		border-radius: 3px;
 		color: rgba(255, 255, 255, 0.7);
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
 		cursor: pointer;
 		padding: 2px 6px;
@@ -418,7 +418,7 @@
 		border: 1px solid rgba(255,255,255,0.10);
 		border-radius: 4px;
 		color: #e2e8f0;
-		font-size: 9px;
+		font-size: 11.5px;
 		font-family: inherit;
 		padding: 4px 8px;
 		margin-bottom: 3px;
@@ -427,12 +427,12 @@
 		top: 0;
 	}
 	.compare-filter:focus { border-color: rgba(96,165,250,0.5); }
-	.compare-filter::placeholder { color: rgba(255,255,255,0.30); }
+	.compare-filter::placeholder { color: rgba(255,255,255,0.55); }
 
 	.group-header {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 700;
-		color: rgba(255,255,255,0.35);
+		color: rgba(255,255,255,0.55);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		padding: 6px 8px 2px;
@@ -447,7 +447,7 @@
 		border: none;
 		border-radius: 3px;
 		text-align: left;
-		font-size: 9px;
+		font-size: 11.5px;
 		color: rgba(255,255,255,0.75);
 		cursor: pointer;
 		transition: background 0.1s;
@@ -473,7 +473,7 @@
 	}
 
 	.panel-title {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 700;
 		color: #93c5fd;
 		text-transform: uppercase;
@@ -481,8 +481,8 @@
 	}
 
 	.hint {
-		font-size: 9px;
-		color: rgba(255, 255, 255, 0.40);
+		font-size: 11.5px;
+		color: rgba(255,255,255,0.55);
 		font-style: italic;
 		margin: 4px 0;
 	}
@@ -490,13 +490,13 @@
 	.stats-table {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: 9px;
+		font-size: 11.5px;
 	}
 
 	.stats-table th {
-		color: rgba(255, 255, 255, 0.40);
+		color: rgba(255,255,255,0.55);
 		font-weight: 600;
-		font-size: 8px;
+		font-size: 11px;
 		padding: 2px 4px;
 		text-align: right;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -513,20 +513,20 @@
 	.stats-table td.col-var {
 		text-align: left;
 		color: rgba(255, 255, 255, 0.55);
-		font-size: 8.5px;
+		font-size: 11px;
 		max-width: 110px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
-	.col-diff { font-weight: 600; font-size: 8px; }
+	.col-diff { font-weight: 600; font-size: 11px; }
 	.col-diff.pos { color: #4ade80; }
 	.col-diff.neg { color: #f87171; }
 
 	.note {
-		font-size: 7.5px;
-		color: rgba(255, 255, 255, 0.25);
+		font-size: 11px;
+		color: rgba(255,255,255,0.55);
 		margin: 5px 0 0;
 		text-align: right;
 		font-style: italic;

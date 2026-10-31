@@ -163,7 +163,7 @@
 
 <style>
 	.analysis-menu {
-		font-size: 11px;
+		font-size: 12.5px;
 	}
 	.menu-header {
 		margin-bottom: 10px;
@@ -189,9 +189,9 @@
 	.analysis-list::-webkit-scrollbar-track { background: transparent; }
 	.analysis-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
 	.group-label {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 700;
-		color: rgba(255,255,255,0.30);
+		color: rgba(255,255,255,0.55);
 		text-transform: uppercase;
 		letter-spacing: 0.07em;
 		padding: 10px 10px 4px;
@@ -203,11 +203,11 @@
 		padding-top: 0;
 		margin-top: 0;
 	}
-	.group-label.local { color: rgba(255,255,255,0.22); }
+	.group-label.local { color: rgba(255,255,255,0.55); }
 	.subgroup-label {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
-		color: rgba(255,255,255,0.42);
+		color: rgba(255,255,255,0.55);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		padding: 8px 10px 2px;
@@ -241,19 +241,19 @@
 		opacity: 0.6;
 	}
 	.item-title {
-		font-size: 11px;
+		font-size: 12.5px;
 		font-weight: 600;
 		color: #ffffff;
 		line-height: 1.3;
 	}
 	.item-desc {
-		font-size: 9px;
+		font-size: 11.5px;
 		color: rgba(255,255,255,0.5);
 		line-height: 1.45;
 	}
 	.item-rigor {
 		display: inline-block;
-		font-size: 8px;
+		font-size: 11px;
 		font-style: italic;
 		margin-top: 2px;
 		opacity: 0.65;
@@ -263,8 +263,8 @@
 	.rigor-census   { color: #fbbf24; }
 	.item-badge {
 		display: inline-block;
-		font-size: 8px;
-		color: #737373;
+		font-size: 11px;
+		color: #9ca3af;
 		font-style: italic;
 		margin-top: 1px;
 	}

@@ -81,7 +81,7 @@
 		flex-direction: column;
 		z-index: 10;
 		backdrop-filter: blur(4px);
-		font-size: 11px;
+		font-size: 12.5px;
 		color: #e2e8f0;
 	}
 
@@ -95,7 +95,7 @@
 	}
 
 	.panel-title {
-		font-size: 10px;
+		font-size: 12px;
 		color: #94a3b8;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
@@ -107,7 +107,7 @@
 		color: #64748b;
 		cursor: pointer;
 		padding: 0;
-		font-size: 10px;
+		font-size: 12px;
 		line-height: 1;
 	}
 	.close-btn:hover { color: #94a3b8; }
@@ -119,7 +119,7 @@
 		border: 1px solid rgba(148, 163, 184, 0.2);
 		border-radius: 4px;
 		color: #e2e8f0;
-		font-size: 10px;
+		font-size: 12px;
 		outline: none;
 		flex-shrink: 0;
 	}
@@ -142,7 +142,7 @@
 		color: #cbd5e1;
 		cursor: pointer;
 		border-radius: 4px;
-		font-size: 11px;
+		font-size: 12.5px;
 		transition: background 0.1s, color 0.1s;
 		white-space: nowrap;
 		overflow: hidden;
@@ -156,6 +156,6 @@
 	.hint {
 		padding: 8px;
 		color: #64748b;
-		font-size: 10px;
+		font-size: 12px;
 	}
 </style>

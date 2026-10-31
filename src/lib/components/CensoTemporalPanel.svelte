@@ -146,30 +146,30 @@
 </div>
 
 <style>
-	.ct-root { font-size: 11px; line-height: 1.3; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.07); }
+	.ct-root { font-size: 12.5px; line-height: 1.3; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.07); }
 	.ct-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
-	.ct-title { font-size: 10px; font-weight: 600; color: #e2e8f0; }
-	.ct-count { font-size: 8px; color: rgba(255,255,255,0.40); }
-	.ct-subtitle { font-size: 9px; color: rgba(255,255,255,0.45); margin: 0 0 8px; }
-	.ct-msg { font-size: 10px; color: #94a3b8; padding: 10px 0; text-align: center; }
+	.ct-title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+	.ct-count { font-size: 11px; color: rgba(255,255,255,0.55); }
+	.ct-subtitle { font-size: 11.5px; color: rgba(255,255,255,0.55); margin: 0 0 8px; }
+	.ct-msg { font-size: 12px; color: #94a3b8; padding: 10px 0; text-align: center; }
 	.ct-toggle { display: flex; gap: 2px; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 2px; margin-bottom: 10px; }
-	.ct-tab { flex: 1; padding: 3px 6px; background: none; border: none; border-radius: 4px; color: #737373; font-size: 9px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+	.ct-tab { flex: 1; padding: 3px 6px; background: none; border: none; border-radius: 4px; color: #9ca3af; font-size: 11.5px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; }
 	.ct-tab:hover { color: #a3a3a3; }
 	.ct-tab.active { background: rgba(255,255,255,0.10); color: #e2e8f0; }
 	.ct-group { margin-bottom: 12px; }
 	.ct-group:last-child { margin-bottom: 0; }
-	.ct-zone-id { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #e2e8f0; font-weight: 600; margin-bottom: 5px; }
-	.ct-zone-count { font-size: 8px; color: rgba(255,255,255,0.40); font-weight: 400; margin-left: auto; }
+	.ct-zone-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #e2e8f0; font-weight: 600; margin-bottom: 5px; }
+	.ct-zone-count { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 400; margin-left: auto; }
 	.ct-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.ct-bars { display: flex; align-items: flex-end; gap: 6px; height: 88px; }
 	.ct-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
-	.ct-bar-val { font-size: 8px; color: rgba(226,232,240,0.75); white-space: nowrap; }
+	.ct-bar-val { font-size: 11px; color: rgba(226,232,240,0.75); white-space: nowrap; }
 	.ct-bar-track { width: 60%; flex: 1; display: flex; align-items: flex-end; }
 	.ct-bar-fill { width: 100%; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 2px 2px 0 0; min-height: 1px; }
-	.ct-bar-year { font-size: 8px; color: rgba(255,255,255,0.45); }
+	.ct-bar-year { font-size: 11px; color: rgba(255,255,255,0.55); }
 	.ct-change { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
-	.ct-change-label { font-size: 9px; color: #a3a3a3; }
-	.ct-change-val { font-size: 11px; font-weight: 700; }
+	.ct-change-label { font-size: 11.5px; color: #a3a3a3; }
+	.ct-change-val { font-size: 12.5px; font-weight: 700; }
 	.ct-change-val.up { color: #4ade80; }
 	.ct-change-val.down { color: #f87171; }
 </style>

@@ -66,8 +66,8 @@
 		background: none;
 		border: none;
 		border-radius: 4px;
-		color: #737373;
-		font-size: 9px;
+		color: #9ca3af;
+		font-size: 11.5px;
 		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.15s;
@@ -84,15 +84,15 @@
 	.toggle-btn.active .period { color: rgba(226,232,240,0.60); }
 	.label { line-height: 1; }
 	.period {
-		font-size: 7.5px;
+		font-size: 11px;
 		font-weight: 400;
 		color: rgba(115,115,115,0.80);
 		line-height: 1;
 		white-space: nowrap;
 	}
 	.temporal-hint {
-		font-size: 8px;
-		color: rgba(255,255,255,0.40);
+		font-size: 11px;
+		color: rgba(255,255,255,0.55);
 		margin: -4px 0 6px;
 		line-height: 1.3;
 	}

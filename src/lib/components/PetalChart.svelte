@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+	import { measure } from '$lib/utils/chartType';
 
 	let {
 		layers,
@@ -12,12 +13,18 @@
 		size?: number;
 	} = $props();
 
-	const pad = 90;
-	const vw = $derived(size + 2 * pad);
-	const vh = $derived(size + 2 * pad);
+	// Drawn in real pixels (viewBox = rendered width): labels stay at LABEL_PX
+	// whatever the panel width; the petal takes what the label margin leaves.
+	// `size` only caps the petal (and sizes the first frame before measuring).
+	const LABEL_PX = 11.5;
+	const pad = 72;
+	let renderedW = $state(0);
+	const vw = $derived(renderedW > 0 ? renderedW : size + 2 * pad);
+	const petal = $derived(Math.min(size, vw - 2 * pad));
+	const vh = $derived(petal + 2 * pad);
 	const cx = $derived(vw / 2);
 	const cy = $derived(vh / 2);
-	const maxR = $derived(size / 2 * 0.85);
+	const maxR = $derived(petal / 2 * 0.85);
 
 	const animAll = tweened([] as number[], {
 		duration: 400,
@@ -89,7 +96,7 @@
 		return { x, y, anchor };
 	}
 
-	const LINE_MAX = 14;
+	const LINE_MAX = 11;
 
 	function splitLabel(text: string): string[] {
 		if (text.length <= LINE_MAX) return [text];
@@ -112,6 +119,7 @@
 	const refR = $derived(maxR * 0.5);
 </script>
 
+<div use:measure={(w) => { renderedW = w; }}>
 <svg width="100%" viewBox="0 0 {vw} {vh}" preserveAspectRatio="xMidYMid meet" class="petal-chart">
 	<!-- Background circles -->
 	{#each [0.25, 0.5, 0.75, 1.0] as frac}
@@ -123,7 +131,7 @@
 	<circle cx={cx} cy={cy} r={refR}
 		fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-dasharray="4 3" />
 	<text x={cx + refR + 4} y={cy - 4}
-		fill="rgba(255,255,255,0.45)" font-size="8" font-family="system-ui, sans-serif">
+		fill="rgba(255,255,255,0.55)" font-size="10" font-family="system-ui, sans-serif">
 		prov.
 	</text>
 
@@ -158,16 +166,17 @@
 	{#each Array.from({length: axisCount}, (_, i) => i) as i}
 		{@const pos = labelPos(i)}
 		{@const lines = splitLabel(labels[i] ?? '')}
-		{@const offsetY = -(lines.length - 1) * 7}
+		{@const offsetY = -(lines.length - 1) * (LABEL_PX + 2) / 2}
 		<text x={pos.x} y={pos.y + offsetY}
 			text-anchor={pos.anchor} dominant-baseline="middle"
-			fill="#e2e8f0" font-size="11" font-weight="500" font-family="system-ui, sans-serif">
+			fill="#e2e8f0" font-size={LABEL_PX} font-weight="500" font-family="system-ui, sans-serif">
 			{#each lines as line, li}
-				<tspan x={pos.x} dy={li === 0 ? 0 : 15}>{line}</tspan>
+				<tspan x={pos.x} dy={li === 0 ? 0 : LABEL_PX + 2}>{line}</tspan>
 			{/each}
 		</text>
 	{/each}
 </svg>
+</div>
 
 <style>
 	.petal-chart {

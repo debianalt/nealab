@@ -220,7 +220,7 @@
 		{#if petalLayers.length > 0}
 			<div class="section">
 				<div class="section-title">{i18n.t('analysis.catastro.housingTitle')}</div>
-				<p class="text-[8px] text-text-dim text-center m-0 mb-0.5">{i18n.t('analysis.catastro.petalHint')}</p>
+				<p class="text-[11px] text-text-dim text-center m-0 mb-0.5">{i18n.t('analysis.catastro.petalHint')}</p>
 				<PetalChart layers={petalLayers} labels={petalLabels} size={300} />
 			</div>
 		{/if}
@@ -236,7 +236,7 @@
 </div>
 
 <style>
-	.zone-comparison { font-size: 11px; }
+	.zone-comparison { font-size: 12.5px; }
 	.zone-header {
 		display: flex;
 		justify-content: space-between;
@@ -244,12 +244,12 @@
 		margin-bottom: 8px;
 	}
 	.zone-title {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 600;
 		color: #e2e8f0;
 	}
 	.zone-clear-btn {
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 2px 6px;
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
@@ -274,7 +274,7 @@
 		border-radius: 4px;
 		background: rgba(255,255,255,0.06);
 		border: 1px solid #334155;
-		font-size: 10px;
+		font-size: 12px;
 		color: #e2e8f0;
 	}
 	.zone-dot {
@@ -296,7 +296,7 @@
 		border: none;
 		color: #a3a3a3;
 		cursor: pointer;
-		font-size: 9px;
+		font-size: 11.5px;
 		padding: 0 2px;
 		line-height: 1;
 	}
@@ -311,7 +311,7 @@
 		margin-bottom: 3px;
 	}
 	.zone-table-header .zt-col {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
 		color: #a3a3a3;
 		text-transform: uppercase;
@@ -323,9 +323,9 @@
 	}
 	.zt-col { flex: 1; }
 	.zt-zone { flex: 0.6; display: flex; align-items: center; gap: 4px; }
-	.zt-num { text-align: right; color: #cbd5e1; font-size: 10px; }
+	.zt-num { text-align: right; color: #cbd5e1; font-size: 12px; }
 
-	.loading { color: #a3a3a3; font-size: 10px; padding: 12px 0; }
+	.loading { color: #a3a3a3; font-size: 12px; padding: 12px 0; }
 
 	.dim-section { margin: 8px 0; }
 	.dim-row {
@@ -338,7 +338,7 @@
 		width: 72px;
 		flex-shrink: 0;
 		color: #d4d4d4;
-		font-size: 9px;
+		font-size: 11.5px;
 		text-align: right;
 		padding-top: 1px;
 	}
@@ -369,7 +369,7 @@
 		flex-shrink: 0;
 	}
 	.dim-val {
-		font-size: 8px;
+		font-size: 11px;
 		font-weight: 600;
 		line-height: 7px;
 		color: #cbd5e1;
@@ -377,7 +377,7 @@
 
 	.section { margin-bottom: 8px; }
 	.section-title {
-		font-size: 9px;
+		font-size: 11.5px;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
@@ -387,8 +387,8 @@
 		margin-bottom: 4px;
 	}
 
-	.map-legend { display: flex; align-items: center; gap: 4px; font-size: 8px; color: #a3a3a3; margin: 8px 0 4px; }
+	.map-legend { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #a3a3a3; margin: 8px 0 4px; }
 	.legend-swatch { width: 10px; height: 3px; border-radius: 1px; flex-shrink: 0; }
 	.legend-gap { margin-left: 8px; }
-	.source-note-box { margin-top: 10px; padding: 6px 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; font-size: 8px; color: #737373; line-height: 1.4; }
+	.source-note-box { margin-top: 10px; padding: 6px 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; font-size: 11px; color: #9ca3af; line-height: 1.4; }
 </style>

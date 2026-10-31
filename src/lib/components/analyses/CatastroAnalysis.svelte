@@ -449,45 +449,45 @@
 {/if}
 
 <style>
-	.loading { color: #a3a3a3; font-size: 10px; padding: 12px 0; }
+	.loading { color: #a3a3a3; font-size: 12px; padding: 12px 0; }
 
 	/* Radio chips header */
 	.radios-header { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-	.radio-chip { display: inline-flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2px 6px 2px 4px; font-size: 9px; }
+	.radio-chip { display: inline-flex; align-items: center; gap: 3px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2px 6px 2px 4px; font-size: 11.5px; }
 	.chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.chip-code { font-family: monospace; font-weight: 600; color: #e2e8f0; }
-	.chip-x { background: none; border: none; color: #737373; cursor: pointer; font-size: 10px; padding: 0 2px; line-height: 1; }
+	.chip-x { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
 	.chip-x:hover { color: #ef4444; }
-	.clear-btn { background: none; border: 1px solid rgba(239,68,68,0.3); color: #ef4444; font-size: 8px; padding: 2px 8px; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+	.clear-btn { background: none; border: 1px solid rgba(239,68,68,0.3); color: #ef4444; font-size: 11px; padding: 2px 8px; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
 	.clear-btn:hover { background: rgba(239,68,68,0.1); }
 
 	/* Radio metrics */
 	.radio-metrics { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; }
 	.radio-metrics-header { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
-	.radio-code { font-family: monospace; font-size: 9px; color: #a3a3a3; }
-	.mini-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 9px; color: #d4d4d4; }
+	.radio-code { font-family: monospace; font-size: 11.5px; color: #a3a3a3; }
+	.mini-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11.5px; color: #d4d4d4; }
 	.mini-stats strong { color: #e2e8f0; }
 	.new-badge { color: #4ade80; font-weight: 600; }
 
 	/* Map legend */
-	.map-legend { display: flex; align-items: center; gap: 4px; font-size: 8px; color: #a3a3a3; margin: 8px 0 4px; }
+	.map-legend { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #a3a3a3; margin: 8px 0 4px; }
 	.legend-swatch { width: 10px; height: 3px; border-radius: 1px; flex-shrink: 0; }
 	.legend-gap { margin-left: 8px; }
 
 	/* Sections */
 	.section { margin-bottom: 8px; }
-	.section-title { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #a3a3a3; border-bottom: 1px solid #1e293b; padding-bottom: 2px; margin-bottom: 4px; }
+	.section-title { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #a3a3a3; border-bottom: 1px solid #1e293b; padding-bottom: 2px; margin-bottom: 4px; }
 
 	/* Petal */
 	.petal-wrapper { display: flex; justify-content: center; margin: 4px 0; }
-	.petal-hint { font-size: 7px; color: #737373; text-align: center; margin-top: 4px; }
+	.petal-hint { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 4px; }
 
 	/* Stat grid */
 	.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
 	.stat-item { background: rgba(255,255,255,0.03); border-radius: 6px; padding: 6px 8px; }
 	.stat-item.highlight { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); }
 	.stat-item.full-width { grid-column: 1 / -1; }
-	.stat-label { font-size: 8px; color: #a3a3a3; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+	.stat-label { font-size: 11px; color: #a3a3a3; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
 	.stat-value { font-size: 13px; font-weight: 600; color: #e2e8f0; }
 	.stat-value.new-count { color: #06b6d4; }
 
@@ -495,16 +495,16 @@
 	.dept-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
 	.dept-clickable { background: none; border: none; width: 100%; text-align: left; cursor: pointer; padding: 4px 6px; border-radius: 4px; transition: background 0.15s; }
 	.dept-clickable:hover { background: rgba(6,182,212,0.1); }
-	.dept-name { font-size: 10px; color: #d4d4d4; flex: 1; }
-	.dept-count { font-size: 9px; color: #a3a3a3; font-variant-numeric: tabular-nums; }
-	.dept-trend { font-size: 8px; font-weight: 600; min-width: 32px; text-align: right; }
+	.dept-name { font-size: 12px; color: #d4d4d4; flex: 1; }
+	.dept-count { font-size: 11.5px; color: #a3a3a3; font-variant-numeric: tabular-nums; }
+	.dept-trend { font-size: 11px; font-weight: 600; min-width: 32px; text-align: right; }
 
 	/* Department detail */
-	.dept-detail { font-size: 11px; }
-	.back-btn { background: none; border: none; color: #60a5fa; font-size: 10px; cursor: pointer; padding: 0; margin-bottom: 8px; }
+	.dept-detail { font-size: 12.5px; }
+	.back-btn { background: none; border: none; color: #60a5fa; font-size: 12px; cursor: pointer; padding: 0; margin-bottom: 8px; }
 	.back-btn:hover { text-decoration: underline; }
 	.dept-active-title { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
-	.hint { font-size: 9px; color: #a3a3a3; text-align: center; margin: 8px 0; }
+	.hint { font-size: 11.5px; color: #a3a3a3; text-align: center; margin: 8px 0; }
 
 	/* Change history chart */
 	.change-chart { display: flex; gap: 4px; align-items: flex-end; padding: 4px 0; min-height: 50px; }
@@ -512,23 +512,23 @@
 	.change-bar { width: 100%; border-radius: 2px 2px 0 0; min-height: 2px; }
 	.change-bar.new { background: #4ade80; }
 	.change-bar.removed { background: #f87171; border-radius: 0 0 2px 2px; }
-	.change-bar-label { font-size: 7px; color: #737373; margin-top: 2px; }
-	.change-legend { display: flex; align-items: center; gap: 4px; font-size: 7px; color: #a3a3a3; margin-top: 4px; }
+	.change-bar-label { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+	.change-legend { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #a3a3a3; margin-top: 4px; }
 
 	/* Source + method */
 	.radio-detail { padding: 2px 0; }
-	.source-note-box { margin-top: 10px; padding: 6px 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; font-size: 8px; color: #737373; line-height: 1.4; }
+	.source-note-box { margin-top: 10px; padding: 6px 8px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; font-size: 11px; color: #9ca3af; line-height: 1.4; }
 	.method-details { margin-top: 8px; border: 1px solid rgba(100,116,139,0.15); border-radius: 6px; overflow: hidden; }
-	.method-summary { font-size: 9px; font-weight: 600; color: #d4d4d4; padding: 6px 8px; cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 4px; }
-	.method-summary::before { content: '\25B8'; font-size: 8px; transition: transform 0.15s; }
+	.method-summary { font-size: 11.5px; font-weight: 600; color: #d4d4d4; padding: 6px 8px; cursor: pointer; user-select: none; list-style: none; display: flex; align-items: center; gap: 4px; }
+	.method-summary::before { content: '\25B8'; font-size: 11px; transition: transform 0.15s; }
 	.method-details[open] > .method-summary::before { transform: rotate(90deg); }
 	.method-summary::-webkit-details-marker { display: none; }
 	.method-body { padding: 4px 8px 8px; }
-	.explain-text { font-size: 9px; color: #a3a3a3; line-height: 1.5; margin: 2px 0 0; }
+	.explain-text { font-size: 11.5px; color: #a3a3a3; line-height: 1.5; margin: 2px 0 0; }
 
 	/* Download buttons */
 	.download-row { display: flex; gap: 6px; margin: 10px 0; }
-	.download-btn { flex: 1; display: block; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 9px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.download-btn { flex: 1; display: block; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
 	.download-btn:hover:not(:disabled) { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
 	.download-btn:disabled { cursor: wait; opacity: 0.6; }
 </style>

@@ -239,46 +239,46 @@
 </div>
 
 <style>
-	.zone-comparison { font-size: 11px; }
+	.zone-comparison { font-size: 12.5px; }
 	.zone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-	.zone-title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
-	.zone-clear-btn { font-size: 9px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.06); border: 1px solid #334155; color: #d4d4d4; cursor: pointer; transition: all 0.15s; }
+	.zone-title { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+	.zone-clear-btn { font-size: 11.5px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.06); border: 1px solid #334155; color: #d4d4d4; cursor: pointer; transition: all 0.15s; }
 	.zone-clear-btn:hover { border-color: #ef4444; color: #ef4444; }
 	.zone-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
-	.zone-chip { display: flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.06); border: 1px solid #334155; font-size: 10px; color: #e2e8f0; }
+	.zone-chip { display: flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.06); border: 1px solid #334155; font-size: 12px; color: #e2e8f0; }
 	.zone-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.zone-dot-sm { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 	.zone-label { font-weight: 500; }
-	.zone-remove { background: none; border: none; color: #a3a3a3; cursor: pointer; font-size: 9px; padding: 0 2px; line-height: 1; }
+	.zone-remove { background: none; border: none; color: #a3a3a3; cursor: pointer; font-size: 11.5px; padding: 0 2px; line-height: 1; }
 	.zone-remove:hover { color: #ef4444; }
 	.zone-table { margin: 8px 0; }
 	.zone-table-header { display: flex; gap: 4px; padding-bottom: 3px; border-bottom: 1px solid #1e293b; margin-bottom: 3px; }
-	.zone-table-header .zt-col { font-size: 9px; font-weight: 600; color: #a3a3a3; text-transform: uppercase; }
+	.zone-table-header .zt-col { font-size: 11.5px; font-weight: 600; color: #a3a3a3; text-transform: uppercase; }
 	.zone-table-row { display: flex; gap: 4px; padding: 2px 0; }
 	.zt-col { flex: 1; }
 	.zt-zone { flex: 0.6; display: flex; align-items: center; gap: 4px; }
-	.zt-num { text-align: right; color: #cbd5e1; font-size: 10px; }
-	.section-title { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #a3a3a3; border-bottom: 1px solid #1e293b; padding-bottom: 2px; margin: 8px 0 4px; }
-	.loading { color: #a3a3a3; font-size: 10px; padding: 8px 0; }
-	.petal-note { font-size: 8px; color: #737373; text-align: center; margin: 0 0 4px; }
+	.zt-num { text-align: right; color: #cbd5e1; font-size: 12px; }
+	.section-title { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #a3a3a3; border-bottom: 1px solid #1e293b; padding-bottom: 2px; margin: 8px 0 4px; }
+	.loading { color: #a3a3a3; font-size: 12px; padding: 8px 0; }
+	.petal-note { font-size: 11px; color: #9ca3af; text-align: center; margin: 0 0 4px; }
 	.flood-scores { margin: 4px 0 8px; }
 	.flood-zone-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-	.flood-zone-label { font-size: 10px; font-weight: 600; color: #e2e8f0; width: 16px; }
+	.flood-zone-label { font-size: 12px; font-weight: 600; color: #e2e8f0; width: 16px; }
 	.score-track { flex: 1; height: 6px; background: rgba(100,116,139,0.2); border-radius: 3px; overflow: hidden; }
 	.score-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
-	.flood-zone-val { font-size: 11px; font-weight: 700; min-width: 28px; text-align: right; }
+	.flood-zone-val { font-size: 12.5px; font-weight: 700; min-width: 28px; text-align: right; }
 	.dim-section { margin: 8px 0; }
 	.dim-row { display: flex; align-items: flex-start; gap: 4px; margin-bottom: 4px; }
-	.dim-label { width: 80px; flex-shrink: 0; color: #d4d4d4; font-size: 9px; text-align: right; padding-top: 1px; }
+	.dim-label { width: 80px; flex-shrink: 0; color: #d4d4d4; font-size: 11.5px; text-align: right; padding-top: 1px; }
 	.dim-bars-container { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 	.dim-bar-track { height: 5px; background: #1e293b; border-radius: 3px; overflow: hidden; }
 	.dim-bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; min-width: 2px; }
 	.dim-values { display: flex; flex-direction: column; align-items: flex-end; gap: 0; width: 36px; flex-shrink: 0; }
-	.dim-val { font-size: 8px; font-weight: 600; line-height: 7px; color: #cbd5e1; }
+	.dim-val { font-size: 11px; font-weight: 600; line-height: 7px; color: #cbd5e1; }
 	.flood-legend { margin: 8px 0; }
 	.legend-bar { height: 6px; border-radius: 3px; background: linear-gradient(to right, #0d1b2a, #1b3a5f, #2a6f97, #eab308, #f97316, #dc2626, #7f1d1d); }
-	.legend-labels { display: flex; justify-content: space-between; font-size: 8px; color: #a3a3a3; margin-top: 2px; }
-	.petal-defs { margin-top: 6px; font-size: 8px; color: #a3a3a3; line-height: 1.5; }
+	.legend-labels { display: flex; justify-content: space-between; font-size: 11px; color: #a3a3a3; margin-top: 2px; }
+	.petal-defs { margin-top: 6px; font-size: 11px; color: #a3a3a3; line-height: 1.5; }
 	.petal-defs div { margin-bottom: 1px; }
 	.petal-defs strong { color: #cbd5e1; }
 </style>

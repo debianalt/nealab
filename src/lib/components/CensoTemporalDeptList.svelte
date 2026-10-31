@@ -189,35 +189,35 @@
 </ChartFrame>
 
 <style>
-	.cd-panel { font-size: 11px; line-height: 1.3; }
-	.cd-msg { font-size: 10px; color: #94a3b8; padding: 10px 0; text-align: center; }
+	.cd-panel { font-size: 12.5px; line-height: 1.3; }
+	.cd-msg { font-size: 12px; color: #94a3b8; padding: 10px 0; text-align: center; }
 	.cd-list { display: flex; flex-direction: column; gap: 1px; max-height: 340px; overflow-y: auto; }
 
 	/* Same look as the deptRank ranking in OvertureAnalysis (rank-*). Growth green,
 	   decline red, as in the map's change mode. */
 	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
-	.rank-tab { font-size: 10px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: #94a3b8; cursor: pointer; font-family: inherit; }
+	.rank-tab { font-size: 12px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: #94a3b8; cursor: pointer; font-family: inherit; }
 	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: #fecaca; }
-	.rank-selected { font-size: 11px; color: #cbd5e1; margin: -4px 0 8px; }
+	.rank-selected { font-size: 12.5px; color: #cbd5e1; margin: -4px 0 8px; }
 	.rank-selected-pos { font-weight: 700; color: #f87171; }
 	.rank-row { display: flex; align-items: center; gap: 5px; width: 100%; padding: 3px 2px; margin-bottom: 1px; background: none; border: none; border-radius: 4px; cursor: pointer; font-family: inherit; text-align: left; transition: background 0.15s; }
 	.rank-row:hover { background: rgba(96,165,250,0.1); }
 	.rank-row.active { background: rgba(255,255,255,0.09); }
-	.rank-pos { font-size: 9px; color: #64748b; width: 14px; text-align: right; flex-shrink: 0; }
-	.rank-name { font-size: 9px; color: #d4d4d4; width: 84px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.rank-pos { font-size: 11.5px; color: #64748b; width: 14px; text-align: right; flex-shrink: 0; }
+	.rank-name { font-size: 11.5px; color: #d4d4d4; width: 100px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.rank-bar-wrap { flex: 1; height: 6px; background: rgba(100,116,139,0.15); border-radius: 2px; overflow: hidden; }
 	.rank-bar { display: block; height: 100%; border-radius: 2px; background: #22c55e; transition: width 0.3s; }
 	.rank-bar.down { background: #dc2626; }
-	.rank-value { font-size: 10px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-	.rank-extra { font-size: 9px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-	.rank-note { font-size: 9px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
+	.rank-value { font-size: 12px; font-weight: 600; color: #e2e8f0; min-width: 40px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+	.rank-extra { font-size: 11.5px; color: #64748b; min-width: 48px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+	.rank-note { font-size: 11.5px; color: #94a3b8; line-height: 1.4; margin: 6px 0 0; }
 
-	.cd-series-label { font-size: 8px; color: rgba(255,255,255,0.45); margin: 3px 6px 0; }
+	.cd-series-label { font-size: 11px; color: rgba(255,255,255,0.55); margin: 3px 6px 0; }
 	.cd-bars { display: flex; align-items: flex-end; gap: 6px; height: 64px; padding: 4px 6px; margin: 1px 0 3px; background: rgba(255,255,255,0.03); border-radius: 4px; }
 	.cd-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
-	.cd-bar-val { font-size: 8px; color: rgba(226,232,240,0.75); white-space: nowrap; }
+	.cd-bar-val { font-size: 11px; color: rgba(226,232,240,0.75); white-space: nowrap; }
 	.cd-bar-track { width: 60%; flex: 1; display: flex; align-items: flex-end; }
 	.cd-bar-fill { width: 100%; background: linear-gradient(to top, #2563eb, #60a5fa); border-radius: 2px 2px 0 0; min-height: 1px; }
 	.cd-bar-fill.viv { background: linear-gradient(to top, #7c3aed, #a78bfa); }
-	.cd-bar-year { font-size: 8px; color: rgba(255,255,255,0.45); }
+	.cd-bar-year { font-size: 11px; color: rgba(255,255,255,0.55); }
 </style>
