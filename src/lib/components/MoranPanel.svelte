@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import * as d3 from 'd3';
-	import { gridDisk } from 'h3-js';
+	import { gridDisk, getResolution } from 'h3-js';
 	import ChartFrame from './ChartFrame.svelte';
 
 	let {
@@ -20,9 +20,18 @@
 	let brushCount = $state(0);
 	let lisaMode = $state(false);
 	let result = $state<{
-		I: number; expected: number; variance: number; z: number; p: number; n: number;
+		I: number; expected: number; variance: number; z: number; p: number; n: number; res: number;
 		points: { h3: string; std: number; lag: number; quad: string }[];
 	} | null>(null);
+
+	// Plain-language reading of I (row-standardised weights, contiguous H3 cells).
+	function readingKey(I: number): string {
+		if (I >= 0.5) return 'chart.moran.read.strong';
+		if (I >= 0.3) return 'chart.moran.read.moderate';
+		if (I >= 0.1) return 'chart.moran.read.weak';
+		if (I > -0.1) return 'chart.moran.read.none';
+		return 'chart.moran.read.dispersed';
+	}
 
 	$effect(() => {
 		if (variable && data.size > 0 && allH3s.length > 0) compute();
@@ -67,31 +76,45 @@
 			const std = new Map<string, number>();
 			for (const [h3, v] of vals) std.set(h3, (v - mean) / sd);
 
-			const lag = new Map<string, number>();
-			let W = 0;
-			let sumWZiZj = 0;
-
+			// Row-standardised contiguity weights (w_ij = 1/k_i, as GeoDa): the spatial
+			// lag is the neighbours' mean and I is the slope of the Moran scatterplot.
+			const nbrs = new Map<string, string[]>();
 			for (const h3 of vals.keys()) {
-				const neighbors = gridDisk(h3, 1).filter(nb => nb !== h3 && vals.has(nb));
-				if (neighbors.length === 0) continue;
-				const zi = std.get(h3)!;
-				let lagSum = 0;
-				for (const nb of neighbors) {
-					lagSum += std.get(nb)!;
-					sumWZiZj += zi * std.get(nb)!;
-					W++;
-				}
-				lag.set(h3, lagSum / neighbors.length);
+				const nb = gridDisk(h3, 1).filter(c => c !== h3 && vals.has(c));
+				if (nb.length > 0) nbrs.set(h3, nb);
 			}
+			const lag = new Map<string, number>();
+			let S0 = 0, S1 = 0, S2 = 0, num = 0;
+			for (const [h3, nb] of nbrs) {
+				const k = nb.length;
+				let lagSum = 0, colSum = 0;
+				for (const c of nb) {
+					lagSum += std.get(c)!;
+					const kc = nbrs.get(c)!.length;       // symmetric contiguity: c has h3 as neighbour
+					S1 += (1 / k + 1 / kc) ** 2;          // ½ Σ_ij (w_ij + w_ji)², summed over ordered pairs
+					colSum += 1 / kc;                     // w_·i
+				}
+				const li = lagSum / k;
+				lag.set(h3, li);
+				num += std.get(h3)! * li;
+				S0 += 1;                                  // each row sums to 1
+				S2 += (1 + colSum) ** 2;                  // (w_i· + w_·i)²
+			}
+			S1 /= 2;
 
 			let sumZ2 = 0;
 			for (const z of std.values()) sumZ2 += z * z;
 
-			const I = W > 0 ? (n / W) * sumWZiZj / sumZ2 : 0;
+			const I = S0 > 0 ? (n / S0) * num / sumZ2 : 0;
 			const expected = -1 / (n - 1);
-			const varI = 1 / (n - 1) - expected * expected;
+			// Variance under the normality assumption (Cliff & Ord 1981).
+			const varI = S0 > 0
+				? (n * n * S1 - n * S2 + 3 * S0 * S0) / ((n * n - 1) * S0 * S0) - expected * expected
+				: 0;
 			const z = varI > 0 ? (I - expected) / Math.sqrt(varI) : 0;
 			const p = 2 * (1 - normalCDF(Math.abs(z)));
+			let res = 9;
+			for (const h3 of vals.keys()) { try { res = getResolution(h3); } catch {} break; }
 
 			const points: { h3: string; std: number; lag: number; quad: string }[] = [];
 			for (const h3 of vals.keys()) {
@@ -106,7 +129,7 @@
 				points.push({ h3, std: zi, lag: li, quad });
 			}
 
-			result = { I, expected, variance: varI, z, p, n, points };
+			result = { I, expected, variance: varI, z, p, n, res, points };
 			computing = false;
 		});
 	}
@@ -199,7 +222,7 @@
 			.attr('text-anchor', 'middle').attr('fill', '#a3a3a3').attr('font-size', '9px').text(`z(${variable})`);
 		svg.append('text').attr('x', 10).attr('y', H / 2)
 			.attr('text-anchor', 'middle').attr('fill', '#a3a3a3').attr('font-size', '9px')
-			.attr('transform', `rotate(-90,10,${H / 2})`).text('Spatial lag');
+			.attr('transform', `rotate(-90,10,${H / 2})`).text(i18n.t('chart.moran.lag'));
 
 		g.append('g').attr('transform', `translate(0,${h})`)
 			.call(d3.axisBottom(x).ticks(5))
@@ -303,12 +326,12 @@
 
 </script>
 
-<ChartFrame title="Autocorrelación espacial" csvRows={csvRows} csvFilename="spatia_moran" {defaultCollapsed}>
+<ChartFrame title={i18n.t('chart.moran.title')} csvRows={csvRows} csvFilename="spatia_moran" {defaultCollapsed}>
 	<div class="moran-body">
 			{#if computing}
 				<div class="moran-loading">
 					<div class="moran-spinner"></div>
-					Calculando Moran's I...
+					{i18n.t('chart.moran.computing')}
 				</div>
 			{:else if result}
 				<div class="moran-stats">
@@ -316,21 +339,22 @@
 					<span class="moran-dim">E[I] = {result.expected.toFixed(4)}</span>
 					<span class="moran-dim">z = {result.z.toFixed(2)}</span>
 					<span class="{result.p < 0.05 ? 'moran-sig' : 'moran-insig'}">p {result.p < 0.001 ? '< 0.001' : '= ' + result.p.toFixed(3)}</span>
-					<span class="moran-dim">n = {result.n}</span>
+					<span class="moran-dim">n = {result.n.toLocaleString(i18n.locale)} {result.res < 9 ? i18n.t('chart.moran.nAggregated').replace('{res}', String(result.res)) : i18n.t('chart.moran.nHex')}</span>
 					{#if brushCount > 0}
 						<span class="moran-sel">{brushCount} sel.</span>
 						<button class="moran-btn-clear" onclick={clearBrush}>✕</button>
 					{/if}
 				</div>
+				<p class="moran-read">{i18n.t(readingKey(result.I))} <span class="moran-dim">{i18n.t('chart.moran.pNote')}</span></p>
 				<div class="moran-mapview">
-					<span class="moran-dim">Mapa:</span>
+					<span class="moran-dim">{i18n.t('chart.moran.map')}</span>
 					<button class="moran-view-btn" class:moran-view-btn-active={!lisaMode}
 						onclick={() => { if (lisaMode) { lisaMode = false; onShowLisa([]); } }}>
-						coropleta
+						{i18n.t('chart.moran.choropleth')}
 					</button>
 					<button class="moran-view-btn" class:moran-view-btn-active={lisaMode}
-						onclick={() => { if (!lisaMode) toggleLisa(); }}>
-						LISA
+						onclick={() => { if (!lisaMode) toggleLisa(); }} title={i18n.t('chart.moran.quadrantsHint')}>
+						{i18n.t('chart.moran.quadrants')}
 					</button>
 				</div>
 				<div bind:this={container} class="moran-plot"></div>
@@ -348,6 +372,10 @@
 </ChartFrame>
 
 <style>
+	.moran-read {
+		font-size: 10px; color: #cbd5e1; line-height: 1.4;
+		margin: 2px 0 6px;
+	}
 	.moran-wrap {
 		margin-top: 10px;
 		border-top: 1px solid rgba(255,255,255,0.07);

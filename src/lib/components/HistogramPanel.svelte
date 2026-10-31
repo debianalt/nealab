@@ -35,7 +35,7 @@
 
 	// Data-driven domain of the primary variable: the chart plots whatever physical
 	// unit the layer carries (tC/ha, min, µg/m³, 0–1 fractions…), not a fixed 0–100.
-	// Mirrors ParallelCoords' per-variable extents. Fallback [0,100] when empty,
+	// Fallback [0,100] when empty,
 	// and a +1 span guard avoids divide-by-zero when all values are equal.
 	const domain = $derived.by(() => {
 		let lo = Infinity, hi = -Infinity;

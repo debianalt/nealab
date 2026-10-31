@@ -372,6 +372,12 @@ export class HexStore {
 		return url.replace('/data/', `/data/${this.territoryPrefix}`);
 	}
 
+	/** Per-department parquet URL of another layer in the active territory (bivariate Y axis). */
+	deptUrlForLayer(layerId: string, parquetKey: string): string | null {
+		const layer = HEX_LAYER_REGISTRY[layerId];
+		return layer ? this.deptUrlFor(layer, parquetKey) : null;
+	}
+
 	/** Per-department parquet URL for a layer (mirrors the dispatch in loadDepartment). */
 	private deptUrlFor(layer: HexLayerConfig, parquetKey: string): string {
 		if (layer.id === 'flood_risk') return getFloodDptoUrl(parquetKey, this.territoryPrefix);

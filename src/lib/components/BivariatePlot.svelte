@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { query } from '$lib/stores/duckdb';
 	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, getHexPrimaryUnit } from '$lib/config';
+	import { cellToParent, getResolution } from 'h3-js';
+	import { loadDeptSummary } from '$lib/utils/deptSummaries';
+	import { normDeptName } from '$lib/utils/deptBoundaries';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 
@@ -10,6 +13,10 @@
 		xLabel = 'score',
 		analysisId = '',
 		territoryPrefix = '',
+		territoryId = '',
+		deptName = null as string | null,
+		deptKey = null as string | null,
+		deptUrl = (_id: string, _key: string) => null as string | null,
 		onBrushSelect = (_h3s: string[]) => {},
 		defaultCollapsed = true,
 	}: {
@@ -18,6 +25,11 @@
 		xLabel?: string;
 		analysisId?: string;
 		territoryPrefix?: string;
+		territoryId?: string;
+		deptName?: string | null;
+		deptKey?: string | null;
+		// Per-department parquet URL of a layer in the active territory.
+		deptUrl?: (layerId: string, key: string) => string | null;
 		onBrushSelect?: (h3s: string[]) => void;
 		defaultCollapsed?: boolean;
 	} = $props();
@@ -27,9 +39,34 @@
 	const plotW = SVG_W - PAD_L - PAD_R;
 	const plotH = SVG_H - PAD_T - PAD_B;
 
+	// Y candidates: comparable hexagon layers available in this territory.
 	const comparableAnalyses = $derived(
-		ANALYSIS_REGISTRY.filter(a => a.comparable && a.id !== analysisId)
+		ANALYSIS_REGISTRY.filter(a => a.comparable && a.id !== analysisId && HEX_LAYER_REGISTRY[a.id]
+			&& (a.coverage as Record<string, string> | undefined)?.[territoryId] !== 'unavailable')
 	);
+	$effect(() => { if (selectedB && !comparableAnalyses.some(a => a.id === selectedB)) selectedB = ''; });
+
+	// Resolution of the cells the panel shows: a large department is aggregated to a
+	// coarser H3 level (hexStore LOD), so Y has to be averaged to that same level or
+	// no key ever matches.
+	const xRes = $derived.by(() => {
+		for (const h3 of data.keys()) { try { return getResolution(h3); } catch { return 9; } }
+		return 9;
+	});
+
+	// Y's parquet for the open department (its own key: census layers name some
+	// departments differently), else the territory-wide parquet.
+	async function yUrl(b: string): Promise<string> {
+		if (deptName && deptKey) {
+			const summary = await loadDeptSummary(b, territoryPrefix);
+			const want = normDeptName(deptName);
+			const d = (summary?.departments as any[] | undefined)?.find(
+				(x) => normDeptName(x.dpto ?? x.distrito ?? x.municipio) === want);
+			const url = deptUrl(b, d?.parquetKey ?? deptKey);
+			if (url) return url;
+		}
+		return getSatGlobalUrl(b, territoryPrefix);
+	}
 
 	let selectedB = $state('');
 	let bData = $state(new Map<string, number>());
@@ -41,18 +78,37 @@
 		if (!b) { bData = new Map(); return; }
 		const layer = HEX_LAYER_REGISTRY[b];
 		if (!layer) return;
-		const url = getSatGlobalUrl(b, territoryPrefix);
-		const bVar = layer.primaryVariable;
+		const res = xRes;
+		void deptKey; void deptName; // reload Y when another department opens
 		bLoading = true;
 		bError = false;
-		query(`SELECT h3index, "${bVar}" as val FROM read_parquet('${url}')`)
-			.then(result => {
-				const m = new Map<string, number>();
-				for (let i = 0; i < result.numRows; i++) {
-					const row = result.get(i)!.toJSON();
-					const v = Number(row.val);
-					if (isFinite(v)) m.set(String(row.h3index), v);
-				}
+		(async () => {
+			const url = await yUrl(b);
+			// The configured primary can be missing from a territory's parquet (hexStore
+			// substitutes one); fall back to the first declared variable present.
+			const desc = await query(`DESCRIBE SELECT * FROM read_parquet('${url}')`);
+			const cols = new Set<string>();
+			for (let i = 0; i < desc.numRows; i++) cols.add(String(desc.get(i)!.toJSON().column_name));
+			const bVar = cols.has(layer.primaryVariable) ? layer.primaryVariable
+				: layer.variables.map(v => v.col).find(c => cols.has(c) && !c.endsWith('_label') && c !== 'type');
+			if (!bVar) throw new Error('no Y column');
+			const result = await query(`SELECT h3index, "${bVar}" as val FROM read_parquet('${url}')`);
+			const sum = new Map<string, number>(), cnt = new Map<string, number>();
+			for (let i = 0; i < result.numRows; i++) {
+				const row = result.get(i)!.toJSON();
+				const v = Number(row.val);
+				if (!isFinite(v)) continue;
+				let h3 = String(row.h3index);
+				if (res < 9) { try { h3 = cellToParent(h3, res); } catch { continue; } }
+				sum.set(h3, (sum.get(h3) ?? 0) + v);
+				cnt.set(h3, (cnt.get(h3) ?? 0) + 1);
+			}
+			const m = new Map<string, number>();
+			for (const [h3, s] of sum) m.set(h3, s / cnt.get(h3)!);
+			return m;
+		})()
+			.then(m => {
+				if (selectedB !== b) return; // superseded by another pick
 				bData = m;
 				bLoading = false;
 			})

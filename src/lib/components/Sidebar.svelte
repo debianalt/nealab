@@ -26,7 +26,6 @@
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
-	import ParallelCoords from './ParallelCoords.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
@@ -73,7 +72,6 @@
 		onMoranBrush,
 		onHistogramBrush,
 		onBivariateBrush,
-		onParallelBrush,
 		onFlowBrush,
 		onRadioCensusBrush,
 		onCensoDeptSelect,
@@ -106,7 +104,6 @@
 		onMoranBrush?: (h3s: string[]) => void;
 		onHistogramBrush?: (h3s: string[]) => void;
 		onBivariateBrush?: (h3s: string[]) => void;
-		onParallelBrush?: (h3s: string[]) => void;
 		onFlowBrush?: (h3s: string[]) => void;
 		onRadioCensusBrush?: (redcodes: string[]) => void;
 		onCensoDeptSelect?: (feature: any | null) => void;
@@ -270,12 +267,11 @@
 						xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
 						analysisId={hexStore.activeLayer.id}
 						territoryPrefix={hexStore.territoryPrefix}
+						territoryId={hexStore.territoryId}
+						deptName={hexStore.selectedDpto}
+						deptKey={hexStore.selectedParquetKey}
+						deptUrl={(id, key) => hexStore.deptUrlForLayer(id, key)}
 						onBrushSelect={onBivariateBrush ?? (() => {})}
-					/>
-					<ParallelCoords
-						data={hexStore.visibleData}
-						variables={hexStore.numericVariables}
-						onBrushSelect={onParallelBrush ?? (() => {})}
 					/>
 				{/if}
 			{/if}

@@ -848,14 +848,6 @@
 		mapComponent?.flyToBbox([w, s, e, n]);
 	}
 
-	function handleParallelBrush(h3s: string[]) {
-		if (h3s.length === 0) { mapComponent?.clearHexZoneHighlight(); return; }
-		mapComponent?.setHexZoneHighlight(
-			[{ h3indices: h3s, color: '#22d3ee' }],
-			hexStore.boundaryCache
-		);
-	}
-
 	// ── Compare choropleth: render compare dept hexes when compareDataVersion changes ──
 	$effect(() => {
 		const version = hexStore.compareDataVersion;
@@ -1938,7 +1930,6 @@
 			onMoranBrush={handleMoranBrush}
 			onHistogramBrush={handleHistogramBrush}
 			onBivariateBrush={handleBivariateBrush}
-			onParallelBrush={handleParallelBrush}
 			onFlowBrush={handleFlowBrush}
 			onRadioCensusBrush={handleRadioCensusBrush}
 			onCensoDeptSelect={handleCensoDeptSelect}
