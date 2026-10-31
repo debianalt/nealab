@@ -2,7 +2,7 @@
 	import { RIO, SELECT, INK_3, SURFACE } from '$lib/utils/sello';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, svgScale, fitLabel, dockBoost, measure } from '$lib/utils/chartType';
+	import { CHART_PX, INK, svgScale, fitLabel, wrapLabel, dockBoost, measure } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -75,9 +75,28 @@
 		return p.join(' ');
 	});
 
-	const pct = (x: number) => (x * 100).toLocaleString(i18n.locale, { maximumFractionDigits: x < 0.1 ? 1 : 0 });
+	// One decimal everywhere, so the headline and the selection read alike; never
+	// round a partial share to 100 % (or a positive one to 0 %).
+	const pct = (x: number): string => {
+		if (x >= 1) return '100';
+		if (x <= 0) return '0';
+		const p = x * 100;
+		if (p < 0.05) return `< ${(0.1).toLocaleString(i18n.locale, { minimumFractionDigits: 1 })}`;
+		const v = Math.min(p, 99.9);
+		return v.toLocaleString(i18n.locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	};
 	const headTop10 = $derived(shareAt(0.1));
 	const headHalf = $derived(hexFracFor(0.5));
+
+	function yTitleLines(v: string, maxPx: number): string[] {
+		const tpl = i18n.t('chart.conc.axisY');
+		const cut = tpl.indexOf('{v}');
+		const head = (cut >= 0 ? tpl.slice(0, cut) : tpl).trim();
+		const tail = cut >= 0 ? tpl.slice(cut + 3).trim() : '';
+		return [head, ...wrapLabel(`${v}${tail ? ' ' + tail : ''}`, maxPx, CHART_PX.label, 2)].filter(Boolean);
+	}
+
+	const yLines = $derived(yTitleLines(label, (plotW / k) * 0.75));
 
 	function svgX(f: number) { return PAD_L + f * plotW; }
 	function svgY(s: number) { return PAD_T + (1 - s) * plotH; }
@@ -139,7 +158,7 @@
 			</p>
 			<div class="cc-sub">
 				{#if cut !== null}
-					<span class="cc-sel">{i18n.t('chart.conc.sel').replace('{k}', pct(cut)).replace('{n}', cutCount.toLocaleString(i18n.locale)).replace('{p}', pct(shareAt(cut)))}</span>
+					<span class="cc-sel">{i18n.t('chart.conc.sel').replace('{k}', pct(cutCount / nAll)).replace('{n}', cutCount.toLocaleString(i18n.locale)).replace('{p}', pct(cutCount > 0 ? cum[cutCount - 1] : 0))}</span>
 				{:else}
 					<span class="cc-hint">{i18n.t('chart.conc.hint')}</span>
 				{/if}
@@ -178,10 +197,11 @@
 					<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
 						text-anchor="middle" fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
 					>{fitLabel(i18n.t('chart.conc.axisX'), plotW / k, CHART_PX.label)}</text>
-					<!-- Y title bottom-right: a concentration curve never goes below the diagonal. -->
-					<text x={svgX(1) - 4 * k} y={PAD_T + plotH - 6 * k} text-anchor="end" fill={INK.label}
-						font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
-					><title>{label}</title>{fitLabel(i18n.t('chart.conc.axisY').replace('{v}', label), plotW / k * 0.9, CHART_PX.label)}</text>
+					<!-- Y title bottom-right (a concentration curve never goes below the diagonal),
+					     wrapped: «% del total de» then the variable name, haloed over the diagonal. -->
+					<text text-anchor="end" fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
+						stroke={SURFACE} stroke-width={3 * k} stroke-linejoin="round" paint-order="stroke"
+					><title>{i18n.t('chart.conc.axisY').replace('{v}', label)}</title>{#each yLines as line, i}<tspan x={svgX(1) - 4 * k} y={PAD_T + plotH - 6 * k - (yLines.length - 1 - i) * (CHART_PX.label + 2) * k}>{line}</tspan>{/each}</text>
 				</svg>
 			</div>
 		{:else}

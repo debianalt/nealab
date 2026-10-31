@@ -42,6 +42,30 @@ export function fitLabel(text: string, maxPx: number, fontPx: number, family: st
 	return text.slice(0, lo).trimEnd() + '…' + suffix;
 }
 
+// Long axis titles over several lines: words packed into lines of at most
+// `maxPx`; only the last line gets an ellipsis when the text still does not fit.
+export function wrapLabel(text: string, maxPx: number, fontPx: number, maxLines = 2, family: string = FONT.sans): string[] {
+	if (typeof document === 'undefined' || maxPx <= 0) return [text];
+	measureCtx ??= document.createElement('canvas').getContext('2d');
+	if (!measureCtx) return [text];
+	measureCtx.font = `${fontPx}px ${family}`;
+	const fits = (t: string) => measureCtx!.measureText(t).width <= maxPx;
+	const words = text.split(/\s+/).filter(Boolean);
+	const lines: string[] = [];
+	let cur = '';
+	let i = 0;
+	for (; i < words.length; i++) {
+		const next = cur ? `${cur} ${words[i]}` : words[i];
+		if (fits(next) || !cur) { cur = next; continue; }
+		lines.push(cur);
+		cur = words[i];
+		if (lines.length === maxLines - 1) { i++; break; }
+	}
+	const rest = [cur, ...words.slice(i)].filter(Boolean).join(' ');
+	if (rest) lines.push(fitLabel(rest, maxPx, fontPx, family));
+	return lines;
+}
+
 // Charts docked beside the map (ChartFrame `bind:expanded`) get one step
 // bigger text: they multiply their k by this.
 // Svelte action: reports the box a chart renders in. Its own ResizeObserver plus
