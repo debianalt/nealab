@@ -841,6 +841,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'side.clearRadios': { es: 'Limpiar', en: 'Clear', gn: 'Emopotĩ', pt: 'Limpar' },
 	'side.radioCensus.title': { es: 'Radios censales', en: 'Census tracts', gn: 'Radio censal', pt: 'Setores censitários' },
 	'side.radioCensus.subtitle': { es: 'Distribución de indicadores censales en todos los radios', en: 'Distribution of census indicators across all tracts', gn: "Indicadores censales jehaipy opavave radio rehe", pt: 'Distribuição de indicadores censitários em todos os setores' },
+	'side.radioCensus.position': { es: 'Este radio: {value} % · mayor que el {pct} % de los radios {ref}', en: 'This tract: {value} % · higher than {pct} % of the tracts {ref}', gn: 'Este radio: {value} % · mayor que el {pct} % de los radios {ref}', pt: 'Este setor: {value} % · maior que {pct} % dos setores {ref}' },
+	'side.radioCensus.positionN': { es: 'Radio {n}: {value} % · mayor que el {pct} % de los radios {ref}', en: 'Tract {n}: {value} % · higher than {pct} % of the tracts {ref}', gn: 'Radio {n}: {value} % · mayor que el {pct} % de los radios {ref}', pt: 'Setor {n}: {value} % · maior que {pct} % dos setores {ref}' },
 	'side.radioCensus.variable': { es: 'Variable', en: 'Variable', gn: 'Variable', pt: 'Variável' },
 	'side.radioCensus.loading': { es: 'Cargando radios…', en: 'Loading tracts…', gn: 'Omyenyhẽhína radio…', pt: 'Carregando setores…' },
 	'side.radioCensus.empty': { es: 'Sin datos de radios', en: 'No tract data', gn: "Ndaipóri radio dato", pt: 'Sem dados de setores' },

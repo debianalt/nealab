@@ -3,11 +3,13 @@
 	import { PETAL_VARS, loadRadioPopulation } from '$lib/utils/petal';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
-	import ParallelCoords from './ParallelCoords.svelte';
+	import { territoryRef } from '$lib/utils/territoryRef';
 
-	let { territory, onBrushSelect }: {
+	let { territory, onBrushSelect, selected = [] }: {
 		territory: string;
 		onBrushSelect?: (redcodes: string[]) => void;
+		// Tracts selected on the map: marked on the distribution, with their percentile.
+		selected?: Array<{ redcode: string; color: string }>;
 	} = $props();
 
 	const TERR_LABEL: Record<string, string> = {
@@ -45,6 +47,24 @@
 		activeVars.some((v) => v.col === selectedVar) ? selectedVar : activeVars[0].col
 	);
 
+	// Where each selected tract falls among all the province's tracts, for the
+	// chosen variable: value and share of tracts with a lower value.
+	const positions = $derived.by(() => {
+		if (!radioData) return [];
+		const vals: number[] = [];
+		for (const row of radioData.values()) {
+			const v = Number(row[effVar]);
+			if (isFinite(v)) vals.push(v);
+		}
+		return selected.flatMap((s) => {
+			const v = Number(radioData!.get(s.redcode)?.[effVar]);
+			if (!isFinite(v) || vals.length === 0) return [];
+			const below = vals.reduce((n, x) => n + (x < v ? 1 : 0), 0);
+			return [{ ...s, value: v, pct: Math.round((100 * below) / vals.length) }];
+		});
+	});
+	const fmtPct = (v: number) => v.toLocaleString(i18n.locale, { maximumFractionDigits: 1 });
+
 	// Clear the map highlight when the panel goes away (lens opened, switch to
 	// Itapúa, radios selected, etc.) so no ghost overlay remains.
 	onDestroy(() => onBrushSelect?.([]));
@@ -72,8 +92,18 @@
 			</select>
 		</label>
 
-		<HistogramPanel data={radioData} variable={effVar} xLabel="%" {onBrushSelect} />
-		<ParallelCoords data={radioData} variables={activeVars} {onBrushSelect} />
+		<HistogramPanel data={radioData} variable={effVar} xLabel="%" {onBrushSelect}
+			markers={positions.map((p) => ({ value: p.value, color: p.color }))} />
+		{#each positions as p, i}
+			<p class="rc-pos">
+				<span class="rc-dot" style:background={p.color}></span>
+				{i18n.t(positions.length > 1 ? 'side.radioCensus.positionN' : 'side.radioCensus.position')
+					.replace('{n}', String(i + 1))
+					.replace('{value}', fmtPct(p.value))
+					.replace('{pct}', String(p.pct))
+					.replace('{ref}', territoryRef(territory, i18n.locale, 'gen'))}
+			</p>
+		{/each}
 	{/if}
 </div>
 
@@ -108,4 +138,13 @@
 	}
 	.rc-select option { background: #1e293b; color: #e2e8f0; }
 	.rc-select:focus { outline: none; border-color: #64748b; }
+	.rc-pos {
+		display: flex; align-items: baseline; gap: 6px;
+		font-size: 10px; color: #cbd5e1;
+		margin: 4px 0 0;
+	}
+	.rc-dot {
+		flex: none; width: 8px; height: 8px; border-radius: 50%;
+		transform: translateY(1px);
+	}
 </style>

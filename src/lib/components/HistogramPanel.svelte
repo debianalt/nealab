@@ -7,11 +7,14 @@
 		variable = '',
 		xLabel = 'score',
 		onBrushSelect = (_h3s: string[]) => {},
+		markers = [] as Array<{ value: number; color: string }>,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
 		xLabel?: string;
 		onBrushSelect?: (h3s: string[]) => void;
+		// Vertical lines at given values (e.g. the census tracts selected on the map).
+		markers?: Array<{ value: number; color: string }>;
 	} = $props();
 
 	function csvRows() {
@@ -206,6 +209,17 @@
 				pointer-events="none"
 			/>
 		{/if}
+
+		<!-- Markers: where the selected items fall in the distribution -->
+		{#each markers as m}
+			{@const pct = Math.max(0, Math.min(100, ((m.value - domain[0]) / (domain[1] - domain[0])) * 100))}
+			<line
+				x1={svgX(pct)} x2={svgX(pct)}
+				y1={PAD_T - 2} y2={PAD_T + plotH}
+				stroke={m.color} stroke-width="1.5"
+				pointer-events="none"
+			/>
+		{/each}
 
 		<!-- X axis labels (physical values at 0/25/50/75/100 % of the domain) -->
 		{#each [0, 25, 50, 75, 100] as tick}

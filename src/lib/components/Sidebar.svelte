@@ -303,7 +303,8 @@
 				{onDownloadRadiosSummary}
 			/>
 			{#if !lensStore.activeLens && isCensusTerritory}
-				<RadioCensusPanel territory={territoryStore.activeTerritory.id} onBrushSelect={onRadioCensusBrush ?? (() => {})} />
+				<RadioCensusPanel territory={territoryStore.activeTerritory.id} onBrushSelect={onRadioCensusBrush ?? (() => {})}
+					selected={[...mapStore.selectedRadios].map(([redcode, r]) => ({ redcode, color: r.color }))} />
 			{/if}
 		</div>
 	{:else if lensStore.activeLens}
