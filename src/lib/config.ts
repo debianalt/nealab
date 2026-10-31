@@ -1697,18 +1697,24 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 		processedDate: '24/03/2026',
 		sourceKey: 'data.source.overture',
 	},
-	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'data.source.satellite' },
-	sat_forestry_aptitude: { dataDate: 'ERA5/CHIRPS/SoilGrids/SRTM 2019-2023', processedDate: '21/04/2026', sourceKey: 'data.source.satellite' },
-	sat_service_deprivation: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
-	sat_health_access: { dataDate: 'Oxford MAP 2019 + Censo 2022', processedDate: '02/04/2026', sourceKey: 'data.source.satellite' },
-	sat_education_capital: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
-	sat_education_flow: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '02/04/2026', sourceKey: 'data.source.censo' },
-	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '29/03/2026', sourceKey: 'data.source.censo' },
-	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'data.source.censo' },
-	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2022-2024 + GBA 2025', processedDate: '29/03/2026', sourceKey: 'data.source.satellite' },
-	sat_accessibility: { dataDate: 'Nelson 2019 / Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'data.source.satellite' },
+	// sourceKey = the layer's own datasets, from its published methodology (no
+	// generic «satellite» list). processedDate = last reprocess (git) or, where
+	// none is recorded, the publication date of the file in R2.
+	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'layer.source.agri' },
+	sat_forestry_aptitude: { dataDate: 'ERA5/CHIRPS/SoilGrids/SRTM 2019-2023', processedDate: '20/06/2026', sourceKey: 'layer.source.forestry' },
+	sat_service_deprivation: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
+	sat_health_access: { dataDate: 'Oxford MAP 2019 + OSM + Censo 2022', processedDate: '30/10/2026', sourceKey: 'layer.source.health' },
+	sat_education_capital: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
+	sat_education_flow: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
+	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
+	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'layer.source.censoTemporal' },
+	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS + GBA 2025', processedDate: '30/10/2026', sourceKey: 'layer.source.economic' },
+	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'layer.source.accessibility' },
+	sat_land_use: { dataDate: 'Dynamic World V1', processedDate: '23/10/2026', sourceKey: 'layer.source.landUse' },
+	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
+	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.12 2001-2024', processedDate: '01/10/2026', sourceKey: 'layer.source.deforestation' },
 	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.
-	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '24/07/2026', sourceKey: 'data.source.satellite' },
+	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '30/10/2026', sourceKey: 'layer.source.eudr' },
 };
 
 // ── EUDR Configuration ──────────────────────────────────────────────────

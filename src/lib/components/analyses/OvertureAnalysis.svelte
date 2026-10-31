@@ -1039,7 +1039,7 @@
 		{#if freshness}
 			<div class="freshness">
 				<span class="freshness-label">{i18n.t('data.updatedAt')}: {processedDisplay}</span>
-				<span class="freshness-source">{i18n.t(freshness.sourceKey)}</span>
+				<span class="freshness-source">{i18n.t('section.source')}: {i18n.t(freshness.sourceKey)}</span>
 				{#if sarDateDisplay}
 					<span class="freshness-label">{i18n.t('section.sarImage')}: {sarDateDisplay} · {i18n.t('section.sarRevisit')}</span>
 				{/if}
