@@ -87,6 +87,7 @@
 		if (fd && (!u || SCORE_UNITS.has(u))) return `${fd[0]}–${fd[1]}${u === '%' ? ' %' : ''}`;
 		// P2–P98 domain (census rates): the ends are printed under the gradient.
 		if (layer.quantileDomain) return unitLabel(u);
+		if (u === '%') return '0–100 %';   // a share (land use), not a /100 score
 		if (!u || SCORE_UNITS.has(u)) return '0–100';
 		return unitLabel(u);
 	});

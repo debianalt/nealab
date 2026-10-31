@@ -71,8 +71,10 @@ export const BIVAR_HEX = [
 // Risk and pressure (flood, census deprivation, isolation, PM2.5, deforestation,
 // EUDR): tierra, one hue.
 export const MAP_TIERRA = ['#8a3a22', '#b24c29', '#d0623a', '#e5835a', '#f3ab8c'] as const;
-// Aptitude and cover (agriculture, forestry, tree cover): selva, one hue.
-export const MAP_SELVA = ['#1a5a40', '#217a55', '#2a9468', '#4fb184', '#86cda6', '#c0e6cf'] as const;
+// Aptitude and cover (agriculture, forestry, tree cover): selva, one hue, pale
+// to deep: the greenest hexagon is the one with the most cover or aptitude (the
+// first version had high = pale mint, which read backwards; fixed 31-oct-2026).
+export const MAP_SELVA = ['#c9dccf', '#9ccbb0', '#6bb88f', '#3fa06f', '#1f8455', '#136b43'] as const;
 // Change (delta mode), left → right: worse (tierra) · no change (gris) · better
 // (río). Danger layers flip the delta sign upstream so an increase lands left.
 export const MAP_DIV = ['#ea9070', '#c4572f', '#8f3f24', '#5c6370', '#35659f', '#3d7fc4', '#7fb0e6'] as const;
