@@ -252,7 +252,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'label.waterNetwork': { es: 'Sin red de agua (%)', en: 'No water network (%)', gn: 'Y juru ỹre (%)', pt: 'Sem rede de água (%)' },
 	// Brazil IBGE setor vars
 	'label.br.waterNetwork':     { es: 'Agua de red (%)',      en: 'Piped water (%)',       gn: 'Y ñemopyrũ (%)',  pt: 'Água de rede (%)' },
-	'label.br.sewerNetwork':     { es: 'Esgoto adecuado (%)',  en: 'Adequate sewage (%)',   gn: 'Ykua porã (%)',   pt: 'Esgoto adequado (%)' },
+	'label.br.sewerNetwork':     { es: 'Desagüe adecuado (%)',  en: 'Adequate sewage (%)',   gn: 'Ykua porã (%)',   pt: 'Esgoto adequado (%)' },
 	'label.br.garbageCollected': { es: 'Basura recolectada (%)', en: 'Garbage collected (%)', gn: 'Taky jeheja (%)', pt: 'Lixo coletado (%)' },
 	'label.br.literacy':         { es: 'Alfabetismo (%)',      en: 'Literacy (%)',          gn: 'Moñe\'ẽ porã (%)', pt: 'Alfabetismo (%)' },
 	'label.br.noBathroom':       { es: 'Sin baño exclusivo (%)', en: 'No private bathroom (%)', gn: 'Ysyryrogue ỹre (%)', pt: 'Sem banheiro exclusivo (%)' },
@@ -862,7 +862,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'source.title': { es: 'Fuentes', en: 'Sources', gn: "Moñe'ẽha", pt: 'Fontes' },
 	'source.census':    { es: 'Datos: INDEC — Censo Nacional de Población 2022', en: 'Data: INDEC — National Population Census 2022', gn: 'Datos: INDEC — Censo Nacional 2022', pt: 'Dados: INDEC — Censo Nacional de Población 2022' },
 	'source.census.br': { es: 'Datos: IBGE — Censo Demográfico 2022 (Agregados por Setores Censitários)', en: 'Data: IBGE — Demographic Census 2022 (Tract-level Aggregates)', gn: 'Datos: IBGE — Censo Demográfico 2022', pt: 'Dados: IBGE — Censo Demográfico 2022 (Agregados por Setores Censitários)' },
-	'source.census.br.note': { es: 'Índice de saneamiento local (modo local — no comparable entre países): % agua de rede geral, % esgoto adequado, % lixo coletado, % sem banheiro exclusivo.', en: 'Local sanitation index (local mode — not cross-country comparable): % piped water, % adequate sewage, % garbage collected, % no exclusive bathroom.', gn: 'Índice saneamiento local BR.', pt: 'Índice de saneamento local (modo local): % água de rede geral, % esgoto adequado, % lixo coletado, % sem banheiro exclusivo.' },
+	'source.census.br.note': { es: 'Índice de saneamiento local (modo local — no comparable entre países): % agua de red general, % desagüe adecuado, % basura recolectada, % sin baño exclusivo.', en: 'Local sanitation index (local mode — not cross-country comparable): % piped water, % adequate sewage, % garbage collected, % no exclusive bathroom.', gn: 'Índice saneamiento local BR.', pt: 'Índice de saneamento local (modo local): % água de rede geral, % esgoto adequado, % lixo coletado, % sem banheiro exclusivo.' },
 	'source.buildings': { es: 'Edificaciones: Google Open Buildings 2025 + VIDA', en: 'Buildings: Google Open Buildings 2025 + VIDA', gn: 'Óga: Google Open Buildings 2025 + VIDA', pt: 'Edificações: Google Open Buildings 2025 + VIDA' },
 	'source.basemap': { es: 'Mapa: CARTO Dark Matter (© OpenStreetMap)', en: 'Basemap: CARTO Dark Matter (© OpenStreetMap)', gn: 'Mapa: CARTO Dark Matter (© OpenStreetMap)', pt: 'Mapa: CARTO Dark Matter (© OpenStreetMap)' },
 	'source.terrain': { es: 'Relieve: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)', en: 'Terrain: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, EU/ESA)', gn: 'Relieve: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)', pt: 'Relevo: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)' },
