@@ -175,6 +175,13 @@ export class HexStore {
 	// Context needed to re-query res-9 detail for the viewport on zoom-in (and to restore
 	// the cached coarse overview on zoom-out). Null when no LOD dept is active.
 	private lodDeptContext: { url: string; coarseRes: number; cacheKey: string } | null = null;
+	// Res-9 cells already loaded for the open LOD department (accumulated across
+	// pans/zooms, capped): a move only queries what is new, and the map is not
+	// replaced wholesale on every moveend (that was the zoom flicker).
+	private lodDetail: {
+		ctx: object; tried: Set<string>;
+		data: Map<string, Record<string, any>>; centroids: Map<string, [number, number]>; boundaries: Map<string, number[][]>;
+	} | null = null;
 	private _prefetchToken = 0;
 
 	// ── Compare dept (cross-territory dept-to-dept comparison) ──────────────
@@ -792,17 +799,33 @@ export class HexStore {
 			return true;
 		}
 
-		// Load res-9 detail for the visible cells.
+		// Load res-9 detail for the visible cells not loaded yet.
+		let det = this.lodDetail;
+		if (!det || det.ctx !== ctx) {
+			det = this.lodDetail = { ctx, tried: new Set(), data: new Map(), centroids: new Map(), boundaries: new Map() };
+		}
+		const missing = cells.filter(c => !det!.tried.has(c));
+		if (missing.length === 0) {
+			if (this.selectedHexResLevel === null) return false; // already showing all of it
+			this.showDetail(det);
+			return true;
+		}
+		// Bound the accumulated detail: drop what is out of the current view first.
+		if (det.data.size + missing.length > HexStore.DETAIL_KEEP) {
+			const keep = new Set(cells);
+			for (const h of [...det.tried]) if (!keep.has(h)) {
+				det.tried.delete(h); det.data.delete(h); det.centroids.delete(h); det.boundaries.delete(h);
+			}
+		}
 		try {
 			const cols = await this.deptWantedCols(layer, ctx.url);
-			const inList = cells.map(c => `'${c}'`).join(',');
+			const inList = missing.map(c => `'${c}'`).join(',');
 			const result = await query(`SELECT ${cols.map(c => `"${c}"`).join(', ')} FROM '${ctx.url}' WHERE h3index IN (${inList})`);
 			// Guard against a stale write: if a different dept/layer was selected while this
 			// query was in flight, lodDeptContext changed — drop this result.
-			if (this.lodDeptContext !== ctx) return false;
-			const data = new Map<string, Record<string, any>>();
-			const centroids = new Map<string, [number, number]>();
-			const boundaries = new Map<string, number[][]>();
+			if (this.lodDeptContext !== ctx || this.lodDetail !== det) return false;
+			for (const c of missing) det.tried.add(c); // cells outside the dept are not re-asked
+			const data = det.data, centroids = det.centroids, boundaries = det.boundaries;
 			const resultCols = result.schema.fields.map((f: any) => f.name).filter((n: string) => n !== 'h3index');
 			const h3Vec = result.getChild('h3index');
 			const colVecs = Object.fromEntries(resultCols.map((c: string) => [c, result.getChild(c)]));
@@ -825,16 +848,22 @@ export class HexStore {
 					boundaries.set(h3index, coords);
 				} catch { /* skip invalid h3 */ }
 			}
-			this.visibleData = data;
-			this.centroidCache = centroids;
-			this.boundaryCache = boundaries;
-			this.selectedHexResLevel = null; // real res-9 detail now → no "aggregated" badge
-			this.dataVersion++;
+			this.showDetail(det);
 			return true;
 		} catch (e) {
 			console.warn('[loadDeptViewport]', e);
 			return false;
 		}
+	}
+
+	private static readonly DETAIL_KEEP = 24000;
+	private showDetail(det: NonNullable<HexStore['lodDetail']>): void {
+		// New Map instances: visibleData/caches are swapped by reference.
+		this.visibleData = new Map(det.data);
+		this.centroidCache = new Map(det.centroids);
+		this.boundaryCache = new Map(det.boundaries);
+		this.selectedHexResLevel = null; // real res-9 detail now → no "aggregated" badge
+		this.dataVersion++;
 	}
 
 	async loadCompareDept(dpto: string, parquetKey: string, comparePrefix: string): Promise<void> {

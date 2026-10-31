@@ -765,6 +765,7 @@
 	// for real res-9 detail of the cells in view; below it, restore the coarse overview.
 	const LOD_DETAIL_ZOOM_MIN = 11;
 	const LOD_DETAIL_MAX_CELLS = 12000;
+	const LOD_DETAIL_PADDED_MAX = 20000;
 	let regionalViewportTooWide = $state(false);
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
@@ -944,23 +945,31 @@
 			let cells: string[] = [];
 			if (m.getZoom() >= LOD_DETAIL_ZOOM_MIN) {
 				const b = m.getBounds();
-				const rect = [[
-					[b.getWest(), b.getSouth()], [b.getEast(), b.getSouth()],
-					[b.getEast(), b.getNorth()], [b.getWest(), b.getNorth()],
-					[b.getWest(), b.getSouth()],
-				]];
-				try { cells = polygonToCells(rect as any, 9, true); } catch { cells = []; }
+				const box = (pad: number) => {
+					const dx = (b.getEast() - b.getWest()) * pad, dy = (b.getNorth() - b.getSouth()) * pad;
+					const w = b.getWest() - dx, e = b.getEast() + dx, s = b.getSouth() - dy, n = b.getNorth() + dy;
+					return [[[w, s], [e, s], [e, n], [w, n], [w, s]]];
+				};
+				// A margin around the view: small pans/zooms land on cells already loaded
+				// (no blank edges while the next query runs). Too many → just the view.
+				try { cells = polygonToCells(box(0.3) as any, 9, true); } catch { cells = []; }
+				if (cells.length > LOD_DETAIL_PADDED_MAX) {
+					try { cells = polygonToCells(box(0) as any, 9, true); } catch { cells = []; }
+				}
 				if (cells.length > LOD_DETAIL_MAX_CELLS) cells = []; // too wide → keep coarse
 			}
 			hexStore.loadDeptViewport(cells).then((changed) => {
 				if (!changed || !hexStore.activeLayer) return;
-				const entries = hexStore.choroplethEntries;
-				if (entries.length === 0) return;
-				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer.colorScale ?? 'flood';
-				if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
-				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
-				// A class map or chart selection outlives the zoom: redraw it at the new resolution.
-				paintClassMap();
+				// One repaint: an active class map (3×3, Moran quadrants) is drawn directly at
+				// the new resolution instead of the layer choropleth followed by it (flicker).
+				if (lastClassMap) paintClassMap();
+				else {
+					const entries = hexStore.choroplethEntries;
+					if (entries.length === 0) return;
+					let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer.colorScale ?? 'flood';
+					if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
+					mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
+				}
 				if (lastHighlight) applyChartHighlight(lastHighlight.h3s, lastHighlight.color);
 			}).catch(() => {});
 		};
