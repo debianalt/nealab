@@ -69,6 +69,23 @@ interface DeptCache {
 }
 const deptDataCache = new Map<string, DeptCache>();
 
+// Charts analyse the whole department at res-9 even when the map draws a coarse
+// overview (LOD): the overview is for drawing only. The res-9 values (no geometry)
+// live in their own small cache — they are 10-50× the overview's rows.
+// Above ANALYSIS_MAX_ROWS (giant PY districts, ~445K hex) charts fall back to the
+// coarse cells and say so.
+const ANALYSIS_MAX_ROWS = 200_000;
+const ANALYSIS_CACHE_MAX = 4;
+const analysisCache = new Map<string, Map<string, Record<string, any>>>();
+function setAnalysisCache(key: string, value: Map<string, Record<string, any>>): void {
+	if (analysisCache.has(key)) analysisCache.delete(key);
+	analysisCache.set(key, value);
+	if (analysisCache.size > ANALYSIS_CACHE_MAX) {
+		const oldest = analysisCache.keys().next().value;
+		if (oldest !== undefined) analysisCache.delete(oldest);
+	}
+}
+
 // Schema (column-name set) cache keyed by parquet URL. The URL carries the
 // `?v=N` cache-buster, so a schema change (version bump) invalidates it
 // naturally. Avoids a redundant `SELECT * LIMIT 0` round-trip on every
@@ -129,6 +146,14 @@ export interface DeptFill {
 export class HexStore {
 	activeLayer: HexLayerConfig | null = $state(null);
 	visibleData: Map<string, Record<string, any>> = $state(new Map());
+	// What the charts analyse: the whole department at res-9, stable under zoom/pan.
+	// Null = same as visibleData (non-LOD loads are already res-9 and never swapped).
+	analysisData: Map<string, Record<string, any>> | null = $state.raw(null);
+	// Coarse res when even the analysis had to aggregate (giant districts), else null.
+	analysisResLevel: number | null = $state(null);
+	get chartData(): Map<string, Record<string, any>> {
+		return this.analysisData ?? this.visibleData;
+	}
 	selectedHexes: Map<string, HexSelectionData> = $state(new Map());
 	hexZones: HexZone[] = $state([]);
 	loading: boolean = $state(false);
@@ -221,6 +246,8 @@ export class HexStore {
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
+			this.analysisData = null;
+			this.analysisResLevel = null;
 			this.centroidCache = new Map();
 			this.boundaryCache = new Map();
 			this.selectedDpto = null;
@@ -262,6 +289,8 @@ export class HexStore {
 		if (cached) {
 			this.visibleData = cached.data;
 			this.centroidCache = cached.centroids;
+			this.analysisData = null;
+			this.analysisResLevel = null;
 			this.boundaryCache = cached.boundaries;
 			this.provincialAvg = cached.provincialAvg;
 			this.dataVersion++;
@@ -354,6 +383,8 @@ export class HexStore {
 		this.colorDomain = null;
 		this.visibleData = new Map();
 		this.selectedDpto = null;
+		this.analysisData = null;
+		this.analysisResLevel = null;
 		this.selectedParquetKey = null;
 		this.selectedHexResLevel = null;
 		this.lodDeptActive = false;
@@ -418,6 +449,8 @@ export class HexStore {
 		this.selectedDpto = dpto;
 		this.selectedParquetKey = parquetKey;
 		this.visibleData = new Map();
+		this.analysisData = null;
+		this.analysisResLevel = null;
 		this.clearSelection();
 		this.clearHexZones();
 		this.clearCompareDept();
@@ -444,6 +477,9 @@ export class HexStore {
 					// Cached coarse overview → re-arm viewport detail (zoom-in re-queries res-9).
 					this.lodDeptActive = true;
 					this.lodDeptContext = { url, coarseRes: deptCached.resLevel, cacheKey };
+					const an = analysisCache.get(cacheKey);
+					if (an) this.analysisData = an;
+					else void this.rebuildAnalysis(layer, url, cacheKey, deptCached.resLevel, deptCached.data);
 				}
 				this.dataVersion++;
 				this.loading = false;
@@ -496,12 +532,17 @@ export class HexStore {
 				const LOD_CATEGORICAL = new Set(['type', 'type_label', 'territorial_type']);
 				const numericCols = resultCols.filter((c: string) => !LOD_CATEGORICAL.has(c));
 				const labelVec = resultCols.includes('type_label') ? result.getChild('type_label') : null;
+				// Res-9 values for the charts (no geometry), unless the district is too big.
+				const keepRes9 = result.numRows <= ANALYSIS_MAX_ROWS;
+				const res9 = keepRes9 ? new Map<string, Record<string, any>>() : null;
 				const sums = new Map<string, Float64Array>();
 				const counts = new Map<string, Int32Array>();
 				const labels = new Map<string, Map<string, number>>();
 				for (let i = 0; i < result.numRows; i++) {
 					let parent: string;
-					try { parent = cellToParent(String(h3indexVec!.get(i)), coarseRes); } catch { continue; }
+					const h3i = String(h3indexVec!.get(i));
+					try { parent = cellToParent(h3i, coarseRes); } catch { continue; }
+					if (res9) res9.set(h3i, HexStore.rowValues(resultCols, colVecs, i));
 					let s = sums.get(parent);
 					let c = counts.get(parent);
 					if (!s || !c) { s = new Float64Array(numericCols.length); c = new Int32Array(numericCols.length); sums.set(parent, s); counts.set(parent, c); }
@@ -549,6 +590,8 @@ export class HexStore {
 				// (enumerates 100K+ res-9 cells on the main thread → the freeze we're avoiding).
 				setDeptCache(cacheKey, { data, centroids, boundaries, bbox: HexStore.bboxFromCentroids(centroids), resLevel: coarseRes });
 				this.visibleData = data;
+				if (res9) { setAnalysisCache(cacheKey, res9); this.analysisData = res9; }
+				else { this.analysisData = data; this.analysisResLevel = coarseRes; }
 				this.centroidCache = centroids;
 				this.boundaryCache = boundaries;
 				this.deptBbox = HexStore.bboxFromCentroids(centroids);
@@ -639,6 +682,8 @@ export class HexStore {
 
 			this.visibleData = data;
 			this.centroidCache = centroids;
+			this.analysisData = null;
+			this.analysisResLevel = null;
 			this.boundaryCache = boundaries;
 			this.deptBbox = HexStore.bboxFromCentroids(centroids);
 			this.dataVersion++;
@@ -653,6 +698,76 @@ export class HexStore {
 		}
 
 		this.loading = false;
+	}
+
+	// One parquet row → plain values (numbers stay numbers, labels stay strings).
+	private static rowValues(cols: string[], vecs: Record<string, any>, i: number): Record<string, any> {
+		const values: Record<string, any> = {};
+		for (const col of cols) {
+			const val = vecs[col]?.get(i);
+			if (val === null || val === undefined) continue;
+			const num = Number(val);
+			values[col] = Number.isFinite(num) && typeof val !== 'string' ? num : String(val);
+		}
+		return values;
+	}
+
+	// Cached coarse overview whose res-9 analysis was evicted: re-read the values
+	// (no geometry) and apply them only if the same department is still open.
+	private async rebuildAnalysis(layer: HexLayerConfig, url: string, cacheKey: string, coarseRes: number, coarse: Map<string, Record<string, any>>): Promise<void> {
+		const ctx = this.lodDeptContext;
+		try {
+			const cols = await this.deptWantedCols(layer, url);
+			const result = await query(`SELECT ${cols.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
+			if (this.lodDeptContext !== ctx) return;
+			if (result.numRows > ANALYSIS_MAX_ROWS) { this.analysisData = coarse; this.analysisResLevel = coarseRes; return; }
+			const resultCols = result.schema.fields.map((f: any) => f.name).filter((n: string) => n !== 'h3index');
+			const h3Vec = result.getChild('h3index');
+			const colVecs = Object.fromEntries(resultCols.map((c: string) => [c, result.getChild(c)]));
+			const res9 = new Map<string, Record<string, any>>();
+			for (let i = 0; i < result.numRows; i++) res9.set(String(h3Vec!.get(i)), HexStore.rowValues(resultCols, colVecs, i));
+			setAnalysisCache(cacheKey, res9);
+			this.analysisData = res9;
+		} catch (e) {
+			console.warn('[rebuildAnalysis]', e);
+		}
+	}
+
+	// Chart selections are res-9 cells; while the map draws a coarse overview,
+	// paint the coarse cells that contain them.
+	displayCells(h3s: string[]): string[] {
+		const res = this.selectedHexResLevel;
+		if (res == null || this.analysisResLevel != null) return h3s;
+		const out = new Set<string>();
+		for (const h of h3s) { try { out.add(cellToParent(h, res)); } catch { /* skip */ } }
+		return [...out];
+	}
+
+	// Class maps (3×3, Moran quadrants) on the coarse overview: each coarse cell
+	// takes the most frequent class among its res-9 children.
+	displayEntries<T extends { h3index: string; value: number | null; nodata?: boolean }>(entries: T[]): { h3index: string; value: number | null; nodata?: boolean }[] {
+		const res = this.selectedHexResLevel;
+		if (res == null || this.analysisResLevel != null) return entries;
+		const tally = new Map<string, Map<number, number>>();
+		const seen = new Set<string>();
+		for (const e of entries) {
+			let parent: string;
+			try { parent = cellToParent(e.h3index, res); } catch { continue; }
+			seen.add(parent);
+			if (e.nodata || e.value === null) continue;
+			let t = tally.get(parent);
+			if (!t) { t = new Map(); tally.set(parent, t); }
+			t.set(e.value, (t.get(e.value) ?? 0) + 1);
+		}
+		const out: { h3index: string; value: number | null; nodata?: boolean }[] = [];
+		for (const parent of seen) {
+			const t = tally.get(parent);
+			if (!t) { out.push({ h3index: parent, value: null, nodata: true }); continue; }
+			let best = 0, bestN = -1;
+			for (const [v, n] of t) if (n > bestN) { bestN = n; best = v; }
+			out.push({ h3index: parent, value: best });
+		}
+		return out;
 	}
 
 	// Viewport detail for a giant (LOD) department: re-query the res-9 cells currently in
@@ -885,6 +1000,8 @@ export class HexStore {
 		if (target === 'primary') {
 			this.visibleData = data;
 			this.centroidCache = centroids;
+			this.analysisData = null;
+			this.analysisResLevel = null;
 			this.boundaryCache = bounds;
 			this.selectedDpto = null;
 			this.selectedParquetKey = null;
@@ -1221,6 +1338,8 @@ export class HexStore {
 
 		this.visibleData = data;
 		this.centroidCache = centroids;
+		this.analysisData = null;
+		this.analysisResLevel = null;
 		this.boundaryCache = boundaries;
 		this.dataVersion++;
 
@@ -1570,6 +1689,8 @@ export class HexStore {
 		this.activeLayer = null;
 		this.visibleData = new Map();
 		this.centroidCache = new Map();
+		this.analysisData = null;
+		this.analysisResLevel = null;
 		this.boundaryCache = new Map();
 		this.selectedDpto = null;
 		this.selectedParquetKey = null;

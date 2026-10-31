@@ -231,34 +231,37 @@
 			     Rendered first: it is the most legible chart of the temporal stack. -->
 			{#if hexStore.activeLayer?.temporal && (hexStore.activeLayer?.perDepartment || hexStore.activeLayer?.flowBands)}
 				<FlowChart
-					data={hexStore.visibleData}
+					data={hexStore.chartData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
 					bands={hexStore.activeLayer.flowBands ?? null}
 					emptyHint={hexStore.activeLayer.perDepartment ? 'seleccioná un departamento' : withRef(i18n.t('analysis.loadingTerritory'), hexStore.territoryId, i18n.locale)}
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
-			{#if hexStore.visibleData.size > 0 && hexStore.activeLayer?.primaryVariable}
+			{#if hexStore.chartData.size > 0 && hexStore.activeLayer?.primaryVariable}
 				<button class="charts-divider charts-toggle" onclick={() => chartsOpen = !chartsOpen}>
 					Gráficos {chartsOpen ? '▾' : '▸'}
 				</button>
 				{#if chartsOpen}
+					{#if hexStore.analysisResLevel != null}
+						<p class="charts-res-note">{i18n.t('chart.analysisCoarse').replace('{res}', String(hexStore.analysisResLevel))}</p>
+					{/if}
 					<HistogramPanel
-						data={hexStore.visibleData}
+						data={hexStore.chartData}
 						variable={hexStore.effectivePrimary}
 						xLabel={primaryAxisLabel}
 						onBrushSelect={onHistogramBrush ?? (() => {})}
 					/>
 					{#if isAdditiveVar(hexStore.activeLayer, hexStore.effectivePrimary)}
 						<ConcentrationCurve
-							data={hexStore.visibleData}
+							data={hexStore.chartData}
 							variable={hexStore.effectivePrimary}
 							label={primaryName}
 							onBrushSelect={onHistogramBrush ?? (() => {})}
 						/>
 					{/if}
 					<MoranPanel
-						data={hexStore.visibleData}
+						data={hexStore.chartData}
 						variable={hexStore.effectivePrimary}
 						label={primaryName}
 						defaultCollapsed={false}
@@ -267,7 +270,7 @@
 						onBrushSelect={onMoranBrush ?? (() => {})}
 					/>
 					<BivariatePlot
-						data={hexStore.visibleData}
+						data={hexStore.chartData}
 						variable={hexStore.effectivePrimary}
 						xLabel={primaryAxisLabel}
 						analysisId={hexStore.activeLayer.id}
@@ -449,4 +452,5 @@
 			bottom: auto;
 		}
 	}
+	.charts-res-note { font-size: 11px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
 </style>

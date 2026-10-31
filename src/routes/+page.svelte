@@ -770,6 +770,7 @@
 
 	function handleShowLisa(entries: { h3index: string; value: number; boundary?: number[][] }[]) {
 		if (entries.length === 0) {
+			lastClassMap = null;
 			prevDataVersion = 0;
 			const layer = hexStore.activeLayer;
 			const cEntries = hexStore.choroplethEntries;
@@ -779,7 +780,8 @@
 			mapComponent?.setHexChoropleth(cEntries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
 			return;
 		}
-		mapComponent?.setHexChoropleth(entries, 'lisa');
+		lastClassMap = { entries, scale: 'lisa' };
+		paintClassMap();
 	}
 
 	// Bivariate 3×3 map: classes 1-9 painted over the layer; [] restores it.
@@ -787,33 +789,13 @@
 	function handleShowBivariateMap(entries: { h3index: string; value: number | null; nodata?: boolean }[]) {
 		bivariateMapOn = entries.length > 0;
 		if (entries.length === 0) { handleShowLisa([]); return; }
-		mapComponent?.setHexChoropleth(
-			entries.map(e => ({ ...e, boundary: hexStore.boundaryCache.get(e.h3index) })),
-			'bivariate'
-		);
+		lastClassMap = { entries, scale: 'bivariate' };
+		paintClassMap();
 	}
 
-	function handleMoranBrush(h3s: string[]) {
-		if (h3s.length === 0) {
-			mapComponent?.clearHexZoneHighlight();
-			return;
-		}
-		mapComponent?.setHexZoneHighlight(
-			[{ h3indices: h3s, color: '#fbbf24' }],
-			hexStore.boundaryCache
-		);
-	}
+	function handleMoranBrush(h3s: string[]) { applyChartHighlight(h3s, '#fbbf24'); }
 
-	function handleHistogramBrush(h3s: string[]) {
-		if (h3s.length === 0) {
-			mapComponent?.clearHexZoneHighlight();
-			return;
-		}
-		mapComponent?.setHexZoneHighlight(
-			[{ h3indices: h3s, color: '#34d399' }],
-			hexStore.boundaryCache
-		);
-	}
+	function handleHistogramBrush(h3s: string[]) { applyChartHighlight(h3s, '#34d399'); }
 
 	function handleRadioCensusBrush(redcodes: string[]) {
 		if (redcodes.length === 0) {
@@ -823,22 +805,30 @@
 		mapComponent?.setRadioBrushHighlight(redcodes);
 	}
 
-	function handleBivariateBrush(h3s: string[]) {
-		if (h3s.length === 0) {
-			mapComponent?.clearHexZoneHighlight();
-			return;
-		}
-		mapComponent?.setHexZoneHighlight(
-			[{ h3indices: h3s, color: '#fb923c' }],
-			hexStore.boundaryCache
-		);
-	}
+	function handleBivariateBrush(h3s: string[]) { applyChartHighlight(h3s, '#fb923c'); }
 
-	function handleFlowBrush(h3s: string[]) {
-		if (h3s.length === 0) { mapComponent?.clearHexZoneHighlight(); return; }
-		mapComponent?.setHexZoneHighlight(
-			[{ h3indices: h3s, color: '#a78bfa' }],
-			hexStore.boundaryCache
+	function handleFlowBrush(h3s: string[]) { applyChartHighlight(h3s, '#a78bfa'); }
+
+	// Charts select res-9 cells of the whole department; the map may be drawing the
+	// coarse overview or a res-9 viewport. Project to what is drawn, and keep the last
+	// selection / class map so a zoom (viewport swap) can re-apply them.
+	let lastHighlight: { h3s: string[]; color: string } | null = null;
+	let lastClassMap: { entries: { h3index: string; value: number | null; nodata?: boolean }[]; scale: 'lisa' | 'bivariate' } | null = null;
+	$effect(() => {
+		void hexStore.selectedDpto; void hexStore.activeLayer; // another dept/layer: forget them
+		lastHighlight = null;
+		lastClassMap = null;
+	});
+	function applyChartHighlight(h3s: string[], color: string) {
+		if (h3s.length === 0) { lastHighlight = null; mapComponent?.clearHexZoneHighlight(); return; }
+		lastHighlight = { h3s, color };
+		mapComponent?.setHexZoneHighlight([{ h3indices: hexStore.displayCells(h3s), color }], hexStore.boundaryCache);
+	}
+	function paintClassMap() {
+		if (!lastClassMap) return;
+		mapComponent?.setHexChoropleth(
+			hexStore.displayEntries(lastClassMap.entries).map(e => ({ ...e, boundary: hexStore.boundaryCache.get(e.h3index) })),
+			lastClassMap.scale
 		);
 	}
 
@@ -969,6 +959,9 @@
 				let cs: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = hexStore.activeLayer.colorScale ?? 'flood';
 				if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
 				mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
+				// A class map or chart selection outlives the zoom: redraw it at the new resolution.
+				paintClassMap();
+				if (lastHighlight) applyChartHighlight(lastHighlight.h3s, lastHighlight.color);
 			}).catch(() => {});
 		};
 

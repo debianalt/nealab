@@ -181,6 +181,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'chart.conc.axisX': { es: '% de hexágonos, de mayor a menor', en: '% of hexagons, largest first', gn: '% de hexágonos, de mayor a menor', pt: '% de hexágonos, do maior ao menor' }, // gn: pendiente
 	'chart.conc.axisY': { es: '% del total de {v}', en: '% of total {v}', gn: '% del total de {v}', pt: '% do total de {v}' }, // gn: pendiente
 	'chart.conc.empty': { es: 'sin valores mayores que cero', en: 'no values above zero', gn: 'sin valores mayores que cero', pt: 'sem valores acima de zero' }, // gn: pendiente
+	'chart.analysisCoarse': { es: 'Distrito muy grande: los gráficos se calculan sobre celdas agregadas (res {res}), no sobre cada hexágono.', en: 'Very large district: charts use aggregated cells (res {res}), not each hexagon.', gn: 'Distrito muy grande: los gráficos se calculan sobre celdas agregadas (res {res}), no sobre cada hexágono.', pt: 'Distrito muito grande: os gráficos usam células agregadas (res {res}), não cada hexágono.' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
 	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente
