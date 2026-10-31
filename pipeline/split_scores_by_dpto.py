@@ -147,7 +147,10 @@ def safe_filename(dpto: str) -> str:
             .replace("á", "a").replace("é", "e")
             .replace("í", "i").replace("ó", "o")
             .replace("ú", "u").replace("ñ", "n")
-            .replace("ü", "u"))
+            .replace("ü", "u").replace("'", "").replace(".", ""))
+    # Dots dropped like split_flood_by_dpto/split_by_admin and the dept summaries:
+    # "L.G. San Martín" → lg_san_martin. With dots the CI uploaded l.g._san_martin,
+    # which the web never reads, and the served file went stale (fixed 31-oct-2026).
 
 
 def assign_hexes_itapua(scores: pd.DataFrame, crosswalk_path: str) -> tuple[pd.DataFrame, str]:

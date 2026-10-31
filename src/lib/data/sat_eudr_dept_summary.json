@@ -1,8 +1,8 @@
 {
   "territory": "misiones",
   "province": {
-    "total_hexes": 311688,
-    "avg_score": 5.75,
+    "total_hexes": 311261,
+    "avg_score": 5.76,
     "unassigned": 0
   },
   "departments": [
@@ -43,10 +43,10 @@
         -53.9584,
         -26.0076
       ],
-      "avg_score": 4.93,
-      "hex_count": 32321,
+      "avg_score": 4.95,
+      "hex_count": 32174,
       "rank": {
-        "loss_ha": 16773,
+        "loss_ha": 16776,
         "loss_pct_forest": 5.59,
         "fire_native_ha": 568
       }
@@ -67,21 +67,6 @@
       }
     },
     {
-      "dpto": "L.G. San Martín",
-      "parquetKey": "lg_san_martin",
-      "centroid": [
-        -54.9218,
-        -26.8934
-      ],
-      "avg_score": 8.29,
-      "hex_count": 15687,
-      "rank": {
-        "loss_ha": 13695,
-        "loss_pct_forest": 10.86,
-        "fire_native_ha": 4022
-      }
-    },
-    {
       "dpto": "Montecarlo",
       "parquetKey": "montecarlo",
       "centroid": [
@@ -94,6 +79,21 @@
         "loss_ha": 13675,
         "loss_pct_forest": 8.07,
         "fire_native_ha": 2351
+      }
+    },
+    {
+      "dpto": "L.G. San Martín",
+      "parquetKey": "lg_san_martin",
+      "centroid": [
+        -54.9218,
+        -26.8934
+      ],
+      "avg_score": 8.36,
+      "hex_count": 15477,
+      "rank": {
+        "loss_ha": 13636,
+        "loss_pct_forest": 10.81,
+        "fire_native_ha": 4011
       }
     },
     {
@@ -178,10 +178,10 @@
         -55.3895,
         -27.6277
       ],
-      "avg_score": 5.92,
-      "hex_count": 11668,
+      "avg_score": 5.96,
+      "hex_count": 11598,
       "rank": {
-        "loss_ha": 7274,
+        "loss_ha": 7275,
         "loss_pct_forest": 7.84,
         "fire_native_ha": 0
       }

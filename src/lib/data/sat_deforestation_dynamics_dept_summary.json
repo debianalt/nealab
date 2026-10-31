@@ -16,10 +16,10 @@
         -26.8934
       ],
       "rank": {
-        "loss_ha_yr": 2129,
+        "loss_ha_yr": 2128,
         "loss_pct_forest": 1.69,
         "loss_change_pct": 14,
-        "loss_base_ha_yr": 1872
+        "loss_base_ha_yr": 1874
       }
     },
     {
@@ -192,10 +192,10 @@
         -26.0076
       ],
       "rank": {
-        "loss_ha_yr": 2792,
+        "loss_ha_yr": 2795,
         "loss_pct_forest": 0.93,
-        "loss_change_pct": 62,
-        "loss_base_ha_yr": 1720
+        "loss_change_pct": 63,
+        "loss_base_ha_yr": 1718
       }
     },
     {
