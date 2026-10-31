@@ -17,13 +17,14 @@
 	import type { LassoStore } from '$lib/stores/lasso.svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
-	import { LENS_CONFIG, getHexAxisLabel, type AnalysisConfig, type LensId } from '$lib/config';
+	import { LENS_CONFIG, getHexAxisLabel, isAdditiveVar, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
 	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
+	import ConcentrationCurve from './ConcentrationCurve.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
@@ -248,6 +249,14 @@
 						xLabel={primaryAxisLabel}
 						onBrushSelect={onHistogramBrush ?? (() => {})}
 					/>
+					{#if isAdditiveVar(hexStore.activeLayer, hexStore.effectivePrimary)}
+						<ConcentrationCurve
+							data={hexStore.visibleData}
+							variable={hexStore.effectivePrimary}
+							label={primaryName}
+							onBrushSelect={onHistogramBrush ?? (() => {})}
+						/>
+					{/if}
 					<MoranPanel
 						data={hexStore.visibleData}
 						variable={hexStore.effectivePrimary}

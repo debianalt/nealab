@@ -696,6 +696,22 @@ export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined, col?
  * e.g. "Carbono en biomasa (tC/ha)". Falls back to the layer title when the
  * variable is not declared (substituted primaries, delta/baseline columns).
  */
+/**
+ * Whether a hex variable can be summed across cells (counts, or per-area
+ * densities on equal-area hexagons): the concentration curve only makes sense
+ * then. Shares of households, minutes, µg/m³ or /100 scores do not add up.
+ */
+const ADDITIVE_UNITS = new Set(['edificios', 'personas', 'hab/km²', 'viv/km²', 'edif/km²', 'ha', 'ha/año', '%/año', '%/yr', 'nW/cm²/sr', 'tC/ha']);
+export function isAdditiveVar(layer: HexLayerConfig | null | undefined, col?: string): boolean {
+	if (!layer) return false;
+	const pv = col ?? layer.primaryVariable;
+	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
+	if (!v) return false;
+	if (v.aggregation === 'sum') return true;
+	const unit = v.rawCol === pv ? (v.rawUnit ?? v.unit) : v.unit;
+	return !!unit && ADDITIVE_UNITS.has(unit);
+}
+
 export function getHexAxisLabel(layer: HexLayerConfig | null | undefined, col?: string, withUnit = true): string {
 	if (!layer) return '';
 	const pv = col ?? layer.primaryVariable;
