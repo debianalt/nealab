@@ -244,7 +244,7 @@
 		padding: 5px 8px;
 		background: rgba(255, 255, 255, 0.04);
 		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-		font-size: 10px;
+		font-size: 12px;
 		font-weight: 600;
 		color: rgba(255, 255, 255, 0.75);
 		flex-shrink: 0;
@@ -253,7 +253,7 @@
 	.chart-frame-expanded .chart-frame-header {
 		cursor: grab;
 		padding: 8px 12px;
-		font-size: 12px;
+		font-size: 13px;
 	}
 	.chart-frame-expanded .chart-frame-header:active { cursor: grabbing; }
 
@@ -270,7 +270,7 @@
 	.chart-frame-header-clickable:hover { background: rgba(255, 255, 255, 0.07); }
 
 	.chart-frame-chevron {
-		font-size: 8px;
+		font-size: 10px;
 		color: rgba(255, 255, 255, 0.45);
 		transition: transform 0.15s;
 	}
@@ -289,7 +289,7 @@
 		background: none;
 		border: 1px solid transparent;
 		color: rgba(255, 255, 255, 0.55);
-		font-size: 12px;
+		font-size: 13px;
 		line-height: 1;
 		padding: 3px 7px;
 		border-radius: 3px;
@@ -328,7 +328,7 @@
 		border: none;
 		color: rgba(255, 255, 255, 0.85);
 		font-family: inherit;
-		font-size: 10px;
+		font-size: 12px;
 		text-align: left;
 		padding: 5px 10px;
 		cursor: pointer;

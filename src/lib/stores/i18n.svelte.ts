@@ -162,6 +162,14 @@ const dict: Record<string, Record<Locale, string>> = {
 	'chart.bivariate.pickY': { es: 'elegí un eje Y abajo', en: 'pick a Y axis below', gn: 'elegí un eje Y abajo', pt: 'escolha um eixo Y abaixo' }, // gn: pendiente
 	'chart.bivariate.intro': { es: 'Seleccioná un segundo análisis en "Eje Y" para explorar correlaciones y seleccionar hexágonos en el mapa.', en: 'Select a second analysis under "Y axis" to explore correlations and select hexagons on the map.', gn: 'Seleccioná un segundo análisis en "Eje Y" para explorar correlaciones y seleccionar hexágonos en el mapa.', pt: 'Selecione uma segunda análise em "Eixo Y" para explorar correlações e selecionar hexágonos no mapa.' }, // gn: pendiente
 	'chart.bivariate.noCommon': { es: 'sin hexágonos en común', en: 'no hexagons in common', gn: 'sin hexágonos en común', pt: 'sem hexágonos em comum' }, // gn: pendiente
+	'chart.bivariate.axisX': { es: 'Eje X (horizontal):', en: 'X axis (horizontal):', gn: 'Eje X (horizontal):', pt: 'Eixo X (horizontal):' }, // gn: pendiente
+	'chart.bivariate.axisY': { es: 'Eje Y (vertical):', en: 'Y axis (vertical):', gn: 'Eje Y (vertical):', pt: 'Eixo Y (vertical):' }, // gn: pendiente
+	'chart.bivariate.pick': { es: '— elegir capa —', en: '— pick a layer —', gn: '— elegir capa —', pt: '— escolher camada —' }, // gn: pendiente
+	'chart.bivariate.medianNote': { es: 'Líneas punteadas: mediana de cada eje. Tocá una esquina para ver ese cuadrante en el mapa.', en: 'Dashed lines: median of each axis. Tap a corner to see that quadrant on the map.', gn: 'Líneas punteadas: mediana de cada eje. Tocá una esquina para ver ese cuadrante en el mapa.', pt: 'Linhas tracejadas: mediana de cada eixo. Toque um canto para ver esse quadrante no mapa.' }, // gn: pendiente
+	'chart.bivariate.hi': { es: 'alto', en: 'high', gn: 'alto', pt: 'alto' }, // gn: pendiente
+	'chart.bivariate.lo': { es: 'bajo', en: 'low', gn: 'bajo', pt: 'baixo' }, // gn: pendiente
+	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
+	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
 	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente
 	'chart.bump.axis': { es: 'posición relativa (#1 = mejor)', en: 'relative rank (#1 = best)', gn: 'posición relativa (#1 = mejor)', pt: 'posição relativa (#1 = melhor)' }, // gn: pendiente
 	'chart.bump.note': { es: '#1 = mejor posición siempre · En <em>riesgo/aislamiento</em> (Inund., Amb., Acceso): #1 = menos expuesto · En <em>potencial</em> (resto): #1 = mayor valor', en: '#1 = best rank always · Under <em>risk/isolation</em> (Flood, Env., Access): #1 = least exposed · Under <em>potential</em> (the rest): #1 = highest value', gn: '#1 = mejor posición siempre · En <em>riesgo/aislamiento</em> (Inund., Amb., Acceso): #1 = menos expuesto · En <em>potencial</em> (resto): #1 = mayor valor', pt: '#1 = melhor posição sempre · Em <em>risco/isolamento</em> (Inund., Amb., Acesso): #1 = menos exposto · Em <em>potencial</em> (o resto): #1 = maior valor' }, // gn: pendiente
@@ -169,7 +177,12 @@ const dict: Record<string, Record<Locale, string>> = {
 	'chart.histogram.dragRange': { es: 'arrastrá para seleccionar rango', en: 'drag to select a range', gn: 'arrastrá para seleccionar rango', pt: 'arraste para selecionar o intervalo' }, // gn: pendiente
 	'chart.moran.title': { es: 'Autocorrelación espacial (Moran)', en: 'Spatial autocorrelation (Moran)', gn: 'Autocorrelación espacial (Moran)', pt: 'Autocorrelação espacial (Moran)' },
 	'chart.moran.computing': { es: 'Calculando I de Moran…', en: 'Computing Moran’s I…', gn: 'Calculando I de Moran…', pt: 'Calculando o I de Moran…' },
-	'chart.moran.lag': { es: 'Rezago espacial', en: 'Spatial lag', gn: 'Rezago espacial', pt: 'Defasagem espacial' },
+	'chart.moran.lag': { es: 'Promedio de los vecinos', en: 'Neighbours’ average', gn: 'Promedio de los vecinos', pt: 'Média dos vizinhos' },
+	'chart.moran.std': { es: '(en desvíos)', en: '(in SDs)', gn: '(en desvíos)', pt: '(em desvios)' },
+	'chart.moran.qHH': { es: 'Foco alto', en: 'High cluster', gn: 'Foco alto', pt: 'Foco alto' },
+	'chart.moran.qLL': { es: 'Foco bajo', en: 'Low cluster', gn: 'Foco bajo', pt: 'Foco baixo' },
+	'chart.moran.qHL': { es: 'Alto aislado', en: 'High outlier', gn: 'Alto aislado', pt: 'Alto isolado' },
+	'chart.moran.qLH': { es: 'Bajo aislado', en: 'Low outlier', gn: 'Bajo aislado', pt: 'Baixo isolado' },
 	'chart.moran.nHex': { es: 'hexágonos', en: 'hexagons', gn: 'hexágonos', pt: 'hexágonos' },
 	'chart.moran.nAggregated': { es: 'celdas (res {res}, vista agregada)', en: 'cells (res {res}, aggregated view)', gn: 'celdas (res {res}, vista agregada)', pt: 'células (res {res}, vista agregada)' },
 	'chart.moran.read.strong': { es: 'Agrupamiento fuerte: los valores altos están junto a otros altos y los bajos junto a bajos.', en: 'Strong clustering: high values sit next to high values and low next to low.', gn: 'Agrupamiento fuerte: los valores altos están junto a otros altos y los bajos junto a bajos.', pt: 'Agrupamento forte: valores altos ficam junto de altos e baixos junto de baixos.' },

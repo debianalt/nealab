@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChartFrame from './ChartFrame.svelte';
+	import { CHART_PX, INK, svgScale } from '$lib/utils/chartType';
 	import type { FlowBands } from '$lib/config';
 
 	let {
@@ -30,14 +31,19 @@
 	const cfg = $derived(bands ?? SCORE_BANDS);
 	const N = $derived(cfg.labels.length);
 
-	// Extra bottom room for the magnitude line (only when bands declare a unit).
-	const MAG_H = $derived(bands?.unit ? 8 : 0);
 	const SVG_W = 260;
-	const SVG_H = $derived(164 + MAG_H);
-	const BAND_W = 40, PAD_T = 22;
-	const LEFT_X = 18, RIGHT_X = SVG_W - 18 - BAND_W;
+	const BAND_W = 58, PAD_T = 24;
+	const LEFT_X = 14, RIGHT_X = SVG_W - 14 - BAND_W;
 	const MID_X = SVG_W / 2;
-	const plotH = 164 - PAD_T - 22; // fixed: the magnitude line only adds room below
+	const plotH = 180;
+
+	// Text is sized in real pixels (k = viewBox units per pixel), so the footer
+	// below the bands grows in viewBox units when the chart is narrow.
+	let renderedW = $state(0), renderedH = $state(0);
+	// SVG_H depends on k (footer lines), so the height side of the fit uses the
+	// band area alone: a lower bound that never wins while the width drives.
+	const k = $derived(svgScale(SVG_W, PAD_T + plotH, renderedW, renderedH));
+	const LINE = $derived((CHART_PX.tick + 4) * k);
 
 	// pd.cut semantics (right-closed): value lands in the lowest band whose
 	// upper break it does not exceed — keeps chart bands == parquet typology.
@@ -83,7 +89,7 @@
 	const fmt1 = (v: number) => v.toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const signed = (v: number) => (v < 0 ? '−' : '+') + fmt1(Math.abs(v));
 	const magnitude = $derived.by(() => {
-		if (!cfg.unit) return '';
+		if (!cfg.unit) return [] as string[];
 		let sb = 0, s = 0, n = 0, down = 0, up = 0;
 		for (const row of data.values()) {
 			const c = Number(row[cfg.col]);
@@ -92,15 +98,18 @@
 			sb += b; s += c; n++;
 			if (c < b) down++; else if (c > b) up++;
 		}
-		if (n === 0) return '';
+		if (n === 0) return [] as string[];
 		const mb = sb / n, mc = s / n, d = mc - mb;
 		const pct = mb !== 0 ? `; ${signed((d / mb) * 100)} %` : '';
 		const moves = [
 			down > 0 ? `bajó en ${fmt1((down / n) * 100)} %` : '',
 			up > 0 ? `subió en ${fmt1((up / n) * 100)} %` : '',
 		].filter(Boolean).join(' y ');
-		return `media ${fmt1(mb)} → ${fmt1(mc)} ${cfg.unit} (${signed(d)}${pct})${moves ? ` · ${moves} de los hexágonos` : ''}`;
+		// Two lines: the panel is ~330 px wide, one line at 11 px would overflow.
+		return [`media ${fmt1(mb)} → ${fmt1(mc)} ${cfg.unit} (${signed(d)}${pct})`, moves ? `${moves} de los hexágonos` : '']
+			.filter(Boolean);
 	});
+	const SVG_H = $derived(PAD_T + plotH + (magnitude.length + 1) * LINE + 6 * k);
 
 	// Band Y positions: highest band index at top, stacked downward
 	function bandYs(totals: number[]): number[] {
@@ -212,6 +221,7 @@
 	</div>
 
 	{#if total > 0}
+		<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<svg
 			width="100%"
@@ -248,24 +258,24 @@
 						style="cursor:pointer"
 						onclick={() => selectBand('from', band)}
 					/>
-					{#if leftBandH[band] > 18}
+					{#if leftBandH[band] > 30 * k}
 						<text
-							x={LEFT_X + BAND_W / 2} y={cy - 1.5}
+							x={LEFT_X + BAND_W / 2} y={cy - 2 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
-							x={LEFT_X + BAND_W / 2} y={cy + 5}
+							x={LEFT_X + BAND_W / 2} y={cy + 10 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
-							font-size="4.5" font-weight="600" font-family="system-ui,sans-serif"
+							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{fromTotals[band].toLocaleString()} · {Math.round(fromTotals[band] / total * 100)}%</text>
-					{:else if leftBandH[band] > 10}
+					{:else if leftBandH[band] > 15 * k}
 						<text
-							x={LEFT_X + BAND_W / 2} y={cy + 2.5}
+							x={LEFT_X + BAND_W / 2} y={cy + 4 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 					{/if}
@@ -286,24 +296,24 @@
 						style="cursor:pointer"
 						onclick={() => selectBand('to', band)}
 					/>
-					{#if rightBandH[band] > 18}
+					{#if rightBandH[band] > 30 * k}
 						<text
-							x={RIGHT_X + BAND_W / 2} y={cy - 1.5}
+							x={RIGHT_X + BAND_W / 2} y={cy - 2 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 						<text
-							x={RIGHT_X + BAND_W / 2} y={cy + 5}
+							x={RIGHT_X + BAND_W / 2} y={cy + 10 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.65)"
-							font-size="4.5" font-weight="600" font-family="system-ui,sans-serif"
+							font-size={(CHART_PX.tick - 1) * k} font-weight="600" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{toTotals[band].toLocaleString()} · {Math.round(toTotals[band] / total * 100)}%</text>
-					{:else if rightBandH[band] > 10}
+					{:else if rightBandH[band] > 15 * k}
 						<text
-							x={RIGHT_X + BAND_W / 2} y={cy + 2.5}
+							x={RIGHT_X + BAND_W / 2} y={cy + 4 * k}
 							text-anchor="middle" fill="rgba(0,0,0,0.75)"
-							font-size="5.5" font-weight="700" font-family="system-ui,sans-serif"
+							font-size={CHART_PX.tick * k} font-weight="700" font-family="system-ui,sans-serif"
 							pointer-events="none"
 						>{cfg.labels[band]}</text>
 					{/if}
@@ -311,23 +321,24 @@
 			{/each}
 
 			<!-- Period labels -->
-			<text x={LEFT_X + BAND_W / 2} y={PAD_T - 7} text-anchor="middle"
-				fill="rgba(255,255,255,0.55)" font-size="6" font-family="system-ui,sans-serif"
+			<text x={LEFT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
+				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="system-ui,sans-serif"
 			>{temporalPeriods?.baseline ?? 'Baseline'}</text>
-			<text x={RIGHT_X + BAND_W / 2} y={PAD_T - 7} text-anchor="middle"
-				fill="rgba(255,255,255,0.55)" font-size="6" font-family="system-ui,sans-serif"
+			<text x={RIGHT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
+				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="system-ui,sans-serif"
 			>{temporalPeriods?.current ?? 'Actual'}</text>
 
 			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
-			{#if magnitude}
-				<text x={SVG_W / 2} y={SVG_H - 15} text-anchor="middle"
-					font-size="5.5" font-family="system-ui,sans-serif" fill="rgba(226,232,240,0.85)"
-				>{magnitude}</text>
-			{/if}
-			<text x={SVG_W / 2} y={SVG_H - 6} text-anchor="middle"
-				font-size="5.5" font-family="system-ui,sans-serif"
-			><tspan fill="#22d3ee">↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}</tspan><tspan fill="rgba(255,255,255,0.35)"> · </tspan><tspan fill="rgba(148,163,184,0.9)">={stable.toLocaleString()} estables</tspan></text>
+			{#each magnitude as line, li}
+				<text x={SVG_W / 2} y={PAD_T + plotH + (li + 1) * LINE} text-anchor="middle"
+					font-size={CHART_PX.tick * k} font-family="system-ui,sans-serif" fill="rgba(226,232,240,0.88)"
+				>{line}</text>
+			{/each}
+			<text x={SVG_W / 2} y={PAD_T + plotH + (magnitude.length + 1) * LINE} text-anchor="middle"
+				font-size={CHART_PX.tick * k} font-family="system-ui,sans-serif"
+			><tspan fill="#22d3ee">↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}</tspan><tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill="#f87171">↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}</tspan><tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill="rgba(148,163,184,0.95)">={stable.toLocaleString()} estables</tspan></text>
 		</svg>
+		</div>
 		<div class="fc-note">{cfg.note}</div>
 	{/if}
 	</div>
@@ -343,24 +354,24 @@
 		gap: 6px;
 		margin-bottom: 2px;
 		padding: 0 2px;
-		min-height: 14px;
+		min-height: 16px;
 		flex-wrap: wrap;
 	}
 	.fc-active {
-		font-size: 8px;
+		font-size: 11px;
 		color: #a78bfa;
 		display: flex;
 		align-items: baseline;
 		gap: 5px;
 	}
 	.fc-hint {
-		font-size: 8px;
-		color: rgba(255,255,255,0.25);
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
 		font-style: italic;
 	}
 	.fc-clear {
-		font-size: 7.5px;
-		color: rgba(255,255,255,0.3);
+		font-size: 11px;
+		color: rgba(255,255,255,0.55);
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -369,8 +380,8 @@
 	}
 	.fc-clear:hover { color: #f87171; }
 	.fc-note {
-		font-size: 7.5px;
-		color: rgba(255,255,255,0.22);
+		font-size: 11px;
+		color: rgba(255,255,255,0.55);
 		line-height: 1.5;
 		padding: 3px 2px 2px;
 		border-top: 1px solid rgba(255,255,255,0.06);

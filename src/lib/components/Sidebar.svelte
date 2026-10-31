@@ -17,10 +17,9 @@
 	import type { LassoStore } from '$lib/stores/lasso.svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
-	import { LENS_CONFIG, type AnalysisConfig, type LensId } from '$lib/config';
+	import { LENS_CONFIG, getHexAxisLabel, type AnalysisConfig, type LensId } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
-	import { unitLabel } from '$lib/utils/units';
 	import { lp } from '$lib/utils/locale-path';
 	import CTADiagnostic from './CTADiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
@@ -29,19 +28,6 @@
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
-
-	// X-axis label for the distribution panels: physical unit when the primary
-	// variable is a raw measurement (e.g. tC/ha, min, µg/m³), else percentil/score.
-	// `pv` is the EFFECTIVE primary (hexStore may substitute a fallback column when
-	// the territory's parquet lacks the configured one).
-	function primaryXLabel(layer: AnalysisConfig | null | undefined, pv?: string): string {
-		if (!layer) return 'score /100';
-		const col = pv ?? layer.primaryVariable;
-		const v = layer.variables?.find((x: any) => x.col === col || x.rawCol === col);
-		if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return unitLabel(v.unit);
-		if (layer.variables?.some((x: any) => x.unit === 'percentil')) return i18n.t('unit.pctlProv');
-		return 'score /100';
-	}
 
 	let {
 		mapStore,
@@ -113,7 +99,13 @@
 	// Charts (histogram/Moran/bivariate/bump/parallel) compute synchronously over the
 	// whole dept hex set — seconds of main-thread block on every dept select. Collapsed
 	// by default so selecting a department is instant; they mount/compute on expand.
-	let chartsOpen = $state(false);
+	// Axis title for the layer charts: what the effective primary measures plus its
+	// unit (hexStore may substitute a fallback column when the territory's parquet
+	// lacks the configured one).
+	const primaryAxisLabel = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary));
+	const primaryName = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary, false));
+
+	let chartsOpen = $state(true);
 
 	// Auto-open when actual results exist
 	$effect(() => {
@@ -251,12 +243,14 @@
 					<HistogramPanel
 						data={hexStore.visibleData}
 						variable={hexStore.effectivePrimary}
-						xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
+						xLabel={primaryAxisLabel}
 						onBrushSelect={onHistogramBrush ?? (() => {})}
 					/>
 					<MoranPanel
 						data={hexStore.visibleData}
 						variable={hexStore.effectivePrimary}
+						label={primaryName}
+						defaultCollapsed={false}
 						boundaryCache={hexStore.boundaryCache}
 						onShowLisa={onShowLisa ?? (() => {})}
 						onBrushSelect={onMoranBrush ?? (() => {})}
@@ -264,7 +258,7 @@
 					<BivariatePlot
 						data={hexStore.visibleData}
 						variable={hexStore.effectivePrimary}
-						xLabel={primaryXLabel(hexStore.activeLayer, hexStore.effectivePrimary)}
+						xLabel={primaryAxisLabel}
 						analysisId={hexStore.activeLayer.id}
 						territoryPrefix={hexStore.territoryPrefix}
 						territoryId={hexStore.territoryId}

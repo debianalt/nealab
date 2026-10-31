@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { query } from '$lib/stores/duckdb';
-	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, getHexPrimaryUnit } from '$lib/config';
+	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, getHexAxisLabel } from '$lib/config';
 	import { cellToParent, getResolution } from 'h3-js';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { normDeptName } from '$lib/utils/deptBoundaries';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
+	import { CHART_PX, INK, svgScale, median, fitLabel } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -34,8 +35,8 @@
 		defaultCollapsed?: boolean;
 	} = $props();
 
-	const PAD_L = 28, PAD_R = 8, PAD_T = 8, PAD_B = 22;
-	const SVG_W = 260, SVG_H = 200;
+	const PAD_L = 44, PAD_R = 8, PAD_T = 8, PAD_B = 38;
+	const SVG_W = 260, SVG_H = 236;
 	const plotW = SVG_W - PAD_L - PAD_R;
 	const plotH = SVG_H - PAD_T - PAD_B;
 
@@ -69,6 +70,7 @@
 	}
 
 	let selectedB = $state('');
+	let bVar = $state('');
 	let bData = $state(new Map<string, number>());
 	let bLoading = $state(false);
 	let bError = $state(false);
@@ -89,10 +91,10 @@
 			const desc = await query(`DESCRIBE SELECT * FROM read_parquet('${url}')`);
 			const cols = new Set<string>();
 			for (let i = 0; i < desc.numRows; i++) cols.add(String(desc.get(i)!.toJSON().column_name));
-			const bVar = cols.has(layer.primaryVariable) ? layer.primaryVariable
+			const col = cols.has(layer.primaryVariable) ? layer.primaryVariable
 				: layer.variables.map(v => v.col).find(c => cols.has(c) && !c.endsWith('_label') && c !== 'type');
-			if (!bVar) throw new Error('no Y column');
-			const result = await query(`SELECT h3index, "${bVar}" as val FROM read_parquet('${url}')`);
+			if (!col) throw new Error('no Y column');
+			const result = await query(`SELECT h3index, "${col}" as val FROM read_parquet('${url}')`);
 			const sum = new Map<string, number>(), cnt = new Map<string, number>();
 			for (let i = 0; i < result.numRows; i++) {
 				const row = result.get(i)!.toJSON();
@@ -105,11 +107,12 @@
 			}
 			const m = new Map<string, number>();
 			for (const [h3, s] of sum) m.set(h3, s / cnt.get(h3)!);
-			return m;
+			return { m, col };
 		})()
-			.then(m => {
+			.then(({ m, col }) => {
 				if (selectedB !== b) return; // superseded by another pick
 				bData = m;
+				bVar = col;
 				bLoading = false;
 			})
 			.catch(() => {
@@ -120,8 +123,11 @@
 
 	const yLabel = $derived.by(() => {
 		if (!selectedB) return '';
-		return getHexPrimaryUnit(HEX_LAYER_REGISTRY[selectedB]) || 'score /100';
+		return getHexAxisLabel(HEX_LAYER_REGISTRY[selectedB], bVar || undefined);
 	});
+
+	let renderedW = $state(0), renderedH = $state(0);
+	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH));
 
 	const allPoints = $derived.by(() => {
 		if (!selectedB || bData.size === 0) return [] as { x: number; y: number; h3: string }[];
@@ -168,7 +174,11 @@
 		return v.toFixed(2);
 	}
 
-	// Value at a fraction (0..1) of each axis, for guide lines / quadrant labels / ticks.
+	// Quadrants split at each axis median (mid-range splits mean nothing on skewed data).
+	const xMed = $derived(median(allPoints.map(p => p.x)));
+	const yMed = $derived(median(allPoints.map(p => p.y)));
+
+	// Value at a fraction (0..1) of each axis, for ticks.
 	function xAt(f: number): number { const [lo, hi] = xDom; return lo + f * (hi - lo); }
 	function yAt(f: number): number { const [lo, hi] = yDom; return lo + f * (hi - lo); }
 
@@ -192,6 +202,7 @@
 
 	function startBrush(e: MouseEvent) {
 		if (!selectedB || bData.size === 0) return;
+		activeQuad = null;
 		const svgEl = e.currentTarget as SVGElement;
 		const rect = svgEl.getBoundingClientRect();
 		const [sx, sy] = clientToData(e.clientX, e.clientY, rect);
@@ -234,8 +245,40 @@
 
 	function clearBrush() {
 		brushRect = null;
+		activeQuad = null;
 		selectedCount = 0;
 		onBrushSelect([]);
+	}
+
+	// Corner labels select their whole quadrant (relative to the medians).
+	type Quad = 'hh' | 'lh' | 'hl' | 'll'; // first letter X, second Y
+	let activeQuad: Quad | null = $state(null);
+	const QUADS: { q: Quad; xHi: boolean; yHi: boolean }[] = [
+		{ q: 'lh', xHi: false, yHi: true }, { q: 'hh', xHi: true, yHi: true },
+		{ q: 'll', xHi: false, yHi: false }, { q: 'hl', xHi: true, yHi: false },
+	];
+	function quadLabel(xHi: boolean, yHi: boolean): string {
+		const hi = i18n.t('chart.bivariate.hi'), lo = i18n.t('chart.bivariate.lo');
+		return `X ${xHi ? hi : lo} · Y ${yHi ? hi : lo}`;
+	}
+	// The high side is strict: zero-inflated layers have median 0, and "high"
+	// must not swallow every zero.
+	function inQuad(pt: { x: number; y: number }, q: Quad): boolean {
+		const xOk = q[0] === 'h' ? pt.x > xMed : pt.x <= xMed;
+		const yOk = q[1] === 'h' ? pt.y > yMed : pt.y <= yMed;
+		return xOk && yOk;
+	}
+	function selectQuadrant(q: Quad, xHi: boolean, yHi: boolean) {
+		if (activeQuad === q) { clearBrush(); return; }
+		const br = {
+			x0: xHi ? xMed : xDom[0], x1: xHi ? xDom[1] : xMed,
+			y0: yHi ? yMed : yDom[0], y1: yHi ? yDom[1] : yMed,
+		};
+		brushRect = br;
+		activeQuad = q;
+		const h3s = allPoints.filter(pt => inQuad(pt, q)).map(pt => pt.h3);
+		selectedCount = h3s.length;
+		onBrushSelect(h3s);
 	}
 
 	$effect(() => {
@@ -243,6 +286,7 @@
 		void variable;
 		void selectedB;
 		brushRect = null;
+		activeQuad = null;
 		selectedCount = 0;
 	});
 
@@ -264,9 +308,13 @@
 	</div>
 
 	<div class="bvpanel-picker">
-		<span class="picker-label">Eje Y:</span>
+		<span class="picker-label">{i18n.t('chart.bivariate.axisX')}</span>
+		<span class="picker-fixed" title={xLabel}>{xLabel}</span>
+	</div>
+	<div class="bvpanel-picker">
+		<span class="picker-label">{i18n.t('chart.bivariate.axisY')}</span>
 		<select bind:value={selectedB} class="picker-select">
-			<option value="">— seleccionar —</option>
+			<option value="">{i18n.t('chart.bivariate.pick')}</option>
 			{#each comparableAnalyses as a}
 				<option value={a.id}>{i18n.t(a.titleKey)}</option>
 			{/each}
@@ -284,6 +332,7 @@
 	{:else if selectedB && allPoints.length === 0 && bData.size > 0}
 		<div class="bvpanel-state">{i18n.t('chart.bivariate.noCommon')}</div>
 	{:else if selectedB && allPoints.length > 0}
+		<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<svg
 			width="100%"
@@ -293,25 +342,17 @@
 			ondblclick={clearBrush}
 			style="cursor: crosshair; display: block;"
 		>
-			<!-- Quadrant guide lines (at each axis midpoint) -->
-			<line x1={svgX(xAt(0.5))} x2={svgX(xAt(0.5))} y1={PAD_T} y2={PAD_T + plotH}
-				stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-dasharray="3 2" />
-			<line x1={PAD_L} x2={PAD_L + plotW} y1={svgY(yAt(0.5))} y2={svgY(yAt(0.5))}
-				stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-dasharray="3 2" />
-
-			<!-- Faint quadrant labels -->
-			<text x={svgX(xAt(0.25))} y={svgY(yAt(0.75)) + 4} text-anchor="middle"
-				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">B/A</text>
-			<text x={svgX(xAt(0.75))} y={svgY(yAt(0.75)) + 4} text-anchor="middle"
-				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">A/A</text>
-			<text x={svgX(xAt(0.25))} y={svgY(yAt(0.25)) + 4} text-anchor="middle"
-				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">B/B</text>
-			<text x={svgX(xAt(0.75))} y={svgY(yAt(0.25)) + 4} text-anchor="middle"
-				fill="rgba(255,255,255,0.09)" font-size="7" font-family="system-ui, sans-serif">A/B</text>
+			<!-- Quadrant guide lines at each axis median -->
+			{#if isFinite(xMed) && isFinite(yMed)}
+				<line x1={svgX(xMed)} x2={svgX(xMed)} y1={PAD_T} y2={PAD_T + plotH}
+					stroke="rgba(255,255,255,0.32)" stroke-width="1" stroke-dasharray="3 2" />
+				<line x1={PAD_L} x2={PAD_L + plotW} y1={svgY(yMed)} y2={svgY(yMed)}
+					stroke="rgba(255,255,255,0.32)" stroke-width="1" stroke-dasharray="3 2" />
+			{/if}
 
 			<!-- Scatter points -->
 			{#each renderedPoints as pt}
-				{@const inBrush = brushRect !== null && pt.x >= brushRect.x0 && pt.x <= brushRect.x1 && pt.y >= brushRect.y0 && pt.y <= brushRect.y1}
+				{@const inBrush = activeQuad ? inQuad(pt, activeQuad) : brushRect !== null && pt.x >= brushRect.x0 && pt.x <= brushRect.x1 && pt.y >= brushRect.y0 && pt.y <= brushRect.y1}
 				<circle
 					cx={svgX(pt.x)} cy={svgY(pt.y)}
 					r="1.4"
@@ -332,33 +373,54 @@
 				/>
 			{/if}
 
+			<!-- Corner labels: a click selects that quadrant on the map -->
+			{#if isFinite(xMed) && isFinite(yMed)}
+				{#each QUADS as c}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<text
+						x={c.xHi ? PAD_L + plotW - 3 * k : PAD_L + 3 * k}
+						y={c.yHi ? PAD_T + (CHART_PX.tick + 1) * k : PAD_T + plotH - 4 * k}
+						text-anchor={c.xHi ? 'end' : 'start'}
+						fill={activeQuad === c.q ? '#fb923c' : INK.tick}
+						font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+						stroke="rgba(15,23,42,0.92)" stroke-width={3 * k} stroke-linejoin="round" paint-order="stroke"
+						class="bv-quad"
+						onmousedown={(e) => e.stopPropagation()}
+						onclick={() => selectQuadrant(c.q, c.xHi, c.yHi)}
+					>{quadLabel(c.xHi, c.yHi)}</text>
+				{/each}
+			{/if}
+
 			<!-- X axis ticks (physical values at 0/50/100 % of the domain) -->
 			{#each [0, 0.5, 1] as f}
-				<text x={svgX(xAt(f))} y={SVG_H - 5}
-					text-anchor="middle" fill="rgba(255,255,255,0.25)"
-					font-size="8" font-family="system-ui, sans-serif">{fmtTick(xAt(f))}</text>
+				<text x={svgX(xAt(f))} y={PAD_T + plotH + (CHART_PX.tick + 2) * k}
+					text-anchor={f === 0 ? 'start' : f === 1 ? 'end' : 'middle'} fill={INK.tick}
+					font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{fmtTick(xAt(f))}</text>
 			{/each}
 
 			<!-- Y axis ticks (physical values at 0/50/100 % of the domain) -->
 			{#each [0, 0.5, 1] as f}
-				<text x={PAD_L - 3} y={svgY(yAt(f)) + 3}
-					text-anchor="end" fill="rgba(255,255,255,0.25)"
-					font-size="8" font-family="system-ui, sans-serif">{fmtTick(yAt(f))}</text>
+				<text x={PAD_L - 3 * k} y={svgY(yAt(f)) + 4 * k}
+					text-anchor="end" fill={INK.tick}
+					font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif">{fmtTick(yAt(f))}</text>
 			{/each}
 
-			<!-- X axis label -->
-			<text x={PAD_L + plotW / 2} y={SVG_H - 1}
-				text-anchor="middle" fill="rgba(255,255,255,0.18)"
-				font-size="6.5" font-family="system-ui, sans-serif">{xLabel}</text>
+			<!-- X axis title -->
+			<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
+				text-anchor="middle" fill={INK.label}
+				font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+			><title>{xLabel}</title>{fitLabel(`X: ${xLabel}`, plotW / k, CHART_PX.label)}</text>
 
-			<!-- Y axis label (rotated) -->
+			<!-- Y axis title (rotated) -->
 			<text
-				x={6} y={PAD_T + plotH / 2}
-				text-anchor="middle" fill="rgba(255,255,255,0.18)"
-				font-size="6.5" font-family="system-ui, sans-serif"
-				transform={`rotate(-90, 6, ${PAD_T + plotH / 2})`}
-			>{yLabel}</text>
+				x={CHART_PX.label * k} y={PAD_T + plotH / 2}
+				text-anchor="middle" fill={INK.label}
+				font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+				transform={`rotate(-90, ${CHART_PX.label * k}, ${PAD_T + plotH / 2})`}
+			><title>{yLabel}</title>{fitLabel(`Y: ${yLabel}`, plotH / k, CHART_PX.label)}</text>
 		</svg>
+		</div>
+		<div class="bvpanel-note">{i18n.t('chart.bivariate.medianNote')}</div>
 	{/if}
 	</div>
 </ChartFrame>
@@ -375,12 +437,12 @@
 		padding: 0 2px;
 	}
 	.bvpanel-count {
-		font-size: 8px;
+		font-size: 11px;
 		color: #fb923c;
 	}
 	.bvpanel-hint {
-		font-size: 8px;
-		color: rgba(255,255,255,0.18);
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
 		font-style: italic;
 	}
 	.bvpanel-picker {
@@ -391,8 +453,17 @@
 		padding: 0 2px;
 	}
 	.picker-label {
-		font-size: 8px;
-		color: rgba(255,255,255,0.35);
+		font-size: 11px;
+		color: rgba(255,255,255,0.6);
+		white-space: nowrap;
+	}
+	.picker-fixed {
+		flex: 1;
+		min-width: 0;
+		font-size: 12px;
+		color: rgba(255,255,255,0.85);
+		overflow: hidden;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 	.picker-select {
@@ -400,8 +471,8 @@
 		background: rgba(255,255,255,0.04);
 		border: 1px solid rgba(255,255,255,0.12);
 		border-radius: 3px;
-		color: rgba(255,255,255,0.72);
-		font-size: 9px;
+		color: rgba(255,255,255,0.85);
+		font-size: 12px;
 		font-family: inherit;
 		padding: 2px 4px;
 		cursor: pointer;
@@ -416,16 +487,24 @@
 		color: #e2e8f0;
 	}
 	.bvpanel-state {
-		font-size: 9px;
-		color: rgba(255,255,255,0.28);
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
 		text-align: center;
 		padding: 16px 0;
 		font-style: italic;
 	}
 	.bvpanel-error { color: #f87171; }
+	.bvpanel-note {
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
+		line-height: 1.45;
+		padding: 4px 2px 0;
+	}
+	.bv-quad { cursor: pointer; }
+	.bv-quad:hover { fill: #fdba74; }
 	.bvpanel-empty-prompt {
-		font-size: 9px;
-		color: rgba(255,255,255,0.22);
+		font-size: 11px;
+		color: rgba(255,255,255,0.55);
 		padding: 8px 2px 10px;
 		line-height: 1.5;
 		border: 1px dashed rgba(255,255,255,0.1);

@@ -691,6 +691,21 @@ export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined, col?
 	return '';
 }
 
+/**
+ * Chart axis title for a hex layer variable: what it measures plus its unit,
+ * e.g. "Carbono en biomasa (tC/ha)". Falls back to the layer title when the
+ * variable is not declared (substituted primaries, delta/baseline columns).
+ */
+export function getHexAxisLabel(layer: HexLayerConfig | null | undefined, col?: string, withUnit = true): string {
+	if (!layer) return '';
+	const pv = col ?? layer.primaryVariable;
+	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
+	const name = v?.labelKey ? i18n.t(v.labelKey) : i18n.t(layer.titleKey);
+	const unit = withUnit ? getHexPrimaryUnit(layer, pv) : '';
+	// Some labels already carry their unit ("Tasa de pérdida (%/año)").
+	return unit && !name.includes(unit) ? `${name} (${unit})` : name;
+}
+
 export function getTemporalCol(col: string, mode: TemporalMode): string {
 	if (mode === 'current') return col;
 	if (mode === 'baseline') return col === 'score' ? 'score_baseline' : `${col}_baseline`;

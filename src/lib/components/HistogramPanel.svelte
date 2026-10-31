@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
+	import { CHART_PX, INK, svgScale, median, fitLabel } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
@@ -28,8 +29,8 @@
 	}
 
 	const BINS = 20;
-	const PAD_L = 28, PAD_R = 8, PAD_T = 6, PAD_B = 20;
-	const SVG_W = 260, SVG_H = 90;
+	const PAD_L = 12, PAD_R = 12, PAD_T = 14, PAD_B = 32;
+	const SVG_W = 260, SVG_H = 120;
 	const plotW = SVG_W - PAD_L - PAD_R;
 	const plotH = SVG_H - PAD_T - PAD_B;
 
@@ -78,6 +79,20 @@
 
 	const maxCount = $derived(Math.max(...histogram, 1));
 	const totalHexes = $derived(data.size);
+
+	// Rendered width → viewBox units per pixel, so text stays at real pixel size.
+	let renderedW = $state(0), renderedH = $state(0);
+	const k = $derived(svgScale(SVG_W, SVG_H, renderedW, renderedH));
+
+	// Median as the reference line (the old line sat at mid-range, which means nothing).
+	const medianPct = $derived.by(() => {
+		const vals: number[] = [];
+		for (const row of data.values()) { const v = Number(row[variable]); if (isFinite(v)) vals.push(v); }
+		const m = median(vals);
+		if (!isFinite(m)) return null;
+		const [lo, hi] = domain;
+		return Math.max(0, Math.min(100, ((m - lo) / (hi - lo)) * 100));
+	});
 
 	let brushLo: number | null = $state(null);
 	let brushHi: number | null = $state(null);
@@ -159,13 +174,14 @@
 <ChartFrame title="Distribución" csvRows={csvRows} csvFilename="spatia_histogram">
 	<div class="hpanel">
 	<div class="hpanel-subheader">
-		<span class="hpanel-unit">{xLabel} {fmtTick(domain[0])}–{fmtTick(domain[1])}</span>
 		{#if brushLo !== null}
 			<span class="hpanel-count">{selectedCount.toLocaleString()} {i18n.t('chart.hexDblClick')}</span>
 		{:else}
 			<span class="hpanel-hint">{i18n.t('chart.histogram.dragRange')}</span>
 		{/if}
+		<span class="hpanel-unit">{totalHexes.toLocaleString()} {i18n.t('chart.hexShort')}</span>
 	</div>
+	<div bind:clientWidth={renderedW} bind:clientHeight={renderedH}>
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<svg
 		width="100%"
@@ -175,12 +191,20 @@
 		ondblclick={clearBrush}
 		style="cursor: crosshair; display: block;"
 	>
-		<!-- Reference line at 50 -->
-		<line
-			x1={svgX(50)} x2={svgX(50)}
-			y1={PAD_T} y2={PAD_T + plotH}
-			stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="3 2"
-		/>
+		<!-- Median reference line -->
+		{#if medianPct !== null}
+			<line
+				x1={svgX(medianPct)} x2={svgX(medianPct)}
+				y1={PAD_T} y2={PAD_T + plotH}
+				stroke="rgba(255,255,255,0.45)" stroke-width="1" stroke-dasharray="3 2"
+			/>
+			<text
+				x={svgX(medianPct)} y={PAD_T - 3 * k}
+				text-anchor={medianPct > 80 ? 'end' : medianPct < 20 ? 'start' : 'middle'}
+				fill={INK.tick} font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
+				pointer-events="none"
+			>{i18n.t('chart.median')}</text>
+		{/if}
 
 		<!-- Bars -->
 		{#each histogram as count, i}
@@ -224,20 +248,20 @@
 		<!-- X axis labels (physical values at 0/25/50/75/100 % of the domain) -->
 		{#each [0, 25, 50, 75, 100] as tick}
 			<text
-				x={svgX(tick)} y={SVG_H - 4}
-				text-anchor="middle" fill="rgba(255,255,255,0.28)"
-				font-size="8" font-family="system-ui, sans-serif"
+				x={svgX(tick)} y={PAD_T + plotH + (CHART_PX.tick + 2) * k}
+				text-anchor={tick === 0 ? 'start' : tick === 100 ? 'end' : 'middle'} fill={INK.tick}
+				font-size={CHART_PX.tick * k} font-family="system-ui, sans-serif"
 			>{fmtTick(pctToVal(tick))}</text>
 		{/each}
 
-
-		<!-- N total (top-left) -->
+		<!-- Axis title: what the bars measure, inside the SVG so exports carry it -->
 		<text
-			x={PAD_L - 3} y={PAD_T + 5}
-			text-anchor="end" fill="rgba(255,255,255,0.22)"
-			font-size="7" font-family="system-ui, sans-serif"
-		>{totalHexes > 999 ? (totalHexes / 1000).toFixed(0) + 'k' : totalHexes}</text>
+			x={PAD_L + plotW / 2} y={PAD_T + plotH + (CHART_PX.tick + CHART_PX.label + 6) * k}
+			text-anchor="middle" fill={INK.label}
+			font-size={CHART_PX.label * k} font-family="system-ui, sans-serif"
+		><title>{xLabel}</title>{fitLabel(xLabel, plotW / k, CHART_PX.label)}</text>
 	</svg>
+	</div>
 	</div>
 </ChartFrame>
 
@@ -253,17 +277,17 @@
 		padding: 0 2px;
 	}
 	.hpanel-count {
-		font-size: 8px;
+		font-size: 11px;
 		color: #34d399;
 	}
 	.hpanel-unit {
-		font-size: 8px;
-		color: rgba(255,255,255,0.2);
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
 		margin-left: auto;
 	}
 	.hpanel-hint {
-		font-size: 8px;
-		color: rgba(255,255,255,0.18);
+		font-size: 11px;
+		color: rgba(255,255,255,0.5);
 		font-style: italic;
 	}
 </style>

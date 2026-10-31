@@ -3,10 +3,12 @@
 	import * as d3 from 'd3';
 	import { gridDisk, getResolution } from 'h3-js';
 	import ChartFrame from './ChartFrame.svelte';
+	import { CHART_PX, INK, fitLabel } from '$lib/utils/chartType';
 
 	let {
 		data = new Map() as Map<string, Record<string, any>>,
 		variable = '',
+		label = '',
 		boundaryCache = new Map() as Map<string, number[][]>,
 		onShowLisa = (_entries: { h3index: string; value: number; boundary?: number[][] }[]) => {},
 		onBrushSelect = (_h3s: string[]) => {},
@@ -160,7 +162,7 @@
 		// same approach the other 5 charts use declaratively.
 		const W = container.clientWidth || 250;
 		const H = container.clientHeight || 180;
-		const m = { top: 10, right: 12, bottom: 28, left: 40 };
+		const m = { top: 10, right: 12, bottom: 36, left: 46 };
 		const w = W - m.left - m.right;
 		const h = H - m.top - m.bottom;
 
@@ -208,29 +210,35 @@
 			.attr('cx', d => x(d.std)).attr('cy', d => y(d.lag))
 			.attr('r', 2).attr('fill', d => QUAD_COLORS[d.quad]).attr('opacity', 0.5);
 
-		const fontSize = '9px';
-		g.append('text').attr('x', w - 4).attr('y', 12)
-			.attr('text-anchor', 'end').attr('fill', '#ef4444').attr('font-size', fontSize).text('HH (alta)');
-		g.append('text').attr('x', 4).attr('y', h - 4)
-			.attr('fill', '#3b82f6').attr('font-size', fontSize).text('LL (baja)');
-		g.append('text').attr('x', w - 4).attr('y', h - 4)
-			.attr('text-anchor', 'end').attr('fill', '#f97316').attr('font-size', fontSize).text('HL');
-		g.append('text').attr('x', 4).attr('y', 12)
-			.attr('fill', '#60a5fa').attr('font-size', fontSize).text('LH');
+		const fontSize = `${CHART_PX.tick}px`;
+		g.append('text').attr('x', w - 4).attr('y', 14)
+			.attr('text-anchor', 'end').attr('fill', '#ef4444').attr('font-size', fontSize).text(i18n.t('chart.moran.qHH'));
+		g.append('text').attr('x', 4).attr('y', h - 5)
+			.attr('fill', '#3b82f6').attr('font-size', fontSize).text(i18n.t('chart.moran.qLL'));
+		g.append('text').attr('x', w - 4).attr('y', h - 5)
+			.attr('text-anchor', 'end').attr('fill', '#f97316').attr('font-size', fontSize).text(i18n.t('chart.moran.qHL'));
+		g.append('text').attr('x', 4).attr('y', 14)
+			.attr('fill', '#60a5fa').attr('font-size', fontSize).text(i18n.t('chart.moran.qLH'));
 
-		svg.append('text').attr('x', W / 2).attr('y', H - 2)
-			.attr('text-anchor', 'middle').attr('fill', '#a3a3a3').attr('font-size', '9px').text(`z(${variable})`);
-		svg.append('text').attr('x', 10).attr('y', H / 2)
-			.attr('text-anchor', 'middle').attr('fill', '#a3a3a3').attr('font-size', '9px')
-			.attr('transform', `rotate(-90,10,${H / 2})`).text(i18n.t('chart.moran.lag'));
+		// Axis titles trimmed to the plot: the panel font is wide and labels are long.
+		const family = getComputedStyle(container).fontFamily;
+		const xTitle = label || variable;
+		svg.append('text').attr('x', m.left + w / 2).attr('y', H - 4)
+			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', `${CHART_PX.label}px`)
+			.text(fitLabel(xTitle, w, CHART_PX.label, family, ` ${i18n.t('chart.moran.std')}`))
+			.append('title').text(xTitle);
+		svg.append('text').attr('x', 12).attr('y', m.top + h / 2)
+			.attr('text-anchor', 'middle').attr('fill', INK.label).attr('font-size', `${CHART_PX.label}px`)
+			.attr('transform', `rotate(-90,12,${m.top + h / 2})`)
+			.text(fitLabel(i18n.t('chart.moran.lag'), h, CHART_PX.label, family));
 
 		g.append('g').attr('transform', `translate(0,${h})`)
 			.call(d3.axisBottom(x).ticks(5))
-			.call(g => g.selectAll('text').attr('fill', '#a3a3a3').attr('font-size', '8px'))
+			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', `${CHART_PX.tick}px`))
 			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
 		g.append('g')
 			.call(d3.axisLeft(y).ticks(5))
-			.call(g => g.selectAll('text').attr('fill', '#a3a3a3').attr('font-size', '8px'))
+			.call(g => g.selectAll('text').attr('fill', INK.tick).attr('font-size', `${CHART_PX.tick}px`))
 			.call(g => g.selectAll('line,path').attr('stroke', '#334155'));
 
 		// Manual brush — d3.brush can be blocked by overflow:auto scroll containers
@@ -360,7 +368,7 @@
 				<div bind:this={container} class="moran-plot"></div>
 				<div class="moran-quads">
 					{#each ['HH', 'LL', 'HL', 'LH'] as q}
-						<span style="color: {QUAD_COLORS[q]}">{q}: {result.points.filter(p => p.quad === q).length}</span>
+						<span style="color: {QUAD_COLORS[q]}">{i18n.t(`chart.moran.q${q}`)}: {result.points.filter(p => p.quad === q).length.toLocaleString(i18n.locale)}</span>
 					{/each}
 				</div>
 			{:else if data.size > 0}
@@ -373,7 +381,7 @@
 
 <style>
 	.moran-read {
-		font-size: 10px; color: #cbd5e1; line-height: 1.4;
+		font-size: 12px; color: #cbd5e1; line-height: 1.4;
 		margin: 2px 0 6px;
 	}
 	.moran-wrap {
@@ -385,7 +393,7 @@
 		display: flex;
 		align-items: center;
 		gap: 5px;
-		font-size: 10px;
+		font-size: 12px;
 		color: #a3a3a3;
 		background: none;
 		border: none;
@@ -396,11 +404,11 @@
 		transition: color 0.15s;
 	}
 	.moran-toggle:hover { color: #d4d4d4; }
-	.moran-arrow { font-size: 8px; }
+	.moran-arrow { font-size: 11px; }
 	.moran-badge {
 		margin-left: auto;
 		font-family: monospace;
-		font-size: 9px;
+		font-size: 11px;
 		color: #f59e0b;
 	}
 	.moran-body {
@@ -413,8 +421,8 @@
 		display: flex;
 		align-items: center;
 		gap: 6px;
-		font-size: 10px;
-		color: #737373;
+		font-size: 12px;
+		color: #9ca3af;
 		padding: 8px 0;
 	}
 	.moran-spinner {
@@ -431,16 +439,16 @@
 		align-items: center;
 		gap: 6px;
 		flex-wrap: wrap;
-		font-size: 10px;
+		font-size: 12px;
 		font-family: monospace;
 	}
 	.moran-I { color: #f59e0b; font-weight: bold; }
-	.moran-dim { color: #737373; }
+	.moran-dim { color: #9ca3af; }
 	.moran-sig { color: #4ade80; }
 	.moran-insig { color: #f87171; }
-	.moran-sel { color: #fbbf24; font-size: 9px; }
+	.moran-sel { color: #fbbf24; font-size: 11px; }
 	.moran-btn-clear {
-		font-size: 9px;
+		font-size: 11px;
 		color: #fbbf24;
 		background: none;
 		border: none;
@@ -451,8 +459,8 @@
 	.moran-btn-clear:hover { color: #fde68a; }
 	.moran-btn-csv {
 		margin-left: auto;
-		font-size: 9px;
-		color: #737373;
+		font-size: 11px;
+		color: #9ca3af;
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -466,12 +474,12 @@
 		gap: 5px;
 	}
 	.moran-view-btn {
-		font-size: 9px;
+		font-size: 11px;
 		padding: 2px 8px;
 		border: 1px solid #334155;
 		border-radius: 3px;
 		background: none;
-		color: #737373;
+		color: #9ca3af;
 		cursor: pointer;
 		font-family: monospace;
 		transition: all 0.12s;
@@ -484,7 +492,7 @@
 	}
 	.moran-plot {
 		width: 100%;
-		height: 180px;
+		height: 220px;
 		user-select: none;
 	}
 	/* When inside ChartFrame's expanded floating panel, let the plot grow */
@@ -501,12 +509,14 @@
 	}
 	.moran-quads {
 		display: flex;
-		gap: 8px;
-		font-size: 9px;
+		flex-wrap: wrap;
+		gap: 2px 12px;
+		font-size: 11px;
 	}
+	.moran-quads span { white-space: nowrap; }
 	.moran-empty {
-		font-size: 10px;
-		color: #525252;
+		font-size: 12px;
+		color: #9ca3af;
 		padding: 6px 0;
 	}
 </style>
