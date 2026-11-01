@@ -163,6 +163,26 @@ FUENTES = [
         uso_recomendado='Referencia obligada; única fuente de heladas a nivel del suelo; corrección de ERA5-Land.',
         uso_no_recomendado='Tratar una automática con pocos años como normal climática.',
         scripts='pipeline/hexoma/bajar_siga.py; pipeline/hexoma/build_hexoma_estaciones.py', objetos=['estaciones.*'], verificado=V),
+    dict(
+        id='mapbiomas_ar_col3', nombre='MapBiomas Argentina, Colección 3', proveedor='MapBiomas Argentina (red MapBiomas; en el NEA, FVSA, INTA y universidades)',
+        producto='Cobertura y uso del suelo anual, 19 clases', version='Colección 3, v1 (presentada el 24-sep-2026)',
+        acceso='GEE projects/mapbiomas-public/assets/argentina/lulc/collection3/mapbiomas_argentina_collection3_coverage_v1, bajado con computePixels en la grilla nativa' + GEE,
+        licencia='Datos abiertos de MapBiomas con atribución (verificar los términos de la Colección 3 en argentina.mapbiomas.org)',
+        cita='Proyecto MapBiomas Argentina. Colección 3 de la serie anual de mapas de cobertura y uso del suelo de Argentina (1985–2025). https://argentina.mapbiomas.org',
+        doi='', tipo_dato='estimación satelital', res_espacial='~30 m (0,000269°)', res_temporal='anual', periodo='1985–2025',
+        cobertura='Argentina; en el Hexoma, el NEA argentino',
+        variables='classification_<año>: 19 clases (bosque cerrado, abierto e inundable; arbustales; pastizales; plantación forestal; pastura; cultivo temporal; mosaico agricultura-pastura; cultivo perenne; urbano; agua; otras; no observado)',
+        procesamiento=('build_hexoma_uso.py baja bloques de 4096² píxeles (sólo los que tienen centros de celda y sus vecinos), un año por '
+                       'pedido; cada píxel va a la celda que contiene su centro (DuckDB h3) y se cuenta por clase y año. La serie completa '
+                       '(h3, año, clase, píxeles) queda en parquet; Postgres guarda ‰ por grupo de clases cada 5 años y la trayectoria '
+                       '1985–2025 de cada celda.'),
+        asignacion_celda='Píxeles de 30 m con centro dentro de la celda (~110–130 por celda); fracción = píxeles de la clase / píxeles de la celda.',
+        validacion='Internamente: ‰ por celda suma 1000. Contra estadísticas oficiales de superficie: pendiente (ver uso.validacion si existe).',
+        limitaciones=('Clasificación automática por año: los cambios de un año a otro incluyen ruido (cambios_dominante lo cuenta). La leyenda '
+                      'en castellano es traducción propia de la del asset. «Mosaico de agricultura y pastura» mezcla usos.'),
+        uso_recomendado='Trayectoria de uso por celda, validación de la aptitud por cultivo (A4), pérdida de bosque y avance agrícola.',
+        uso_no_recomendado='Superficie de un cultivo específico (soja, maíz) sin un mapa por cultivo; cambios de un solo año.',
+        scripts='pipeline/hexoma/build_hexoma_uso.py', objetos=['uso.*'], verificado=V),
     # ------------------------------------------------------------------ censos y cruce
     dict(
         id='censo_2022', nombre='Censo Nacional 2022 por radio', proveedor='INDEC; agregado por radio en Source Cooperative (nlebovits/censo-argentino)',
