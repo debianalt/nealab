@@ -38,7 +38,14 @@ OUTPUT_DIR = REPO / "pipeline" / "output"
 
 TERRITORIES = ['misiones', 'corrientes', 'itapua_py', 'alto_parana_py',
                'chaco', 'formosa', 'parana_br', 'santa_catarina_br',
-               'rio_grande_sul_br']
+               'rio_grande_sul_br',
+               # The 15 PY departments added later were never optimized: single
+               # row group + SNAPPY, so a zoom-in in Boquerón read the whole 29 MB
+               # file (1-nov-2026).
+               'concepcion_py', 'san_pedro_py', 'cordillera_py', 'guaira_py',
+               'caaguazu_py', 'caazapa_py', 'misiones_py', 'paraguari_py',
+               'central_py', 'neembucu_py', 'amambay_py', 'canindeyu_py',
+               'presidente_hayes_py', 'boqueron_py', 'alto_paraguay_py']
 
 LAYERS = [
     'pm25_drivers',
@@ -46,10 +53,10 @@ LAYERS = [
 ]
 
 
-def territory_dpto_dir(t: str) -> Path:
+def territory_dpto_dir(t: str, root: Path = OUTPUT_DIR) -> Path:
     if t == 'misiones':
-        return OUTPUT_DIR / "sat_dpto"
-    return OUTPUT_DIR / t / "sat_dpto"
+        return root / "sat_dpto"
+    return root / t / "sat_dpto"
 
 
 def optimize_one(args):
@@ -88,14 +95,17 @@ def main() -> int:
     ap.add_argument('--drop-temporal', action='store_true',
                     help='drop *_baseline / *_delta cols (not for temporal mode)')
     ap.add_argument('--workers', type=int, default=4)
+    ap.add_argument('--root', default=None,
+                    help='tree laid out like pipeline/output (e.g. a copy of R2 data/); default pipeline/output')
     args = ap.parse_args()
 
-    territories = TERRITORIES if args.territory == 'all' else [args.territory]
-    layers = LAYERS if args.layer == 'all' else [args.layer]
+    root = Path(args.root) if args.root else OUTPUT_DIR
+    territories = TERRITORIES if args.territory == 'all' else args.territory.split(',')
+    layers = LAYERS if args.layer == 'all' else args.layer.split(',')
 
     tasks = []
     for t in territories:
-        dpto_dir = territory_dpto_dir(t)
+        dpto_dir = territory_dpto_dir(t, root)
         if not dpto_dir.exists():
             print(f'skip {t}: no sat_dpto dir')
             continue
