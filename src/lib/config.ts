@@ -1662,11 +1662,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 		processedDate: '21/03/2026',
 		sourceKey: 'data.source.censo',
 	},
-	real_estate: {
-		dataDate: '01/2025',
-		processedDate: '21/03/2026',
-		sourceKey: 'data.source.realEstate',
-	},
 	catastro_by_radio: {
 		dataDate: 'marzo 2026',
 		processedDate: '22/03/2026',

@@ -8,7 +8,6 @@
 	import AnalysisView from './AnalysisView.svelte';
 	import ZoneComparison from './ZoneComparison.svelte';
 	import CatastroZoneComparison from './CatastroZoneComparison.svelte';
-	import FloodZoneComparison from './FloodZoneComparison.svelte';
 	import HexComparison from './HexComparison.svelte';
 	import HexZoneComparison from './HexZoneComparison.svelte';
 	import ComparisonPanel from './ComparisonPanel.svelte';
@@ -147,7 +146,6 @@
 	});
 
 	const isCatastroAnalysis = $derived(lensStore.activeAnalysis?.id === 'catastro');
-	const isFloodRiskAnalysis = $derived(lensStore.activeAnalysis?.id === 'flood_risk');
 	// Territories with radio/setor-level census data for the base-map RadioCensusPanel.
 	const CENSUS_TERRITORIES = new Set([
 		'misiones', 'corrientes', 'chaco', 'formosa',
@@ -215,9 +213,7 @@
 		</div>
 	{:else if lassoStore.zones.length > 0}
 		<div class="chart-scroll">
-			{#if isFloodRiskAnalysis}
-				<FloodZoneComparison {lassoStore} {mapStore} {onRemoveZone} {onClearZones} />
-			{:else if isCatastroAnalysis}
+			{#if isCatastroAnalysis}
 				<CatastroZoneComparison {lassoStore} {lensStore} {onRemoveZone} {onClearZones} />
 			{:else}
 				<ZoneComparison {lassoStore} {onRemoveZone} {onClearZones} />

@@ -15,7 +15,7 @@
 src/                    # SvelteKit app
   lib/config.ts         # PARQUETS URLs, HEX_LAYER_REGISTRY, ANALYSIS_REGISTRY
   lib/stores/           # hex.svelte.ts, map.svelte.ts, i18n.svelte.ts, duckdb.ts
-  lib/components/analyses/  # FloodRiskAnalysis, RealEstate, TerritorialProfile
+  lib/components/analyses/  # CatastroAnalysis, OvertureAnalysis (panel de capa hex)
   routes/+page.svelte   # Main page (map, hex click, analysis choropleth)
 functions/api/          # Cloudflare Pages Functions (chat proxy)
 pipeline/               # Python GEE/raster pipeline
