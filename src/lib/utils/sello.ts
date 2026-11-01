@@ -125,6 +125,16 @@ function hexRgb(h: string): [number, number, number] {
 export const MAP_CLASS_3 = ['#a2452a', '#df7440', '#f2c46b'] as const;
 export const MAP_CLASS_4 = ['#8a3a22', '#d0602f', '#efa046', '#fbe3a6'] as const;
 export const MAP_CLASS_5 = ['#7a3120', '#b84e2b', '#e2793b', '#eeac52', '#fbe6ae'] as const;
+// Travel time (isolation): near is a dark, low-chroma brown that recedes, far
+// climbs tierra → oro to the brightest class. MAP_TIERRA read backwards here:
+// its dark, saturated red sat on the capital and its pale end on the most
+// isolated places, and a linear min–max domain left whole departments one flat
+// tone (fixed 1-nov-2026). Fitted in OKLCH, validated on #0e1117
+// (validate_palette): L monotone with ΔL ≥ 0.06, darkest step 2.04:1, adjacent
+// ΔE normal ≥ 14.2 (MAP_CLASS_5: 12.2), CVD worst 10.0 deutan. The near step
+// keeps ΔE 16 from the no-data gray #6b7280 (Chaco, Formosa and the Paraguayan
+// Chaco have 3–14 % of cells without a time) and 11 from the backdrop #29303d.
+export const MAP_ACCESS_5 = ['#5a4234', '#c0502b', '#f97408', '#f0b64f', '#f5e8ba'] as const;
 // Density bands match the map's viridis ramp (Map.computeHexColor default branch).
 export const MAP_VIRIDIS_3 = ['#5b21b6', '#21918c', '#fde725'] as const;
 

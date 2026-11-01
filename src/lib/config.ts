@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3 } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5 } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -572,6 +572,9 @@ export interface ColorClasses {
 	// true → a cut belongs to the class below (value > from), matching FlowChart
 	// bands; default → to the class above (value >= from).
 	upperInclusive?: boolean;
+	// Unit printed next to the legend title when the class labels use a different
+	// one than the variable (travel time: variable in min, classes in hours).
+	unit?: string;
 }
 
 export function colorForClass(value: number, classes: ColorClasses): string {
@@ -639,6 +642,21 @@ export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 		{ from: 2, color: MAP_CLASS_3[2], labelKey: 'legend.deforest.high' },
 	],
 	upperInclusive: true,
+};
+
+// Travel time to the capital (Oxford MAP, minutes), doubling cuts in hours, the
+// same in every territory. Medians run from 73 min (Central PY) to 403 (Alto
+// Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. No zero class: 0 min (the capital
+// itself, 1.008 cells in Capital) is the nearest class, not "Sin cobertura".
+export const ACCESS_TIME_CLASSES: ColorClasses = {
+	unit: 'h',
+	steps: [
+		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.access.c1' },
+		{ from: 60, color: MAP_ACCESS_5[1], labelKey: 'legend.access.c2' },
+		{ from: 120, color: MAP_ACCESS_5[2], labelKey: 'legend.access.c3' },
+		{ from: 240, color: MAP_ACCESS_5[3], labelKey: 'legend.access.c4' },
+		{ from: 480, color: MAP_ACCESS_5[4], labelKey: 'legend.access.c5' },
+	],
 };
 
 export interface ScaleStats {
@@ -1126,6 +1144,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		],
 		primaryVariable: 'travel_min_capital_raw',
 		colorScale: 'flood',
+		colorClasses: ACCESS_TIME_CLASSES,
 		aggregation: 'mean',
 		titleKey: 'analysis.accessibility.title',
 		perDepartment: true,
@@ -1574,7 +1593,7 @@ export const RADIO_ANALYSIS_REGISTRY: Record<string, RadioAnalysisConfig> = {
 			{ col: 'dist_nearest_secundaria_km', label: { es: 'Escuela sec.', en: 'High school' }, desc: { es: 'Distancia a escuela secundaria (km)', en: 'Distance to high school (km)' }, invert: true },
 			{ col: 'dist_primary_m', label: { es: 'Ruta principal', en: 'Main road' }, desc: { es: 'Distancia a ruta primaria (km)', en: 'Distance to primary road (km)' }, invert: true },
 		],
-		howToRead: { es: 'Las parcelas se colorean según el tiempo de viaje a la capital. Verde = más cercano. El pétalo muestra accesibilidad a servicios clave — en este caso mayor extensión = mejor acceso (menor distancia/tiempo).', en: 'Parcels are coloured by travel time to the capital. Green = closer. The petal shows accessibility to key services.' },
+		howToRead: { es: 'Los hexágonos se colorean por el tiempo de viaje a la capital, en cinco clases: menos de 1 h, 1–2 h, 2–4 h, 4–8 h y más de 8 h. Pardo oscuro = cerca; cuanto más claro y dorado, más aislado. El pétalo muestra accesibilidad a servicios clave: mayor extensión = mejor acceso (menor distancia/tiempo).', en: 'Hexagons are coloured by travel time to the capital in five classes: under 1 h, 1–2 h, 2–4 h, 4–8 h and over 8 h. Dark brown = near; the lighter and more golden, the more isolated. The petal shows accessibility to key services: larger = better access.' },
 		implications: { es: 'Zonas a más de 2 horas de la capital y sin hospital cercano representan alto riesgo para familias. La distancia a ruta principal determina el costo logístico para producción.', en: 'Areas over 2 hours from the capital without a nearby hospital represent high risk for families.' },
 		methodology: { es: 'Tiempo de viaje motorizado a la capital y cabecera departamental (superficie de fricción Oxford MAP). Distancia a hospitales, escuelas y rutas principales (OSM). Fuente: Nelson et al. 2019 + Oxford MAP 2019 + OSM.', en: 'Motorised travel time to capital and dept seat (Oxford MAP friction surface). Distance to hospitals, schools and primary roads (OSM).' },
 	},

@@ -189,7 +189,7 @@
 	</div>
 {:else if layer && classes}
 	<div class="legend">
-		<div class="legend-title">{title} {#if classUnit && !paintedLabel}<span class="legend-range">{classUnit}</span>{/if}</div>
+		<div class="legend-title">{title} {#if (classes.unit ?? classUnit) && !paintedLabel}<span class="legend-range">{classes.unit ?? classUnit}</span>{/if}</div>
 		<div class="legend-items">
 			{#if classes.zero}
 				<div class="legend-item">
