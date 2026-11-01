@@ -17,7 +17,7 @@
 	import { onMount, tick } from 'svelte';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { page } from '$app/state';
-	import { BASEMAP, getTilesUrl } from '$lib/config';
+	import { BASEMAP, TERRAIN_DEM, getTilesUrl } from '$lib/config';
 	import { pointInPolygon } from '$lib/utils/geometry';
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
@@ -31,10 +31,47 @@
 
 	// Colour: warm graphite chrome; data in ColorBrewer (OrRd) and Tol muted (categorical) schemes,
 	// so nothing on the map competes with the water blues.
-	const INK_BG = '#131417';      // map background / halos
+	const INK_BG = '#131417';      // star outlines, school dots
 	const GREY = '#787d86';        // neutral class (no priority, never reached)
-	const SEL = '#f3efe6';         // selection and lasso: warm white, reads on any data colour
 	const RED = '#d1484a';         // cut roads
+	// Two themes. Light (default): paper basemap with shaded relief, the atlas look for a scientific reading.
+	// Dark: the v9 graphite. Only what depends on the background changes; data colours (OrRd, Tol, PRIO) stay.
+	type Tema = 'claro' | 'oscuro';
+	const STYLE_URL: Record<Tema, string> = {
+		claro: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+		oscuro: BASEMAP
+	};
+	const TH = {
+		claro: { sel: '#1c1c1c', dry: '#d3d0c8', ctx: '#e6e3dc', radioLine: '#5a5750', casing: '#fbfaf7', iso: '#7b62c0',
+			label: '#1c1c1c', halo: 'rgba(251, 250, 247, 0.92)', peakOff: '#dcd8cf', peakOn: '#3a7fb0', peakLine: '#1c1c1c' },
+		oscuro: { sel: '#f3efe6', dry: '#4a4c52', ctx: '#26282d', radioLine: '#e6e2d8', casing: INK_BG, iso: '#b6a1dc',
+			label: '#ebe8e1', halo: 'rgba(19, 20, 23, 0.92)', peakOff: '#2d2f36', peakOn: '#7fb3d1', peakLine: '#ebe8e1' }
+	};
+	const temaInicial = (): Tema => {
+		try { return localStorage.getItem('demo-el-nino-tema') === 'oscuro' ? 'oscuro' : 'claro'; } catch { return 'claro'; }
+	};
+	// Positron restyled as an atlas sheet: paper, no land-cover blotches, no POIs, no flat buildings (the demo
+	// draws its own), and shaded relief from the site's Mapterhorn tiles under the roads: the Uruguay's
+	// barranca is what decides how far the water gets.
+	function atlasStyle(s: any) {
+		// the country border runs mid-river: Positron draws it as an 8 px pale band that reads as a road,
+		// so it becomes a thin dashed line, the atlas convention
+		const drop = /^(landcover|park_|landuse$|building|poi_|housenumber|aeroway|boundary_country_outline)/;
+		s.layers = s.layers.filter((l: any) => !drop.test(l.id));
+		for (const l of s.layers) {
+			if (l.id === 'boundary_country_inner')
+				l.paint = { 'line-color': '#8f8b82', 'line-width': 1, 'line-dasharray': [4, 2], 'line-opacity': 0.8 };
+			if (l.id === 'background') l.paint = { 'background-color': '#fbfaf7' };
+			if (l.id === 'water') l.paint = { ...l.paint, 'fill-color': '#dfe7ec' };
+			if (l.id === 'waterway') l.paint = { ...l.paint, 'line-color': '#c9d6de' };
+		}
+		s.sources.relieve = { type: 'raster-dem', tiles: [getTilesUrl('terrain')], encoding: 'terrarium', ...TERRAIN_DEM };
+		const at = s.layers.findIndex((l: any) => l.id === 'water') + 1;
+		s.layers.splice(at, 0, { id: 'relieve', type: 'hillshade', source: 'relieve',
+			paint: { 'hillshade-exaggeration': 0.35, 'hillshade-shadow-color': '#8a867c', 'hillshade-highlight-color': '#ffffff',
+				'hillshade-accent-color': '#b9b4a8', 'hillshade-illumination-direction': 315 } });
+		return s;
+	}
 	const PRIO = [
 		{ id: 'vigilar ya', label: 'Vigilar ya', color: '#c8373b' },
 		{ id: 'vigilar', label: 'Vigilar', color: '#e58a3a' },
@@ -81,26 +118,32 @@
 		return [...new Set(q)].filter((x) => x > 0).sort((a, b) => a - b);
 	}
 	// continuous water-depth scale: colour interpolated between stops that the legend shows evenly spaced
-	const WSTOPS: [number, number[]][] = [[0, [224, 247, 255, 175]], [0.5, [158, 230, 255, 190]], [1.5, [76, 195, 255, 205]],
-		[3, [31, 143, 224, 215]], [6, [20, 83, 168, 225]], [10, [11, 42, 107, 235]]];
+	// dark: bright blues that glow on graphite; light: ColorBrewer Blues from its 3rd class, so shallow water
+	// does not vanish on paper
+	const WSTOPS: Record<Tema, [number, number[]][]> = {
+		oscuro: [[0, [224, 247, 255, 175]], [0.5, [158, 230, 255, 190]], [1.5, [76, 195, 255, 205]],
+			[3, [31, 143, 224, 215]], [6, [20, 83, 168, 225]], [10, [11, 42, 107, 235]]],
+		claro: [[0, [178, 210, 235, 200]], [0.5, [140, 190, 222, 210]], [1.5, [94, 160, 206, 220]],
+			[3, [49, 125, 186, 228]], [6, [16, 82, 152, 235]], [10, [8, 48, 107, 242]]]
+	};
 	const LUT_STEP = 0.05;
-	const WLUT = (() => {
+	const makeLut = (stops: [number, number[]][]) => {
 		const n = Math.round(10 / LUT_STEP) + 1, out = new Uint8ClampedArray(n * 4);
 		for (let i = 0; i < n; i++) {
 			const d = i * LUT_STEP;
 			let k = 0;
-			while (k < WSTOPS.length - 2 && d > WSTOPS[k + 1][0]) k++;
-			const [a, ca] = WSTOPS[k], [b, cb] = WSTOPS[k + 1];
+			while (k < stops.length - 2 && d > stops[k + 1][0]) k++;
+			const [a, ca] = stops[k], [b, cb] = stops[k + 1];
 			const t = Math.min(Math.max((d - a) / (b - a), 0), 1);
 			for (let j = 0; j < 4; j++) out[i * 4 + j] = ca[j] + (cb[j] - ca[j]) * t;
 		}
 		return out;
-	})();
-	const WLUT_N = WLUT.length / 4;
-	const WGRAD = `linear-gradient(to right, ${WSTOPS.map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS.length - 1)) * 100}%`).join(', ')})`;
+	};
+	const WLUT: Record<Tema, Uint8ClampedArray> = { claro: makeLut(WSTOPS.claro), oscuro: makeLut(WSTOPS.oscuro) };
+	const WLUT_N = WLUT.claro.length / 4;
+	const wgrad = (tm: Tema) => `linear-gradient(to right, ${WSTOPS[tm].map((s, i) => `rgb(${s[1].slice(0, 3).join(',')}) ${(i / (WSTOPS[tm].length - 1)) * 100}%`).join(', ')})`;
 	// building depth: ColorBrewer OrRd
 	const BDEPTH: [number, string][] = [[0, '#fdd49e'], [1, '#fc8d59'], [2.5, '#d7301f'], [5, '#7f0000']];
-	const DRY = '#4a4c52';
 	// arroyo susceptibility: class 3 high, 2 medium (low is not drawn)
 	const ARR = [{ k: 3, label: 'Alta', color: '#e34a33', rgb: [227, 74, 51] }, { k: 2, label: 'Media', color: '#fdbb84', rgb: [253, 187, 132] }];
 	// how often the river reached a place since 1980: years whose annual peak was at or above its first-impact height (OrRd)
@@ -121,7 +164,14 @@
 	] as { id: string; label: string; short: string; note?: string; extra?: boolean }[];
 	// official levels at the El Soberbio gauge (cited by the municipality and Protección Civil, 2025-2026)
 	const COTAS = [{ h: 11, label: 'alerta', side: 'left' }, { h: 13, label: 'evacuación', side: 'right' }];
-	const ISO = '#b6a1dc';
+	// Calibration band. The vertical shift Δ fitted on press-documented floods (03_calibracion.py) is 2.0 m, and
+	// 1.5 m fits almost as well. The shift is uniform and the steps are 0.5 m, so Δ = 1.5 at height h is exactly
+	// Δ = 2.0 at h − 0.5: per building, the water arrives at s (Δ 2.0) or s + 0.5 (Δ 1.5). For isolation it is
+	// an approximation: the bridge (+3.5 m) and culvert (< 10 m) rules were set on calibrated heights.
+	const DELTA_LO = 1.5;
+	// above this height the press floods put the model at 1.9–2.8 times the reported families or houses under
+	// water (19.75 m in Nov 2023: 372 vs > 200; 22.6 m in Jun 2014: 710 vs 250-350): the totals are a ceiling
+	const TECHO_M = 19;
 	const DIMS: [string, string][] = [
 		['dim_material', 'vivienda precaria o hacinamiento'],
 		['dim_recuperacion', 'hogares con NBI'],
@@ -156,6 +206,9 @@
 		};
 	}
 	interface Lasso { viv: number; pers: number; ninos: number; mayores: number; ren: number; esc: number }
+	// rows of the radio tables (card and printed sheet): key, label, rounded like persons
+	const FILAS_RADIO: [keyof Lasso, string, boolean][] = [['viv', 'Viviendas', false], ['pers', 'Personas', true],
+		['ninos', 'Niños 0-5', true], ['mayores', 'Mayores 65+', true], ['ren', 'Barrio popular', false]];
 
 	let container: HTMLDivElement;
 	let map: any;
@@ -164,6 +217,8 @@
 	let selected = $state<Record<string, any> | null>(null);
 	let error = $state('');
 	let capa = $state('agua');
+	let tema = $state<Tema>(temaInicial());
+	const T = $derived(TH[tema]);
 	// river colour: depth at the chosen height, or how many years since 1980 the river got there
 	let aguaModo = $state<'profundidad' | 'frecuencia'>('profundidad');
 	let lassoOn = $state(false);
@@ -194,9 +249,12 @@
 		for (const p of tabla.pasos) if (p.altura <= h + 1e-6) best = p;
 		return best;
 	};
+	// metres between the two ends of the calibration band (0.5 with Δ = 2.0 and 1.5)
+	const banda = $derived(tabla ? Math.max((tabla.calibracion_delta ?? 2) - DELTA_LO, 0) : 0.5);
 	const pasoActual = $derived(tabla ? pasoAt(stage) : null);
-	const pasoMenos = $derived(tabla ? pasoAt(stage - 1) : null);
-	const pasoMas = $derived(tabla ? pasoAt(stage + 1) : null);
+	// the same height with Δ = 1.5: the low end of the band
+	const pasoBajo = $derived(tabla ? pasoAt(stage - banda) : null);
+	const esTecho = $derived(stage > TECHO_M + 1e-6);
 	const minStage = $derived(tabla ? tabla.pasos[0].altura : 2.5);
 	const maxStage = $derived(tabla ? tabla.pasos[tabla.pasos.length - 1].altura : 28);
 	const alcanzadas = $derived(tabla ? tabla.umbrales.filter((u) => u.altura <= stage + 1e-6) : []);
@@ -223,34 +281,52 @@
 		return cols.map((color, i) => ({ color,
 			label: i === 0 ? `menos de ${fmt(b[0])}` : i === b.length ? `${fmt(b[i - 1])} o más` : `${fmt(b[i - 1])} a ${fmt(b[i])}` }));
 	});
-	const lassoRes = $derived.by(() => {
-		if (!lassoPoly || !tabla) return null;
-		const alturas = [stage, ...SCEN.map((s) => tabla!.escenarios[s.id].altura_m)];
-		const out: Lasso[] = alturas.map(() => ({ viv: 0, pers: 0, ninos: 0, mayores: 0, ren: 0, esc: 0 }));
+	// Counts under water for a set of buildings at several heights, at both ends of the calibration band:
+	// hi = Δ 2.0 (water at s), lo = Δ 1.5 (water at s + banda). `keep` picks the buildings, `keepPt` the schools.
+	function contar(alturas: number[], keep: (i: number) => boolean, keepPt: (c: [number, number]) => boolean) {
+		const zero = (): Lasso => ({ viv: 0, pers: 0, ninos: 0, mayores: 0, ren: 0, esc: 0 });
+		const hi = alturas.map(zero), lo = alturas.map(zero);
 		const total = { viv: 0, pers: 0, n: 0 };
-		const bb = bbox(lassoPoly);
+		const add = (o: Lasso, i: number, rp: any) => {
+			o.viv += B.v[i]; o.pers += B.p[i]; o.ninos += B.p[i] * rp.s05; o.mayores += B.p[i] * rp.s65;
+			if (B.r[i]) o.ren += B.v[i];
+		};
 		for (let i = 0; i < B.x.length; i++) {
-			const x = B.x[i], y = B.y[i];
-			if (x < bb[0] || x > bb[2] || y < bb[1] || y > bb[3] || !pointInPolygon([x, y], lassoPoly)) continue;
+			if (!keep(i)) continue;
 			total.viv += B.v[i]; total.pers += B.p[i]; total.n++;
 			const s = B.s[i];
 			if (s == null) continue;
 			const rp = radioById.get(B.radios[B.z[i]])?.properties ?? { s05: 0, s65: 0 };
 			alturas.forEach((h, k) => {
-				if (s <= h + 1e-6) {
-					const o = out[k];
-					o.viv += B.v[i]; o.pers += B.p[i]; o.ninos += B.p[i] * rp.s05; o.mayores += B.p[i] * rp.s65;
-					if (B.r[i]) o.ren += B.v[i];
-				}
+				if (s <= h + 1e-6) add(hi[k], i, rp);
+				if (s + banda <= h + 1e-6) add(lo[k], i, rp);
 			});
 		}
 		for (const f of puntos?.features ?? []) {
 			const pi = f.properties.primer_impacto;
-			if (f.properties.tipo !== 'escuela' || pi == null) continue;
-			if (!pointInPolygon(f.geometry.coordinates, lassoPoly)) continue;
-			alturas.forEach((h, k) => { if (pi <= h + 1e-6) out[k].esc += 1; });
+			if (f.properties.tipo !== 'escuela' || pi == null || !keepPt(f.geometry.coordinates)) continue;
+			alturas.forEach((h, k) => {
+				if (pi <= h + 1e-6) hi[k].esc += 1;
+				if (pi + banda <= h + 1e-6) lo[k].esc += 1;
+			});
 		}
-		return { out, total };
+		return { hi, lo, total };
+	}
+	const lassoRes = $derived.by(() => {
+		if (!lassoPoly || !tabla) return null;
+		const poly = lassoPoly, bb = bbox(poly);
+		const alturas = [stage, ...SCEN.map((s) => tabla!.escenarios[s.id].altura_m)];
+		return contar(alturas, (i) => {
+			const x = B.x[i], y = B.y[i];
+			return x >= bb[0] && x <= bb[2] && y >= bb[1] && y <= bb[3] && pointInPolygon([x, y], poly);
+		}, (c) => pointInPolygon(c, poly));
+	});
+	// the selected radio at the scenario heights, both ends of the band (hi equals the precomputed esc* fields)
+	const radioRes = $derived.by(() => {
+		if (!selected || !tabla) return null;
+		const k = B.radios.indexOf(selected.id);
+		if (k < 0) return null;
+		return contar(SCEN.map((s) => tabla!.escenarios[s.id].altura_m), (i) => B.z[i] === k, () => false);
 	});
 
 	const STAR = Array.from({ length: 10 }, (_, k) => {
@@ -289,6 +365,22 @@
 
 	const fmt = (n: number) => Math.round(n).toLocaleString('es-AR');
 	const approx = (n: number) => (n < 20 ? fmt(n) : '≈ ' + fmt(Math.round(n / 10) * 10));
+	// a band as "a a b" (or one number when both ends round the same); approxR rounds persons like approx
+	const round10 = (n: number) => (n < 20 ? Math.round(n) : Math.round(n / 10) * 10);
+	const rango = (a: number, b: number) => {
+		const lo = fmt(Math.min(a, b)), hi = fmt(Math.max(a, b));
+		return lo === hi ? hi : `${lo} a ${hi}`;
+	};
+	const approxR = (a: number, b: number) => {
+		const lo = round10(Math.min(a, b)), hi = round10(Math.max(a, b));
+		return (hi >= 20 ? '≈ ' : '') + (lo === hi ? fmt(hi) : `${fmt(lo)} a ${fmt(hi)}`);
+	};
+	// compact band for narrow table cells: "42–48"
+	const rc = (a: number, b: number, aprox = false) => {
+		const f = (n: number) => fmt(aprox ? round10(n) : n);
+		const lo = f(Math.min(a, b)), hi = f(Math.max(a, b));
+		return lo === hi ? hi : `${lo}–${hi}`;
+	};
 	const m = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + ' m';
 	const dec = (x: number) => x.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const pct = (x: number) => (x * 100).toLocaleString('es-AR', { maximumFractionDigits: 0 }) + ' %';
@@ -319,6 +411,7 @@
 		// frequency classes by height code (x4): one lookup per code instead of per pixel
 		const fcol = freq ? Array.from({ length: 256 }, (_, v) => freqOf(aniosHasta(v / 4)).rgb) : null;
 		const riverCode = ((tabla?.s_ref ?? 2.1) + 0.3) * 4;
+		const lut = WLUT[tema];
 		for (let k = 0; k < wet.length; k++) {
 			const i = wet[k], v = vals[i];
 			if (v > st4) continue;
@@ -330,7 +423,7 @@
 				continue;
 			}
 			const li = Math.min(Math.round((stage - v / 4) / LUT_STEP), WLUT_N - 1) * 4;
-			d[o] = WLUT[li]; d[o + 1] = WLUT[li + 1]; d[o + 2] = WLUT[li + 2]; d[o + 3] = WLUT[li + 3];
+			d[o] = lut[li]; d[o + 1] = lut[li + 1]; d[o + 2] = lut[li + 2]; d[o + 3] = lut[li + 3];
 		}
 		// paint on a scratch canvas, then draw it blurred by ~1 px so 20 m pixels do not show as blocks
 		wraw.putImageData(wimg, 0, 0);
@@ -384,10 +477,10 @@
 			// step on the impact height: at or below the 10th highest peak = 10 years or more, and so on
 			const freqRamp = ['step', ['get', 's'], FREQ[0].color, picosDesc[9] + 1e-6, FREQ[1].color, picosDesc[2] + 1e-6,
 				FREQ[2].color, picosDesc[0] + 1e-6, FREQ[3].color];
-			return ['case', flooded, freqRamp, isolated, ISO, DRY];
+			return ['case', flooded, freqRamp, isolated, T.iso, T.dry];
 		}
-		if (capa === 'agua') return ['case', flooded, depthRamp, isolated, ISO, DRY];
-		if (capa === 'arroyos') return ['match', ['coalesce', ['get', 'k'], 0], 3, ARR[0].color, 2, ARR[1].color, DRY];
+		if (capa === 'agua') return ['case', flooded, depthRamp, isolated, T.iso, T.dry];
+		if (capa === 'arroyos') return ['match', ['coalesce', ['get', 'k'], 0], 3, ARR[0].color, 2, ARR[1].color, T.dry];
 		return ['match', ['get', 'z'], ...colorPairs(), GREY];
 	}
 
@@ -401,7 +494,16 @@
 		map.setPaintProperty('agua', 'raster-opacity', capa === 'arroyos' ? 0.35 : 0.9);
 		map.setPaintProperty('radios-fill', 'fill-color', col);
 		map.setPaintProperty('radios-fill', 'fill-opacity', water ? 0 : 0.16);
-		map.setPaintProperty('radios-line', 'line-color', '#e6e2d8');
+		map.setPaintProperty('radios-line', 'line-color', T.radioLine);
+		// background-dependent colours (theme)
+		map.setPaintProperty('radio-sel', 'line-color', T.sel);
+		map.setPaintProperty('lasso-fill', 'fill-color', T.sel);
+		map.setPaintProperty('lasso-line', 'line-color', T.sel);
+		map.setPaintProperty('ctx-3d', 'fill-extrusion-color', T.ctx);
+		map.setPaintProperty('aisl-pts', 'circle-color', T.iso);
+		map.setPaintProperty('cortes-casing', 'line-color', T.casing);
+		map.setPaintProperty('star-labels', 'text-color', T.label);
+		map.setPaintProperty('star-labels', 'text-halo-color', T.halo);
 		map.setPaintProperty('radios-line', 'line-opacity', water ? ['case', reached, 0.6, 0] : 0.28);
 		map.setPaintProperty('radios-line', 'line-width', water ? 1.3 : 0.8);
 		map.setPaintProperty('radios-line', 'line-dasharray', water ? [2, 2] : [1, 0]);
@@ -418,8 +520,25 @@
 		map.setFilter('puntos', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st]);
 	}
 
-	$effect(() => { stage; capa; aguaModo; applyLayers(); });
-	$effect(() => { stage; capa; aguaModo; paintWater(); });
+	$effect(() => { stage; capa; aguaModo; tema; applyLayers(); });
+	$effect(() => { stage; capa; aguaModo; tema; paintWater(); });
+	// theme: remember it, and swap the basemap; addDemoLayers runs again on 'style.load'
+	let styleTema: Tema | null = null;
+	$effect(() => {
+		const tm = tema;
+		try { localStorage.setItem('demo-el-nino-tema', tm); } catch {}
+		if (!map || styleTema === null || styleTema === tm) return;
+		loadStyle(tm).then((s) => { if (tema === tm) { styleTema = tm; map.setStyle(s, { diff: false }); } });
+	});
+	const styleCache = new Map<Tema, any>();
+	async function loadStyle(tm: Tema) {
+		if (!styleCache.has(tm)) {
+			const s = await (await fetch(STYLE_URL[tm])).json();
+			styleCache.set(tm, tm === 'claro' ? atlasStyle(s) : s);
+		}
+		// a fresh copy: MapLibre keeps a reference to the object it is given
+		return structuredClone(styleCache.get(tm));
+	}
 	$effect(() => {
 		const data = starData();
 		const src = map?.getSource('stars');
@@ -611,11 +730,18 @@
 			wraw = raw.getContext('2d')!;
 			wimg = wraw.createImageData(wc.width, wc.height);
 
-			map = new maplibregl.Map({ container, style: BASEMAP, ...town(), maxPitch: 70, attributionControl: { compact: true } });
+			let style0: any;
+			const tema0 = tema;
+			try { style0 = await loadStyle(tema0); } catch { style0 = STYLE_URL.oscuro; }
+			if (cancelled) return;
+			styleTema = tema0;
+			map = new maplibregl.Map({ container, style: style0, ...town(), maxPitch: 70, attributionControl: { compact: true } });
 			map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-left');
 			map.addControl(new maplibregl.ScaleControl({ maxWidth: 120, unit: 'metric' }), 'bottom-left');
 			if (import.meta.env.DEV) (window as any).__demo = map;   // for the local Playwright check
-			map.on('load', () => {
+			// the demo's sources and layers: added on every style load, because a theme change replaces the style
+			const addDemoLayers = () => {
+				if (map.getSource('radios')) return;
 				const firstSymbol = map.getStyle().layers.find((l: any) => l.type === 'symbol')?.id;
 				map.addSource('radios', { type: 'geojson', data: radios });
 				map.addLayer({ id: 'radios-fill', type: 'fill', source: 'radios', paint: { 'fill-color': GREY, 'fill-opacity': 0 } }, firstSymbol);
@@ -627,21 +753,21 @@
 					map.addLayer({ id: 'arroyos', type: 'raster', source: 'arroyos', layout: { visibility: 'none' },
 						paint: { 'raster-resampling': 'linear', 'raster-opacity': 0.85, 'raster-fade-duration': 0 } }, firstSymbol);
 				}
-				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': '#e6e2d8', 'line-width': 1, 'line-opacity': 0 } });
-				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], ''],
-					paint: { 'line-color': SEL, 'line-width': 2.5 } });
+				map.addLayer({ id: 'radios-line', type: 'line', source: 'radios', paint: { 'line-color': T.radioLine, 'line-width': 1, 'line-opacity': 0 } });
+				map.addLayer({ id: 'radio-sel', type: 'line', source: 'radios', filter: ['==', ['get', 'id'], selected?.id ?? ''],
+					paint: { 'line-color': T.sel, 'line-width': 2.5 } });
 				// context: the site's building tiles outside the municipality only
 				// at low zoom (municipality view) the 3D tiles are not loaded: buildings that can be isolated as points
 				const aisl = { type: 'FeatureCollection', features: (B.i ?? []).flatMap((iv: number, k: number) => iv >= 0
 					? [{ type: 'Feature', geometry: { type: 'Point', coordinates: [B.x[k], B.y[k]] }, properties: { i: iv, s: B.s[k] ?? -1 } }] : []) };
 				map.addSource('aisl', { type: 'geojson', data: aisl });
 				map.addLayer({ id: 'aisl-pts', type: 'circle', source: 'aisl', maxzoom: 12.5, filter: ['<=', ['get', 'i'], 0],
-					paint: { 'circle-color': ISO, 'circle-opacity': 0.6,
+					paint: { 'circle-color': T.iso, 'circle-opacity': 0.6,
 						'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 0.9, 12, 2.2] } });
 				// roads the model cuts at the chosen height ("posible corte"): only those are drawn
 				map.addSource('caminos', { type: 'geojson', data: caminos });
 				map.addLayer({ id: 'cortes-casing', type: 'line', source: 'caminos', filter: ['<=', ['get', 's'], 0],
-					layout: { 'line-cap': 'round' }, paint: { 'line-color': INK_BG, 'line-width': 6 } });
+					layout: { 'line-cap': 'round' }, paint: { 'line-color': T.casing, 'line-width': 6 } });
 				map.addLayer({ id: 'cortes', type: 'line', source: 'caminos', filter: ['<=', ['get', 's'], 0],
 					layout: { 'line-cap': 'round' }, paint: { 'line-color': RED, 'line-width': 3 } });
 				map.addSource('buildings', { type: 'vector', url: getTilesUrl('buildings') });
@@ -649,11 +775,11 @@
 					filter: ['!', ['in', ['get', 'redcode'], ['literal', B.radios]]],
 					paint: {
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
-						'fill-extrusion-color': '#26282d', 'fill-extrusion-opacity': 0.8
+						'fill-extrusion-color': T.ctx, 'fill-extrusion-opacity': 0.8
 					} });
 				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v7.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
-					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': DRY, 'fill-extrusion-opacity': 0.95 } });
+					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': T.dry, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
 				map.addLayer({ id: 'puntos', type: 'circle', source: 'puntos', minzoom: 11,
 					paint: {
@@ -679,13 +805,23 @@
 						'text-anchor': 'left', 'text-offset': [1.15, 0], 'text-max-width': 12,
 						'symbol-sort-key': ['get', 'n']
 					},
-					paint: { 'text-color': '#ebe8e1', 'text-halo-color': 'rgba(19, 20, 23, 0.92)', 'text-halo-width': 1.6 } });
+					paint: { 'text-color': T.label, 'text-halo-color': T.halo, 'text-halo-width': 1.6 } });
 				map.addSource('lasso', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 				map.addLayer({ id: 'lasso-fill', type: 'fill', source: 'lasso', filter: ['==', ['geometry-type'], 'Polygon'],
-					paint: { 'fill-color': SEL, 'fill-opacity': 0.1 } });
+					paint: { 'fill-color': T.sel, 'fill-opacity': 0.1 } });
 				map.addLayer({ id: 'lasso-line', type: 'line', source: 'lasso',
-					paint: { 'line-color': SEL, 'line-width': 2, 'line-dasharray': [3, 1.5] } });
-
+					paint: { 'line-color': T.sel, 'line-width': 2, 'line-dasharray': [3, 1.5] } });
+				// after a theme change: the lasso and stars come back with the current state
+				lassoPoly = lassoPoly ? [...lassoPoly] : null;
+				applyLayers();
+				paintWater();
+			};
+			map.on('style.load', addDemoLayers);
+			map.once('load', () => {
+				addDemoLayers();
+				// the compact attribution opens on load; with the relief credit it covers the scale and, on phones,
+				// a third of the map: start it folded (the (i) button opens it)
+				container.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
 				const tip = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 10, maxWidth: '340px', className: 'demo-tip' });
 				map.on('mousemove', (e: any) => {
 					if (lassoOn) { tip.remove(); return; }
@@ -721,12 +857,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet" />
 </svelte:head>
 
-<div class="demo">
+<div class="demo" class:light={tema === 'claro'}>
 	<div class="mapwrap">
 		<div class="map" bind:this={container}></div>
 		<div class="tools">
 			<button onclick={() => view(town())}>Pueblo 3D</button>
 			<button onclick={() => view(MUNI)}>Municipio</button>
+			<button class="tema" onclick={() => (tema = tema === 'claro' ? 'oscuro' : 'claro')} title="Fondo del mapa" aria-label="Cambiar fondo del mapa">{tema === 'claro' ? 'Oscuro' : 'Claro'}</button>
 			{#if lassoOn}
 				<button class="on" onclick={() => endLasso(true)}>Cerrar área · {lassoPts.length}</button>
 			{:else}
@@ -771,26 +908,30 @@
 				</div>
 			</section>
 
+			{@const lo = pasoBajo ?? pasoActual}
 			<section class="impact">
 				{#if pasoActual.viviendas < 1}
 					<p class="lead">A esta altura el agua no llega a viviendas.</p>
 				{:else}
-					<p class="lead"><b>{fmt(pasoActual.viviendas)} viviendas</b> y <b>{approx(pasoActual.personas)} personas</b> quedarían bajo el agua, entre ellas {approx(pasoActual.ninos)} niños de 0 a 5 años y {approx(pasoActual.mayores)} mayores de 65.</p>
+					<p class="lead"><b>{rango(lo.viviendas, pasoActual.viviendas)} viviendas</b> y <b>{approxR(lo.personas, pasoActual.personas)} personas</b> quedarían bajo el agua, entre ellas {approxR(lo.ninos, pasoActual.ninos)} niños de 0 a 5 años y {approxR(lo.mayores, pasoActual.mayores)} mayores de 65.</p>
+					{#if esTecho}
+						<p class="techo">Arriba de {TECHO_M} m estas cifras son un techo: en las crecidas de noviembre de 2023 y junio de 2014 el modelo dio entre 1,9 y 2,8 veces las familias evacuadas o las casas bajo agua que informó la prensa.</p>
+					{/if}
 				{/if}
 				{#if pasoActual.aisladas_viv > 0}
-					<p class="iso">Además, <b>{fmt(pasoActual.aisladas_viv)} viviendas</b> quedarían aisladas: secas, pero sin camino seco ni al hospital de El Soberbio ni a las rutas que salen del municipio. <button class="lnk" onclick={() => { capa = 'agua'; view(MUNI); }}>Ver en el mapa</button></p>
+					<p class="iso">Además, <b>{rango(lo.aisladas_viv, pasoActual.aisladas_viv)} viviendas</b> quedarían aisladas: secas, pero sin camino seco ni al hospital de El Soberbio ni a las rutas que salen del municipio. <button class="lnk" onclick={() => { capa = 'agua'; view(MUNI); }}>Ver en el mapa</button></p>
 				{/if}
 				{#if (pasoActual.sin_hosp_viv ?? 0) > 0}
-					<p class="sub">Otras {fmt(pasoActual.sin_hosp_viv ?? 0)} pierden el camino al hospital de El Soberbio, pero pueden salir por ruta (RP 13, 15 o 21, o picadas) hacia hospitales de municipios vecinos.</p>
+					<p class="sub">Otras {rango(lo.sin_hosp_viv ?? 0, pasoActual.sin_hosp_viv ?? 0)} pierden el camino al hospital de El Soberbio, pero pueden salir por ruta (RP 13, 15 o 21, o picadas) hacia hospitales de municipios vecinos.</p>
 				{/if}
 				<p class="roads">
 					{#if cortados.length}<span class="rl"></span>Posible corte de {[...rutasCortadas.map((c) => `${c.nombre.replace(' (RP2)', '')} (${m(c.altura)})`), ...(callesCortadas.length ? [`${callesCortadas.length} ${callesCortadas.length === 1 ? 'calle' : 'calles'} del pueblo`] : [])].join(' · ')}.
 					{:else if proximoCorte}Primer corte de camino: {proximoCorte.nombre}, con {m(proximoCorte.altura)}.{/if}
 				</p>
 				<p class="sub">
-					{fmt(pasoActual.viv_renabap)} en barrios populares · {pasoActual.escuelas} {pasoActual.escuelas === 1 ? 'escuela' : 'escuelas'} bajo el agua, {pasoActual.escuelas_secas} secas para refugio
-					{#if pasoMenos && pasoMas}· con ±1 m de error del terreno, entre {fmt(pasoMenos.viviendas)} y {fmt(pasoMas.viviendas)} viviendas{/if}
+					{rango(lo.viv_renabap, pasoActual.viv_renabap)} en barrios populares · {rango(lo.escuelas, pasoActual.escuelas)} {pasoActual.escuelas === 1 ? 'escuela' : 'escuelas'} bajo el agua, {pasoActual.escuelas_secas} secas para refugio
 				</p>
+				<p class="note">El rango sale de ajustar el terreno entre {dec(DELTA_LO)} y {dec(tabla.calibracion_delta ?? 2)} m con las crecidas documentadas; los dos ajustes explican las evacuaciones casi igual de bien. El mapa muestra el extremo alto.</p>
 			</section>
 
 			{#if lassoRes}
@@ -802,10 +943,11 @@
 						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
 						<tbody>
 							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'Barrio popular'], ['esc', 'Escuelas']] as [k, l]}
-								<tr><td>{l}</td>{#each lassoRes.out as r, i}<td class:cur={i === 0}>{k === 'pers' || k === 'ninos' || k === 'mayores' ? approx(r[k as keyof Lasso]) : fmt(r[k as keyof Lasso])}</td>{/each}</tr>
+								<tr><td>{l}</td>{#each lassoRes.hi as r, i}<td class:cur={i === 0}>{rc(lassoRes.lo[i][k as keyof Lasso], r[k as keyof Lasso], k === 'pers' || k === 'ninos' || k === 'mayores')}</td>{/each}</tr>
 							{/each}
 						</tbody>
 					</table>
+					<p class="note">Rango por el ajuste del terreno ({dec(DELTA_LO)} a {dec(tabla.calibracion_delta ?? 2)} m).{#if esTecho} Arriba de {TECHO_M} m, un techo.{/if}</p>
 				</section>
 			{/if}
 
@@ -850,10 +992,10 @@
 							<div class="keys">{#each FREQ as f}<span><i style:background={f.color}></i>{f.label}</span>{/each}</div>
 							<p class="note">Años desde 1980 en que el río llegó a cada lugar (agua y casas), con la lectura diaria de Prefectura. El pico del día puede ser mayor: la cuenta es un mínimo. Lo que llegó 10 años o más se inunda de nuevo con casi cualquier crecida grande.</p>
 						{:else}
-							<div class="ramp"><span>Agua</span><i class="bar" style:background={WGRAD}></i><span class="dim">0–10 m</span></div>
+							<div class="ramp"><span>Agua</span><i class="bar" style:background={wgrad(tema)}></i><span class="dim">0–10 m</span></div>
 							<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
 						{/if}
-						<div class="keys"><span><i style:background={ISO}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i class="pt"></i>Escuela o centro de salud bajo el agua</span></div>
+						<div class="keys"><span><i style:background={T.iso}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i class="pt"></i>Escuela o centro de salud bajo el agua</span></div>
 						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
 					{:else if tab === 'arroyos' && tabla.arroyos}
 						{@const A = tabla.arroyos}
@@ -893,12 +1035,12 @@
 					{#if selected.arr_alta_viviendas != null && (+selected.arr_alta_viviendas > 0 || +selected.arr_media_viviendas > 0)}
 						<p>Junto a arroyos, con lluvia fuerte: <b>{fmt(+selected.arr_alta_viviendas)}</b> {+selected.arr_alta_viviendas === 1 ? 'vivienda' : 'viviendas'} en susceptibilidad alta y {fmt(+selected.arr_media_viviendas)} en media.</p>
 					{/if}
-					{#if s0 != null}
-						<table>
+					{#if s0 != null && radioRes}
+						<table class="band">
 							<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
 							<tbody>
-								{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'Barrio popular']] as [k, l]}
-									<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
+								{#each FILAS_RADIO as [k, l, ap]}
+									<tr><td>{l}</td>{#each radioRes.hi as r, i}<td>{rc(radioRes.lo[i][k], r[k], ap)}</td>{/each}</tr>
 								{/each}
 							</tbody>
 						</table>
@@ -922,7 +1064,7 @@
 							</div>
 						{/each}
 					</div>
-					<p class="note">Censo 2022: cantidad en el radio y porcentaje. La marca blanca es el promedio de Misiones; la barra llena, el doble.</p>
+					<p class="note">Censo 2022: cantidad en el radio y porcentaje. La marca vertical es el promedio de Misiones; la barra llena, el doble.</p>
 					<p class="acc"><button class="lnk" onclick={imprimirFicha}>Ficha para imprimir (PDF)</button> · <button class="lnk" onclick={copiarLink}>{copiado ? 'Link copiado' : 'Copiar link de esta zona'}</button></p>
 				</section>
 			{/if}
@@ -933,9 +1075,9 @@
 					{#each tabla.picos as p, i}
 						{@const w = 300 / tabla.picos.length}
 						{@const h = (p.altura / 30) * 56}
-						<rect x={i * w + 0.5} y={60 - h} width={Math.max(w - 1, 1)} height={h} fill={p.altura >= stage - 1e-6 ? '#7fb3d1' : '#2d2f36'}><title>{p.anio}: {m(p.altura)}</title></rect>
+						<rect x={i * w + 0.5} y={60 - h} width={Math.max(w - 1, 1)} height={h} fill={p.altura >= stage - 1e-6 ? T.peakOn : T.peakOff}><title>{p.anio}: {m(p.altura)}</title></rect>
 					{/each}
-					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke="#ebe8e1" stroke-width="1" stroke-dasharray="3 2" />
+					<line x1="0" x2="300" y1={60 - (stage / 30) * 56} y2={60 - (stage / 30) * 56} stroke={T.peakLine} stroke-width="1" stroke-dasharray="3 2" />
 				</svg>
 				<p class="sub">Lectura diaria de Prefectura: el río superó {m(stage)} en <b>{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
 			</details>
@@ -944,7 +1086,7 @@
 				<summary>Cómo leer esta demo</summary>
 				<div class="fine">
 					<p><b>Escenarios, no pronóstico.</b> Muestran qué pasaría si el Uruguay llega a esa altura. Los arroyos van aparte, en su pestaña: no dependen de la altura del río.</p>
-					<p><b>Calibrado con siete crecidas documentadas (2014-2026):</b> el terreno satelital se ajustó {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (por ejemplo, Maracaná y Chivilcoy desde 13 m). Las marcas de crecida de la provincia lo vuelven exacto.</p>
+					<p><b>Calibrado con crecidas documentadas (2014-2026):</b> el terreno satelital se bajó entre {dec(DELTA_LO)} y {dec(tabla.calibracion_delta ?? 0)} m para que coincidan las alturas a las que se evacuó (Maracaná y Chivilcoy desde 13 m, la cota oficial). El ajuste se eligió con seis crecidas y se controló con una séptima (junio 2025, 13,1 m), donde el modelo da 18 viviendas contra 6 familias evacuadas. Por eso las cifras van como rango y no como un número. El orden de los barrios coincide con la prensa; las cantidades, sólo aproximadamente: arriba de {TECHO_M} m el modelo dio entre 1,9 y 2,8 veces lo informado (la prensa cuenta familias evacuadas o casas «completamente» bajo agua; el modelo, toda casa a la que llega el agua). Las marcas de crecida de la provincia permitirían ajustarlo por barrio.</p>
 					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
 					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte». Una vivienda queda aislada cuando no llega en seco ni al hospital de El Soberbio ni a una salida del municipio (RP 13, 15, 21 y picadas hacia las colonias vecinas); fuera del municipio esos caminos se suponen transitables. La RP 2 no cuenta como salida: va a Moconá o corre junto al río.</p>
@@ -972,16 +1114,16 @@
 			· Prioridad: <b>{PRIO.find((p) => p.id === selected?.prioridad)?.label}</b> · Vivienda: <b>{tv?.label}</b></p>
 		{#if fichaImg}
 			<img src={fichaImg} alt="Mapa de la zona" />
-			<p class="fn">Mapa con el río a {m(stage)} en la escala de Prefectura{tab === 'arroyos' ? ' y susceptibilidad por arroyos' : tab === 'agua' && aguaModo === 'frecuencia' ? '; el color del agua y de las casas es cuántos años desde 1980 llegó el río (rojo: 10 o más; naranja: 3 a 9; ocre: 1 o 2; gris: nunca)' : ''}. Contorno blanco: la zona.</p>
+			<p class="fn">Mapa con el río a {m(stage)} en la escala de Prefectura{tab === 'arroyos' ? ' y susceptibilidad por arroyos' : tab === 'agua' && aguaModo === 'frecuencia' ? '; el color del agua y de las casas es cuántos años desde 1980 llegó el río (rojo: 10 o más; naranja: 3 a 9; ocre: 1 o 2; gris: nunca)' : ''}. Contorno {tema === 'claro' ? 'negro' : 'blanco'}: la zona. Agua y casas: extremo alto del rango ({dec(tabla.calibracion_delta ?? 2)} m de ajuste).</p>
 		{/if}
 		<p>{#if s0 != null}<b>El agua del río entra a sus viviendas con {m(s0)}</b> en el hidrómetro del puerto; el río superó esa altura {selected.anios_alcanzada} {+selected.anios_alcanzada === 1 ? 'año' : 'años'} desde 1980.{:else}El agua del río no llega a sus viviendas en los escenarios.{/if}
 			{#if +selected.arr_alta_viviendas > 0 || +selected.arr_media_viviendas > 0}Junto a arroyos, con lluvia fuerte: <b>{fmt(+selected.arr_alta_viviendas)}</b> {+selected.arr_alta_viviendas === 1 ? 'vivienda' : 'viviendas'} en susceptibilidad alta y {fmt(+selected.arr_media_viviendas)} en media.{/if}</p>
-		{#if s0 != null}
+		{#if s0 != null && radioRes}
 			<table>
 				<thead><tr><th>Bajo el agua</th>{#each SCEN as s}<th>{s.label}<br /><span>{m(tabla.escenarios[s.id].altura_m)}</span></th>{/each}</tr></thead>
 				<tbody>
-					{#each [['viviendas', 'Viviendas'], ['personas', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['viv_renabap', 'En barrio popular']] as [k, l]}
-						<tr><td>{l}</td>{#each SCEN as s}<td>{fmt(+selected[`esc${s.id}_${k}`])}</td>{/each}</tr>
+					{#each FILAS_RADIO as [k, l, ap]}
+						<tr><td>{k === 'ren' ? 'En barrio popular' : l}</td>{#each radioRes.hi as r, i}<td>{rc(radioRes.lo[i][k], r[k], ap)}</td>{/each}</tr>
 					{/each}
 					{#if refs.length}
 						<tr><td>Refugio seco más cercano</td>{#each SCEN as s}<td class="rf">{+selected[`esc${s.id}_viviendas`] > 0 ? (selected[`esc${s.id}_refugio`] && selected[`esc${s.id}_refugio`] !== 'null' ? `${selected[`esc${s.id}_refugio`]} (${dec(+selected[`esc${s.id}_refugio_km`])} km)` : 'ninguno accesible') : '—'}</td>{/each}</tr>
@@ -997,7 +1139,7 @@
 				{/each}
 			</tbody>
 		</table>
-		<p class="fn"><b>Escenarios, no pronóstico:</b> qué pasaría si el Uruguay llega a esa altura, con el terreno calibrado con siete crecidas documentadas (±1 m). Los arroyos son susceptibilidad por terreno, sin calibrar: no ven alcantarillas, entubados ni desagües pluviales. Capacidad de los refugios: dato a pedir a Defensa Civil.
+		<p class="fn"><b>Escenarios, no pronóstico:</b> qué pasaría si el Uruguay llega a esa altura, con el terreno calibrado con crecidas documentadas. Cada cifra es un rango (ajuste del terreno entre {dec(DELTA_LO)} y {dec(tabla.calibracion_delta ?? 2)} m); arriba de {TECHO_M} m es un techo: el modelo dio entre 1,9 y 2,8 veces lo informado por la prensa en 2023 y 2014. Los arroyos son susceptibilidad por terreno, sin calibrar: no ven alcantarillas, entubados ni desagües pluviales. Capacidad de los refugios: dato a pedir a Defensa Civil.
 			Fuentes: INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
 		<p class="fp">{zonaUrl(selected.id)} · {new Date().toLocaleDateString('es-AR')} · CONICET / FHyCS-UNaM · Spatia</p>
 	</section>
@@ -1012,16 +1154,22 @@
 		--amber: #e2b06a; --lavender: #b6a1dc; --red: #d1484a; --red-soft: #e49799;
 		--serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 		--sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+		--glass: rgba(19, 20, 23, 0.82); --hover: rgba(235, 232, 225, 0.06);
 		position: fixed; inset: 0; display: flex; background: var(--bg); color: var(--ink); font-size: 13.5px; font-family: var(--sans); }
+	/* light theme: the printed sheet's paper and ink; accents darkened to keep contrast on white */
+	.demo.light { --bg: #fbfaf7; --panel: #ffffff; --card: #f6f4ef; --line: #d8d5ce; --line-soft: #e8e5de;
+		--ink: #1c1c1c; --ink-2: #3d3b36; --ink-3: #7a776f; --accent: #2f6f9f; --accent-soft: rgba(47, 111, 159, 0.08);
+		--amber: #9a5512; --lavender: #5f45a8; --red: #c0392b; --red-soft: #b03a3c;
+		--glass: rgba(255, 255, 255, 0.9); --hover: rgba(28, 28, 28, 0.04); }
 	.mapwrap { flex: 1; min-width: 0; position: relative; }
 	.map { position: absolute; inset: 0; }
 	.tools { position: absolute; top: 12px; left: 52px; display: flex; gap: 4px; z-index: 2; }
-	.tools button { padding: 5px 11px; border-radius: 3px; background: rgba(19, 20, 23, 0.82); border: 1px solid var(--line);
+	.tools button { padding: 5px 11px; border-radius: 3px; background: var(--glass); border: 1px solid var(--line);
 		color: var(--ink-2); cursor: pointer; font: inherit; font-size: 12px; backdrop-filter: blur(6px); }
 	.tools button:hover { color: var(--ink); border-color: var(--ink-3); }
 	.tools button.on { border-color: var(--accent); color: var(--accent); }
 	.hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); padding: 6px 14px; border-radius: 3px;
-		background: rgba(19, 20, 23, 0.92); border: 1px solid var(--line); color: var(--ink-2); font-size: 12px; z-index: 2; }
+		background: var(--glass); border: 1px solid var(--line); color: var(--ink-2); font-size: 12px; z-index: 2; }
 
 	.panel { width: 384px; max-width: 100%; overflow-y: auto; padding: 24px 24px 30px; background: var(--panel);
 		border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
@@ -1056,6 +1204,7 @@
 	.impact .iso b { color: var(--lavender); }
 	.impact .roads { margin: 6px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
 	.impact .roads:empty { display: none; }
+	.impact .techo { margin: 8px 0 0; padding: 6px 9px; border-left: 2px solid var(--amber); font-size: 12px; line-height: 1.45; color: var(--ink-2); }
 	.rl, i.road { display: inline-block; width: 14px; height: 3px; border-radius: 0; background: var(--red); vertical-align: middle; margin-right: 6px; }
 	i.pt { width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 1.5px solid var(--bg); box-shadow: 0 0 0 1px var(--ink-3); }
 	.cota { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: var(--red-soft); white-space: nowrap; pointer-events: none; }
@@ -1072,7 +1221,7 @@
 	.umbrales { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 	.umbrales button { display: flex; gap: 10px; align-items: center; width: 100%; padding: 5px 4px; background: none; border: 0;
 		border-radius: 3px; color: var(--ink); cursor: pointer; text-align: left; font: inherit; font-size: 13px; }
-	.umbrales button:hover { background: rgba(235, 232, 225, 0.06); }
+	.umbrales button:hover { background: var(--hover); }
 	.umbrales .nm { flex: 1; }
 	.umbrales .h { color: var(--ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
 	.umbrales .next button { color: var(--ink-3); }
@@ -1105,6 +1254,9 @@
 	.card th { color: var(--ink-3); font-weight: 500; border-bottom: 1px solid var(--line); }
 	.card th:first-child, .card td:first-child { text-align: left; color: var(--ink-2); }
 	.card td.cur { color: var(--accent); font-weight: 600; }
+	/* band cells ("42–48") are wider than single numbers */
+	.card table.band, .card table:has(td.cur) { font-size: 11.5px; }
+	.card table.band td, .card table:has(td.cur) td { white-space: nowrap; padding: 3px 3px; }
 	.close { position: absolute; top: 6px; right: 10px; background: none; border: 0; color: var(--ink-3); font-size: 18px; cursor: pointer; }
 	.close:hover { color: var(--ink); }
 	.bars { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
@@ -1137,6 +1289,14 @@
 	:global(.demo-tip b) { color: #fff; font-weight: 600; }
 	:global(.demo-tip .dim) { color: #b4b0a7; }
 	:global(.demo-tip .r) { color: #e49799; }
+	.demo.light :global(.demo-tip .maplibregl-popup-content) { background: rgba(255, 255, 255, 0.98); color: #1c1c1c; border-color: #d8d5ce;
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
+	.demo.light :global(.demo-tip b) { color: #1c1c1c; }
+	.demo.light :global(.demo-tip .dim) { color: #5a5750; }
+	.demo.light :global(.demo-tip .r) { color: #b03a3c; }
+	.demo.light .mapwrap :global(.maplibregl-ctrl-scale) { background: rgba(255, 255, 255, 0.8); border-color: #3d3b36; color: #3d3b36; }
+	.demo.light .mapwrap :global(.maplibregl-ctrl-attrib) { background: rgba(255, 255, 255, 0.85); color: #5a5750; }
+	.demo.light .mapwrap :global(.maplibregl-ctrl-attrib a) { color: #3d3b36; }
 
 	.acc { font-size: 12.5px; }
 	/* one-page sheet: hidden on screen, the only thing printed */
@@ -1177,6 +1337,7 @@
 		.big { font-size: 36px; }
 		.impact .lead { font-size: 15.5px; }
 		.bar { grid-template-columns: 104px 1fr 70px; }
-		.tools { left: 48px; }
+		.tools { left: 48px; right: 8px; flex-wrap: nowrap; }
+		.tools button { padding: 5px 8px; white-space: nowrap; }
 	}
 </style>
