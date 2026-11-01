@@ -80,7 +80,7 @@
 	<footer class="footer">
 		<p>
 			Citación sugerida: Gomez, R. E. (2026). Spatia: A Reproducible Platform for Subnational Geospatial
-			Analysis (Version v2.3). Zenodo.
+			Analysis. Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>
 		<p class="affil">CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier</p>
