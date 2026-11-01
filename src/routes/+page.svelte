@@ -49,21 +49,23 @@
 	import { themeStore, type Fondo } from '$lib/stores/theme.svelte';
 
 	// Hex opacity defaults per basemap: in Satélite the slider starts just under its
-	// middle (range 0.3–0.9) so the imagery reads under the hexes. A value the user
-	// set by hand is kept when switching (±0.03: the slider snaps 0.78 to its 0.05 grid).
-	const HEX_OPACITY_MAP = 0.78;
-	const HEX_OPACITY_SATELLITE = 0.55;
+	// middle (range 0.3–0.9) so the imagery reads under the hexes; on paper (Claro)
+	// near opaque, or every ramp washes out (sello.ts: Claro ramps are validated as
+	// drawn at 0.88). A value the user set by hand is kept when switching (±0.03: the
+	// slider snaps 0.78 to its 0.05 grid).
+	const HEX_OPACITY: Record<Fondo, number> = { claro: 0.88, oscuro: 0.78, satelite: 0.55 };
 	const mapStore = new MapStore();
-	if (themeStore.fondo === 'satelite') mapStore.hexOpacity = HEX_OPACITY_SATELLITE;
+	mapStore.hexOpacity = HEX_OPACITY[themeStore.fondo];
 	const FONDOS: Fondo[] = ['claro', 'oscuro', 'satelite'];
 	function setFondo(f: Fondo) {
 		if (f === themeStore.fondo) return;
 		const toSat = f === 'satelite', fromSat = themeStore.fondo === 'satelite';
 		// A value the user set by hand is kept; a default follows the basemap.
-		if (toSat && Math.abs(mapStore.hexOpacity - HEX_OPACITY_MAP) < 0.03) mapStore.hexOpacity = HEX_OPACITY_SATELLITE;
-		if (fromSat && Math.abs(mapStore.hexOpacity - HEX_OPACITY_SATELLITE) < 0.03) mapStore.hexOpacity = HEX_OPACITY_MAP;
+		const byHand = Math.abs(mapStore.hexOpacity - HEX_OPACITY[themeStore.fondo]) >= 0.03;
+		if (!byHand) mapStore.hexOpacity = HEX_OPACITY[f];
 		themeStore.set(f);
 		if (toSat !== fromSat) mapComponent?.setSatellite(toSat);
+		else if (!byHand) mapComponent?.applyHexOpacity();
 	}
 	const lensStore = new LensStore();
 	const lassoStore = new LassoStore();

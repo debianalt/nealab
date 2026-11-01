@@ -199,6 +199,97 @@ export const MAP_ACCESS_5 = ['#5a4234', '#c0502b', '#f97408', '#f0b64f', '#f5e8b
 // Density bands match the map's viridis ramp (Map.computeHexColor default branch).
 export const MAP_VIRIDIS_3 = ['#5b21b6', '#21918c', '#fde725'] as const;
 
+// ── Data colors on the Claro map (atlas sheet) ─────────────────────────────────
+// Designed for paper, not the dark set inverted: "more" is darker (print convention,
+// as the @media print tokens), same hues and meanings as the dark set (tierra = risk,
+// selva = aptitude/cover, río · gris · tierra = change, tierra → oro classes).
+// Generated in OKLCH so that the color AS DRAWN hits its target: hexagons at 0.88
+// (HEX_OPACITY claro: at 0.78 black only reaches L 0.40 on paper and every ramp
+// washed out) over territory-bg #d9d4cb @0.5 over paper #fbfaf7 = #eae7e1.
+// Validated drawn with dataviz validate_palette (1-nov-2026):
+// - ramps (--ordinal): monotone L, adjacent ΔL ≥ 0.06, hue spread ≤ 22° on the
+//   one-hue ramps. The light end sits at 1.2–1.5:1 on purpose (the 2:1 floor
+//   FAILs): on paper the low class holds most hexagons and must recede (El Soberbio
+//   lesson: the majority class cannot carry a strong color). Chroma, not contrast,
+//   parts it from the backdrop and from the gray zero/no-data.
+// - classes (--pairs all): CLASS_3 normal 18.5 / CVD 18.1; CLASS_4 14.7 / 13.2;
+//   CLASS_5 12.6 / 11.0 and ACCESS_5 12.0 / 10.5 (dark: 12.2 and 14.2; their
+//   classes are always labelled); AGRI 16.6 / 10.7; LISA 19.2 / 16.1.
+// - BIVAR_HEX_LIGHT keeps its print validation (normal 9.0, CVD 7.1: the legend
+//   grid stays next to the map, as in the dark).
+export const MAP_TIERRA_CLARO = ['#dbad90', '#cf7d59', '#bb4f2e', '#952b12', '#641608'] as const;
+export const MAP_SELVA_CLARO = ['#a6caad', '#75b286', '#459865', '#1c7b4c', '#025d36', '#004327'] as const;
+// Neutral magnitude (density, the dark map's viridis): río, one hue.
+export const MAP_RIO_CLARO = ['#aec6dd', '#7da4c9', '#4b81b9', '#1f5ea2', '#0b3c79'] as const;
+// Night lights and economic activity (dark: a night-sky ramp that glows): on paper
+// a magnitude like any other, oro → tierra.
+export const MAP_ORO_CLARO = ['#e3cc93', '#d89e4a', '#c56a1b', '#a33c11', '#6b1d0c'] as const;
+export const MAP_DIV_CLARO = ['#6f1908', '#af4424', '#ce937a', '#b9b8b5', '#88a6c7', '#3068a6', '#083975'] as const;
+export const LISA_HEX_CLARO: Record<number, string> = { 1: '#0a4a8c', 2: '#6ea5da', 3: '#de8756', 4: '#952c10' };
+export const MAP_CLASS_3_CLARO = ['#e0b972', '#c55c13', '#7a230e'] as const;
+export const MAP_CLASS_4_CLARO = ['#e4d197', '#df8021', '#b63f03', '#731c0a'] as const;
+export const MAP_CLASS_5_CLARO = ['#e5d7a6', '#ec9c3e', '#d75f0e', '#a63410', '#67190c'] as const;
+export const MAP_ACCESS_5_CLARO = ['#dad0c2', '#dc9346', '#cb5400', '#9d2c07', '#5c160d'] as const;
+// Crop suitability S1 · S2 · S3 · N (config AGRI_APT_CLASSES holds the dark set).
+export const AGRI_APT_HEX = ['#1f7a52', '#86c49c', '#d4a53c', '#b4482a'] as const;
+export const AGRI_APT_CLARO = ['#257848', '#94c79e', '#cc841c', '#731402'] as const;
+// A measured 0 (zero class) and no reading: quiet grays, zero the lighter one.
+export const ZERO_HEX = '#1e293b';
+
+export interface MapPalette {
+	tierra: readonly string[]; selva: readonly string[]; div: readonly string[];
+	seq: readonly string[];        // neutral magnitude ('sequential')
+	warm: readonly string[]; night: readonly string[];
+	lisa: Record<number, string>;
+	bivar: readonly string[]; bivarNodata: string;
+	nodata: string;
+	hexLine: string;               // hairline between hexagons
+}
+export const MAP_PALETTE: Record<MapTema, MapPalette> = {
+	oscuro: {
+		tierra: MAP_TIERRA, selva: MAP_SELVA, div: MAP_DIV,
+		seq: ['#5b21b6', '#21918c', '#fde725'],
+		warm: ['#78350f', '#f59e0b', '#fde725'],
+		night: ['#0b1026', '#f59e0b', '#fff7d6'],
+		lisa: LISA_HEX,
+		bivar: BIVAR_HEX, bivarNodata: BIVAR_NODATA,
+		nodata: '#6b7280',
+		hexLine: '#374151',
+	},
+	claro: {
+		tierra: MAP_TIERRA_CLARO, selva: MAP_SELVA_CLARO, div: MAP_DIV_CLARO,
+		seq: MAP_RIO_CLARO,
+		warm: MAP_ORO_CLARO, night: MAP_ORO_CLARO,
+		lisa: LISA_HEX_CLARO,
+		bivar: BIVAR_HEX_LIGHT, bivarNodata: '#cdcac4',
+		nodata: '#b1b1ae',
+		hexLine: '#fbfaf7',        // a paper gap, not a dark rule
+	},
+};
+
+// Fixed classes (config.ts ColorClasses) carry the dark hex; classColor() gives
+// the Claro counterpart, pair by pair, so the class tables stay one list.
+const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
+	[MAP_CLASS_3, MAP_CLASS_3_CLARO], [MAP_CLASS_4, MAP_CLASS_4_CLARO], [MAP_CLASS_5, MAP_CLASS_5_CLARO],
+	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
+	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], ['#d6d3ce']],
+];
+const CLARO_OF = new Map<string, string>();
+for (const [dark, light] of CLASS_PAIRS) dark.forEach((c, i) => {
+	const k = c.toLowerCase(), prev = CLARO_OF.get(k);
+	if (prev && prev !== light[i]) throw new Error(`sello: ${c} has two Claro counterparts`);
+	CLARO_OF.set(k, light[i]);
+});
+/** The color of a fixed class on the given theme (dark hex in, same hex on oscuro). */
+export function classColor(c: string, t: MapTema): string {
+	return t === 'claro' ? CLARO_OF.get(c.toLowerCase()) ?? c : c;
+}
+
+// 3D buildings by built volume (m³), Claro: ink from pale warm gray (a house) to
+// almost black (a tower). Variant A of the 1-nov comparison; the dark set is
+// config COLOR_RAMPS.volume. Same breaks.
+export const BUILDING_VOLUME_CLARO = ['#d1cac2', '#b4ada5', '#958d84', '#766e66', '#544d46', '#342e28', '#16110c'] as const;
+
 /** Readable ink on a coloured fill (labels drawn on bands, swatches). */
 export function inkOn(hex: string): string {
 	const [r, g, b] = hexRgb(hex).map(c => {

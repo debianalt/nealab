@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
-	import { BIVAR_COLORS } from '$lib/utils/chartType';
-	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA, SELECT_OUTLINE, MAP_THEME, type MapTema } from '$lib/utils/sello';
+	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, type MapTema } from '$lib/utils/sello';
 	import { themeStore } from '$lib/stores/theme.svelte';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
 	import { cellsToMultiPolygon } from 'h3-js';
@@ -2358,6 +2357,7 @@
 				appliedTema = t;
 				applyOwnLayersTheme(t);
 				applyDeptFill();
+				if (catastroActive) catastroReapply?.();
 				map.once('render', () => { if (sheet) sheet.transition = fade; });
 				map.triggerRepaint();
 			})
@@ -2410,6 +2410,14 @@
 			if (before && before !== 'hillshade') map.moveLayer('hillshade', before);
 		}
 		map.setLight({ anchor: 'viewport', color: T.light.color, intensity: T.light.intensity, position: [1.5, 210, 35] });
+		// Data: hexagon features carry both themes' colors; buildings by volume (height
+		// in Itapúa and Alto Paraná, as showBuildingsForActiveTerritory).
+		for (const id of ['hex-fill', 'compare-hex-fill', 'regional-hex-fill']) set(id, 'fill-color', hexColorExpr());
+		for (const id of ['hex-line', 'compare-hex-line', 'regional-hex-line']) set(id, 'line-color', MAP_PALETTE[t].hexLine);
+		for (const id of ALL_BUILDINGS_LAYERS) {
+			const byHeight = id === TERRITORY_BUILDINGS_LAYER.itapua_py || id === TERRITORY_BUILDINGS_LAYER.alto_parana_py;
+			set(id, 'fill-extrusion-color', byHeight ? mapStore.getHeightColorExpr() : mapStore.getColorExpr());
+		}
 	}
 
 	// Basemap (CartoDB) admin lines come from a different source than our GADM
@@ -2676,6 +2684,20 @@
 	// CARTO basemap building layer IDs (dark-matter style)
 	const CARTO_BUILDING_LAYERS = ['building', 'building-top'];
 
+	// Parcel colors per theme. Dark: bright cyan/green parcels; claro: río and selva
+	// tints with darker rims, removed/new in tierra/oro (MAP_PALETTE claro family).
+	const CATASTRO_COLORS = {
+		oscuro: { urbano: '#22d3ee', rural: '#4ade80', urbanoRim: '#0e7490', ruralRim: '#15803d',
+			removed: '#dc2626', added: '#fbbf24', removedRim: '#7f1d1d', addedRim: '#b45309',
+			removedLine: '#fca5a5', addedLine: '#fde68a', line: 'rgba(0,0,0,0.7)', choroLine: '#ffffff' },
+		claro: { urbano: '#7da4c9', rural: '#75b286', urbanoRim: '#1f5ea2', ruralRim: '#1c7b4c',
+			removed: '#bb4f2e', added: '#d89e4a', removedRim: '#641608', addedRim: '#a33c11',
+			removedLine: '#952b12', addedLine: '#a33c11', line: 'rgba(28,28,28,0.55)', choroLine: '#5a5750' },
+	} as const;
+	const catastroTipo = (urbano: string, rural: string): any => ['match', ['get', 'tipo'], 'urbano', urbano, 'rural', rural, urbano];
+	// Re-applies the parcel coloring in force (base, flood classes, scores) after a theme switch.
+	let catastroReapply: (() => void) | null = null;
+
 	export function showCatastroLayer() {
 		if (!map) return;
 		// Retry if style not loaded yet
@@ -2736,14 +2758,9 @@
 				paint: {
 					'fill-color': [
 						'case',
-						['==', ['get', 'is_removed'], 1], '#dc2626',
-						['==', ['get', 'is_new'], 1], '#fbbf24',
-						[
-							'match', ['get', 'tipo'],
-							'urbano', '#22d3ee',
-							'rural', '#4ade80',
-							'#22d3ee'
-						]
+						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removed,
+						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].added,
+						catastroTipo(CATASTRO_COLORS[appliedTema].urbano, CATASTRO_COLORS[appliedTema].rural)
 					],
 					'fill-opacity': [
 						'case',
@@ -2752,14 +2769,9 @@
 					],
 					'fill-outline-color': [
 						'case',
-						['==', ['get', 'is_removed'], 1], '#7f1d1d',
-						['==', ['get', 'is_new'], 1], '#b45309',
-						[
-							'match', ['get', 'tipo'],
-							'urbano', '#0e7490',
-							'rural', '#15803d',
-							'#0e7490'
-						]
+						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removedRim,
+						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].addedRim,
+						catastroTipo(CATASTRO_COLORS[appliedTema].urbanoRim, CATASTRO_COLORS[appliedTema].ruralRim)
 					]
 				}
 			});
@@ -2777,9 +2789,9 @@
 				paint: {
 					'line-color': [
 						'case',
-						['==', ['get', 'is_removed'], 1], '#fca5a5',
-						['==', ['get', 'is_new'], 1], '#fde68a',
-						'rgba(0,0,0,0.7)'
+						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removedLine,
+						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].addedLine,
+						CATASTRO_COLORS[appliedTema].line
 					],
 					'line-width': [
 						'interpolate', ['linear'], ['zoom'],
@@ -2869,26 +2881,22 @@
 				['interpolate', ['linear'], ['zoom'], 10, 0.25, 11, 0.35, 12, 0.55, 14, 0.7]);
 		}
 		if (map.getLayer('catastro-line')) {
-			map.setPaintProperty('catastro-line', 'line-color', '#ffffff');
+			map.setPaintProperty('catastro-line', 'line-color', CATASTRO_COLORS[appliedTema].choroLine);
 			map.setPaintProperty('catastro-line', 'line-opacity',
 				['interpolate', ['linear'], ['zoom'], 10, 0.1, 11, 0.15, 12, 0.3, 14, 0.5]);
 		}
 	}
 
 	function resetCatastroStyle() {
+		catastroReapply = resetCatastroStyle;
+		const C = CATASTRO_COLORS[appliedTema];
 		if (map.getLayer('catastro-fill')) {
-			map.setPaintProperty('catastro-fill', 'fill-color', [
-				'match', ['get', 'tipo'], 'urbano', '#22d3ee', 'rural', '#4ade80', '#22d3ee'
-			]);
+			map.setPaintProperty('catastro-fill', 'fill-color', catastroTipo(C.urbano, C.rural));
 			map.setPaintProperty('catastro-fill', 'fill-opacity', 0.95);
-			map.setPaintProperty('catastro-fill', 'fill-outline-color', [
-				'match', ['get', 'tipo'], 'urbano', '#0e7490', 'rural', '#15803d', '#0e7490'
-			]);
+			map.setPaintProperty('catastro-fill', 'fill-outline-color', catastroTipo(C.urbanoRim, C.ruralRim));
 		}
 		if (map.getLayer('catastro-line')) {
-			map.setPaintProperty('catastro-line', 'line-color', [
-				'match', ['get', 'tipo'], 'urbano', '#0e7490', 'rural', '#15803d', '#0e7490'
-			]);
+			map.setPaintProperty('catastro-line', 'line-color', catastroTipo(C.urbanoRim, C.ruralRim));
 			map.setPaintProperty('catastro-line', 'line-opacity',
 				['interpolate', ['linear'], ['zoom'], 13, 0.6, 15, 0.9]);
 		}
@@ -2912,6 +2920,8 @@
 		function apply() {
 			if (!catastroActive) showCatastroLayer();
 			catastroClickMode = 'flood';
+			catastroReapply = apply;
+			const t = appliedTema, tierra = MAP_PALETTE[t].tierra;
 
 			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
@@ -2921,14 +2931,16 @@
 			// Parcels with no matched hex fall to 0 → the zero class.
 			applyCatastroChoropleth(classes
 				? ['let', 'v', matchExpr,
-					['case', ['==', ['var', 'v'], 0], classes.zero?.color ?? classes.steps[0].color,
-						['step', ['var', 'v'], classes.steps[0].color,
-							...classes.steps.slice(1).flatMap((c) => [c.from, c.color])]]]
-				: [
-					'interpolate', ['linear'], matchExpr,
-					0, '#0d1b2a', 10, '#1b3a5f', 25, '#2a6f97',
-					40, '#eab308', 60, '#f97316', 80, '#dc2626', 100, '#7f1d1d'
-				]);
+					['case', ['==', ['var', 'v'], 0], classColor(classes.zero?.color ?? classes.steps[0].color, t),
+						['step', ['var', 'v'], classColor(classes.steps[0].color, t),
+							...classes.steps.slice(1).flatMap((c) => [c.from, classColor(c.color, t)])]]]
+				: t === 'claro'
+					? ['interpolate', ['linear'], matchExpr, 0, MAP_PALETTE.claro.nodata, ...tierra.flatMap((c, i) => [1 + (99 * i) / (tierra.length - 1), c])]
+					: [
+						'interpolate', ['linear'], matchExpr,
+						0, '#0d1b2a', 10, '#1b3a5f', 25, '#2a6f97',
+						40, '#eab308', 60, '#f97316', 80, '#dc2626', 100, '#7f1d1d'
+					]);
 			bindCatastroClick();
 		}
 
@@ -3008,16 +3020,20 @@
 		function apply() {
 			if (!catastroActive) showCatastroLayer();
 			catastroClickMode = 'scores';
+			catastroReapply = apply;
+			const selva = MAP_PALETTE.claro.selva;
 
 			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
 			matchExpr.push(0);
 
-			applyCatastroChoropleth([
-				'interpolate', ['linear'], matchExpr,
-				0, '#1e293b', 15, '#334155', 30, '#4a7c59',
-				50, '#22c55e', 70, '#86efac', 100, '#f0fdf4'
-			]);
+			applyCatastroChoropleth(appliedTema === 'claro'
+				? ['interpolate', ['linear'], matchExpr, 0, '#d6d3ce', 15, selva[0], 30, selva[1], 50, selva[2], 70, selva[4], 100, selva[5]]
+				: [
+					'interpolate', ['linear'], matchExpr,
+					0, '#1e293b', 15, '#334155', 30, '#4a7c59',
+					50, '#22c55e', 70, '#86efac', 100, '#f0fdf4'
+				]);
 			bindCatastroClick();
 		}
 
@@ -3153,60 +3169,45 @@
 	// ── Hexagon H3 choropleth functions ──────────────────────────────────
 
 	const CATEGORICAL_PALETTE = ['#1565c0', '#7e57c2', '#4db6ac', '#66bb6a', '#c0ca33', '#ffb74d', '#e65100', '#78909c'];
-	// "Sin cobertura" — gris neutro. Debe ser distinguible del fondo (#374151) Y
-	// no confundirse con NINGÚN extremo de las rampas de datos (el violeta bajo
-	// #5b21b6 = "buen acceso" en capas censales se confundía con el azul-gris
-	// anterior #4b6584). Gris neutro = convención cartográfica de "sin dato".
-	const NODATA_COLOR = '#6b7280';
+	// "Sin cobertura": a neutral gray, the cartographic convention for no data (dark:
+	// distinct from the backdrop #374151 and from every ramp end; claro: a quiet gray
+	// darker than the zero class). MAP_PALETTE[tema].nodata.
 
-	function computeHexColor(value: number, colorScale: string, minVal: number, maxVal: number, range: number): string {
-		if (typeof value !== 'number' || !Number.isFinite(value)) return NODATA_COLOR;
+	/** Color of a value on the given theme (sello.ts MAP_PALETTE). Hexagon features
+	 *  carry both themes' colors (color, color_c): a theme switch only changes which
+	 *  property fill-color reads, no recomputation. */
+	function computeHexColor(value: number, colorScale: string, minVal: number, maxVal: number, range: number, t: MapTema): string {
+		const P = MAP_PALETTE[t];
+		if (typeof value !== 'number' || !Number.isFinite(value)) return P.nodata;
 		// Legacy: value=0 era usado como proxy de nodata. Tras la refactorización,
 		// setHexChoropleth maneja nodata explícitamente antes de llamar a esta función.
 		// Este branch permanece como red de seguridad para callsites legacy.
-		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa' && colorScale !== 'bivariate') return NODATA_COLOR;
-		if (colorScale === 'bivariate') return BIVAR_COLORS[Math.round(value) - 1] ?? NODATA_COLOR;
-		if (colorScale === 'lisa') {
-			const LISA = LISA_HEX;
-			return LISA[Math.round(value)] ?? 'rgb(55,65,81)';
-		}
+		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa' && colorScale !== 'bivariate') return P.nodata;
+		if (colorScale === 'bivariate') return P.bivar[Math.round(value) - 1] ?? P.nodata;
+		if (colorScale === 'lisa') return P.lisa[Math.round(value)] ?? P.nodata;
 		if (colorScale === 'categorical') {
 			const idx = Math.round(value) - 1;
-			if (idx < 0) return 'rgb(55,65,81)';
+			if (idx < 0) return P.nodata;
 			return CATEGORICAL_PALETTE[idx % CATEGORICAL_PALETTE.length];
 		}
-		// Sello ramps (sello.ts): tierra = risk/pressure, selva = aptitude/cover,
-		// río · gris · tierra = change. 'warm', 'night' and the default viridis keep
-		// their own ramps (night lights metaphor; density is neither risk nor aptitude).
+		// Sello ramps: tierra = risk/pressure, selva = aptitude/cover, río · gris · tierra
+		// = change. Dark: warm, night (night lights) and viridis (density is neither risk
+		// nor aptitude) keep their own ramps; claro: oro → tierra and río.
 		if (colorScale === 'diverging') {
 			const absMax = Math.max(Math.abs(minVal), Math.abs(maxVal)) || 1;
-			return divColor(value / absMax);
+			return rampColor(P.div, (Math.max(-1, Math.min(1, value / absMax)) + 1) / 2);
 		}
 		const t0 = Math.max(0, Math.min(1, (value - minVal) / range));
-		if (colorScale === 'flood') return rampColor(MAP_TIERRA, t0);
-		if (colorScale === 'green') return rampColor(MAP_SELVA, t0);
-		const t = t0;
-		let r: number, g: number, b: number;
-		{
-			if (colorScale === 'warm') {
-				r = Math.round(t < 0.5 ? 120 + t * 2 * (245 - 120) : 245 + (t - 0.5) * 2 * (253 - 245));
-				g = Math.round(t < 0.5 ? 53 + t * 2 * (158 - 53) : 158 + (t - 0.5) * 2 * (231 - 158));
-				b = Math.round(t < 0.5 ? 15 + t * 2 * (11 - 15) : 11 + (t - 0.5) * 2 * (37 - 11));
-			} else if (colorScale === 'night') {
-				// Night activity (VIIRS): azul-noche casi negro (#0b1026) → ámbar de marca
-				// (#f59e0b) → blanco cálido incandescente (#fff7d6). Piso oscuro + techo
-				// blanco-hot ⇒ la alta actividad nocturna "salta" como luces de ciudad.
-				r = Math.round(t < 0.5 ? 11 + t * 2 * (245 - 11) : 245 + (t - 0.5) * 2 * (255 - 245));
-				g = Math.round(t < 0.5 ? 16 + t * 2 * (158 - 16) : 158 + (t - 0.5) * 2 * (247 - 158));
-				b = Math.round(t < 0.5 ? 38 + t * 2 * (11 - 38) : 11 + (t - 0.5) * 2 * (214 - 11));
-			} else {
-				r = Math.round(t < 0.5 ? 91 + t * 2 * (33 - 91) : 33 + (t - 0.5) * 2 * (253 - 33));
-				g = Math.round(t < 0.5 ? 33 + t * 2 * (145 - 33) : 145 + (t - 0.5) * 2 * (231 - 145));
-				b = Math.round(t < 0.5 ? 182 + t * 2 * (140 - 182) : 140 + (t - 0.5) * 2 * (37 - 140));
-			}
-		}
-		return `rgb(${r},${g},${b})`;
+		if (colorScale === 'flood') return rampColor(P.tierra, t0);
+		if (colorScale === 'green') return rampColor(P.selva, t0);
+		if (colorScale === 'warm') return rampColor(P.warm, t0);
+		if (colorScale === 'night') return rampColor(P.night, t0);
+		return rampColor(P.seq, t0);
 	}
+	const nodataColor = (colorScale: string, t: MapTema) =>
+		colorScale === 'bivariate' ? MAP_PALETTE[t].bivarNodata : MAP_PALETTE[t].nodata;
+	/** fill-color of the hexagon layers: the feature color of the painted theme. */
+	const hexColorExpr = (): any => ['get', appliedTema === 'claro' ? 'color_c' : 'color'];
 
 	// In Satélite mode the zero class (a measured 0, e.g. 0 % water — 97 % of Eldorado)
 	// is drawn transparent so the imagery shows through; only hexes with a reading > 0
@@ -3252,7 +3253,7 @@
 		}
 		const range = maxVal - minVal || 1;
 
-		const getColor = (value: number) => classes ? colorForClass(value, classes) : computeHexColor(value, colorScale, minVal, maxVal, range);
+		const getColor = (value: number, t: MapTema) => classes ? classColor(colorForClass(value, classes), t) : computeHexColor(value, colorScale, minVal, maxVal, range, t);
 
 		// Pre-allocate to avoid dynamic resizing (measurable on 30K+ hex sets)
 		const features = new Array(entries.length);
@@ -3265,7 +3266,8 @@
 					properties: {
 						h3index: entry.h3index,
 						value: null,
-						color: colorScale === 'bivariate' ? BIVAR_NODATA : NODATA_COLOR,
+						color: nodataColor(colorScale, 'oscuro'),
+						color_c: nodataColor(colorScale, 'claro'),
 						nodata: true,
 						type_label: entry.properties?.type_label
 					},
@@ -3278,7 +3280,8 @@
 				properties: {
 					h3index: entry.h3index,
 					value: entry.value,
-					color: getColor(entry.value as number),
+					color: getColor(entry.value as number, 'oscuro'),
+					color_c: getColor(entry.value as number, 'claro'),
 					zero: entry.value === 0 && !!classes?.zero,
 					type_label: entry.properties?.type_label
 				},
@@ -3291,8 +3294,8 @@
 		// Static properties (color expression, line style) only need to be set once.
 		// Opacity is always restored because clearHexChoropleth() sets it to 0.
 		if (!_hexLayerInitialized) {
-			map.setPaintProperty('hex-fill', 'fill-color', ['get', 'color']);
-			map.setPaintProperty('hex-line', 'line-color', '#374151');
+			map.setPaintProperty('hex-fill', 'fill-color', hexColorExpr());
+			map.setPaintProperty('hex-line', 'line-color', MAP_PALETTE[appliedTema].hexLine);
 			map.setPaintProperty('hex-line', 'line-width', 0.5);
 			_hexLayerInitialized = true;
 		}
@@ -3346,7 +3349,7 @@
 			if (!Number.isFinite(minVal)) { minVal = 0; maxVal = 1; }
 		}
 		const range = maxVal - minVal || 1;
-		const getColor = (v: number) => classes ? colorForClass(v, classes) : computeHexColor(v, colorScale, minVal, maxVal, range);
+		const getColor = (v: number, t: MapTema) => classes ? classColor(colorForClass(v, classes), t) : computeHexColor(v, colorScale, minVal, maxVal, range, t);
 
 		const features = new Array(entries.length);
 		let fi = 0;
@@ -3355,23 +3358,23 @@
 			if (isNodata(entry)) {
 				features[fi++] = {
 					type: 'Feature',
-					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, type_label: entry.properties?.type_label },
+					properties: { h3index: entry.h3index, value: null, color: nodataColor(colorScale, 'oscuro'), color_c: nodataColor(colorScale, 'claro'), nodata: true, type_label: entry.properties?.type_label },
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 				};
 				continue;
 			}
 			features[fi++] = {
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number, 'oscuro'), color_c: getColor(entry.value as number, 'claro'), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			};
 		}
 		if (fi < features.length) features.length = fi;
 
 		src.setData({ type: 'FeatureCollection', features });
-		map.setPaintProperty('compare-hex-fill', 'fill-color', ['get', 'color']);
+		map.setPaintProperty('compare-hex-fill', 'fill-color', hexColorExpr());
 		map.setPaintProperty('compare-hex-fill', 'fill-opacity', hexFillOpacity(mapStore.hexOpacity));
-		map.setPaintProperty('compare-hex-line', 'line-color', '#374151');
+		map.setPaintProperty('compare-hex-line', 'line-color', MAP_PALETTE[appliedTema].hexLine);
 		map.setPaintProperty('compare-hex-line', 'line-width', 0.5);
 		map.setPaintProperty('compare-hex-line', 'line-opacity', hexLineOpacity(mapStore.hexOpacity));
 	}
@@ -3414,7 +3417,7 @@
 			if (!Number.isFinite(minVal)) { minVal = 0; maxVal = 1; }
 		}
 		const range = maxVal - minVal || 1;
-		const getColor = (v: number) => classes ? colorForClass(v, classes) : computeHexColor(v, colorScale, minVal, maxVal, range);
+		const getColor = (v: number, t: MapTema) => classes ? classColor(colorForClass(v, classes), t) : computeHexColor(v, colorScale, minVal, maxVal, range, t);
 
 		const features: any[] = [];
 		for (const entry of entries) {
@@ -3422,22 +3425,22 @@
 			if (isNodata(entry)) {
 				features.push({
 					type: 'Feature',
-					properties: { h3index: entry.h3index, value: null, color: NODATA_COLOR, nodata: true, type_label: entry.properties?.type_label },
+					properties: { h3index: entry.h3index, value: null, color: nodataColor(colorScale, 'oscuro'), color_c: nodataColor(colorScale, 'claro'), nodata: true, type_label: entry.properties?.type_label },
 					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 				});
 				continue;
 			}
 			features.push({
 				type: 'Feature',
-				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
+				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number, 'oscuro'), color_c: getColor(entry.value as number, 'claro'), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
 				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
 			});
 		}
 
 		src.setData({ type: 'FeatureCollection', features });
-		map.setPaintProperty('regional-hex-fill', 'fill-color', ['get', 'color']);
+		map.setPaintProperty('regional-hex-fill', 'fill-color', hexColorExpr());
 		map.setPaintProperty('regional-hex-fill', 'fill-opacity', hexFillOpacity(mapStore.hexOpacity));
-		map.setPaintProperty('regional-hex-line', 'line-color', '#374151');
+		map.setPaintProperty('regional-hex-line', 'line-color', MAP_PALETTE[appliedTema].hexLine);
 		map.setPaintProperty('regional-hex-line', 'line-width', 0.5);
 		map.setPaintProperty('regional-hex-line', 'line-opacity', hexLineOpacity(mapStore.hexOpacity));
 	}

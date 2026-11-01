@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5 } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, ZERO_HEX } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -608,10 +608,10 @@ export function colorForClass(value: number, classes: ColorClasses): string {
 export const AGRI_APT_CLASSES: ColorClasses = {
 	ordinal: true,
 	steps: [
-		{ from: 1, color: '#1f7a52', labelKey: 'agri.class.s1' },
-		{ from: 2, color: '#86c49c', labelKey: 'agri.class.s2' },
-		{ from: 3, color: '#d4a53c', labelKey: 'agri.class.s3' },
-		{ from: 4, color: '#b4482a', labelKey: 'agri.class.n' },
+		{ from: 1, color: AGRI_APT_HEX[0], labelKey: 'agri.class.s1' },
+		{ from: 2, color: AGRI_APT_HEX[1], labelKey: 'agri.class.s2' },
+		{ from: 3, color: AGRI_APT_HEX[2], labelKey: 'agri.class.s3' },
+		{ from: 4, color: AGRI_APT_HEX[3], labelKey: 'agri.class.n' },
 	],
 };
 
@@ -620,7 +620,7 @@ export const AGRI_APT_CLASSES: ColorClasses = {
 // coverage gap: it was painted "Sin cobertura" (97 % of Eldorado) by the legacy
 // value-0-as-nodata rule in Map.computeHexColor.
 export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
-	zero: { color: '#1e293b', labelKey: 'legend.flood.none' },
+	zero: { color: ZERO_HEX, labelKey: 'legend.flood.none' },
 	steps: [
 		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.flood.low' },
 		{ from: 5, color: MAP_CLASS_3[1], labelKey: 'legend.flood.mid' },
@@ -633,7 +633,7 @@ export const FLOOD_OCCURRENCE_CLASSES: ColorClasses = {
 // distribution of cells with any building on low ground (p50 2, p75 7, p90 16,
 // p99 139) and of added buildings there 2016–2023 (p50 1, p75 3, p90 7, p99 41).
 export const FLOOD_LOW_BLD_CLASSES: ColorClasses = {
-	zero: { color: '#1e293b', labelKey: 'legend.lowBld.none' },
+	zero: { color: ZERO_HEX, labelKey: 'legend.lowBld.none' },
 	zeroBelow: 0.5,
 	steps: [
 		{ from: 0.5, color: MAP_CLASS_4[0], labelKey: 'legend.lowBld.c1' },
@@ -643,7 +643,7 @@ export const FLOOD_LOW_BLD_CLASSES: ColorClasses = {
 	],
 };
 export const FLOOD_LOW_LAND_CLASSES: ColorClasses = {
-	zero: { color: '#1e293b', labelKey: 'legend.lowLand.none' },
+	zero: { color: ZERO_HEX, labelKey: 'legend.lowLand.none' },
 	steps: [
 		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.lowLand.c1' },
 		{ from: 25, color: MAP_CLASS_3[1], labelKey: 'legend.lowLand.c2' },
@@ -651,7 +651,7 @@ export const FLOOD_LOW_LAND_CLASSES: ColorClasses = {
 	],
 };
 export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
-	zero: { color: '#1e293b', labelKey: 'legend.lowNew.none' },
+	zero: { color: ZERO_HEX, labelKey: 'legend.lowNew.none' },
 	zeroBelow: 0.5,
 	steps: [
 		{ from: -1e9, color: '#64748b', labelKey: 'legend.lowNew.down' },
@@ -666,7 +666,7 @@ export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
 // detected — in Eldorado half the hexagons, median tree cover 98 %: standing
 // forest, previously painted "Sin cobertura".
 export const DEFOREST_LOSS_CLASSES: ColorClasses = {
-	zero: { color: '#1e293b', labelKey: 'legend.deforest.none' },
+	zero: { color: ZERO_HEX, labelKey: 'legend.deforest.none' },
 	steps: [
 		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.deforest.low' },
 		{ from: 0.5, color: MAP_CLASS_3[1], labelKey: 'legend.deforest.mid' },

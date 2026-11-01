@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { MAP_TIERRA, MAP_SELVA, MAP_DIV, rampGradient } from '$lib/utils/sello';
+	import { MAP_PALETTE, BUILDING_VOLUME_CLARO, classColor, rampGradient } from '$lib/utils/sello';
+	import { COLOR_RAMPS } from '$lib/config';
+	import { themeStore } from '$lib/stores/theme.svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
@@ -106,19 +108,16 @@
 		return [...types.entries()].sort((a, b) => a[0] - b[0]);
 	});
 
-	const gradient = $derived(
-		isFlood
-			? rampGradient(MAP_TIERRA)
-			: isGreen
-			? rampGradient(MAP_SELVA)
-			: isWarm
-			? 'linear-gradient(to right, #78350f, #f59e0b, #fde725)'
-			: isNight
-			? 'linear-gradient(to right, #0b1026, #f59e0b, #fff7d6)'
-			: isDiverging
-			? rampGradient(MAP_DIV)
-			: 'linear-gradient(to right, #5b21b6, #21918c, #fde725)'
-	);
+	// The map's own colors on the theme in view (sello.ts MAP_PALETTE).
+	const tema = $derived(themeStore.tema);
+	const P = $derived(MAP_PALETTE[tema]);
+	const gradient = $derived(rampGradient(
+		isFlood ? P.tierra : isGreen ? P.selva : isWarm ? P.warm : isNight ? P.night : isDiverging ? P.div : P.seq
+	));
+	// Buildings are painted by volume (Map: mapStore.getColorExpr), not by height.
+	const buildingGradient = $derived(rampGradient(
+		tema === 'claro' ? BUILDING_VOLUME_CLARO : COLOR_RAMPS.volume.stops.filter((_, i) => i % 2 === 1) as string[]
+	));
 
 	// Danger layers (colorScale 'flood', higher = worse) get their delta sign flipped in
 	// the choropleth so an INCREASE renders tierra (left end). In that mode the static layer labels
@@ -183,7 +182,7 @@
 			{/each}
 		</div>
 		<div class="nodata-row">
-			<span class="nodata-swatch"></span>
+			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
@@ -193,19 +192,19 @@
 		<div class="legend-items">
 			{#if classes.zero}
 				<div class="legend-item">
-					<span class="legend-swatch outlined" style:background={classes.zero.color}></span>
+					<span class="legend-swatch outlined" style:background={classColor(classes.zero.color, tema)}></span>
 					<span class="legend-label">{i18n.t(classes.zero.labelKey)}</span>
 				</div>
 			{/if}
 			{#each classes.steps as step}
 				<div class="legend-item">
-					<span class="legend-swatch" style:background={step.color}></span>
+					<span class="legend-swatch" style:background={classColor(step.color, tema)}></span>
 					<span class="legend-label">{i18n.t(step.labelKey)}</span>
 				</div>
 			{/each}
 		</div>
 		<div class="nodata-row">
-			<span class="nodata-swatch"></span>
+			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
@@ -223,7 +222,7 @@
 		</div>
 		<div class="scale-note">{scaleNote}</div>
 		<div class="nodata-row">
-			<span class="nodata-swatch"></span>
+			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
@@ -242,7 +241,7 @@
 			</div>
 		{/if}
 		<div class="nodata-row">
-			<span class="nodata-swatch"></span>
+			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
 	</div>
@@ -250,7 +249,7 @@
 	<!-- Cold-open canvas: GBA buildings coloured by estimated population -->
 	<div class="legend">
 		<div class="legend-title">{i18n.t('legend.buildingsCanvas')}</div>
-		<div class="gradient-bar" style:background={'linear-gradient(to right, #0f1e30, #1e4060, #3080c0, #50a0e0, #70c0ff, #a0dfff, #d0f0ff)'}></div>
+		<div class="gradient-bar" style:background={buildingGradient}></div>
 		<div class="gradient-labels">
 			<span>−</span>
 			<span>{i18n.t('legend.buildingVolume')}</span>
