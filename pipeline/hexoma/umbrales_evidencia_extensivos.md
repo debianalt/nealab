@@ -176,3 +176,14 @@ Para no repetir la cita completa en cada fila, uso claves; la referencia complet
 3. Pendiente: no hay nada argentino. Sólo Sys/Verdoodt (Ruanda) y CIREN (Chile), y nada específico para algodón.
 4. Faltan el efecto por día > 35 °C (sólo hay umbrales, no tasas por día) y el déficit P − ETP salvo para girasol en Chaco (120 mm). Los períodos críticos están por etapa, no por mes del NEA.
 5. No pude leer el texto original de FAO 33 (Doorenbos & Kassam 1979); usé las fichas web de FAO derivadas de él, sin paginar. El PDF de FAO 56 tampoco se consultó. Del CSV o `.rds` de ECOCROP, abrirlo con R fue denegado y usé las fichas web.
+
+
+## Agregado del 1-nov-2026: pH de la soja, fuentes argentinas (búsqueda dirigida)
+| cultivo | variable | tipo | valor_min | valor_max | unidad | etapa o condición | cita completa | página/tabla | URL/DOI | cita textual |
+|---|---|---|---|---|---|---|---|---|---|---|
+| soja | pH | óptimo | 6,0 | 7,0 | pH | orientativo; toma los valores de Porta et al. 1999 | Vázquez, M.; Pagani, A. 2018. UD C5 (1 de 2): Manejo de suelos ácidos. FCAyF-UNLP | Tabla 2, p. 5 | https://aulavirtual.agro.unlp.edu.ar/pluginfile.php/75162/mod_resource/content/1/Tirada%20Interna%20UDC%20C5%20%281%20de%202%29%20Suelos%20%C3%81cidos.pdf | «Soja (Glycine max) 6,0-7,0 4,5-7,5» (verificado sobre la imagen de la página) |
+| soja | pH | tolerancia para rendimiento satisfactorio | 4,5 | 7,5 | pH | ídem | ídem | Tabla 2, p. 5 | ídem | ídem |
+| soja | pH | óptimo / tolerancia | 6 (4,5) | 7 (7) | pH en agua 1:2,5 | Buenos Aires y Santa Fe; cita a Vázquez 2007 | Vázquez, M. et al. 2012. Respuesta de la soja a enmiendas básicas en suelos de Buenos Aires y Santa Fe. Ciencia del Suelo 30(1): 43–55 | pp. 48–49 | https://www.scielo.org.ar/pdf/cds/v30n1/v30n1a05.pdf | «estaría dentro del rango de tolerancia (4,5-7) para la especie, se encontraría por debajo del rango óptimo de 6-7 (Vázquez, 2007)» |
+| cultivos de la región | pH | óptimo | 6 | 7,5 | pH en agua | pampeana y extrapampeana; no específico de soja | Sainz Rozas, H.; Echeverría, H.; Angelini, H. 2011. Ciencia del Suelo 29(1): 29–37 | p. 34 | https://www.scielo.org.ar/pdf/cds/v29n1/v29n1a04.pdf | «6 a 7,5 […] considerados óptimos para el crecimiento de los principales cultivos de la región» |
+| soja | pH | óptimo | 5,5 | 6,0 | pH en agua | Brasil, RS y SC | Oliveira Junior, A. et al. 2020. Tecnologias de produção de soja, cap. 7. Embrapa Soja | p. 142 | https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1128401/1/cap-7-SP-17-2020.pdf | «o pH em água adequado para a cultura da soja situa-se entre 5,5 e 6,0» |
+Sin fuente del NEA (INTA Sáenz Peña, Las Breñas, UNNE): no se encontró valor de pH para soja.

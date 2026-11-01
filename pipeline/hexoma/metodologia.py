@@ -407,15 +407,16 @@ PROCESOS = [
                  'factor S1/S2/S3/N; combinación FAO por factor más limitante; resumen por celda = clase mediana y % de '
                  'campañas S1 y S1+S2 en 1991/92–2024/25. Arroz: frío por decenios (Steinmetz & Amaral 2002).'),
          parametros='ventanas: soja nov–mar, maíz sep–feb, algodón oct–mar, girasol ago–dic, arroz ene–1.º mar; perennes y pasturas: campaña',
-         validacion=('validar_aptitud.py: lift de S1 contra MapBiomas 2025 (cultivo temporal ≥ 50 %): algodón 2,33, girasol 1,75, '
-                     'maíz 1,63, soja 0,85; yerba S1 3,18 (pocas celdas); té, cítricos y pasturas sin celdas S1. Departamentos contra '
-                     'la superficie sembrada del MAGyP: correlaciones débiles (r −0,04 a 0,50). Ver aptitud.validacion.'),
+         validacion=('validar_aptitud.py (tras los ajustes del 1-nov-2026): lift de S1 contra MapBiomas 2025: algodón 2,33, '
+                     'yerba 3,18 (pocas celdas S1), girasol 1,75, té 1,81, maíz 1,63, soja 1,50 (era 0,85 con el pH de ECOCROP); '
+                     'cítricos sin prueba válida (el cultivo perenne de MapBiomas es yerba y té); pasturas sin S1. Departamentos '
+                     'contra el MAGyP: correlaciones débiles a moderadas (soja S1 r 0,33). Ver aptitud.validacion.'),
          regla='Reglas del autor en meta.umbrales_reglas (1-nov-2026).',
-         limitaciones=('S1+S2 discrimina poco en cultivos de límites amplios (maíz, cítricos, pasturas, arroz). La pendiente de Sys '
-                       'pone en S3 buena parte de Misiones (zona yerbatera incluida). Cítricos y pasturas: el rango de temperatura de '
-                       'crecimiento comparado con la media anual impide S1. Té: la regla «sin heladas a 5 cm en sep–oct» impide S1 en '
-                       'casi toda Misiones. Soja: el pH óptimo de ECOCROP (5,5–6,5) deja afuera los suelos neutros del Chaco donde se '
-                       'siembra. Arroz sin agua de riego. Suelo de SoilGrids (modelo).'),
+         limitaciones=('S1+S2 discrimina poco en cultivos de límites amplios (maíz, cítricos, pasturas, arroz). Ajustes de '
+                       'aplicación (umbrales_cultivos.md): cítricos y pasturas con temperatura de crecimiento sep–mar; té con lluvia S1 '
+                       '1.400–2.200; yerba y té con la tabla de pendiente de té de Sys; soja con pH argentino 6–7 (UNLP / Porta). '
+                       'Pasturas: el óptimo 28–35 °C no se alcanza en la media sep–mar del NEA. Arroz sin agua de riego. Suelo de '
+                       'SoilGrids (modelo).'),
          scripts='pipeline/hexoma/aptitud_reglas.py; aptitud_clima.py; build_hexoma_aptitud.py; validar_aptitud.py',
          objetos=['aptitud.*'], fuentes=['era5_land', 'chirps_v3', 'soilgrids2', 'fabdem', 'mapbiomas_ar_col3', 'ghcn_daily', 'inta_siga'],
          verificado=V),

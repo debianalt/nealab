@@ -20,6 +20,28 @@ La aptitud se calcula en A4 paso 2, sobre la temperatura corregida con estacione
    pastoreo extensivo)». El potencial de mejora lo cubren las pasturas implantadas.
 8. **Combinación de factores:** FAO, factor más limitante: la clase de la celda es la peor de sus factores.
 
+## Ajustes de aplicación (1-nov-2026, tras la primera validación)
+La primera validación contra MapBiomas y el MAGyP (`validacion_aptitud.md`) mostró cuatro problemas de aplicación. El
+autor pidió corregirlos. Cada ajuste tiene su evidencia:
+1. **Cítricos y pasturas, temperatura:** el rango validado es de temperatura «de crecimiento». Comparado con la media
+   anual (~22 °C) no dejaba ninguna celda en S1. Ahora se compara con la media de **septiembre a marzo**, la estación
+   de crecimiento. El rango no cambia. Pasturas: el óptimo (28–35 °C) sigue sin alcanzarse en la media sep–mar del NEA
+   (25 °C); se informa como hallazgo.
+2. **Té, lluvia:** 1.800–2.200 mm (Parra) describe la zona tealera, no es un requisito, y la lluvia de cada campaña cae
+   fuera de esa banda muy seguido. Ahora S1 = 1.400–2.200 mm (piso de ECOCROP, techo de Parra) y el límite sigue en
+   ≥ 1.000 mm. Las heladas del té no cambian: las convencionales del INTA y el modelo dan la misma frecuencia de años
+   con helada a 5 cm en sep–oct (Cerro Azul 35 % y 35 %; Bella Vista 43 % y 54 %; Las Breñas 66 % y 67 %).
+3. **Pendiente de yerba y té:** clases de la tabla de té de Verdoodt & Van Ranst (2003, Tabla 4.15, p. 103; adaptada de
+   Sys et al. 1993): S2 ≤ 25 %, S3 ≤ 55 %, N > 55 %. Las clases generales ponían la zona yerbatera de Guaraní en S3. El
+   óptimo propio sigue fijando S1 (yerba ≤ 4 %, té ≤ 17,6 %). Cítricos sigue con las clases generales (no hay tabla).
+4. **Soja, pH:** el 67 % de las celdas cultivadas en 2025 tiene pH de SoilGrids > 6,5, el techo del óptimo de ECOCROP:
+   el óptimo de la literatura internacional dejaba afuera los suelos neutros donde se siembra. No hay fuente del NEA;
+   hay fuentes argentinas (pampeanas) con número, que por la regla 1 van antes que ECOCROP: Vázquez & Pagani (2018,
+   UNLP, Tabla 2, p. 5, que toma los valores de Porta et al. 1999) dan óptimo 6,0–7,0 y tolerancia 4,5–7,5
+   (verificado sobre la página); Vázquez et al. (2012, *Ciencia del Suelo* 30(1), pp. 48–49) confirman el óptimo 6–7
+   con tolerancia 4,5–7. Se usa S1 6,0–7,0 y límite 4,5–7,5. Las otras fuentes de la búsqueda (Embrapa 5,5–6,0 para
+   oxisoles; Sainz Rozas et al. 2011, 6–7,5 para los cultivos de la región) están en la evidencia.
+
 ## Cómo se armó
 - Tres búsquedas en paralelo (perennes; extensivos; arroz y pasturas), con cita completa, página o tabla, URL y cita
   textual por valor: la evidencia completa está en `umbrales_evidencia_*.md`.
@@ -60,24 +82,24 @@ pendiente de la regla 2.
 | pH | 4,5–5,5 | ≥ 4,0 | Zelada & González 2019 p. 33; Embrapa 2014 | regla 3 |
 | Arcilla | > 35 % | ≥ 15 % | Oliveira & Rotta 1985 p. 28; Carvalho 2003 | |
 | Anegamiento | sin suelos hidromórficos | — | Oliveira & Rotta 1985 p. 28; Embrapa 2014 | proxy MapBiomas |
-| Pendiente | ≤ 4 % | Sys | Burtnik 2006 p. 11 (3–4 %, INTA/INYM) | regla 2: fija el óptimo, no excluye |
+| Pendiente | ≤ 4 % | S2 ≤ 25 %, S3 ≤ 55 %, N > 55 % | Burtnik 2006 p. 11 (óptimo); Verdoodt & Van Ranst 2003, Tabla 4.15 (té, Sys) | ajuste 3 |
 
 ### Té
 | Factor | S1 | Límite | Fuente | Nota |
 |---|---|---|---|---|
-| Lluvia anual | 1.800–2.200 mm | ≥ 1.000 mm | Parra (MAGyP, Alimentos Argentinos 34); Prat Kricun et al. 2020 p. 24; [E] RMIN 1.000 | |
+| Lluvia anual | 1.400–2.200 mm | ≥ 1.000 mm | [E] (piso y límite); Parra (MAGyP, Alimentos Argentinos 34) (techo) | ajuste 2 |
 | T media del ciclo | 20–30 °C | 8–35 °C | [E] | sin valor regional |
 | Helada en brotación (5 cm) | sin heladas a 5 cm después del 1-sep | — | [E] KTMP 0 (brotación) | |
 | Helada severa (abrigo) | mínima absoluta > −5 °C | — | [E] KTMPR −5 | |
 | pH | 4,5–5,5 | 4,0–6,0 | Parra (MAGyP); [E] | |
-| Pendiente | 8,7–17,6 % (5–10°) | Sys | Mwesige et al. 2026 | única fuente específica |
+| Pendiente | ≤ 17,6 % (5–10°) | S2 ≤ 25 %, S3 ≤ 55 %, N > 55 % | Mwesige et al. 2026 (óptimo); Verdoodt & Van Ranst 2003, Tabla 4.15 | ajuste 3 |
 | Anegamiento | no tolera | — | Crane & Balerdi (EDIS) p. 2 | proxy MapBiomas |
 
 ### Cítricos (naranja y mandarina)
 | Factor | S1 | Límite | Fuente | Nota |
 |---|---|---|---|---|
 | Lluvia anual | 1.200–2.000 mm (~100 mm/mes) | ≥ 450 mm (con riego complementario) | INTA EEA Concordia cap. IV p. 2; [E] naranja | |
-| T de crecimiento | 23–34 °C | 12,8–37 °C | INTA Concordia cap. IV p. 1; Oliveira et al. 2012 p. 10 (Embrapa, sur de Brasil) | |
+| T de crecimiento (media sep–mar) | 23–34 °C | 12,8–37 °C | INTA Concordia cap. IV p. 1; Oliveira et al. 2012 p. 10 (Embrapa, sur de Brasil) | ajuste 1 |
 | Helada en flor y fruto chico (5 cm) | sin heladas a 5 cm en sep–oct | — | INTA Concordia cap. IV p. 1 (−1 °C) | |
 | Helada severa (abrigo) | mínima absoluta > −3 °C | > −8 °C | INTA Concordia (−3 °C, fruto); Oliveira et al. 2012 p. 12 (letal foliar) | mandarina más tolerante |
 | pH | naranja 5,0–6,0; mandarina 6,0–6,8 | 4,0–8,3 | [E] naranja y mandarina | sin pH regional |
@@ -91,7 +113,7 @@ pendiente de la regla 2.
 | Calor en floración | — | — | FAO 66 p. 129 (aborto a 35 °C) | regla 5: se informa el conteo |
 | Agua (lluvia de la campaña) | 600–1.500 mm | ≥ 450 mm | [E]; INTA Las Breñas (demanda regional 650 mm) | |
 | Período libre de heladas | ≥ 130 días | ≥ 100 días | FAO CI (ciclo 100–130 d o más) | proxy: duración del ciclo |
-| pH | 5,5–6,5 | 4,5–8,4 | [E] | regla 1 (antes FAO CI: 6–6,5) |
+| pH | 6,0–7,0 | 4,5–7,5 | Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999; Vázquez et al. 2012, Ciencia del Suelo 30(1) pp. 48–49 | ajuste 4 (antes [E] 5,5–6,5) |
 | Arcilla | 20–60 % | — | Verdoodt & Van Ranst 2003 (Sys) | excluye suelos muy arenosos |
 | Anegamiento | < 7 días | — | FAO 66 p. 129 | proxy MapBiomas |
 | Pendiente | Sys | Sys | Verdoodt & Van Ranst 2003 | |
@@ -141,7 +163,7 @@ pendiente de la regla 2.
 ### Pasturas megatérmicas implantadas
 | Factor | S1 | Límite | Fuente | Nota |
 |---|---|---|---|---|
-| T de crecimiento | 28–35 °C | se detiene < 15 °C | Veneciano et al. 2002 p. 2 (INTA San Luis) | Tb 12–16 °C (Mendonça & Rassini 2006) |
+| T de crecimiento (media sep–mar) | 28–35 °C | se detiene < 15 °C | Veneciano et al. 2002 p. 2 (INTA San Luis) | ajuste 1; Tb 12–16 °C (Mendonça & Rassini 2006) |
 | Lluvia anual | Brachiaria y Setaria ≥ 800 mm; Gatton 500–1.000; Rhodes 600–1.500 | — | Pérego 1999; Mc Lean et al. 2015; INTA Las Breñas 2005; [E] Rhodes | por especie |
 | Heladas | — | Setaria −1 (crecimiento) / −4 (reposo); Rhodes −1 / −10 | [E] | Brachiaria, Pangola y Gatton: sin valor numérico |
 | Anegamiento | Setaria y Rhodes toleran (Rhodes hasta 15 días); Gatton no | — | INTA Las Breñas; Tropical Forages | proxy MapBiomas |

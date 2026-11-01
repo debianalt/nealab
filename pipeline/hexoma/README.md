@@ -210,9 +210,10 @@ y el suelo de SoilGrids/FABDEM; anegamiento = bosque y pastizal inundables de Ma
 (par × campaña × cultivo), `aptitud.suelo`, `aptitud.resumen` (clase mediana, % de campañas S1 y S1+S2, factor
 limitante) y `aptitud.v_h3_campania`. Regenerar: `corregir_temperatura.py` → `aptitud_clima.py` →
 `build_hexoma_aptitud.py` → `validar_aptitud.py`. Resultado de la validación y limitaciones en `validacion_aptitud.md`
-y en la ficha `aptitud_cultivo` de `meta.procesos`: S1 apunta a donde se cultiva en algodón, girasol y maíz (lift
-1,6–2,3), no en soja (0,85, por el pH de ECOCROP); té, cítricos y pasturas no tienen celdas S1 por cómo se aplican sus
-reglas; las correlaciones por departamento con el MAGyP son débiles.
+y en la ficha `aptitud_cultivo` de `meta.procesos`. Tras los ajustes de aplicación del 1-nov-2026 (sección de
+`umbrales_cultivos.md`), S1 apunta a donde se cultiva en algodón (lift 2,33), té (1,81), girasol (1,75), maíz (1,63) y
+soja (1,50, con el pH argentino 6–7); pasturas sin S1 (el óptimo no se alcanza en el NEA); para cítricos no hay prueba
+válida contra MapBiomas; las correlaciones por departamento con el MAGyP son débiles a moderadas.
 
 ## Estaciones: la referencia obligada (esquema `estaciones`)
 Toda afirmación del Hexoma sobre temperatura, heladas o lluvia se contrasta con las estaciones: son la única medición

@@ -5,7 +5,8 @@ Lee los diarios corregidos de corregir_temperatura.py (era5_tmin/tmax/suelo_corr
 1-nov-2026 (aptitud_reglas.CICLOS). La campaña Y va de jul-Y a jun-(Y+1); los meses de ene–jun son del año Y+1.
 
     tm_anual            media de (Tmax+Tmin)/2 en la campaña, °C
-    tm_<ventana>        ídem en la ventana del cultivo (nov_mar, sep_feb, oct_mar, ago_dic)
+    tm_<ventana>        ídem en la ventana del cultivo (nov_mar, sep_feb, oct_mar, ago_dic) y en la estación de
+                        crecimiento sep_mar (cítricos y pasturas: su rango es de temperatura de crecimiento)
     gdd8_sep_feb        Σ max(0, min(Tm, 30) − 8) sep–feb (maíz; FAO 66: Tbase 8, Tupper 30)
     gdd12_oct_mar       Σ max(0, Tm − 12) oct–mar (algodón)
     gdd7_ago_dic        Σ max(0, Tm − 7) ago–dic (girasol; ASAGIR 6–8 °C)
@@ -35,7 +36,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_hexoma import log  # noqa: E402
 from clima_a_pixel import DERIV  # noqa: E402
 
-VENTANAS = {'nov_mar': [11, 12, 1, 2, 3], 'sep_feb': [9, 10, 11, 12, 1, 2], 'oct_mar': [10, 11, 12, 1, 2, 3],
+VENTANAS = {'sep_mar': [9, 10, 11, 12, 1, 2, 3], 'nov_mar': [11, 12, 1, 2, 3], 'sep_feb': [9, 10, 11, 12, 1, 2], 'oct_mar': [10, 11, 12, 1, 2, 3],
             'ago_dic': [8, 9, 10, 11, 12], 'ene_feb': [1, 2], 'sep_oct': [9, 10], 'oct': [10]}
 
 
@@ -58,7 +59,7 @@ def main() -> None:
         m = mes[i]
         d = {'pixel_id': pix.pixel_id.values, 'campania': np.full(len(pix), c, np.int16)}
         d['tm_anual'] = tm.mean(axis=0)
-        for v in ('nov_mar', 'sep_feb', 'oct_mar', 'ago_dic'):
+        for v in ('sep_mar', 'nov_mar', 'sep_feb', 'oct_mar', 'ago_dic'):
             sel = np.isin(m, VENTANAS[v])
             d[f'tm_{v}'] = tm[sel].mean(axis=0)
             d[f'dias35_{v}'] = (tx[sel] > 35).sum(axis=0).astype(np.int16)

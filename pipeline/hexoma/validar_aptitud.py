@@ -73,8 +73,7 @@ def main() -> None:
                               indicador=en_obs / base if base > 0 else None))
     # departamentos contra el MAGyP
     m = pd.read_csv(MAGYP, encoding='utf-8')
-    m = m[m.provincia_id.isin([18, 22, 34, 54]) & m.campania.isin(
-        ['2019/2020', '2020/2021', '2021/2022', '2022/2023', '2023/2024', '2024/2025'])]
+    m = m[m.provincia_id.isin([18, 22, 34, 54])]
     lim = pd.read_sql('SELECT l.redcode, l.nombre, t.etiqueta AS provincia FROM limites l JOIN territorios t USING (territorio_id)', conn)
     mapa = {}
     for prov, g in m.groupby('provincia'):
@@ -87,8 +86,11 @@ def main() -> None:
     m['redcode'] = [mapa.get((p_, d_)) for p_, d_ in zip(m.provincia, m.departamento)]
     m = m[m.redcode.notna()]
     for cult, nombres_m in MAGYP_CULT.items():
-        sem = (m[m.cultivo.isin(nombres_m)].groupby(['redcode', 'campania']).superficie_sembrada_ha.sum()
-               .groupby('redcode').mean())
+        mc = m[m.cultivo.isin(nombres_m)]
+        # últimas 6 campañas con dato (2019/20–2024/25 para casi todos; los cítricos del MAGyP terminan en 1996/97)
+        ult = sorted(mc.campania.unique())[-6:]
+        mc = mc[mc.campania.isin(ult)]
+        sem = mc.groupby(['redcode', 'campania']).superficie_sembrada_ha.sum().groupby('redcode').mean()
         if sem.sum() == 0:
             continue
         for k, rot in ((1, 'S1'), (2, 'S1+S2')):
@@ -97,7 +99,7 @@ def main() -> None:
             j = j[j.index.isin(d.redcode.unique())]
             if len(j) < 5:
                 continue
-            filas.append(dict(cultivo=cult, prueba='departamentos frente a superficie sembrada MAGyP 2019/20–2024/25',
+            filas.append(dict(cultivo=cult, prueba=f'departamentos frente a superficie sembrada MAGyP {ult[0]}–{ult[-1]}',
                               clase=rot, n=len(j), valor_obs=np.corrcoef(j.apt, j.sembrada)[0, 1],
                               valor_base=j.apt.rank().corr(j.sembrada.rank()), indicador=None))
     v = pd.DataFrame(filas)
@@ -119,9 +121,11 @@ def main() -> None:
          '| Cultivo | Celdas cultivadas | Clase | % de cultivadas en la clase | % de todas | Lift |', '|---|---:|---|---:|---:|---:|']
     for r in v[v.prueba.str.startswith('lift')].itertuples():
         L.append(f'| {NOMBRES[r.cultivo]} | {r.n:,} | {r.clase} | {f(r.valor_obs)} | {f(r.valor_base)} | {f(r.indicador, 2)} |')
-    L += ['', '## Departamentos contra el MAGyP', '', '| Cultivo | Deptos. | Clase | r | ρ |', '|---|---:|---|---:|---:|']
+    L += ['', 'Yerba, té y cítricos se comparan con el «cultivo perenne» de MapBiomas, que en Misiones y Corrientes es sobre '
+          'todo yerba y té: para cítricos el lift no es una prueba válida; vale la de departamentos.',
+          '', '## Departamentos contra el MAGyP', '', '| Cultivo | Campañas MAGyP | Deptos. | Clase | r | ρ |', '|---|---|---:|---|---:|---:|']
     for r in v[v.prueba.str.startswith('dep')].itertuples():
-        L.append(f'| {NOMBRES[r.cultivo]} | {r.n} | {r.clase} | {f(r.valor_obs, 2)} | {f(r.valor_base, 2)} |')
+        L.append(f'| {NOMBRES[r.cultivo]} | {r.prueba.split("MAGyP ")[1]} | {r.n} | {r.clase} | {f(r.valor_obs, 2)} | {f(r.valor_base, 2)} |')
     INFORME.write_text('\n'.join(L) + '\n', encoding='utf-8')
     print('\n'.join(L))
     log(f'listo en {time.time() - t0:.0f} s')

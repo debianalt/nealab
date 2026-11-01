@@ -6,15 +6,17 @@ Tipos:
     min     s1 = valor mínimo para S1; s2 = mínimo para S2 (None = todo lo demás es S2).
     cero    S1 si el conteo es 0; si no, S2 (heladas por estado: las fuentes no dan un límite de exclusión).
     max_n   N si el valor ≥ umbral (anegamiento); si no, S1.
-    pend    pendiente (%): S1 ≤ s1 (óptimo propio o 8 de Sys); S2 ≤ s2 (16 de Sys, o el propio); S3 ≤ 30; N > 30.
+    pend    pendiente (%): S1 ≤ s1 (óptimo propio o 8 de Sys); S2 ≤ s2 (16 de Sys); S3 ≤ s3 (30 de Sys); N más arriba.
+            Yerba y té usan la tabla de té de Verdoodt & Van Ranst 2003 (Sys): S2 ≤ 25, S3 ≤ 55.
     hidro   arroz: S1 si inundable ≥ 50 % o arcilla ≥ 35 %; si no, S2.
 Variables climáticas por píxel ERA5 y campaña (aptitud_clima.py) o por par CHIRPS×ERA5 (p_mm); de suelo por celda.
 
 Reglas del autor que vinculan (meta.umbrales_reglas): factor más limitante; calor sin clase; arroz «sin dato de agua
 de riego»; campo natural sin aptitud; pendiente de Sys con el óptimo propio (ninguna propia excluye por sí sola).
 Decisiones de aplicación tomadas al codificar (se informan en la validación):
-- Cítricos y pasturas: el rango validado es de temperatura «de crecimiento»; con la ventana aprobada (año) se compara
-  con la media anual, que en el NEA queda debajo del óptimo: la temperatura los deja en S2 en casi todo el NEA.
+- Ajustes de aplicación del 1-nov-2026 (umbrales_cultivos.md, «Ajustes de aplicación»): cítricos y pasturas comparan
+  su temperatura de crecimiento con la media sep–mar; té, lluvia S1 1.400–2.200; yerba y té, pendiente con la tabla
+  de té de Sys (S2 ≤ 25 %, S3 ≤ 55 %).
 - Arroz: por decenios de ene, feb y 1.º de mar (Steinmetz & Amaral 2002): S1 si algún decenio no tiene noches ≤ 17 °C;
   S2 si alguno no tiene noches ≤ 15 °C; N si todos tienen alguna. Contar una sola noche fría en dos meses (primera
   versión) daba N en el 70–85 % de las campañas, igual que las estaciones, y contradecía las 95 mil ha sembradas.
@@ -41,20 +43,20 @@ REGLAS = {
         ('ph', 'ph', 'rango', dict(s1=(4.5, 5.5), lim=(4.0, None)), 'Zelada & González 2019; Embrapa 2014'),
         ('arcilla', 'arcilla', 'rango', dict(s1=(35, None), lim=(15, None)), 'Oliveira & Rotta 1985; Carvalho 2003'),
         ('anegamiento', 'inundable', 'max_n', dict(n=50), 'Oliveira & Rotta 1985; Embrapa 2014'),
-        ('pendiente', 'pendiente', 'pend', dict(s1=4, s2=16), 'Burtnik 2006 (óptimo); Sys et al. 1993'),
+        ('pendiente', 'pendiente', 'pend', dict(s1=4, s2=25, s3=55), 'Burtnik 2006 (óptimo); Verdoodt & Van Ranst 2003, Tabla 4.15 (té, Sys)'),
     ],
     'te': [
-        ('lluvia', 'p_mm', 'rango', dict(s1=(1800, 2200), lim=(1000, None)), 'Parra (MAGyP); Prat Kricun et al. 2020; ECOCROP'),
+        ('lluvia', 'p_mm', 'rango', dict(s1=(1400, 2200), lim=(1000, None)), 'ECOCROP (piso 1.400, límite 1.000); Parra (MAGyP) (techo 2.200)'),
         ('t_media', 'tm_anual', 'rango', dict(s1=(20, 30), lim=(8, 35)), 'ECOCROP'),
         ('helada_brotacion', 'heladas5_sep_oct', 'cero', {}, 'ECOCROP KTMP (brotación)'),
         ('helada_severa', 'tmin_abs', 'rango', dict(s1=(-5, None), lim=(None, None)), 'ECOCROP KTMPR'),
         ('ph', 'ph', 'rango', dict(s1=(4.5, 5.5), lim=(4.0, 6.0)), 'Parra (MAGyP); ECOCROP'),
         ('anegamiento', 'inundable', 'max_n', dict(n=50), 'Crane & Balerdi (EDIS)'),
-        ('pendiente', 'pendiente', 'pend', dict(s1=17.6, s2=17.6), 'Mwesige et al. 2026 (óptimo 5–10°); Sys et al. 1993'),
+        ('pendiente', 'pendiente', 'pend', dict(s1=17.6, s2=25, s3=55), 'Mwesige et al. 2026 (óptimo 5–10°); Verdoodt & Van Ranst 2003, Tabla 4.15 (té, Sys)'),
     ],
     'citricos': [
         ('lluvia', 'p_mm', 'rango', dict(s1=(1200, 2000), lim=(450, None)), 'INTA EEA Concordia; ECOCROP'),
-        ('t_media', 'tm_anual', 'rango', dict(s1=(23, 34), lim=(12.8, 37)), 'INTA EEA Concordia; Oliveira et al. 2012'),
+        ('t_media', 'tm_sep_mar', 'rango', dict(s1=(23, 34), lim=(12.8, 37)), 'INTA EEA Concordia; Oliveira et al. 2012 (temperatura de crecimiento, sep–mar)'),
         ('helada_floracion', 'heladas5_sep_oct', 'cero', {}, 'INTA EEA Concordia (−1 °C en flor)'),
         ('helada_severa', 'tmin_abs', 'rango', dict(s1=(-3, None), lim=(-8, None)), 'INTA EEA Concordia; Oliveira et al. 2012'),
         ('ph', 'ph', 'rango', dict(s1=(5.0, 6.0), lim=(4.0, 8.3)), 'ECOCROP (naranja)'),
@@ -64,7 +66,7 @@ REGLAS = {
         ('t_media', 'tm_nov_mar', 'rango', dict(s1=(20, 33), lim=(10, 38)), 'ECOCROP'),
         ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1500), lim=(450, None)), 'ECOCROP; INTA Las Breñas'),
         ('libre_heladas', 'libre_heladas', 'min', dict(s1=130, s2=100), 'FAO Crop info (ciclo)'),
-        ('ph', 'ph', 'rango', dict(s1=(5.5, 6.5), lim=(4.5, 8.4)), 'ECOCROP'),
+        ('ph', 'ph', 'rango', dict(s1=(6.0, 7.0), lim=(4.5, 7.5)), 'Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999); Vázquez et al. 2012, Ciencia del Suelo 30(1)'),
         ('arcilla', 'arcilla', 'rango', dict(s1=(20, 60), lim=(None, None)), 'Verdoodt & Van Ranst 2003'),
         ('anegamiento', 'inundable', 'max_n', dict(n=50), 'FAO 66'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
@@ -98,7 +100,7 @@ REGLAS = {
         ('pendiente', 'pendiente', 'pend', dict(s1=1, s2=3), 'RENARE (Uruguay); Sys et al. 1993'),
     ],
     'pasturas': [
-        ('t_media', 'tm_anual', 'rango', dict(s1=(28, 35), lim=(15, None)), 'Veneciano et al. 2002 (INTA)'),
+        ('t_media', 'tm_sep_mar', 'rango', dict(s1=(28, 35), lim=(15, None)), 'Veneciano et al. 2002 (INTA) (temperatura de crecimiento, sep–mar)'),
         ('lluvia', 'p_mm', 'rango', dict(s1=(800, None), lim=(500, None)), 'Pérego 1999; Mc Lean et al. 2015; INTA Las Breñas 2005'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
@@ -139,7 +141,7 @@ def clasificar(tipo: str, p: dict, x, arcilla=None):
         c[ok] = np.where(x[ok] >= p['n'], 4, 1)
     elif tipo == 'pend':
         c[ok] = 4
-        c[ok & (x <= 30)] = 3
+        c[ok & (x <= p.get('s3', 30))] = 3
         c[ok & (x <= max(p['s2'], p['s1']))] = 2
         c[ok & (x <= p['s1'])] = 1
     elif tipo == 'hidro':
