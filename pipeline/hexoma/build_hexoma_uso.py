@@ -181,20 +181,27 @@ def procesar(args) -> None:
         log(f'prueba: {int(cuenta.sum(dtype=np.int64)):,} píxeles contados; celdas con dato {int((cuenta.sum(axis=(1, 2), dtype=np.int64) > 0).sum()):,}')
         return
     np.save(USO / 'cuenta.npy', cuenta)
-    # parquet largo sin ceros
+    escribir_parquet(cen, cuenta)
+
+
+def escribir_parquet(cen, cuenta) -> None:
+    """Serie larga sin ceros (h3, anio, clase, n_px), un año por vez; se escribe a .tmp y se renombra al cerrar."""
     import pyarrow as pa
     import pyarrow.parquet as pq
+    destino = USO / 'uso_h3_anio_clase.parquet'
+    tmp = destino.with_suffix('.tmp.parquet')
     w = None
     for j, a in enumerate(ANIOS):
-        c = cuenta[:, j, :]
+        c = np.asarray(cuenta[:, j, :])
         ci, ki = np.nonzero(c)
         t = pa.table({'h3': pa.array(cen.h3.values[ci]), 'anio': pa.array(np.full(len(ci), a, np.int16)),
                       'clase': pa.array(np.array(CODIGOS, np.int16)[ki]), 'n_px': pa.array(c[ci, ki].astype(np.int32))})
         if w is None:
-            w = pq.ParquetWriter(USO / 'uso_h3_anio_clase.parquet', t.schema, compression='zstd')
+            w = pq.ParquetWriter(tmp, t.schema, compression='zstd')
         w.write_table(t)
     w.close()
-    log(f'parquet: {(USO / "uso_h3_anio_clase.parquet").stat().st_size / 1e9:.2f} GB')
+    tmp.replace(destino)
+    log(f'parquet: {destino.stat().st_size / 1e9:.2f} GB')
 
 
 def cargar() -> None:
@@ -323,7 +330,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--solo-carga', action='store_true')
     ap.add_argument('--max-bloques', type=int, help='prueba con N bloques, sin guardar ni cargar')
+    ap.add_argument('--solo-parquet', action='store_true', help='rearma el parquet desde cuenta.npy y termina')
     args = ap.parse_args()
+    if args.solo_parquet:
+        escribir_parquet(pd.read_parquet(CENTROS), np.load(USO / 'cuenta.npy', mmap_mode='r'))
+        return 0
     if not args.solo_carga:
         procesar(args)
         if args.max_bloques:

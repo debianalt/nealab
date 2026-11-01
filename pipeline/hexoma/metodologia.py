@@ -401,6 +401,24 @@ PROCESOS = [
                        '150 km usa la estación más cercana.'),
          scripts='pipeline/hexoma/corregir_temperatura.py', objetos=['clima.era5_*_corr', 'clima.correccion_*'],
          fuentes=['era5_land', 'ghcn_daily', 'inta_siga'], verificado=V),
+    dict(id='aptitud_cultivo', nombre='Aptitud por cultivo, celda y campaña (A4)',
+         metodo=('Umbrales validados por el autor (umbrales_cultivos.md, 8 reglas) codificados en aptitud_reglas.py; '
+                 'indicadores climáticos por ventana del ciclo desde la temperatura corregida (aptitud_clima.py); clase por '
+                 'factor S1/S2/S3/N; combinación FAO por factor más limitante; resumen por celda = clase mediana y % de '
+                 'campañas S1 y S1+S2 en 1991/92–2024/25. Arroz: frío por decenios (Steinmetz & Amaral 2002).'),
+         parametros='ventanas: soja nov–mar, maíz sep–feb, algodón oct–mar, girasol ago–dic, arroz ene–1.º mar; perennes y pasturas: campaña',
+         validacion=('validar_aptitud.py: lift de S1 contra MapBiomas 2025 (cultivo temporal ≥ 50 %): algodón 2,33, girasol 1,75, '
+                     'maíz 1,63, soja 0,85; yerba S1 3,18 (pocas celdas); té, cítricos y pasturas sin celdas S1. Departamentos contra '
+                     'la superficie sembrada del MAGyP: correlaciones débiles (r −0,04 a 0,50). Ver aptitud.validacion.'),
+         regla='Reglas del autor en meta.umbrales_reglas (1-nov-2026).',
+         limitaciones=('S1+S2 discrimina poco en cultivos de límites amplios (maíz, cítricos, pasturas, arroz). La pendiente de Sys '
+                       'pone en S3 buena parte de Misiones (zona yerbatera incluida). Cítricos y pasturas: el rango de temperatura de '
+                       'crecimiento comparado con la media anual impide S1. Té: la regla «sin heladas a 5 cm en sep–oct» impide S1 en '
+                       'casi toda Misiones. Soja: el pH óptimo de ECOCROP (5,5–6,5) deja afuera los suelos neutros del Chaco donde se '
+                       'siembra. Arroz sin agua de riego. Suelo de SoilGrids (modelo).'),
+         scripts='pipeline/hexoma/aptitud_reglas.py; aptitud_clima.py; build_hexoma_aptitud.py; validar_aptitud.py',
+         objetos=['aptitud.*'], fuentes=['era5_land', 'chirps_v3', 'soilgrids2', 'fabdem', 'mapbiomas_ar_col3', 'ghcn_daily', 'inta_siga'],
+         verificado=V),
     dict(id='validacion_clima', nombre='Validación de productos grillados contra estaciones',
          metodo='Cada estación contra el píxel que la contiene; sesgo, MAE y r diarios y de conteos anuales o por campaña en períodos con ≥ 95 % de días.',
          parametros='1991–2025', validacion='—', regla='No se corrige en este paso: se mide.', limitaciones='Pocas estaciones con series completas de temperatura máxima en GHCN.',

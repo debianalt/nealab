@@ -251,6 +251,11 @@ def aplicar_todo(F, meta, dec) -> None:
             d = trasladar(F, meta, p.lat, p.lng, 'tmax', dec['tmax']['adoptado'])
             tmax[:, i] = aplicar(tmax[:, i], fechas, d)
     log(f'corregidos {len(pix):,} píxeles')
+    # diarios corregidos para la aptitud por cultivo (aptitud_clima.py): días × píxeles de pixel_era5.parquet
+    np.save(DERIV / 'era5_tmin_corr_diario.npy', tmin.astype(np.float32))
+    np.save(DERIV / 'era5_tmax_corr_diario.npy', tmax.astype(np.float32))
+    if suelo is not None:
+        np.save(DERIV / 'era5_suelo_corr_diario.npy', suelo.astype(np.float32))
     camp, est, est_anio = grupos(fechas)
     tm = (tmax + tmin) / 2
     m = {

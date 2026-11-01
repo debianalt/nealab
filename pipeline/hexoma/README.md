@@ -196,12 +196,23 @@ Tamaño: `clima` 2,0 GB (la mitad es `anomalia`), `suelo` 0,36 GB.
 ## Uso del suelo por celda (esquema `uso`, fase A2)
 MapBiomas Argentina Colección 3 (1985–2025, ~30 m, 19 clases), por celda: `uso.h3_anio` (‰ por grupo cada 5 años),
 `uso.h3_trayectoria` (dominante 1985 y 2025, % de bosque y agrícola, primer año agrícola, año de pérdida de bosque) y
-la serie anual completa por clase en `%HEXOMA_FUENTES%/uso/uso_h3_anio_clase.parquet` (683 MB, DuckDB). En 2025: bosque
+la serie anual completa por clase en `%HEXOMA_FUENTES%/uso/uso_h3_anio_clase.parquet` (1,08 GB, DuckDB). En 2025: bosque
 5,66 M ha en Chaco, 5,79 M en Formosa, 1,61 M en Misiones; bosque del NEA 16,2 M ha en 1985 → 13,8 M en 2025.
 Validación contra el MAGyP por departamento (`validar_uso.py`, `validacion_uso.md`): cultivo temporal r 0,87–0,95,
 perenne r 0,81–0,89; MapBiomas sobreestima la superficie (×1,3–3), ubica bien la agricultura. **Trampa:** los códigos
 de departamento del Hexoma en Chaco y Formosa no son los del INDEC/MAGyP: unir por nombre.
 `python pipeline/hexoma/build_hexoma_uso.py` (~45 min; `--solo-carga` usa lo ya bajado) y después `validar_uso.py`.
+
+## Aptitud por cultivo (esquema `aptitud`, fase A4)
+9 cultivos (yerba, té, cítricos, soja, maíz, algodón, girasol, arroz sin agua de riego, pasturas megatérmicas) con los
+umbrales validados por el autor (`umbrales_cultivos.md`, reglas en `meta.umbrales_reglas`), la temperatura corregida
+y el suelo de SoilGrids/FABDEM; anegamiento = bosque y pastizal inundables de MapBiomas 2025. `aptitud.clima_campania`
+(par × campaña × cultivo), `aptitud.suelo`, `aptitud.resumen` (clase mediana, % de campañas S1 y S1+S2, factor
+limitante) y `aptitud.v_h3_campania`. Regenerar: `corregir_temperatura.py` → `aptitud_clima.py` →
+`build_hexoma_aptitud.py` → `validar_aptitud.py`. Resultado de la validación y limitaciones en `validacion_aptitud.md`
+y en la ficha `aptitud_cultivo` de `meta.procesos`: S1 apunta a donde se cultiva en algodón, girasol y maíz (lift
+1,6–2,3), no en soja (0,85, por el pH de ECOCROP); té, cítricos y pasturas no tienen celdas S1 por cómo se aplican sus
+reglas; las correlaciones por departamento con el MAGyP son débiles.
 
 ## Estaciones: la referencia obligada (esquema `estaciones`)
 Toda afirmación del Hexoma sobre temperatura, heladas o lluvia se contrasta con las estaciones: son la única medición

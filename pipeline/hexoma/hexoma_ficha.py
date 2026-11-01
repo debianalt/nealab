@@ -19,6 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_hexoma import DB, connect  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -122,6 +123,11 @@ def datos(cur, h3: str) -> dict:
                       OR (tabla = 'balance_campania' AND unidad_id = %s))
                      AND periodo BETWEEN %s AND %s""", (d['chirps'], d['era5'], d['par'], ult - 4, ult))
     d['anomalias'] = cur.fetchall()
+    from aptitud_reglas import NOMBRES
+    cols = ', '.join(f'{c}_s1_pct, {c}_s12_pct, {c}_clase, {c}_limitante' for c in NOMBRES)
+    cur.execute(f'SELECT {cols} FROM aptitud.resumen WHERE h3 = %s::h3index', (h3,))
+    r = cur.fetchone()
+    d['aptitud'] = [] if not r else [(NOMBRES[c], *r[4 * i:4 * i + 4]) for i, c in enumerate(NOMBRES)]
     return d
 
 
@@ -153,6 +159,11 @@ def pagina(d: dict) -> str:
         for k, v in d['suelo'].items() if k in SUELO_ROT)
     titulos = {(s['tabla'], s['var']): (s['titulo'], s['unidad']) for s in d['series']}
     an = sorted(d['anomalias'], key=lambda r: (list(titulos).index((r[0], r[1])) if (r[0], r[1]) in titulos else 99, r[2]))
+    CL = {1: 'S1', 2: 'S2', 3: 'S3', 4: 'N'}
+    apt = sorted(d.get('aptitud', []), key=lambda x: (x[3] if x[3] is not None else 9, -(x[2] or 0)))
+    filas_apt = ''.join(
+        f'<tr><td>{e(n)}</td><td class="n">{CL.get(cl, "—")}</td><td class="n">{num(s12, 0)}</td><td class="n">{num(s1, 0)}</td>'
+        f'<td>{e((lim or "—").replace("_", " "))}</td></tr>' for n, s1, s12, cl, lim in apt)
     filas_an = ''
     for tabla, var, per, val, nor, anom, pct, ref in an:
         if (tabla, var) not in titulos:
@@ -216,6 +227,13 @@ Relieve: FABDEM (sin dosel ni edificios), media de los píxeles de ~90 m dentro 
 <h2>Series por campaña (julio–junio) y por año</h2>
 <div class="ley"><span class="v">valor de la campaña</span><span class="nm">normal 1991–2020 de este píxel</span><span class="b">P10–P90 de 1991–2020</span></div>
 <div class="grid" id="series"></div>
+
+<h2>Aptitud por cultivo</h2>
+<p class="nota">Umbrales validados (pipeline/hexoma/umbrales_cultivos.md), temperatura corregida con estaciones. Clase mediana de las campañas
+1991/92–2024/25 combinando el clima de cada campaña con el suelo de la celda: la peor clase de sus factores (FAO). S1 óptimo, S2 y S3 con
+limitaciones, N no apto. El arroz no tiene dato de agua de riego. Validación contra MapBiomas y el MAGyP: pipeline/hexoma/validacion_aptitud.md.</p>
+<div class="tw"><table><thead><tr><th>Cultivo</th><th class="n">Clase</th><th class="n">% campañas S1+S2</th><th class="n">% campañas S1</th>
+<th>Factor limitante</th></tr></thead><tbody>{filas_apt}</tbody></table></div>
 
 <h2>Últimas campañas frente a su normal</h2>
 <p class="nota">Anomalía = valor − normal 1991–2020 del mismo píxel. «% bajo» = de los 30 años de referencia, cuántos tuvieron un valor menor.
