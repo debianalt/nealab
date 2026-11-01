@@ -285,21 +285,37 @@
 	});
 
 	// ── 3×3 bivariate map: terciles of each axis → 9 classes ──────────────
-	// When a value repeats over more than a third of the hexagons (zero-inflated
-	// layers: two thirds with no buildings in low ground) both cuts coincide and the
-	// middle class would be empty: keep the repeated value as "low" and split the
-	// rest at its median.
+	// A value repeated over a third of the hexagons or more makes a cut land on it.
+	// The tied block stays together in the class its value belongs to: the minimum
+	// is "low" (zero-inflated: no buildings in low ground), the maximum is "high"
+	// (top-inflated: 70 % of San Pedro is 100 % tree cover, which the old rule put
+	// in "low"), any other value is "middle"; the rest splits around it.
+	// Classes are right-closed (v > cut climbs), so cuts sit just below each block.
 	function cuts(sorted: number[]): number[] {
+		const n = sorted.length;
+		if (n === 0) return [NaN, NaN];
+		const lo = sorted[0], hi = sorted[n - 1];
 		const c1 = quantile(sorted, 1 / 3), c2 = quantile(sorted, 2 / 3);
+		if (hi > lo && c2 >= hi) {
+			const below = sorted.filter(v => v < hi);
+			const top = below[below.length - 1];
+			// Both ends tied (e.g. 0 % and 100 % cover): min low, max high, between middle.
+			if (c1 <= lo) return [lo, top];
+			return below.length > 1 ? [quantile(below, 0.5), top] : [top, top];
+		}
 		if (c2 > c1) return [c1, c2];
-		const above = sorted.filter(v => v > c1);
-		return above.length > 1 ? [c1, quantile(above, 0.5)] : [c1, c2];
+		if (c1 <= lo) {
+			const above = sorted.filter(v => v > c1);
+			return above.length > 1 ? [c1, quantile(above, 0.5)] : [c1, c2];
+		}
+		const below = sorted.filter(v => v < c1);
+		return [below[below.length - 1], c1];
 	}
 	const tert = $derived.by(() => ({
 		x: cuts(allPoints.map(p => p.x).sort((a, b) => a - b)),
 		y: cuts(allPoints.map(p => p.y).sort((a, b) => a - b)),
 	}));
-	// Right-closed like pd.cut: ties at a cut (zero-inflated layers) stay in the lower class.
+	// Right-closed like pd.cut (v > cut climbs); cuts() places each tied block whole.
 	function tercile(v: number, cuts: number[]): number {
 		let c = 0;
 		for (const b of cuts) if (v > b) c++;
@@ -317,19 +333,32 @@
 	let mapOn = $state(false);
 	let activeCell: number | null = $state(null);
 
-	// Ties at the low cut go to "low" (zero-inflated layers): say how big "low" got
-	// when it is far from a third, so the legend does not promise thirds it lacks.
-	const lowNotes = $derived.by(() => {
+	// Tied blocks make classes far from a third: say which class grew and what is
+	// in it, so the legend does not promise thirds it lacks.
+	const CLS_KEY = ['chart.bivariate.clsLow', 'chart.bivariate.clsMid', 'chart.bivariate.clsHigh'];
+	const shareNotes = $derived.by(() => {
 		if (!mapOn || allPoints.length === 0) return [];
-		const out: { axis: string; pct: number; cut: number }[] = [];
+		const out: { axis: string; cls: number; pct: number; min: number; max: number }[] = [];
 		for (const axis of ['x', 'y'] as const) {
-			const cut = tert[axis][0];
-			const n = allPoints.reduce((k, p) => k + (p[axis] <= cut ? 1 : 0), 0);
-			const pct = Math.round((100 * n) / allPoints.length);
-			if (pct >= 40) out.push({ axis: axis.toUpperCase(), pct, cut });
+			const n = [0, 0, 0], mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity];
+			for (const p of allPoints) {
+				const c = tercile(p[axis], tert[axis]), v = p[axis];
+				n[c]++; if (v < mn[c]) mn[c] = v; if (v > mx[c]) mx[c] = v;
+			}
+			for (let c = 0; c < 3; c++) {
+				const pct = Math.round((100 * n[c]) / allPoints.length);
+				if (pct >= 40) out.push({ axis: axis.toUpperCase(), cls: c, pct, min: mn[c], max: mx[c] });
+			}
 		}
 		return out;
 	});
+	function shareText(s: { axis: string; cls: number; pct: number; min: number; max: number }): string {
+		const range = s.min === s.max
+			? i18n.t('chart.bivariate.allAt').replace('{v}', fmtTick(s.min))
+			: i18n.t('chart.bivariate.between').replace('{a}', fmtTick(s.min)).replace('{b}', fmtTick(s.max));
+		return i18n.t('chart.bivariate.classShare').replace('{axis}', s.axis)
+			.replace('{cls}', i18n.t(CLS_KEY[s.cls])).replace('{p}', String(s.pct)).replace('{range}', range);
+	}
 	// Hexagons of the open department with no Y value (painted BIVAR_NODATA).
 	const noY = $derived(mapOn ? Math.max(0, data.size - allPoints.length) : 0);
 	// Legend cells dark enough on the dark grid to need light ink (sello.ts BIVAR_HEX).
@@ -524,8 +553,8 @@
 					{#if noY > 0}
 						<p class="bv-legend-note bv-legend-low"><span class="bv-nodata" style="background: {BIVAR_NODATA}"></span>{i18n.t('chart.bivariate.noY').replace('{n}', noY.toLocaleString())}</p>
 					{/if}
-					{#each lowNotes as n}
-						<p class="bv-legend-note bv-legend-low">{i18n.t('chart.bivariate.lowShare').replace('{axis}', n.axis).replace('{p}', String(n.pct)).replace('{v}', fmtTick(n.cut))}</p>
+					{#each shareNotes as n}
+						<p class="bv-legend-note bv-legend-low">{shareText(n)}</p>
 					{/each}
 				</div>
 			</div>
