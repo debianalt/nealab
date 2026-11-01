@@ -2,6 +2,7 @@
 	import { LISA, INK_1, SELECT, SURFACE, AXIS } from '$lib/utils/sello';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import * as d3 from 'd3';
+	import { untrack } from 'svelte';
 	import { gridDisk, getResolution } from 'h3-js';
 	import ChartFrame from './ChartFrame.svelte';
 	import { CHART_PX, INK, fitLabel, dockBoost } from '$lib/utils/chartType';
@@ -169,8 +170,13 @@
 
 	function draw() {
 		if (!result || !container) return;
+		// Clear only Moran's own box: draw() also runs on mount and on resize, and an
+		// unconditional [] wiped a selection made in another chart (Evolución, Distribución…).
+		// untrack: draw() runs inside the draw $effect; tracking brushCount would redraw
+		// (and clear) on every brush.
+		const hadBox = untrack(() => brushCount) > 0;
 		brushCount = 0;
-		onBrushSelect([]);
+		if (hadBox) onBrushSelect([]);
 		const { I, points } = result;
 
 		// Use container size at first draw as the canonical viewBox, then render the SVG

@@ -136,7 +136,7 @@ async def main():
         shown = await pg.locator('.zone-block').nth(1).locator('.cd-row').first.inner_text()
         print('  panel zona B, 1a fila:', ' '.join(shown.split()))
 
-        href = await pg.locator('.hzc-report-btn').get_attribute('href')
+        href = await pg.locator('.hzc .rd-btn').get_attribute('href')  # RequestDiagnostic
         print('mailto:', unquote(href)[:600])
         # Lasso still makes a zone with its polygon
         await pg.get_by_role('button', name='Lazo').first.click()
