@@ -58,7 +58,7 @@ jobs:
           bucket = client.bucket('spatia-satellite')
 
           year = '${{ github.event.inputs.year || '2024' }}'
-          for prefix in [f'dw_probs_{year}', f'dw_label_{year}']:
+          for prefix in [f'dw_cover_{year}']:   # area fractions (not dw_probs: mean probability is not area)
               for blob in bucket.list_blobs(prefix=prefix):
                   local = f'pipeline/output/{blob.name}'
                   os.makedirs(os.path.dirname(local), exist_ok=True)

@@ -1,9 +1,11 @@
 """
-Orchestrate the Dynamic World land_use regeneration for non-Misiones territories.
+Orchestrate the Dynamic World land_use regeneration (the 24 territories).
 
 Per territory (4 parallel workers):
-  1. wait for the GEE export task `dw_probs_<territory>_2024` to COMPLETE
-  2. download gs://spatia-satellite/satellite/<territory>/dw_probs_<territory>_2024*.tif
+  1. wait for the GEE export task `dw_cover_<territory>_2024` to COMPLETE
+     (area fractions; see gee_dynamic_world.py — not the old dw_probs)
+  2. download gs://spatia-satellite/satellite/<territory>/dw_cover_<territory>_2024*.tif
+     (Misiones: the legacy flat gs://spatia-satellite/dw_cover_2024*.tif)
      (multiple shards are mosaicked into a VRT)
   3. process_dw_to_h3.py --territory <t>   -> output/<t>/sat_land_use.parquet (DW schema)
   4. split_by_admin.py --territory <t> --only land_use
@@ -28,7 +30,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 OUTPUT_DIR = SCRIPT_DIR / 'output'
 
 ALL_TERRITORIES = [
-    'itapua_py', 'alto_parana_py', 'corrientes', 'chaco', 'formosa',
+    'misiones', 'itapua_py', 'alto_parana_py', 'corrientes', 'chaco', 'formosa',
     'parana_br', 'santa_catarina_br', 'rio_grande_sul_br',
     'concepcion_py', 'san_pedro_py', 'cordillera_py', 'guaira_py',
     'caaguazu_py', 'caazapa_py', 'misiones_py', 'paraguari_py',
@@ -38,6 +40,8 @@ ALL_TERRITORIES = [
 
 GCS_PREFIX = 'gs://spatia-satellite/satellite'
 YEAR = 2024
+PRODUCT = 'dw_cover'
+UPLOAD = False
 
 
 def find_gdalbuildvrt() -> str:
@@ -59,7 +63,7 @@ def gee_states() -> dict:
     out = {}
     for t in ee.data.getTaskList()[:80]:
         d = t.get('description', '')
-        if d.startswith('dw_probs_'):
+        if d.startswith(f'{PRODUCT}_'):
             # keep the most recent occurrence only (list is newest-first)
             out.setdefault(d, t.get('state', 'UNKNOWN'))
     return out
@@ -71,7 +75,7 @@ def wait_for_gee(territories, poll_secs=60):
     while pending:
         states = gee_states()
         for t in sorted(pending):
-            st = states.get(f'dw_probs_{t}_{YEAR}', 'MISSING')
+            st = states.get(f'{PRODUCT}_{t}_{YEAR}', 'MISSING')
             if st == 'COMPLETED':
                 completed.add(t)
                 print(f'  [GEE done] {t}', flush=True)
@@ -92,21 +96,24 @@ def wait_for_gee(territories, poll_secs=60):
 
 def download(t: str) -> str | None:
     """Download shard(s); return raster path (tif or vrt) or None."""
-    t_dir = OUTPUT_DIR / t
+    flat = t == 'misiones'   # legacy flat layout
+    t_dir = OUTPUT_DIR if flat else OUTPUT_DIR / t
     t_dir.mkdir(exist_ok=True)
-    pattern = f'{GCS_PREFIX}/{t}/dw_probs_{t}_{YEAR}*.tif'
+    stem = f'{PRODUCT}_{YEAR}' if flat else f'{PRODUCT}_{t}_{YEAR}'
+    pattern = (f'gs://spatia-satellite/{stem}*.tif' if flat
+               else f'{GCS_PREFIX}/{t}/{stem}*.tif')
     r = subprocess.run(['gcloud', 'storage', 'cp', pattern, str(t_dir)],
                        capture_output=True, text=True, shell=(os.name == 'nt'))
     if r.returncode != 0:
         print(f'  [{t}] gcloud cp FAILED: {r.stderr.strip()[:300]}', flush=True)
         return None
-    shards = sorted(glob.glob(str(t_dir / f'dw_probs_{t}_{YEAR}*.tif')))
+    shards = sorted(glob.glob(str(t_dir / f'{stem}*.tif')))
     if not shards:
         print(f'  [{t}] no shards after download', flush=True)
         return None
     if len(shards) == 1:
         return shards[0]
-    vrt = str(t_dir / f'dw_probs_{t}_{YEAR}.vrt')
+    vrt = str(t_dir / f'{stem}.vrt')
     r = subprocess.run([find_gdalbuildvrt(), vrt, *shards], capture_output=True, text=True)
     if r.returncode != 0:
         print(f'  [{t}] gdalbuildvrt FAILED: {r.stderr.strip()[:300]}', flush=True)
@@ -126,19 +133,32 @@ def process_territory(t: str) -> bool:
     if r.returncode != 0:
         print(f'  [{t}] process_dw_to_h3 FAILED:\n{r.stdout[-500:]}\n{r.stderr[-500:]}', flush=True)
         return False
-    pq = OUTPUT_DIR / t / 'sat_land_use.parquet'
+    pq = (OUTPUT_DIR if t == 'misiones' else OUTPUT_DIR / t) / 'sat_land_use.parquet'
     if not pq.exists():
         print(f'  [{t}] parquet missing after processing', flush=True)
         return False
     print(f'  [{t}] H3 done in {(time.time()-t0)/60:.1f} min ({pq.stat().st_size//1024} KB)', flush=True)
 
-    r = subprocess.run([sys.executable, str(SCRIPT_DIR / 'split_by_admin.py'),
-                        '--territory', t, '--only', 'land_use'],
+    split = (['split_satellite_by_dpto.py', '--only', 'land_use'] if t == 'misiones'
+             else ['split_by_admin.py', '--territory', t, '--only', 'land_use'])
+    r = subprocess.run([sys.executable, str(SCRIPT_DIR / split[0]), *split[1:]],
                        capture_output=True, text=True, cwd=str(SCRIPT_DIR.parent))
     if r.returncode != 0:
         print(f'  [{t}] split_by_admin FAILED:\n{r.stdout[-500:]}\n{r.stderr[-500:]}', flush=True)
         return False
     print(f'  [{t}] split done', flush=True)
+    if UPLOAD:
+        # Upload as soon as the territory is ready (no CDN purge here: the site
+        # keeps serving the old files until one purge at the end, so territories
+        # never show mixed methods).
+        r = subprocess.run([sys.executable, str(SCRIPT_DIR / 'upload_dw_land_use.py'),
+                            '--territories', t, '--workers', '8'],
+                           capture_output=True, text=True, cwd=str(SCRIPT_DIR.parent),
+                           encoding='utf-8', errors='replace')
+        tail = (r.stdout.strip().splitlines() or [''])[-1]
+        print(f'  [{t}] upload: {tail}', flush=True)
+        if r.returncode != 0:
+            return False
     return True
 
 
@@ -147,7 +167,10 @@ def main():
     ap.add_argument('--territories', default=','.join(ALL_TERRITORIES))
     ap.add_argument('--skip-gee', action='store_true')
     ap.add_argument('--workers', type=int, default=4)
+    ap.add_argument('--upload', action='store_true', help='upload each territory to R2 when done (no purge)')
     args = ap.parse_args()
+    global UPLOAD
+    UPLOAD = args.upload
     territories = [t.strip() for t in args.territories.split(',') if t.strip()]
 
     ok, fail = [], []

@@ -2,116 +2,116 @@
   "territory": "canindeyu_py",
   "province": {
     "total_hexes": 142250,
-    "avg_score": 59.7,
+    "avg_score": 16.0,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "F. Caballero Alvarez",
-      "parquetKey": "f_caballero_alvarez",
-      "avg_score": 78.4,
-      "hex_count": 36828,
-      "centroid": [
-        -54.7025,
-        -24.3729
-      ],
-      "rank": {
-        "trees_pct": 22.2,
-        "trees_ha": 86084,
-        "crops_pct": 32.8,
-        "crops_ha": 127419,
-        "built_pct": 4.8,
-        "built_ha": 18477
-      }
-    },
-    {
-      "distrito": "Corpus Christi",
-      "parquetKey": "corpus_christi",
-      "avg_score": 77.3,
-      "hex_count": 18536,
-      "centroid": [
-        -55.0227,
-        -24.1393
-      ],
-      "rank": {
-        "trees_pct": 24.0,
-        "trees_ha": 46919,
-        "crops_pct": 29.8,
-        "crops_ha": 58179,
-        "built_pct": 4.6,
-        "built_ha": 8884
-      }
-    },
-    {
-      "distrito": "Salto Del Guaira",
-      "parquetKey": "salto_del_guaira",
-      "avg_score": 76.3,
-      "hex_count": 16849,
-      "centroid": [
-        -54.4392,
-        -24.212
-      ],
-      "rank": {
-        "trees_pct": 24.1,
-        "trees_ha": 42782,
-        "crops_pct": 25.5,
-        "crops_ha": 45277,
-        "built_pct": 4.7,
-        "built_ha": 8254
-      }
-    },
-    {
-      "distrito": "Villa Igatimi",
-      "parquetKey": "villa_igatimi",
-      "avg_score": 66.7,
-      "hex_count": 19229,
-      "centroid": [
-        -55.4917,
-        -24.1422
-      ],
-      "rank": {
-        "trees_pct": 42.0,
-        "trees_ha": 85006,
-        "crops_pct": 11.5,
-        "crops_ha": 23238,
-        "built_pct": 4.1,
-        "built_ha": 8322
-      }
-    },
-    {
-      "distrito": "Itanara",
-      "parquetKey": "itanara",
-      "avg_score": 48.0,
-      "hex_count": 8321,
-      "centroid": [
-        -55.6588,
-        -23.7626
-      ],
-      "rank": {
-        "trees_pct": 15.6,
-        "trees_ha": 13696,
-        "crops_pct": 9.1,
-        "crops_ha": 7987,
-        "built_pct": 2.7,
-        "built_ha": 2330
-      }
-    },
-    {
       "distrito": "Curuguaty",
       "parquetKey": "curuguaty",
-      "avg_score": 28.3,
+      "avg_score": 20.4,
       "hex_count": 42487,
       "centroid": [
         -55.7259,
         -24.3773
       ],
       "rank": {
-        "trees_pct": 12.3,
-        "trees_ha": 55076,
-        "crops_pct": 6.7,
-        "crops_ha": 30021,
-        "built_pct": 1.8,
-        "built_ha": 8047
+        "trees_pct": 43.8,
+        "trees_ha": 195796,
+        "crops_pct": 34.5,
+        "crops_ha": 154221,
+        "built_pct": 2.2,
+        "built_ha": 10048
+      }
+    },
+    {
+      "distrito": "Itanara",
+      "parquetKey": "itanara",
+      "avg_score": 18.7,
+      "hex_count": 8321,
+      "centroid": [
+        -55.6588,
+        -23.7626
+      ],
+      "rank": {
+        "trees_pct": 36.0,
+        "trees_ha": 31593,
+        "crops_pct": 17.4,
+        "crops_ha": 15279,
+        "built_pct": 0.5,
+        "built_ha": 415
+      }
+    },
+    {
+      "distrito": "Villa Igatimi",
+      "parquetKey": "villa_igatimi",
+      "avg_score": 15.5,
+      "hex_count": 19229,
+      "centroid": [
+        -55.4917,
+        -24.1422
+      ],
+      "rank": {
+        "trees_pct": 64.5,
+        "trees_ha": 130680,
+        "crops_pct": 15.2,
+        "crops_ha": 30810,
+        "built_pct": 1.3,
+        "built_ha": 2564
+      }
+    },
+    {
+      "distrito": "Corpus Christi",
+      "parquetKey": "corpus_christi",
+      "avg_score": 14.6,
+      "hex_count": 18536,
+      "centroid": [
+        -55.0227,
+        -24.1393
+      ],
+      "rank": {
+        "trees_pct": 31.5,
+        "trees_ha": 61519,
+        "crops_pct": 54.6,
+        "crops_ha": 106600,
+        "built_pct": 0.9,
+        "built_ha": 1848
+      }
+    },
+    {
+      "distrito": "Salto Del Guaira",
+      "parquetKey": "salto_del_guaira",
+      "avg_score": 14.2,
+      "hex_count": 16849,
+      "centroid": [
+        -54.4392,
+        -24.212
+      ],
+      "rank": {
+        "trees_pct": 31.4,
+        "trees_ha": 55727,
+        "crops_pct": 47.5,
+        "crops_ha": 84333,
+        "built_pct": 1.2,
+        "built_ha": 2177
+      }
+    },
+    {
+      "distrito": "F. Caballero Alvarez",
+      "parquetKey": "f_caballero_alvarez",
+      "avg_score": 12.2,
+      "hex_count": 36828,
+      "centroid": [
+        -54.7025,
+        -24.3729
+      ],
+      "rank": {
+        "trees_pct": 27.7,
+        "trees_ha": 107443,
+        "crops_pct": 66.8,
+        "crops_ha": 258948,
+        "built_pct": 1.1,
+        "built_ha": 4306
       }
     }
   ]

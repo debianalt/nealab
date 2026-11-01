@@ -2,188 +2,188 @@
   "territory": "caazapa_py",
   "province": {
     "total_hexes": 102393,
-    "avg_score": 76.0,
+    "avg_score": 17.4,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Yuty",
-      "parquetKey": "yuty",
-      "avg_score": 81.1,
-      "hex_count": 19207,
-      "centroid": [
-        -56.2397,
-        -26.5325
-      ],
-      "rank": {
-        "trees_pct": 33.6,
-        "trees_ha": 67936,
-        "crops_pct": 10.4,
-        "crops_ha": 21102,
-        "built_pct": 4.2,
-        "built_ha": 8523
-      }
-    },
-    {
-      "distrito": "Gral. Higinio Morinigo",
-      "parquetKey": "gral_higinio_morinigo",
-      "avg_score": 80.2,
-      "hex_count": 2765,
-      "centroid": [
-        -56.1114,
-        -26.0729
-      ],
-      "rank": {
-        "trees_pct": 34.5,
-        "trees_ha": 10051,
-        "crops_pct": 13.6,
-        "crops_ha": 3972,
-        "built_pct": 4.7,
-        "built_ha": 1365
-      }
-    },
-    {
-      "distrito": "Caazapa",
-      "parquetKey": "caazapa",
-      "avg_score": 79.3,
-      "hex_count": 9308,
-      "centroid": [
-        -56.2983,
-        -26.1867
-      ],
-      "rank": {
-        "trees_pct": 36.1,
-        "trees_ha": 35399,
-        "crops_pct": 8.4,
-        "crops_ha": 8241,
-        "built_pct": 4.8,
-        "built_ha": 4665
-      }
-    },
-    {
       "distrito": "Buena Vista",
       "parquetKey": "buena_vista",
-      "avg_score": 79.1,
+      "avg_score": 23.2,
       "hex_count": 1275,
       "centroid": [
         -56.0981,
         -26.2335
       ],
       "rank": {
-        "trees_pct": 40.0,
-        "trees_ha": 5367,
-        "crops_pct": 9.4,
-        "crops_ha": 1259,
-        "built_pct": 5.7,
-        "built_ha": 770
-      }
-    },
-    {
-      "distrito": "Abai",
-      "parquetKey": "abai",
-      "avg_score": 78.7,
-      "hex_count": 23364,
-      "centroid": [
-        -55.7178,
-        -25.8957
-      ],
-      "rank": {
-        "trees_pct": 30.7,
-        "trees_ha": 75650,
-        "crops_pct": 24.7,
-        "crops_ha": 60909,
-        "built_pct": 4.8,
-        "built_ha": 11877
-      }
-    },
-    {
-      "distrito": "Maciel",
-      "parquetKey": "maciel",
-      "avg_score": 77.5,
-      "hex_count": 4792,
-      "centroid": [
-        -56.528,
-        -26.2225
-      ],
-      "rank": {
-        "trees_pct": 37.2,
-        "trees_ha": 18766,
-        "crops_pct": 9.4,
-        "crops_ha": 4727,
+        "trees_pct": 68.1,
+        "trees_ha": 9145,
+        "crops_pct": 8.2,
+        "crops_ha": 1103,
         "built_pct": 3.8,
-        "built_ha": 1907
+        "built_ha": 504
+      }
+    },
+    {
+      "distrito": "Gral. Higinio Morinigo",
+      "parquetKey": "gral_higinio_morinigo",
+      "avg_score": 22.6,
+      "hex_count": 2765,
+      "centroid": [
+        -56.1114,
+        -26.0729
+      ],
+      "rank": {
+        "trees_pct": 53.0,
+        "trees_ha": 15444,
+        "crops_pct": 21.5,
+        "crops_ha": 6273,
+        "built_pct": 2.0,
+        "built_ha": 585
+      }
+    },
+    {
+      "distrito": "Yuty",
+      "parquetKey": "yuty",
+      "avg_score": 20.6,
+      "hex_count": 19207,
+      "centroid": [
+        -56.2397,
+        -26.5325
+      ],
+      "rank": {
+        "trees_pct": 54.6,
+        "trees_ha": 110551,
+        "crops_pct": 13.3,
+        "crops_ha": 26884,
+        "built_pct": 1.0,
+        "built_ha": 2006
+      }
+    },
+    {
+      "distrito": "Caazapa",
+      "parquetKey": "caazapa",
+      "avg_score": 19.1,
+      "hex_count": 9308,
+      "centroid": [
+        -56.2983,
+        -26.1867
+      ],
+      "rank": {
+        "trees_pct": 59.3,
+        "trees_ha": 58125,
+        "crops_pct": 6.7,
+        "crops_ha": 6525,
+        "built_pct": 2.0,
+        "built_ha": 1981
       }
     },
     {
       "distrito": "San Juan Nepomuceno",
       "parquetKey": "san_juan_nepomuceno",
-      "avg_score": 75.5,
+      "avg_score": 18.9,
       "hex_count": 10884,
       "centroid": [
         -55.9173,
         -26.2417
       ],
       "rank": {
-        "trees_pct": 43.9,
-        "trees_ha": 50295,
-        "crops_pct": 10.1,
-        "crops_ha": 11536,
-        "built_pct": 4.5,
-        "built_ha": 5206
+        "trees_pct": 71.2,
+        "trees_ha": 81590,
+        "crops_pct": 10.2,
+        "crops_ha": 11703,
+        "built_pct": 1.6,
+        "built_ha": 1780
+      }
+    },
+    {
+      "distrito": "Abai",
+      "parquetKey": "abai",
+      "avg_score": 17.0,
+      "hex_count": 23364,
+      "centroid": [
+        -55.7178,
+        -25.8957
+      ],
+      "rank": {
+        "trees_pct": 43.3,
+        "trees_ha": 106569,
+        "crops_pct": 49.1,
+        "crops_ha": 120867,
+        "built_pct": 1.4,
+        "built_ha": 3452
       }
     },
     {
       "distrito": "Tavai",
       "parquetKey": "tavai",
-      "avg_score": 75.4,
+      "avg_score": 15.6,
       "hex_count": 13470,
       "centroid": [
         -55.53,
         -26.195
       ],
       "rank": {
-        "trees_pct": 40.6,
-        "trees_ha": 57647,
-        "crops_pct": 16.8,
-        "crops_ha": 23852,
-        "built_pct": 4.5,
-        "built_ha": 6330
+        "trees_pct": 61.5,
+        "trees_ha": 87256,
+        "crops_pct": 29.0,
+        "crops_ha": 41105,
+        "built_pct": 1.0,
+        "built_ha": 1426
+      }
+    },
+    {
+      "distrito": "Maciel",
+      "parquetKey": "maciel",
+      "avg_score": 14.4,
+      "hex_count": 4792,
+      "centroid": [
+        -56.528,
+        -26.2225
+      ],
+      "rank": {
+        "trees_pct": 57.2,
+        "trees_ha": 28874,
+        "crops_pct": 10.4,
+        "crops_ha": 5268,
+        "built_pct": 0.6,
+        "built_ha": 297
       }
     },
     {
       "distrito": "Fulgencio Yegros",
       "parquetKey": "fulgencio_yegros",
-      "avg_score": 64.5,
+      "avg_score": 14.0,
       "hex_count": 9598,
       "centroid": [
         -56.5581,
         -26.5506
       ],
       "rank": {
-        "trees_pct": 31.7,
-        "trees_ha": 32002,
-        "crops_pct": 6.4,
-        "crops_ha": 6447,
-        "built_pct": 3.0,
-        "built_ha": 3038
+        "trees_pct": 69.6,
+        "trees_ha": 70376,
+        "crops_pct": 2.6,
+        "crops_ha": 2673,
+        "built_pct": 0.5,
+        "built_ha": 514
       }
     },
     {
       "distrito": "Dr. Moises Bertoni",
       "parquetKey": "dr_moises_bertoni",
-      "avg_score": 63.6,
+      "avg_score": 13.5,
       "hex_count": 7730,
       "centroid": [
         -56.5977,
         -26.3929
       ],
       "rank": {
-        "trees_pct": 30.5,
-        "trees_ha": 24808,
-        "crops_pct": 6.8,
-        "crops_ha": 5536,
-        "built_pct": 2.9,
-        "built_ha": 2356
+        "trees_pct": 62.8,
+        "trees_ha": 51157,
+        "crops_pct": 10.9,
+        "crops_ha": 8842,
+        "built_pct": 0.4,
+        "built_ha": 298
       }
     }
   ]

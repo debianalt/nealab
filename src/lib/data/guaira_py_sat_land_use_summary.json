@@ -2,278 +2,278 @@
   "territory": "guaira_py",
   "province": {
     "total_hexes": 40805,
-    "avg_score": 75.2,
+    "avg_score": 22.2,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Dr. Bottrell",
-      "parquetKey": "dr_bottrell",
-      "avg_score": 81.2,
-      "hex_count": 771,
-      "centroid": [
-        -56.3675,
-        -25.5987
-      ],
-      "rank": {
-        "trees_pct": 34.5,
-        "trees_ha": 2803,
-        "crops_pct": 10.5,
-        "crops_ha": 851,
-        "built_pct": 4.5,
-        "built_ha": 363
-      }
-    },
-    {
-      "distrito": "Yataity",
-      "parquetKey": "yataity",
-      "avg_score": 81.2,
-      "hex_count": 2112,
-      "centroid": [
-        -56.501,
-        -25.6879
-      ],
-      "rank": {
-        "trees_pct": 34.3,
-        "trees_ha": 7628,
-        "crops_pct": 6.3,
-        "crops_ha": 1406,
-        "built_pct": 5.7,
-        "built_ha": 1277
-      }
-    },
-    {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 80.9,
-      "hex_count": 2018,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ],
-      "rank": {
-        "trees_pct": 34.0,
-        "trees_ha": 7231,
-        "crops_pct": 9.2,
-        "crops_ha": 1956,
-        "built_pct": 5.3,
-        "built_ha": 1124
-      }
-    },
-    {
-      "distrito": "Jose Fassardi",
-      "parquetKey": "jose_fassardi",
-      "avg_score": 80.2,
-      "hex_count": 3770,
-      "centroid": [
-        -55.9221,
-        -25.8245
-      ],
-      "rank": {
-        "trees_pct": 33.9,
-        "trees_ha": 13469,
-        "crops_pct": 18.9,
-        "crops_ha": 7508,
-        "built_pct": 5.6,
-        "built_ha": 2243
-      }
-    },
-    {
-      "distrito": "Capitan Troche",
-      "parquetKey": "capitan_troche",
-      "avg_score": 79.4,
-      "hex_count": 1460,
-      "centroid": [
-        -56.2055,
-        -25.6088
-      ],
-      "rank": {
-        "trees_pct": 39.0,
-        "trees_ha": 5999,
-        "crops_pct": 12.3,
-        "crops_ha": 1895,
-        "built_pct": 7.1,
-        "built_ha": 1087
-      }
-    },
-    {
-      "distrito": "San Salvador",
-      "parquetKey": "san_salvador",
-      "avg_score": 79.3,
-      "hex_count": 1517,
-      "centroid": [
-        -56.4246,
-        -25.953
-      ],
-      "rank": {
-        "trees_pct": 35.8,
-        "trees_ha": 5714,
-        "crops_pct": 8.8,
-        "crops_ha": 1402,
-        "built_pct": 4.5,
-        "built_ha": 718
-      }
-    },
-    {
-      "distrito": "Itape",
-      "parquetKey": "itape",
-      "avg_score": 78.7,
-      "hex_count": 1683,
-      "centroid": [
-        -56.561,
-        -25.8515
-      ],
-      "rank": {
-        "trees_pct": 39.5,
-        "trees_ha": 7006,
-        "crops_pct": 9.3,
-        "crops_ha": 1657,
-        "built_pct": 5.5,
-        "built_ha": 967
-      }
-    },
-    {
-      "distrito": "Mbocayati",
-      "parquetKey": "mbocayati",
-      "avg_score": 78.6,
-      "hex_count": 2122,
-      "centroid": [
-        -56.3632,
-        -25.7041
-      ],
-      "rank": {
-        "trees_pct": 35.4,
-        "trees_ha": 7920,
-        "crops_pct": 7.3,
-        "crops_ha": 1639,
-        "built_pct": 5.5,
-        "built_ha": 1232
-      }
-    },
-    {
       "distrito": "Natalicio Talavera",
       "parquetKey": "natalicio_talavera",
-      "avg_score": 78.4,
+      "avg_score": 26.8,
       "hex_count": 645,
       "centroid": [
         -56.2826,
         -25.6601
       ],
       "rank": {
-        "trees_pct": 38.9,
-        "trees_ha": 2640,
-        "crops_pct": 9.9,
-        "crops_ha": 675,
-        "built_pct": 6.7,
-        "built_ha": 454
+        "trees_pct": 62.5,
+        "trees_ha": 4247,
+        "crops_pct": 8.0,
+        "crops_ha": 540,
+        "built_pct": 5.3,
+        "built_ha": 359
+      }
+    },
+    {
+      "distrito": "Capitan Troche",
+      "parquetKey": "capitan_troche",
+      "avg_score": 25.9,
+      "hex_count": 1460,
+      "centroid": [
+        -56.2055,
+        -25.6088
+      ],
+      "rank": {
+        "trees_pct": 64.9,
+        "trees_ha": 9988,
+        "crops_pct": 14.7,
+        "crops_ha": 2264,
+        "built_pct": 5.8,
+        "built_ha": 889
       }
     },
     {
       "distrito": "Colonia Independencia",
       "parquetKey": "colonia_independencia",
-      "avg_score": 78.1,
+      "avg_score": 24.4,
       "hex_count": 10105,
       "centroid": [
         -56.0671,
         -25.7311
       ],
       "rank": {
-        "trees_pct": 39.5,
-        "trees_ha": 42044,
-        "crops_pct": 13.0,
-        "crops_ha": 13831,
-        "built_pct": 5.6,
-        "built_ha": 6009
+        "trees_pct": 61.8,
+        "trees_ha": 65726,
+        "crops_pct": 17.5,
+        "crops_ha": 18635,
+        "built_pct": 3.2,
+        "built_ha": 3368
+      }
+    },
+    {
+      "distrito": "Dr. Bottrell",
+      "parquetKey": "dr_bottrell",
+      "avg_score": 24.4,
+      "hex_count": 771,
+      "centroid": [
+        -56.3675,
+        -25.5987
+      ],
+      "rank": {
+        "trees_pct": 57.2,
+        "trees_ha": 4642,
+        "crops_pct": 13.5,
+        "crops_ha": 1098,
+        "built_pct": 1.4,
+        "built_ha": 117
+      }
+    },
+    {
+      "distrito": "Jose Fassardi",
+      "parquetKey": "jose_fassardi",
+      "avg_score": 24.1,
+      "hex_count": 3770,
+      "centroid": [
+        -55.9221,
+        -25.8245
+      ],
+      "rank": {
+        "trees_pct": 52.2,
+        "trees_ha": 20739,
+        "crops_pct": 32.8,
+        "crops_ha": 13030,
+        "built_pct": 3.0,
+        "built_ha": 1176
+      }
+    },
+    {
+      "distrito": "Cnel Martinez",
+      "parquetKey": "cnel_martinez",
+      "avg_score": 22.6,
+      "hex_count": 2018,
+      "centroid": [
+        -56.648,
+        -25.7972
+      ],
+      "rank": {
+        "trees_pct": 53.5,
+        "trees_ha": 11381,
+        "crops_pct": 7.9,
+        "crops_ha": 1682,
+        "built_pct": 3.0,
+        "built_ha": 635
       }
     },
     {
       "distrito": "Numi",
       "parquetKey": "numi",
-      "avg_score": 76.4,
+      "avg_score": 22.4,
       "hex_count": 989,
       "centroid": [
         -56.3101,
         -25.9052
       ],
       "rank": {
-        "trees_pct": 42.6,
-        "trees_ha": 4434,
-        "crops_pct": 7.6,
-        "crops_ha": 794,
-        "built_pct": 5.1,
-        "built_ha": 531
+        "trees_pct": 67.7,
+        "trees_ha": 7054,
+        "crops_pct": 2.8,
+        "crops_ha": 291,
+        "built_pct": 2.5,
+        "built_ha": 261
       }
     },
     {
-      "distrito": "Villarica",
-      "parquetKey": "villarica",
-      "avg_score": 76.1,
-      "hex_count": 3382,
+      "distrito": "Itape",
+      "parquetKey": "itape",
+      "avg_score": 22.3,
+      "hex_count": 1683,
       "centroid": [
-        -56.4107,
-        -25.8273
+        -56.561,
+        -25.8515
       ],
       "rank": {
-        "trees_pct": 39.7,
-        "trees_ha": 14136,
-        "crops_pct": 6.8,
-        "crops_ha": 2406,
-        "built_pct": 9.1,
-        "built_ha": 3238
+        "trees_pct": 65.1,
+        "trees_ha": 11540,
+        "crops_pct": 6.5,
+        "crops_ha": 1158,
+        "built_pct": 3.5,
+        "built_ha": 619
       }
     },
     {
-      "distrito": "Gral Garay",
-      "parquetKey": "gral_garay",
-      "avg_score": 72.1,
-      "hex_count": 2939,
+      "distrito": "Mbocayati",
+      "parquetKey": "mbocayati",
+      "avg_score": 21.2,
+      "hex_count": 2122,
       "centroid": [
-        -56.1916,
-        -25.9353
+        -56.3632,
+        -25.7041
       ],
       "rank": {
-        "trees_pct": 48.4,
-        "trees_ha": 14985,
-        "crops_pct": 7.8,
-        "crops_ha": 2407,
-        "built_pct": 5.0,
-        "built_ha": 1548
+        "trees_pct": 53.8,
+        "trees_ha": 12026,
+        "crops_pct": 2.3,
+        "crops_ha": 521,
+        "built_pct": 3.4,
+        "built_ha": 752
+      }
+    },
+    {
+      "distrito": "Yataity",
+      "parquetKey": "yataity",
+      "avg_score": 21.1,
+      "hex_count": 2112,
+      "centroid": [
+        -56.501,
+        -25.6879
+      ],
+      "rank": {
+        "trees_pct": 59.0,
+        "trees_ha": 13116,
+        "crops_pct": 0.9,
+        "crops_ha": 202,
+        "built_pct": 3.7,
+        "built_ha": 828
+      }
+    },
+    {
+      "distrito": "San Salvador",
+      "parquetKey": "san_salvador",
+      "avg_score": 20.7,
+      "hex_count": 1517,
+      "centroid": [
+        -56.4246,
+        -25.953
+      ],
+      "rank": {
+        "trees_pct": 58.0,
+        "trees_ha": 9263,
+        "crops_pct": 5.6,
+        "crops_ha": 889,
+        "built_pct": 1.5,
+        "built_ha": 243
       }
     },
     {
       "distrito": "Borja",
       "parquetKey": "borja",
-      "avg_score": 61.4,
+      "avg_score": 20.6,
       "hex_count": 4475,
       "centroid": [
         -56.609,
         -26.0281
       ],
       "rank": {
-        "trees_pct": 29.7,
-        "trees_ha": 13986,
-        "crops_pct": 6.6,
-        "crops_ha": 3133,
-        "built_pct": 3.7,
-        "built_ha": 1734
+        "trees_pct": 59.0,
+        "trees_ha": 27802,
+        "crops_pct": 6.7,
+        "crops_ha": 3167,
+        "built_pct": 1.7,
+        "built_ha": 811
       }
     },
     {
       "distrito": "Iturbe",
       "parquetKey": "iturbe",
-      "avg_score": 61.4,
+      "avg_score": 20.6,
       "hex_count": 2817,
       "centroid": [
         -56.4662,
         -26.0627
       ],
       "rank": {
-        "trees_pct": 27.1,
-        "trees_ha": 8036,
-        "crops_pct": 7.2,
-        "crops_ha": 2135,
-        "built_pct": 3.8,
-        "built_ha": 1113
+        "trees_pct": 58.3,
+        "trees_ha": 17300,
+        "crops_pct": 7.5,
+        "crops_ha": 2235,
+        "built_pct": 2.0,
+        "built_ha": 592
+      }
+    },
+    {
+      "distrito": "Villarica",
+      "parquetKey": "villarica",
+      "avg_score": 19.9,
+      "hex_count": 3382,
+      "centroid": [
+        -56.4107,
+        -25.8273
+      ],
+      "rank": {
+        "trees_pct": 62.2,
+        "trees_ha": 22152,
+        "crops_pct": 1.1,
+        "crops_ha": 393,
+        "built_pct": 9.4,
+        "built_ha": 3356
+      }
+    },
+    {
+      "distrito": "Gral Garay",
+      "parquetKey": "gral_garay",
+      "avg_score": 17.4,
+      "hex_count": 2939,
+      "centroid": [
+        -56.1916,
+        -25.9353
+      ],
+      "rank": {
+        "trees_pct": 74.8,
+        "trees_ha": 23165,
+        "crops_pct": 5.4,
+        "crops_ha": 1683,
+        "built_pct": 2.5,
+        "built_ha": 780
       }
     }
   ]

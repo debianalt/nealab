@@ -53,13 +53,16 @@ def main():
     jobs = []  # (local, key)
     missing = []
     for t in territories:
-        g = OUTPUT_DIR / t / 'sat_land_use.parquet'
+        # Misiones keeps the legacy flat layout: output/ and data/ with no prefix.
+        local_dir = OUTPUT_DIR if t == 'misiones' else OUTPUT_DIR / t
+        key_dir = 'data' if t == 'misiones' else f'data/{t}'
+        g = local_dir / 'sat_land_use.parquet'
         if not g.exists():
             missing.append(t)
             continue
-        jobs.append((str(g), f'data/{t}/sat_land_use.parquet'))
-        for f in sorted(glob.glob(str(OUTPUT_DIR / t / 'sat_dpto' / 'sat_land_use_*.parquet'))):
-            jobs.append((f, f'data/{t}/sat_dpto/{os.path.basename(f)}'))
+        jobs.append((str(g), f'{key_dir}/sat_land_use.parquet'))
+        for f in sorted(glob.glob(str(local_dir / 'sat_dpto' / 'sat_land_use_*.parquet'))):
+            jobs.append((f, f'{key_dir}/sat_dpto/{os.path.basename(f)}'))
 
     if missing:
         print(f'SKIPPED (no parquet yet): {missing}')

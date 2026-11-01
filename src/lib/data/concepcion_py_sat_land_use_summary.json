@@ -2,134 +2,134 @@
   "territory": "concepcion_py",
   "province": {
     "total_hexes": 191663,
-    "avg_score": 79.8,
+    "avg_score": 20.0,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Belen",
       "parquetKey": "belen",
-      "avg_score": 85.6,
+      "avg_score": 32.1,
       "hex_count": 1491,
       "centroid": [
         -57.2183,
         -23.4372
       ],
       "rank": {
-        "trees_pct": 26.3,
-        "trees_ha": 4134,
-        "crops_pct": 11.8,
-        "crops_ha": 1856,
-        "built_pct": 6.8,
-        "built_ha": 1065
+        "trees_pct": 41.0,
+        "trees_ha": 6435,
+        "crops_pct": 10.8,
+        "crops_ha": 1699,
+        "built_pct": 5.1,
+        "built_ha": 805
       }
     },
     {
       "distrito": "Loreto",
       "parquetKey": "loreto",
-      "avg_score": 84.4,
+      "avg_score": 24.3,
       "hex_count": 9686,
       "centroid": [
         -57.1715,
         -23.2161
       ],
       "rank": {
-        "trees_pct": 27.4,
-        "trees_ha": 27956,
-        "crops_pct": 10.6,
-        "crops_ha": 10813,
-        "built_pct": 5.1,
-        "built_ha": 5204
+        "trees_pct": 41.6,
+        "trees_ha": 42399,
+        "crops_pct": 9.4,
+        "crops_ha": 9572,
+        "built_pct": 2.0,
+        "built_ha": 2048
       }
     },
     {
       "distrito": "Horqueta",
       "parquetKey": "horqueta",
-      "avg_score": 80.8,
+      "avg_score": 23.4,
       "hex_count": 26825,
       "centroid": [
         -56.7402,
         -23.283
       ],
       "rank": {
-        "trees_pct": 27.8,
-        "trees_ha": 78482,
-        "crops_pct": 16.5,
-        "crops_ha": 46537,
-        "built_pct": 5.6,
-        "built_ha": 15689
-      }
-    },
-    {
-      "distrito": "San Carlos",
-      "parquetKey": "san_carlos",
-      "avg_score": 80.1,
-      "hex_count": 16747,
-      "centroid": [
-        -57.3306,
-        -22.3583
-      ],
-      "rank": {
-        "trees_pct": 37.5,
-        "trees_ha": 66210,
-        "crops_pct": 7.9,
-        "crops_ha": 13868,
-        "built_pct": 3.8,
-        "built_ha": 6714
-      }
-    },
-    {
-      "distrito": "San Lazaro",
-      "parquetKey": "san_lazaro",
-      "avg_score": 80.1,
-      "hex_count": 11310,
-      "centroid": [
-        -57.7533,
-        -22.2364
-      ],
-      "rank": {
-        "trees_pct": 37.2,
-        "trees_ha": 44303,
-        "crops_pct": 8.1,
-        "crops_ha": 9676,
-        "built_pct": 4.4,
-        "built_ha": 5287
-      }
-    },
-    {
-      "distrito": "Concepcion",
-      "parquetKey": "concepcion",
-      "avg_score": 79.2,
-      "hex_count": 103939,
-      "centroid": [
-        -57.2752,
-        -22.8011
-      ],
-      "rank": {
-        "trees_pct": 36.3,
-        "trees_ha": 397694,
-        "crops_pct": 8.2,
-        "crops_ha": 90044,
-        "built_pct": 4.2,
-        "built_ha": 45944
+        "trees_pct": 40.7,
+        "trees_ha": 115119,
+        "crops_pct": 21.7,
+        "crops_ha": 61230,
+        "built_pct": 2.4,
+        "built_ha": 6748
       }
     },
     {
       "distrito": "Yby Yau",
       "parquetKey": "yby_yau",
-      "avg_score": 78.5,
+      "avg_score": 23.2,
       "hex_count": 21665,
       "centroid": [
         -56.3726,
         -23.0159
       ],
       "rank": {
-        "trees_pct": 31.0,
-        "trees_ha": 70671,
-        "crops_pct": 13.7,
-        "crops_ha": 31223,
-        "built_pct": 4.9,
-        "built_ha": 11295
+        "trees_pct": 43.9,
+        "trees_ha": 100069,
+        "crops_pct": 12.2,
+        "crops_ha": 27751,
+        "built_pct": 1.3,
+        "built_ha": 2916
+      }
+    },
+    {
+      "distrito": "San Carlos",
+      "parquetKey": "san_carlos",
+      "avg_score": 20.5,
+      "hex_count": 16747,
+      "centroid": [
+        -57.3306,
+        -22.3583
+      ],
+      "rank": {
+        "trees_pct": 62.7,
+        "trees_ha": 110555,
+        "crops_pct": 1.6,
+        "crops_ha": 2794,
+        "built_pct": 0.1,
+        "built_ha": 149
+      }
+    },
+    {
+      "distrito": "San Lazaro",
+      "parquetKey": "san_lazaro",
+      "avg_score": 19.3,
+      "hex_count": 11310,
+      "centroid": [
+        -57.7533,
+        -22.2364
+      ],
+      "rank": {
+        "trees_pct": 60.0,
+        "trees_ha": 71437,
+        "crops_pct": 2.4,
+        "crops_ha": 2844,
+        "built_pct": 1.1,
+        "built_ha": 1267
+      }
+    },
+    {
+      "distrito": "Concepcion",
+      "parquetKey": "concepcion",
+      "avg_score": 17.9,
+      "hex_count": 103939,
+      "centroid": [
+        -57.2752,
+        -22.8011
+      ],
+      "rank": {
+        "trees_pct": 57.5,
+        "trees_ha": 629741,
+        "crops_pct": 3.6,
+        "crops_ha": 39422,
+        "built_pct": 0.6,
+        "built_ha": 7097
       }
     }
   ]

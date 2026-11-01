@@ -2,314 +2,314 @@
   "territory": "paraguari_py",
   "province": {
     "total_hexes": 94348,
-    "avg_score": 80.3,
+    "avg_score": 18.1,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Caapucu",
-      "parquetKey": "caapucu",
-      "avg_score": 83.9,
-      "hex_count": 26026,
-      "centroid": [
-        -57.3904,
-        -26.3278
-      ],
-      "rank": {
-        "trees_pct": 28.1,
-        "trees_ha": 77087,
-        "crops_pct": 7.8,
-        "crops_ha": 21247,
-        "built_pct": 3.7,
-        "built_ha": 10249
-      }
-    },
-    {
-      "distrito": "Quyquyho",
-      "parquetKey": "quyquyho",
-      "avg_score": 82.3,
-      "hex_count": 6662,
-      "centroid": [
-        -57.0129,
-        -26.2561
-      ],
-      "rank": {
-        "trees_pct": 28.9,
-        "trees_ha": 20253,
-        "crops_pct": 7.0,
-        "crops_ha": 4924,
-        "built_pct": 3.8,
-        "built_ha": 2682
-      }
-    },
-    {
-      "distrito": "Carapegua",
-      "parquetKey": "carapegua",
-      "avg_score": 81.1,
-      "hex_count": 5302,
-      "centroid": [
-        -57.3255,
-        -25.7621
-      ],
-      "rank": {
-        "trees_pct": 36.3,
-        "trees_ha": 20285,
-        "crops_pct": 7.5,
-        "crops_ha": 4183,
-        "built_pct": 6.1,
-        "built_ha": 3393
-      }
-    },
-    {
-      "distrito": "San Roque Gonzalez",
-      "parquetKey": "san_roque_gonzalez",
-      "avg_score": 80.1,
-      "hex_count": 2353,
-      "centroid": [
-        -57.3024,
-        -25.8795
-      ],
-      "rank": {
-        "trees_pct": 35.6,
-        "trees_ha": 8820,
-        "crops_pct": 8.1,
-        "crops_ha": 2002,
-        "built_pct": 5.4,
-        "built_ha": 1337
-      }
-    },
-    {
       "distrito": "Acahay",
       "parquetKey": "acahay",
-      "avg_score": 79.7,
+      "avg_score": 22.1,
       "hex_count": 3557,
       "centroid": [
         -57.076,
         -25.8967
       ],
       "rank": {
-        "trees_pct": 37.3,
-        "trees_ha": 13974,
-        "crops_pct": 7.9,
-        "crops_ha": 2971,
-        "built_pct": 5.5,
-        "built_ha": 2079
-      }
-    },
-    {
-      "distrito": "Mbuyapey",
-      "parquetKey": "mbuyapey",
-      "avg_score": 79.7,
-      "hex_count": 9725,
-      "centroid": [
-        -56.8042,
-        -26.2791
-      ],
-      "rank": {
-        "trees_pct": 35.9,
-        "trees_ha": 36821,
-        "crops_pct": 7.3,
-        "crops_ha": 7433,
-        "built_pct": 4.0,
-        "built_ha": 4063
-      }
-    },
-    {
-      "distrito": "Yaguaron",
-      "parquetKey": "yaguaron",
-      "avg_score": 79.6,
-      "hex_count": 2750,
-      "centroid": [
-        -57.2804,
-        -25.595
-      ],
-      "rank": {
-        "trees_pct": 38.5,
-        "trees_ha": 11160,
-        "crops_pct": 7.3,
-        "crops_ha": 2109,
-        "built_pct": 7.0,
-        "built_ha": 2013
-      }
-    },
-    {
-      "distrito": "Ybytymi",
-      "parquetKey": "ybytymi",
-      "avg_score": 79.6,
-      "hex_count": 4447,
-      "centroid": [
-        -56.7656,
-        -25.7754
-      ],
-      "rank": {
-        "trees_pct": 35.9,
-        "trees_ha": 16827,
-        "crops_pct": 9.9,
-        "crops_ha": 4648,
-        "built_pct": 4.2,
-        "built_ha": 1962
-      }
-    },
-    {
-      "distrito": "Paraguari",
-      "parquetKey": "paraguari",
-      "avg_score": 79.4,
-      "hex_count": 4908,
-      "centroid": [
-        -57.1351,
-        -25.6664
-      ],
-      "rank": {
-        "trees_pct": 31.9,
-        "trees_ha": 16507,
-        "crops_pct": 7.9,
-        "crops_ha": 4092,
-        "built_pct": 5.5,
-        "built_ha": 2849
-      }
-    },
-    {
-      "distrito": "Quiindy",
-      "parquetKey": "quiindy",
-      "avg_score": 79.4,
-      "hex_count": 6788,
-      "centroid": [
-        -57.3214,
-        -26.0118
-      ],
-      "rank": {
-        "trees_pct": 33.3,
-        "trees_ha": 23793,
-        "crops_pct": 6.3,
-        "crops_ha": 4472,
-        "built_pct": 4.4,
-        "built_ha": 3171
+        "trees_pct": 62.2,
+        "trees_ha": 23294,
+        "crops_pct": 3.3,
+        "crops_ha": 1243,
+        "built_pct": 2.7,
+        "built_ha": 1010
       }
     },
     {
       "distrito": "Escobar",
       "parquetKey": "escobar",
-      "avg_score": 76.9,
+      "avg_score": 21.8,
       "hex_count": 3140,
       "centroid": [
         -57.0105,
         -25.6329
       ],
       "rank": {
-        "trees_pct": 39.4,
-        "trees_ha": 13029,
-        "crops_pct": 7.8,
-        "crops_ha": 2596,
-        "built_pct": 5.1,
-        "built_ha": 1680
+        "trees_pct": 61.0,
+        "trees_ha": 20174,
+        "crops_pct": 2.9,
+        "crops_ha": 945,
+        "built_pct": 2.5,
+        "built_ha": 817
       }
     },
     {
-      "distrito": "Ybycui",
-      "parquetKey": "ybycui",
-      "avg_score": 76.7,
-      "hex_count": 8812,
+      "distrito": "San Roque Gonzalez",
+      "parquetKey": "san_roque_gonzalez",
+      "avg_score": 21.5,
+      "hex_count": 2353,
       "centroid": [
-        -56.942,
-        -26.0391
+        -57.3024,
+        -25.8795
       ],
       "rank": {
-        "trees_pct": 39.8,
-        "trees_ha": 36938,
-        "crops_pct": 7.2,
-        "crops_ha": 6664,
-        "built_pct": 4.4,
-        "built_ha": 4075
+        "trees_pct": 64.5,
+        "trees_ha": 15974,
+        "crops_pct": 4.2,
+        "crops_ha": 1031,
+        "built_pct": 2.8,
+        "built_ha": 696
       }
     },
     {
-      "distrito": "Caballero",
-      "parquetKey": "caballero",
-      "avg_score": 76.5,
-      "hex_count": 2610,
+      "distrito": "Carapegua",
+      "parquetKey": "carapegua",
+      "avg_score": 21.1,
+      "hex_count": 5302,
       "centroid": [
-        -56.8862,
-        -25.7573
+        -57.3255,
+        -25.7621
       ],
       "rank": {
-        "trees_pct": 40.9,
-        "trees_ha": 11244,
-        "crops_pct": 6.6,
-        "crops_ha": 1808,
-        "built_pct": 4.5,
-        "built_ha": 1245
-      }
-    },
-    {
-      "distrito": "Pirayu",
-      "parquetKey": "pirayu",
-      "avg_score": 76.5,
-      "hex_count": 2137,
-      "centroid": [
-        -57.2018,
-        -25.4796
-      ],
-      "rank": {
-        "trees_pct": 42.6,
-        "trees_ha": 9598,
-        "crops_pct": 7.2,
-        "crops_ha": 1630,
-        "built_pct": 6.8,
-        "built_ha": 1522
+        "trees_pct": 67.0,
+        "trees_ha": 37425,
+        "crops_pct": 1.4,
+        "crops_ha": 795,
+        "built_pct": 3.9,
+        "built_ha": 2193
       }
     },
     {
       "distrito": "Tebicuarymi",
       "parquetKey": "tebicuarymi",
-      "avg_score": 76.3,
+      "avg_score": 20.7,
       "hex_count": 1751,
       "centroid": [
         -56.666,
         -25.9156
       ],
       "rank": {
-        "trees_pct": 42.7,
-        "trees_ha": 7867,
-        "crops_pct": 9.2,
-        "crops_ha": 1688,
-        "built_pct": 4.8,
-        "built_ha": 877
+        "trees_pct": 67.0,
+        "trees_ha": 12349,
+        "crops_pct": 9.1,
+        "crops_ha": 1685,
+        "built_pct": 1.8,
+        "built_ha": 341
       }
     },
     {
       "distrito": "Sapucai",
       "parquetKey": "sapucai",
-      "avg_score": 76.2,
+      "avg_score": 20.5,
       "hex_count": 2150,
       "centroid": [
         -56.9738,
         -25.7203
       ],
       "rank": {
-        "trees_pct": 41.5,
-        "trees_ha": 9406,
-        "crops_pct": 7.1,
-        "crops_ha": 1597,
-        "built_pct": 4.9,
-        "built_ha": 1101
+        "trees_pct": 65.0,
+        "trees_ha": 14715,
+        "crops_pct": 1.3,
+        "crops_ha": 285,
+        "built_pct": 2.2,
+        "built_ha": 507
+      }
+    },
+    {
+      "distrito": "Ybytymi",
+      "parquetKey": "ybytymi",
+      "avg_score": 19.8,
+      "hex_count": 4447,
+      "centroid": [
+        -56.7656,
+        -25.7754
+      ],
+      "rank": {
+        "trees_pct": 59.1,
+        "trees_ha": 27704,
+        "crops_pct": 8.3,
+        "crops_ha": 3883,
+        "built_pct": 1.0,
+        "built_ha": 450
+      }
+    },
+    {
+      "distrito": "Caballero",
+      "parquetKey": "caballero",
+      "avg_score": 19.5,
+      "hex_count": 2610,
+      "centroid": [
+        -56.8862,
+        -25.7573
+      ],
+      "rank": {
+        "trees_pct": 63.9,
+        "trees_ha": 17571,
+        "crops_pct": 2.1,
+        "crops_ha": 591,
+        "built_pct": 1.6,
+        "built_ha": 451
+      }
+    },
+    {
+      "distrito": "Pirayu",
+      "parquetKey": "pirayu",
+      "avg_score": 19.4,
+      "hex_count": 2137,
+      "centroid": [
+        -57.2018,
+        -25.4796
+      ],
+      "rank": {
+        "trees_pct": 69.9,
+        "trees_ha": 15740,
+        "crops_pct": 1.6,
+        "crops_ha": 350,
+        "built_pct": 5.5,
+        "built_ha": 1229
       }
     },
     {
       "distrito": "La Colmena",
       "parquetKey": "la_colmena",
-      "avg_score": 73.4,
+      "avg_score": 19.0,
       "hex_count": 1230,
       "centroid": [
         -56.8176,
         -25.9063
       ],
       "rank": {
-        "trees_pct": 47.1,
-        "trees_ha": 6102,
-        "crops_pct": 7.7,
-        "crops_ha": 994,
-        "built_pct": 5.8,
-        "built_ha": 746
+        "trees_pct": 74.6,
+        "trees_ha": 9667,
+        "crops_pct": 4.7,
+        "crops_ha": 615,
+        "built_pct": 3.4,
+        "built_ha": 439
+      }
+    },
+    {
+      "distrito": "Yaguaron",
+      "parquetKey": "yaguaron",
+      "avg_score": 18.7,
+      "hex_count": 2750,
+      "centroid": [
+        -57.2804,
+        -25.595
+      ],
+      "rank": {
+        "trees_pct": 67.9,
+        "trees_ha": 19677,
+        "crops_pct": 1.4,
+        "crops_ha": 408,
+        "built_pct": 5.1,
+        "built_ha": 1472
+      }
+    },
+    {
+      "distrito": "Quyquyho",
+      "parquetKey": "quyquyho",
+      "avg_score": 18.3,
+      "hex_count": 6662,
+      "centroid": [
+        -57.0129,
+        -26.2561
+      ],
+      "rank": {
+        "trees_pct": 45.2,
+        "trees_ha": 31741,
+        "crops_pct": 3.0,
+        "crops_ha": 2076,
+        "built_pct": 0.5,
+        "built_ha": 372
+      }
+    },
+    {
+      "distrito": "Ybycui",
+      "parquetKey": "ybycui",
+      "avg_score": 18.2,
+      "hex_count": 8812,
+      "centroid": [
+        -56.942,
+        -26.0391
+      ],
+      "rank": {
+        "trees_pct": 61.6,
+        "trees_ha": 57184,
+        "crops_pct": 2.6,
+        "crops_ha": 2411,
+        "built_pct": 1.3,
+        "built_ha": 1160
+      }
+    },
+    {
+      "distrito": "Paraguari",
+      "parquetKey": "paraguari",
+      "avg_score": 18.1,
+      "hex_count": 4908,
+      "centroid": [
+        -57.1351,
+        -25.6664
+      ],
+      "rank": {
+        "trees_pct": 46.2,
+        "trees_ha": 23890,
+        "crops_pct": 2.8,
+        "crops_ha": 1431,
+        "built_pct": 3.3,
+        "built_ha": 1697
+      }
+    },
+    {
+      "distrito": "Quiindy",
+      "parquetKey": "quiindy",
+      "avg_score": 17.0,
+      "hex_count": 6788,
+      "centroid": [
+        -57.3214,
+        -26.0118
+      ],
+      "rank": {
+        "trees_pct": 51.8,
+        "trees_ha": 37009,
+        "crops_pct": 0.9,
+        "crops_ha": 640,
+        "built_pct": 1.4,
+        "built_ha": 1021
+      }
+    },
+    {
+      "distrito": "Mbuyapey",
+      "parquetKey": "mbuyapey",
+      "avg_score": 16.9,
+      "hex_count": 9725,
+      "centroid": [
+        -56.8042,
+        -26.2791
+      ],
+      "rank": {
+        "trees_pct": 60.3,
+        "trees_ha": 61764,
+        "crops_pct": 4.9,
+        "crops_ha": 5048,
+        "built_pct": 0.7,
+        "built_ha": 749
+      }
+    },
+    {
+      "distrito": "Caapucu",
+      "parquetKey": "caapucu",
+      "avg_score": 15.9,
+      "hex_count": 26026,
+      "centroid": [
+        -57.3904,
+        -26.3278
+      ],
+      "rank": {
+        "trees_pct": 49.1,
+        "trees_ha": 134559,
+        "crops_pct": 9.6,
+        "crops_ha": 26206,
+        "built_pct": 0.2,
+        "built_ha": 534
       }
     }
   ]

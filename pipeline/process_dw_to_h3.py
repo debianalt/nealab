@@ -1,13 +1,18 @@
 """
 Process Dynamic World GeoTIFF to H3 res-9 parquet.
 
-Reads the class probability raster (9 bands) and computes per-hexagon:
-  - Mean fraction for each of the 9 DW classes
+Reads the 9-band area-fraction raster (dw_cover, gee_dynamic_world.py) and
+computes per-hexagon:
+  - Share of the hexagon's area in each of the 9 DW classes (frac_*, 0-1): the
+    mean of the 100 m cells, each already the share of its 10 m pixels whose
+    most frequent class of the year is that class
   - Shannon diversity index as composite score (0-100)
+Do not feed it the old dw_probs raster (mean class probability): that is not
+area (~5 % snow_and_ice over subtropical forest).
 
 Usage:
   python pipeline/process_dw_to_h3.py
-  python pipeline/process_dw_to_h3.py --input path/to/dw_probs_2024.tif
+  python pipeline/process_dw_to_h3.py --input path/to/dw_cover_2024.tif
   python pipeline/process_dw_to_h3.py --territory itapua_py
 """
 
@@ -28,7 +33,7 @@ from parquet_io import write_h3_parquet
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 HEXAGONS_PATH = os.path.join(OUTPUT_DIR, "hexagons-lite.geojson")
-DEFAULT_INPUT = os.path.join(OUTPUT_DIR, "dw_probs_2024.tif")
+DEFAULT_INPUT = os.path.join(OUTPUT_DIR, "dw_cover_2024.tif")
 
 CLASSES = ['water', 'trees', 'grass', 'flooded_vegetation', 'crops',
            'shrub_and_scrub', 'built', 'bare', 'snow_and_ice']
@@ -54,7 +59,7 @@ def compute_shannon(fractions: np.ndarray) -> float:
 
 def main():
     parser = argparse.ArgumentParser(description="Process Dynamic World raster to H3")
-    parser.add_argument("--input", default=None, help="Path to DW probs GeoTIFF")
+    parser.add_argument("--input", default=None, help="Path to the DW cover (area fraction) GeoTIFF")
     parser.add_argument("--output", default=None)
     parser.add_argument("--territory", default="misiones", help="Territory ID from pipeline config")
     args = parser.parse_args()
@@ -64,7 +69,7 @@ def main():
     if args.territory != "misiones":
         get_territory(args.territory)  # validates the ID
         t_dir = os.path.join(OUTPUT_DIR, args.territory)
-        input_path = args.input or os.path.join(t_dir, f"dw_probs_{args.territory}_2024.tif")
+        input_path = args.input or os.path.join(t_dir, f"dw_cover_{args.territory}_2024.tif")
         output_path = args.output or os.path.join(t_dir, "sat_land_use.parquet")
         hex_path = os.path.join(t_dir, "hexagons.geojson")
     else:

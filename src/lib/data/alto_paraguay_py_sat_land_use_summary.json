@@ -2,62 +2,62 @@
   "territory": "alto_paraguay_py",
   "province": {
     "total_hexes": 797665,
-    "avg_score": 77.3,
+    "avg_score": 11.6,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "La Victoria",
       "parquetKey": "la_victoria",
-      "avg_score": 82.3,
+      "avg_score": 15.6,
       "hex_count": 238244,
       "centroid": [
         -58.845,
         -21.6079
       ],
       "rank": {
-        "trees_pct": 37.0,
-        "trees_ha": 929324,
-        "crops_pct": 9.9,
-        "crops_ha": 247688,
-        "built_pct": 4.3,
-        "built_ha": 106858
+        "trees_pct": 70.0,
+        "trees_ha": 1756332,
+        "crops_pct": 9.2,
+        "crops_ha": 231996,
+        "built_pct": 0.1,
+        "built_ha": 3550
       }
     },
     {
       "distrito": "Fuerte Olimpo",
       "parquetKey": "fuerte_olimpo",
-      "avg_score": 81.7,
+      "avg_score": 12.6,
       "hex_count": 204841,
       "centroid": [
         -58.6553,
         -20.376
       ],
       "rank": {
-        "trees_pct": 39.6,
-        "trees_ha": 853363,
-        "crops_pct": 7.9,
-        "crops_ha": 170476,
-        "built_pct": 3.9,
-        "built_ha": 84884
+        "trees_pct": 78.4,
+        "trees_ha": 1692044,
+        "crops_pct": 3.4,
+        "crops_ha": 72569,
+        "built_pct": 0.1,
+        "built_ha": 1658
       }
     },
     {
       "distrito": "Mayor Pablo La Gerenza",
       "parquetKey": "mayor_pablo_la_gerenza",
-      "avg_score": 71.3,
+      "avg_score": 8.4,
       "hex_count": 354580,
       "centroid": [
         -60.2193,
         -20.0049
       ],
       "rank": {
-        "trees_pct": 34.0,
-        "trees_ha": 1268324,
+        "trees_pct": 83.6,
+        "trees_ha": 3122061,
         "crops_pct": 7.5,
-        "crops_ha": 281614,
-        "built_pct": 3.6,
-        "built_ha": 135911
+        "crops_ha": 278637,
+        "built_pct": 0.0,
+        "built_ha": 1317
       }
     }
   ]

@@ -2,458 +2,458 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 1033548,
-    "avg_score": 79.2,
+    "avg_score": 14.8,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "Berón de Astrada",
-      "parquetKey": "beron_de_astrada",
-      "avg_score": 86.1,
-      "hex_count": 8324,
-      "centroid": [
-        -57.6317,
-        -27.472
-      ],
-      "rank": {
-        "trees_pct": 21.2,
-        "trees_ha": 18614,
-        "crops_pct": 11.8,
-        "crops_ha": 10383,
-        "built_pct": 4.3,
-        "built_ha": 3752
-      }
-    },
-    {
-      "dpto": "Lavalle",
-      "parquetKey": "lavalle",
-      "avg_score": 83.1,
-      "hex_count": 18006,
-      "centroid": [
-        -58.9267,
-        -28.9976
-      ],
-      "rank": {
-        "trees_pct": 21.3,
-        "trees_ha": 40311,
-        "crops_pct": 8.9,
-        "crops_ha": 16840,
-        "built_pct": 5.0,
-        "built_ha": 9541
-      }
-    },
-    {
-      "dpto": "General Paz",
-      "parquetKey": "general_paz",
-      "avg_score": 82.7,
-      "hex_count": 29303,
-      "centroid": [
-        -57.8035,
-        -27.7136
-      ],
-      "rank": {
-        "trees_pct": 32.3,
-        "trees_ha": 99639,
-        "crops_pct": 5.2,
-        "crops_ha": 16166,
-        "built_pct": 3.6,
-        "built_ha": 11188
-      }
-    },
-    {
-      "dpto": "Bella Vista",
-      "parquetKey": "bella_vista",
-      "avg_score": 82.6,
-      "hex_count": 22244,
-      "centroid": [
-        -58.9292,
-        -28.4852
-      ],
-      "rank": {
-        "trees_pct": 25.5,
-        "trees_ha": 59776,
-        "crops_pct": 8.8,
-        "crops_ha": 20626,
-        "built_pct": 4.3,
-        "built_ha": 10035
-      }
-    },
-    {
-      "dpto": "San Roque",
-      "parquetKey": "san_roque",
-      "avg_score": 82.6,
-      "hex_count": 29031,
-      "centroid": [
-        -58.603,
-        -28.7144
-      ],
-      "rank": {
-        "trees_pct": 25.4,
-        "trees_ha": 77589,
-        "crops_pct": 7.7,
-        "crops_ha": 23406,
-        "built_pct": 3.8,
-        "built_ha": 11571
-      }
-    },
-    {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 81.9,
+      "avg_score": 23.9,
       "hex_count": 58352,
       "centroid": [
         -59.2704,
         -29.4647
       ],
       "rank": {
-        "trees_pct": 25.3,
-        "trees_ha": 155480,
-        "crops_pct": 7.3,
-        "crops_ha": 44599,
-        "built_pct": 4.0,
-        "built_ha": 24728
-      }
-    },
-    {
-      "dpto": "Saladas",
-      "parquetKey": "saladas",
-      "avg_score": 81.7,
-      "hex_count": 21912,
-      "centroid": [
-        -58.602,
-        -28.2037
-      ],
-      "rank": {
-        "trees_pct": 32.6,
-        "trees_ha": 75352,
-        "crops_pct": 7.3,
-        "crops_ha": 16878,
-        "built_pct": 3.8,
-        "built_ha": 8810
-      }
-    },
-    {
-      "dpto": "San Luis del Palmar",
-      "parquetKey": "san_luis_del_palmar",
-      "avg_score": 81.1,
-      "hex_count": 29721,
-      "centroid": [
-        -58.2668,
-        -27.6004
-      ],
-      "rank": {
-        "trees_pct": 37.6,
-        "trees_ha": 117700,
-        "crops_pct": 5.0,
-        "crops_ha": 15534,
-        "built_pct": 3.6,
-        "built_ha": 11298
-      }
-    },
-    {
-      "dpto": "Esquina",
-      "parquetKey": "esquina",
-      "avg_score": 80.7,
-      "hex_count": 46922,
-      "centroid": [
-        -59.2457,
-        -29.9916
-      ],
-      "rank": {
-        "trees_pct": 32.4,
-        "trees_ha": 160124,
-        "crops_pct": 7.4,
-        "crops_ha": 36649,
-        "built_pct": 3.9,
-        "built_ha": 19053
-      }
-    },
-    {
-      "dpto": "Itatí",
-      "parquetKey": "itati",
-      "avg_score": 80.6,
-      "hex_count": 8810,
-      "centroid": [
-        -58.0869,
-        -27.3361
-      ],
-      "rank": {
-        "trees_pct": 28.1,
-        "trees_ha": 26063,
-        "crops_pct": 5.4,
-        "crops_ha": 5020,
-        "built_pct": 3.9,
-        "built_ha": 3622
-      }
-    },
-    {
-      "dpto": "Mburucuyá",
-      "parquetKey": "mburucuya",
-      "avg_score": 80.6,
-      "hex_count": 11407,
-      "centroid": [
-        -58.1721,
-        -28.0052
-      ],
-      "rank": {
-        "trees_pct": 34.3,
-        "trees_ha": 41172,
-        "crops_pct": 6.4,
-        "crops_ha": 7674,
-        "built_pct": 3.8,
-        "built_ha": 4561
-      }
-    },
-    {
-      "dpto": "Mercedes",
-      "parquetKey": "mercedes",
-      "avg_score": 80.2,
-      "hex_count": 116648,
-      "centroid": [
-        -57.8356,
-        -29.0512
-      ],
-      "rank": {
-        "trees_pct": 23.5,
-        "trees_ha": 289054,
-        "crops_pct": 7.3,
-        "crops_ha": 90071,
-        "built_pct": 3.7,
-        "built_ha": 45910
-      }
-    },
-    {
-      "dpto": "Empedrado",
-      "parquetKey": "empedrado",
-      "avg_score": 80.1,
-      "hex_count": 23792,
-      "centroid": [
-        -58.6717,
-        -27.893
-      ],
-      "rank": {
-        "trees_pct": 33.6,
-        "trees_ha": 84173,
-        "crops_pct": 6.2,
-        "crops_ha": 15610,
-        "built_pct": 3.8,
-        "built_ha": 9438
-      }
-    },
-    {
-      "dpto": "General Alvear",
-      "parquetKey": "general_alvear",
-      "avg_score": 80.1,
-      "hex_count": 22565,
-      "centroid": [
-        -56.5245,
-        -28.7791
-      ],
-      "rank": {
-        "trees_pct": 32.5,
-        "trees_ha": 77188,
-        "crops_pct": 5.7,
-        "crops_ha": 13618,
-        "built_pct": 3.4,
-        "built_ha": 8067
-      }
-    },
-    {
-      "dpto": "Concepción",
-      "parquetKey": "concepcion",
-      "avg_score": 79.7,
-      "hex_count": 59287,
-      "centroid": [
-        -58.0479,
-        -28.4115
-      ],
-      "rank": {
-        "trees_pct": 34.5,
-        "trees_ha": 215592,
-        "crops_pct": 5.7,
-        "crops_ha": 35729,
-        "built_pct": 3.5,
-        "built_ha": 21796
-      }
-    },
-    {
-      "dpto": "San Cosme",
-      "parquetKey": "san_cosme",
-      "avg_score": 79.7,
-      "hex_count": 6926,
-      "centroid": [
-        -58.5137,
-        -27.3768
-      ],
-      "rank": {
-        "trees_pct": 32.4,
-        "trees_ha": 23647,
-        "crops_pct": 6.2,
-        "crops_ha": 4490,
-        "built_pct": 5.5,
-        "built_ha": 4011
-      }
-    },
-    {
-      "dpto": "San Martín",
-      "parquetKey": "san_martin",
-      "avg_score": 79.2,
-      "hex_count": 76885,
-      "centroid": [
-        -56.9513,
-        -28.8303
-      ],
-      "rank": {
-        "trees_pct": 33.3,
-        "trees_ha": 269710,
-        "crops_pct": 5.7,
-        "crops_ha": 45983,
-        "built_pct": 3.3,
-        "built_ha": 26927
-      }
-    },
-    {
-      "dpto": "San Miguel",
-      "parquetKey": "san_miguel",
-      "avg_score": 79.0,
-      "hex_count": 33285,
-      "centroid": [
-        -57.4252,
-        -27.8708
-      ],
-      "rank": {
-        "trees_pct": 38.5,
-        "trees_ha": 134881,
-        "crops_pct": 4.5,
-        "crops_ha": 15868,
-        "built_pct": 3.3,
-        "built_ha": 11678
-      }
-    },
-    {
-      "dpto": "Paso de los Libres",
-      "parquetKey": "paso_de_los_libres",
-      "avg_score": 78.8,
-      "hex_count": 58737,
-      "centroid": [
-        -57.3264,
-        -29.599
-      ],
-      "rank": {
-        "trees_pct": 26.2,
-        "trees_ha": 162359,
-        "crops_pct": 7.3,
-        "crops_ha": 45361,
-        "built_pct": 3.7,
-        "built_ha": 22931
+        "trees_pct": 36.2,
+        "trees_ha": 222284,
+        "crops_pct": 0.7,
+        "crops_ha": 4542,
+        "built_pct": 0.8,
+        "built_ha": 5135
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 78.1,
+      "avg_score": 21.2,
       "hex_count": 6125,
       "centroid": [
         -58.7619,
         -27.5213
       ],
       "rank": {
-        "trees_pct": 24.9,
-        "trees_ha": 16033,
-        "crops_pct": 6.8,
-        "crops_ha": 4398,
-        "built_pct": 12.8,
-        "built_ha": 8256
+        "trees_pct": 41.0,
+        "trees_ha": 26440,
+        "crops_pct": 0.8,
+        "crops_ha": 532,
+        "built_pct": 15.7,
+        "built_ha": 10125
       }
     },
     {
-      "dpto": "Curuzú Cuatiá",
-      "parquetKey": "curuzu_cuatia",
-      "avg_score": 78.0,
-      "hex_count": 98250,
+      "dpto": "Lavalle",
+      "parquetKey": "lavalle",
+      "avg_score": 20.9,
+      "hex_count": 18006,
       "centroid": [
-        -58.3336,
-        -29.7068
+        -58.9267,
+        -28.9976
       ],
       "rank": {
-        "trees_pct": 24.6,
-        "trees_ha": 254632,
-        "crops_pct": 7.2,
-        "crops_ha": 74720,
-        "built_pct": 3.8,
-        "built_ha": 38945
+        "trees_pct": 24.4,
+        "trees_ha": 46226,
+        "crops_pct": 3.8,
+        "crops_ha": 7173,
+        "built_pct": 3.1,
+        "built_ha": 5841
       }
     },
     {
-      "dpto": "Sauce",
-      "parquetKey": "sauce",
-      "avg_score": 77.3,
-      "hex_count": 29344,
+      "dpto": "San Cosme",
+      "parquetKey": "san_cosme",
+      "avg_score": 20.8,
+      "hex_count": 6926,
       "centroid": [
-        -58.8097,
-        -30.0011
+        -58.5137,
+        -27.3768
       ],
       "rank": {
-        "trees_pct": 36.5,
-        "trees_ha": 112956,
-        "crops_pct": 7.0,
-        "crops_ha": 21526,
-        "built_pct": 3.6,
-        "built_ha": 11095
+        "trees_pct": 54.4,
+        "trees_ha": 39662,
+        "crops_pct": 0.4,
+        "crops_ha": 290,
+        "built_pct": 3.7,
+        "built_ha": 2687
       }
     },
     {
-      "dpto": "Santo Tomé",
-      "parquetKey": "santo_tome",
-      "avg_score": 76.5,
-      "hex_count": 82588,
+      "dpto": "Esquina",
+      "parquetKey": "esquina",
+      "avg_score": 20.5,
+      "hex_count": 46922,
       "centroid": [
-        -56.248,
-        -28.2257
+        -59.2457,
+        -29.9916
       ],
       "rank": {
-        "trees_pct": 37.3,
-        "trees_ha": 324599,
-        "crops_pct": 6.3,
-        "crops_ha": 54386,
-        "built_pct": 3.4,
-        "built_ha": 30004
+        "trees_pct": 51.8,
+        "trees_ha": 256254,
+        "crops_pct": 1.5,
+        "crops_ha": 7415,
+        "built_pct": 0.6,
+        "built_ha": 2721
+      }
+    },
+    {
+      "dpto": "Bella Vista",
+      "parquetKey": "bella_vista",
+      "avg_score": 19.8,
+      "hex_count": 22244,
+      "centroid": [
+        -58.9292,
+        -28.4852
+      ],
+      "rank": {
+        "trees_pct": 41.0,
+        "trees_ha": 96028,
+        "crops_pct": 4.1,
+        "crops_ha": 9596,
+        "built_pct": 1.3,
+        "built_ha": 3129
+      }
+    },
+    {
+      "dpto": "Saladas",
+      "parquetKey": "saladas",
+      "avg_score": 19.2,
+      "hex_count": 21912,
+      "centroid": [
+        -58.602,
+        -28.2037
+      ],
+      "rank": {
+        "trees_pct": 55.1,
+        "trees_ha": 127203,
+        "crops_pct": 2.0,
+        "crops_ha": 4570,
+        "built_pct": 0.7,
+        "built_ha": 1682
+      }
+    },
+    {
+      "dpto": "San Roque",
+      "parquetKey": "san_roque",
+      "avg_score": 18.5,
+      "hex_count": 29031,
+      "centroid": [
+        -58.603,
+        -28.7144
+      ],
+      "rank": {
+        "trees_pct": 35.4,
+        "trees_ha": 108147,
+        "crops_pct": 3.2,
+        "crops_ha": 9796,
+        "built_pct": 0.5,
+        "built_ha": 1606
+      }
+    },
+    {
+      "dpto": "Mburucuyá",
+      "parquetKey": "mburucuya",
+      "avg_score": 17.9,
+      "hex_count": 11407,
+      "centroid": [
+        -58.1721,
+        -28.0052
+      ],
+      "rank": {
+        "trees_pct": 60.2,
+        "trees_ha": 72318,
+        "crops_pct": 1.7,
+        "crops_ha": 2010,
+        "built_pct": 0.8,
+        "built_ha": 972
+      }
+    },
+    {
+      "dpto": "Itatí",
+      "parquetKey": "itati",
+      "avg_score": 17.7,
+      "hex_count": 8810,
+      "centroid": [
+        -58.0869,
+        -27.3361
+      ],
+      "rank": {
+        "trees_pct": 45.3,
+        "trees_ha": 42021,
+        "crops_pct": 0.9,
+        "crops_ha": 795,
+        "built_pct": 0.7,
+        "built_ha": 671
+      }
+    },
+    {
+      "dpto": "Empedrado",
+      "parquetKey": "empedrado",
+      "avg_score": 17.6,
+      "hex_count": 23792,
+      "centroid": [
+        -58.6717,
+        -27.893
+      ],
+      "rank": {
+        "trees_pct": 62.5,
+        "trees_ha": 156571,
+        "crops_pct": 0.5,
+        "crops_ha": 1212,
+        "built_pct": 0.6,
+        "built_ha": 1456
+      }
+    },
+    {
+      "dpto": "Berón de Astrada",
+      "parquetKey": "beron_de_astrada",
+      "avg_score": 17.4,
+      "hex_count": 8324,
+      "centroid": [
+        -57.6317,
+        -27.472
+      ],
+      "rank": {
+        "trees_pct": 32.0,
+        "trees_ha": 28049,
+        "crops_pct": 23.7,
+        "crops_ha": 20793,
+        "built_pct": 0.3,
+        "built_ha": 305
+      }
+    },
+    {
+      "dpto": "Concepción",
+      "parquetKey": "concepcion",
+      "avg_score": 16.6,
+      "hex_count": 59287,
+      "centroid": [
+        -58.0479,
+        -28.4115
+      ],
+      "rank": {
+        "trees_pct": 60.3,
+        "trees_ha": 376355,
+        "crops_pct": 1.0,
+        "crops_ha": 6161,
+        "built_pct": 0.4,
+        "built_ha": 2195
+      }
+    },
+    {
+      "dpto": "General Paz",
+      "parquetKey": "general_paz",
+      "avg_score": 16.5,
+      "hex_count": 29303,
+      "centroid": [
+        -57.8035,
+        -27.7136
+      ],
+      "rank": {
+        "trees_pct": 60.7,
+        "trees_ha": 187425,
+        "crops_pct": 1.6,
+        "crops_ha": 4888,
+        "built_pct": 0.4,
+        "built_ha": 1271
+      }
+    },
+    {
+      "dpto": "San Luis del Palmar",
+      "parquetKey": "san_luis_del_palmar",
+      "avg_score": 15.0,
+      "hex_count": 29721,
+      "centroid": [
+        -58.2668,
+        -27.6004
+      ],
+      "rank": {
+        "trees_pct": 73.5,
+        "trees_ha": 230198,
+        "crops_pct": 0.0,
+        "crops_ha": 44,
+        "built_pct": 0.3,
+        "built_ha": 1021
+      }
+    },
+    {
+      "dpto": "General Alvear",
+      "parquetKey": "general_alvear",
+      "avg_score": 14.9,
+      "hex_count": 22565,
+      "centroid": [
+        -56.5245,
+        -28.7791
+      ],
+      "rank": {
+        "trees_pct": 54.7,
+        "trees_ha": 129963,
+        "crops_pct": 0.7,
+        "crops_ha": 1772,
+        "built_pct": 0.2,
+        "built_ha": 585
       }
     },
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "avg_score": 75.8,
+      "avg_score": 14.7,
       "hex_count": 31149,
       "centroid": [
         -57.871,
         -30.2487
       ],
       "rank": {
-        "trees_pct": 25.3,
-        "trees_ha": 82907,
-        "crops_pct": 8.3,
-        "crops_ha": 27323,
-        "built_pct": 4.0,
-        "built_ha": 13243
+        "trees_pct": 31.5,
+        "trees_ha": 103221,
+        "crops_pct": 4.3,
+        "crops_ha": 13991,
+        "built_pct": 0.8,
+        "built_ha": 2735
+      }
+    },
+    {
+      "dpto": "Paso de los Libres",
+      "parquetKey": "paso_de_los_libres",
+      "avg_score": 13.9,
+      "hex_count": 58737,
+      "centroid": [
+        -57.3264,
+        -29.599
+      ],
+      "rank": {
+        "trees_pct": 31.7,
+        "trees_ha": 196318,
+        "crops_pct": 3.1,
+        "crops_ha": 19436,
+        "built_pct": 0.5,
+        "built_ha": 2867
+      }
+    },
+    {
+      "dpto": "Sauce",
+      "parquetKey": "sauce",
+      "avg_score": 13.6,
+      "hex_count": 29344,
+      "centroid": [
+        -58.8097,
+        -30.0011
+      ],
+      "rank": {
+        "trees_pct": 61.7,
+        "trees_ha": 190676,
+        "crops_pct": 3.3,
+        "crops_ha": 10248,
+        "built_pct": 0.2,
+        "built_ha": 596
+      }
+    },
+    {
+      "dpto": "San Miguel",
+      "parquetKey": "san_miguel",
+      "avg_score": 13.0,
+      "hex_count": 33285,
+      "centroid": [
+        -57.4252,
+        -27.8708
+      ],
+      "rank": {
+        "trees_pct": 72.4,
+        "trees_ha": 253677,
+        "crops_pct": 0.5,
+        "crops_ha": 1748,
+        "built_pct": 0.3,
+        "built_ha": 940
+      }
+    },
+    {
+      "dpto": "Santo Tomé",
+      "parquetKey": "santo_tome",
+      "avg_score": 13.0,
+      "hex_count": 82588,
+      "centroid": [
+        -56.248,
+        -28.2257
+      ],
+      "rank": {
+        "trees_pct": 59.7,
+        "trees_ha": 519319,
+        "crops_pct": 2.3,
+        "crops_ha": 20285,
+        "built_pct": 0.4,
+        "built_ha": 3237
+      }
+    },
+    {
+      "dpto": "San Martín",
+      "parquetKey": "san_martin",
+      "avg_score": 12.9,
+      "hex_count": 76885,
+      "centroid": [
+        -56.9513,
+        -28.8303
+      ],
+      "rank": {
+        "trees_pct": 55.7,
+        "trees_ha": 450998,
+        "crops_pct": 1.6,
+        "crops_ha": 12947,
+        "built_pct": 0.2,
+        "built_ha": 1422
+      }
+    },
+    {
+      "dpto": "Curuzú Cuatiá",
+      "parquetKey": "curuzu_cuatia",
+      "avg_score": 11.9,
+      "hex_count": 98250,
+      "centroid": [
+        -58.3336,
+        -29.7068
+      ],
+      "rank": {
+        "trees_pct": 32.5,
+        "trees_ha": 336584,
+        "crops_pct": 4.3,
+        "crops_ha": 44658,
+        "built_pct": 0.3,
+        "built_ha": 2612
+      }
+    },
+    {
+      "dpto": "Mercedes",
+      "parquetKey": "mercedes",
+      "avg_score": 11.9,
+      "hex_count": 116648,
+      "centroid": [
+        -57.8356,
+        -29.0512
+      ],
+      "rank": {
+        "trees_pct": 30.3,
+        "trees_ha": 372124,
+        "crops_pct": 4.2,
+        "crops_ha": 51338,
+        "built_pct": 0.2,
+        "built_ha": 2842
       }
     },
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 75.5,
+      "avg_score": 9.6,
       "hex_count": 103935,
       "centroid": [
         -56.8203,
         -27.9285
       ],
       "rank": {
-        "trees_pct": 42.2,
-        "trees_ha": 462528,
-        "crops_pct": 4.5,
-        "crops_ha": 49317,
-        "built_pct": 3.3,
-        "built_ha": 35960
+        "trees_pct": 74.5,
+        "trees_ha": 815245,
+        "crops_pct": 0.9,
+        "crops_ha": 9903,
+        "built_pct": 0.2,
+        "built_ha": 2331
       }
     }
   ]

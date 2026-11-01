@@ -2,368 +2,368 @@
   "territory": "cordillera_py",
   "province": {
     "total_hexes": 51330,
-    "avg_score": 65.8,
+    "avg_score": 19.1,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Loma Grande",
-      "parquetKey": "loma_grande",
-      "avg_score": 81.9,
-      "hex_count": 1011,
-      "centroid": [
-        -57.1909,
-        -25.1471
-      ],
-      "rank": {
-        "trees_pct": 37.0,
-        "trees_ha": 3941,
-        "crops_pct": 6.2,
-        "crops_ha": 660,
-        "built_pct": 4.7,
-        "built_ha": 505
-      }
-    },
-    {
-      "distrito": "Arroyos Y Esteros",
-      "parquetKey": "arroyos_y_esteros",
-      "avg_score": 81.6,
-      "hex_count": 5898,
-      "centroid": [
-        -57.1657,
-        -25.0372
-      ],
-      "rank": {
-        "trees_pct": 32.9,
-        "trees_ha": 20415,
-        "crops_pct": 7.9,
-        "crops_ha": 4936,
-        "built_pct": 4.8,
-        "built_ha": 3010
-      }
-    },
-    {
-      "distrito": "San Jose Obrero",
-      "parquetKey": "san_jose_obrero",
-      "avg_score": 80.1,
-      "hex_count": 2180,
-      "centroid": [
-        -56.8842,
-        -25.1148
-      ],
-      "rank": {
-        "trees_pct": 35.1,
-        "trees_ha": 8066,
-        "crops_pct": 7.7,
-        "crops_ha": 1771,
-        "built_pct": 4.4,
-        "built_ha": 1001
-      }
-    },
-    {
-      "distrito": "Tobati",
-      "parquetKey": "tobati",
-      "avg_score": 80.0,
-      "hex_count": 2861,
-      "centroid": [
-        -57.0454,
-        -25.218
-      ],
-      "rank": {
-        "trees_pct": 34.9,
-        "trees_ha": 10531,
-        "crops_pct": 7.6,
-        "crops_ha": 2294,
-        "built_pct": 6.3,
-        "built_ha": 1893
-      }
-    },
-    {
-      "distrito": "Atyra",
-      "parquetKey": "atyra",
-      "avg_score": 79.1,
-      "hex_count": 1285,
-      "centroid": [
-        -57.1453,
-        -25.2524
-      ],
-      "rank": {
-        "trees_pct": 40.9,
-        "trees_ha": 5542,
-        "crops_pct": 6.7,
-        "crops_ha": 905,
-        "built_pct": 6.9,
-        "built_ha": 935
-      }
-    },
-    {
-      "distrito": "1 De Marzo",
-      "parquetKey": "1_de_marzo",
-      "avg_score": 78.2,
-      "hex_count": 810,
-      "centroid": [
-        -56.9751,
-        -25.1246
-      ],
-      "rank": {
-        "trees_pct": 43.3,
-        "trees_ha": 3697,
-        "crops_pct": 7.9,
-        "crops_ha": 678,
-        "built_pct": 6.0,
-        "built_ha": 511
-      }
-    },
-    {
-      "distrito": "Nueva Colombia",
-      "parquetKey": "nueva_colombia",
-      "avg_score": 77.6,
-      "hex_count": 1026,
-      "centroid": [
-        -57.2658,
-        -25.1606
-      ],
-      "rank": {
-        "trees_pct": 42.2,
-        "trees_ha": 4557,
-        "crops_pct": 6.6,
-        "crops_ha": 718,
-        "built_pct": 6.6,
-        "built_ha": 712
-      }
-    },
-    {
-      "distrito": "Emboscada",
-      "parquetKey": "emboscada",
-      "avg_score": 77.4,
-      "hex_count": 2055,
-      "centroid": [
-        -57.3593,
-        -25.1259
-      ],
-      "rank": {
-        "trees_pct": 41.5,
-        "trees_ha": 8973,
-        "crops_pct": 6.8,
-        "crops_ha": 1469,
-        "built_pct": 6.6,
-        "built_ha": 1432
-      }
-    },
-    {
-      "distrito": "Isla Pucu",
-      "parquetKey": "isla_pucu",
-      "avg_score": 77.2,
-      "hex_count": 1183,
-      "centroid": [
-        -56.9,
-        -25.302
-      ],
-      "rank": {
-        "trees_pct": 38.5,
-        "trees_ha": 4803,
-        "crops_pct": 8.1,
-        "crops_ha": 1008,
-        "built_pct": 6.0,
-        "built_ha": 752
-      }
-    },
-    {
-      "distrito": "Altos",
-      "parquetKey": "altos",
-      "avg_score": 76.4,
-      "hex_count": 1354,
-      "centroid": [
-        -57.2174,
-        -25.2525
-      ],
-      "rank": {
-        "trees_pct": 44.1,
-        "trees_ha": 6294,
-        "crops_pct": 7.5,
-        "crops_ha": 1066,
-        "built_pct": 7.2,
-        "built_ha": 1033
-      }
-    },
-    {
-      "distrito": "Caraguatay",
-      "parquetKey": "caraguatay",
-      "avg_score": 73.2,
-      "hex_count": 5731,
-      "centroid": [
-        -56.7397,
-        -25.2179
-      ],
-      "rank": {
-        "trees_pct": 32.8,
-        "trees_ha": 19778,
-        "crops_pct": 6.6,
-        "crops_ha": 4007,
-        "built_pct": 4.3,
-        "built_ha": 2626
-      }
-    },
-    {
-      "distrito": "Juan De Mena",
-      "parquetKey": "juan_de_mena",
-      "avg_score": 72.7,
-      "hex_count": 10887,
-      "centroid": [
-        -56.7701,
-        -24.9869
-      ],
-      "rank": {
-        "trees_pct": 34.8,
-        "trees_ha": 39939,
-        "crops_pct": 5.9,
-        "crops_ha": 6770,
-        "built_pct": 3.4,
-        "built_ha": 3914
-      }
-    },
-    {
-      "distrito": "San Bernardino",
-      "parquetKey": "san_bernardino",
-      "avg_score": 70.3,
-      "hex_count": 1410,
-      "centroid": [
-        -57.2908,
-        -25.2889
-      ],
-      "rank": {
-        "trees_pct": 38.8,
-        "trees_ha": 5766,
-        "crops_pct": 5.5,
-        "crops_ha": 816,
-        "built_pct": 11.0,
-        "built_ha": 1637
-      }
-    },
-    {
-      "distrito": "Mbacayaty Del Yhaguy",
-      "parquetKey": "mbacayaty_del_yhaguy",
-      "avg_score": 63.7,
-      "hex_count": 3150,
-      "centroid": [
-        -56.7007,
-        -25.3325
-      ],
-      "rank": {
-        "trees_pct": 29.3,
-        "trees_ha": 9731,
-        "crops_pct": 4.4,
-        "crops_ha": 1460,
-        "built_pct": 3.3,
-        "built_ha": 1093
-      }
-    },
-    {
-      "distrito": "Eusebio Ayala",
-      "parquetKey": "eusebio_ayala",
-      "avg_score": 58.5,
-      "hex_count": 2873,
-      "centroid": [
-        -56.9762,
-        -25.3608
-      ],
-      "rank": {
-        "trees_pct": 28.6,
-        "trees_ha": 8652,
-        "crops_pct": 5.3,
-        "crops_ha": 1608,
-        "built_pct": 5.1,
-        "built_ha": 1539
-      }
-    },
-    {
-      "distrito": "Caacupe",
-      "parquetKey": "caacupe",
-      "avg_score": 57.4,
-      "hex_count": 1249,
-      "centroid": [
-        -57.1229,
-        -25.3732
-      ],
-      "rank": {
-        "trees_pct": 34.8,
-        "trees_ha": 4576,
-        "crops_pct": 5.2,
-        "crops_ha": 686,
-        "built_pct": 12.0,
-        "built_ha": 1581
-      }
-    },
-    {
-      "distrito": "Santa Elena",
-      "parquetKey": "santa_elena",
-      "avg_score": 46.4,
-      "hex_count": 1171,
-      "centroid": [
-        -56.8205,
-        -25.3962
-      ],
-      "rank": {
-        "trees_pct": 23.6,
-        "trees_ha": 2914,
-        "crops_pct": 4.8,
-        "crops_ha": 591,
-        "built_pct": 3.2,
-        "built_ha": 391
-      }
-    },
-    {
       "distrito": "Piribebuy",
       "parquetKey": "piribebuy",
-      "avg_score": 3.1,
+      "avg_score": 27.0,
       "hex_count": 2027,
       "centroid": [
         -57.0428,
         -25.4661
       ],
       "rank": {
-        "trees_pct": 1.7,
-        "trees_ha": 371,
-        "crops_pct": 0.3,
-        "crops_ha": 69,
-        "built_pct": 0.5,
-        "built_ha": 103
-      }
-    },
-    {
-      "distrito": "Itacurubi De La Cordiller",
-      "parquetKey": "itacurubi_de_la_cordiller",
-      "avg_score": 0.0,
-      "hex_count": 1147,
-      "centroid": [
-        -56.8701,
-        -25.4677
-      ],
-      "rank": {
-        "trees_pct": 0.0,
-        "trees_ha": 0,
-        "crops_pct": 0.0,
-        "crops_ha": 0,
-        "built_pct": 0.0,
-        "built_ha": 0
+        "trees_pct": 57.3,
+        "trees_ha": 12234,
+        "crops_pct": 14.9,
+        "crops_ha": 3172,
+        "built_pct": 7.5,
+        "built_ha": 1598
       }
     },
     {
       "distrito": "Valenzuela",
       "parquetKey": "valenzuela",
-      "avg_score": 0.0,
+      "avg_score": 25.8,
       "hex_count": 2022,
       "centroid": [
         -56.8551,
         -25.5913
       ],
       "rank": {
-        "trees_pct": 0.0,
-        "trees_ha": 0,
-        "crops_pct": 0.0,
-        "crops_ha": 0,
-        "built_pct": 0.0,
-        "built_ha": 0
+        "trees_pct": 53.3,
+        "trees_ha": 11347,
+        "crops_pct": 6.8,
+        "crops_ha": 1439,
+        "built_pct": 3.1,
+        "built_ha": 652
+      }
+    },
+    {
+      "distrito": "Isla Pucu",
+      "parquetKey": "isla_pucu",
+      "avg_score": 24.4,
+      "hex_count": 1183,
+      "centroid": [
+        -56.9,
+        -25.302
+      ],
+      "rank": {
+        "trees_pct": 59.4,
+        "trees_ha": 7404,
+        "crops_pct": 3.5,
+        "crops_ha": 430,
+        "built_pct": 4.1,
+        "built_ha": 506
+      }
+    },
+    {
+      "distrito": "Arroyos Y Esteros",
+      "parquetKey": "arroyos_y_esteros",
+      "avg_score": 23.1,
+      "hex_count": 5898,
+      "centroid": [
+        -57.1657,
+        -25.0372
+      ],
+      "rank": {
+        "trees_pct": 55.1,
+        "trees_ha": 34250,
+        "crops_pct": 3.8,
+        "crops_ha": 2344,
+        "built_pct": 2.2,
+        "built_ha": 1372
+      }
+    },
+    {
+      "distrito": "Tobati",
+      "parquetKey": "tobati",
+      "avg_score": 22.6,
+      "hex_count": 2861,
+      "centroid": [
+        -57.0454,
+        -25.218
+      ],
+      "rank": {
+        "trees_pct": 58.3,
+        "trees_ha": 17556,
+        "crops_pct": 2.3,
+        "crops_ha": 685,
+        "built_pct": 4.5,
+        "built_ha": 1344
+      }
+    },
+    {
+      "distrito": "Eusebio Ayala",
+      "parquetKey": "eusebio_ayala",
+      "avg_score": 21.5,
+      "hex_count": 2873,
+      "centroid": [
+        -56.9762,
+        -25.3608
+      ],
+      "rank": {
+        "trees_pct": 63.0,
+        "trees_ha": 19080,
+        "crops_pct": 1.2,
+        "crops_ha": 367,
+        "built_pct": 4.6,
+        "built_ha": 1387
+      }
+    },
+    {
+      "distrito": "Nueva Colombia",
+      "parquetKey": "nueva_colombia",
+      "avg_score": 21.5,
+      "hex_count": 1026,
+      "centroid": [
+        -57.2658,
+        -25.1606
+      ],
+      "rank": {
+        "trees_pct": 72.0,
+        "trees_ha": 7780,
+        "crops_pct": 0.4,
+        "crops_ha": 41,
+        "built_pct": 4.6,
+        "built_ha": 502
+      }
+    },
+    {
+      "distrito": "Santa Elena",
+      "parquetKey": "santa_elena",
+      "avg_score": 21.4,
+      "hex_count": 1171,
+      "centroid": [
+        -56.8205,
+        -25.3962
+      ],
+      "rank": {
+        "trees_pct": 61.7,
+        "trees_ha": 7609,
+        "crops_pct": 4.9,
+        "crops_ha": 609,
+        "built_pct": 3.4,
+        "built_ha": 420
+      }
+    },
+    {
+      "distrito": "Altos",
+      "parquetKey": "altos",
+      "avg_score": 20.8,
+      "hex_count": 1354,
+      "centroid": [
+        -57.2174,
+        -25.2525
+      ],
+      "rank": {
+        "trees_pct": 74.6,
+        "trees_ha": 10646,
+        "crops_pct": 2.3,
+        "crops_ha": 325,
+        "built_pct": 6.0,
+        "built_ha": 861
+      }
+    },
+    {
+      "distrito": "Atyra",
+      "parquetKey": "atyra",
+      "avg_score": 20.3,
+      "hex_count": 1285,
+      "centroid": [
+        -57.1453,
+        -25.2524
+      ],
+      "rank": {
+        "trees_pct": 73.0,
+        "trees_ha": 9876,
+        "crops_pct": 0.9,
+        "crops_ha": 122,
+        "built_pct": 5.5,
+        "built_ha": 746
+      }
+    },
+    {
+      "distrito": "Itacurubi De La Cordiller",
+      "parquetKey": "itacurubi_de_la_cordiller",
+      "avg_score": 19.6,
+      "hex_count": 1147,
+      "centroid": [
+        -56.8701,
+        -25.4677
+      ],
+      "rank": {
+        "trees_pct": 71.1,
+        "trees_ha": 8589,
+        "crops_pct": 1.1,
+        "crops_ha": 130,
+        "built_pct": 5.4,
+        "built_ha": 658
+      }
+    },
+    {
+      "distrito": "Emboscada",
+      "parquetKey": "emboscada",
+      "avg_score": 19.0,
+      "hex_count": 2055,
+      "centroid": [
+        -57.3593,
+        -25.1259
+      ],
+      "rank": {
+        "trees_pct": 73.4,
+        "trees_ha": 15877,
+        "crops_pct": 0.3,
+        "crops_ha": 65,
+        "built_pct": 5.1,
+        "built_ha": 1099
+      }
+    },
+    {
+      "distrito": "Caacupe",
+      "parquetKey": "caacupe",
+      "avg_score": 18.9,
+      "hex_count": 1249,
+      "centroid": [
+        -57.1229,
+        -25.3732
+      ],
+      "rank": {
+        "trees_pct": 70.3,
+        "trees_ha": 9251,
+        "crops_pct": 1.0,
+        "crops_ha": 125,
+        "built_pct": 19.3,
+        "built_ha": 2533
+      }
+    },
+    {
+      "distrito": "1 De Marzo",
+      "parquetKey": "1_de_marzo",
+      "avg_score": 18.5,
+      "hex_count": 810,
+      "centroid": [
+        -56.9751,
+        -25.1246
+      ],
+      "rank": {
+        "trees_pct": 78.0,
+        "trees_ha": 6652,
+        "crops_pct": 4.2,
+        "crops_ha": 360,
+        "built_pct": 3.7,
+        "built_ha": 320
+      }
+    },
+    {
+      "distrito": "Loma Grande",
+      "parquetKey": "loma_grande",
+      "avg_score": 18.0,
+      "hex_count": 1011,
+      "centroid": [
+        -57.1909,
+        -25.1471
+      ],
+      "rank": {
+        "trees_pct": 72.6,
+        "trees_ha": 7729,
+        "crops_pct": 0.3,
+        "crops_ha": 28,
+        "built_pct": 2.0,
+        "built_ha": 211
+      }
+    },
+    {
+      "distrito": "San Jose Obrero",
+      "parquetKey": "san_jose_obrero",
+      "avg_score": 17.7,
+      "hex_count": 2180,
+      "centroid": [
+        -56.8842,
+        -25.1148
+      ],
+      "rank": {
+        "trees_pct": 62.6,
+        "trees_ha": 14385,
+        "crops_pct": 8.2,
+        "crops_ha": 1892,
+        "built_pct": 1.6,
+        "built_ha": 363
+      }
+    },
+    {
+      "distrito": "Mbacayaty Del Yhaguy",
+      "parquetKey": "mbacayaty_del_yhaguy",
+      "avg_score": 17.3,
+      "hex_count": 3150,
+      "centroid": [
+        -56.7007,
+        -25.3325
+      ],
+      "rank": {
+        "trees_pct": 53.9,
+        "trees_ha": 17874,
+        "crops_pct": 0.9,
+        "crops_ha": 290,
+        "built_pct": 0.9,
+        "built_ha": 314
+      }
+    },
+    {
+      "distrito": "Caraguatay",
+      "parquetKey": "caraguatay",
+      "avg_score": 16.9,
+      "hex_count": 5731,
+      "centroid": [
+        -56.7397,
+        -25.2179
+      ],
+      "rank": {
+        "trees_pct": 58.4,
+        "trees_ha": 35268,
+        "crops_pct": 3.5,
+        "crops_ha": 2106,
+        "built_pct": 1.8,
+        "built_ha": 1100
+      }
+    },
+    {
+      "distrito": "San Bernardino",
+      "parquetKey": "san_bernardino",
+      "avg_score": 14.9,
+      "hex_count": 1410,
+      "centroid": [
+        -57.2908,
+        -25.2889
+      ],
+      "rank": {
+        "trees_pct": 59.7,
+        "trees_ha": 8872,
+        "crops_pct": 0.8,
+        "crops_ha": 124,
+        "built_pct": 14.1,
+        "built_ha": 2087
+      }
+    },
+    {
+      "distrito": "Juan De Mena",
+      "parquetKey": "juan_de_mena",
+      "avg_score": 14.0,
+      "hex_count": 10887,
+      "centroid": [
+        -56.7701,
+        -24.9869
+      ],
+      "rank": {
+        "trees_pct": 68.7,
+        "trees_ha": 78734,
+        "crops_pct": 1.6,
+        "crops_ha": 1867,
+        "built_pct": 0.5,
+        "built_ha": 626
       }
     }
   ]

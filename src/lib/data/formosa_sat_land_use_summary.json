@@ -2,170 +2,170 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 73.7,
+    "avg_score": 12.0,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "Pilcomayo",
-      "parquetKey": "pilcomayo",
-      "avg_score": 81.2,
-      "hex_count": 58522,
-      "centroid": [
-        -58.0456,
-        -25.3808
-      ],
-      "rank": {
-        "trees_pct": 36.0,
-        "trees_ha": 222113,
-        "crops_pct": 7.4,
-        "crops_ha": 45584,
-        "built_pct": 4.2,
-        "built_ha": 25815
-      }
-    },
-    {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 80.1,
+      "avg_score": 16.7,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
         -25.9345
       ],
       "rank": {
-        "trees_pct": 38.0,
-        "trees_ha": 287077,
-        "crops_pct": 6.5,
-        "crops_ha": 48875,
-        "built_pct": 4.2,
-        "built_ha": 31890
+        "trees_pct": 66.2,
+        "trees_ha": 500804,
+        "crops_pct": 1.2,
+        "crops_ha": 8729,
+        "built_pct": 1.2,
+        "built_ha": 8821
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 79.9,
+      "avg_score": 16.7,
       "hex_count": 39672,
       "centroid": [
         -58.5513,
         -26.4647
       ],
       "rank": {
-        "trees_pct": 38.5,
-        "trees_ha": 160683,
-        "crops_pct": 6.7,
-        "crops_ha": 28108,
-        "built_pct": 3.8,
-        "built_ha": 16087
+        "trees_pct": 66.4,
+        "trees_ha": 277376,
+        "crops_pct": 2.9,
+        "crops_ha": 12057,
+        "built_pct": 0.4,
+        "built_ha": 1648
+      }
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 16.6,
+      "hex_count": 58522,
+      "centroid": [
+        -58.0456,
+        -25.3808
+      ],
+      "rank": {
+        "trees_pct": 65.9,
+        "trees_ha": 406476,
+        "crops_pct": 1.6,
+        "crops_ha": 9803,
+        "built_pct": 1.0,
+        "built_ha": 6390
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 78.7,
+      "avg_score": 15.5,
       "hex_count": 37365,
       "centroid": [
         -58.6711,
         -25.1016
       ],
       "rank": {
-        "trees_pct": 39.9,
-        "trees_ha": 156948,
-        "crops_pct": 7.3,
-        "crops_ha": 28540,
-        "built_pct": 3.9,
-        "built_ha": 15338
+        "trees_pct": 69.3,
+        "trees_ha": 272831,
+        "crops_pct": 1.8,
+        "crops_ha": 6998,
+        "built_pct": 0.5,
+        "built_ha": 1813
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 75.4,
+      "avg_score": 14.1,
       "hex_count": 95406,
       "centroid": [
         -59.1628,
         -25.7727
       ],
       "rank": {
-        "trees_pct": 45.4,
-        "trees_ha": 456555,
-        "crops_pct": 6.6,
-        "crops_ha": 66026,
-        "built_pct": 3.9,
-        "built_ha": 38926
+        "trees_pct": 73.5,
+        "trees_ha": 739004,
+        "crops_pct": 2.1,
+        "crops_ha": 20628,
+        "built_pct": 0.5,
+        "built_ha": 5100
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 75.2,
+      "avg_score": 11.7,
       "hex_count": 288652,
       "centroid": [
         -60.0089,
         -24.8951
       ],
       "rank": {
-        "trees_pct": 46.6,
-        "trees_ha": 1416364,
-        "crops_pct": 7.6,
-        "crops_ha": 231897,
-        "built_pct": 3.9,
-        "built_ha": 119503
-      }
-    },
-    {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 75.0,
-      "hex_count": 150491,
-      "centroid": [
-        -61.2886,
-        -24.027
-      ],
-      "rank": {
-        "trees_pct": 48.0,
-        "trees_ha": 760586,
-        "crops_pct": 7.2,
-        "crops_ha": 114693,
-        "built_pct": 4.0,
-        "built_ha": 63758
-      }
-    },
-    {
-      "dpto": "Matacos",
-      "parquetKey": "matacos",
-      "avg_score": 53.5,
-      "hex_count": 43310,
-      "centroid": [
-        -62.0811,
-        -23.8673
-      ],
-      "rank": {
-        "trees_pct": 40.7,
-        "trees_ha": 185835,
-        "crops_pct": 4.5,
-        "crops_ha": 20353,
-        "built_pct": 2.9,
-        "built_ha": 13168
+        "trees_pct": 78.4,
+        "trees_ha": 2382714,
+        "crops_pct": 5.5,
+        "crops_ha": 166464,
+        "built_pct": 0.2,
+        "built_ha": 7066
       }
     },
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 41.8,
+      "avg_score": 10.5,
       "hex_count": 40559,
       "centroid": [
         -62.1413,
         -23.111
       ],
       "rank": {
-        "trees_pct": 24.0,
-        "trees_ha": 102607,
-        "crops_pct": 4.5,
-        "crops_ha": 19103,
-        "built_pct": 2.4,
-        "built_ha": 10296
+        "trees_pct": 83.6,
+        "trees_ha": 357188,
+        "crops_pct": 1.3,
+        "crops_ha": 5616,
+        "built_pct": 0.2,
+        "built_ha": 751
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 7.8,
+      "hex_count": 150491,
+      "centroid": [
+        -61.2886,
+        -24.027
+      ],
+      "rank": {
+        "trees_pct": 85.0,
+        "trees_ha": 1348073,
+        "crops_pct": 4.1,
+        "crops_ha": 64392,
+        "built_pct": 0.1,
+        "built_ha": 1891
+      }
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 2.8,
+      "hex_count": 43310,
+      "centroid": [
+        -62.0811,
+        -23.8673
+      ],
+      "rank": {
+        "trees_pct": 96.6,
+        "trees_ha": 440674,
+        "crops_pct": 0.6,
+        "crops_ha": 2630,
+        "built_pct": 0.2,
+        "built_ha": 1046
       }
     }
   ]
