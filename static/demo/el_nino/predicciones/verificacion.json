@@ -1,0 +1,31 @@
+{
+ "registro": "predicciones_2026-11-01.json",
+ "esquema": {
+  "fecha": "AAAA-MM-DD del pico",
+  "altura_m": "pico usado",
+  "fuente_altura": "Prefectura (prensa) o INA 61",
+  "prensa": {
+   "familias_o_casas": "número informado",
+   "barrios": [
+    "nombres"
+   ],
+   "fuente": "medio y URL"
+  },
+  "modelo": {
+   "viviendas": "[bajo, alto] a esa altura",
+   "barrios_alcanzados": [
+    "radios"
+   ]
+  },
+  "nisar": {
+   "pasada": "fecha y órbita",
+   "altura_ina_m": "lectura del día",
+   "resultado": "coincide / contradice / no concluyente"
+  },
+  "resultado": {
+   "barrios": "todos alcanzados / faltan …",
+   "cantidad": "dentro / modelo alto / modelo bajo"
+  }
+ },
+ "eventos": []
+}

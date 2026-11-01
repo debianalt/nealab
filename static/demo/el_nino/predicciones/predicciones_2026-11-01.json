@@ -1,0 +1,7362 @@
+{
+ "registro": "2026-11-01",
+ "que_es": "Predicciones de la demo El Niño (El Soberbio) registradas antes de las crecidas de la temporada 2026-27. Escenarios condicionales: qué pasaría si el río Uruguay llega a cada altura; no pronostican la altura.",
+ "escala": "El Soberbio (escala de Prefectura, serie INA 61)",
+ "modelo": {
+  "visor": "spatia.ar/demo/el-nino v10",
+  "datos": "v7 (data/demo/el_nino/ en R2)",
+  "terreno": "FABDEM 30 m, HAND conectado al cauce, grilla de 20 m",
+  "calibracion_delta_m": [
+   1.5,
+   2.0
+  ],
+  "calibracion_criterio": "mínimo error cuadrático en log(viviendas) frente a 6 crecidas documentadas"
+ },
+ "insumos_sha256": {
+  "tabla_altura.json": "d9ea46a855605c180d5d8cc0c1889c4e9cfc38ee3bc5683a6a3c5e363030b5c5",
+  "edificios_pts.json": "ffdaf62d524993edf06aa63a72301e91e5b93b200c15ca512d64e87e3ddef874",
+  "radios.geojson": "f8fb5e16967ca359d8b563b8f82786e788103fc82500b99010d65f42bd6c33e8",
+  "puntos.geojson": "a7807a69e089c845835efb2a07a2b54be43d4219737d830e986095b0c119b9ef",
+  "agua.png": "05b4a8465515d53b36f5980ae0b8ef08223e704b5fd7d9e2ab35cc03b2ee86a1"
+ },
+ "lectura": {
+  "rango": "[Δ 1,5 m, Δ 2,0 m]; el visor pinta Δ 2,0",
+  "techo_m": 19.0,
+  "techo": "arriba de 19 m las cifras son un techo: con nov-2023 (19,75 m) y jun-2014 (22,6 m) el modelo dio 1,9–2,8 veces las familias evacuadas o casas bajo agua informadas",
+  "barrio": "radio censal del INDEC con el nombre de los barrios que contiene"
+ },
+ "verificacion": [
+  "Barrios: cada barrio que la prensa nombre como afectado tiene que estar alcanzado (punta alta) a la altura pico.",
+  "Cantidad: familias evacuadas o casas bajo agua informadas contra la banda: dentro, modelo alto (x < bajo) o modelo bajo (x > alto). Arriba de 19 m se espera modelo alto.",
+  "Agua: pasada NISAR a 4 días o menos del pico, orilla observada contra la predicha con la lectura INA del día.",
+  "Altura del evento: pico informado en la escala de Prefectura; si no hay, lectura diaria INA 61 (se dice cuál)."
+ ],
+ "alturas": [
+  {
+   "altura_m": 11.0,
+   "techo": false,
+   "viviendas": [
+    3,
+    4
+   ],
+   "personas": [
+    9,
+    11
+   ],
+   "aisladas_viv": [
+    6,
+    6
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      0,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 11.5,
+   "techo": false,
+   "viviendas": [
+    4,
+    4
+   ],
+   "personas": [
+    11,
+    12
+   ],
+   "aisladas_viv": [
+    6,
+    13
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      1,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 12.0,
+   "techo": false,
+   "viviendas": [
+    4,
+    6
+   ],
+   "personas": [
+    12,
+    17
+   ],
+   "aisladas_viv": [
+    13,
+    13
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      4,
+      5
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      1,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 12.5,
+   "techo": false,
+   "viviendas": [
+    6,
+    10
+   ],
+   "personas": [
+    17,
+    26
+   ],
+   "aisladas_viv": [
+    13,
+    21
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      1,
+      3
+     ],
+     "personas": [
+      3,
+      7
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      7
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      0,
+      3
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 13.0,
+   "techo": false,
+   "viviendas": [
+    10,
+    18
+   ],
+   "personas": [
+    26,
+    47
+   ],
+   "aisladas_viv": [
+    21,
+    24
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      3,
+      9
+     ],
+     "personas": [
+      7,
+      22
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      7,
+      8
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      2,
+      5
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 13.5,
+   "techo": false,
+   "viviendas": [
+    18,
+    34
+   ],
+   "personas": [
+    47,
+    90
+   ],
+   "aisladas_viv": [
+    24,
+    35
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      9,
+      23
+     ],
+     "personas": [
+      22,
+      60
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      8,
+      10
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      3,
+      6
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 14.0,
+   "techo": false,
+   "viviendas": [
+    34,
+    49
+   ],
+   "personas": [
+    90,
+    131
+   ],
+   "aisladas_viv": [
+    35,
+    35
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      23,
+      34
+     ],
+     "personas": [
+      60,
+      89
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      2,
+      5
+     ],
+     "personas": [
+      6,
+      14
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      6
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      4,
+      6
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 14.5,
+   "techo": false,
+   "viviendas": [
+    49,
+    66
+   ],
+   "personas": [
+    131,
+    177
+   ],
+   "aisladas_viv": [
+    35,
+    61
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      34,
+      42
+     ],
+     "personas": [
+      89,
+      110
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      5,
+      14
+     ],
+     "personas": [
+      14,
+      38
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      10,
+      11
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      6,
+      6
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      6,
+      6
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 15.0,
+   "techo": false,
+   "viviendas": [
+    66,
+    78
+   ],
+   "personas": [
+    177,
+    209
+   ],
+   "aisladas_viv": [
+    61,
+    66
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      42,
+      48
+     ],
+     "personas": [
+      110,
+      126
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      14,
+      17
+     ],
+     "personas": [
+      38,
+      47
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      6,
+      10
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      6,
+      8
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 15.5,
+   "techo": false,
+   "viviendas": [
+    78,
+    91
+   ],
+   "personas": [
+    209,
+    245
+   ],
+   "aisladas_viv": [
+    63,
+    66
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      48,
+      57
+     ],
+     "personas": [
+      126,
+      150
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      17,
+      19
+     ],
+     "personas": [
+      47,
+      52
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      8,
+      12
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      10,
+      11
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      12
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 16.0,
+   "techo": false,
+   "viviendas": [
+    91,
+    112
+   ],
+   "personas": [
+    245,
+    301
+   ],
+   "aisladas_viv": [
+    63,
+    117
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      57,
+      71
+     ],
+     "personas": [
+      150,
+      186
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      19,
+      24
+     ],
+     "personas": [
+      52,
+      67
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      4,
+      6
+     ],
+     "personas": [
+      11,
+      14
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      4,
+      5
+     ],
+     "personas": [
+      12,
+      14
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      12,
+      12
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 16.5,
+   "techo": false,
+   "viviendas": [
+    112,
+    139
+   ],
+   "personas": [
+    301,
+    371
+   ],
+   "aisladas_viv": [
+    117,
+    117
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      71,
+      86
+     ],
+     "personas": [
+      186,
+      225
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      24,
+      31
+     ],
+     "personas": [
+      67,
+      85
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      14,
+      19
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      4,
+      6
+     ],
+     "personas": [
+      12,
+      17
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      5,
+      6
+     ],
+     "personas": [
+      14,
+      16
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 17.0,
+   "techo": false,
+   "viviendas": [
+    139,
+    165
+   ],
+   "personas": [
+    371,
+    441
+   ],
+   "aisladas_viv": [
+    117,
+    142
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      86,
+      95
+     ],
+     "personas": [
+      225,
+      249
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      31,
+      38
+     ],
+     "personas": [
+      85,
+      105
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      7,
+      8
+     ],
+     "personas": [
+      19,
+      20
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      0,
+      7
+     ],
+     "personas": [
+      0,
+      17
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      17,
+      19
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      6,
+      6
+     ],
+     "personas": [
+      16,
+      17
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      3,
+      4
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      3
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      0,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 17.5,
+   "techo": false,
+   "viviendas": [
+    165,
+    186
+   ],
+   "personas": [
+    441,
+    496
+   ],
+   "aisladas_viv": [
+    142,
+    143
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      95,
+      101
+     ],
+     "personas": [
+      249,
+      265
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      38,
+      44
+     ],
+     "personas": [
+      105,
+      123
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      7,
+      10
+     ],
+     "personas": [
+      17,
+      25
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      7,
+      9
+     ],
+     "personas": [
+      19,
+      26
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      8,
+      8
+     ],
+     "personas": [
+      20,
+      21
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      17,
+      19
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      3,
+      5
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 18.0,
+   "techo": false,
+   "viviendas": [
+    186,
+    219
+   ],
+   "personas": [
+    496,
+    583
+   ],
+   "aisladas_viv": [
+    143,
+    165
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      101,
+      108
+     ],
+     "personas": [
+      265,
+      283
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      44,
+      55
+     ],
+     "personas": [
+      123,
+      153
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      10,
+      19
+     ],
+     "personas": [
+      25,
+      45
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      9,
+      11
+     ],
+     "personas": [
+      26,
+      31
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      8,
+      9
+     ],
+     "personas": [
+      21,
+      23
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      7,
+      7
+     ],
+     "personas": [
+      19,
+      20
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      0,
+      3
+     ],
+     "personas": [
+      0,
+      8
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      4,
+      5
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 18.5,
+   "techo": false,
+   "viviendas": [
+    219,
+    257
+   ],
+   "personas": [
+    583,
+    681
+   ],
+   "aisladas_viv": [
+    165,
+    170
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      108,
+      117
+     ],
+     "personas": [
+      283,
+      306
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      55,
+      64
+     ],
+     "personas": [
+      153,
+      179
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      19,
+      29
+     ],
+     "personas": [
+      45,
+      70
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      11,
+      12
+     ],
+     "personas": [
+      31,
+      34
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      9,
+      9
+     ],
+     "personas": [
+      23,
+      24
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      7,
+      8
+     ],
+     "personas": [
+      20,
+      24
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      3,
+      6
+     ],
+     "personas": [
+      8,
+      14
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      2,
+      6
+     ],
+     "personas": [
+      5,
+      15
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 19.0,
+   "techo": false,
+   "viviendas": [
+    257,
+    310
+   ],
+   "personas": [
+    681,
+    824
+   ],
+   "aisladas_viv": [
+    170,
+    225
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      117,
+      121
+     ],
+     "personas": [
+      306,
+      318
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      64,
+      88
+     ],
+     "personas": [
+      179,
+      245
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      29,
+      42
+     ],
+     "personas": [
+      70,
+      103
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      12,
+      18
+     ],
+     "personas": [
+      34,
+      52
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      9,
+      10
+     ],
+     "personas": [
+      24,
+      25
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      8,
+      9
+     ],
+     "personas": [
+      24,
+      27
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      14,
+      17
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      15,
+      19
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      6
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      4
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 19.5,
+   "techo": true,
+   "viviendas": [
+    310,
+    372
+   ],
+   "personas": [
+    824,
+    990
+   ],
+   "aisladas_viv": [
+    225,
+    230
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      121,
+      130
+     ],
+     "personas": [
+      318,
+      341
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      88,
+      119
+     ],
+     "personas": [
+      245,
+      331
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      42,
+      52
+     ],
+     "personas": [
+      103,
+      125
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      18,
+      22
+     ],
+     "personas": [
+      52,
+      61
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      7,
+      11
+     ],
+     "personas": [
+      17,
+      26
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      7,
+      11
+     ],
+     "personas": [
+      19,
+      31
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      9,
+      10
+     ],
+     "personas": [
+      27,
+      30
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      10,
+      10
+     ],
+     "personas": [
+      25,
+      26
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      6,
+      7
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 20.0,
+   "techo": true,
+   "viviendas": [
+    372,
+    435
+   ],
+   "personas": [
+    990,
+    1156
+   ],
+   "aisladas_viv": [
+    211,
+    230
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      119,
+      141
+     ],
+     "personas": [
+      331,
+      391
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      130,
+      138
+     ],
+     "personas": [
+      341,
+      362
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      52,
+      70
+     ],
+     "personas": [
+      125,
+      169
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      22,
+      25
+     ],
+     "personas": [
+      61,
+      72
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      11,
+      15
+     ],
+     "personas": [
+      31,
+      42
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      11,
+      13
+     ],
+     "personas": [
+      26,
+      30
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      10,
+      13
+     ],
+     "personas": [
+      26,
+      33
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      10,
+      11
+     ],
+     "personas": [
+      30,
+      32
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      7,
+      10
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      4,
+      5
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      4
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 20.5,
+   "techo": true,
+   "viviendas": [
+    435,
+    485
+   ],
+   "personas": [
+    1156,
+    1282
+   ],
+   "aisladas_viv": [
+    211,
+    215
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    0
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      141,
+      146
+     ],
+     "personas": [
+      391,
+      406
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      138,
+      142
+     ],
+     "personas": [
+      362,
+      372
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      70,
+      95
+     ],
+     "personas": [
+      169,
+      230
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      25,
+      31
+     ],
+     "personas": [
+      72,
+      86
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      15,
+      20
+     ],
+     "personas": [
+      42,
+      54
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      13,
+      18
+     ],
+     "personas": [
+      30,
+      41
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      13,
+      13
+     ],
+     "personas": [
+      33,
+      34
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      11,
+      11
+     ],
+     "personas": [
+      32,
+      32
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      4,
+      5
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 21.0,
+   "techo": true,
+   "viviendas": [
+    485,
+    525
+   ],
+   "personas": [
+    1282,
+    1383
+   ],
+   "aisladas_viv": [
+    215,
+    226
+   ],
+   "escuelas_bajo_agua": [
+    0,
+    1
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      142,
+      151
+     ],
+     "personas": [
+      372,
+      397
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      146,
+      148
+     ],
+     "personas": [
+      406,
+      411
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      95,
+      109
+     ],
+     "personas": [
+      230,
+      263
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      31,
+      33
+     ],
+     "personas": [
+      86,
+      93
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      20,
+      25
+     ],
+     "personas": [
+      54,
+      69
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      18,
+      20
+     ],
+     "personas": [
+      41,
+      45
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      13,
+      14
+     ],
+     "personas": [
+      34,
+      35
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      11,
+      12
+     ],
+     "personas": [
+      32,
+      35
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      1,
+      5
+     ],
+     "personas": [
+      2,
+      10
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 21.5,
+   "techo": true,
+   "viviendas": [
+    525,
+    586
+   ],
+   "personas": [
+    1383,
+    1542
+   ],
+   "aisladas_viv": [
+    216,
+    226
+   ],
+   "escuelas_bajo_agua": [
+    1,
+    1
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      148,
+      162
+     ],
+     "personas": [
+      411,
+      451
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      151,
+      162
+     ],
+     "personas": [
+      397,
+      424
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      109,
+      115
+     ],
+     "personas": [
+      263,
+      278
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      33,
+      36
+     ],
+     "personas": [
+      93,
+      101
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      25,
+      28
+     ],
+     "personas": [
+      69,
+      76
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      20,
+      26
+     ],
+     "personas": [
+      45,
+      58
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      14,
+      14
+     ],
+     "personas": [
+      35,
+      36
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      12,
+      14
+     ],
+     "personas": [
+      35,
+      40
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      0,
+      14
+     ],
+     "personas": [
+      0,
+      37
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      5,
+      7
+     ],
+     "personas": [
+      10,
+      12
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      6
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 22.0,
+   "techo": true,
+   "viviendas": [
+    586,
+    644
+   ],
+   "personas": [
+    1542,
+    1694
+   ],
+   "aisladas_viv": [
+    197,
+    216
+   ],
+   "escuelas_bajo_agua": [
+    1,
+    1
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      162,
+      176
+     ],
+     "personas": [
+      424,
+      460
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      162,
+      167
+     ],
+     "personas": [
+      451,
+      464
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      115,
+      121
+     ],
+     "personas": [
+      278,
+      292
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      36,
+      40
+     ],
+     "personas": [
+      101,
+      113
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      28,
+      36
+     ],
+     "personas": [
+      76,
+      97
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      26,
+      30
+     ],
+     "personas": [
+      58,
+      69
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      14,
+      24
+     ],
+     "personas": [
+      37,
+      63
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      14,
+      16
+     ],
+     "personas": [
+      36,
+      41
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      14,
+      15
+     ],
+     "personas": [
+      40,
+      43
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      7,
+      8
+     ],
+     "personas": [
+      12,
+      16
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      6,
+      8
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      2,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 22.5,
+   "techo": true,
+   "viviendas": [
+    644,
+    710
+   ],
+   "personas": [
+    1694,
+    1865
+   ],
+   "aisladas_viv": [
+    192,
+    197
+   ],
+   "escuelas_bajo_agua": [
+    1,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      176,
+      182
+     ],
+     "personas": [
+      460,
+      478
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      167,
+      172
+     ],
+     "personas": [
+      464,
+      477
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      121,
+      135
+     ],
+     "personas": [
+      292,
+      327
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      36,
+      49
+     ],
+     "personas": [
+      97,
+      132
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      40,
+      40
+     ],
+     "personas": [
+      113,
+      114
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      24,
+      40
+     ],
+     "personas": [
+      63,
+      105
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      30,
+      33
+     ],
+     "personas": [
+      69,
+      75
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      16,
+      17
+     ],
+     "personas": [
+      41,
+      44
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      15,
+      16
+     ],
+     "personas": [
+      43,
+      45
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      8,
+      9
+     ],
+     "personas": [
+      16,
+      16
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      0,
+      3
+     ],
+     "personas": [
+      0,
+      7
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      7
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      4
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 23.0,
+   "techo": true,
+   "viviendas": [
+    710,
+    768
+   ],
+   "personas": [
+    1865,
+    2015
+   ],
+   "aisladas_viv": [
+    187,
+    192
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      182,
+      197
+     ],
+     "personas": [
+      478,
+      515
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      172,
+      179
+     ],
+     "personas": [
+      477,
+      497
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      135,
+      146
+     ],
+     "personas": [
+      327,
+      353
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      49,
+      53
+     ],
+     "personas": [
+      132,
+      143
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      40,
+      50
+     ],
+     "personas": [
+      105,
+      132
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      40,
+      42
+     ],
+     "personas": [
+      114,
+      119
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      33,
+      39
+     ],
+     "personas": [
+      75,
+      89
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      17,
+      18
+     ],
+     "personas": [
+      44,
+      47
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      16,
+      16
+     ],
+     "personas": [
+      45,
+      47
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      9,
+      9
+     ],
+     "personas": [
+      16,
+      16
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      10
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      0,
+      2
+     ],
+     "personas": [
+      1,
+      5
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 23.5,
+   "techo": true,
+   "viviendas": [
+    768,
+    828
+   ],
+   "personas": [
+    2015,
+    2169
+   ],
+   "aisladas_viv": [
+    184,
+    187
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      197,
+      213
+     ],
+     "personas": [
+      515,
+      558
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      179,
+      183
+     ],
+     "personas": [
+      497,
+      508
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      146,
+      152
+     ],
+     "personas": [
+      353,
+      368
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      50,
+      67
+     ],
+     "personas": [
+      132,
+      178
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      53,
+      54
+     ],
+     "personas": [
+      143,
+      146
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      42,
+      43
+     ],
+     "personas": [
+      119,
+      120
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      39,
+      42
+     ],
+     "personas": [
+      89,
+      97
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      18,
+      19
+     ],
+     "personas": [
+      47,
+      48
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      16,
+      18
+     ],
+     "personas": [
+      47,
+      51
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      2,
+      10
+     ],
+     "personas": [
+      5,
+      23
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      9,
+      10
+     ],
+     "personas": [
+      16,
+      18
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      10,
+      11
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      7,
+      9
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      7,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      4
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 24.0,
+   "techo": true,
+   "viviendas": [
+    828,
+    893
+   ],
+   "personas": [
+    2169,
+    2333
+   ],
+   "aisladas_viv": [
+    184,
+    199
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      213,
+      223
+     ],
+     "personas": [
+      558,
+      584
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      183,
+      191
+     ],
+     "personas": [
+      508,
+      531
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      152,
+      166
+     ],
+     "personas": [
+      368,
+      402
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      67,
+      80
+     ],
+     "personas": [
+      178,
+      212
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      54,
+      57
+     ],
+     "personas": [
+      146,
+      154
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      43,
+      46
+     ],
+     "personas": [
+      120,
+      129
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      42,
+      44
+     ],
+     "personas": [
+      97,
+      102
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      19,
+      20
+     ],
+     "personas": [
+      48,
+      50
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      10,
+      19
+     ],
+     "personas": [
+      23,
+      41
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      18,
+      18
+     ],
+     "personas": [
+      51,
+      53
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      10,
+      11
+     ],
+     "personas": [
+      18,
+      20
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      12
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      9,
+      9
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 24.5,
+   "techo": true,
+   "viviendas": [
+    893,
+    950
+   ],
+   "personas": [
+    2333,
+    2480
+   ],
+   "aisladas_viv": [
+    199,
+    202
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      223,
+      226
+     ],
+     "personas": [
+      584,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      191,
+      192
+     ],
+     "personas": [
+      531,
+      534
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      166,
+      176
+     ],
+     "personas": [
+      402,
+      425
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      80,
+      101
+     ],
+     "personas": [
+      212,
+      267
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      57,
+      57
+     ],
+     "personas": [
+      154,
+      154
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      46,
+      51
+     ],
+     "personas": [
+      129,
+      143
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      44,
+      50
+     ],
+     "personas": [
+      102,
+      114
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      19,
+      23
+     ],
+     "personas": [
+      41,
+      51
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      18,
+      23
+     ],
+     "personas": [
+      53,
+      65
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      20,
+      20
+     ],
+     "personas": [
+      50,
+      52
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      11,
+      12
+     ],
+     "personas": [
+      20,
+      22
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      12,
+      12
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      10,
+      12
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      9,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 25.0,
+   "techo": true,
+   "viviendas": [
+    950,
+    989
+   ],
+   "personas": [
+    2480,
+    2574
+   ],
+   "aisladas_viv": [
+    202,
+    206
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      192,
+      198
+     ],
+     "personas": [
+      534,
+      549
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      176,
+      179
+     ],
+     "personas": [
+      425,
+      434
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      101,
+      107
+     ],
+     "personas": [
+      267,
+      283
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      57,
+      57
+     ],
+     "personas": [
+      154,
+      155
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      50,
+      52
+     ],
+     "personas": [
+      114,
+      120
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      51,
+      51
+     ],
+     "personas": [
+      143,
+      143
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      23,
+      38
+     ],
+     "personas": [
+      51,
+      82
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      23,
+      23
+     ],
+     "personas": [
+      65,
+      67
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      20,
+      21
+     ],
+     "personas": [
+      52,
+      54
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      12,
+      14
+     ],
+     "personas": [
+      22,
+      25
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      4,
+      5
+     ],
+     "personas": [
+      12,
+      15
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      12,
+      13
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      9
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      7
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 25.5,
+   "techo": true,
+   "viviendas": [
+    989,
+    1027
+   ],
+   "personas": [
+    2574,
+    2669
+   ],
+   "aisladas_viv": [
+    204,
+    206
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    2
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      198,
+      201
+     ],
+     "personas": [
+      549,
+      560
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      179,
+      182
+     ],
+     "personas": [
+      434,
+      439
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      107,
+      111
+     ],
+     "personas": [
+      283,
+      296
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      57,
+      58
+     ],
+     "personas": [
+      155,
+      157
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      52,
+      54
+     ],
+     "personas": [
+      120,
+      123
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      51,
+      53
+     ],
+     "personas": [
+      143,
+      149
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      38,
+      52
+     ],
+     "personas": [
+      82,
+      112
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      23,
+      25
+     ],
+     "personas": [
+      67,
+      72
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      21,
+      22
+     ],
+     "personas": [
+      54,
+      56
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      14,
+      17
+     ],
+     "personas": [
+      25,
+      31
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      5,
+      6
+     ],
+     "personas": [
+      15,
+      17
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      4,
+      5
+     ],
+     "personas": [
+      13,
+      16
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      9,
+      12
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      7,
+      7
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      0,
+      2
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 26.0,
+   "techo": true,
+   "viviendas": [
+    1027,
+    1063
+   ],
+   "personas": [
+    2669,
+    2755
+   ],
+   "aisladas_viv": [
+    204,
+    205
+   ],
+   "escuelas_bajo_agua": [
+    2,
+    3
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      201,
+      203
+     ],
+     "personas": [
+      560,
+      563
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      182,
+      182
+     ],
+     "personas": [
+      439,
+      439
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      111,
+      119
+     ],
+     "personas": [
+      296,
+      317
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      52,
+      61
+     ],
+     "personas": [
+      112,
+      132
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      54,
+      60
+     ],
+     "personas": [
+      123,
+      138
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      58,
+      60
+     ],
+     "personas": [
+      157,
+      163
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      53,
+      54
+     ],
+     "personas": [
+      149,
+      153
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      25,
+      26
+     ],
+     "personas": [
+      72,
+      75
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      22,
+      22
+     ],
+     "personas": [
+      56,
+      57
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      17,
+      20
+     ],
+     "personas": [
+      31,
+      37
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      6,
+      6
+     ],
+     "personas": [
+      17,
+      17
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      16,
+      16
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      12,
+      13
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      7,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      2,
+      3
+     ],
+     "personas": [
+      7,
+      9
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      3
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 26.5,
+   "techo": true,
+   "viviendas": [
+    1063,
+    1093
+   ],
+   "personas": [
+    2755,
+    2828
+   ],
+   "aisladas_viv": [
+    205,
+    219
+   ],
+   "escuelas_bajo_agua": [
+    3,
+    4
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      203,
+      207
+     ],
+     "personas": [
+      563,
+      574
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      182,
+      186
+     ],
+     "personas": [
+      439,
+      451
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      119,
+      126
+     ],
+     "personas": [
+      317,
+      334
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      61,
+      68
+     ],
+     "personas": [
+      132,
+      147
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      60,
+      63
+     ],
+     "personas": [
+      138,
+      143
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      60,
+      61
+     ],
+     "personas": [
+      163,
+      164
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      54,
+      55
+     ],
+     "personas": [
+      153,
+      154
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      26,
+      26
+     ],
+     "personas": [
+      75,
+      76
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      22,
+      23
+     ],
+     "personas": [
+      57,
+      59
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      20,
+      23
+     ],
+     "personas": [
+      37,
+      42
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      6,
+      6
+     ],
+     "personas": [
+      17,
+      19
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      16,
+      17
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      13,
+      14
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      9,
+      9
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      0,
+      1
+     ],
+     "personas": [
+      1,
+      2
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 27.0,
+   "techo": true,
+   "viviendas": [
+    1093,
+    1118
+   ],
+   "personas": [
+    2828,
+    2890
+   ],
+   "aisladas_viv": [
+    219,
+    220
+   ],
+   "escuelas_bajo_agua": [
+    4,
+    5
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      207,
+      208
+     ],
+     "personas": [
+      574,
+      578
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      186,
+      187
+     ],
+     "personas": [
+      451,
+      452
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      126,
+      133
+     ],
+     "personas": [
+      334,
+      352
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      68,
+      79
+     ],
+     "personas": [
+      147,
+      172
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      63,
+      64
+     ],
+     "personas": [
+      143,
+      146
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      61,
+      61
+     ],
+     "personas": [
+      164,
+      167
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      55,
+      55
+     ],
+     "personas": [
+      154,
+      154
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      26,
+      27
+     ],
+     "personas": [
+      76,
+      77
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      23,
+      24
+     ],
+     "personas": [
+      59,
+      61
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      23,
+      24
+     ],
+     "personas": [
+      42,
+      44
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      6,
+      7
+     ],
+     "personas": [
+      19,
+      20
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      17,
+      17
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      14,
+      14
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      9,
+      9
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      1,
+      2
+     ],
+     "personas": [
+      2,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 27.5,
+   "techo": true,
+   "viviendas": [
+    1118,
+    1143
+   ],
+   "personas": [
+    2890,
+    2951
+   ],
+   "aisladas_viv": [
+    220,
+    225
+   ],
+   "escuelas_bajo_agua": [
+    5,
+    5
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      208,
+      210
+     ],
+     "personas": [
+      578,
+      582
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      187,
+      187
+     ],
+     "personas": [
+      452,
+      453
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      133,
+      138
+     ],
+     "personas": [
+      352,
+      367
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      79,
+      85
+     ],
+     "personas": [
+      172,
+      184
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      64,
+      70
+     ],
+     "personas": [
+      146,
+      160
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      61,
+      62
+     ],
+     "personas": [
+      167,
+      168
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      55,
+      57
+     ],
+     "personas": [
+      154,
+      160
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      27,
+      28
+     ],
+     "personas": [
+      77,
+      79
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      24,
+      24
+     ],
+     "personas": [
+      61,
+      62
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      24,
+      24
+     ],
+     "personas": [
+      44,
+      44
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      7,
+      7
+     ],
+     "personas": [
+      20,
+      21
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      17,
+      17
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      14,
+      14
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      9,
+      10
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 28.0,
+   "techo": true,
+   "viviendas": [
+    1143,
+    1178
+   ],
+   "personas": [
+    2951,
+    3036
+   ],
+   "aisladas_viv": [
+    212,
+    225
+   ],
+   "escuelas_bajo_agua": [
+    5,
+    6
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      210,
+      213
+     ],
+     "personas": [
+      582,
+      592
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      187,
+      191
+     ],
+     "personas": [
+      453,
+      461
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      138,
+      143
+     ],
+     "personas": [
+      367,
+      379
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      85,
+      97
+     ],
+     "personas": [
+      184,
+      211
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      70,
+      72
+     ],
+     "personas": [
+      160,
+      166
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      62,
+      62
+     ],
+     "personas": [
+      168,
+      168
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      57,
+      59
+     ],
+     "personas": [
+      160,
+      166
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      28,
+      28
+     ],
+     "personas": [
+      79,
+      80
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      24,
+      27
+     ],
+     "personas": [
+      44,
+      50
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      24,
+      25
+     ],
+     "personas": [
+      62,
+      64
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      7,
+      9
+     ],
+     "personas": [
+      21,
+      25
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      5,
+      6
+     ],
+     "personas": [
+      17,
+      17
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      4,
+      5
+     ],
+     "personas": [
+      14,
+      15
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      10,
+      12
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 28.5,
+   "techo": true,
+   "viviendas": [
+    1178,
+    1214
+   ],
+   "personas": [
+    3036,
+    3128
+   ],
+   "aisladas_viv": [
+    212,
+    326
+   ],
+   "escuelas_bajo_agua": [
+    6,
+    7
+   ],
+   "barrios": [
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      213,
+      217
+     ],
+     "personas": [
+      592,
+      602
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      191,
+      191
+     ],
+     "personas": [
+      461,
+      461
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      143,
+      157
+     ],
+     "personas": [
+      379,
+      416
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      97,
+      107
+     ],
+     "personas": [
+      211,
+      232
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      72,
+      74
+     ],
+     "personas": [
+      166,
+      170
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      62,
+      62
+     ],
+     "personas": [
+      168,
+      168
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      59,
+      61
+     ],
+     "personas": [
+      166,
+      171
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      28,
+      29
+     ],
+     "personas": [
+      80,
+      83
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      27,
+      28
+     ],
+     "personas": [
+      50,
+      52
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      25,
+      25
+     ],
+     "personas": [
+      64,
+      65
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      9,
+      9
+     ],
+     "personas": [
+      25,
+      25
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      6,
+      8
+     ],
+     "personas": [
+      17,
+      24
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      15,
+      15
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      12,
+      12
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      8
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 29.0,
+   "techo": true,
+   "viviendas": [
+    1214,
+    1269
+   ],
+   "personas": [
+    3128,
+    3265
+   ],
+   "aisladas_viv": [
+    324,
+    326
+   ],
+   "escuelas_bajo_agua": [
+    7,
+    7
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      217,
+      232
+     ],
+     "personas": [
+      602,
+      644
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      191,
+      191
+     ],
+     "personas": [
+      461,
+      461
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      157,
+      166
+     ],
+     "personas": [
+      416,
+      440
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      107,
+      125
+     ],
+     "personas": [
+      232,
+      270
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      74,
+      81
+     ],
+     "personas": [
+      170,
+      186
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      61,
+      62
+     ],
+     "personas": [
+      171,
+      175
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      62,
+      62
+     ],
+     "personas": [
+      168,
+      168
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      28,
+      29
+     ],
+     "personas": [
+      52,
+      54
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      29,
+      29
+     ],
+     "personas": [
+      83,
+      84
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      25,
+      26
+     ],
+     "personas": [
+      65,
+      65
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      9,
+      10
+     ],
+     "personas": [
+      25,
+      29
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      8,
+      8
+     ],
+     "personas": [
+      24,
+      24
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      15,
+      15
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      4,
+      5
+     ],
+     "personas": [
+      12,
+      15
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      3
+     ],
+     "personas": [
+      8,
+      9
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 29.5,
+   "techo": true,
+   "viviendas": [
+    1269,
+    1307
+   ],
+   "personas": [
+    3265,
+    3356
+   ],
+   "aisladas_viv": [
+    324,
+    387
+   ],
+   "escuelas_bajo_agua": [
+    7,
+    7
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      232,
+      233
+     ],
+     "personas": [
+      644,
+      649
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      191,
+      192
+     ],
+     "personas": [
+      461,
+      463
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      166,
+      173
+     ],
+     "personas": [
+      440,
+      459
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      125,
+      141
+     ],
+     "personas": [
+      270,
+      305
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      81,
+      86
+     ],
+     "personas": [
+      186,
+      198
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      62,
+      64
+     ],
+     "personas": [
+      168,
+      174
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      62,
+      62
+     ],
+     "personas": [
+      175,
+      176
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      29,
+      31
+     ],
+     "personas": [
+      54,
+      58
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      29,
+      30
+     ],
+     "personas": [
+      84,
+      88
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      26,
+      26
+     ],
+     "personas": [
+      65,
+      67
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      10,
+      10
+     ],
+     "personas": [
+      29,
+      29
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      8,
+      8
+     ],
+     "personas": [
+      24,
+      25
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      15,
+      17
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      15,
+      15
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      11
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      3,
+      4
+     ],
+     "personas": [
+      9,
+      10
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "altura_m": 30.0,
+   "techo": true,
+   "viviendas": [
+    1307,
+    1357
+   ],
+   "personas": [
+    3356,
+    3474
+   ],
+   "aisladas_viv": [
+    356,
+    387
+   ],
+   "escuelas_bajo_agua": [
+    7,
+    8
+   ],
+   "barrios": [
+    {
+     "radio": "540560211",
+     "barrio": "Unión, Barrio Unión",
+     "viviendas": [
+      233,
+      243
+     ],
+     "personas": [
+      649,
+      676
+     ]
+    },
+    {
+     "radio": "540560214",
+     "barrio": "Maracaná, Chivilcoy",
+     "viviendas": [
+      226,
+      226
+     ],
+     "personas": [
+      593,
+      593
+     ]
+    },
+    {
+     "radio": "540560206",
+     "barrio": "cerca de El Soberbio",
+     "viviendas": [
+      192,
+      193
+     ],
+     "personas": [
+      463,
+      467
+     ]
+    },
+    {
+     "radio": "540560210",
+     "barrio": "Hospital, Itatí",
+     "viviendas": [
+      173,
+      177
+     ],
+     "personas": [
+      459,
+      471
+     ]
+    },
+    {
+     "radio": "540560215",
+     "barrio": "Centro, San Martín, El Soberbio",
+     "viviendas": [
+      141,
+      161
+     ],
+     "personas": [
+      305,
+      349
+     ]
+    },
+    {
+     "radio": "540560201",
+     "barrio": "Unión, Agua Potable, Telecom",
+     "viviendas": [
+      86,
+      90
+     ],
+     "personas": [
+      198,
+      206
+     ]
+    },
+    {
+     "radio": "540560216",
+     "barrio": "Unión, Hertman",
+     "viviendas": [
+      64,
+      67
+     ],
+     "personas": [
+      174,
+      183
+     ]
+    },
+    {
+     "radio": "540560309",
+     "barrio": "Paraje Barra El Soberbio",
+     "viviendas": [
+      62,
+      63
+     ],
+     "personas": [
+      176,
+      177
+     ]
+    },
+    {
+     "radio": "540560403",
+     "barrio": "Colonia El Paraíso, Paraje Barra Pepirí, Paraje Mbiguá",
+     "viviendas": [
+      31,
+      35
+     ],
+     "personas": [
+      58,
+      65
+     ]
+    },
+    {
+     "radio": "540560105",
+     "barrio": "Puerto Mata Ojos",
+     "viviendas": [
+      30,
+      30
+     ],
+     "personas": [
+      88,
+      88
+     ]
+    },
+    {
+     "radio": "540560101",
+     "barrio": "Fray Luis Beltrán, Mariano Moreno, Paraje Fray Luis Beltrán",
+     "viviendas": [
+      26,
+      26
+     ],
+     "personas": [
+      67,
+      68
+     ]
+    },
+    {
+     "radio": "540560202",
+     "barrio": "Belgrano",
+     "viviendas": [
+      10,
+      10
+     ],
+     "personas": [
+      29,
+      29
+     ]
+    },
+    {
+     "radio": "540560311",
+     "barrio": "Puerto Paraíso",
+     "viviendas": [
+      8,
+      9
+     ],
+     "personas": [
+      25,
+      26
+     ]
+    },
+    {
+     "radio": "540560307",
+     "barrio": "Paraje Monteagudo",
+     "viviendas": [
+      5,
+      7
+     ],
+     "personas": [
+      17,
+      20
+     ]
+    },
+    {
+     "radio": "540560102",
+     "barrio": "Martín Güemes, Paraje El Grapia",
+     "viviendas": [
+      5,
+      5
+     ],
+     "personas": [
+      15,
+      16
+     ]
+    },
+    {
+     "radio": "540560106",
+     "barrio": "Paraje Fray Luis Beltrán, Paraje Tacuaruzú",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      11,
+      12
+     ]
+    },
+    {
+     "radio": "540560203",
+     "barrio": "Paraje Manuel Belgrano, Paraje Villa Belgrano",
+     "viviendas": [
+      4,
+      4
+     ],
+     "personas": [
+      10,
+      10
+     ]
+    },
+    {
+     "radio": "540560308",
+     "barrio": "cerca de Paraje Naranjera",
+     "viviendas": [
+      2,
+      2
+     ],
+     "personas": [
+      5,
+      5
+     ]
+    },
+    {
+     "radio": "540560301",
+     "barrio": "Colonia Cristal III, Paraje El Ceibo, Paraje El Cristal",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560304",
+     "barrio": "Colonia Paraíso, Paraje Naranjera",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    },
+    {
+     "radio": "540560306",
+     "barrio": "Colonia La Comprida, Monteagudo, Paraje Agua dos Porcos",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      4,
+      4
+     ]
+    },
+    {
+     "radio": "540560207",
+     "barrio": "Paraje Lechuza",
+     "viviendas": [
+      1,
+      1
+     ],
+     "personas": [
+      3,
+      3
+     ]
+    }
+   ]
+  }
+ ]
+}

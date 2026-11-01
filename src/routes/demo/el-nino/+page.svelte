@@ -172,6 +172,14 @@
 	// above this height the press floods put the model at 1.9–2.8 times the reported families or houses under
 	// water (19.75 m in Nov 2023: 372 vs > 200; 22.6 m in Jun 2014: 710 vs 250-350): the totals are a ceiling
 	const TECHO_M = 19;
+	// predictions registered before the 2026-27 floods (07_predicciones.py), served from static/ so the git
+	// commit dates them; verificacion.json gains one entry per flood
+	const PRED_DIR = '/demo/el_nino/predicciones';
+	const PRED_FILE = 'predicciones_2026-11-01';
+	const PRED_ALTURAS = [13, 15, 17, 19, 21, 23];
+	interface Registro { registro: string; alturas: { altura_m: number; techo: boolean; viviendas: [number, number]; personas: [number, number]; barrios: unknown[] }[] }
+	interface Verif { eventos: { fecha: string; altura_m: number; fuente_altura?: string; prensa?: { familias_o_casas?: number; fuente?: string };
+		modelo?: { viviendas?: [number, number] }; nisar?: { resultado?: string }; resultado?: { barrios?: string; cantidad?: string } }[] }
 	const DIMS: [string, string][] = [
 		['dim_material', 'vivienda precaria o hacinamiento'],
 		['dim_recuperacion', 'hogares con NBI'],
@@ -218,6 +226,8 @@
 	let error = $state('');
 	let capa = $state('agua');
 	let tema = $state<Tema>(temaInicial());
+	let registro = $state<Registro | null>(null);
+	let verif = $state<Verif | null>(null);
 	const T = $derived(TH[tema]);
 	// river colour: depth at the chosen height, or how many years since 1980 the river got there
 	let aguaModo = $state<'profundidad' | 'frecuencia'>('profundidad');
@@ -649,6 +659,10 @@
 	onMount(() => {
 		const base = (import.meta.env.DEV && page.url.searchParams.get('src')) || CDN;
 		let cancelled = false;
+		// the registered predictions: not needed for the map, so they load on the side and fail quietly
+		Promise.all([fetch(`${PRED_DIR}/${PRED_FILE}.json`), fetch(`${PRED_DIR}/verificacion.json`)])
+			.then(async ([a, b]) => { if (a.ok) registro = await a.json(); if (b.ok) verif = await b.json(); })
+			.catch(() => {});
 		(async () => {
 			const [maplibregl, { Protocol }] = await Promise.all([import('$lib/maplibre'), import('pmtiles')]);
 			if (cancelled) return;
@@ -1082,6 +1096,32 @@
 				<p class="sub">Lectura diaria de Prefectura: el río superó {m(stage)} en <b>{aniosSobre}</b> de {tabla.picos.length} años con registro.</p>
 			</details>
 
+			{#if registro}
+				<details>
+					<summary>Predicciones registradas · {fecha(registro.registro)}</summary>
+					<p class="sub">Antes de las crecidas de esta temporada quedó registrado, con fecha, qué espera el modelo a cada altura. Después de cada crecida se compara con lo que informe la prensa y con el agua que vea el radar NISAR.</p>
+					<table class="pred">
+						<thead><tr><th>Altura</th><th>Viviendas bajo agua</th><th>Barrios</th></tr></thead>
+						<tbody>
+							{#each registro.alturas.filter((a) => PRED_ALTURAS.includes(a.altura_m)) as a}
+								<tr><td>{m(a.altura_m)}{a.techo ? ' *' : ''}</td><td>{rango(a.viviendas[0], a.viviendas[1])}</td><td>{a.barrios.length}</td></tr>
+							{/each}
+						</tbody>
+					</table>
+					<p class="note">* Arriba de {TECHO_M} m, un techo. Cómo se verifica (fijado antes de las crecidas), la tabla por barrio cada 0,5 m y la huella de los datos: <a class="lnk" href={`${PRED_DIR}/${PRED_FILE}.md`} target="_blank" rel="noopener">registro</a> · <a class="lnk" href={`${PRED_DIR}/${PRED_FILE}.json`} target="_blank" rel="noopener">datos</a>.</p>
+					<h2 class="ver">Verificación</h2>
+					{#if verif?.eventos?.length}
+						<ul class="ver-list">
+							{#each verif.eventos as e}
+								<li><b>{fecha(e.fecha)} · {m(e.altura_m)}</b>{e.fuente_altura ? ` (${e.fuente_altura})` : ''}: prensa {e.prensa?.familias_o_casas ?? '—'}, modelo {e.modelo?.viviendas ? rango(e.modelo.viviendas[0], e.modelo.viviendas[1]) : '—'} → {e.resultado?.cantidad ?? 'pendiente'}{e.resultado?.barrios ? `; barrios: ${e.resultado.barrios}` : ''}{e.nisar?.resultado ? `; NISAR: ${e.nisar.resultado}` : ''}</li>
+							{/each}
+						</ul>
+					{:else}
+						<p class="sub">Sin crecidas desde el registro.</p>
+					{/if}
+				</details>
+			{/if}
+
 			<details>
 				<summary>Cómo leer esta demo</summary>
 				<div class="fine">
@@ -1277,6 +1317,12 @@
 	details > :not(summary) { margin-top: 10px; }
 	.peaks { width: 100%; height: 64px; display: block; }
 	.fine p { margin: 0 0 6px; font-size: 12px; line-height: 1.5; color: var(--ink-2); }
+	table.pred { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+	table.pred th, table.pred td { padding: 3px 4px; text-align: right; border-bottom: 1px solid var(--line-soft); }
+	table.pred th { color: var(--ink-3); font-weight: 500; border-bottom-color: var(--line); }
+	table.pred th:first-child, table.pred td:first-child { text-align: left; }
+	h2.ver { margin-top: 14px; }
+	.ver-list { margin: 0; padding-left: 16px; font-size: 12px; line-height: 1.5; color: var(--ink-2); }
 	footer { color: var(--ink-3); font-size: 11.5px; }
 	.warn { color: var(--red-soft); }
 
