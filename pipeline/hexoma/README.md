@@ -42,6 +42,9 @@ base no tiene backup propio porque se regenera.
 | `python pipeline/hexoma/build_hexoma_clima.py` | Rearma el esquema `clima` (ver abajo) | ~5 min |
 | `python pipeline/hexoma/build_hexoma_suelo.py` | Rearma el esquema `suelo` | ~2 min |
 | `python pipeline/hexoma/bajar_siga.py` | Baja las series diarias de las estaciones del INTA (SIGA) del NEA, por la API pública de la aplicación, a `%HEXOMA_FUENTES%/estaciones/` | ~15 min |
+| `python pipeline/hexoma/build_hexoma_estaciones.py` | Rearma el esquema `estaciones` (GHCN-Daily + INTA SIGA): la referencia obligada | ~5 min |
+| `python pipeline/hexoma/corregir_temperatura.py` | Corrige Tmin y Tmax de ERA5-Land con las estaciones (validación cruzada y regla); después recargar `build_hexoma_clima.py` | ~4 min |
+| `python pipeline/hexoma/build_hexoma_meta.py` | Rearma el catálogo metodológico `meta` desde `metodologia.py`. Correrlo al final de cualquier recarga | segundos |
 | `python pipeline/hexoma/validar_clima.py` | Estaciones GHCN-Daily contra el píxel que las contiene: `clima.validacion` y `validacion_clima.md` | 1 min |
 | `python pipeline/hexoma/hexoma_ficha.py <h3> […]` | Ficha HTML local de una celda con sus series: `pipeline/output/hexoma/fichas/<h3>.html` | segundos |
 | `python pipeline/hexoma/extracto.py --nombre X --sql q.sql --destino carpeta` | Extracto congelado de una consulta: parquet + manifiesto de procedencia (ver abajo) | segundos |
@@ -189,6 +192,36 @@ Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 con go
 - El GDD de la capa web ((Tmedia mensual − 10) × 30) difiere sólo −1,4 a −1,7 % del diario en Posadas, Bernardo de Irigoyen y Las Lomitas (2019–2024): el problema de esa capa es la escala 0–100, no la fórmula.
 
 Tamaño: `clima` 2,0 GB (la mitad es `anomalia`), `suelo` 0,36 GB.
+
+## Estaciones: la referencia obligada (esquema `estaciones`)
+Toda afirmación del Hexoma sobre temperatura, heladas o lluvia se contrasta con las estaciones: son la única medición
+directa. 50 estaciones (17 GHCN-Daily, 33 INTA SIGA), 526 mil días tal cual, con un QC que marca y no borra
+(`diario.qc`), agregados anuales y por campaña con completitud, normales observadas 1991–2020 (≥ 20 años completos)
+y la estación más cercana a cada celda (`h3_cercana`, 58 km en promedio). La ficha de cada celda la muestra al lado
+de cada serie.
+
+**Corrección de heladas y calor** (`corregir_temperatura.py`, tablas `clima.era5_*_corr`): mapeo de cuantiles mensual
+de Tmin y Tmax de ERA5-Land con 40 estaciones, trasladado por 1/d² de las 4 más cercanas a < 150 km. Se eligió por
+validación cruzada (cada estación sin ella ni sus vecinas a < 10 km) con una regla fijada antes (≥ 25 % de mejora):
+heladas 11,9 → 7,4 días/año de error, días > 35 °C 28,9 → 16,5, helada a 5 cm 15,6 → 9,2. Normales corregidas:
+heladas en abrigo Chaco 4,9, Corrientes 2,6, Formosa 2,4, Misiones 1,5 por año. Para heladas y calor se usan las
+`_corr`; las crudas quedan para comparar.
+
+## Catálogo metodológico (esquema `meta`)
+`meta.fuentes` (29: clima, suelo, estaciones, censos, GHSL, edificios y las 15 capas de la web) y `meta.procesos` (13)
+tienen la ficha pormenorizada: proveedor, versión, acceso, licencia, cita y DOI, **tipo de dato** (medición,
+estimación satelital, reanálisis, modelo, censo, derivado), resoluciones, procesamiento paso a paso, asignación a la
+celda, validación, limitaciones y usos. `meta.variables` tiene una fila por columna de todo el Hexoma (2.875) con su
+definición y sus fuentes; `meta.v_ficha` pone al lado la validación y las limitaciones de la fuente:
+```sql
+SELECT columna, definicion, fuente, tipo_dato, limitaciones FROM meta.v_ficha WHERE objeto = 'era5_helada_corr';
+```
+La fuente de verdad es `pipeline/hexoma/metodologia.py`: al agregar una fuente o un proceso se edita ahí y se corre
+`build_hexoma_meta.py`. El relevamiento de las capas de la web (1-nov-2026) encontró inconsistencias entre código y
+textos de spatia.ar, anotadas en sus fichas: la pendiente de `agri_potential` sale de SRTM aunque el texto dice
+FABDEM; el CI de Misiones de `agri_potential` y el de deforestación corren en percentil local aunque las capas
+figuran como comparables; el año de VIIRS de actividad económica no está determinado; el modelo forestal se
+describe con dos nichos y el script entrena uno.
 
 ## Extractos para artículos (`extracto.py`)
 El Hexoma se regenera desde las fuentes y desde la web viva, así que un número publicado tiene que poder rastrearse. `extracto.py` corre una consulta y deja en la carpeta destino:
