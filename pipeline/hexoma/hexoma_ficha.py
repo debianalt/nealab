@@ -29,21 +29,21 @@ SERIES = [
     ('chirps_campania', 'p_mm', 'Lluvia por campaña', 'mm', 'linea', None),
     ('balance_campania', 'p_menos_et0', 'Balance hídrico: lluvia − ET0', 'mm', 'signo', None),
     ('chirps_campania', 'racha_seca_max_oct_mar', 'Racha seca más larga, octubre–marzo', 'días', 'linea',
-     'CHIRPS diario es una desagregación: da ~33 días de lluvia por campaña más que los pluviómetros; las rachas son orientativas.'),
+     'CHIRPS diario es una desagregación: da ~36 días de lluvia por campaña más que los pluviómetros; las rachas son orientativas.'),
     ('era5_campania', 'gdd10', 'Grados-día base 10 °C', '°C·d', 'linea', None),
     ('era5_campania', 'et0_mm', 'Evapotranspiración de referencia (FAO-56)', 'mm', 'linea', None),
     ('era5_campania', 'tmax_media', 'Media de las máximas', '°C', 'linea',
-     'ERA5-Land da máximas ~2,9 °C más bajas que las estaciones del NEA (mediana de 17).'),
+     'ERA5-Land da máximas ~2,1 °C más bajas que las estaciones del NEA (mediana de 48).'),
     ('era5_campania', 'tmin_media', 'Media de las mínimas', '°C', 'linea',
-     'ERA5-Land da mínimas ~1,6 °C más altas que las estaciones del NEA (mediana de 17).'),
+     'ERA5-Land da mínimas ~1,5 °C más altas que las estaciones del NEA (mediana de 48).'),
     ('era5_campania', 'dias_tmax35', 'Días con máxima > 35 °C', 'días', 'barra',
-     'Subestimado: las máximas de ERA5-Land vienen ~2,9 °C bajas.'),
+     'Subestimado: las máximas de ERA5-Land vienen ~2,1 °C bajas.'),
     ('era5_campania', 'sw2', 'Humedad del suelo, 7–28 cm', 'm³/m³', 'linea',
      'Modelo de ERA5-Land con textura genérica: sirve para la variación entre años, no como valor absoluto.'),
     ('era5_helada', 'dias_tmin_le3', 'Días con mínima ≤ 3 °C (helada agrometeorológica), por año', 'días', 'barra',
-     'Muy subestimado: en estaciones con datos completos ERA5-Land marca ~12 días por año menos.'),
+     'Muy subestimado: ERA5-Land marca ~9 días por año menos que las estaciones (−78 %).'),
     ('era5_helada', 'dias_tmin_lt0', 'Días con mínima < 0 °C, por año', 'días', 'barra',
-     'Casi nulo en ERA5-Land: las estaciones registran 2–8 por año y el modelo ~0. No usar como conteo de heladas.'),
+     'Casi nulo en ERA5-Land: las estaciones registran 0,3–6 por año en abrigo y 8–24 a 5 cm del suelo; el modelo ~0. No usar como conteo de heladas.'),
 ]
 
 
@@ -187,7 +187,7 @@ No es un goalpost: la celda se compara con su propia historia.</p>
 <div class="tw"><table><thead><tr><th>Variable</th><th>Período</th><th class="n">Valor</th><th class="n">Normal</th>
 <th class="n">Anomalía</th><th class="n">% de la normal</th><th class="n">% bajo</th><th>Unidad</th></tr></thead><tbody>{filas_an}</tbody></table></div>
 <p class="nota">Fuentes: CHIRPS v3 (estimación satelital calibrada con pluviómetros, desde 1981/82); ERA5-Land (reanálisis, desde 1950/51; antes de 1979 asimila menos observaciones).
-Validación contra 17 estaciones: pipeline/hexoma/validacion_clima.md.</p>
+Validación contra 48 estaciones (GHCN-Daily e INTA SIGA): pipeline/hexoma/validacion_clima.md.</p>
 </main>
 <script>
 const SERIES = {datos_js};

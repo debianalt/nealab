@@ -4,10 +4,11 @@ Estaciones: GHCN-Daily de NOAA (abierto; SMN de Argentina, DMH de Paraguay e INM
 de Brasil cerca del límite), bajadas a %HEXOMA_FUENTES%/estaciones/ghcnd/. Cada estación se compara
 con el píxel que la contiene (el mismo criterio que una celda), en el período 1991–2025.
 
-Estaciones extra (p. ej. INTA SIGA: Cerro Azul, Oberá, Bernardo de Irigoyen, que GHCN no tiene y
-que el sitio de SIGA no deja bajar en forma automática: responde 403): un CSV por estación en
-%HEXOMA_FUENTES%/estaciones/extra/<nombre>.csv con columnas fecha (AAAA-MM-DD), tmin, tmax, p
-(°C, °C, mm; vacío = sin dato) y un <nombre>.json con {"lat": …, "lng": …, "elev": …}.
+Estaciones extra: las del INTA (SIGA) que baja pipeline/hexoma/bajar_siga.py (Cerro Azul desde 1968,
+Bernardo de Irigoyen, San Vicente, Montecarlo, Corrientes, Bella Vista, Sáenz Peña, El Colorado…),
+o cualquier CSV en %HEXOMA_FUENTES%/estaciones/extra/<nombre>.csv con columnas fecha (AAAA-MM-DD),
+tmin, tmax, p (°C, °C, mm; vacío = sin dato), opcional tmin_suelo (mínima a 5 cm), y un
+<nombre>.json con {"lat": …, "lng": …, "elev": …}.
 
 Métricas (sólo años o campañas con ≥ 95 % de días válidos en la estación):
   diario       Tmin y Tmax: sesgo (modelo − estación), MAE y r
@@ -98,7 +99,9 @@ def estaciones() -> dict[str, tuple[str, float, float, float, pd.DataFrame]]:
     for f in sorted((EST / 'extra').glob('*.csv')) if (EST / 'extra').exists() else []:
         meta = json.loads(f.with_suffix('.json').read_text(encoding='utf-8'))
         d = pd.read_csv(f, parse_dates=['fecha']).set_index('fecha')
-        out[f.stem] = (f.stem, meta['lat'], meta['lng'], meta.get('elev'), d[['tmin', 'tmax', 'p']])
+        cols = [c for c in ('tmin', 'tmax', 'p', 'tmin_suelo') if c in d]
+        nombre = f"{meta.get('nombre', f.stem)} (INTA, {meta.get('elev') or 0:.0f} m)" if meta.get('id_siga') else f.stem
+        out[f.stem] = (nombre, meta['lat'], meta['lng'], meta.get('elev'), d[cols])
     log(f'{len(out)} estaciones')
     return out
 
@@ -153,6 +156,16 @@ def metricas(sid, nombre, est: pd.DataFrame, e5: pd.DataFrame | None, ch: pd.Dat
                 if len(a) >= 5:
                     r = np.corrcoef(a, b)[0, 1] if a.std() > 0 and b.std() > 0 else None
                     fila(rot, len(a), a.mean(), b.mean(), (b - a).mean(), (b - a).abs().mean(), r)
+        if 'tmin_suelo' in j:
+            x = j[['tmin_suelo', 'tmin_m']].dropna()
+            g = x.groupby(x.index.year)
+            ok = g.size() >= 0.95 * 365
+            a = g.tmin_suelo.apply(lambda s: (s < 0).sum())[ok]
+            b = g.tmin_m.apply(lambda s: (s < 0).sum())[ok]
+            if len(a) >= 5:
+                r = np.corrcoef(a, b)[0, 1] if a.std() > 0 and b.std() > 0 else None
+                fila('heladas a 5 cm (estación) frente a Tmin < 0 °C del modelo, por año', len(a), a.mean(), b.mean(),
+                     (b - a).mean(), (b - a).abs().mean(), r)
         if {'tmin', 'tmax'} <= set(j):
             x = j[['tmin', 'tmax', 'tmin_m', 'tmax_m']].dropna()
             x = x.assign(c=campania(x.index))
@@ -223,7 +236,7 @@ def informe(v: pd.DataFrame, est: dict) -> None:
     L = ['# Validación del clima del Hexoma contra estaciones', '',
          f'Generado por `pipeline/hexoma/validar_clima.py` el {time.strftime("%d-%m-%Y")}. Período {DESDE}–{HASTA}; '
          'cada estación contra el píxel que la contiene (ERA5-Land 0,1°, CHIRPS v3 0,05°). '
-         '**Sesgo = modelo − estación.** Estaciones de GHCN-Daily (NOAA). En A1 el sesgo se mide, '
+         '**Sesgo = modelo − estación.** Estaciones de GHCN-Daily (NOAA) y del INTA (SIGA, marcadas «INTA»). En A1 el sesgo se mide, '
          'no se corrige.', '',
          'Sólo entran años y campañas con al menos 95 % de días válidos en la estación.', '']
     for metrica in v.metrica.unique():
@@ -235,12 +248,8 @@ def informe(v: pd.DataFrame, est: dict) -> None:
                      f'{f(r.mae)} | {f(r.r, 2)} |')
         L += ['', f'Mediana del sesgo: {f(s.sesgo.median())}; mediana de r: {f(s.r.median(), 2)}.', '']
     falta = [k for k, x in est.items() if x[4].empty]
-    L += ['## Huecos', '',
-          '- Las sierras de Misiones (Oberá, Bernardo de Irigoyen, Cerro Azul) no están en GHCN-Daily. INTA SIGA '
-          'tiene esas series, pero su sitio responde 403 a la descarga automática. Para sumarlas: bajarlas a mano '
-          'y dejarlas en `%HEXOMA_FUENTES%/estaciones/extra/` (formato en el docstring del script).']
     if falta:
-        L.append(f'- Estaciones sin datos: {", ".join(falta)}.')
+        L += ['## Huecos', '', f'- Estaciones sin datos en el período: {", ".join(falta)}.']
     INFORME.write_text('\n'.join(L) + '\n', encoding='utf-8')
     log(f'informe: {INFORME}')
 

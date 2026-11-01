@@ -57,18 +57,18 @@ ROT_ERA5 = ('ERA5-Land (ECMWF/ERA5_LAND/DAILY_AGGR), píxel 0,1°: reanálisis (
 # variable → (tipo SQL, unidad y definición)
 VARS = {
     'chirps': {
-        'p_mm': ('real', 'lluvia total, mm. VALIDADO: r ≈ 0,97 con pluviómetros por campaña, sesgo mediano +126 mm (~+7 %)'),
-        'dias_lluvia': ('smallint', 'días con lluvia ≥ 1 mm. VALIDADO: ~33 días por campaña más que los pluviómetros (desagregación diaria)'),
+        'p_mm': ('real', 'lluvia total, mm. VALIDADO: r mediana 0,92 por campaña contra 23 pluviómetros (GHCN e INTA), sesgo mediano +137 mm (~+10 %)'),
+        'dias_lluvia': ('smallint', 'días con lluvia ≥ 1 mm. VALIDADO: ~36 días por campaña más que los pluviómetros (+46 %; desagregación diaria)'),
         'dias_p50': ('smallint', 'días con lluvia ≥ 50 mm'),
-        'racha_seca_max': ('smallint', 'racha más larga de días con lluvia < 1 mm, días. Orientativa: el dato diario de CHIRPS tiene r ≈ 0,56 con los pluviómetros'),
+        'racha_seca_max': ('smallint', 'racha más larga de días con lluvia < 1 mm, días. Orientativa: el dato diario de CHIRPS tiene r ≈ 0,45 con los pluviómetros'),
         'racha_seca_max_oct_mar': ('smallint', 'racha seca más larga entre octubre y marzo (ciclo de verano), días'),
         'n_nulos': ('smallint', 'días sin dato'),
     },
     'era5': {
-        'gdd10': ('real', 'grados-día base 10 °C: Σ max(0, (Tmax+Tmin)/2 − 10) del dato diario, °C·d. VALIDADO: sesgo mediano +49 °C·d (~1 %), r ≈ 0,83 por campaña'),
-        'dias_tmax35': ('smallint', 'días con Tmax > 35 °C. SUBESTIMADO: Tmax de ERA5-Land ~2,9 °C más baja que en las estaciones'),
-        'tmax_media': ('real', 'media de las temperaturas máximas diarias, °C. VALIDADO: sesgo mediano −2,9 °C contra 17 estaciones'),
-        'tmin_media': ('real', 'media de las temperaturas mínimas diarias, °C. VALIDADO: sesgo mediano +1,6 °C contra 17 estaciones'),
+        'gdd10': ('real', 'grados-día base 10 °C: Σ max(0, (Tmax+Tmin)/2 − 10) del dato diario, °C·d. VALIDADO: sesgo mediano −55 °C·d (−1 %), r 0,84; en las sierras de Misiones −250 a −370 °C·d (hasta −10 %)'),
+        'dias_tmax35': ('smallint', 'días con Tmax > 35 °C. SUBESTIMADO: Tmax de ERA5-Land ~2,1 °C más baja que en las estaciones'),
+        'tmax_media': ('real', 'media de las temperaturas máximas diarias, °C. VALIDADO: sesgo mediano −2,1 °C, r 0,94, contra 48 estaciones (17 GHCN-Daily, 31 INTA SIGA), 1991–2025'),
+        'tmin_media': ('real', 'media de las temperaturas mínimas diarias, °C. VALIDADO: sesgo mediano +1,5 °C, r 0,96, contra 48 estaciones (17 GHCN-Daily, 31 INTA SIGA), 1991–2025'),
         'et0_mm': ('real', 'evapotranspiración de referencia FAO-56 Penman-Monteith (pasto), suma, mm'),
         'sw1': ('real', 'humedad volumétrica del suelo 0–7 cm, media, m³/m³ (textura genérica del modelo)'),
         'sw2': ('real', 'humedad volumétrica del suelo 7–28 cm, media, m³/m³ (textura genérica del modelo)'),
@@ -76,12 +76,12 @@ VARS = {
         'n_nulos': ('smallint', 'días sin dato'),
     },
     'helada': {
-        'dias_tmin_lt0': ('smallint', 'días con Tmin < 0 °C (helada meteorológica, abrigo a 2 m). NO USAR COMO CONTEO: las estaciones registran 2–8 por año y ERA5-Land ~0'),
+        'dias_tmin_lt0': ('smallint', 'días con Tmin < 0 °C (helada meteorológica, abrigo a 2 m). NO USAR COMO CONTEO: en abrigo las estaciones registran 0,3–6 por año (más en Chaco y Mercedes que en las sierras de Misiones) y ERA5-Land ~0; a 5 cm del suelo, 8–24 por año'),
         'dias_tmin_lt_m2': ('smallint', 'días con Tmin < −2 °C. NO USAR COMO CONTEO (ver dias_tmin_lt0)'),
-        'dias_tmin_le3': ('smallint', 'días con Tmin ≤ 3 °C (umbral de helada agrometeorológica de INTA). SUBESTIMADO: ~12 días por año menos que las estaciones; r ≈ 0,56 entre años'),
+        'dias_tmin_le3': ('smallint', 'días con Tmin ≤ 3 °C (umbral de helada agrometeorológica de INTA). SUBESTIMADO: ~9 días por año menos que las estaciones (−78 %); r ≈ 0,43 entre años'),
         'primera_doy': ('smallint', 'día del año de la primera Tmin < 0 °C; NULL = sin helada'),
         'ultima_doy': ('smallint', 'día del año de la última Tmin < 0 °C; NULL = sin helada'),
-        'tmin_abs': ('real', 'mínima absoluta del año, °C. SESGADA HACIA ARRIBA (Tmin de ERA5-Land ~1,6 °C alta en media, más en noches frías)'),
+        'tmin_abs': ('real', 'mínima absoluta del año, °C. SESGADA HACIA ARRIBA (Tmin de ERA5-Land ~1,5 °C alta en media, más en noches frías)'),
     },
 }
 SIN_NORMAL = {'n_nulos'}

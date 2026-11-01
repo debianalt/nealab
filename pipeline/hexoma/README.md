@@ -41,6 +41,7 @@ base no tiene backup propio porque se regenera.
 | `python pipeline/hexoma/clima_a_pixel.py` | Indicadores por píxel de origen: campaña, estación, heladas por año, ET0 FAO-56 | ~2 min |
 | `python pipeline/hexoma/build_hexoma_clima.py` | Rearma el esquema `clima` (ver abajo) | ~5 min |
 | `python pipeline/hexoma/build_hexoma_suelo.py` | Rearma el esquema `suelo` | ~2 min |
+| `python pipeline/hexoma/bajar_siga.py` | Baja las series diarias de las estaciones del INTA (SIGA) del NEA, por la API pública de la aplicación, a `%HEXOMA_FUENTES%/estaciones/` | ~15 min |
 | `python pipeline/hexoma/validar_clima.py` | Estaciones GHCN-Daily contra el píxel que las contiene: `clima.validacion` y `validacion_clima.md` | 1 min |
 | `python pipeline/hexoma/hexoma_ficha.py <h3> […]` | Ficha HTML local de una celda con sus series: `pipeline/output/hexoma/fichas/<h3>.html` | segundos |
 | `python pipeline/hexoma/extracto.py --nombre X --sql q.sql --destino carpeta` | Extracto congelado de una consulta: parquet + manifiesto de procedencia (ver abajo) | segundos |
@@ -181,10 +182,10 @@ Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 con go
 | `clima.validacion` | Métricas contra estaciones |
 | `suelo.h3` | Arcilla, arena, limo, COS, pH, CIC, densidad aparente, fragmentos, N; pendiente y elevación media, mínima y máxima |
 
-**Validación contra 17 estaciones GHCN-Daily, 1991–2025** (`validacion_clima.md`; el COMMENT de cada columna lleva la cifra):
-- **Sirven:** lluvia por campaña (r ≈ 0,97; +7 %), grados-día (+1 %, r ≈ 0,83), Tmin y Tmax diarias como variación (r 0,96 y 0,91).
-- **No sirven como valor absoluto:** ERA5-Land da mínimas +1,6 °C y máximas −2,9 °C (mediana). Por eso **casi no marca heladas** (las estaciones tienen 2–8 días bajo 0 °C por año; ERA5-Land, ~0) y subestima los días > 35 °C. AgERA5 (`projects/climate-engine-pro/assets/ce-ag-era5-v2/daily`) se probó el 1-nov-2026 y tiene el mismo sesgo. CHIRPS diario da ~33 días de lluvia por campaña de más: rachas y conteos de días son orientativos.
-- **Hueco:** las sierras de Misiones no están en GHCN-Daily. INTA SIGA tiene esas series, pero responde 403 a la descarga automática.
+**Validación contra 48 estaciones, 1991–2025: 17 de GHCN-Daily y 31 del INTA (SIGA)** (`validacion_clima.md`; el COMMENT de cada columna lleva la cifra):
+- **Sirven:** lluvia por campaña (r mediana 0,92; +10 %), grados-día (−1 %, r 0,84; pero −250 a −370 °C·d, hasta −10 %, en las sierras de Misiones), Tmin y Tmax diarias como variación (r 0,96 y 0,94).
+- **No sirven como valor absoluto:** ERA5-Land da mínimas +1,5 °C y máximas −2,1 °C (mediana). Por eso **casi no marca heladas**: en abrigo las estaciones tienen 0,3–6 días bajo 0 °C por año (más en el Chaco y en Mercedes que en las sierras de Misiones: Bernardo de Irigoyen 1,1, Cerro Azul 1,0) y ERA5-Land ~0; **a 5 cm del suelo**, las convencionales del INTA registran 8–24 por año (Cerro Azul 9,5, Colonia Benítez 24). También subestima los días > 35 °C. AgERA5 (`projects/climate-engine-pro/assets/ce-ag-era5-v2/daily`) se probó el 1-nov-2026 y tiene el mismo sesgo. CHIRPS diario da ~36 días de lluvia por campaña de más: rachas y conteos de días son orientativos.
+- Las sierras de Misiones no están en GHCN-Daily: entran por las estaciones del INTA (SIGA; `bajar_siga.py` usa la API `CdnaUV0iiERRpFQE.php` de https://siga.inta.gob.ar, la misma de la aplicación; las rutas `http://…/document/series/*.xls` del paquete R `siga` ya no responden). Las convencionales traen además la mínima a 5 cm (helada a nivel del suelo).
 - El GDD de la capa web ((Tmedia mensual − 10) × 30) difiere sólo −1,4 a −1,7 % del diario en Posadas, Bernardo de Irigoyen y Las Lomitas (2019–2024): el problema de esa capa es la escala 0–100, no la fórmula.
 
 Tamaño: `clima` 2,0 GB (la mitad es `anomalia`), `suelo` 0,36 GB.
