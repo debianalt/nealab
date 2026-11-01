@@ -142,9 +142,18 @@ def build_layer(layer: dict) -> dict:
         scopes = scopes_of(layer)
         base = base_sql(layer, vars_)
 
+        # The base rows once, in a temp table (the DISTINCT ON of base_sql is not cheap).
+        cur.execute(sql.SQL('CREATE TEMP TABLE _b AS {}').format(base))
+        cur.execute('ANALYZE _b')
+        base = sql.SQL('SELECT * FROM _b')
+
         # ── per-hexagon position: lt / eq in hundredths of a point ──
-        cols = []
+        # One narrow table per variable (keys + that value), joined at the end. A single
+        # query with every window over the wide row made each sort drag all the columns:
+        # agri_potential (28 variables × 3 scopes) spilled 81 GB to disk on 1-nov-2026.
+        parts = []
         for i, v in enumerate(vars_):
+            cols = []
             for s in scopes:
                 x = scoped(s, i)
                 w = sql.SQL('PARTITION BY {p} ORDER BY {x}').format(p=PART[s], x=x)
@@ -155,15 +164,24 @@ def build_layer(layer: dict) -> dict:
                     x=x, lt=lt, n=n, a=sql.Identifier(f'{v["col"]}__{s}_lt')))
                 cols.append(sql.SQL('CASE WHEN {x} IS NOT NULL THEN round(10000.0 * ({le} - ({lt})) / {n})::smallint END AS {a}').format(
                     x=x, le=le, lt=lt, n=n, a=sql.Identifier(f'{v["col"]}__{s}_eq')))
+            part = sql.Identifier(f'_r{i}')
+            cur.execute(sql.SQL("""CREATE TEMP TABLE {part} AS
+                SELECT h3, territorio_id, {wins} FROM (
+                    SELECT h3, territorio_id, depto_id, principal, regkey, reg_ok, {v} FROM _b) b
+                ORDER BY h3, territorio_id""").format(
+                part=part, v=sql.Identifier(f'v{i}'), wins=sql.SQL(', ').join(cols)))
+            parts.append(part)
         new = sql.Identifier(f'rango_{lid}_new')
         cur.execute(sql.SQL('DROP TABLE IF EXISTS {}').format(new))
+        joins = sql.SQL(' ').join(sql.SQL('JOIN {} USING (h3, territorio_id)').format(p) for p in parts)
         cur.execute(sql.SQL("""CREATE TABLE {new} AS
-            SELECT h3, territorio_id, {cols} FROM (SELECT b.*, {wins} FROM ({base}) b) w WHERE principal""").format(
-            new=new, base=base,
-            cols=sql.SQL(', ').join(sql.Identifier(f'{v["col"]}__{s}_{k}') for v in vars_ for s in scopes for k in ('lt', 'eq')),
-            wins=sql.SQL(', ').join(cols)))
+            SELECT h3, territorio_id, {cols} FROM (SELECT h3, territorio_id FROM _b WHERE principal) k {joins}""").format(
+            new=new, joins=joins,
+            cols=sql.SQL(', ').join(sql.Identifier(f'{v["col"]}__{s}_{k}') for v in vars_ for s in scopes for k in ('lt', 'eq'))))
         n_rows = cur.rowcount
         cur.execute(sql.SQL('ALTER TABLE {} ADD PRIMARY KEY (h3, territorio_id)').format(new))
+        for p in parts:
+            cur.execute(sql.SQL('DROP TABLE {}').format(p))
 
         # ── distributions ──
         dist = []

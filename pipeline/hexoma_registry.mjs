@@ -53,7 +53,7 @@ try {
 				scale: v.scale ?? 1,
 				unit: v.unit ? units.unitLabel(v.unit) : '/100',
 				label: i18n.t(v.labelKey),
-				inFicha: !HIDDEN.has(v.col) || v.col === pv || v.rawCol === pv,
+				inFicha: (!HIDDEN.has(v.col) && !v.hidden) || v.col === pv || v.rawCol === pv,
 			})),
 		});
 	}
