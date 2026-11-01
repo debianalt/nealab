@@ -580,7 +580,7 @@
 	function startLasso() {
 		lassoOn = true; lassoPts = []; lassoPoly = null; selected = null;
 		if (!map) return;
-		map.dragPan.disable(); map.touchZoomRotate.disable(); map.doubleClickZoom.disable(); map.dragRotate.disable();
+		map.dragPan.disable(); map.touchZoomRotate.disable(); map.dragRotate.disable();
 		map.getCanvas().style.cursor = 'crosshair';
 		container.style.touchAction = 'none';
 	}
@@ -588,7 +588,7 @@
 		if (close && lassoPts.length >= 3) lassoPoly = [...lassoPts];
 		lassoOn = false; lassoPts = []; drawing = false; lastPx = null; lassoEnded = performance.now();
 		if (!map) return;
-		map.dragPan.enable(); map.touchZoomRotate.enable(); map.doubleClickZoom.enable(); map.dragRotate.enable();
+		map.dragPan.enable(); map.touchZoomRotate.enable(); map.dragRotate.enable();
 		map.getCanvas().style.cursor = '';
 		container.style.touchAction = '';
 	}
@@ -788,6 +788,10 @@
 			if (cancelled) return;
 			styleTema = tema0;
 			map = new maplibregl.Map({ container, style: style0, ...town(), maxPitch: 70, attributionControl: { compact: true } });
+			// radios cover the whole municipality, so every click selects one: double click releases it
+			// (it is not a zoom here; wheel, buttons and pinch still zoom)
+			map.doubleClickZoom.disable();
+			map.on('dblclick', () => { if (!lassoOn) selected = null; });
 			map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-left');
 			map.addControl(new maplibregl.ScaleControl({ maxWidth: 120, unit: 'metric' }), 'bottom-left');
 			if (import.meta.env.DEV) (window as any).__demo = map;   // for the local Playwright check
@@ -897,7 +901,11 @@
 				if (zq && radioById.has(zq)) flyToRadio(zq);
 			});
 		})();
-		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && lassoOn) endLasso(false); };
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key !== 'Escape') return;
+			if (lassoOn) endLasso(false);
+			else selected = null;
+		};
 		window.addEventListener('keydown', onKey);
 		// capture phase: the lasso sees the pointer before MapLibre's handlers do
 		const cap = { capture: true };
