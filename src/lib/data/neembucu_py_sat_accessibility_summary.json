@@ -159,14 +159,14 @@
     {
       "distrito": "Alberdi",
       "parquetKey": "alberdi",
-      "avg_score": 26.4,
+      "avg_score": 25.2,
       "hex_count": 1236,
       "centroid": [
         -58.0676,
         -26.1811
       ],
       "rank": {
-        "min_cabecera": 21,
+        "min_cabecera": 20,
         "min_capital": 182,
         "km_hospital": 37.7
       }

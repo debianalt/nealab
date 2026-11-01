@@ -99,7 +99,7 @@
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 26.0,
+      "avg_score": 26.1,
       "hex_count": 58522,
       "centroid": [
         -58.0456,
@@ -114,14 +114,14 @@
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 25.5,
+      "avg_score": 25.6,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
         -25.9345
       ],
       "rank": {
-        "min_cabecera": 76,
+        "min_cabecera": 75,
         "min_capital": 101,
         "km_hospital": 20.5
       }

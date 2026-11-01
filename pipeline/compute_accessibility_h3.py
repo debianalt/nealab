@@ -133,6 +133,12 @@ def sample_raster_at_centroids(raster_path: str, lngs: list, lats: list,
         vals = np.array([v[0] for v in src.sample(coords)], dtype=np.float64)
         if nd is not None:
             vals[vals == nd] = np.nan
+        # rasterio fills points outside the raster with 0 when it declares no
+        # nodata: a cell beyond the export read "0 min to a city" (fixed 1-nov-2026).
+        b = src.bounds
+        lng_a, lat_a = np.asarray(lngs), np.asarray(lats)
+        outside = (lng_a < b.left) | (lng_a > b.right) | (lat_a < b.bottom) | (lat_a > b.top)
+        vals[outside] = np.nan
     return vals
 
 
@@ -342,7 +348,9 @@ def main():
     # ── Travel time to nearest city (cities_access raster) ───────────────────
     print("\nSampling cities_access raster...")
     travel_cabecera_raw = sample_raster_at_centroids(cities_path, lngs, lats)
-    travel_cabecera_raw[travel_cabecera_raw <= 0] = np.nan
+    # 0 = inside a city of 50k+ (Oxford); cells without a reading come as NaN.
+    # `<= 0` used to drop the city cores themselves (Posadas, Gran Asunción).
+    travel_cabecera_raw[travel_cabecera_raw < 0] = np.nan
     valid = np.sum(np.isfinite(travel_cabecera_raw))
     print(f"  valid={valid:,}/{n:,}  mean={np.nanmean(travel_cabecera_raw):.1f} min")
 
@@ -500,17 +508,27 @@ def main():
     X_km = scored[retained].fillna(scored[retained].mean()).values
     km = KMeans(n_clusters=4, random_state=42, n_init=10)
     raw_labels = km.fit_predict(X_km)
-    # Map cluster IDs: 1=highest score, 4=lowest score
-    cluster_means = {c: scored['score'].values[raw_labels == c].mean()
-                     for c in range(4)}
-    order = sorted(cluster_means, key=lambda c: -cluster_means[c])
+    # Map cluster IDs: 1 = shortest median time to the capital (Bien conectado),
+    # 4 = longest (Extremadamente aislado). It used to sort by score, but in local
+    # mode the score grows with distance (percentiles not inverted), so every
+    # label came out backwards: "Bien conectado" had a median of 439 min in
+    # Misiones (fixed 1-nov-2026). Physical time does not depend on the mode.
+    cap_raw = scored['travel_capital_raw'].values
+    cluster_means = {c: np.nanmedian(cap_raw[raw_labels == c]) for c in range(4)}
+    order = sorted(cluster_means, key=lambda c: cluster_means[c])
     label_map = {c: rank + 1 for rank, c in enumerate(order)}
     scored['type'] = np.array([label_map[l] for l in raw_labels], dtype=np.int32)
-    scored['type_label'] = scored['type'].map(TYPE_LABELS)
     print(f"  Counts: {scored['type'].value_counts().sort_index().to_dict()}")
+    # Keep EVERY grid cell: a cell without a score (one indicator missing) still
+    # carries its physical readings. Writing only `scored` dropped the Posadas
+    # core (time to city = 0 read as missing → no score → no row at all).
+    df['type'] = pd.array([pd.NA] * len(df), dtype='Int32')
+    df.loc[scored.index, 'type'] = scored['type'].values
+    df['type_label'] = df['type'].map(TYPE_LABELS)
+    print(f"  Cells without score (kept, physical values only): {int((~scored_mask).sum()):,}")
 
     # ── Assemble output ───────────────────────────────────────────────────────
-    out = scored[[
+    out = df[[
         'h3index', 'score', 'type', 'type_label', 'pca_1', 'pca_2',
         'r_travel_capital', 'r_travel_cabecera',
         'r_hospital', 'r_school', 'r_road',

@@ -102,10 +102,11 @@ SPECS = {
 
 
 # Fields where 0 cannot be a department mean (minutes, km, µg/m³): a 0 there is
-# a missing input averaged as 0 — accessibility has no cabecera times for Chaco
-# and Formosa and almost no hospital distances in Brazil.
+# a missing input averaged as 0 — almost no hospital distances in Brazil.
+# min_cabecera left the list on 1-nov-2026: 0 is now a real reading (inside a city
+# of 50k+, e.g. the Asunción district) and missing cells come as NULL.
 ZERO_IS_MISSING = {
-    'accessibility': ['min_cabecera', 'min_capital', 'km_hospital'],
+    'accessibility': ['min_capital', 'km_hospital'],
     'health_access': ['health_min'],
     'pm25_drivers': ['pm25_ug'],
 }

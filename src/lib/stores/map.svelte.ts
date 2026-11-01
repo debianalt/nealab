@@ -86,7 +86,9 @@ export class MapStore {
 		// measurement, identical method across all territories → objectively comparable,
 		// no census-allocation artifact. Coalesced low-zoom BR blobs carry summed area +
 		// mean height, so volume stays ~correct at every zoom. est_personas → click only.
-		const value = ['*', ['coalesce', ['get', 'area_m2'], 0], ['coalesce', ['get', 'best_height_m'], 3]];
+		// to-number: the BR tiles carry area_m2 as a string, which made '*' fail and
+		// painted every Brazilian building black (fallback colour; fixed 1-nov-2026).
+		const value = ['*', ['to-number', ['get', 'area_m2'], 0], ['to-number', ['coalesce', ['get', 'best_height_m'], 3], 3]];
 		return [
 			'interpolate', ['linear'],
 			value,

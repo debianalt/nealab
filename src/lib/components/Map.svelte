@@ -200,11 +200,31 @@
 			});
 
 			// Province border: neon green outline
-			map.addSource('province-boundary', { type: 'geojson', data: misionesBoundary as any });
+			// ONE source for the 24 territory outlines. As 24 GeoJSON sources each view
+			// cost ~104 worker tile jobs per outline, about half of the ~4,800 jobs
+			// measured over Villeta (1-nov-2026). Each `*-border` layer keeps its id and
+			// style and filters its own territory.
+			const tagged = (territory: string, data: any): any[] =>
+				(data.type === 'FeatureCollection' ? data.features : [data.type === 'Feature' ? data : { type: 'Feature', properties: {}, geometry: data }])
+					.map((f: any) => ({ ...f, properties: { ...(f.properties ?? {}), territory } }));
+			const boundaryData: Array<[string, any]> = [
+				['misiones', misionesBoundary], ['itapua', itapuaBoundary], ['corrientes', corrientesBoundary],
+				['alto_parana', altoParanaBoundary], ['chaco', chacoBoundary], ['formosa', formosaBoundary],
+				['parana_br', paranaBrBoundary], ['santa_catarina_br', scBrBoundary], ['rio_grande_sul_br', rsBrBoundary],
+				['concepcion_py', concepcionPyBoundary], ['san_pedro_py', sanPedroPyBoundary], ['cordillera_py', cordilleraPyBoundary],
+				['guaira_py', guairaPyBoundary], ['caaguazu_py', caaguazuPyBoundary], ['caazapa_py', caazapaPyBoundary],
+				['misiones_py', misionesPyBoundary], ['paraguari_py', paraguariPyBoundary], ['central_py', centralPyBoundary],
+				['neembucu_py', neembucuPyBoundary], ['amambay_py', amambayPyBoundary], ['canindeyu_py', canindeyuPyBoundary],
+				['presidente_hayes_py', presidenteHayesPyBoundary], ['boqueron_py', boqueronPyBoundary], ['alto_paraguay_py', altoParaguayPyBoundary],
+			];
+			map.addSource('territory-boundaries', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: boundaryData.flatMap(([t, d]) => tagged(t, d)) } as any
+			});
 			map.addLayer({
 				id: 'province-border',
 				type: 'line',
-				source: 'province-boundary',
+				source: 'territory-boundaries', filter: ['==', ['get', 'territory'], 'misiones'],
 				paint: {
 					'line-color': '#f472b6',
 					'line-width': [
@@ -225,11 +245,10 @@
 			});
 
 			// Itapúa territory border — always visible, indicates available coverage
-			map.addSource('itapua-boundary', { type: 'geojson', data: itapuaBoundary as any });
 			map.addLayer({
 				id: 'itapua-border',
 				type: 'line',
-				source: 'itapua-boundary',
+				source: 'territory-boundaries', filter: ['==', ['get', 'territory'], 'itapua'],
 				paint: {
 					'line-color': '#f472b6',
 					'line-width': [
@@ -259,11 +278,10 @@
 				layout: { visibility: 'none' },
 				paint: { 'fill-color': '#1a1a2e', 'fill-opacity': 0.75 }
 			}, 'province-fill');
-			map.addSource('corrientes-boundary', { type: 'geojson', data: corrientesBoundary as any });
 			map.addLayer({
 				id: 'corrientes-border',
 				type: 'line',
-				source: 'corrientes-boundary',
+				source: 'territory-boundaries', filter: ['==', ['get', 'territory'], 'corrientes'],
 				layout: { 'line-join': 'round', 'line-cap': 'round' },
 				paint: {
 					'line-color': '#f472b6',
@@ -292,11 +310,10 @@
 				layout: { visibility: 'none' },
 				paint: { 'fill-color': '#1a1a2e', 'fill-opacity': 0.75 }
 			}, 'province-fill');
-			map.addSource('alto_parana-boundary', { type: 'geojson', data: altoParanaBoundary as any });
 			map.addLayer({
 				id: 'alto_parana-border',
 				type: 'line',
-				source: 'alto_parana-boundary',
+				source: 'territory-boundaries', filter: ['==', ['get', 'territory'], 'alto_parana'],
 				layout: { 'line-join': 'round', 'line-cap': 'round' },
 				paint: {
 					'line-color': '#f472b6',
@@ -324,12 +341,11 @@
 				['santa_catarina_br', scBrBoundary],
 				['rio_grande_sul_br', rsBrBoundary],
 			];
-			for (const [id, data] of v11Borders) {
-				map.addSource(`${id}-boundary`, { type: 'geojson', data });
+			for (const [id] of v11Borders) {
 				map.addLayer({
 					id: `${id}-border`,
 					type: 'line',
-					source: `${id}-boundary`,
+					source: 'territory-boundaries', filter: ['==', ['get', 'territory'], id],
 					layout: { 'line-join': 'round', 'line-cap': 'round' },
 					paint: {
 						'line-color': '#f472b6',
@@ -363,12 +379,11 @@
 			['boqueron_py',         boqueronPyBoundary],
 			['alto_paraguay_py',    altoParaguayPyBoundary],
 			];
-			for (const [id, data] of pyDeptBorders) {
-				map.addSource(`${id}-boundary`, { type: 'geojson', data });
+			for (const [id] of pyDeptBorders) {
 				map.addLayer({
 					id: `${id}-border`,
 					type: 'line',
-					source: `${id}-boundary`,
+					source: 'territory-boundaries', filter: ['==', ['get', 'territory'], id],
 					layout: { 'line-join': 'round', 'line-cap': 'round' },
 					paint: {
 						'line-color': '#f472b6',
@@ -1847,6 +1862,7 @@
 		const colorExpr = heightColored ? mapStore.getHeightColorExpr() : mapStore.getColorExpr();
 		if (map?.getLayer(layer)) {
 			map.setLayoutProperty(layer, 'visibility', 'visible');
+			setBuildingsZoom(layer, true);
 			map.setPaintProperty(layer, 'fill-extrusion-color', colorExpr as any);
 			map.setPaintProperty(layer, 'fill-extrusion-opacity', opacity);
 		}
@@ -2103,6 +2119,15 @@
 		if (feature && map?.getLayer('compare-dept-outline-line')) map.moveLayer('compare-dept-outline-line');
 	}
 
+	// Buildings of the active territory from z8 (the PMTiles minzoom); neighbours'
+	// only from z11, where a building is more than a pixel or two. In the regional
+	// mode of a department view every territory in sight loaded its buildings from
+	// z8: the heaviest work of the single MapLibre worker over Villeta (decided with
+	// the author 1-nov-2026).
+	function setBuildingsZoom(layerId: string, own: boolean) {
+		map?.setLayerZoomRange(layerId, own ? 8 : 11, 24);
+	}
+
 	function applyTerritoryVisibility() {
 		if (!map) return;
 
@@ -2113,9 +2138,11 @@
 			// population) — consistent meaning across the frontier, not height.
 			const colorExprDefault = mapStore.getColorExpr();
 			const colorExprItapua = colorExprDefault;
+			const ownLayer = TERRITORY_BUILDINGS_LAYER[activeTerritoryId] ?? 'buildings-3d';
 			for (const l of ALL_BUILDINGS_LAYERS) {
 				if (map.getLayer(l)) {
 					map.setLayoutProperty(l, 'visibility', 'visible');
+					setBuildingsZoom(l, l === ownLayer);
 					const expr = (l === 'itapua-buildings-3d' || l === 'alto_parana-buildings-3d') ? colorExprItapua : colorExprDefault;
 					map.setPaintProperty(l, 'fill-extrusion-color', expr as any);
 				}
@@ -2173,6 +2200,7 @@
 		}
 		if (map.getLayer(activeLayer)) {
 			map.setLayoutProperty(activeLayer, 'visibility', 'visible');
+			setBuildingsZoom(activeLayer, true);
 			const colorExpr = mapStore.getColorExpr();
 			map.setPaintProperty(activeLayer, 'fill-extrusion-color', colorExpr as any);
 		}

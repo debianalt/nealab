@@ -2,7 +2,7 @@
   "territory": "caaguazu_py",
   "province": {
     "total_hexes": 135727,
-    "avg_score": 44.4,
+    "avg_score": 44.5,
     "unassigned": 0
   },
   "departments": [
@@ -39,7 +39,7 @@
     {
       "distrito": "R.i. 3 Corrales",
       "parquetKey": "ri_3_corrales",
-      "avg_score": 56.3,
+      "avg_score": 56.4,
       "hex_count": 2925,
       "centroid": [
         -56.2343,
@@ -54,7 +54,7 @@
     {
       "distrito": "Repatriacion",
       "parquetKey": "repatriacion",
-      "avg_score": 52.9,
+      "avg_score": 53.0,
       "hex_count": 8988,
       "centroid": [
         -55.7998,
@@ -69,7 +69,7 @@
     {
       "distrito": "Carayao",
       "parquetKey": "carayao",
-      "avg_score": 51.3,
+      "avg_score": 51.4,
       "hex_count": 9778,
       "centroid": [
         -56.3183,
@@ -99,7 +99,7 @@
     {
       "distrito": "San Jose De Los Arroyos",
       "parquetKey": "san_jose_de_los_arroyos",
-      "avg_score": 46.6,
+      "avg_score": 46.7,
       "hex_count": 5299,
       "centroid": [
         -56.6955,
@@ -129,7 +129,7 @@
     {
       "distrito": "Simon Bolivar",
       "parquetKey": "simon_bolivar",
-      "avg_score": 41.7,
+      "avg_score": 41.8,
       "hex_count": 3997,
       "centroid": [
         -56.3273,
@@ -219,7 +219,7 @@
     {
       "distrito": "Nueva Londres",
       "parquetKey": "nueva_londres",
-      "avg_score": 28.1,
+      "avg_score": 28.2,
       "hex_count": 2284,
       "centroid": [
         -56.5598,
@@ -234,7 +234,7 @@
     {
       "distrito": "Juan M. Frutos",
       "parquetKey": "juan_m_frutos",
-      "avg_score": 28.0,
+      "avg_score": 28.1,
       "hex_count": 5778,
       "centroid": [
         -55.825,
@@ -249,7 +249,7 @@
     {
       "distrito": "Caaguazu",
       "parquetKey": "caaguazu",
-      "avg_score": 27.4,
+      "avg_score": 27.5,
       "hex_count": 10114,
       "centroid": [
         -56.0534,
@@ -264,14 +264,14 @@
     {
       "distrito": "Coronel Oviedo",
       "parquetKey": "coronel_oviedo",
-      "avg_score": 25.6,
+      "avg_score": 25.7,
       "hex_count": 9135,
       "centroid": [
         -56.4242,
         -25.4906
       ],
       "rank": {
-        "min_cabecera": 24,
+        "min_cabecera": 23,
         "min_capital": 23,
         "km_hospital": 11.2
       }

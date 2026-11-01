@@ -2,14 +2,14 @@
   "territory": "central_py",
   "province": {
     "total_hexes": 27483,
-    "avg_score": 45.4,
+    "avg_score": 46.9,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Nueva Italia",
       "parquetKey": "nueva_italia",
-      "avg_score": 72.2,
+      "avg_score": 73.2,
       "hex_count": 4022,
       "centroid": [
         -57.4757,
@@ -24,7 +24,7 @@
     {
       "distrito": "Villeta",
       "parquetKey": "villeta",
-      "avg_score": 63.0,
+      "avg_score": 64.5,
       "hex_count": 9166,
       "centroid": [
         -57.6064,
@@ -39,7 +39,7 @@
     {
       "distrito": "Ita",
       "parquetKey": "ita",
-      "avg_score": 40.4,
+      "avg_score": 43.9,
       "hex_count": 1945,
       "centroid": [
         -57.3749,
@@ -52,31 +52,16 @@
       }
     },
     {
-      "distrito": "Ypacarai",
-      "parquetKey": "ypacarai",
-      "avg_score": 30.7,
-      "hex_count": 1197,
-      "centroid": [
-        -57.2585,
-        -25.3887
-      ],
-      "rank": {
-        "min_cabecera": 7,
-        "min_capital": 21,
-        "km_hospital": null
-      }
-    },
-    {
       "distrito": "Limpio",
       "parquetKey": "limpio",
-      "avg_score": 30.5,
+      "avg_score": 34.5,
       "hex_count": 1313,
       "centroid": [
         -57.4784,
         -25.1533
       ],
       "rank": {
-        "min_cabecera": 7,
+        "min_cabecera": 5,
         "min_capital": 28,
         "km_hospital": null
       }
@@ -84,7 +69,7 @@
     {
       "distrito": "Guarambare",
       "parquetKey": "guarambare",
-      "avg_score": 28.8,
+      "avg_score": 34.3,
       "hex_count": 312,
       "centroid": [
         -57.452,
@@ -97,39 +82,24 @@
       }
     },
     {
-      "distrito": "M. Roque Alonso",
-      "parquetKey": "m_roque_alonso",
-      "avg_score": 27.1,
-      "hex_count": 455,
+      "distrito": "Ypacarai",
+      "parquetKey": "ypacarai",
+      "avg_score": 34.0,
+      "hex_count": 1197,
       "centroid": [
-        -57.5338,
-        -25.1973
+        -57.2585,
+        -25.3887
       ],
       "rank": {
-        "min_cabecera": 4,
-        "min_capital": 25,
-        "km_hospital": null
-      }
-    },
-    {
-      "distrito": "San Antonio",
-      "parquetKey": "san_antonio",
-      "avg_score": 26.0,
-      "hex_count": 315,
-      "centroid": [
-        -57.5599,
-        -25.4165
-      ],
-      "rank": {
-        "min_cabecera": 18,
-        "min_capital": 34,
+        "min_cabecera": 7,
+        "min_capital": 21,
         "km_hospital": null
       }
     },
     {
       "distrito": "Ypane",
       "parquetKey": "ypane",
-      "avg_score": 25.5,
+      "avg_score": 30.4,
       "hex_count": 509,
       "centroid": [
         -57.5063,
@@ -142,16 +112,61 @@
       }
     },
     {
+      "distrito": "M. Roque Alonso",
+      "parquetKey": "m_roque_alonso",
+      "avg_score": 27.3,
+      "hex_count": 455,
+      "centroid": [
+        -57.5338,
+        -25.1973
+      ],
+      "rank": {
+        "min_cabecera": 1,
+        "min_capital": 25,
+        "km_hospital": null
+      }
+    },
+    {
+      "distrito": "Itaugua",
+      "parquetKey": "itaugua",
+      "avg_score": 27.0,
+      "hex_count": 1218,
+      "centroid": [
+        -57.3532,
+        -25.3941
+      ],
+      "rank": {
+        "min_cabecera": 4,
+        "min_capital": 14,
+        "km_hospital": null
+      }
+    },
+    {
+      "distrito": "San Antonio",
+      "parquetKey": "san_antonio",
+      "avg_score": 26.8,
+      "hex_count": 315,
+      "centroid": [
+        -57.5599,
+        -25.4165
+      ],
+      "rank": {
+        "min_cabecera": 11,
+        "min_capital": 34,
+        "km_hospital": null
+      }
+    },
+    {
       "distrito": "Aregua",
       "parquetKey": "aregua",
-      "avg_score": 24.5,
+      "avg_score": 26.4,
       "hex_count": 1123,
       "centroid": [
         -57.3871,
         -25.2913
       ],
       "rank": {
-        "min_cabecera": 15,
+        "min_cabecera": 11,
         "min_capital": 14,
         "km_hospital": null
       }
@@ -159,44 +174,29 @@
     {
       "distrito": "J. A. Saldivar",
       "parquetKey": "j_a_saldivar",
-      "avg_score": 24.3,
+      "avg_score": 24.5,
       "hex_count": 374,
       "centroid": [
         -57.4334,
         -25.4217
       ],
       "rank": {
-        "min_cabecera": 3,
+        "min_cabecera": 1,
         "min_capital": 16,
-        "km_hospital": null
-      }
-    },
-    {
-      "distrito": "Itaugua",
-      "parquetKey": "itaugua",
-      "avg_score": 24.0,
-      "hex_count": 1218,
-      "centroid": [
-        -57.3532,
-        -25.3941
-      ],
-      "rank": {
-        "min_cabecera": 5,
-        "min_capital": 14,
         "km_hospital": null
       }
     },
     {
       "distrito": "Luque",
       "parquetKey": "luque",
-      "avg_score": 22.9,
+      "avg_score": 24.1,
       "hex_count": 1595,
       "centroid": [
         -57.4568,
         -25.2476
       ],
       "rank": {
-        "min_cabecera": 7,
+        "min_cabecera": 4,
         "min_capital": 17,
         "km_hospital": null
       }
@@ -204,14 +204,14 @@
     {
       "distrito": "Asuncion",
       "parquetKey": "asuncion",
-      "avg_score": 22.5,
+      "avg_score": 22.1,
       "hex_count": 1465,
       "centroid": [
         -57.6069,
         -25.2858
       ],
       "rank": {
-        "min_cabecera": 8,
+        "min_cabecera": 2,
         "min_capital": 31,
         "km_hospital": null
       }
@@ -219,14 +219,14 @@
     {
       "distrito": "Nemby",
       "parquetKey": "nemby",
-      "avg_score": 21.8,
+      "avg_score": 20.9,
       "hex_count": 283,
       "centroid": [
         -57.5321,
         -25.3952
       ],
       "rank": {
-        "min_cabecera": 2,
+        "min_cabecera": 1,
         "min_capital": 20,
         "km_hospital": null
       }
@@ -234,14 +234,14 @@
     {
       "distrito": "Lambare",
       "parquetKey": "lambare",
-      "avg_score": 21.6,
+      "avg_score": 19.2,
       "hex_count": 310,
       "centroid": [
         -57.6166,
         -25.3522
       ],
       "rank": {
-        "min_cabecera": 15,
+        "min_cabecera": 1,
         "min_capital": 29,
         "km_hospital": null
       }
@@ -249,14 +249,14 @@
     {
       "distrito": "Villa Elisa",
       "parquetKey": "villa_elisa",
-      "avg_score": 20.3,
+      "avg_score": 18.2,
       "hex_count": 220,
       "centroid": [
         -57.5871,
         -25.3721
       ],
       "rank": {
-        "min_cabecera": 22,
+        "min_cabecera": 1,
         "min_capital": 27,
         "km_hospital": null
       }
@@ -264,14 +264,14 @@
     {
       "distrito": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 18.7,
+      "avg_score": 16.5,
       "hex_count": 607,
       "centroid": [
         -57.5107,
         -25.3477
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 0,
         "min_capital": 17,
         "km_hospital": null
       }
@@ -279,14 +279,14 @@
     {
       "distrito": "Capiata",
       "parquetKey": "capiata",
-      "avg_score": 17.4,
+      "avg_score": 16.2,
       "hex_count": 833,
       "centroid": [
         -57.4524,
         -25.3673
       ],
       "rank": {
-        "min_cabecera": 3,
+        "min_cabecera": 0,
         "min_capital": 11,
         "km_hospital": null
       }
@@ -294,14 +294,14 @@
     {
       "distrito": "Fdo. De La Mora",
       "parquetKey": "fdo_de_la_mora",
-      "avg_score": 16.0,
+      "avg_score": 14.6,
       "hex_count": 221,
       "centroid": [
         -57.5499,
         -25.3229
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 0,
         "min_capital": 21,
         "km_hospital": null
       }

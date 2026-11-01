@@ -2,7 +2,7 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 1116998,
-    "avg_score": 45.4,
+    "avg_score": 45.5,
     "unassigned": 0
   },
   "departments": [
@@ -114,7 +114,7 @@
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 46.5,
+      "avg_score": 46.6,
       "hex_count": 14454,
       "centroid": [
         -61.0749,
@@ -159,7 +159,7 @@
     {
       "dpto": "Maipú",
       "parquetKey": "maipu",
-      "avg_score": 37.3,
+      "avg_score": 37.4,
       "hex_count": 31826,
       "centroid": [
         -60.4564,
@@ -174,7 +174,7 @@
     {
       "dpto": "Veinticinco de Mayo",
       "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 36.8,
+      "avg_score": 36.9,
       "hex_count": 25567,
       "centroid": [
         -60.0398,
@@ -189,7 +189,7 @@
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 36.4,
+      "avg_score": 36.5,
       "hex_count": 26903,
       "centroid": [
         -59.7871,
@@ -204,7 +204,7 @@
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 35.5,
+      "avg_score": 35.6,
       "hex_count": 17997,
       "centroid": [
         -60.692,
@@ -219,7 +219,7 @@
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
-      "avg_score": 35.3,
+      "avg_score": 35.4,
       "hex_count": 21190,
       "centroid": [
         -60.7604,
@@ -234,7 +234,7 @@
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 32.4,
+      "avg_score": 32.5,
       "hex_count": 83469,
       "centroid": [
         -59.5073,
@@ -316,7 +316,7 @@
         -27.7065
       ],
       "rank": {
-        "min_cabecera": 65,
+        "min_cabecera": 63,
         "min_capital": 71,
         "km_hospital": 10.4
       }
@@ -324,14 +324,14 @@
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 25.0,
+      "avg_score": 25.1,
       "hex_count": 16790,
       "centroid": [
         -60.4735,
         -26.7914
       ],
       "rank": {
-        "min_cabecera": 24,
+        "min_cabecera": 23,
         "min_capital": 182,
         "km_hospital": 10.3
       }
@@ -339,7 +339,7 @@
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 22.2,
+      "avg_score": 22.3,
       "hex_count": 11409,
       "centroid": [
         -59.2715,
@@ -354,7 +354,7 @@
     {
       "dpto": "Primero de Mayo",
       "parquetKey": "primero_de_mayo",
-      "avg_score": 18.8,
+      "avg_score": 18.9,
       "hex_count": 15919,
       "centroid": [
         -58.9731,
