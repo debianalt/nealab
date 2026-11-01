@@ -73,6 +73,7 @@ PCT_2022 = [
     ('agua_precaria', 'HOGAR_H14', [4, 5, 6], [],
      'Agua de pozo sin bomba, cisterna, lluvia, río u otra procedencia / hogares'),
     ('agua_fuera_vivienda', 'HOGAR_H13', [3], [], 'Agua fuera de la vivienda (dentro del terreno) / hogares'),
+    ('agua_dentro_vivienda', 'HOGAR_H13', [1], [], 'Agua por cañería dentro de la vivienda / hogares'),
     ('cloaca', 'HOGAR_H15_17_18', [1], [], 'Inodoro con descarga y desagüe a red pública / hogares'),
     ('sin_inodoro_descarga', 'HOGAR_H15_17_18', [4], [], 'Inodoro sin descarga, o sin inodoro o baño / hogares'),
     ('sin_bano', 'HOGAR_H15_17', [3], [], 'Sin baño o baño sin inodoro / hogares'),
@@ -159,6 +160,7 @@ PCT_2001 = [
     ('techo_precario', 'HOGAR_CH13', [11, 12], [0], 'Techo de chapa de cartón, caña, tabla o paja / hogares'),
     ('agua_fuera_vivienda', 'HOGAR_H10', [2, 3], [0],
      'Agua por cañería fuera de la vivienda o fuera del terreno / hogares (el diccionario rotula mal la categoría 1, que es «dentro de la vivienda»)'),
+    ('agua_dentro_vivienda', 'HOGAR_H10', [1], [0], 'Agua por cañería dentro de la vivienda / hogares'),
     ('cloaca', 'HOGAR_CH9', [1], [0], 'Inodoro con descarga y desagüe a red pública / hogares'),
     ('sin_inodoro_descarga', 'HOGAR_CH9', [4], [0], 'Inodoro sin descarga, o sin inodoro / hogares'),
     ('hacinamiento', 'HOGAR_HACIAGRU', [5, 6], [7], 'Más de 2 personas por cuarto / hogares'),
@@ -237,6 +239,10 @@ PCT_2010 = [  # ampliado: muestra calibrada por radio
     ('materiales_calidad_iv', 'HOGAR_INMAT', [4], [0], 'Calidad de materiales IV / hogares'),
     ('servicios_insuficientes', 'HOGAR_INCALSERV', [3], [0], 'Calidad de conexiones a servicios básicos insuficiente / hogares'),
     ('agua_fuera_vivienda', 'HOGAR_H1308', [2, 3], [0], 'Agua por cañería fuera de la vivienda o fuera del terreno / hogares'),
+    ('agua_dentro_vivienda', 'HOGAR_H1308', [1], [0], 'Agua por cañería dentro de la vivienda / hogares'),
+    ('techo_precario', 'HOGAR_H1006', [6, 7], [0], 'Techo de chapa de cartón, caña, palma, tabla o paja / hogares'),
+    ('menores_15', 'PERSONA_P03', rng(0, 14), [], 'Personas de 0 a 14 años / población'),
+    ('mayores_65', 'PERSONA_P03', rng(65, 130), [], 'Personas de 65 años y más / población'),
     ('cocina_lena_carbon', 'HOGAR_H2014', [6], [0], 'Cocina principalmente con leña o carbón / hogares'),
     ('cocina_garrafa', 'HOGAR_H2014', [4], [0], 'Cocina principalmente con gas en garrafa / hogares'),
     ('cocina_gas_red', 'HOGAR_H2014', [1], [0], 'Cocina principalmente con gas de red / hogares'),
@@ -292,6 +298,7 @@ PCT_1991 = [
     ('nbi_subsistencia', 'HOGAR_CMV2ECASU', [1], [], 'NBI capacidad de subsistencia / hogares'),
     ('agua_red', 'HOGAR_OBTAGUA', [1], [8, 9, 10], 'Agua de red pública / hogares con dato'),
     ('agua_fuera_vivienda', 'HOGAR_AGUA', [2, 3], [8, 9, 10], 'Agua fuera de la vivienda o fuera del terreno / hogares con dato'),
+    ('agua_dentro_vivienda', 'HOGAR_AGUA', [1], [8, 9, 10], 'Agua por cañería dentro de la vivienda / hogares con dato'),
     ('cloaca', 'HOGAR_DESAGINH', [1], [8, 9, 11], 'Desagüe a red pública / hogares con dato (incluye a los sin inodoro con descarga)'),
     ('piso_tierra', 'HOGAR_PISOS', [3], [5, 6], 'Piso de tierra / hogares con dato'),
     ('piso_sin_revestimiento', 'HOGAR_PISOS', [2, 3, 4], [5, 6], 'Piso de cemento, ladrillo fijo, tierra u otro / hogares con dato'),
@@ -357,3 +364,77 @@ SPECS: dict[int, dict] = {
         persona_muestra='PERSONA_SEXO',
     ),
 }
+
+# ── Panel 1991–2022: sólo indicadores con la misma definición en los años en que aparecen ──
+# (indicador, tipo, {año: columna de censo_<año>.indicadores}, rótulo, nota de comparabilidad)
+# tipo 'pct' usa <columna>_num y <columna>_den; 'total' usa la columna tal cual.
+TODOS = (1991, 2001, 2010, 2022)
+
+
+def todos(col: str) -> dict[int, str]:
+    return {a: col for a in TODOS}
+
+
+def menos(col: str, *sin: int) -> dict[int, str]:
+    return {a: col for a in TODOS if a not in sin}
+
+
+PANEL = [
+    ('personas', 'total', todos('personas_oficial'), 'Población total (oficial del radio)',
+     '2022 cuenta sólo viviendas particulares; los demás años incluyen colectivas'),
+    ('viviendas', 'total', todos('viviendas_oficial'), 'Viviendas (oficial del radio)',
+     '1991, 2010 y 2022: particulares; 2001: total'),
+    ('hogares', 'total', todos('hogares'), 'Hogares',
+     '1991 expandido de la muestra; 2010 de la tabla básica completa'),
+    ('nbi', 'pct', todos('nbi'), 'Hogares con NBI / hogares',
+     'Mismos cinco criterios INDEC. 1991: NBI de la vivienda, heredado por sus hogares'),
+    ('nbi_hacinamiento', 'pct', todos('nbi_hacinamiento'), 'Hogares con más de 3 personas por cuarto / hogares', ''),
+    ('nbi_vivienda', 'pct', todos('nbi_vivienda'), 'NBI vivienda de tipo inconveniente / hogares',
+     '2010 de la muestra calibrada'),
+    ('nbi_sanitario', 'pct', todos('nbi_sanitario'), 'NBI condiciones sanitarias / hogares',
+     '2010 de la muestra calibrada'),
+    ('nbi_escolaridad', 'pct', todos('nbi_escolaridad'), 'NBI escolaridad / hogares', '2010 de la muestra calibrada'),
+    ('nbi_subsistencia', 'pct', todos('nbi_subsistencia'), 'NBI capacidad de subsistencia / hogares',
+     '2010 de la muestra calibrada'),
+    ('agua_dentro_vivienda', 'pct', todos('agua_dentro_vivienda'), 'Agua por cañería dentro de la vivienda / hogares',
+     '2010 de la muestra calibrada'),
+    ('agua_red', 'pct', menos('agua_red', 2001), 'Agua de red pública / hogares',
+     '2001 no preguntó la procedencia del agua'),
+    ('cloaca', 'pct', todos('cloaca'), 'Desagüe a red pública (cloaca) / hogares',
+     '1991: denominador sin los hogares con dato desconocido'),
+    ('piso_sin_revestimiento', 'pct', menos('piso_sin_revestimiento', 2001),
+     'Piso de cemento, ladrillo, tierra u otro (sin cerámica, baldosa ni madera) / hogares', '2001 no preguntó pisos'),
+    ('techo_precario', 'pct', todos('techo_precario'), 'Techo de chapa de cartón, caña, tabla o paja / hogares',
+     '2010 de la muestra calibrada'),
+    ('computadora', 'pct', menos('computadora', 1991), 'Computadora / hogares', '2022 incluye tablet'),
+    ('sin_heladera', 'pct', {2001: 'sin_heladera', 2010: 'sin_heladera'}, 'Sin heladera / hogares', ''),
+    ('telefono_fijo', 'pct', {2001: 'telefono_fijo', 2010: 'telefono_fijo'}, 'Teléfono fijo / hogares', ''),
+    ('propietario', 'pct', todos('propietario'), 'Vivienda propia / hogares',
+     '1991 y 2001: propietario de la vivienda con o sin el terreno'),
+    ('inquilino', 'pct', todos('inquilino'), 'Vivienda alquilada / hogares', ''),
+    ('cocina_lena_carbon', 'pct', menos('cocina_lena_carbon', 2001), 'Cocina principalmente con leña o carbón / hogares',
+     '2001 no preguntó el combustible; 2010 de la muestra calibrada'),
+    ('cocina_garrafa', 'pct', menos('cocina_garrafa', 2001), 'Cocina con gas en garrafa / hogares',
+     '1991: gas envasado (garrafa o tubo)'),
+    ('cocina_gas_red', 'pct', menos('cocina_gas_red', 2001), 'Cocina con gas de red / hogares', ''),
+    ('hogar_unipersonal', 'pct', menos('hogar_unipersonal', 1991), 'Hogares unipersonales / hogares', ''),
+    ('mujeres', 'pct', todos('mujeres'), 'Mujeres / población', ''),
+    ('menores_15', 'pct', todos('menores_15'), 'Personas de 0 a 14 años / población', '2010 de la muestra calibrada'),
+    ('mayores_65', 'pct', todos('mayores_65'), 'Personas de 65 años y más / población', '2010 de la muestra calibrada'),
+    ('nacidos_otra_provincia', 'pct', menos('nacidos_otra_provincia', 1991), 'Nacidos en otra provincia / población', ''),
+    ('nacidos_otro_pais', 'pct', menos('nacidos_otro_pais', 1991), 'Nacidos en otro país / población', ''),
+    ('tasa_actividad', 'pct', menos('tasa_actividad', 2010), 'Ocupados y desocupados / población de 14 años y más',
+     '2010: la base por radio no permite armar la condición de actividad'),
+    ('tasa_empleo', 'pct', menos('tasa_empleo', 2010), 'Ocupados / población de 14 años y más', 'ídem'),
+    ('tasa_desocupacion', 'pct', menos('tasa_desocupacion', 2010), 'Desocupados / población activa', 'ídem'),
+    ('cat_asalariado', 'pct', todos('cat_asalariado'), 'Obreros o empleados / ocupados',
+     '1991 y 2022 separan el servicio doméstico (no entra acá); 2001 y 2010 lo cuentan como asalariado'),
+    ('cat_cuenta_propia', 'pct', todos('cat_cuenta_propia'), 'Cuenta propia / ocupados', ''),
+    ('cat_patron', 'pct', todos('cat_patron'), 'Patrones / ocupados', ''),
+    ('cat_familiar', 'pct', todos('cat_familiar'), 'Trabajadores familiares / ocupados', ''),
+    ('cobertura_obra_social', 'pct', menos('cobertura_obra_social', 2001), 'Obra social o prepaga / población',
+     '1991 pregunta sólo por obra social; 2001 no preguntó'),
+    ('jubilacion_pension', 'pct', menos('jubilacion_pension', 2001), 'Cobra jubilación o pensión / población',
+     '2001 no preguntó'),
+    ('rural_dispersa', 'pct', menos('rural_dispersa', 1991), 'Viviendas en área rural dispersa / viviendas', ''),
+]

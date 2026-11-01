@@ -214,12 +214,14 @@ def build_duck(anio: int) -> duckdb.DuckDBPyConnection:
     """)
     # indicadores en conteos, calibrados por el factor del radio
     con.execute("CREATE TABLE rawf AS SELECT r.*, coalesce(f.factor, 1.0) AS f FROM raw r LEFT JOIN factor f USING (redcode)")
+    # Numeradores: 0 (no NULL) cuando la variable está en el radio pero ninguna categoría entra:
+    # sum(...) FILTER (WHERE cat IN …) daría NULL y el radio quedaría sin tasa en vez de 0 %.
     cols = []
     for name, var, cats, _ in spec['TOTAL']:
-        cond = f'AND cat_int IN ({ints(cats)})' if cats else ''
-        cols.append(f"sum(n * f) FILTER (WHERE codigo = '{var}' {cond}) AS {name}")
+        val = f'CASE WHEN cat_int IN ({ints(cats)}) THEN n * f ELSE 0 END' if cats else 'n * f'
+        cols.append(f"sum({val}) FILTER (WHERE codigo = '{var}') AS {name}")
     for name, var, num, excl, _ in spec['PCT']:
-        cols.append(f"sum(n * f) FILTER (WHERE codigo = '{var}' AND cat_int IN ({ints(num)})) AS {name}_num")
+        cols.append(f"sum(CASE WHEN cat_int IN ({ints(num)}) THEN n * f ELSE 0 END) FILTER (WHERE codigo = '{var}') AS {name}_num")
         cols.append(f"sum(n * f) FILTER (WHERE codigo = '{var}' AND cat_int NOT IN ({ints(excl)})) AS {name}_den"
                     if excl else f"sum(n * f) FILTER (WHERE codigo = '{var}') AS {name}_den")
     for name, var, excl, _ in spec['MEAN']:
