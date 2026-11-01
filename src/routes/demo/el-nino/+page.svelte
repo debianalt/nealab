@@ -42,7 +42,7 @@
 		oscuro: BASEMAP
 	};
 	const TH = {
-		claro: { sel: '#1c1c1c', dry: '#d3d0c8', ctx: '#e6e3dc', radioLine: '#5a5750', casing: '#fbfaf7', iso: '#7b62c0',
+		claro: { sel: '#1c1c1c', dry: '#a39482', ctx: '#cfc5b8', radioLine: '#5a5750', casing: '#fbfaf7', iso: '#7b62c0',
 			label: '#1c1c1c', halo: 'rgba(251, 250, 247, 0.92)', peakOff: '#dcd8cf', peakOn: '#3a7fb0', peakLine: '#1c1c1c' },
 		oscuro: { sel: '#f3efe6', dry: '#4a4c52', ctx: '#26282d', radioLine: '#e6e2d8', casing: INK_BG, iso: '#b6a1dc',
 			label: '#ebe8e1', halo: 'rgba(19, 20, 23, 0.92)', peakOff: '#2d2f36', peakOn: '#7fb3d1', peakLine: '#ebe8e1' }
@@ -83,7 +83,7 @@
 		{ id: 'saneamiento', label: 'Saneamiento que se contamina', color: '#aa4499', def: 'pozo sin cámara y agua sin cañería por encima del promedio: con la crecida el pozo desborda' },
 		{ id: 'tenencia', label: 'Tenencia insegura', color: '#ddaa33', def: 'hogares ni propietarios ni inquilinos por encima del promedio, o mayoría de viviendas en barrio popular' },
 		{ id: 'dependientes', label: 'Hogares que no se evacúan solos', color: '#44aa99', def: 'niños de 0 a 5 y mayores de 65 por encima del promedio' },
-		{ id: 'consolidada', label: 'Consolidada', color: '#8a8f98', def: 'ninguno de los rasgos anteriores' }
+		{ id: 'consolidada', label: 'Consolidada', color: '#b5a48c', def: 'ninguno de los rasgos anteriores' }
 	];
 	// census layers as raw counts per radio: share in the radio x its persons or households.
 	// prov = Misiones share (tabla.provincia key, or a number: 0-5 and 65+ from the 2022 census, all radios 54*)
@@ -572,15 +572,53 @@
 		] : [] });
 	});
 
+	// Freehand lasso, like spatia.ar's: press, drag around the area, release. Map panning is off while the
+	// mode is on, so the drag draws instead of moving the map; pointer events cover mouse and finger alike.
+	let drawing = false;
+	let lastPx: [number, number] | null = null;
+	let lassoEnded = 0;
 	function startLasso() {
 		lassoOn = true; lassoPts = []; lassoPoly = null; selected = null;
-		map?.doubleClickZoom.disable();
-		if (map) map.getCanvas().style.cursor = 'crosshair';
+		if (!map) return;
+		map.dragPan.disable(); map.touchZoomRotate.disable(); map.doubleClickZoom.disable(); map.dragRotate.disable();
+		map.getCanvas().style.cursor = 'crosshair';
+		container.style.touchAction = 'none';
 	}
 	function endLasso(close: boolean) {
 		if (close && lassoPts.length >= 3) lassoPoly = [...lassoPts];
-		lassoOn = false; lassoPts = [];
-		if (map) { map.getCanvas().style.cursor = ''; setTimeout(() => map.doubleClickZoom.enable(), 300); }
+		lassoOn = false; lassoPts = []; drawing = false; lastPx = null; lassoEnded = performance.now();
+		if (!map) return;
+		map.dragPan.enable(); map.touchZoomRotate.enable(); map.doubleClickZoom.enable(); map.dragRotate.enable();
+		map.getCanvas().style.cursor = '';
+		container.style.touchAction = '';
+	}
+	function lassoPoint(e: PointerEvent) {
+		const r = container.getBoundingClientRect();
+		const px: [number, number] = [e.clientX - r.left, e.clientY - r.top];
+		// one vertex every 4 px of drag: a full loop stays at a few hundred vertices
+		if (lastPx && Math.hypot(px[0] - lastPx[0], px[1] - lastPx[1]) < 4) return;
+		lastPx = px;
+		const ll = map.unproject(px);
+		lassoPts = [...lassoPts, [ll.lng, ll.lat]];
+	}
+	function lassoDown(e: PointerEvent) {
+		if (!lassoOn || e.button !== 0 || !e.isPrimary) return;
+		e.stopPropagation(); e.preventDefault();
+		drawing = true; lastPx = null; lassoPts = [];
+		try { container.setPointerCapture(e.pointerId); } catch { /* synthetic or already released pointer */ }
+		lassoPoint(e);
+	}
+	function lassoMove(e: PointerEvent) {
+		if (!drawing) return;
+		e.stopPropagation(); e.preventDefault();
+		lassoPoint(e);
+	}
+	function lassoUp(e: PointerEvent) {
+		if (!drawing) return;
+		e.stopPropagation();
+		drawing = false;
+		try { container.releasePointerCapture(e.pointerId); } catch { /* not captured */ }
+		endLasso(true);
 	}
 	function clearLasso() { lassoPoly = null; lassoPts = []; }
 
@@ -846,12 +884,12 @@
 				map.on('mouseout', () => tip.remove());
 				// click on a building or on empty ground: highlight its census radio and open the radio card
 				map.on('click', (e: any) => {
-					if (lassoOn) { lassoPts = [...lassoPts, [e.lngLat.lng, e.lngLat.lat]]; return; }
+					// the release that closes a lasso loop near its start also fires a click: skip it
+					if (lassoOn || performance.now() - lassoEnded < 400) return;
 					const b = map.queryRenderedFeatures(e.point, { layers: ['eb-3d'] })[0];
 					const id = b?.properties.z ?? map.queryRenderedFeatures(e.point, { layers: ['radios-fill'] })[0]?.properties.id;
 					if (id && radioById.has(id)) selected = radioById.get(id).properties;
 				});
-				map.on('dblclick', (e: any) => { if (lassoOn) { e.preventDefault(); endLasso(true); } });
 				applyLayers();
 				paintWater();
 				// deep link to one radio: ?zona=<radio id>
@@ -861,7 +899,20 @@
 		})();
 		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && lassoOn) endLasso(false); };
 		window.addEventListener('keydown', onKey);
-		return () => { cancelled = true; window.removeEventListener('keydown', onKey); map?.remove(); };
+		// capture phase: the lasso sees the pointer before MapLibre's handlers do
+		const cap = { capture: true };
+		container.addEventListener('pointerdown', lassoDown, cap);
+		container.addEventListener('pointermove', lassoMove, cap);
+		container.addEventListener('pointerup', lassoUp, cap);
+		container.addEventListener('pointercancel', lassoUp, cap);
+		return () => {
+			cancelled = true; window.removeEventListener('keydown', onKey);
+			container.removeEventListener('pointerdown', lassoDown, cap);
+			container.removeEventListener('pointermove', lassoMove, cap);
+			container.removeEventListener('pointerup', lassoUp, cap);
+			container.removeEventListener('pointercancel', lassoUp, cap);
+			map?.remove();
+		};
 	});
 </script>
 
@@ -879,13 +930,13 @@
 			<button onclick={() => view(MUNI)}>Municipio</button>
 			<button class="tema" onclick={() => (tema = tema === 'claro' ? 'oscuro' : 'claro')} title="Fondo del mapa" aria-label="Cambiar fondo del mapa">{tema === 'claro' ? 'Oscuro' : 'Claro'}</button>
 			{#if lassoOn}
-				<button class="on" onclick={() => endLasso(true)}>Cerrar área · {lassoPts.length}</button>
+				<button class="on" onclick={() => endLasso(false)}>Cancelar</button>
 			{:else}
 				<button onclick={startLasso}>Medir un área</button>
 			{/if}
 		</div>
 		{#if lassoOn}
-			<div class="hint">Clic para marcar los vértices · doble clic para cerrar · Esc para cancelar</div>
+			<div class="hint">Apretá y arrastrá para rodear el área · Esc para cancelar</div>
 		{/if}
 	</div>
 
@@ -1009,8 +1060,8 @@
 							<div class="ramp"><span>Agua</span><i class="bar" style:background={wgrad(tema)}></i><span class="dim">0–10 m</span></div>
 							<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
 						{/if}
-						<div class="keys"><span><i style:background={T.iso}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i class="pt"></i>Escuela o centro de salud bajo el agua</span></div>
-						<p class="note">Gris: secas. Línea punteada: radios censales a los que ya llega el agua.</p>
+						<div class="keys"><span><i style:background={T.dry}></i>Casa sin agua</span><span><i style:background={T.iso}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i class="pt"></i>Escuela o centro de salud bajo el agua</span></div>
+						<p class="note">Línea punteada: radios censales a los que ya llega el agua.</p>
 					{:else if tab === 'arroyos' && tabla.arroyos}
 						{@const A = tabla.arroyos}
 						<div class="keys">{#each ARR as a}<span><i style:background={a.color}></i>{a.label}</span>{/each}</div>
