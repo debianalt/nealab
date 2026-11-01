@@ -21,7 +21,7 @@
 	import { withRef } from '$lib/utils/territoryRef';
 	import { formatDept } from '$lib/utils/format';
 	import { lp } from '$lib/utils/locale-path';
-	import CTADiagnostic from './CTADiagnostic.svelte';
+	import RequestDiagnostic from './RequestDiagnostic.svelte';
 	import MoranPanel from './MoranPanel.svelte';
 	import HistogramPanel from './HistogramPanel.svelte';
 	import ConcentrationCurve from './ConcentrationCurve.svelte';
@@ -215,7 +215,7 @@
 				</div>
 			</div>
 
-			<CTADiagnostic />
+			<RequestDiagnostic variant="welcome" />
 		</div>
 	{:else if lassoStore.zones.length > 0}
 		<div class="chart-scroll">
@@ -249,6 +249,10 @@
 				{/if}
 			{/if}
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} {onCensoDeptSelect} />
+			<!-- Above every chart (Evolución included) and outside the «Gráficos» fold:
+			     below them it was drawn off-screen for a FlowChart pick, and a folded
+			     «Gráficos» hid it. Sticky, so it stays in view while scrolling the charts. -->
+			<ChartSelectionBar {hexStore} onSave={onSaveChartSelection ?? (async () => null)} onClear={onClearChartSelection ?? (() => {})} />
 			<!-- FlowChart: perDepartment temporal layers (score or flowBands data
 			     arrives with the dept selection) plus global temporal layers that
 			     declare flowBands (censo_temporal bands raw density territory-wide).
@@ -273,7 +277,6 @@
 					Gráficos {chartsOpen ? '▾' : '▸'}
 				</button>
 				{#if chartsOpen}
-					<ChartSelectionBar {hexStore} onSave={onSaveChartSelection ?? (async () => null)} onClear={onClearChartSelection ?? (() => {})} />
 					{#if hexStore.analysisResLevel != null}
 						<p class="charts-res-note">{i18n.t('chart.analysisCoarse').replace('{res}', String(hexStore.analysisResLevel))}</p>
 					{/if}

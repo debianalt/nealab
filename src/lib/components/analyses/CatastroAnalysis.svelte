@@ -6,7 +6,7 @@
 	import type { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
-	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
+	import RequestDiagnostic from '$lib/components/RequestDiagnostic.svelte';
 	import { downloadCsvFromRows } from '$lib/utils/data-export';
 
 	let {
@@ -444,7 +444,7 @@
 			<div>{i18n.t('analysis.catastro.updateFreq')} · {DATA_FRESHNESS.catastro_by_radio?.processedDate ?? ''}</div>
 		</div>
 
-		<CTADiagnostic analysisName={i18n.t('analysis.catastro.title')} />
+		<RequestDiagnostic ctx={{ layer: i18n.t('analysis.catastro.title') }} />
 	</div>
 {/if}
 

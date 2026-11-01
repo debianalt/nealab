@@ -7,13 +7,13 @@
 	import { unitLabel } from '$lib/utils/units';
 	import { lp } from '$lib/utils/locale-path';
 	import { formatDept } from '$lib/utils/format';
-	import CTADiagnostic from '$lib/components/CTADiagnostic.svelte';
+	import RequestDiagnostic from '$lib/components/RequestDiagnostic.svelte';
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
 	import CensoTemporalDeptList from '$lib/components/CensoTemporalDeptList.svelte';
 	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
-	import { withRef } from '$lib/utils/territoryRef';
+	import { withRef, territoryRef } from '$lib/utils/territoryRef';
 	import { query } from '$lib/stores/duckdb';
 	import { downloadCsvFromQuery, downloadGeoJsonFromHexQuery } from '$lib/utils/data-export';
 	import { ANALYSIS_CONTENT, resolveMethod } from '$lib/content/methodology';
@@ -572,12 +572,11 @@
 		return v.toFixed(0);
 	}
 
-	let reportCopied = $state(false);
-	async function copyReportEmail() {
-		await navigator.clipboard.writeText('nealab@spatia.ar');
-		reportCopied = true;
-		setTimeout(() => { reportCopied = false; }, 2000);
-	}
+	// «Pedir un diagnóstico a medida»: this layer + the open department, or the territory.
+	const layerRequestCtx = $derived({
+		layer: i18n.t(analysis.titleKey),
+		place: [selectedDpto ? formatDept(selectedDpto) : '', territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · '),
+	});
 
 	// ── Calibration distribution ──
 	interface CalibRow { territory: TerritoryConfig; p25: number; p50: number; p75: number; avg: number }
@@ -777,11 +776,7 @@
 			</div>
 		{/if}
 
-		<div class="action-row">
-			<button class="action-btn" onclick={copyReportEmail} style="text-align:center;cursor:pointer;">
-				{reportCopied ? 'nealab@spatia.ar ✓' : i18n.t('section.requestReport')}
-			</button>
-		</div>
+		<RequestDiagnostic ctx={layerRequestCtx} />
 
 		{#if content}
 			<details class="method-details">
@@ -1030,7 +1025,7 @@
 			</div>
 		{/if}
 
-		<CTADiagnostic analysisName={i18n.t(analysis.titleKey)} />
+		<RequestDiagnostic ctx={layerRequestCtx} />
 	</div>
 
 {:else}
@@ -1127,7 +1122,7 @@
 			</details>
 		{/if}
 
-		<CTADiagnostic analysisName={i18n.t(analysis.titleKey)} />
+		<RequestDiagnostic ctx={layerRequestCtx} />
 	</div>
 {/if}
 
@@ -1247,9 +1242,6 @@
 	.cross-label { color: #9ca3af; flex-shrink: 0; min-width: 90px; }
 	.cross-value { color: #d4d4d4; font-weight: 500; }
 	.type-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-	.action-row { display: flex; gap: 6px; margin: 10px 0; }
-	.action-btn { flex: 1; padding: 6px 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; color: #a3a3a3; font-size: 11.5px; cursor: pointer; transition: all 0.15s; }
-	.action-btn:hover { background: rgba(255,255,255,0.08); color: #d4d4d4; }
 	.detail-label { font-size: 11.5px; color: #d4d4d4; margin-bottom: 2px; }
 	.detail-value { font-size: 14px; font-weight: 700; color: #e2e8f0; }
 	.detail-desc { font-size: 11px; color: #a3a3a3; margin-top: 2px; }

@@ -9,6 +9,7 @@
 		downloadGeoJsonFromPolygon,
 		downloadGeoJsonFromHexList,
 	} from '$lib/utils/data-export';
+	import RequestDiagnostic from './RequestDiagnostic.svelte';
 
 	let {
 		hexStore,
@@ -91,31 +92,12 @@
 		downloadGeoJsonFromPolygon(zone.polygon, props, `${zoneFilenameBase(zone)}_polygon.geojson`);
 	}
 
-	// «Solicitar informe»: a mail with what was selected (not the H3 codes: they can be
-	// thousands; the body asks to attach the CSV). Copy-the-address as fallback.
-	const EMAIL = 'nealab@spatia.ar';
-	const reportHref = $derived.by(() => {
-		const layer = hexStore.activeLayer ? i18n.t(hexStore.activeLayer.titleKey) : '';
-		const dept = hexStore.selectedDpto ? formatDept(hexStore.selectedDpto) : '';
-		const where = [dept, territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · ');
-		const subject = `Spatia — ${i18n.t('zone.report.subject')}: ${layer}${dept ? ' · ' + dept : ''}`;
-		const lines = [
-			i18n.t('zone.report.intro'),
-			'',
-			`${i18n.t('zone.report.layer')}: ${layer}`,
-			`${i18n.t('zone.report.where')}: ${where}`,
-			...zones.map(z => `${i18n.t('zone.title')} ${z.id} · ${z.origin} · ${z.stats.hexCount} hex`),
-			'',
-			`${i18n.t('zone.report.link')}: ${typeof location !== 'undefined' ? location.href : ''}`,
-			'',
-			i18n.t('zone.report.attach'),
-		];
-		return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+	// «Pedir un diagnóstico a medida» with the zones (origin + size, not H3 codes).
+	const requestCtx = $derived({
+		layer: hexStore.activeLayer ? i18n.t(hexStore.activeLayer.titleKey) : undefined,
+		place: [hexStore.selectedDpto ? formatDept(hexStore.selectedDpto) : '', territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · '),
+		zones: zones.map(z => ({ id: z.id, origin: z.origin, hexCount: z.stats.hexCount })),
 	});
-	let copied = $state(false);
-	async function copyEmail() {
-		try { await navigator.clipboard.writeText(EMAIL); copied = true; setTimeout(() => (copied = false), 2000); } catch { /* clipboard blocked */ }
-	}
 
 	function downloadZonesSummaryCsv() {
 		if (zones.length === 0) return;
@@ -195,10 +177,7 @@
 				↓ Resumen comparativo (CSV)
 			</button>
 		</div>
-		<div class="hzc-report">
-			<a class="hzc-report-btn" href={reportHref}>{i18n.t('zone.report.button')}</a>
-			<button class="hzc-report-copy" onclick={copyEmail}>{copied ? `${EMAIL} ✓` : i18n.t('zone.report.copy')}</button>
-		</div>
+		<RequestDiagnostic ctx={requestCtx} />
 	{/if}
 </div>
 
@@ -253,11 +232,6 @@
 	.hzc-chip-label { font-weight: 600; }
 	.hzc-chip-origin { color: var(--s-ink-2); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.zone-origin { font-weight: 400; color: var(--s-ink-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-	.hzc-report { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
-	.hzc-report-btn { flex: 1; text-align: center; padding: 6px 10px; border-radius: 4px; font-size: 12px; text-decoration: none; color: var(--s-ink-1); border: 1px solid var(--s-cat-1); background: rgba(196, 87, 47, 0.14); }
-	.hzc-report-btn:hover { background: rgba(196, 87, 47, 0.26); }
-	.hzc-report-copy { font: inherit; font-size: 11.5px; padding: 6px 8px; border-radius: 4px; cursor: pointer; color: var(--s-ink-2); background: none; border: 1px solid rgba(255,255,255,0.12); }
-	.hzc-report-copy:hover { color: var(--s-ink-1); }
 	.hzc-remove {
 		background: none;
 		border: none;

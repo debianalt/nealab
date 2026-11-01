@@ -7,6 +7,7 @@
 	import { territoryRef } from '$lib/utils/territoryRef';
 	import ChartFrame from './ChartFrame.svelte';
 	import PositionStrip from './PositionStrip.svelte';
+	import RequestDiagnostic from './RequestDiagnostic.svelte';
 
 	let {
 		deptUrl = (_id: string, _key: string) => null as string | null,
@@ -203,6 +204,11 @@
 					</div>
 				{/each}
 				<p class="fi-note">{i18n.t('ficha.pending')}</p>
+				<RequestDiagnostic ctx={{
+					place: [ctx.deptName ? formatDept(ctx.deptName) : '', territoryRef(ctx.territoryId, i18n.locale)].filter(Boolean).join(' · '),
+					h3,
+					href: typeof location !== 'undefined' ? `${location.origin}${location.pathname}?h3=${h3}` : undefined,
+				}} />
 			{/if}
 		</div>
 	</ChartFrame>
