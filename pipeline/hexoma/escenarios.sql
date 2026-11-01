@@ -153,7 +153,7 @@ ORDER BY 1, 2;
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 5. Leña o carbón para cocinar donde el PM2.5 es alto (esquema censo)
 -- ¿Cuántos hogares cocinan con leña o carbón en celdas con PM2.5 en el cuartil más
--- alto de la región, por departamento? Junta el censo por radio (censo.v_h3: hogares
+-- alto de la región, por departamento? Junta el censo por radio (censo_2022.v_h3: hogares
 -- repartidos por el peso de edificios del cruce) con la capa de PM2.5 de v_hexoma.
 -- Ámbito región para el PM2.5 (capa satelital comparable entre territorios).
 -- Tasas de un conjunto de celdas: sumar _num y _den y dividir al final, nunca promediar.
@@ -166,7 +166,7 @@ WITH celdas AS (
            h.hogares, h.cocina_lena_carbon_num AS lena,
            v.pm25_drivers__c_pm25_mean AS pm25,
            r.pm25_drivers__c_pm25_mean__pr_reg AS pm25_pr
-    FROM censo.v_h3 h
+    FROM censo_2022.v_h3 h
     JOIN v_hexoma v USING (h3, territorio)
     JOIN v_hexoma_rangos r USING (h3, territorio)
 )

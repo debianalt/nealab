@@ -4,8 +4,8 @@ El **hexoma** de una celda H3 es su vector completo en Spatia: todas las capas, 
 escalas propias y en su posición dentro del departamento, la provincia y la región, más
 los cortes temporales que tenga cada capa. **El Hexoma** es la base Postgres local que
 los guarda para todo el NEA argentino (Misiones, Corrientes, Chaco y Formosa:
-3.299.569 hexágonos res-9, 15 capas), más el censo 2022 completo por radio censal,
-unido a cada hexágono (esquema `censo`).
+3.299.569 hexágonos res-9, 15 capas), más los censos 1991, 2001, 2010 y 2022 completos por radio censal
+(esquemas `censo_<año>`).
 
 Es **privado**: sirve para armar escenarios de investigación con SQL. No se publica, no
 se vende y no se sube nada a R2. Es una **foto** de los parquets publicados en
@@ -31,7 +31,8 @@ base no tiene backup propio porque se regenera.
 | `… --reset` | Borra sólo las tablas del Hexoma y vuelve a cargar | |
 | `python pipeline/build_hexoma_distribuciones.py [--layers …]` | Recalcula sólo `distribuciones`, `rango_*` y `v_hexoma_rangos` | 745 s con todas las capas |
 | `python pipeline/build_ficha_link_index.py` | Regenera `src/lib/data/ficha_link_index.json`, que usan la web y el Hexoma. Correrlo cuando cambia una partición por departamento | |
-| `python pipeline/build_hexoma_censo.py [--refresh]` | Rearma el esquema `censo` (censo 2022 por radio, ver abajo). Es independiente de lo anterior, y `--reset` no lo toca | 85 s |
+| `python pipeline/build_hexoma_censo.py [--anio A] [--refresh]` | Rearma los esquemas `censo_<año>` (ver abajo). Es independiente de lo anterior, y `--reset` no lo toca. 1991 necesita antes `python pipeline/hexoma/redatam_a_radio.py --anio 1991 --csv pipeline/output/hexoma/redatam1991/csv` (los CSV de `ARG1991.zip`) | 40–110 s por año |
+| `python pipeline/hexoma/build_hexoma_externos.py` | Rearma el esquema `externos` | 5 s |
 
 Una recarga deja filas muertas. El script reescribe (VACUUM FULL) las tablas donde pasan
 del 20 %. Si un VACUUM FULL no avanza, mirá `pg_stat_activity`: una consulta huérfana lo
@@ -51,34 +52,38 @@ bloqueó una vez durante una hora.
 | `rango_<capa>` | Posición de cada celda: `<var>__<dep\|prov\|reg>_lt` y `_eq` |
 | `v_hexoma_rangos` | `<capa>__<variable>__pr_<dep\|prov\|reg>` = % por debajo, unible a `v_hexoma` por (h3, territorio) |
 
-Tamaño medido el 31-oct-2026: **11 GB** en total. El esquema `public` ocupa 10,2 GB (capas, rangos y distribuciones) y el esquema `censo` 0,75 GB.
+Tamaño medido el 31-oct-2026: **11 GB** en total. El esquema `public` ocupa 10,2 GB (capas, rangos y distribuciones) y el esquema `censo` (hoy `censo_2022`) 0,75 GB. El 1-nov-2026 se sumaron `censo_1991` (0,18 GB), `censo_2001` (0,22 GB) y `censo_2010` (0,49 GB).
 
-## Censo 2022 por radio (esquema `censo`)
-El censo 2022 completo de las 4 provincias se guarda en su unidad de origen, el radio censal (6.887 radios), y se une a cada celda por el mismo cruce que usan las capas censales de la web. No reemplaza a esas capas: `v_hexoma` sigue siendo la foto de la web.
+## Censos 1991, 2001, 2010 y 2022 por radio (esquemas `censo_<año>`)
+Cada censo se guarda completo en su unidad de origen, el radio censal de ese año, en su propio esquema. `censo_2022` es el antiguo esquema `censo` (renombrado el 1-nov-2026); es el único que hoy se une a las celdas (`cruce`, `v_h3`), por el mismo cruce que usan las capas censales de la web. Los otros años esperan el cruce único por año (esquema `cruce`, en construcción). Nada de esto reemplaza a las capas de la web: `v_hexoma` sigue siendo la foto de la web.
 
-**Fuente.** El censo del INDEC ya agregado por radio (radio × variable × categoría × conteo, sacado de la base REDATAM), publicado en [Source Cooperative](https://source.coop/nlebovits/censo-argentino) con licencia CC-BY-4.0. Sin microdatos, así que no hay secreto estadístico en juego.
+**Fuentes:**
+| Año | Conteos por radio | Radios y totales oficiales |
+|---|---|---|
+| 1991 | Microdatos REDATAM exportados por Open Redatam ([pachadotdev/redatam-microdata](https://github.com/pachadotdev/redatam-microdata), release 2.0.2, `ARG1991.zip`), pasados a radio con `redatam_a_radio.py`. **Muestra** en los radios grandes | `radios.parquet` 1991 de Source Cooperative |
+| 2001 | [Source Cooperative](https://source.coop/nlebovits/censo-argentino) (CC-BY-4.0), de la base REDATAM. Censo completo | ídem 2001 |
+| 2010 | Ampliado: Source Cooperative, **muestra** en las localidades de más de 50 mil habitantes. Básico completo: tabla por radio de Poblaciones importada en la base `posadas` (`censo_2010.nbi_2010` y `poblacion_2010`) | ídem 2010 |
+| 2022 | Source Cooperative, de la base REDATAM. Censo completo | Polígonos de la web (los del cruce de las capas) y totales de `radios.parquet` 2022 |
 
-La descarga directa del INDEC (`bases_censo2022_RedatamX.zip`) devolvía la página de inicio el 31-oct-2026. Si vuelve y hacen falta cruces, se puede pasar a los microdatos con el paquete de R `censo2022arg`.
+La descarga directa del INDEC (`bases_censo2022_RedatamX.zip`) devolvía la página de inicio el 31-oct-2026. Para cruces entre variables (sexo × edad, por ejemplo), que la versión por radio no trae, están los microdatos de los cuatro años en `pachadotdev/redatam-microdata` (`ARG1991`…`ARG2022`, CSV por entidad) y `redatam_a_radio.py` como punto de partida.
 
-**Qué trae:**
-- 76 variables de personas, hogares y viviendas particulares;
-- NBI y sus cinco criterios, e IPMH, ya calculados por el INDEC;
-- combustible para cocinar, agua, desagüe, materiales, hacinamiento, tenencia, conectividad, migración, educación, actividad, rama, categoría ocupacional, cobertura de salud y jubilación.
+**Muestra (1991 y 2010).** En esos radios la base trae sólo la muestra (en 2010, 214.819 personas en lugar de 1.346.791 en 1.310 radios del NEA). Cada radio se calibra con su total oficial: `radios.factor_muestra` = `personas_oficial / n_muestra`, y `indicadores` ya viene multiplicado por ese factor (personas, hogares y viviendas: la muestra es de viviendas enteras). `categorias` guarda el conteo crudo y `v_categorias.n_expandido` el calibrado. Las tasas de un radio con muestra salen de unas decenas de hogares: son ruidosas en la celda y en el radio, estables al sumar varios. Los radios «sólo básico» (300 en 2010, 35 en 1991) no tienen ampliado: tienen sus totales oficiales y los indicadores en NULL. `radios.relevamiento` dice el caso de cada radio.
 
-**Qué no trae:**
-- cruces entre variables (sexo × edad, por ejemplo), porque son frecuencias por radio;
-- las variables de la base PO (pueblos originarios y afrodescendientes);
-- las viviendas colectivas y la situación de calle. La población es la de viviendas particulares: Misiones 1.273.347, Corrientes 1.209.671, Chaco 1.124.603, Formosa 605.507.
+**2010 básico.** Los indicadores de hogares y población del cuestionario básico (NBI, hacinamiento crítico, heladera, computadora, teléfono, agua de red, cloaca, techo, cielorraso, piso, combustible, tenencia, sexo, edad, universitarios) salen de la tabla básica completa de Poblaciones (`censo_2010.basico`), no de la muestra: cubre los 5.320 radios y sus hogares de Misiones suman 302.953, el total del INDEC. Cada columna usada se verificó contra el censo crudo en los 3.710 radios censados completos: coincide exacto en los 3.710 con las categorías que anota su COMMENT (varias son el complemento: `h_heladera` = sin heladera, `h_agua_red` = sin red, `h_cloaca` = sin cloaca). `h_nbi` coincide en 2.992 de 3.710 (−0,45 % de hogares con NBI): es el NBI de la base básica y reproduce el publicado.
 
-| Objeto | Contenido |
+**Qué trae cada año.** `censo_<año>.variables` (114 en 1991, 81 en 2001, 124 en 2010, 76 en 2022) y `censo_<año>.indicadores` (los COMMENT dicen variable, categorías del numerador y del denominador). Lo que no se pudo armar: 2001 no tiene procedencia del agua ni combustible; 2010 no trae condición de actividad (se arma con P25–P28 cruzadas, que sólo están en los microdatos); 1991 no trae migración usable ni nivel educativo completo.
+
+| Objeto (por año) | Contenido |
 |---|---|
-| `censo.categorias` | Todo el censo: conteo por (radio, variable, categoría). Con rótulos: `censo.v_categorias` |
-| `censo.variables`, `censo.diccionario` | Qué es cada variable y cada categoría |
-| `censo.indicadores` | ~80 indicadores por radio en conteos, `<x>_num` y `<x>_den`. El COMMENT de cada columna dice qué categorías entran en el numerador y en el denominador |
-| `censo.v_tasas_radio` | Las tasas (%) y los promedios por radio |
-| `censo.radios` | Departamento, tipo de radio (urbano, mixto o rural), localidad, gobierno local, aglomerado, área y geometría |
-| `censo.cruce` | Celda → radio. Peso = parte de los edificios del radio que cae en la celda (suma 1 por radio). `fuente = 'area'` marca el respaldo por superficie para un radio de Esquina sin edificios en el cruce |
-| `censo.v_h3` | Vista materializada por celda: conteos × peso y tasas (Σ num·peso / Σ den·peso), con `_num` y `_den`. `redcode` es el radio que aporta más hogares. Se une a `v_hexoma` por (`h3`, `territorio`) |
+| `categorias` | Todo el censo: conteo crudo por (radio, variable, categoría). Con rótulos y conteo expandido: `v_categorias` |
+| `variables`, `diccionario` | Qué es cada variable y cada categoría |
+| `indicadores` | Indicadores por radio en conteos calibrados, `<x>_num` y `<x>_den`, más `personas_oficial` y `viviendas_oficial` |
+| `v_tasas_radio` | Las tasas (%) y los promedios por radio |
+| `radios` | Departamento, atributos (área urbana o rural, localidad…), relevamiento, totales oficiales, factor de muestra, área y geometría |
+| `basico` (2010) | La tabla básica completa de Poblaciones, tal cual |
+| `cruce`, `v_h3` (2022) | Celda → radio por edificios y la vista por celda, como antes en el esquema `censo` |
+
+`externos` guarda datos de terceros sobre la grilla de un censo, con su procedencia en `externos.fuentes`: hoy, el riesgo de inseguridad alimentaria por radio 2010 de la UCA (`uca_inseguridad_alimentaria_2010`; armado con variables del censo 2010, así que no es independiente del NBI de ese año). El «índice de exclusión» de `posadas.censo_2010.exclusion_2010` quedó afuera: no se encontró quién lo hizo.
 
 **Cuándo usar cada unidad:**
 - **Radio,** para preguntas cuyo dato central es censal: es donde el INDEC midió, con n honesto y errores estándar que se pueden agrupar por radio.
@@ -86,11 +91,10 @@ La descarga directa del INDEC (`bases_censo2022_RedatamX.zip`) devolvía la pág
 
 Para tasas de un conjunto de celdas o de un departamento, sumá `_num` y `_den` y dividí al final. No promedies tasas.
 
-**Verificado el 31-oct-2026:**
-- **Personas por radio:** iguales a los totales publicados en 6.882 de 6.882 radios con población.
-- **Tasas por radio:** NBI, hacinamiento crítico, computadora, desocupación, propietarios, inquilinos y piso sin revestimiento coinciden exactamente con las tablas de la web. Las que no coinciden difieren por definición: `pct_agua_red` y `pct_cloacas` de la web son el complemento (sin red), y la web los rotula así.
-- **La celda conserva el total:** la suma de `v_h3` reproduce la de los radios (±40 personas por provincia, por redondeo).
-- **NBI por celda contra la capa de la web:** igual en 223.972 de 224.817 celdas (r = 0,9997). Las 845 restantes tocan dos radios, y ahí la web promedia tasas ponderando por los hogares estimados en vez de sumar conteos.
+**Verificado el 1-nov-2026** (`build_hexoma_censo.py` lo imprime al final de cada año):
+- **Personas por radio:** iguales al total oficial en todos los radios con datos (2001: salvo uno de Chaco, donde el total de `radios.parquet` es 692 menor; los datos dan 984.446, el total publicado de la provincia). Radios con datos y sin geometría: 0 en 2001, 2010 y 2022; 14 en 1991 (160 personas).
+- **NBI de hogares por provincia** igual al publicado por el INDEC en 2001 (Misiones 23,5; Corrientes 24,0; Chaco 27,6; Formosa 28,0 %) y en 2010 (15,6; 15,1; 18,2; 19,7 %). 1991 da 29,4; 26,3; 33,1; 33,4 %: ahí el NBI es el de la vivienda, heredado por cada hogar.
+- **2022, como antes del renombre:** `v_h3` tiene las mismas 318.506 celdas y las mismas sumas (±30 personas sobre 4,2 millones, por redondeo de reales). Verificado el 31-oct-2026: tasas por radio iguales a las de la web; NBI por celda igual a la capa de la web en 223.972 de 224.817 celdas (las demás tocan dos radios, y ahí la web promedia tasas).
 
 ## Convenciones (no obvias)
 - **Sin dato = NULL, nunca cero.** `avg()` y `percentile_cont()` los saltean; `count(*)` no.
@@ -137,7 +141,7 @@ web, ya corregidos:
 2. inundación y carencias;
 3. uso actual del suelo donde hubo pérdida EUDR después de 2020;
 4. población 1991–2022 según el aislamiento;
-5. hogares que cocinan con leña o carbón donde el PM2.5 es alto (esquema `censo`).
+5. hogares que cocinan con leña o carbón donde el PM2.5 es alto (esquema `censo_2022`).
 
 ## Pendiente (hoja de ruta del 31-oct-2026)
 Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
@@ -147,7 +151,7 @@ Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
    - MapBiomas resumido (falta confirmar la cobertura de Corrientes);
    - pérdida oficial de la UMSEF.
 
-   Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por `censo.cruce`.
+   Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por `censo_2022.cruce` (o por el cruce único, cuando esté).
 2. **Capas institucionales:** OTBN, áreas protegidas, comunidades indígenas (RENACI) y catastro o tamaño de parcela.
 3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100.
 4. **Vecindad con SQL** (`h3_grid_disk`) y una tabla con la resolución de origen de cada variable.
