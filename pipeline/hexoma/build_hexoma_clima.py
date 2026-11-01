@@ -162,6 +162,82 @@ def anomalia_sql(tabla: str, unidad: str, periodo: str, vars_: list[str], desde:
                                      AND n.variable = l.variable AND n.estacion IS NULL"""
 
 
+VARS_CORR = {
+    'campania': {
+        'gdd10': ('real', 'grados-día base 10 °C con Tmax y Tmin corregidas, °C·d'),
+        'dias_tmax35': ('smallint', 'días con Tmax corregida > 35 °C'),
+        'tmax_media': ('real', 'media de las máximas corregidas, °C'),
+        'tmin_media': ('real', 'media de las mínimas corregidas, °C'),
+    },
+    'helada': {
+        'dias_tmin_lt0': ('smallint', 'días con Tmin corregida < 0 °C (helada en abrigo)'),
+        'dias_tmin_lt_m2': ('smallint', 'días con Tmin corregida < −2 °C'),
+        'dias_tmin_le3': ('smallint', 'días con Tmin corregida ≤ 3 °C'),
+        'primera_doy': ('smallint', 'día del año de la primera Tmin corregida < 0 °C; NULL = sin helada'),
+        'ultima_doy': ('smallint', 'día del año de la última Tmin corregida < 0 °C; NULL = sin helada'),
+        'tmin_abs': ('real', 'mínima absoluta corregida del año, °C'),
+        'dias_helada_suelo': ('smallint', 'días con helada a 5 cm del suelo (agrometeorológica) estimados: Tmin corregida + '
+                              'diferencia suelo − abrigo de la convencional del INTA más cercana'),
+    },
+}
+
+
+def cargar_correccion(cur, n: dict) -> dict | None:
+    """Tablas de corregir_temperatura.py, si existen. Devuelve las variables cargadas y el rótulo."""
+    fh = DERIV / 'helada_era5_corr.parquet'
+    if not fh.exists():
+        return None
+    dec = json.loads((DERIV / 'correccion_decision.json').read_text(encoding='utf-8'))
+
+    def txt(v):
+        d = dec[v]
+        if not d.get('adoptado'):
+            return f'{v}: sin corrección (no pasó la regla)'
+        m = d['mae_medio']
+        return (f"{v}: método {d['adoptado']}, MAE de validación cruzada {m[d['adoptado']]} contra {m['cruda']} "
+                f"de la cruda ({d['mejora']:.0%} menos, {d['n_estaciones']} estaciones)")
+    rot = ('ERA5-Land corregido con estaciones GHCN-Daily e INTA SIGA (esquema estaciones): mapeo de cuantiles '
+           'mensual trasladado por 1/d² de las 4 estaciones más cercanas a < 150 km; fijado en el período de cada '
+           'estación y aplicado a 1950–2025 suponiendo sesgo estacionario. ' + '; '.join(txt(v) for v in dec) +
+           '. Detalle: clima.correccion_validacion. pipeline/hexoma/corregir_temperatura.py')
+    out = {'rotulo': rot}
+    c = pd.read_parquet(DERIV / 'campania_era5_corr.parquet')
+    vc = {k: v for k, v in VARS_CORR['campania'].items() if k in c}
+    vh = {k: v for k, v in VARS_CORR['helada'].items() if k in pd.read_parquet(fh).columns}
+    crear_tabla(cur, 'era5_campania_corr', [('pixel_id', 'bigint'), ('campania', 'smallint')], vc, rot,
+                'Temperatura corregida con estaciones, por campaña jul–jun')
+    n['era5_campania_corr'] = cargar(cur, 'era5_campania_corr', 'campania_era5_corr.parquet', ['pixel_id', 'campania'], vc)
+    crear_tabla(cur, 'era5_estacion_corr', [('pixel_id', 'bigint'), ('anio_estacion', 'smallint'), ('estacion', 'text')],
+                vc, rot, 'Temperatura corregida con estaciones, por estación del año')
+    n['era5_estacion_corr'] = cargar(cur, 'era5_estacion_corr', 'estacion_era5_corr.parquet',
+                                     ['pixel_id', 'anio_estacion', 'estacion'], vc)
+    crear_tabla(cur, 'era5_helada_corr', [('pixel_id', 'bigint'), ('anio', 'smallint')], vh, rot,
+                'Heladas por año calendario con la Tmin corregida con estaciones')
+    n['era5_helada_corr'] = cargar(cur, 'era5_helada_corr', 'helada_era5_corr.parquet', ['pixel_id', 'anio'], vh)
+    val = pd.read_parquet(DERIV / 'correccion_validacion.parquet')
+    cur.execute("""CREATE TABLE clima.correccion_validacion (estacion_id text, nombre text, variable text, metrica text,
+                   metodo text, n_anios int, obs_media float8, mod_media float8, mae float8, sesgo float8)""")
+    copy_df(cur, val[['estacion_id', 'nombre', 'variable', 'metrica', 'metodo', 'n_anios', 'obs_media', 'mod_media',
+                      'mae', 'sesgo']], 'clima.correccion_validacion')
+    cur.execute("COMMENT ON TABLE clima.correccion_validacion IS 'Validación cruzada de la corrección: cada estación "
+                "predicha sin ella ni las estaciones a < 10 km; conteos anuales en años completos. metrica: lt0 (Tmin<0), "
+                "le3 (Tmin≤3), gt35 (Tmax>35), lt0_suelo (helada a 5 cm). metodo: cruda, idw, cercana'")
+    fun = pd.read_parquet(DERIV / 'correccion_funciones.parquet')
+    cur.execute("""CREATE TABLE clima.correccion_funciones (estacion_id text, variable text, mes smallint,
+                   q real[], delta real[], PRIMARY KEY (estacion_id, variable, mes))""")
+    for r in fun.itertuples():
+        cur.execute('INSERT INTO clima.correccion_funciones VALUES (%s, %s, %s, %s, %s)',
+                    (r.estacion_id, r.variable, int(r.mes), list(map(float, r.q)), list(map(float, r.delta))))
+    cur.execute("COMMENT ON TABLE clima.correccion_funciones IS 'Funciones de transferencia por estación, variable "
+                "(tmin, tmax: estación − ERA5; suelo: Tmin a 5 cm − Tmin de abrigo, ambas observadas) y mes: delta en "
+                "cada cuantil q'")
+    cur.execute('CREATE TABLE clima.correccion_decision (decision jsonb)')
+    cur.execute('INSERT INTO clima.correccion_decision VALUES (%s)', (json.dumps(dec, ensure_ascii=False),))
+    out['campania'] = list(vc)
+    out['helada'] = list(vh)
+    return out
+
+
 def main() -> None:
     t0 = time.time()
     conn = connect(DB)
@@ -232,6 +308,7 @@ def main() -> None:
         crear_tabla(cur, 'era5_helada', [('pixel_id', 'bigint'), ('anio', 'smallint')], VARS['helada'],
                     ROT_ERA5, 'Heladas por año calendario (el invierno entero en un mismo año)')
         n['era5_helada'] = cargar(cur, 'era5_helada', 'helada_era5.parquet', ['pixel_id', 'anio'], VARS['helada'])
+        corr = cargar_correccion(cur, n)
         log('indicadores: ' + ', '.join(f'{k} {v:,}' for k, v in n.items()))
 
         # balance hídrico por par
@@ -266,7 +343,11 @@ def main() -> None:
                     normales_sql('balance_campania', 'par_id', 'campania', ['p_menos_et0'], 1991, 2020),
                     normales_sql('chirps_estacion', 'pixel_id', 'anio_estacion', vce, 1991, 2020, True),
                     normales_sql('era5_estacion', 'pixel_id', 'anio_estacion', ve, 1991, 2020, True),
-                    normales_sql('balance_estacion', 'par_id', 'anio_estacion', ['p_menos_et0'], 1991, 2020, True)):
+                    normales_sql('balance_estacion', 'par_id', 'anio_estacion', ['p_menos_et0'], 1991, 2020, True),
+                    *([normales_sql('era5_campania_corr', 'pixel_id', 'campania', list(corr['campania']), 1991, 2020),
+                       normales_sql('era5_estacion_corr', 'pixel_id', 'anio_estacion', list(corr['campania']), 1991, 2020, True),
+                       normales_sql('era5_helada_corr', 'pixel_id', 'anio', list(corr['helada']), 1991, 2020)]
+                      if corr else [])):
             cur.execute(sql)
         cur.execute('CREATE INDEX ON clima.normal_1991_2020 (tabla, unidad_id, variable, estacion)')
         log('normales')
@@ -280,7 +361,10 @@ def main() -> None:
         for sql in (anomalia_sql('chirps_campania', 'pixel_id', 'campania', vc, 1991, 2020),
                     anomalia_sql('era5_campania', 'pixel_id', 'campania', ve, 1991, 2020),
                     anomalia_sql('era5_helada', 'pixel_id', 'anio', vh, 1991, 2020),
-                    anomalia_sql('balance_campania', 'par_id', 'campania', ['p_menos_et0'], 1991, 2020)):
+                    anomalia_sql('balance_campania', 'par_id', 'campania', ['p_menos_et0'], 1991, 2020),
+                    *([anomalia_sql('era5_campania_corr', 'pixel_id', 'campania', list(corr['campania']), 1991, 2020),
+                       anomalia_sql('era5_helada_corr', 'pixel_id', 'anio', list(corr['helada']), 1991, 2020)]
+                      if corr else [])):
             cur.execute(sql)
         cur.execute('ALTER TABLE clima.anomalia ADD PRIMARY KEY (tabla, unidad_id, variable, periodo)')
         log('anomalías')
@@ -311,7 +395,8 @@ def main() -> None:
               JOIN clima.anomalia a ON a.tabla = 'chirps_campania' AND a.unidad_id = h.chirps_pixel
             UNION ALL
             SELECT h.h3, a.* FROM clima.hex_pixel h
-              JOIN clima.anomalia a ON a.tabla IN ('era5_campania', 'era5_helada') AND a.unidad_id = h.era5_pixel
+              JOIN clima.anomalia a ON a.tabla IN ('era5_campania', 'era5_helada', 'era5_campania_corr', 'era5_helada_corr')
+                                    AND a.unidad_id = h.era5_pixel
             UNION ALL
             SELECT h.h3, a.* FROM clima.hex_pixel h
               JOIN clima.anomalia a ON a.tabla = 'balance_campania' AND a.unidad_id = h.par_id""")
@@ -319,6 +404,15 @@ def main() -> None:
                      ('v_h3_estacion', 'por celda y estación'), ('v_h3_helada', 'por celda y año calendario'),
                      ('v_h3_anomalia', 'anomalías de campañas y heladas por celda (filtrar por h3: la vista une tres fuentes)')):
             cur.execute(f'COMMENT ON VIEW clima.{v} IS {q("Clima " + d + ". El valor es el del píxel que contiene el centro de la celda")}')
+        if corr:
+            vc_ = ', '.join(f'x.{v}' for v in corr['campania'])
+            vh_ = ', '.join(f'x.{v}' for v in corr['helada'])
+            cur.execute(f"""CREATE VIEW clima.v_h3_campania_corr AS
+                SELECT h.h3, x.campania, {vc_} FROM clima.hex_pixel h JOIN clima.era5_campania_corr x ON x.pixel_id = h.era5_pixel""")
+            cur.execute(f"""CREATE VIEW clima.v_h3_helada_corr AS
+                SELECT h.h3, x.anio, {vh_} FROM clima.hex_pixel h JOIN clima.era5_helada_corr x ON x.pixel_id = h.era5_pixel""")
+            for v in ('v_h3_campania_corr', 'v_h3_helada_corr'):
+                cur.execute(f'COMMENT ON VIEW clima.{v} IS {q("Temperatura de ERA5-Land corregida con estaciones, por celda. " + corr["rotulo"])}')
         log('vistas')
         cur.execute('ANALYZE')
     verificar(conn)

@@ -24,27 +24,34 @@ from build_hexoma import DB, connect  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 SALIDA = ROOT / 'pipeline' / 'output' / 'hexoma' / 'fichas'
 
-# (tabla, variable, título, unidad, forma, aviso)
+# (tabla, variable, título, unidad, forma, aviso, extra)
+# extra: cruda = (tabla, variable) de la serie sin corregir, que se dibuja en gris; est = variable de
+# estaciones.normal_1991_2020 para mostrar la normal observada de la estación más cercana que la tenga;
+# corr = variable de clima.correccion_decision cuyo resultado de validación se cita.
 SERIES = [
-    ('chirps_campania', 'p_mm', 'Lluvia por campaña', 'mm', 'linea', None),
-    ('balance_campania', 'p_menos_et0', 'Balance hídrico: lluvia − ET0', 'mm', 'signo', None),
+    ('chirps_campania', 'p_mm', 'Lluvia por campaña', 'mm', 'linea', None, {'est': 'p_mm'}),
+    ('balance_campania', 'p_menos_et0', 'Balance hídrico: lluvia − ET0', 'mm', 'signo', None, {}),
     ('chirps_campania', 'racha_seca_max_oct_mar', 'Racha seca más larga, octubre–marzo', 'días', 'linea',
-     'CHIRPS diario es una desagregación: da ~36 días de lluvia por campaña más que los pluviómetros; las rachas son orientativas.'),
-    ('era5_campania', 'gdd10', 'Grados-día base 10 °C', '°C·d', 'linea', None),
-    ('era5_campania', 'et0_mm', 'Evapotranspiración de referencia (FAO-56)', 'mm', 'linea', None),
-    ('era5_campania', 'tmax_media', 'Media de las máximas', '°C', 'linea',
-     'ERA5-Land da máximas ~2,1 °C más bajas que las estaciones del NEA (mediana de 48).'),
-    ('era5_campania', 'tmin_media', 'Media de las mínimas', '°C', 'linea',
-     'ERA5-Land da mínimas ~1,5 °C más altas que las estaciones del NEA (mediana de 48).'),
-    ('era5_campania', 'dias_tmax35', 'Días con máxima > 35 °C', 'días', 'barra',
-     'Subestimado: las máximas de ERA5-Land vienen ~2,1 °C bajas.'),
+     'CHIRPS diario es una desagregación: da ~36 días de lluvia por campaña más que los pluviómetros; las rachas son orientativas.', {}),
+    ('era5_campania_corr', 'gdd10', 'Grados-día base 10 °C', '°C·d', 'linea', None,
+     {'cruda': ('era5_campania', 'gdd10'), 'est': 'gdd10'}),
+    ('era5_campania', 'et0_mm', 'Evapotranspiración de referencia (FAO-56)', 'mm', 'linea', None, {}),
+    ('era5_campania_corr', 'tmax_media', 'Media de las máximas', '°C', 'linea', None,
+     {'cruda': ('era5_campania', 'tmax_media'), 'corr': 'tmax'}),
+    ('era5_campania_corr', 'tmin_media', 'Media de las mínimas', '°C', 'linea', None,
+     {'cruda': ('era5_campania', 'tmin_media'), 'corr': 'tmin'}),
+    ('era5_campania_corr', 'dias_tmax35', 'Días con máxima > 35 °C', 'días', 'barra', None,
+     {'cruda': ('era5_campania', 'dias_tmax35'), 'est': 'dias_tmax35', 'corr': 'tmax'}),
     ('era5_campania', 'sw2', 'Humedad del suelo, 7–28 cm', 'm³/m³', 'linea',
-     'Modelo de ERA5-Land con textura genérica: sirve para la variación entre años, no como valor absoluto.'),
-    ('era5_helada', 'dias_tmin_le3', 'Días con mínima ≤ 3 °C (helada agrometeorológica), por año', 'días', 'barra',
-     'Muy subestimado: ERA5-Land marca ~9 días por año menos que las estaciones (−78 %).'),
-    ('era5_helada', 'dias_tmin_lt0', 'Días con mínima < 0 °C, por año', 'días', 'barra',
-     'Casi nulo en ERA5-Land: las estaciones registran 0,3–6 por año en abrigo y 8–24 a 5 cm del suelo; el modelo ~0. No usar como conteo de heladas.'),
+     'Modelo de ERA5-Land con textura genérica: sirve para la variación entre años, no como valor absoluto.', {}),
+    ('era5_helada_corr', 'dias_tmin_lt0', 'Heladas en abrigo (mínima < 0 °C), por año', 'días', 'barra', None,
+     {'cruda': ('era5_helada', 'dias_tmin_lt0'), 'est': 'dias_tmin_lt0', 'corr': 'tmin'}),
+    ('era5_helada_corr', 'dias_helada_suelo', 'Heladas a 5 cm del suelo (agrometeorológicas), por año', 'días', 'barra', None,
+     {'est': 'dias_helada_suelo', 'corr': 'tmin_suelo'}),
+    ('era5_helada_corr', 'dias_tmin_le3', 'Días con mínima ≤ 3 °C, por año', 'días', 'barra', None,
+     {'cruda': ('era5_helada', 'dias_tmin_le3'), 'est': 'dias_tmin_le3', 'corr': 'tmin'}),
 ]
+PERIODO = {'era5_helada': 'anio', 'era5_helada_corr': 'anio'}
 
 
 def datos(cur, h3: str) -> dict:
@@ -66,24 +73,52 @@ def datos(cur, h3: str) -> dict:
     d['suelo'] = dict(zip(cols, cur.fetchone() or [None] * len(cols)))
     d['suelo'].pop('h3', None)
     unidad = {'chirps_campania': d['chirps'], 'era5_campania': d['era5'], 'era5_helada': d['era5'],
-              'balance_campania': d['par']}
+              'era5_campania_corr': d['era5'], 'era5_helada_corr': d['era5'], 'balance_campania': d['par']}
+    cur.execute('SELECT decision FROM clima.correccion_decision')
+    dec = cur.fetchone()[0]
+    cur.execute("""SELECT e.nombre, c.dist_km FROM estaciones.h3_cercana c JOIN estaciones.estacion e USING (estacion_id)
+                   WHERE c.h3 = %s::h3index""", (h3,))
+    d['estacion'] = cur.fetchone()
+
+    def serie(tabla, var):
+        per = PERIODO.get(tabla, 'campania')
+        col = 'par_id' if tabla.startswith('balance') else 'pixel_id'
+        cur.execute(f'SELECT {per}, {var} FROM clima.{tabla} WHERE {col} = %s ORDER BY 1', (unidad[tabla],))
+        return [[int(a), None if b is None else float(b)] for a, b in cur.fetchall()]
+
     d['series'] = []
-    for tabla, var, titulo, u, forma, aviso in SERIES:
-        per = 'anio' if tabla == 'era5_helada' else 'campania'
-        cur.execute(f'SELECT {per}, {var} FROM clima.{tabla} WHERE {"par_id" if tabla.startswith("balance") else "pixel_id"} = %s ORDER BY 1',
-                    (unidad[tabla],))
-        pts = [[int(a), None if b is None else float(b)] for a, b in cur.fetchall()]
+    for tabla, var, titulo, u, forma, aviso, extra in SERIES:
+        pts = serie(tabla, var)
         cur.execute("""SELECT media, p10, p90 FROM clima.normal_1991_2020
                        WHERE tabla = %s AND unidad_id = %s AND variable = %s AND estacion IS NULL""",
                     (tabla, unidad[tabla], var))
         n = cur.fetchone()
+        nota = []
+        if 'corr' in extra and extra['corr'] in dec and dec[extra['corr']].get('adoptado'):
+            x = dec[extra['corr']]
+            m = x['mae_medio']
+            que = {'tmin': 'días de helada < 0 y ≤ 3 °C', 'tmax': 'días > 35 °C', 'tmin_suelo': 'heladas a 5 cm'}[extra['corr']]
+            nota.append(f"Corregido con estaciones (mapeo de cuantiles). Validación cruzada en {x['n_estaciones']} "
+                        f"estaciones, sobre {que}: error medio {num(m[x['adoptado']])} días/año contra {num(m['cruda'])} sin corregir. "
+                        + ('Gris: ERA5-Land sin corregir.' if 'cruda' in extra else ''))
+        if 'est' in extra:
+            cur.execute("""SELECT e.nombre, o.media, o.n,
+                                  ST_Distance(e.geom::geography, h3_cell_to_geometry(%s::h3index)::geography) / 1000
+                           FROM estaciones.normal_1991_2020 o JOIN estaciones.estacion e USING (estacion_id)
+                           WHERE o.variable = %s
+                           ORDER BY e.geom <-> h3_cell_to_geometry(%s::h3index) LIMIT 1""", (h3, extra['est'], h3))
+            e = cur.fetchone()
+            if e:
+                nota.append(f'Observado: {e[0]} (a {num(e[3], 0)} km), normal 1991–2020 = {num(e[1], ND.get(var, 0) or 1)} {u} ({e[2]} años).')
         d['series'].append({'tabla': tabla, 'var': var, 'titulo': titulo, 'unidad': u, 'forma': forma, 'nd': ND.get(var, 0),
-                            'aviso': aviso, 'periodo': per, 'puntos': pts,
+                            'aviso': aviso, 'nota': ' '.join(nota) or None,
+                            'periodo': PERIODO.get(tabla, 'campania'), 'puntos': pts,
+                            'cruda': serie(*extra['cruda']) if 'cruda' in extra else None,
                             'normal': None if not n else {'media': n[0], 'p10': n[1], 'p90': n[2]}})
     ult = 2025
     cur.execute("""SELECT tabla, variable, periodo, valor, normal, anom, anom_pct, pct_ref
                    FROM clima.anomalia WHERE ((tabla = 'chirps_campania' AND unidad_id = %s)
-                      OR (tabla IN ('era5_campania', 'era5_helada') AND unidad_id = %s)
+                      OR (tabla IN ('era5_campania', 'era5_helada_corr', 'era5_campania_corr') AND unidad_id = %s)
                       OR (tabla = 'balance_campania' AND unidad_id = %s))
                      AND periodo BETWEEN %s AND %s""", (d['chirps'], d['era5'], d['par'], ult - 4, ult))
     d['anomalias'] = cur.fetchall()
@@ -169,6 +204,7 @@ svg text {{ fill:var(--muted); font-size:10px; }}
 </style></head><body><main>
 <h1>{e(d['h3'])}</h1>
 <p class="sub">{e(d['territorio'] or '')}{' · ' + e(d['departamento']) if d['departamento'] else ''} · {num(d['lat'], 4)}, {num(d['lng'], 4)}</p>
+<p class="nota">Estación meteorológica más cercana: {e(d['estacion'][0]) if d['estacion'] else '—'} (a {num(d['estacion'][1] if d['estacion'] else None, 0)} km): es la referencia obligada para leer las series de temperatura y lluvia.</p>
 <p class="nota">Píxel CHIRPS {d['chirps']} (0,05°, ~70 celdas) · píxel ERA5-Land {d['era5']} (0,1°, altitud del modelo {num(d['z_era5'], 0)} m) ·
 cada valor es el del píxel que contiene el centro de la celda, sin interpolar. Ficha del Hexoma (base local, pipeline/hexoma/hexoma_ficha.py).</p>
 
@@ -187,7 +223,7 @@ No es un goalpost: la celda se compara con su propia historia.</p>
 <div class="tw"><table><thead><tr><th>Variable</th><th>Período</th><th class="n">Valor</th><th class="n">Normal</th>
 <th class="n">Anomalía</th><th class="n">% de la normal</th><th class="n">% bajo</th><th>Unidad</th></tr></thead><tbody>{filas_an}</tbody></table></div>
 <p class="nota">Fuentes: CHIRPS v3 (estimación satelital calibrada con pluviómetros, desde 1981/82); ERA5-Land (reanálisis, desde 1950/51; antes de 1979 asimila menos observaciones).
-Validación contra 48 estaciones (GHCN-Daily e INTA SIGA): pipeline/hexoma/validacion_clima.md.</p>
+Temperatura corregida con 48 estaciones (GHCN-Daily e INTA SIGA, esquema estaciones): pipeline/hexoma/corregir_temperatura.py y validacion_clima.md.</p>
 </main>
 <script>
 const SERIES = {datos_js};
@@ -199,7 +235,7 @@ function carta(s) {{
   const pts = s.puntos.filter(p => p[1] != null);
   const nd = s.nd;
   div.innerHTML = `<h3>${{s.titulo}}</h3><p class="u">${{s.unidad}} · ${{etq(s, pts[0][0])}} a ${{etq(s, pts[pts.length - 1][0])}}</p>`;
-  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]).concat((s.cruda || []).filter(p => p[1] != null).map(p => p[1]));
   const n = s.normal;
   let lo = Math.min(...ys, n ? n.p10 : Infinity), hi = Math.max(...ys, n ? n.p90 : -Infinity);
   if (s.forma !== 'linea') {{ lo = Math.min(0, lo); hi = Math.max(0, hi); }}
@@ -225,6 +261,10 @@ function carta(s) {{
     g += `<line x1="${{M.l}}" x2="${{W - M.r}}" y1="${{Y(n.media)}}" y2="${{Y(n.media)}}" stroke="var(--normal)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
   }}
   const bw = Math.max(1, (W - M.l - M.r) / (x1 - x0) - 2);
+  if (s.cruda) {{
+    const cp = s.cruda.filter(p => p[1] != null);
+    g += `<path d="${{cp.map((p, i) => (i ? 'L' : 'M') + X(p[0]) + ' ' + Y(Math.min(Math.max(p[1], lo), hi))).join('')}}" fill="none" stroke="var(--muted)" stroke-width="1" opacity=".7"/>`;
+  }}
   if (s.forma === 'linea') {{
     g += `<path d="${{pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]) + ' ' + Y(p[1])).join('')}}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round"/>`;
   }} else {{
@@ -250,6 +290,7 @@ function carta(s) {{
     tip.style.left = Math.min(px + 14, r.width - tip.offsetWidth) + 'px'; tip.style.top = '40px';
   }});
   svg.addEventListener('mouseleave', () => {{ tip.style.display = 'none'; svg.querySelector('.cruz').setAttribute('visibility', 'hidden'); }});
+  if (s.nota) {{ const a = document.createElement('p'); a.className = 'nota'; a.style.margin = '6px 0 0'; a.textContent = s.nota; div.appendChild(a); }}
   if (s.aviso) {{ const a = document.createElement('div'); a.className = 'aviso'; a.textContent = s.aviso; div.appendChild(a); }}
   return div;
 }}
