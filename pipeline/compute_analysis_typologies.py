@@ -8,7 +8,7 @@ Replaces score (0-100) with type (categorical 1-k) + type_label (string).
 
 Usage:
   python pipeline/compute_analysis_typologies.py
-  python pipeline/compute_analysis_typologies.py --only agri_potential,land_use
+  python pipeline/compute_analysis_typologies.py --only forestry_aptitude,land_use
   python pipeline/compute_analysis_typologies.py --k 4
 """
 
@@ -30,7 +30,6 @@ sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR
 
 ALL_ANALYSES = [
-    "agri_potential",
     "forestry_aptitude",
     "health_access", "land_use",
     "territorial_scores",

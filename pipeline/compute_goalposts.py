@@ -28,7 +28,6 @@ GOALPOSTS_PATH = os.path.join(os.path.dirname(__file__), 'config', 'goalposts.js
 # Comparable analyses: parquet filename stem → list of c_* columns to pool
 # Maps sat_*.parquet columns that appear in goalposts.json indicators
 COMPARABLE_PARQUETS = {
-    'sat_agri_potential':        ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd', 'c_slope'],
     'sat_carbon_stock':          ['c_agb_cci', 'c_total_carbon', 'c_soc', 'c_net_flux'],
     'sat_productive_activity':   ['c_viirs', 'c_npp', 'c_ndvi', 'c_built', 'c_forest_loss', 'c_lst'],
     'sat_deforestation_dynamics':['c_loss_rate', 'c_cumulative'],
@@ -40,7 +39,6 @@ PARQUET_TO_ANALYSIS = {k: k.replace('sat_', '') for k in COMPARABLE_PARQUETS}
 
 # PCA variable selection analysis-to-component mapping (for re-validation)
 ANALYSIS_COMPONENTS = {
-    'agri_potential':         ['c_soc', 'c_ph_optimal', 'c_clay', 'c_precipitation', 'c_gdd', 'c_slope'],
     'carbon_stock':           ['c_agb_cci', 'c_total_carbon', 'c_soc', 'c_net_flux'],
     'productive_activity':    ['c_viirs', 'c_npp', 'c_ndvi', 'c_built', 'c_forest_loss', 'c_lst'],
     'deforestation_dynamics': ['c_loss_rate', 'c_cumulative'],

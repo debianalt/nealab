@@ -20,7 +20,7 @@ Usage:
       --shapefile pipeline/output/itapua_gaul_distritos.geojson
 
 Also generates:
-  {territory_prefix}hexagons.geojson  — hex grid for this territory (used by process_raster_to_h3)
+  {territory_prefix}hexagons.geojson  — hex grid for this territory
 """
 
 import argparse

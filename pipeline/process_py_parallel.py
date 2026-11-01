@@ -5,7 +5,8 @@ Spawns one subprocess per territory simultaneously.
 Usage:
   python pipeline/process_py_parallel.py --analysis pm25
   python pipeline/process_py_parallel.py --analysis carbon
-  python pipeline/process_py_parallel.py --analysis deforestation  # after GEE finishes
+
+deforestation_dynamics in Paraguay: python pipeline/process_deforestation_py.py (its own runner).
 """
 import argparse
 import os
@@ -37,12 +38,6 @@ ANALYSIS_CMDS = {
         "python split_by_admin.py --territory {t} --only pm25_drivers",
         "npx wrangler r2 object put neahub/data/{prefix}sat_pm25_drivers.parquet "
         "--file output/{t}/sat_pm25_drivers.parquet --remote",
-    ],
-    "deforestation": [
-        "python process_raster_to_h3.py --territory {t} --analysis deforestation_dynamics --mode comparable",
-        "python split_by_admin.py --territory {t} --only deforestation_dynamics",
-        "npx wrangler r2 object put neahub/data/{prefix}sat_deforestation_dynamics.parquet "
-        "--file ../output/{t}/sat_deforestation_dynamics.parquet --remote",
     ],
     "accessibility": [
         "python compute_accessibility_h3.py --territory {t}",

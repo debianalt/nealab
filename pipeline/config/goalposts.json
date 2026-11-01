@@ -56,12 +56,6 @@
       "tier": 2,
       "unit": "Â°C"
     },
-    "c_slope": {
-      "lo": 0.0,
-      "hi": 19.289,
-      "tier": 2,
-      "unit": "degrees"
-    },
     "c_hand": {
       "lo": 0.0,
       "hi": 127.2,
@@ -79,12 +73,6 @@
       "hi": 20.6444,
       "tier": 2,
       "unit": "Â°C"
-    },
-    "c_precipitation": {
-      "lo": 615.4997,
-      "hi": 1940.1236,
-      "tier": 2,
-      "unit": "mm/yr"
     },
     "c_frost": {
       "lo": 0,
@@ -181,24 +169,6 @@
       "hi": 550.0,
       "tier": 2,
       "unit": "g/dm3"
-    },
-    "c_ph_optimal": {
-      "lo": 0,
-      "hi": 1.0,
-      "tier": 1,
-      "unit": "pH_dist"
-    },
-    "c_clay": {
-      "lo": 0.0,
-      "hi": 579.0,
-      "tier": 2,
-      "unit": "g/kg"
-    },
-    "c_gdd": {
-      "lo": 2321.8599,
-      "hi": 5338.9058,
-      "tier": 2,
-      "unit": "C_days"
     },
     "c_loss_ratio": {
       "lo": 0.0,
@@ -351,14 +321,6 @@
       "c_recurrence",
       "c_extent"
     ],
-    "agri_potential": [
-      "c_soc",
-      "c_ph_optimal",
-      "c_clay",
-      "c_precipitation",
-      "c_gdd",
-      "c_slope"
-    ],
     "carbon_stock": [
       "c_agb_cci",
       "c_total_carbon",
@@ -412,6 +374,10 @@
       "version": "1.1b-soil_water",
       "date": "2026-05-29",
       "note": "Add c_soil_moisture / c_dry_season / c_actual_et goalposts pooled across 9 territories. c_precipitation preserved from v1.1. soil_water added to pca_variable_selection."
+    },
+    {
+      "date": "2026-11-01",
+      "note": "agri_potential retirado: la capa sale del Hexoma en unidades físicas (pipeline/hexoma/exportar_agri_web.py). Se quitan sus goalposts (c_ph_optimal, c_clay, c_gdd, c_slope, c_precipitation) y su selección PCA; c_soc queda para carbon_stock."
     }
   ]
 }

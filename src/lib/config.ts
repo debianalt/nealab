@@ -104,7 +104,6 @@ export const TERRAIN_CONFIG = {
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=39',
-		sat_agri_potential: '?v=36',
 		sat_agri_apt: '?v=1',
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=32',
@@ -225,7 +224,6 @@ export const PARQUETS = {
 	get overture_places() { return getParquetUrl('overture_places'); },
 	get overture_base() { return getParquetUrl('overture_base'); },
 	// Satellite composite scores
-	get sat_agri_potential() { return getParquetUrl('sat_agri_potential'); },
 	get sat_agri_apt() { return getParquetUrl('sat_agri_apt'); },
 	get sat_forestry_aptitude() { return getParquetUrl('sat_forestry_aptitude'); },
 	get sat_service_deprivation() { return getParquetUrl('sat_service_deprivation'); },
@@ -731,7 +729,7 @@ export function getHexPrimaryUnit(layer: HexLayerConfig | null | undefined, col?
 	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
 	if (v?.unit && v.unit !== '/100' && v.unit !== 'percentil') return unitLabel(v.unit);
 	if (layer.variables?.some((x) => x.unit === 'percentil')) return i18n.t('unit.pctlProv');
-	// Genuine 0-100 composite score (eudr risk_score, agri c_ph_optimal) → '/100'.
+	// Genuine 0-100 composite score (eudr risk_score, forestry score) → '/100'.
 	// Anything else with no declared unit (e.g. a raw 0-1 fraction) → no suffix,
 	// so we never re-introduce a fake '/100' on a raw value.
 	if (pv === 'score' || pv.endsWith('_score') || v?.unit === '/100') return '/100';
@@ -1638,21 +1636,6 @@ export const RADIO_ANALYSIS_REGISTRY: Record<string, RadioAnalysisConfig> = {
 		implications: { es: 'Parcelas con múltiples riesgos altos requieren estudios de suelo antes de invertir. Pendiente alta + erosión alta señalan terrenos inestables. La deforestación reciente agrava todos los riesgos.', en: 'Parcels with multiple high risks require soil studies before investing. High slope + high erosion indicate unstable terrain.' },
 		methodology: { es: 'Índice 0–100: media geométrica de componentes validados por PCA. Indicadores: frecuencia de inundación JRC, susceptibilidad deslizamiento, erosión RUSLE, pendiente FABDEM, presión de deforestación Hansen.', en: 'Index 0–100: geometric mean of PCA-validated components. Indicators: JRC flood frequency, landslide susceptibility, RUSLE erosion, mean slope, deforestation pressure.' },
 	},
-	productive_aptitude: {
-		id: 'productive_aptitude',
-		choroplethCol: 'agri_potential_score',
-		colorScale: 'sequential',
-		petalCols: [
-			{ col: 'soil_ph', label: { es: 'pH del suelo', en: 'Soil pH' }, desc: { es: 'Acidez/alcalinidad del suelo (SoilGrids)', en: 'Soil acidity/alkalinity (SoilGrids)' }, invert: false },
-			{ col: 'soil_organic_carbon', label: { es: 'Carbono orgánico', en: 'Organic carbon' }, desc: { es: 'Contenido de materia orgánica', en: 'Organic matter content' }, invert: false },
-			{ col: 'chirps_annual_mm', label: { es: 'Precipitación', en: 'Rainfall' }, desc: { es: 'Lluvia anual media en mm (CHIRPS)', en: 'Mean annual rainfall in mm (CHIRPS)' }, invert: false },
-			{ col: 'slope_mean', label: { es: 'Pendiente', en: 'Slope' }, desc: { es: 'Pendiente media — menor es mejor para cultivos', en: 'Mean slope — lower is better for crops' }, invert: true },
-			{ col: 'agri_potential_score', label: { es: 'Aptitud agrícola', en: 'Ag. potential' }, desc: { es: 'Score compuesto de potencial productivo', en: 'Composite productive potential score' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según el score de aptitud agrícola. Verde más intenso = mayor potencial. El pétalo muestra suelo, lluvia, pendiente y aptitud general.', en: 'Parcels are coloured by agricultural aptitude score. Greener = higher potential.' },
-		implications: { es: 'Suelos con pH 5.5-6.5 y alto carbono orgánico son óptimos para yerba mate y té. Pendientes >15% requieren terrazas. Precipitación >1600mm/año permite cultivos sin riego.', en: 'Soils with pH 5.5-6.5 and high organic carbon are optimal for yerba mate and tea.' },
-		methodology: { es: 'Índice 0–100: media geométrica de componentes validados por PCA. Indicadores: pH del suelo SoilGrids (óptimo 5.5–6.5), carbono orgánico, precipitación CHIRPS, pendiente FABDEM. Fuentes: SoilGrids 250m + CHIRPS 5km.', en: 'Index 0–100: geometric mean of PCA-validated components. Indicators: soil pH SoilGrids, organic carbon, CHIRPS precipitation, FABDEM slope.' },
-	},
 	accessibility: {
 		id: 'accessibility',
 		choroplethCol: 'travel_min_capital',
@@ -1786,7 +1769,6 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	// sourceKey = the layer's own datasets, from its published methodology (no
 	// generic «satellite» list). processedDate = last reprocess (git) or, where
 	// none is recorded, the publication date of the file in R2.
-	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'layer.source.agri' },
 	sat_agri_apt: { dataDate: 'CHIRPS v3 1981–2026 · ERA5-Land corregido con 48 estaciones 1950–2026 · SoilGrids 2.0 · FABDEM · normal 1991–2020', processedDate: '01/11/2026', sourceKey: 'layer.source.agri' },
 	sat_forestry_aptitude: { dataDate: 'ERA5/CHIRPS/SoilGrids/SRTM 2019-2023', processedDate: '20/06/2026', sourceKey: 'layer.source.forestry' },
 	sat_service_deprivation: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },

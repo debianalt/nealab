@@ -6,7 +6,7 @@ Compute district-level statistics for Itapua (Paraguay).
 
 Output: pipeline/output/itapua_py/district_stats_itapua.parquet
   Columns: distrito, n_hexes,
-            accessibility_score, agri_potential_score, flood_risk_score,
+            accessibility_score, flood_risk_score,
             pct_nbi, pct_vivienda, pct_sanitario, pct_educacion, pct_subsistencia
 
 R2 upload:
@@ -34,7 +34,6 @@ def _stem(tid: str) -> str:
 
 ANALYSES = {
     "accessibility_score":   ("sat_accessibility.parquet",      "score"),
-    "agri_potential_score":  ("sat_agri_potential.parquet",     "score"),
     "flood_risk_score":      ("hex_flood_risk.parquet",         "flood_risk_score"),
 }
 NBI_COLS = ["pct_nbi", "pct_vivienda", "pct_sanitario", "pct_educacion", "pct_subsistencia"]

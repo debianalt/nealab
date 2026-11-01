@@ -88,7 +88,7 @@ _TILE_RE = re.compile(
 
 def authenticate() -> None:
     """GEE auth — service account in CI, user credentials locally
-    (mirrors gee_export_analysis.authenticate)."""
+    (same GEE auth as the other exporters)."""
     key_env = os.environ.get("GEE_SERVICE_ACCOUNT_KEY", "")
     if not key_env:
         ee.Initialize()

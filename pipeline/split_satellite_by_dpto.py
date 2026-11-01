@@ -7,7 +7,7 @@ point-in-polygon, splits each of the 10 satellite analyses.
 
 Usage:
   python pipeline/split_satellite_by_dpto.py
-  python pipeline/split_satellite_by_dpto.py --only agri_potential,land_use
+  python pipeline/split_satellite_by_dpto.py --only forestry_aptitude,land_use
 
 Output:
   pipeline/output/sat_dpto/sat_{ID}_{DPTO}.parquet  (x17 per analysis)
@@ -32,7 +32,6 @@ RADIO_STATS_PATH = os.path.join(OUTPUT_DIR, "radio_stats_master.parquet")
 AREAL_CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk_areal.parquet")
 
 ALL_ANALYSES = [
-    "agri_potential",
     "forestry_aptitude",
     "service_deprivation",
     "health_access", "education_capital", "education_flow",

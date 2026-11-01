@@ -16,7 +16,7 @@
 -- 1. Frontera de deforestación aislada
 -- ¿Dónde se pierde bosque más rápido (top 10 % de la región) en las celdas más
 -- lejanas de la capital de su propio departamento (por encima del P75 del depto),
--- y cuánto potencial agrícola tienen?
+-- y qué parte de las campañas 1991/92–2024/25 fueron aptas para soja (aptitud.resumen, sin puntajes)?
 -- Ámbitos: región para la tasa (capa satelital comparable entre territorios),
 -- departamento para el aislamiento (lejos «para ese departamento»).
 -- Medido: 30 departamentos (de 76), 14 s. Encabezan Patiño y Bermejo (Formosa).
@@ -30,13 +30,13 @@ celdas AS (
     SELECT v.h3, v.territorio, v.departamento,
            v.deforestation_dynamics__c_loss_rate AS perdida,
            v.accessibility__travel_min_capital   AS minutos,
-           ag.score                               AS potencial_agricola
+           ap.soja_s12_pct                        AS soja_campanias_aptas
     FROM v_hexoma v
     JOIN v_hexoma_rangos r USING (h3, territorio)
     JOIN territorios t ON t.territorio = v.territorio
     JOIN capa_accessibility a ON a.h3 = v.h3 AND a.territorio_id = t.territorio_id AND a.principal
     JOIN p75 ON p75.depto_id = a.depto_id
-    LEFT JOIN capa_agri_potential ag ON ag.h3 = v.h3 AND ag.territorio_id = t.territorio_id AND ag.principal
+    LEFT JOIN aptitud.resumen ap ON ap.h3 = v.h3
     WHERE r.deforestation_dynamics__c_loss_rate__pr_reg >= 90
       AND v.accessibility__travel_min_capital > p75.p75
 )
@@ -45,7 +45,7 @@ SELECT territorio, departamento,
        round(sum(h3_cell_area(h3, 'km^2'))::numeric, 1)  AS km2,
        round(avg(perdida)::numeric, 2)                   AS perdida_media_pct_anio,
        round(avg(minutos)::numeric)                      AS minutos_a_capital,
-       round(avg(potencial_agricola)::numeric, 1)        AS potencial_agricola_100
+       round(avg(soja_campanias_aptas)::numeric, 1)      AS soja_pct_campanias_aptas
 FROM celdas
 GROUP BY 1, 2
 ORDER BY km2 DESC

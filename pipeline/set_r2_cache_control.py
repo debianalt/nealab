@@ -18,10 +18,10 @@ CACHE_CONTROL = "public, max-age=86400, immutable"
 # Most-accessed territories (per-dept parquets are the hot path for users)
 TERRITORIES_AND_ANALYSES = [
     # (prefix, analyses, summary_pattern)
-    ("", ["agri_potential","forestry_aptitude","carbon_stock","deforestation_dynamics","pm25_drivers","land_use","accessibility","flood_risk"], "sat_{a}_dept_summary"),
-    ("itapua_py/", ["agri_potential","forestry_aptitude","carbon_stock","deforestation_dynamics","pm25_drivers","land_use","accessibility"], "itapua_py_sat_{a}_summary"),
-    ("alto_parana_py/", ["agri_potential","forestry_aptitude","carbon_stock","land_use"], "alto_parana_py_sat_{a}_summary"),
-    ("corrientes/", ["agri_potential","forestry_aptitude","carbon_stock","pm25_drivers","land_use","accessibility"], "corrientes_sat_{a}_summary"),
+    ("", ["forestry_aptitude","carbon_stock","deforestation_dynamics","pm25_drivers","land_use","accessibility","flood_risk"], "sat_{a}_dept_summary"),
+    ("itapua_py/", ["forestry_aptitude","carbon_stock","deforestation_dynamics","pm25_drivers","land_use","accessibility"], "itapua_py_sat_{a}_summary"),
+    ("alto_parana_py/", ["forestry_aptitude","carbon_stock","land_use"], "alto_parana_py_sat_{a}_summary"),
+    ("corrientes/", ["forestry_aptitude","carbon_stock","pm25_drivers","land_use","accessibility"], "corrientes_sat_{a}_summary"),
 ]
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "src", "lib", "data")

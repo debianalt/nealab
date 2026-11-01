@@ -246,9 +246,8 @@ SELECT columna, definicion, fuente, tipo_dato, limitaciones FROM meta.v_ficha WH
 ```
 La fuente de verdad es `pipeline/hexoma/metodologia.py`: al agregar una fuente o un proceso se edita ahí y se corre
 `build_hexoma_meta.py`. El relevamiento de las capas de la web (1-nov-2026) encontró inconsistencias entre código y
-textos de spatia.ar, anotadas en sus fichas: la pendiente de `agri_potential` sale de SRTM aunque el texto dice
-FABDEM; el CI de Misiones de `agri_potential` y el de deforestación corren en percentil local aunque las capas
-figuran como comparables; el año de VIIRS de actividad económica no está determinado; el modelo forestal se
+textos de spatia.ar, anotadas en sus fichas: el CI de deforestación corre en percentil local aunque la capa
+figura como comparable; el año de VIIRS de actividad económica no está determinado; el modelo forestal se
 describe con dos nichos y el script entrena uno.
 
 ## Extractos para artículos (`extracto.py`)

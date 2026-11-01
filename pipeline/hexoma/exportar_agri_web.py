@@ -43,8 +43,6 @@ DATA = ROOT / 'src' / 'lib' / 'data'
 PREFIJO = {'misiones': '', 'corrientes': 'corrientes/', 'chaco': 'chaco/', 'formosa': 'formosa/'}
 RESUMEN = {'misiones': 'sat_agri_apt_dept_summary.json', 'corrientes': 'corrientes_sat_agri_apt_summary.json',
            'chaco': 'chaco_sat_agri_apt_summary.json', 'formosa': 'formosa_sat_agri_apt_summary.json'}
-VIEJO = {'misiones': 'sat_agri_potential_dept_summary.json', 'corrientes': 'corrientes_sat_agri_potential_summary.json',
-         'chaco': 'chaco_sat_agri_potential_summary.json', 'formosa': 'formosa_sat_agri_potential_summary.json'}
 CULTIVOS = list(NOMBRES)
 
 
@@ -59,7 +57,7 @@ def main() -> None:
            s.ph_h2o::real AS ph, s.arcilla_pct::real AS arcilla_pct,
            (100 * tan(radians(s.pendiente_media_grados)))::real AS pendiente_pct, s.elev_media_m::real AS elev_m,
            {apt}
-    FROM capa_agri_potential a
+    FROM capa_agri_potential a   -- la capa web ya es esta misma: sólo se usa su partición (depto_id, principal)
     JOIN departamentos d USING (depto_id) JOIN territorios t ON t.territorio_id = a.territorio_id
     JOIN clima.hex_pixel h ON h.h3 = a.h3
     LEFT JOIN suelo.h3 s ON s.h3 = a.h3
@@ -85,8 +83,8 @@ def main() -> None:
         for key, d in g.groupby('parquet_key'):
             d.sort_values('h3index')[cols].to_parquet(OUT / pre / 'sat_dpto' / f'sat_agri_apt_{key}.parquet',
                                                        index=False, compression='zstd')
-        # resumen: parte del viejo (nombres, centroides) y reemplaza los valores
-        viejo = json.loads((DATA / VIEJO[terr]).read_text(encoding='utf-8'))
+        # resumen: parte del publicado (nombres, centroides, parquetKey) y reemplaza los valores
+        viejo = json.loads((DATA / RESUMEN[terr]).read_text(encoding='utf-8'))
         por_key = {k: d for k, d in g.groupby('parquet_key')}
         deps = []
         for dep in viejo['departments']:

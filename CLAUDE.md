@@ -55,7 +55,7 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 - **Sin pesos**: los componentes retenidos pesan igual. No hay promedio ponderado en ningún score (el modo `--legacy` y los pesos por componente se borraron el 12-oct-2026).
 - **Shared module**: `pipeline/scoring.py` — all diagnostics and scoring functions
 - **Diagnostics**: `--diagnostics` flag on `compute_satellite_scores.py` emits `*_diagnostics.json` per analysis
-- **Scripts**: `compute_satellite_scores.py` = 4 capas censales (service_deprivation, health_access, education_capital, education_flow). `process_raster_to_h3.py` / `gee_reduce_analysis.py` = agri_potential.
+- **Scripts**: `compute_satellite_scores.py` = 4 capas censales (service_deprivation, health_access, education_capital, education_flow). agri_potential NO es un score: sale del Hexoma en unidades físicas y aptitud por cultivo (`pipeline/hexoma/exportar_agri_web.py`); la versión 0–100 y su pipeline se borraron el 1-nov-2026.
 
 ## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
 nealab has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
@@ -67,7 +67,7 @@ UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
 - "↔ Comparables entre territorios" → layers with `comparable: true` in `ANALYSIS_REGISTRY`
 - "Solo <territorio>" → layers with `comparable: false`
 
-**Tier 1 (physical, invariant)**: c_recurrence, c_occurrence, c_extent, c_treecover, c_water_stress, c_ph_optimal. Fractions/percentages/bounded ratios. NEVER recalibrated.
+**Tier 1 (physical, invariant)**: c_recurrence, c_occurrence, c_extent, c_treecover, c_water_stress. Fractions/percentages/bounded ratios. NEVER recalibrated.
 
 **Tier 2 frozen v1** (commit `58e225f`): P2/P98 over pooled Mis+Ita reference universe. Intra-ecoregion additions DO NOT recompute. Bump v(n+1) only when leaving the ecoregion OR on deliberate methodological revision (recomputes ALL territories + full history + documents the break).
 

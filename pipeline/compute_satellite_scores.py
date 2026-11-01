@@ -15,8 +15,6 @@ Analyses (census, served by spatia.ar):
   education_capital    — No schooling, secondary, tertiary, university
   education_flow       — School non-attendance 6-12 / 13-18, teen pregnancy
 
-Raster-based analyses (agri_potential) run in process_raster_to_h3.py.
-
 Usage:
   python pipeline/compute_satellite_scores.py
   python pipeline/compute_satellite_scores.py --only health_access --territory corrientes
@@ -381,19 +379,16 @@ def main():
         print(f"  Loaded goalposts v{goalposts.get('version', '?')} "
               f"({goalposts.get('computed', '?')})")
 
-    # agri_potential runs in process_raster_to_h3.py (hex-level zonal stats over a
-    # GEE raster). Point there instead of failing with "no matching analyses".
-    RASTER_BASED = {"agri_potential"}
+    # agri_potential is no longer a score: it comes from the Hexoma in physical units
+    # (pipeline/hexoma/exportar_agri_web.py).
+    if args.only and "agri_potential" in args.only.split(","):
+        print("ERROR: agri_potential is built by pipeline/hexoma/exportar_agri_web.py, not here.")
+        return 1
 
     # Filter analyses if --only specified
     analyses = list(ANALYSIS_DEFS)
     if args.only:
         only_ids = set(args.only.split(","))
-        overlap = only_ids & RASTER_BASED
-        if overlap:
-            print(f"ERROR: {sorted(overlap)} are raster-based. Run via:")
-            print(f"  python pipeline/process_raster_to_h3.py --analysis {','.join(sorted(overlap))}")
-            return 1
         analyses = [a for a in analyses if a["id"] in only_ids]
         if not analyses:
             print(f"ERROR: No matching analyses for --only={args.only}")

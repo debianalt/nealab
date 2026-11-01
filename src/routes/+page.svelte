@@ -636,7 +636,7 @@
 			mapStore.clearFloodParcelState();
 		}
 		if (['territorial_scores', 'investment_value', 'natural_risks',
-			'productive_aptitude', 'accessibility', 'change_dynamics',
+			'accessibility', 'change_dynamics',
 			'sociodemographic', 'forest_potential', 'economic_activity'].includes(prevAnalysisId ?? '')) {
 			mapComponent?.clearCatastroScoresChoropleth();
 			mapComponent?.clearFloodParcelHighlight();

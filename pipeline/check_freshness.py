@@ -9,7 +9,7 @@ reads Last-Modified from the public bucket and data/flood_meta.json — and exit
 GitHub issue.
 
 Only layers with an automatic refresh are checked. Layers refreshed by hand
-(Paraguay, Brazil, agri_potential, land use, Overture) have no cadence to miss.
+(Paraguay, Brazil, agri_potential from the Hexoma, land use, Overture) have no cadence to miss.
 
     python pipeline/check_freshness.py            # report to stdout, exit 1 if late
 """
