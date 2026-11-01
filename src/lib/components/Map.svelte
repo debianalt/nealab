@@ -57,6 +57,24 @@
 	let lassoActive = false;
 	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
+	// Gray backdrop under the hex layer ("no hexagon here = no data"), one outline
+	// per territory. It used to know only Mis/Ctes/Itapúa/Alto Paraná and fell back
+	// to Misiones: Chaco, Formosa, the other PY departments and BR had no backdrop,
+	// and Misiones was painted gray when it was in view from them.
+	const TERRITORY_BG: Record<string, unknown> = {
+		misiones: misionesBoundary, corrientes: corrientesBoundary,
+		chaco: chacoBoundary, formosa: formosaBoundary,
+		itapua_py: itapuaBoundary, alto_parana_py: altoParanaBoundary,
+		concepcion_py: concepcionPyBoundary, san_pedro_py: sanPedroPyBoundary,
+		cordillera_py: cordilleraPyBoundary, guaira_py: guairaPyBoundary,
+		caaguazu_py: caaguazuPyBoundary, caazapa_py: caazapaPyBoundary,
+		misiones_py: misionesPyBoundary, paraguari_py: paraguariPyBoundary,
+		central_py: centralPyBoundary, neembucu_py: neembucuPyBoundary,
+		amambay_py: amambayPyBoundary, canindeyu_py: canindeyuPyBoundary,
+		presidente_hayes_py: presidenteHayesPyBoundary, boqueron_py: boqueronPyBoundary,
+		alto_paraguay_py: altoParaguayPyBoundary,
+		parana_br: paranaBrBoundary, santa_catarina_br: scBrBoundary, rio_grande_sul_br: rsBrBoundary,
+	};
 	// Start view ("Spatia" / fresh load): no territory picked yet — every border thin,
 	// the outline of the whole area strong (setHomeView).
 	let homeView = true;
@@ -3103,11 +3121,7 @@
 
 		const bgSrc = map.getSource('territory-bg') as maplibregl.GeoJSONSource | undefined;
 		if (bgSrc) {
-			const bgData = activeTerritoryId === 'corrientes' ? corrientesBoundary
-			             : activeTerritoryId === 'itapua_py'  ? itapuaBoundary
-			             : activeTerritoryId === 'alto_parana_py' ? altoParanaBoundary
-			             : misionesBoundary;
-			bgSrc.setData(bgData as any);
+			bgSrc.setData((TERRITORY_BG[activeTerritoryId] ?? { type: 'FeatureCollection', features: [] }) as any);
 		}
 	}
 
