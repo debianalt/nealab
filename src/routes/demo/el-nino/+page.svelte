@@ -22,7 +22,7 @@
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
 	// cache buster for the JSON and PNG files (the CDN keeps files with ?v as immutable)
-	const VER = '7';
+	const VER = '8';
 	const TOWN_WIDE = { center: [-54.2025, -27.2995] as [number, number], zoom: 14.9, pitch: 55, bearing: -20 };
 	const TOWN_NARROW = { center: [-54.1995, -27.3005] as [number, number], zoom: 14.1, pitch: 50, bearing: -20 };
 	const MUNI = { center: [-54.12, -27.15] as [number, number], zoom: 10.4, pitch: 0, bearing: 0 };
@@ -42,9 +42,9 @@
 		oscuro: BASEMAP
 	};
 	const TH = {
-		claro: { sel: '#1c1c1c', dry: '#a39482', ctx: '#cfc5b8', radioLine: '#5a5750', casing: '#fbfaf7', iso: '#7b62c0',
+		claro: { sel: '#1c1c1c', dry: '#a39482', ctx: '#cfc5b8', nrWet: '#b9c4cc', sym: '#5a5750', symFill: '#fbfaf7', radioLine: '#5a5750', casing: '#fbfaf7', iso: '#7b62c0',
 			label: '#1c1c1c', halo: 'rgba(251, 250, 247, 0.92)', peakOff: '#dcd8cf', peakOn: '#3a7fb0', peakLine: '#1c1c1c' },
-		oscuro: { sel: '#f3efe6', dry: '#4a4c52', ctx: '#26282d', radioLine: '#e6e2d8', casing: INK_BG, iso: '#b6a1dc',
+		oscuro: { sel: '#f3efe6', dry: '#4a4c52', ctx: '#26282d', nrWet: '#4a5560', sym: '#d8d4ca', symFill: '#1c1e22', radioLine: '#e6e2d8', casing: INK_BG, iso: '#b6a1dc',
 			label: '#ebe8e1', halo: 'rgba(19, 20, 23, 0.92)', peakOff: '#2d2f36', peakOn: '#7fb3d1', peakLine: '#ebe8e1' }
 	};
 	const temaInicial = (): Tema => {
@@ -153,6 +153,16 @@
 		{ min: 1, label: '1 o 2 años', color: '#fdcc8a', rgb: [253, 204, 138] },
 		{ min: 0, label: 'Nunca registrado', color: GREY, rgb: [120, 125, 134] }
 	];
+	// building use (10_usos.py: OSM, SIG Misiones, or local data); 0 = unknown, then COND by size applies
+	const USO_LABEL = ['', 'Casa', 'Anexo o galpón', 'Comercio o servicio', 'Edificio público', 'Iglesia, club o salón'];
+	// services drawn as small symbols (puntos.geojson tipo)
+	const SERV = [
+		{ id: 'escuela', label: 'Escuela' }, { id: 'salud', label: 'Salud' },
+		{ id: 'seguridad', label: 'Seguridad y emergencia' }, { id: 'municipio', label: 'Municipio' },
+		{ id: 'abastecimiento', label: 'Combustible, comercio, banco' }
+	];
+	const ESC: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
+	const esc = (t: any) => String(t ?? '').replace(/[&<>"]/g, (c) => ESC[c]);
 	const COND = ['Anexo chico (menos de 25 m²)', 'Vivienda probable (25 a 400 m²)', 'No residencial probable (más de 400 m²)'];
 	const SCEN = [
 		{ id: '2026', label: 'Jul. 2026', short: '2026' },
@@ -349,6 +359,55 @@
 		const n = parseInt(c.slice(1), 16);
 		return 0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255) > 150 ? INK_BG : '#fff';
 	};
+	// small service symbol: paper disc, thin ring and pictogram in ink; red when the water reaches it
+	function servImage(tipo: string, wet: boolean, th: typeof TH.claro) {
+		const S = 28, cv = document.createElement('canvas');
+		cv.width = cv.height = S;
+		const g = cv.getContext('2d')!, ink = wet ? '#c8373b' : th.sym;
+		g.beginPath(); g.arc(14, 14, 12, 0, Math.PI * 2);
+		g.fillStyle = th.symFill; g.fill(); g.lineWidth = wet ? 2.2 : 1.4; g.strokeStyle = ink; g.stroke();
+		g.fillStyle = ink; g.strokeStyle = ink;
+		g.beginPath();
+		if (tipo === 'salud') { g.rect(12.4, 7.5, 3.2, 13); g.rect(7.5, 12.4, 13, 3.2); g.fill(); }
+		else if (tipo === 'escuela') {
+			g.moveTo(7, 9.5); g.lineTo(13.3, 11); g.lineTo(13.3, 19.5); g.lineTo(7, 18); g.closePath();
+			g.moveTo(21, 9.5); g.lineTo(14.7, 11); g.lineTo(14.7, 19.5); g.lineTo(21, 18); g.closePath(); g.fill();
+		} else if (tipo === 'seguridad') {
+			g.moveTo(14, 6.8); g.lineTo(20, 9); g.lineTo(20, 14); g.quadraticCurveTo(20, 19.2, 14, 21.6);
+			g.quadraticCurveTo(8, 19.2, 8, 14); g.lineTo(8, 9); g.closePath(); g.fill();
+		} else if (tipo === 'municipio') {
+			g.moveTo(7.5, 12); g.lineTo(14, 7.3); g.lineTo(20.5, 12); g.closePath();
+			for (const x of [8.8, 12.9, 17]) g.rect(x, 13, 2.2, 5.6);
+			g.rect(7.5, 19.2, 13, 1.8); g.fill();
+		} else {
+			// shopping cart (a bag with a handle read as a padlock)
+			g.moveTo(6.5, 8.5); g.lineTo(9, 8.5); g.lineTo(11, 17); g.lineTo(19.5, 17); g.lineTo(21, 11); g.lineTo(9.7, 11);
+			g.lineWidth = 1.8; g.lineJoin = 'round'; g.stroke();
+			g.beginPath(); g.arc(12, 19.8, 1.5, 0, Math.PI * 2); g.arc(18.3, 19.8, 1.5, 0, Math.PI * 2); g.fill();
+		}
+		return g.getImageData(0, 0, S, S);
+	}
+	function addServImages(m: any, th: typeof TH.claro) {
+		for (const sv of SERV) for (const w of [0, 1]) {
+			const id = `sv-${sv.id}-${w}`;
+			if (m.hasImage(id)) m.removeImage(id);
+			m.addImage(id, servImage(sv.id, !!w, th), { pixelRatio: 2 });
+		}
+	}
+	const servIcon = (st: number): any => ['concat', 'sv-', ['get', 'tipo'], '-',
+		['case', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st], '1', '0']];
+	// legend copies of the symbols, per theme (canvas only exists in the browser)
+	let servUrls = $state<Record<string, string>>({});
+	$effect(() => {
+		const th = T, out: Record<string, string> = {};
+		for (const sv of SERV) {
+			const cv = document.createElement('canvas'); cv.width = cv.height = 28;
+			cv.getContext('2d')!.putImageData(servImage(sv.id, false, th), 0, 0);
+			out[sv.id] = cv.toDataURL();
+		}
+		servUrls = out;
+	});
+
 	function starImage(n: number, color: string) {
 		const S = 80, k = S / 24, cv = document.createElement('canvas');
 		cv.width = cv.height = S;
@@ -483,15 +542,17 @@
 		const flooded = ['all', ['>=', ['get', 's'], 0], ['<=', ['get', 's'], st]];
 		const depthRamp = ['interpolate', ['linear'], ['-', st, ['get', 's']], ...BDEPTH.flat()];
 		const isolated = ['all', ['>=', ['get', 'i'], 0], ['<=', ['get', 'i'], st]];
+		// sheds, annexes, shops and public buildings hold no people: muted, so the eye counts houses
+		const nonres = ['!=', ['get', 'c'], 1];
 		if (capa === 'agua' && aguaModo === 'frecuencia' && picosDesc.length >= 10) {
 			// step on the impact height: at or below the 10th highest peak = 10 years or more, and so on
 			const freqRamp = ['step', ['get', 's'], FREQ[0].color, picosDesc[9] + 1e-6, FREQ[1].color, picosDesc[2] + 1e-6,
 				FREQ[2].color, picosDesc[0] + 1e-6, FREQ[3].color];
-			return ['case', flooded, freqRamp, isolated, T.iso, T.dry];
+			return ['case', nonres, ['case', flooded, T.nrWet, T.ctx], flooded, freqRamp, isolated, T.iso, T.dry];
 		}
-		if (capa === 'agua') return ['case', flooded, depthRamp, isolated, T.iso, T.dry];
-		if (capa === 'arroyos') return ['match', ['coalesce', ['get', 'k'], 0], 3, ARR[0].color, 2, ARR[1].color, T.dry];
-		return ['match', ['get', 'z'], ...colorPairs(), GREY];
+		if (capa === 'agua') return ['case', nonres, ['case', flooded, T.nrWet, T.ctx], flooded, depthRamp, isolated, T.iso, T.dry];
+		if (capa === 'arroyos') return ['case', nonres, T.ctx, ['match', ['coalesce', ['get', 'k'], 0], 3, ARR[0].color, 2, ARR[1].color, T.dry]];
+		return ['case', nonres, T.ctx, ['match', ['get', 'z'], ...colorPairs(), GREY]];
 	}
 
 	function applyLayers() {
@@ -526,8 +587,9 @@
 			map.setFilter('cortes', ['<=', ['get', 's'], st]);
 			map.setFilter('cortes-casing', ['<=', ['get', 's'], st]);
 		}
-		// schools and health centres only when they end up under water
-		map.setFilter('puntos', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st]);
+		// services always shown, red where the water reaches them, drawn last so they stay on top
+		map.setLayoutProperty('puntos', 'icon-image', servIcon(st));
+		map.setLayoutProperty('puntos', 'symbol-sort-key', ['case', ['<=', ['coalesce', ['get', 'primer_impacto'], 99], st], 1, 0]);
 	}
 
 	$effect(() => { stage; capa; aguaModo; tema; applyLayers(); });
@@ -663,12 +725,12 @@
 		let z = feats.find((f: any) => f.layer.id === 'radios-fill')?.properties;
 		if (pt) {
 			const s = num(pt.properties.primer_impacto);
-			lines.push(`<b>${pt.properties.nombre}</b>`,
+			lines.push(`<b>${esc(pt.properties.nombre)}</b> <span class="dim">· ${SERV.find((x) => x.id === pt.properties.tipo)?.label ?? ''}</span>`,
 				s == null ? 'Fuera del alcance de los escenarios' : `El agua llega con ${m(s)}` + (s <= stage + 1e-6 ? ` · <span class="r">bajo ${m(stage - s)} de agua</span>` : ' · seca a esta altura'));
 		} else if (b) {
 			const p = b.properties, s = num(p.s);
 			z = radioById.get(p.z)?.properties ?? z;
-			lines.push(`<b>${COND[+p.c]}</b>${+p.r ? ' · barrio popular' : ''}`);
+			lines.push(`<b>${+p.u ? USO_LABEL[+p.u] + (p.n ? ': ' + esc(p.n) : '') : COND[+p.c]}</b>${+p.r ? ' · barrio popular' : ''}`);
 			lines.push(`${fmt(+p.a)} m² · ${dec(+p.h)} m de alto · ${+p.c === 1 ? `<b>≈ ${dec(+p.p)} personas</b> (estimado por tamaño)` : 'sin personas asignadas'}`);
 			if (+p.c === 1 && z && +z.c_hogares > 0)
 				lines.push(`<span class="dim">En su radio hay 1 hogar cada ${dec(+z.viv_probables / +z.c_hogares)} construcciones de este tamaño: muchas son galpones o anexos</span>`);
@@ -833,16 +895,14 @@
 						'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 3], 3], 60],
 						'fill-extrusion-color': T.ctx, 'fill-extrusion-opacity': 0.8
 					} });
-				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v7.pmtiles` });
+				map.addSource('eb', { type: 'vector', url: `pmtiles://${CDN}/edificios_v8.pmtiles` });
 				map.addLayer({ id: 'eb-3d', type: 'fill-extrusion', source: 'eb', 'source-layer': 'b', minzoom: 12,
 					paint: { 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-color': T.dry, 'fill-extrusion-opacity': 0.95 } });
 				map.addSource('puntos', { type: 'geojson', data: puntos });
-				map.addLayer({ id: 'puntos', type: 'circle', source: 'puntos', minzoom: 11,
-					paint: {
-						'circle-radius': ['interpolate', ['linear'], ['zoom'], 11, 3.5, 16, 7],
-						'circle-color': '#ffffff', 'circle-stroke-color': INK_BG, 'circle-stroke-width': 1.5,
-						'circle-pitch-alignment': 'map'
-					} });
+				addServImages(map, T);
+				map.addLayer({ id: 'puntos', type: 'symbol', source: 'puntos', minzoom: 12.5,
+					layout: { 'icon-image': servIcon(stage + 1e-6), 'icon-allow-overlap': true, 'icon-ignore-placement': true,
+						'icon-size': ['interpolate', ['linear'], ['zoom'], 12.5, 0.75, 16, 1.1] } });
 				// numbered stars for "Dónde llega primero"
 				t.umbrales.forEach((u, i) => {
 					if (!map.hasImage(`star-${i + 1}`)) map.addImage(`star-${i + 1}`, starImage(i + 1, colorOf(u.prioridad)), { pixelRatio: 2 });
@@ -1068,7 +1128,7 @@
 							<div class="ramp"><span>Agua</span><i class="bar" style:background={wgrad(tema)}></i><span class="dim">0–10 m</span></div>
 							<div class="ramp"><span>Casas</span><i class="bar" style:background={`linear-gradient(to right, ${BDEPTH.map(([, c]) => c).join(', ')})`}></i><span class="dim">0–5 m</span></div>
 						{/if}
-						<div class="keys"><span><i style:background={T.dry}></i>Casa sin agua</span><span><i style:background={T.iso}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i class="pt"></i>Escuela o centro de salud bajo el agua</span></div>
+						<div class="keys"><span><i style:background={T.dry}></i>Casa sin agua</span><span><i style:background={T.iso}></i>Aislada: seca, sin camino al hospital ni salida por ruta</span><span><i class="road"></i>Camino posiblemente cortado</span><span><i style:background={T.ctx}></i>Galpón, comercio o edificio público (sin personas)</span></div>
 						<p class="note">Línea punteada: radios censales a los que ya llega el agua.</p>
 					{:else if tab === 'arroyos' && tabla.arroyos}
 						{@const A = tabla.arroyos}
@@ -1089,6 +1149,7 @@
 						<div class="keys">{#each censoKeys as r}<span><i style:background={r.color}></i>{r.label} {censoSel.unit}</span>{/each}</div>
 						<p class="note">Cantidad por radio censal (censo 2022). Los radios rurales grandes suman más porque tienen más gente: la ficha da también el porcentaje.</p>
 					{/if}
+					<div class="keys serv">{#each SERV as sv}<span>{#if servUrls[sv.id]}<img src={servUrls[sv.id]} alt="" />{/if}{sv.label}</span>{/each}<span class="dim">en rojo: bajo el agua</span></div>
 					<p class="note radio-def">Cada zona es un radio censal del INDEC (en el pueblo, unas 200 a 300 viviendas) y lleva el nombre de los barrios que contiene.</p>
 				</div>
 			</section>
@@ -1190,6 +1251,7 @@
 					<p><b>Escenario extremo (30 m):</b> sin antecedente medido; el récord de 1983 más 3 m. Con los picos anuales 1980-2025, es la crecida de unos 200 años según una distribución de Gumbel (29,3 m). Más arriba la extrapolación no tiene sustento con 44 años de datos.</p>
 					<p><b>Escala:</b> la de Prefectura en el puerto de El Soberbio, la misma que usa Defensa Civil. Los escenarios son el pico de cada crecida; la historia usa la lectura diaria de Prefectura (serie del INA), que puede quedar hasta 2 m por debajo del pico.</p>
 					<p><b>Caminos y aislamiento:</b> red de OpenStreetMap; un camino se corta cuando el agua cubre algún tramo. El terreno no ve terraplenes: los accesos a puentes se ajustaron con los cierres documentados del Yabotí (16,1 m) y del arroyo El Soberbio. Se dice «posible corte». Una vivienda queda aislada cuando no llega en seco ni al hospital de El Soberbio ni a una salida del municipio (RP 13, 15, 21 y picadas hacia las colonias vecinas); fuera del municipio esos caminos se suponen transitables. La RP 2 no cuenta como salida: va a Moconá o corre junto al río.</p>
+					<p><b>Uso de los edificios:</b> galpones, anexos, comercios y edificios públicos no reciben personas. El uso sale de OpenStreetMap y del SIG de la provincia (escuelas, salud, policía, Prefectura, Gendarmería, bomberos, municipalidad, combustible); donde no hay dato, del tamaño (menos de 25 m², anexo; más de 400 m², no residencial). Hoy se conoce el uso de menos del 2 % de los edificios que alcanza el agua, así que el reparto todavía cuenta como casas a muchos galpones y negocios: con un relevamiento local mejora.</p>
 					<p><b>Arroyos:</b> altura de cada lugar sobre el arroyo más cercano siguiendo la pendiente, con el mismo terreno satelital (30 m) que el río; la red de arroyos calculada coincide con la de OpenStreetMap en el 89 % de su largo. Susceptibilidad sin calibrar: no ve alcantarillas, entubados ni rellenos. Tampoco ve desagües pluviales: se probó marcar las calles donde se concentra la escorrentía y con terreno de 30 m no discrimina (marca una de cada cuatro viviendas del pueblo, en Cerro Bonito igual que en el resto); hace falta el relevamiento de desagües o un terreno más fino. Lluvia: CHIRPS y ERA5-Land diarios desde 1981.</p>
 					<p><b>Personas por casa:</b> la población censal del radio repartida por superficie entre las viviendas probables (25 a 400 m²).</p>
 					<p><b>Fuentes:</b> INA, FABDEM, CHIRPS, ERA5-Land, Censo 2022 (INDEC), RENABAP, edificios Google y Microsoft, OpenStreetMap, Mapa para la Gestión de la Emergencia.</p>
@@ -1306,6 +1368,7 @@
 	.impact .roads:empty { display: none; }
 	.impact .techo { margin: 8px 0 0; padding: 6px 9px; border-left: 2px solid var(--amber); font-size: 12px; line-height: 1.45; color: var(--ink-2); }
 	.rl, i.road { display: inline-block; width: 14px; height: 3px; border-radius: 0; background: var(--red); vertical-align: middle; margin-right: 6px; }
+	.keys.serv img { width: 14px; height: 14px; vertical-align: -3px; margin-right: 5px; }
 	i.pt { width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 1.5px solid var(--bg); box-shadow: 0 0 0 1px var(--ink-3); }
 	.cota { position: absolute; bottom: 0; transform: translateX(-50%); font-size: 10px; color: var(--red-soft); white-space: nowrap; pointer-events: none; }
 	.cota.left { transform: translateX(calc(-100% + 1px)); padding-right: 3px; }
