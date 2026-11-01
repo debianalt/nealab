@@ -33,6 +33,10 @@ base no tiene backup propio porque se regenera.
 | `python pipeline/build_ficha_link_index.py` | Regenera `src/lib/data/ficha_link_index.json`, que usan la web y el Hexoma. Correrlo cuando cambia una partición por departamento | |
 | `python pipeline/build_hexoma_censo.py [--anio A] [--refresh]` | Rearma los esquemas `censo_<año>` (ver abajo). Es independiente de lo anterior, y `--reset` no lo toca. 1991 necesita antes `python pipeline/hexoma/redatam_a_radio.py --anio 1991 --csv pipeline/output/hexoma/redatam1991/csv` (los CSV de `ARG1991.zip`) | 40–110 s por año |
 | `python pipeline/hexoma/build_hexoma_externos.py` | Rearma el esquema `externos` | 5 s |
+| `python pipeline/gee_export_ghsl_epochs.py` y `gcloud storage cp "gs://spatia-satellite/satellite/nea_ar/ghsl_built_*.tif" pipeline/output/hexoma/ghsl/` | Exporta GHSL 1990, 2000, 2010 y 2020 del NEA (una vez; el cruce los baja solo si faltan) | ~10 min en GEE |
+| `python pipeline/hexoma/build_hexoma_cruce.py [--desde pesos\|fracciones\|validacion\|final]` | Rearma el esquema `cruce` y `hexoma/validacion_cruce.md`. Correrlo después de los censos | 140 s |
+| `python pipeline/hexoma/build_hexoma_panel.py` | Rearma el esquema `panel`. Correrlo después del cruce | 10 s |
+| `python pipeline/hexoma/extracto.py --nombre X --sql q.sql --destino carpeta` | Extracto congelado de una consulta: parquet + manifiesto de procedencia (ver abajo) | segundos |
 
 Una recarga deja filas muertas. El script reescribe (VACUUM FULL) las tablas donde pasan
 del 20 %. Si un VACUUM FULL no avanza, mirá `pg_stat_activity`: una consulta huérfana lo
@@ -55,7 +59,7 @@ bloqueó una vez durante una hora.
 Tamaño medido el 31-oct-2026: **11 GB** en total. El esquema `public` ocupa 10,2 GB (capas, rangos y distribuciones) y el esquema `censo` (hoy `censo_2022`) 0,75 GB. El 1-nov-2026 se sumaron `censo_1991` (0,18 GB), `censo_2001` (0,22 GB) y `censo_2010` (0,49 GB).
 
 ## Censos 1991, 2001, 2010 y 2022 por radio (esquemas `censo_<año>`)
-Cada censo se guarda completo en su unidad de origen, el radio censal de ese año, en su propio esquema. `censo_2022` es el antiguo esquema `censo` (renombrado el 1-nov-2026); es el único que hoy se une a las celdas (`cruce`, `v_h3`), por el mismo cruce que usan las capas censales de la web. Los otros años esperan el cruce único por año (esquema `cruce`, en construcción). Nada de esto reemplaza a las capas de la web: `v_hexoma` sigue siendo la foto de la web.
+Cada censo se guarda completo en su unidad de origen, el radio censal de ese año, en su propio esquema. `censo_2022` es el antiguo esquema `censo` (renombrado el 1-nov-2026); es el único que hoy se une a las celdas (`cruce`, `v_h3`), por el mismo cruce que usan las capas censales de la web. Los cuatro años llegan a las celdas por el cruce único (esquema `cruce`) y el panel (esquema `panel`), más abajo. Nada de esto reemplaza a las capas de la web: `v_hexoma` sigue siendo la foto de la web.
 
 **Fuentes:**
 | Año | Conteos por radio | Radios y totales oficiales |
@@ -95,6 +99,65 @@ Para tasas de un conjunto de celdas o de un departamento, sumá `_num` y `_den` 
 - **Personas por radio:** iguales al total oficial en todos los radios con datos (2001: salvo uno de Chaco, donde el total de `radios.parquet` es 692 menor; los datos dan 984.446, el total publicado de la provincia). Radios con datos y sin geometría: 0 en 2001, 2010 y 2022; 14 en 1991 (160 personas).
 - **NBI de hogares por provincia** igual al publicado por el INDEC en 2001 (Misiones 23,5; Corrientes 24,0; Chaco 27,6; Formosa 28,0 %) y en 2010 (15,6; 15,1; 18,2; 19,7 %). 1991 da 29,4; 26,3; 33,1; 33,4 %: ahí el NBI es el de la vivienda, heredado por cada hogar.
 - **2022, como antes del renombre:** `v_h3` tiene las mismas 318.506 celdas y las mismas sumas (±30 personas sobre 4,2 millones, por redondeo de reales). Verificado el 31-oct-2026: tasas por radio iguales a las de la web; NBI por celda igual a la capa de la web en 223.972 de 224.817 celdas (las demás tocan dos radios, y ahí la web promedia tasas).
+
+## Cruce único radio → celda (esquema `cruce`)
+Un cruce por año censal, para que cada censo llegue a las celdas con un peso de su época. Los edificios de Open Buildings son de ~2023: repartir con ellos la población de 1991 la pondría en barrios que no existían. El método de cada año y de cada tamaño de radio se eligió con una validación medida, con una regla fijada antes de ver los resultados. Todo el detalle está en el docstring de `build_hexoma_cruce.py` y en `validacion_cruce.md`.
+
+**Pesos de celda** (`cruce.celda_pesos`, 378.105 celdas):
+- edificios de los cruces 2022 de la web;
+- m² construidos de GHS-BUILT-S R2023A en 1990, 2000, 2010 y 2020 (píxel de 100 m asignado a la celda de su centro);
+- `construida_<época>`: si GHSL marcaba construcción en la celda o en su anillo 1.
+
+**Métodos candidatos** (peso de una celda dentro de un radio = fracción de la celda en el radio × …):
+- **área:** sin peso, densidad pareja;
+- **edificios:** de ~2023;
+- **ghsl:** m² construidos de la época;
+- **edificios_ghsl:** edificios sólo donde GHSL ya marcaba construcción en la época.
+
+**Validación:** se reparte la población de cada fracción censal entre sus radios y se compara con la real (WAPE = Σ|est − real| / Σ real).
+- El área es mala siempre: 71–82 % de error total y hasta 207 % en radios rurales.
+- En radios urbanos (< 1 km²) ganan los edificios: 26–31 %, contra 29–33 % de GHSL.
+- En radios intermedios y rurales gana GHSL de la época: en los rurales de 2022, 57 contra 68 % de los edificios; en 1991, 39 contra 52 %. Una hipótesis: en el campo, Open Buildings cuenta galpones, secaderos y gallineros como si fueran viviendas.
+
+**Elegido:**
+| Año | Urbano (< 1 km²) | Intermedio (1–10 km²) | Rural (> 10 km²) |
+|---|---|---|---|
+| 1991 | ghsl | ghsl | ghsl |
+| 2001 | edificios_ghsl | ghsl | ghsl |
+| 2010 | edificios | ghsl | ghsl |
+| 2022 | edificios por punto (el cruce de la web) | edificios por punto | **ghsl** |
+
+**2022 rural difiere de la web:** las capas censales 2022 de spatia.ar reparten los radios rurales por edificios, y el Hexoma (`cruce.radio_h3`, `panel`) por GHSL, porque la validación lo mide mejor. `censo_2022.v_h3` sigue con el cruce de la web. Si se confirma, conviene llevarlo también a la web.
+
+| Objeto | Contenido |
+|---|---|
+| `cruce.celda_pesos`, `cruce.celda_geom` | Pesos y polígono de cada celda con algún peso |
+| `cruce.celda_radio` | Fracción de cada celda en cada radio de cada año |
+| `cruce.validacion` | Error de cada método por año y tamaño de radio |
+| `cruce.radio_h3` | **El cruce oficial:** (anio, h3, territorio_id, redcode, peso, metodo). El peso suma 1 por radio; `metodo` es el usado para ese radio (si no tenía peso con el elegido, el siguiente de la cadena edificios_ghsl → edificios → ghsl → área: hoy, 2 radios por año caen a área) |
+| `cruce.celda_confianza` | Por celda y año: `n_radios`, `personas_est`, `parte_radios_grandes` (parte de las personas que viene de radios de más de 10 km², donde la ubicación dentro del radio es gruesa), `usa_area`, `usa_muestra` (algún radio con factor de muestra > 1,5: tasas ruidosas) |
+
+Verificado el 1-nov-2026: el peso suma 1 por radio en los cuatro años, y toda la población oficial de los radios con geometría cae en celdas (2.822.439 en 1991, 3.366.826 en 2001, 3.679.609 en 2010, 4.213.128 en 2022).
+
+## Panel censal 1991–2022 (esquema `panel`)
+Treinta y ocho indicadores con la misma definición en los años en que aparecen (`censo_specs.PANEL`), por radio de cada año y por celda. Para comparar entre años sirve la celda, porque los radios se parten y cambian de código. Cada columna dice en su COMMENT qué años tiene y qué cuidar, por ejemplo: 2001 no preguntó agua de red ni combustible; 2010 no permite armar la condición de actividad por radio; 2022 cuenta sólo viviendas particulares.
+
+| Objeto | Contenido |
+|---|---|
+| `panel.definiciones` | Indicador × año: columna de origen en `censo_<año>.indicadores`, rótulo y nota |
+| `panel.radio` | (anio, redcode, indicador, num, den) en la grilla de cada año |
+| `panel.v_h3` | Materializada, por (anio, h3, territorio): `<ind>_num`, `<ind>_den` o el total, = Σ peso × conteo del radio, más la confianza de la celda |
+| `panel.v_h3_tasas` | Las tasas (%) de `v_h3` |
+
+Verificado el 1-nov-2026: por provincia y año, la población y el NBI de las celdas son iguales a los de los radios (población ±12 por redondeo; NBI con dos decimales). Lo mismo con el NBI publicado por el INDEC en 2001 y 2010.
+
+## Extractos para artículos (`extracto.py`)
+El Hexoma se regenera desde las fuentes y desde la web viva, así que un número publicado tiene que poder rastrearse. `extracto.py` corre una consulta y deja en la carpeta destino:
+- `<nombre>.parquet`;
+- `<nombre>.sql`;
+- `<nombre>.manifest.json`: fecha, commit de neahub y si había cambios sin commitear, objetos usados con su COMMENT, COMMENT de cada columna, métodos de cruce por año con su error de validación, fuentes de los externos, filas y sha256.
+
+Una capa de Spatia o una exportación para terceros son este mismo extracto más un paso de formato; esos adaptadores se escriben cuando se pidan.
 
 ## Convenciones (no obvias)
 - **Sin dato = NULL, nunca cero.** `avg()` y `percentile_cont()` los saltean; `count(*)` no.
@@ -155,7 +218,7 @@ Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
 2. **Capas institucionales:** OTBN, áreas protegidas, comunidades indígenas (RENACI) y catastro o tamaño de parcela.
 3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100.
 4. **Vecindad con SQL** (`h3_grid_disk`) y una tabla con la resolución de origen de cada variable.
-5. **Un extracto congelado por paper,** porque la base se regenera desde la web viva.
+5. ~~Un extracto congelado por paper~~: hecho el 1-nov-2026 (`extracto.py`).
 
 Descartado: pasar a res-10 o res-11, porque da precisión falsa en las censales y en las capas de 250 m a 5 km.
 
