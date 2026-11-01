@@ -2,14 +2,14 @@
   "territory": "presidente_hayes_py",
   "province": {
     "total_hexes": 772479,
-    "avg_score": 43.7,
+    "avg_score": 45.1,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Puerto Pinasco",
       "parquetKey": "puerto_pinasco",
-      "avg_score": 57.2,
+      "avg_score": 59.6,
       "hex_count": 96548,
       "centroid": [
         -58.3619,
@@ -17,52 +17,52 @@
       ],
       "rank": {
         "min_cabecera": 530,
-        "min_capital": 366,
+        "min_capital": 597,
         "km_hospital": 52.4
       }
     },
     {
       "distrito": "Villa Hayes",
       "parquetKey": "villa_hayes",
-      "avg_score": 49.6,
+      "avg_score": 48.6,
       "hex_count": 345937,
       "centroid": [
         -58.6721,
         -24.2215
       ],
       "rank": {
-        "min_cabecera": 229,
-        "min_capital": 352,
+        "min_cabecera": 242,
+        "min_capital": 328,
         "km_hospital": 71.1
       }
     },
     {
       "distrito": "Pozo Colorado",
       "parquetKey": "pozo_colorado",
-      "avg_score": 34.4,
+      "avg_score": 38.6,
       "hex_count": 306577,
       "centroid": [
         -58.8214,
         -23.1741
       ],
       "rank": {
-        "min_cabecera": 246,
-        "min_capital": 246,
+        "min_cabecera": 248,
+        "min_capital": 439,
         "km_hospital": 53.7
       }
     },
     {
       "distrito": "Benjamin Aceval",
       "parquetKey": "benjamin_aceval",
-      "avg_score": 21.3,
+      "avg_score": 17.2,
       "hex_count": 23417,
       "centroid": [
         -57.6409,
         -24.821
       ],
       "rank": {
-        "min_cabecera": 67,
-        "min_capital": 321,
+        "min_cabecera": 86,
+        "min_capital": 77,
         "km_hospital": 36.3
       }
     }

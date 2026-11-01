@@ -112,7 +112,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=25',
 		sat_economic_activity: '?v=31',
-		sat_accessibility: '?v=27',
+		sat_accessibility: '?v=28',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=16',
 		sat_land_use: '?v=6',   // 31-oct-2026: área por clase (dw_cover), no probabilidad media
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 27;
+const DEPT_V = 28;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -575,16 +575,9 @@ export interface ColorClasses {
 	// Unit printed next to the legend title when the class labels use a different
 	// one than the variable (travel time: variable in min, classes in hours).
 	unit?: string;
-	// value === 0 is a coverage gap, painted "Sin cobertura": split_by_admin
-	// (fill_missing) and the regional view turn missing cells into 0.
-	zeroIsNodata?: boolean;
 }
 
-// Same gray as Map.svelte NODATA_COLOR ("Sin cobertura").
-export const NODATA_HEX = '#6b7280';
-
 export function colorForClass(value: number, classes: ColorClasses): string {
-	if (classes.zeroIsNodata && value === 0) return NODATA_HEX;
 	if (classes.zero && (value === 0 || (classes.zeroBelow !== undefined && Math.abs(value) < classes.zeroBelow))) return classes.zero.color;
 	let color = classes.steps[0].color;
 	for (const s of classes.steps) if (classes.upperInclusive ? value > s.from : value >= s.from) color = s.color;
@@ -653,14 +646,12 @@ export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 
 // Travel time to the capital (Oxford MAP, minutes), doubling cuts in hours, the
 // same in every territory. Medians run from 73 min (Central PY) to 403 (Alto
-// Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. A 0 is not a measured time: the
-// global parquets hold no zeros (Misiones min 1.4 min) but NULL where Oxford has
-// no reading, and split_by_admin (fill_missing) writes those as 0 in the
-// department files (1,008 cells in Capital, 2,033 in Villeta). Painted "Sin
-// cobertura" until the pipeline keeps the NULLs.
+// Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. Since the 1-nov-2026 rebuild a 0 is
+// a real reading (the capital's own cells, ~9 per territory): split_by_admin keeps
+// *_raw columns NULL where there is no reading ("Sin cobertura"). Before, it wrote
+// them as 0 (1,008 cells in Capital, 2,033 in Villeta).
 export const ACCESS_TIME_CLASSES: ColorClasses = {
 	unit: 'h',
-	zeroIsNodata: true,
 	steps: [
 		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.access.c1' },
 		{ from: 60, color: MAP_ACCESS_5[1], labelKey: 'legend.access.c2' },

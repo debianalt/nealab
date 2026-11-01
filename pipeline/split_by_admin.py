@@ -274,6 +274,11 @@ def main():
                     continue
                 if col.startswith('c_'):
                     continue  # keep component NaN (no raster coverage)
+                if col.endswith('_raw'):
+                    # Physical measure (minutes, km, µg/m³): NaN = no reading. A 0
+                    # here was a false value — "0 min to the capital" in Villeta's
+                    # south and in Posadas (fixed 1-nov-2026).
+                    continue
                 if col in score_like:
                     df[col] = df[col].fillna(0)  # water/masked → score=0 (renders at low end, not gray)
                     continue

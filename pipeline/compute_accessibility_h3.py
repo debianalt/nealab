@@ -52,22 +52,25 @@ CAPITAL_COORDS = {
     'parana_br':             (-25.4290, -49.2671),  # Curitiba
     'santa_catarina_br':     (-27.5954, -48.5480),  # Florianópolis
     'rio_grande_sul_br':     (-30.0346, -51.2177),  # Porto Alegre
-    # New PY departments — capital city of each department
+    # New PY departments — capital city of each department. Nine were misplaced
+    # by 20–181 km (Villa Hayes, Salto del Guairá, Fuerte Olimpo, Filadelfia,
+    # Coronel Oviedo, San Juan Bautista, Pilar, Areguá across the river, Caacupé);
+    # corrected 1-nov-2026 against OSM town nodes.
     'concepcion_py':         (-23.4063, -57.4340),  # Concepción
     'san_pedro_py':          (-24.1000, -57.0833),  # San Pedro de Ycuamandiyú
-    'cordillera_py':         (-25.2167, -57.0833),  # Caacupé
+    'cordillera_py':         (-25.3857, -57.1405),  # Caacupé
     'guaira_py':             (-25.7667, -56.4333),  # Villarrica
-    'caaguazu_py':           (-25.4500, -56.0167),  # Coronel Oviedo
+    'caaguazu_py':           (-25.4501, -56.4407),  # Coronel Oviedo
     'caazapa_py':            (-26.1833, -56.3667),  # Caazapá
-    'misiones_py':           (-26.8417, -56.8722),  # San Juan Bautista
+    'misiones_py':           (-26.6690, -57.1456),  # San Juan Bautista
     'paraguari_py':          (-25.6250, -57.1500),  # Paraguarí
-    'central_py':            (-25.2967, -57.6667),  # Areguá (capital departamental)
-    'neembucu_py':           (-27.0833, -58.1667),  # Pilar
+    'central_py':            (-25.3129, -57.3847),  # Areguá (capital departamental)
+    'neembucu_py':           (-26.8583, -58.3034),  # Pilar
     'amambay_py':            (-22.5500, -55.7333),  # Pedro Juan Caballero
-    'canindeyu_py':          (-24.1394, -55.7397),  # Salto del Guairá
-    'presidente_hayes_py':   (-23.4833, -57.8167),  # Villa Hayes
-    'boqueron_py':           (-22.3833, -60.4500),  # Filadelfia
-    'alto_paraguay_py':      (-20.0500, -58.3167),  # Fuerte Olimpo
+    'canindeyu_py':          (-24.0617, -54.3056),  # Salto del Guairá
+    'presidente_hayes_py':   (-25.0929, -57.5246),  # Villa Hayes
+    'boqueron_py':           (-22.3525, -60.0352),  # Filadelfia
+    'alto_paraguay_py':      (-21.0385, -57.8748),  # Fuerte Olimpo
 }
 
 TYPE_LABELS = {

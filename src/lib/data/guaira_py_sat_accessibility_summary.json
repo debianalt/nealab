@@ -2,14 +2,14 @@
   "territory": "guaira_py",
   "province": {
     "total_hexes": 40805,
-    "avg_score": 45.2,
+    "avg_score": 45.0,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Jose Fassardi",
       "parquetKey": "jose_fassardi",
-      "avg_score": 70.5,
+      "avg_score": 69.8,
       "hex_count": 3770,
       "centroid": [
         -55.9221,
@@ -24,7 +24,7 @@
     {
       "distrito": "Gral Garay",
       "parquetKey": "gral_garay",
-      "avg_score": 60.2,
+      "avg_score": 59.5,
       "hex_count": 2939,
       "centroid": [
         -56.1916,
@@ -39,22 +39,22 @@
     {
       "distrito": "Borja",
       "parquetKey": "borja",
-      "avg_score": 57.6,
+      "avg_score": 59.0,
       "hex_count": 4475,
       "centroid": [
         -56.609,
         -26.0281
       ],
       "rank": {
-        "min_cabecera": 79,
-        "min_capital": 42,
+        "min_cabecera": 109,
+        "min_capital": 60,
         "km_hospital": 15.0
       }
     },
     {
       "distrito": "Colonia Independencia",
       "parquetKey": "colonia_independencia",
-      "avg_score": 47.4,
+      "avg_score": 46.8,
       "hex_count": 10105,
       "centroid": [
         -56.0671,
@@ -69,7 +69,7 @@
     {
       "distrito": "Numi",
       "parquetKey": "numi",
-      "avg_score": 45.3,
+      "avg_score": 44.7,
       "hex_count": 989,
       "centroid": [
         -56.3101,
@@ -84,7 +84,7 @@
     {
       "distrito": "Capitan Troche",
       "parquetKey": "capitan_troche",
-      "avg_score": 44.9,
+      "avg_score": 44.2,
       "hex_count": 1460,
       "centroid": [
         -56.2055,
@@ -97,9 +97,24 @@
       }
     },
     {
+      "distrito": "Iturbe",
+      "parquetKey": "iturbe",
+      "avg_score": 43.8,
+      "hex_count": 2817,
+      "centroid": [
+        -56.4662,
+        -26.0627
+      ],
+      "rank": {
+        "min_cabecera": 91,
+        "min_capital": 49,
+        "km_hospital": 9.1
+      }
+    },
+    {
       "distrito": "Dr. Bottrell",
       "parquetKey": "dr_bottrell",
-      "avg_score": 42.4,
+      "avg_score": 41.8,
       "hex_count": 771,
       "centroid": [
         -56.3675,
@@ -112,24 +127,9 @@
       }
     },
     {
-      "distrito": "Iturbe",
-      "parquetKey": "iturbe",
-      "avg_score": 41.8,
-      "hex_count": 2817,
-      "centroid": [
-        -56.4662,
-        -26.0627
-      ],
-      "rank": {
-        "min_cabecera": 62,
-        "min_capital": 36,
-        "km_hospital": 9.1
-      }
-    },
-    {
       "distrito": "San Salvador",
       "parquetKey": "san_salvador",
-      "avg_score": 40.5,
+      "avg_score": 39.9,
       "hex_count": 1517,
       "centroid": [
         -56.4246,
@@ -144,7 +144,7 @@
     {
       "distrito": "Cnel Martinez",
       "parquetKey": "cnel_martinez",
-      "avg_score": 36.5,
+      "avg_score": 35.9,
       "hex_count": 2018,
       "centroid": [
         -56.648,
@@ -159,7 +159,7 @@
     {
       "distrito": "Itape",
       "parquetKey": "itape",
-      "avg_score": 35.8,
+      "avg_score": 35.2,
       "hex_count": 1683,
       "centroid": [
         -56.561,
@@ -174,7 +174,7 @@
     {
       "distrito": "Villarica",
       "parquetKey": "villarica",
-      "avg_score": 26.9,
+      "avg_score": 26.5,
       "hex_count": 3382,
       "centroid": [
         -56.4107,
@@ -189,7 +189,7 @@
     {
       "distrito": "Natalicio Talavera",
       "parquetKey": "natalicio_talavera",
-      "avg_score": 25.9,
+      "avg_score": 25.6,
       "hex_count": 645,
       "centroid": [
         -56.2826,
@@ -204,7 +204,7 @@
     {
       "distrito": "Yataity",
       "parquetKey": "yataity",
-      "avg_score": 24.8,
+      "avg_score": 24.5,
       "hex_count": 2112,
       "centroid": [
         -56.501,
@@ -219,7 +219,7 @@
     {
       "distrito": "Mbocayati",
       "parquetKey": "mbocayati",
-      "avg_score": 22.6,
+      "avg_score": 22.3,
       "hex_count": 2122,
       "centroid": [
         -56.3632,

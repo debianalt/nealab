@@ -2,119 +2,119 @@
   "territory": "misiones_py",
   "province": {
     "total_hexes": 92975,
-    "avg_score": 51.6,
+    "avg_score": 45.1,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Villa Florida",
-      "parquetKey": "villa_florida",
-      "avg_score": 92.2,
-      "hex_count": 3009,
-      "centroid": [
-        -57.1253,
-        -26.4611
-      ],
-      "rank": {
-        "min_cabecera": null,
-        "min_capital": null,
-        "km_hospital": 49.0
-      }
-    },
-    {
-      "distrito": "San Miguel",
-      "parquetKey": "san_miguel",
-      "avg_score": 77.5,
-      "hex_count": 6276,
-      "centroid": [
-        -56.9666,
-        -26.5689
-      ],
-      "rank": {
-        "min_cabecera": null,
-        "min_capital": 1,
-        "km_hospital": 35.5
-      }
-    },
-    {
-      "distrito": "San Juan Bautista",
-      "parquetKey": "san_juan_bautista",
-      "avg_score": 61.4,
-      "hex_count": 23961,
-      "centroid": [
-        -57.426,
-        -26.6948
-      ],
-      "rank": {
-        "min_cabecera": 54,
-        "min_capital": 50,
-        "km_hospital": 45.2
-      }
-    },
-    {
       "distrito": "Ayolas",
       "parquetKey": "ayolas",
-      "avg_score": 54.6,
+      "avg_score": 67.4,
       "hex_count": 9478,
       "centroid": [
         -57.0272,
         -27.3756
       ],
       "rank": {
-        "min_cabecera": 14,
-        "min_capital": 11,
+        "min_cabecera": 178,
+        "min_capital": 154,
         "km_hospital": 55.4
       }
     },
     {
       "distrito": "Yabebyry",
       "parquetKey": "yabebyry",
-      "avg_score": 44.9,
+      "avg_score": 59.1,
       "hex_count": 9241,
       "centroid": [
         -57.1846,
         -27.2526
       ],
       "rank": {
-        "min_cabecera": 176,
-        "min_capital": 142,
+        "min_cabecera": 239,
+        "min_capital": 144,
         "km_hospital": 44.5
+      }
+    },
+    {
+      "distrito": "San Juan Bautista",
+      "parquetKey": "san_juan_bautista",
+      "avg_score": 50.6,
+      "hex_count": 23961,
+      "centroid": [
+        -57.426,
+        -26.6948
+      ],
+      "rank": {
+        "min_cabecera": 164,
+        "min_capital": 80,
+        "km_hospital": 45.2
+      }
+    },
+    {
+      "distrito": "Villa Florida",
+      "parquetKey": "villa_florida",
+      "avg_score": 43.5,
+      "hex_count": 3009,
+      "centroid": [
+        -57.1253,
+        -26.4611
+      ],
+      "rank": {
+        "min_cabecera": 107,
+        "min_capital": 55,
+        "km_hospital": 49.0
+      }
+    },
+    {
+      "distrito": "San Miguel",
+      "parquetKey": "san_miguel",
+      "avg_score": 40.7,
+      "hex_count": 6276,
+      "centroid": [
+        -56.9666,
+        -26.5689
+      ],
+      "rank": {
+        "min_cabecera": 125,
+        "min_capital": 52,
+        "km_hospital": 35.5
       }
     },
     {
       "distrito": "Santa Rosa",
       "parquetKey": "santa_rosa",
-      "avg_score": 44.1,
+      "avg_score": 37.0,
       "hex_count": 9138,
       "centroid": [
         -56.7968,
         -26.8686
       ],
       "rank": {
-        "min_cabecera": 116,
-        "min_capital": 61,
+        "min_cabecera": 139,
+        "min_capital": 108,
         "km_hospital": 15.0
       }
     },
     {
       "distrito": "Santiago",
       "parquetKey": "santiago",
-      "avg_score": 40.2,
+      "avg_score": 36.9,
       "hex_count": 10349,
       "centroid": [
         -56.7915,
         -27.1361
       ],
       "rank": {
-        "min_cabecera": 106,
-        "min_capital": 83,
+        "min_cabecera": 107,
+        "min_capital": 116,
         "km_hospital": 29.8
       }
     },
     {
       "distrito": "San Ignacio",
       "parquetKey": "san_ignacio",
-      "avg_score": 39.8,
+      "avg_score": 33.3,
       "hex_count": 16735,
       "centroid": [
         -57.1427,
@@ -122,29 +122,29 @@
       ],
       "rank": {
         "min_cabecera": 147,
-        "min_capital": 90,
+        "min_capital": 84,
         "km_hospital": 18.7
       }
     },
     {
       "distrito": "Santa Maria",
       "parquetKey": "santa_maria",
-      "avg_score": 32.9,
+      "avg_score": 30.7,
       "hex_count": 4060,
       "centroid": [
         -56.8905,
         -26.73
       ],
       "rank": {
-        "min_cabecera": 81,
-        "min_capital": 30,
+        "min_cabecera": 132,
+        "min_capital": 64,
         "km_hospital": 18.4
       }
     },
     {
       "distrito": "San Patricio",
       "parquetKey": "san_patricio",
-      "avg_score": 16.5,
+      "avg_score": 14.1,
       "hex_count": 728,
       "centroid": [
         -56.8303,
@@ -152,7 +152,7 @@
       ],
       "rank": {
         "min_cabecera": 73,
-        "min_capital": 40,
+        "min_capital": 74,
         "km_hospital": 11.4
       }
     }

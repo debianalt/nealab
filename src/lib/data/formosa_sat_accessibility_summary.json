@@ -2,143 +2,143 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 48.7,
+    "avg_score": 44.8,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 54.4,
-      "hex_count": 150491,
-      "centroid": [
-        -61.2886,
-        -24.027
-      ],
-      "rank": {
-        "min_cabecera": null,
-        "min_capital": 643,
-        "km_hospital": null
-      }
-    },
-    {
-      "dpto": "Matacos",
-      "parquetKey": "matacos",
-      "avg_score": 54.4,
-      "hex_count": 43310,
-      "centroid": [
-        -62.0811,
-        -23.8673
-      ],
-      "rank": {
-        "min_cabecera": null,
-        "min_capital": 544,
-        "km_hospital": null
-      }
-    },
-    {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 52.9,
+      "avg_score": 61.6,
       "hex_count": 40559,
       "centroid": [
         -62.1413,
         -23.111
       ],
       "rank": {
-        "min_cabecera": null,
-        "min_capital": 464,
-        "km_hospital": null
+        "min_cabecera": 312,
+        "min_capital": 824,
+        "km_hospital": 24.0
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 59.0,
+      "hex_count": 150491,
+      "centroid": [
+        -61.2886,
+        -24.027
+      ],
+      "rank": {
+        "min_cabecera": 284,
+        "min_capital": 643,
+        "km_hospital": 31.1
+      }
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 58.9,
+      "hex_count": 43310,
+      "centroid": [
+        -62.0811,
+        -23.8673
+      ],
+      "rank": {
+        "min_cabecera": 250,
+        "min_capital": 714,
+        "km_hospital": 24.0
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 52.0,
+      "avg_score": 49.0,
       "hex_count": 288652,
       "centroid": [
         -60.0089,
         -24.8951
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 181,
         "min_capital": 422,
-        "km_hospital": null
+        "km_hospital": 27.2
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 44.3,
+      "avg_score": 39.7,
       "hex_count": 37365,
       "centroid": [
         -58.6711,
         -25.1016
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 116,
         "min_capital": 232,
-        "km_hospital": null
+        "km_hospital": 30.3
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 43.1,
+      "avg_score": 33.1,
       "hex_count": 95406,
       "centroid": [
         -59.1628,
         -25.7727
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 104,
         "min_capital": 228,
-        "km_hospital": null
+        "km_hospital": 20.5
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 42.1,
+      "avg_score": 26.0,
       "hex_count": 58522,
       "centroid": [
         -58.0456,
         -25.3808
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 72,
         "min_capital": 153,
-        "km_hospital": null
+        "km_hospital": 17.2
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 39.3,
+      "avg_score": 25.5,
       "hex_count": 71783,
       "centroid": [
         -58.3872,
         -25.9345
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 76,
         "min_capital": 101,
-        "km_hospital": null
+        "km_hospital": 20.5
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 37.7,
+      "avg_score": 22.4,
       "hex_count": 39672,
       "centroid": [
         -58.5513,
         -26.4647
       ],
       "rank": {
-        "min_cabecera": null,
+        "min_cabecera": 82,
         "min_capital": 110,
-        "km_hospital": null
+        "km_hospital": 13.0
       }
     }
   ]

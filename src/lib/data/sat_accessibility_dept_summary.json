@@ -2,7 +2,7 @@
   "territory": "misiones",
   "province": {
     "total_hexes": 319870,
-    "avg_score": 21.8,
+    "avg_score": 21.7,
     "unassigned": 0
   },
   "departments": [
@@ -16,7 +16,7 @@
         -26.6398
       ],
       "rank": {
-        "min_cabecera": 149,
+        "min_cabecera": 150,
         "min_capital": 321,
         "km_hospital": 10.9
       }
@@ -39,15 +39,15 @@
     {
       "dpto": "Iguazú",
       "parquetKey": "iguazu",
-      "avg_score": 29.7,
+      "avg_score": 29.5,
       "hex_count": 28650,
       "centroid": [
         -54.4076,
         -25.8818
       ],
       "rank": {
-        "min_cabecera": 90,
-        "min_capital": 306,
+        "min_cabecera": 91,
+        "min_capital": 308,
         "km_hospital": 8.0
       }
     },
@@ -63,7 +63,7 @@
       "rank": {
         "min_cabecera": 72,
         "min_capital": 219,
-        "km_hospital": 10.4
+        "km_hospital": 10.5
       }
     },
     {
@@ -84,16 +84,16 @@
     {
       "dpto": "Eldorado",
       "parquetKey": "eldorado",
-      "avg_score": 23.1,
+      "avg_score": 22.7,
       "hex_count": 18128,
       "centroid": [
         -54.4402,
         -26.3193
       ],
       "rank": {
-        "min_cabecera": 59,
-        "min_capital": 239,
-        "km_hospital": 6.1
+        "min_cabecera": 60,
+        "min_capital": 243,
+        "km_hospital": 6.2
       }
     },
     {
@@ -121,15 +121,15 @@
         -26.8934
       ],
       "rank": {
-        "min_cabecera": 66,
+        "min_cabecera": 67,
         "min_capital": 149,
-        "km_hospital": 5.6
+        "km_hospital": 5.7
       }
     },
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 15.8,
+      "avg_score": 15.7,
       "hex_count": 8517,
       "centroid": [
         -55.4678,
@@ -183,7 +183,7 @@
       "rank": {
         "min_cabecera": 51,
         "min_capital": 79,
-        "km_hospital": 5.0
+        "km_hospital": 5.1
       }
     },
     {
@@ -196,24 +196,9 @@
         -27.775
       ],
       "rank": {
-        "min_cabecera": 41,
+        "min_cabecera": 42,
         "min_capital": 114,
         "km_hospital": 3.6
-      }
-    },
-    {
-      "dpto": "Capital",
-      "parquetKey": "capital",
-      "avg_score": 10.3,
-      "hex_count": 10621,
-      "centroid": [
-        -55.8579,
-        -27.5524
-      ],
-      "rank": {
-        "min_cabecera": 26,
-        "min_capital": 35,
-        "km_hospital": 5.1
       }
     },
     {
@@ -232,18 +217,18 @@
       }
     },
     {
-      "dpto": "Oberá",
-      "parquetKey": "obera",
-      "avg_score": 9.3,
-      "hex_count": 17136,
+      "dpto": "Capital",
+      "parquetKey": "capital",
+      "avg_score": 9.4,
+      "hex_count": 10621,
       "centroid": [
-        -55.0808,
-        -27.4651
+        -55.8579,
+        -27.5524
       ],
       "rank": {
-        "min_cabecera": 21,
-        "min_capital": 110,
-        "km_hospital": 3.7
+        "min_cabecera": 28,
+        "min_capital": 39,
+        "km_hospital": 5.6
       }
     },
     {
@@ -259,6 +244,21 @@
         "min_cabecera": 30,
         "min_capital": 76,
         "km_hospital": 3.5
+      }
+    },
+    {
+      "dpto": "Oberá",
+      "parquetKey": "obera",
+      "avg_score": 9.2,
+      "hex_count": 17136,
+      "centroid": [
+        -55.0808,
+        -27.4651
+      ],
+      "rank": {
+        "min_cabecera": 21,
+        "min_capital": 112,
+        "km_hospital": 3.8
       }
     }
   ]
