@@ -551,7 +551,7 @@
 				<div class="bv-legend-notes">
 					<p class="bv-legend-note">{i18n.t('chart.bivariate.legendNote')}</p>
 					{#if noY > 0}
-						<p class="bv-legend-note bv-legend-low"><span class="bv-nodata" style="background: {BIVAR_NODATA}"></span>{i18n.t('chart.bivariate.noY').replace('{n}', noY.toLocaleString())}</p>
+						<p class="bv-legend-note bv-legend-low"><span class="bv-nodata"><span style="background: {BIVAR_NODATA}"></span></span>{i18n.t('chart.bivariate.noY').replace('{n}', noY.toLocaleString())}</p>
 					{/if}
 					{#each shareNotes as n}
 						<p class="bv-legend-note bv-legend-low">{shareText(n)}</p>
@@ -681,7 +681,10 @@
 		color: rgba(255,255,255,0.55);
 	}
 	.bv-legend-low { margin-top: 4px; color: var(--s-ink-2); }
-	.bv-nodata { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; border: 1px solid var(--s-axis); border-radius: 2px; }
+	/* A hexagon, not a square: a bordered square read as an empty checkbox. */
+	.bv-nodata, .bv-nodata > span { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+	.bv-nodata { display: inline-flex; width: 11px; height: 12px; margin-right: 5px; vertical-align: -2px; background: var(--s-axis); }
+	.bv-nodata > span { display: block; width: 9px; height: 10px; margin: 1px; }
 	.bv-cell {
 		border: 2px solid transparent;
 		border-radius: 2px;
