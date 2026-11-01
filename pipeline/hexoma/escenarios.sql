@@ -148,3 +148,35 @@ SELECT territorio, aislamiento,
 FROM celdas
 GROUP BY 1, 2
 ORDER BY 1, 2;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 5. Leña o carbón para cocinar donde el PM2.5 es alto (esquema censo)
+-- ¿Cuántos hogares cocinan con leña o carbón en celdas con PM2.5 en el cuartil más
+-- alto de la región, por departamento? Junta el censo por radio (censo.v_h3: hogares
+-- repartidos por el peso de edificios del cruce) con la capa de PM2.5 de v_hexoma.
+-- Ámbito región para el PM2.5 (capa satelital comparable entre territorios).
+-- Tasas de un conjunto de celdas: sumar _num y _den y dividir al final, nunca promediar.
+-- Medido: 14 s. Muestra: Patiño (Formosa) 5.095 hogares con leña en el cuartil alto;
+-- Ramón Lista 72 % de hogares con leña. Por provincia: Formosa y Misiones 9,2 %,
+-- Chaco 4,9 %, Corrientes 4,8 %.
+-- ─────────────────────────────────────────────────────────────────────────────
+WITH celdas AS (
+    SELECT v.territorio, v.departamento,
+           h.hogares, h.cocina_lena_carbon_num AS lena,
+           v.pm25_drivers__c_pm25_mean AS pm25,
+           r.pm25_drivers__c_pm25_mean__pr_reg AS pm25_pr
+    FROM censo.v_h3 h
+    JOIN v_hexoma v USING (h3, territorio)
+    JOIN v_hexoma_rangos r USING (h3, territorio)
+)
+SELECT territorio, departamento,
+       round(sum(hogares))                                              AS hogares,
+       round(sum(lena))                                                 AS hogares_lena,
+       round((100 * sum(lena) / nullif(sum(hogares), 0))::numeric, 1)   AS pct_lena,
+       round(sum(lena) FILTER (WHERE pm25_pr >= 75))                    AS lena_pm25_cuartil_alto,
+       round((sum(pm25 * hogares) / nullif(sum(hogares) FILTER (WHERE pm25 IS NOT NULL), 0))::numeric, 1) AS pm25_medio_hogares
+FROM celdas
+GROUP BY 1, 2
+ORDER BY lena_pm25_cuartil_alto DESC NULLS LAST
+LIMIT 15;
