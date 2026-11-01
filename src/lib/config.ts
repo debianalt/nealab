@@ -575,9 +575,16 @@ export interface ColorClasses {
 	// Unit printed next to the legend title when the class labels use a different
 	// one than the variable (travel time: variable in min, classes in hours).
 	unit?: string;
+	// value === 0 is a coverage gap, painted "Sin cobertura": split_by_admin
+	// (fill_missing) and the regional view turn missing cells into 0.
+	zeroIsNodata?: boolean;
 }
 
+// Same gray as Map.svelte NODATA_COLOR ("Sin cobertura").
+export const NODATA_HEX = '#6b7280';
+
 export function colorForClass(value: number, classes: ColorClasses): string {
+	if (classes.zeroIsNodata && value === 0) return NODATA_HEX;
 	if (classes.zero && (value === 0 || (classes.zeroBelow !== undefined && Math.abs(value) < classes.zeroBelow))) return classes.zero.color;
 	let color = classes.steps[0].color;
 	for (const s of classes.steps) if (classes.upperInclusive ? value > s.from : value >= s.from) color = s.color;
@@ -646,10 +653,14 @@ export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 
 // Travel time to the capital (Oxford MAP, minutes), doubling cuts in hours, the
 // same in every territory. Medians run from 73 min (Central PY) to 403 (Alto
-// Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. No zero class: 0 min (the capital
-// itself, 1.008 cells in Capital) is the nearest class, not "Sin cobertura".
+// Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. A 0 is not a measured time: the
+// global parquets hold no zeros (Misiones min 1.4 min) but NULL where Oxford has
+// no reading, and split_by_admin (fill_missing) writes those as 0 in the
+// department files (1,008 cells in Capital, 2,033 in Villeta). Painted "Sin
+// cobertura" until the pipeline keeps the NULLs.
 export const ACCESS_TIME_CLASSES: ColorClasses = {
 	unit: 'h',
+	zeroIsNodata: true,
 	steps: [
 		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.access.c1' },
 		{ from: 60, color: MAP_ACCESS_5[1], labelKey: 'legend.access.c2' },
@@ -1588,7 +1599,7 @@ export const RADIO_ANALYSIS_REGISTRY: Record<string, RadioAnalysisConfig> = {
 		invertChoropleth: true,
 		petalCols: [
 			{ col: 'travel_min_capital', label: { es: 'Tiempo a capital', en: 'Time to capital' }, desc: { es: 'Minutos de viaje a la capital provincial', en: 'Travel minutes to the provincial capital' }, invert: true },
-			{ col: 'travel_min_cabecera', label: { es: 'Tiempo a cabecera', en: 'Time to dept. seat' }, desc: { es: 'Minutos a la cabecera departamental', en: 'Minutes to department seat' }, invert: true },
+			{ col: 'travel_min_cabecera', label: { es: 'Tiempo a ciudad ≥50k', en: 'Time to city ≥50k' }, desc: { es: 'Minutos a la ciudad de 50.000 habitantes o más más cercana (Oxford)', en: 'Minutes to the nearest city of 50,000 or more (Oxford)' }, invert: true },
 			{ col: 'dist_nearest_hospital_km', label: { es: 'Hospital', en: 'Hospital' }, desc: { es: 'Distancia al hospital más cercano (km)', en: 'Distance to nearest hospital (km)' }, invert: true },
 			{ col: 'dist_nearest_secundaria_km', label: { es: 'Escuela sec.', en: 'High school' }, desc: { es: 'Distancia a escuela secundaria (km)', en: 'Distance to high school (km)' }, invert: true },
 			{ col: 'dist_primary_m', label: { es: 'Ruta principal', en: 'Main road' }, desc: { es: 'Distancia a ruta primaria (km)', en: 'Distance to primary road (km)' }, invert: true },

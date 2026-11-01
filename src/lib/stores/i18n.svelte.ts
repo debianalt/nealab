@@ -603,7 +603,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'radio.viirs': { es: 'Luces nocturnas', en: 'Night lights', gn: 'Luces', pt: 'Luzes noturnas' },
 	'radio.buildingDensity': { es: 'Densidad edilicia', en: 'Building density', gn: 'Oga', pt: 'Densidade edilícia' },
 	'radio.travelCapital': { es: 'Min. a capital', en: 'Min. to capital', gn: 'Capital', pt: 'Min. até capital' },
-	'radio.travelCabecera': { es: 'Min. a cabecera', en: 'Min. to dept. seat', gn: 'Cabecera', pt: 'Min. até sede municipal' },
+	'radio.travelCabecera': { es: 'Min. a ciudad ≥50k', en: 'Min. to city ≥50k', gn: 'Min. tetã ≥50k', pt: 'Min. até cidade ≥50 mil' },
 	'radio.distHospital': { es: 'Dist. hospital (km)', en: 'Dist. hospital (km)', gn: 'Hospital', pt: 'Dist. hospital (km)' },
 	'radio.distSecundaria': { es: 'Dist. secundaria (km)', en: 'Dist. secondary school', gn: 'Secundaria', pt: 'Dist. ensino médio (km)' },
 	'radio.distPrimaria': { es: 'Dist. ruta (km)', en: 'Dist. primary road (km)', gn: 'Tape', pt: 'Dist. rodovia (km)' },
