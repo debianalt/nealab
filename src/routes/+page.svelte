@@ -46,6 +46,7 @@
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
+	import { themeStore, type Fondo } from '$lib/stores/theme.svelte';
 
 	// Hex opacity defaults per basemap: in Satélite the slider starts just under its
 	// middle (range 0.3–0.9) so the imagery reads under the hexes. A value the user
@@ -53,6 +54,17 @@
 	const HEX_OPACITY_MAP = 0.78;
 	const HEX_OPACITY_SATELLITE = 0.55;
 	const mapStore = new MapStore();
+	if (themeStore.fondo === 'satelite') mapStore.hexOpacity = HEX_OPACITY_SATELLITE;
+	const FONDOS: Fondo[] = ['claro', 'oscuro', 'satelite'];
+	function setFondo(f: Fondo) {
+		if (f === themeStore.fondo) return;
+		const toSat = f === 'satelite', fromSat = themeStore.fondo === 'satelite';
+		// A value the user set by hand is kept; a default follows the basemap.
+		if (toSat && Math.abs(mapStore.hexOpacity - HEX_OPACITY_MAP) < 0.03) mapStore.hexOpacity = HEX_OPACITY_SATELLITE;
+		if (fromSat && Math.abs(mapStore.hexOpacity - HEX_OPACITY_SATELLITE) < 0.03) mapStore.hexOpacity = HEX_OPACITY_MAP;
+		themeStore.set(f);
+		if (toSat !== fromSat) mapComponent?.setSatellite(toSat);
+	}
 	const lensStore = new LensStore();
 	const lassoStore = new LassoStore();
 	const hexStore = new HexStore();
@@ -1936,33 +1948,30 @@
 				<div class="itapua-hover-badge">🇵🇾 Paraguay · datos satelitales comparables</div>
 			{/if}
 
-			<!-- Orientation controls (bottom-left): basemap Map⇄Satellite (any active analysis) +
-			     hex opacity slider (hexagon layers only — it's what the slider targets). -->
-			{#if lensStore.activeAnalysis}
-				<div class="absolute bottom-4 left-4 z-30 flex flex-col gap-1.5 px-2.5 py-2 rounded-lg bg-black/75 backdrop-blur-md border border-white/15 shadow-lg text-[11px] text-white/85">
-					<div class="flex gap-1">
+			<!-- Orientation controls (bottom-left): basemap Claro · Oscuro · Satélite (always:
+			     it also sets the site's theme, so it is on the start view too) + hex opacity
+			     slider (hexagon layers only — it's what the slider targets). -->
+			<div class="absolute bottom-4 left-4 z-30 flex flex-col gap-1.5 px-2.5 py-2 rounded-lg bg-black/75 backdrop-blur-md border border-white/15 shadow-lg text-[11px] text-white/85">
+				<div class="flex gap-1" role="group" aria-label={i18n.t('map.basemap.label')}>
+					{#each FONDOS as f (f)}
 						<button
-							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'map' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
-							onclick={() => { mapStore.basemapMode = 'map'; if (Math.abs(mapStore.hexOpacity - HEX_OPACITY_SATELLITE) < 0.03) mapStore.hexOpacity = HEX_OPACITY_MAP; mapComponent?.setSatellite(false); }}>
-							{i18n.t('map.basemap.map')}
+							aria-pressed={themeStore.fondo === f}
+							class="px-2 py-1 rounded transition-colors {themeStore.fondo === f ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
+							onclick={() => setFondo(f)}>
+							{i18n.t(`map.basemap.${f}`)}
 						</button>
-						<button
-							class="px-2 py-1 rounded transition-colors {mapStore.basemapMode === 'satellite' ? 'bg-white/20 text-white' : 'text-white/60 hover:text-white'}"
-							onclick={() => { mapStore.basemapMode = 'satellite'; if (Math.abs(mapStore.hexOpacity - HEX_OPACITY_MAP) < 0.03) mapStore.hexOpacity = HEX_OPACITY_SATELLITE; mapComponent?.setSatellite(true); }}>
-							{i18n.t('map.basemap.satellite')}
-						</button>
-					</div>
-					{#if hexStore.activeLayer}
-						<label class="flex items-center gap-2">
-							<span class="opacity-70">{i18n.t('map.opacity')}</span>
-							<input type="range" min="0.3" max="0.9" step="0.05"
-								bind:value={mapStore.hexOpacity}
-								oninput={() => mapComponent?.applyHexOpacity()}
-								class="w-24 accent-sky-400 cursor-pointer" />
-						</label>
-					{/if}
+					{/each}
 				</div>
-			{/if}
+				{#if lensStore.activeAnalysis && hexStore.activeLayer}
+					<label class="flex items-center gap-2">
+						<span class="opacity-70">{i18n.t('map.opacity')}</span>
+						<input type="range" min="0.3" max="0.9" step="0.05"
+							bind:value={mapStore.hexOpacity}
+							oninput={() => mapComponent?.applyHexOpacity()}
+							class="w-24 accent-sky-400 cursor-pointer" />
+					</label>
+				{/if}
+			</div>
 
 			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
 			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}

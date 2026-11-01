@@ -248,6 +248,13 @@ export const PARQUETS = {
 };
 
 export const BASEMAP = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+// Per theme. Positron and Dark Matter share the 95 layer ids, sources, filters and
+// layout (verified 1-nov-2026): a theme change repaints the mounted layers
+// (utils/basemapTheme.ts) instead of setStyle, which would wipe Spatia's own layers.
+export const BASEMAP_STYLE = {
+	claro: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+	oscuro: BASEMAP,
+} as const;
 
 export const MAP_INIT = {
 	center: [-56.7, -28.1] as [number, number],  // NEA regional view

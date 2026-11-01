@@ -2,11 +2,13 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
-	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA, SELECT_OUTLINE } from '$lib/utils/sello';
+	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA, SELECT_OUTLINE, MAP_THEME, type MapTema } from '$lib/utils/sello';
+	import { themeStore } from '$lib/stores/theme.svelte';
+	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
 	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
+	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -80,6 +82,11 @@
 	// Start view ("Spatia" / fresh load): no territory picked yet — every border thin,
 	// the outline of the whole area strong (setHomeView).
 	let homeView = true;
+	// Theme the map is painted in (Claro · Oscuro; Satélite paints oscuro). The basemap
+	// starts in the stored theme; switchTheme() repaints the mounted layers in place.
+	let appliedTema: MapTema = themeStore.tema;
+	let themeReady = false;
+	let themeSwitchSeq = 0;
 	let hoverTerritoryId: string | null = null;
 	let regionalModeActive = false;
 	// Forestry plantations overlay (DNDFI). Visibility is driven from the right panel
@@ -93,7 +100,7 @@
 
 		map = new maplibregl.Map({
 			container,
-			style: BASEMAP,
+			style: BASEMAP_STYLE[appliedTema],
 			center: MAP_INIT.center,
 			zoom: MAP_INIT.zoom,
 			pitch: MAP_INIT.pitch,
@@ -104,10 +111,17 @@
 			attributionControl: false
 		});
 
+		if (import.meta.env.DEV) (window as any).__spatiaMap = map;   // local Playwright checks (verify_theme.py)
 		map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-right');
 		map.addControl(new maplibregl.AttributionControl({ compact: false }), 'bottom-right');
 
 		map.on('error', (e) => console.error('MAP ERROR:', e.error?.message || e));
+		// Before the first frame: same layer order in both basemaps, and the theme's
+		// retouches (atlas sheet in claro, label halos) on the basemap's own layers.
+		map.once('style.load', () => {
+			normaliseBasemapOrder(map);
+			applyBasemapTheme(map, appliedTema, null);
+		});
 
 		map.on('load', () => {
 			// Signal readiness to +page (drives the regional/compare viewport-load effect,
@@ -1143,15 +1157,7 @@
 				filter: ['==', ['get', 'h3index'], '']
 			}, firstSymbolId);
 
-			// Improve label contrast over bright hexagons: dark halo on the basemap's text.
-			for (const l of (map.getStyle().layers ?? [])) {
-				if (l.type === 'symbol' && (l.layout as any)?.['text-field']) {
-					try {
-						map.setPaintProperty(l.id, 'text-halo-color', 'rgba(8,10,14,0.9)');
-						map.setPaintProperty(l.id, 'text-halo-width', 1.4);
-					} catch { /* layer may not support it */ }
-				}
-			}
+			// Label halos over bright hexagons: applyBasemapTheme (style.load) sets them per theme.
 
 			// ── Compare territory hex choropleth (dept comparison mode) ─────
 			map.addSource('compare-hexagons', {
@@ -1241,6 +1247,11 @@
 			styleActiveTerritory();
 			if (regionalModeActive) setRegionalMapMode(true);
 			applyDeptFill();   // the panel can set it before the style loads (deep link)
+			applyOwnLayersTheme(appliedTema);
+			if (themeStore.fondo === 'satelite') setSatellite(true);
+			themeReady = true;
+			// The reader may have switched theme while the map was loading.
+			if (themeStore.tema !== appliedTema) switchTheme(themeStore.tema);
 		});
 
 		// A chart docked beside the map covers its right side: pad the camera so
@@ -2325,6 +2336,82 @@
 		}
 	}
 
+	$effect(() => {
+		const t = themeStore.tema;
+		if (themeReady && t !== appliedTema) switchTheme(t);
+	});
+
+	function switchTheme(t: MapTema) {
+		const seq = ++themeSwitchSeq;
+		basemapStyle(t)
+			.then((style) => {
+				if (!map || seq !== themeSwitchSeq) return;   // a newer switch won
+				// No fade. With 3D terrain each tile is drawn into a cached texture that is
+				// refreshed once per style change, not per frame of a paint transition: with
+				// the default 300 ms fade the textures froze halfway, dark and paper blended
+				// until the next camera move (MapLibre 6 render_to_texture: the fingerprint
+				// has no paint). The stylesheet's transition has no public setter.
+				const sheet = (map as any).style?.stylesheet;
+				const fade = sheet?.transition;
+				if (sheet) sheet.transition = { duration: 0, delay: 0 };
+				applyBasemapTheme(map, t, style);
+				appliedTema = t;
+				applyOwnLayersTheme(t);
+				applyDeptFill();
+				map.once('render', () => { if (sheet) sheet.transition = fade; });
+				map.triggerRepaint();
+			})
+			.catch((e) => console.error('MAP THEME:', e));
+	}
+
+	// Spatia's own layers whose color depends on the basemap (MAP_THEME in sello.ts).
+	// Data colors (hexagons, ranking fills, zones, radios) are painted by their own
+	// functions; this covers the frame around them.
+	function applyOwnLayersTheme(t: MapTema) {
+		if (!map) return;
+		const T = MAP_THEME[t];
+		const set = (id: string, prop: string, v: unknown) => {
+			if (!map.getLayer(id)) return;
+			try { map.setPaintProperty(id, prop as any, v as any); } catch { /* not a property of this layer */ }
+		};
+		for (const l of map.getStyle().layers ?? []) {
+			const id = l.id;
+			if (id === 'mask-fill' || id.endsWith('-mask-fill')) {
+				set(id, 'fill-color', T.mask);
+				set(id, 'fill-opacity', T.maskOpacity);
+			} else if (l.type === 'line' && id.endsWith('-border')) {
+				set(id, 'line-color', T.border);
+				set(id, 'line-dasharray', T.borderDash ?? undefined);
+			} else if (id.endsWith('-district-line')) {
+				set(id, 'line-color', T.deptLine);
+			} else if (id.endsWith('-district-selected-fill')) {
+				set(id, 'fill-color', T.accent);
+			} else if (id.endsWith('-district-selected-line')) {
+				set(id, 'line-color', T.accent);
+			}
+		}
+		set('territory-bg-fill', 'fill-color', T.territoryBg);
+		set('territory-bg-fill', 'fill-opacity', T.territoryBgOpacity);
+		set('region-outline', 'line-color', T.regionOutline);
+		set('province-line', 'line-color', T.province);
+		set('province-fill', 'fill-color', T.accent);
+		for (const id of ['ar-dept-line', 'br-dept-line']) set(id, 'line-color', T.deptLine);
+		set('dept-outline-line', 'line-color', T.accent);
+		set('compare-dept-outline-line', 'line-color', T.compare);
+		for (const id of ['hex-selected', 'compare-hex-selected', 'radio-brush-line', 'hex-zone-line']) set(id, 'line-color', T.select);
+		// Relief: in claro a soft gray ground under roads, labels and data (atlas); in
+		// oscuro where it always was, over the basemap.
+		set('hillshade', 'hillshade-shadow-color', T.hillshade.shadow);
+		set('hillshade', 'hillshade-highlight-color', T.hillshade.highlight);
+		set('hillshade', 'hillshade-accent-color', T.hillshade.accent);
+		set('hillshade', 'hillshade-exaggeration', T.hillshade.exaggeration);
+		if (map.getLayer('hillshade')) {
+			const before = t === 'claro' ? layerAfterWater(map) : (map.getLayer('province-fill') ? 'province-fill' : undefined);
+			if (before && before !== 'hillshade') map.moveLayer('hillshade', before);
+		}
+		map.setLight({ anchor: 'viewport', color: T.light.color, intensity: T.light.intensity, position: [1.5, 210, 35] });
+	}
+
 	// Basemap (CartoDB) admin lines come from a different source than our GADM
 	// boundaries and visibly drift, producing a duplicate/blurry outline next to
 	// our province borders. Hide them once after load.
@@ -2454,7 +2541,7 @@
 		if (!map?.getStyle()) return;
 		const reset = (id: string, opacity: number) => {
 			if (!map.getLayer(id)) return;
-			map.setPaintProperty(id, 'fill-color', '#60a5fa');
+			map.setPaintProperty(id, 'fill-color', MAP_THEME[appliedTema].accent);
 			map.setPaintProperty(id, 'fill-opacity', opacity);
 		};
 		reset('ar-dept-fill', 0.05);

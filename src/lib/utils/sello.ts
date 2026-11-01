@@ -34,6 +34,64 @@ export const SELECT = TIERRA;
 export const SELECT_OUTLINE = '#ffffff';
 export const SURFACE = 'var(--s-surface)';
 
+// ── Map colors that depend on the basemap, per theme ───────────────────────────
+// Oscuro = the values the map has always had (vitrina, and Satélite). Claro = the
+// atlas sheet of the El Soberbio demo (demo/el-nino: atlasStyle, TH): paper, gray
+// shaded relief under the roads, administrative limits as a dashed gray line,
+// selection in ink. Map.svelte applyMapTheme() sets these on the mounted layers.
+export type MapTema = 'claro' | 'oscuro';
+export interface MapThemeColors {
+	paper: string | null;          // basemap background (null = the style's own)
+	water: string | null;
+	waterway: string | null;
+	placeText: string | null;      // place-name labels
+	halo: string; haloWidth: number;
+	mask: string; maskOpacity: number;           // outside the active territory
+	territoryBg: string; territoryBgOpacity: number; // under the hexagons (no-parquet cells)
+	border: string; borderDash: number[] | null; // the 24 territory limits
+	regionOutline: string;          // start view: outline of the whole area
+	province: string;               // census radio borders (province context)
+	deptLine: string;               // department limits (pickers)
+	accent: string;                 // selected department, picker tint
+	compare: string;                // compared department
+	select: string;                 // outline of anything selected
+	hillshade: { shadow: string; highlight: string; accent: string | undefined; exaggeration: number };
+	light: { color: string; intensity: number };
+}
+export const MAP_THEME: Record<MapTema, MapThemeColors> = {
+	oscuro: {
+		paper: null, water: null, waterway: null, placeText: null,
+		halo: 'rgba(8,10,14,0.9)', haloWidth: 1.4,
+		mask: '#1a1a2e', maskOpacity: 0.75,
+		territoryBg: 'rgb(55,65,81)', territoryBgOpacity: 0.65,
+		border: '#f472b6', borderDash: null,
+		regionOutline: '#f472b6',
+		province: '#d4d4d4',
+		deptLine: '#93c5fd',
+		accent: '#60a5fa',
+		compare: '#fbbf24',
+		select: SELECT_OUTLINE,
+		hillshade: { shadow: '#0a0a1a', highlight: '#8899bb', accent: undefined, exaggeration: 0.7 },
+		light: { color: '#e0f0ff', intensity: 0.55 },
+	},
+	claro: {
+		paper: '#fbfaf7', water: '#dfe7ec', waterway: '#c9d6de', placeText: '#3d3b36',
+		halo: 'rgba(251,250,247,0.92)', haloWidth: 1.4,
+		// a paper veil: the neighbours stay legible but quiet
+		mask: '#fbfaf7', maskOpacity: 0.7,
+		territoryBg: '#d9d4cb', territoryBgOpacity: 0.5,
+		border: '#5a5750', borderDash: [4, 2],
+		regionOutline: '#5a5750',
+		province: '#8f8b82',
+		deptLine: '#8f8b82',
+		accent: '#2f6f9f',
+		compare: '#b7791f',
+		select: '#1c1c1c',
+		hillshade: { shadow: '#8a867c', highlight: '#ffffff', accent: '#b9b4a8', exaggeration: 0.35 },
+		light: { color: '#fff8ec', intensity: 0.7 },
+	},
+};
+
 export const FONT = {
 	sans: "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
 	serif: "'Newsreader', Georgia, 'Times New Roman', serif",

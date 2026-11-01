@@ -1,4 +1,5 @@
 import { COLOR_RAMPS } from '$lib/config';
+import { themeStore } from '$lib/stores/theme.svelte';
 
 export type RadioData = {
 	color: string;
@@ -58,8 +59,9 @@ export class MapStore {
 	// Hexagon fill opacity, user-controlled via the bottom-left slider so the basemap
 	// (streets / buildings / satellite) shows through for orientation. 0.78 = original default.
 	hexOpacity: number = $state(0.78);
-	// Basemap reference mode: 'map' = dark-matter only, 'satellite' = Sentinel-2 raster underlay.
-	basemapMode: 'map' | 'satellite' = $state('map');
+	// Basemap reference mode: 'map' = vector basemap (Claro or Oscuro), 'satellite' =
+	// imagery underlay. Derived from themeStore.fondo, the one source of truth.
+	get basemapMode(): 'map' | 'satellite' { return themeStore.fondo === 'satelite' ? 'satellite' : 'map'; }
 	// Forestry plantations overlay (DNDFI): controlled from the right panel
 	// (AnalysisView), only when forestry_aptitude is active with a dept selected.
 	// plantationsDept = the selected department name, used to filter the overlay to

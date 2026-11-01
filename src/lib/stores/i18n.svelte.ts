@@ -149,8 +149,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'map.hover.pick': { es: '{name} · clic para elegir', en: '{name} · click to select', gn: '{name} · clic para elegir', pt: '{name} · clique para escolher' },
 	'map.hint.zoomNeighbours': { es: 'Acercá para ver los hexágonos de las provincias, departamentos y estados vecinos', en: 'Zoom in to load the neighbouring provinces, departments and states', gn: 'Acercá para ver los hexágonos de las provincias, departamentos y estados vecinos', pt: 'Aproxime para ver os hexágonos das províncias, departamentos e estados vizinhos' },
 	'map.hint.aggregated': { es: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', en: 'Aggregated overview — spatial means · zoom in for per-hex detail', gn: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', pt: 'Vista agregada — médias espaciais · aproxime para ver o detalhe por hexágono' }, // gn: pendiente
-	'map.basemap.map': { es: 'Mapa', en: 'Map', gn: 'Mapa', pt: 'Mapa' }, // gn: pendiente
-	'map.basemap.satellite': { es: 'Satélite', en: 'Satellite', gn: 'Satélite', pt: 'Satélite' }, // gn: pendiente
+	'map.basemap.label': { es: 'Fondo del mapa', en: 'Basemap', gn: 'Fondo del mapa', pt: 'Fundo do mapa' }, // gn: pendiente
+	'map.basemap.claro': { es: 'Claro', en: 'Light', gn: 'Claro', pt: 'Claro' }, // gn: pendiente
+	'map.basemap.oscuro': { es: 'Oscuro', en: 'Dark', gn: 'Oscuro', pt: 'Escuro' }, // gn: pendiente
+	'map.basemap.satelite': { es: 'Satélite', en: 'Satellite', gn: 'Satélite', pt: 'Satélite' }, // gn: pendiente
 	'map.opacity': { es: 'Opacidad', en: 'Opacity', gn: 'Opacidad', pt: 'Opacidade' }, // gn: pendiente
 
 	// ── Analysis panel ──
