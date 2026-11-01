@@ -71,12 +71,27 @@ def main() -> None:
     with conn, conn.cursor() as cur:
         cur.execute('DROP TABLE IF EXISTS meta.umbrales_cultivo, meta.umbrales_evidencia')
         cur.execute("""CREATE TABLE meta.umbrales_cultivo (cultivo text, factor text, s1 text, limite text, fuente text,
-                       nota text, estado text DEFAULT 'propuesto', PRIMARY KEY (cultivo, factor))""")
+                       nota text, estado text DEFAULT 'validado 2026-11-01', PRIMARY KEY (cultivo, factor))""")
         for r in propuesta:
             cur.execute('INSERT INTO meta.umbrales_cultivo (cultivo, factor, s1, limite, fuente, nota) VALUES (%s, %s, %s, %s, %s, %s)',
                         tuple(r) + (None,) * (6 - len(r)))
-        cur.execute("COMMENT ON TABLE meta.umbrales_cultivo IS 'A4: propuesta de umbrales por cultivo (umbrales_cultivos.md). "
-                    "estado = propuesto hasta que el autor la valide; la aptitud no se calcula antes'")
+        cur.execute("COMMENT ON TABLE meta.umbrales_cultivo IS 'A4: umbrales por cultivo validados por el autor el 1-nov-2026 "
+                    "(umbrales_cultivos.md); reglas en meta.umbrales_reglas'")
+        cur.execute('DROP TABLE IF EXISTS meta.umbrales_reglas')
+        cur.execute('CREATE TABLE meta.umbrales_reglas (n smallint PRIMARY KEY, regla text)')
+        md = (AQUI / 'umbrales_cultivos.md').read_text(encoding='utf-8')
+        bloque = md.split('## Reglas decididas', 1)[1].split(chr(10) + '## ', 1)[0]
+        reglas, actual = [], None
+        for l in bloque.splitlines()[1:]:
+            m = re.match(r'^(\d+)\.\s+(.*)', l)
+            if m:
+                actual = [int(m.group(1)), m.group(2)]
+                reglas.append(actual)
+            elif l.strip() and actual:
+                actual[1] += ' ' + l.strip()
+        cur.executemany('INSERT INTO meta.umbrales_reglas VALUES (%s, %s)', [tuple(r) for r in reglas])
+        cur.execute("COMMENT ON TABLE meta.umbrales_reglas IS 'A4: reglas decididas por el autor el 1-nov-2026 (precedencia de "
+                    "fuentes, pendiente, pH, calor, arroz, campo natural, combinación de factores)'")
         cur.execute("""CREATE TABLE meta.umbrales_evidencia (grupo text, cultivo text, variable text, tipo text, valor_min text,
                        valor_max text, unidad text, condicion text, fuente text, pagina text, url text, cita_textual text)""")
         cur.executemany('INSERT INTO meta.umbrales_evidencia VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', evid)
