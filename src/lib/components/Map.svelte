@@ -3,6 +3,7 @@
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
 	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA, SELECT_OUTLINE } from '$lib/utils/sello';
+	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -1213,12 +1214,18 @@
 				source: 'hex-zones',
 				paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.35 }
 			});
+			// Outline white like every selection, drawn around the zone (cells dissolved),
+			// not around each cell: per-cell white lines drowned the zone colour at
+			// regional zoom. The zone's colour stays in the per-cell fill.
+			map.addSource('hex-zones-outline', {
+				type: 'geojson',
+				data: { type: 'FeatureCollection', features: [] }
+			});
 			map.addLayer({
 				id: 'hex-zone-line',
 				type: 'line',
-				source: 'hex-zones',
-				// Outline white like every selection; the zone's colour stays in the fill.
-				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2, 'line-opacity': 0.8 }
+				source: 'hex-zones-outline',
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2, 'line-opacity': 0.9 }
 			});
 
 			gateEmptyOverlaySources();
@@ -1258,7 +1265,7 @@
 	// parked at z24 and get their own range back with the first feature. Visibility
 	// stays with the existing code; this only gates by emptiness.
 	const GATED_SOURCES = ['lasso-draw', 'dept-highlights', 'dept-outline', 'compare-dept-outline',
-		'hexagons', 'territory-bg', 'compare-hexagons', 'regional-hexagons', 'hex-zones'];
+		'hexagons', 'territory-bg', 'compare-hexagons', 'regional-hexagons', 'hex-zones', 'hex-zones-outline'];
 	function gateEmptyOverlaySources() {
 		if (!map) return;
 		const layers = map.getStyle().layers ?? [];
@@ -3491,31 +3498,47 @@
 		if (!map) return;
 		const src = map.getSource('hex-zones') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
+		const outlineSrc = map.getSource('hex-zones-outline') as maplibregl.GeoJSONSource | undefined;
 
 		if (zones.length === 0) {
 			src.setData({ type: 'FeatureCollection', features: [] });
+			outlineSrc?.setData({ type: 'FeatureCollection', features: [] });
 			return;
 		}
 
 		const features: any[] = [];
+		const outlines: any[] = [];
 		for (const zone of zones) {
+			const cellFeatures: any[] = [];
 			for (const h3index of zone.h3indices) {
 				const cached = boundaryCache?.get(h3index);
 				if (!cached) continue;
-				features.push({
+				cellFeatures.push({
 					type: 'Feature',
 					properties: { h3index, color: zone.color },
 					geometry: { type: 'Polygon', coordinates: [cached] }
 				});
 			}
+			features.push(...cellFeatures);
+			// Zone perimeter: dissolve the cells (GeoJSON order). Mixed resolutions make
+			// h3-js throw; then fall back to outlining each cell.
+			try {
+				const mp = cellsToMultiPolygon(zone.h3indices, true);
+				if (mp.length) outlines.push({ type: 'Feature', properties: { color: zone.color }, geometry: { type: 'MultiPolygon', coordinates: mp } });
+			} catch {
+				outlines.push(...cellFeatures);
+			}
 		}
 		src.setData({ type: 'FeatureCollection', features });
+		outlineSrc?.setData({ type: 'FeatureCollection', features: outlines });
 	}
 
 	export function clearHexZoneHighlight() {
 		if (!map) return;
 		const src = map.getSource('hex-zones') as maplibregl.GeoJSONSource | undefined;
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
+		const outlineSrc = map.getSource('hex-zones-outline') as maplibregl.GeoJSONSource | undefined;
+		if (outlineSrc) outlineSrc.setData({ type: 'FeatureCollection', features: [] });
 	}
 
 	// Census-panel chart brush → highlight matching radios on the PMTiles layer.
