@@ -1203,6 +1203,7 @@
 				paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.8 }
 			});
 
+			gateEmptyOverlaySources();
 			setupInteractions();
 
 			// Re-apply territory visibility in case territory was set before map loaded
@@ -1231,6 +1232,41 @@
 			map.remove();
 		};
 	});
+
+	// Empty overlay sources (lasso, zones, comparison, highlights, outlines…) still
+	// had MapLibre cut ~130 empty tiles each per view on its worker (~1/3 of the
+	// remaining load over Villeta, 1-nov-2026). A source is only loaded while one of
+	// its layers is inside its zoom range, so while a source is empty its layers are
+	// parked at z24 and get their own range back with the first feature. Visibility
+	// stays with the existing code; this only gates by emptiness.
+	const GATED_SOURCES = ['lasso-draw', 'dept-highlights', 'dept-outline', 'compare-dept-outline',
+		'hexagons', 'territory-bg', 'compare-hexagons', 'regional-hexagons', 'hex-zones'];
+	function gateEmptyOverlaySources() {
+		if (!map) return;
+		const layers = map.getStyle().layers ?? [];
+		for (const id of GATED_SOURCES) {
+			const src = map.getSource(id) as maplibregl.GeoJSONSource | undefined;
+			if (!src) continue;
+			const own = layers
+				.filter((l: any) => l.source === id)
+				.map((l: any) => [l.id, l.minzoom ?? 0, l.maxzoom ?? 24] as [string, number, number]);
+			const apply = (data: any) => {
+				const fc = data?.geojson ?? data;
+				// Empty = a collection with no features, or a feature with no vertices
+				// (the lasso clears itself to a Polygon with one empty ring).
+				const empty = !!fc && typeof fc === 'object' && (
+					Array.isArray(fc.features) ? fc.features.length === 0
+						: fc.type === 'Feature' && JSON.stringify(fc.geometry?.coordinates ?? []).replace(/[\[\],]/g, '') === ''
+				);
+				for (const [lid, min, max] of own) {
+					if (map.getLayer(lid)) map.setLayerZoomRange(lid, empty ? 24 : min, empty ? 24 : max);
+				}
+			};
+			apply((src as any)._data);
+			const setData = src.setData.bind(src);
+			src.setData = ((data: any, ...rest: any[]) => { apply(data); return (setData as any)(data, ...rest); }) as any;
+		}
+	}
 
 	function setupInteractions() {
 		const tooltip = document.createElement('div');
