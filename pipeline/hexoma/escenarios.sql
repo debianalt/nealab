@@ -180,3 +180,54 @@ FROM celdas
 GROUP BY 1, 2
 ORDER BY lena_pm25_cuartil_alto DESC NULLS LAST
 LIMIT 15;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 6. La campaña 2022/23 frente a su normal, por departamento (esquema clima)
+-- ¿Cuánto llovió en la campaña de la sequía 2022/23 frente a la normal 1991–2020 de
+-- cada celda, y en qué parte del departamento fue la campaña más seca de las 30 de
+-- referencia? Lluvia CHIRPS v3; balance = lluvia − ET0 FAO-56 de ERA5-Land.
+-- Cada celda lee el píxel que contiene su centro (CHIRPS ~70 celdas por píxel): el
+-- promedio por departamento pondera los píxeles por cuántas celdas del depto cubren.
+-- Medido el 1-nov-2026: 6 s. Encabeza Corrientes: Goya −48 % de la normal, balance
+-- −873 mm, y en 99 % de sus celdas fue la campaña más seca de 1991–2020.
+-- ─────────────────────────────────────────────────────────────────────────────
+SELECT l.nombre AS departamento, t.etiqueta AS provincia, count(*) AS celdas,
+       round(avg(a.anom_pct)::numeric, 0)                          AS lluvia_pct_normal,
+       round(avg(b.anom)::numeric, 0)                               AS balance_anom_mm,
+       round(100.0 * avg((a.pct_ref = 0)::int)::numeric, 0)        AS pct_celdas_la_mas_seca
+FROM hexagonos x
+JOIN territorios t USING (territorio_id)
+JOIN limites l ON l.redcode = x.redcode
+JOIN clima.hex_pixel h ON h.h3 = x.h3
+JOIN clima.anomalia a ON a.tabla = 'chirps_campania' AND a.unidad_id = h.chirps_pixel
+                     AND a.variable = 'p_mm' AND a.periodo = 2022
+JOIN clima.anomalia b ON b.tabla = 'balance_campania' AND b.unidad_id = h.par_id
+                     AND b.variable = 'p_menos_et0' AND b.periodo = 2022
+GROUP BY 1, 2
+HAVING count(*) >= 100   -- fuera las celdas de borde cuyo centro cae en un depto vecino
+ORDER BY lluvia_pct_normal
+LIMIT 15;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 7. Heladas agrometeorológicas y altitud en Misiones (esquemas clima y suelo)
+-- Normal 1991–2020 de días con Tmin ≤ 3 °C por franja de elevación (FABDEM).
+-- OJO: ERA5-Land SUBESTIMA estos días (~12 por año menos que las estaciones, ver
+-- validacion_clima.md): sirve el gradiente, no el número. Y su píxel de ~11 km no
+-- ve las heladas de valle: la elevación de la celda no es la del píxel (clima.pixel.z_m).
+-- Medido el 1-nov-2026: 9 s. De 2,2 días (100–200 m) a 4,1 (800 m): un gradiente
+-- chato que delata el sesgo; la estación de Posadas sola ya supera esos valores.
+-- ─────────────────────────────────────────────────────────────────────────────
+SELECT (floor(s.elev_media_m / 100) * 100)::int AS elev_desde_m, count(*) AS celdas,
+       round(avg(n.media)::numeric, 1) AS dias_tmin_le3_normal,
+       round(avg(p.z_m)::numeric, 0)   AS altitud_media_del_pixel_era5
+FROM hexagonos x
+JOIN territorios t USING (territorio_id)
+JOIN suelo.h3 s ON s.h3 = x.h3
+JOIN clima.hex_pixel h ON h.h3 = x.h3
+JOIN clima.pixel p ON p.fuente = 'era5' AND p.pixel_id = h.era5_pixel
+JOIN clima.normal_1991_2020 n ON n.tabla = 'era5_helada' AND n.unidad_id = h.era5_pixel
+                             AND n.variable = 'dias_tmin_le3' AND n.estacion IS NULL
+WHERE t.territorio = 'misiones'
+GROUP BY 1 ORDER BY 1;

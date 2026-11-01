@@ -36,6 +36,13 @@ base no tiene backup propio porque se regenera.
 | `python pipeline/gee_export_ghsl_epochs.py` y `gcloud storage cp "gs://spatia-satellite/satellite/nea_ar/ghsl_built_*.tif" pipeline/output/hexoma/ghsl/` | Exporta GHSL 1990, 2000, 2010 y 2020 del NEA (una vez; el cruce los baja solo si faltan) | ~10 min en GEE |
 | `python pipeline/hexoma/build_hexoma_cruce.py [--desde pesos\|fracciones\|validacion\|final]` | Rearma el esquema `cruce` y `hexoma/validacion_cruce.md`. Correrlo después de los censos | 140 s |
 | `python pipeline/hexoma/build_hexoma_panel.py` | Rearma el esquema `panel`. Correrlo después del cruce | 10 s |
+| `python pipeline/gee_export_clima_diario.py --fuente chirps\|era5` | Baja de GEE el clima diario del NEA (CHIRPS v3 1981–, ERA5-Land 1950–) en la grilla nativa, a `%HEXOMA_FUENTES%/clima/diario/` (fuera de OneDrive; 5,8 GB). Idempotente | ~6 min ERA5, ~2 min CHIRPS |
+| `python pipeline/gee_export_suelo_relieve.py` | Baja SoilGrids 2.0 (9 variables, 0–30 cm) y FABDEM (pendiente y elevación a 3") a `%HEXOMA_FUENTES%/suelo/` | ~3 min |
+| `python pipeline/hexoma/clima_a_pixel.py` | Indicadores por píxel de origen: campaña, estación, heladas por año, ET0 FAO-56 | ~2 min |
+| `python pipeline/hexoma/build_hexoma_clima.py` | Rearma el esquema `clima` (ver abajo) | ~5 min |
+| `python pipeline/hexoma/build_hexoma_suelo.py` | Rearma el esquema `suelo` | ~2 min |
+| `python pipeline/hexoma/validar_clima.py` | Estaciones GHCN-Daily contra el píxel que las contiene: `clima.validacion` y `validacion_clima.md` | 1 min |
+| `python pipeline/hexoma/hexoma_ficha.py <h3> […]` | Ficha HTML local de una celda con sus series: `pipeline/output/hexoma/fichas/<h3>.html` | segundos |
 | `python pipeline/hexoma/extracto.py --nombre X --sql q.sql --destino carpeta` | Extracto congelado de una consulta: parquet + manifiesto de procedencia (ver abajo) | segundos |
 
 Una recarga deja filas muertas. El script reescribe (VACUUM FULL) las tablas donde pasan
@@ -151,6 +158,37 @@ Treinta y ocho indicadores con la misma definición en los años en que aparecen
 
 Verificado el 1-nov-2026: por provincia y año, la población y el NBI de las celdas son iguales a los de los radios (población ±12 por redondeo; NBI con dos decimales). Lo mismo con el NBI publicado por el INDEC en 2001 y 2010.
 
+## Clima y suelo (esquemas `clima` y `suelo`, fase A1 del potencial agrícola)
+Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 con goalposts a **series empíricas en unidades físicas** por celda. A1 es la base: clima por campaña y suelo y relieve en unidades. Siguen A2 (MapBiomas Argentina Col. 3, uso por año), A3 (MODIS) y A4 (aptitud por cultivo con umbrales citados).
+
+**Reglas:**
+- **Resolución de origen.** Cada serie se guarda por píxel de su fuente: CHIRPS 0,05° (~70 celdas), ERA5-Land 0,1° (~1.100 celdas). Una celda lee el píxel que contiene su centro: no hay interpolación, y las celdas de un mismo píxel repiten el valor porque eso es lo que la fuente mide. `clima.hex_pixel` lleva de la celda a sus píxeles.
+- **Tiempo.** Campaña agrícola julio–junio (`campania` = año de inicio), estación (DEF del año de diciembre) y **heladas por año calendario**, para no partir el invierno.
+- **Normal 1991–2020 del propio píxel** (`normal_1991_2020`) y anomalías contra ella (`anomalia`: valor − normal, % de la normal y `pct_ref`, el % de los 30 años con valor menor). No hay goalposts: cada celda se compara con su propia historia.
+- **ET0** FAO-56 Penman-Monteith de referencia, diaria, con radiación neta calculada como en FAO-56 (pasto, albedo 0,23); prueba contra el ejemplo 18 de FAO-56 en `clima_a_pixel.py`.
+- **Suelo:** SoilGrids 2.0, 0–30 cm ponderado por espesor, píxel de 250 m que contiene el centro. Es un modelo, no una medición. **Relieve:** FABDEM (sin dosel ni edificios), media de los píxeles de 3" con centro en la celda (mediana: 12).
+
+| Objeto | Contenido |
+|---|---|
+| `clima.fuentes`, `suelo.fuentes` | Asset, período, rótulo y sha256 de cada archivo bajado |
+| `clima.pixel`, `clima.hex_pixel`, `clima.par` | Píxeles (con geometría y, en ERA5, altitud del modelo), celda → píxeles y par CHIRPS×ERA5 para el balance |
+| `clima.chirps_campania`, `chirps_estacion` | Lluvia, días ≥ 1 y ≥ 50 mm, racha seca (y la de octubre–marzo) |
+| `clima.era5_campania`, `era5_estacion` | Grados-día base 10, días > 35 °C, medias de máximas y mínimas, ET0, humedad del suelo en 3 capas |
+| `clima.era5_helada` | Por año: días con Tmin < 0, < −2 y ≤ 3 °C, primera y última helada, mínima absoluta |
+| `clima.balance_campania`, `balance_estacion` | Lluvia − ET0 |
+| `clima.normal_1991_2020`, `clima.anomalia` | Normales y anomalías (campañas y heladas) |
+| `clima.v_h3_campania`, `v_h3_estacion`, `v_h3_helada`, `v_h3_anomalia` | Lo mismo por celda. Filtrar por `h3` (consulta de una celda: ~10 ms) |
+| `clima.validacion` | Métricas contra estaciones |
+| `suelo.h3` | Arcilla, arena, limo, COS, pH, CIC, densidad aparente, fragmentos, N; pendiente y elevación media, mínima y máxima |
+
+**Validación contra 17 estaciones GHCN-Daily, 1991–2025** (`validacion_clima.md`; el COMMENT de cada columna lleva la cifra):
+- **Sirven:** lluvia por campaña (r ≈ 0,97; +7 %), grados-día (+1 %, r ≈ 0,83), Tmin y Tmax diarias como variación (r 0,96 y 0,91).
+- **No sirven como valor absoluto:** ERA5-Land da mínimas +1,6 °C y máximas −2,9 °C (mediana). Por eso **casi no marca heladas** (las estaciones tienen 2–8 días bajo 0 °C por año; ERA5-Land, ~0) y subestima los días > 35 °C. AgERA5 (`projects/climate-engine-pro/assets/ce-ag-era5-v2/daily`) se probó el 1-nov-2026 y tiene el mismo sesgo. CHIRPS diario da ~33 días de lluvia por campaña de más: rachas y conteos de días son orientativos.
+- **Hueco:** las sierras de Misiones no están en GHCN-Daily. INTA SIGA tiene esas series, pero responde 403 a la descarga automática.
+- El GDD de la capa web ((Tmedia mensual − 10) × 30) difiere sólo −1,4 a −1,7 % del diario en Posadas, Bernardo de Irigoyen y Las Lomitas (2019–2024): el problema de esa capa es la escala 0–100, no la fórmula.
+
+Tamaño: `clima` 2,0 GB (la mitad es `anomalia`), `suelo` 0,36 GB.
+
 ## Extractos para artículos (`extracto.py`)
 El Hexoma se regenera desde las fuentes y desde la web viva, así que un número publicado tiene que poder rastrearse. `extracto.py` corre una consulta y deja en la carpeta destino:
 - `<nombre>.parquet`;
@@ -204,19 +242,21 @@ web, ya corregidos:
 2. inundación y carencias;
 3. uso actual del suelo donde hubo pérdida EUDR después de 2020;
 4. población 1991–2022 según el aislamiento;
-5. hogares que cocinan con leña o carbón donde el PM2.5 es alto (esquema `censo_2022`).
+5. hogares que cocinan con leña o carbón donde el PM2.5 es alto (esquema `censo_2022`);
+6. la campaña 2022/23 frente a su normal, por departamento (esquema `clima`);
+7. heladas agrometeorológicas y altitud en Misiones (esquemas `clima` y `suelo`; muestra el sesgo de ERA5-Land).
 
 ## Pendiente (hoja de ruta del 31-oct-2026)
 Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
 1. **Series anuales por celda:**
    - pérdida de Hansen v1.13, 2001–2025;
-   - VIIRS, CHIRPS, fuego y VCF;
+   - VIIRS, fuego y VCF (CHIRPS y ERA5-Land: hecho el 1-nov-2026, esquema `clima`);
    - MapBiomas resumido (falta confirmar la cobertura de Corrientes);
    - pérdida oficial de la UMSEF.
 
    Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por `censo_2022.cruce` (o por el cruce único, cuando esté).
 2. **Capas institucionales:** OTBN, áreas protegidas, comunidades indígenas (RENACI) y catastro o tamaño de parcela.
-3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100.
+3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100 (potencial agrícola: A1 hecha el 1-nov-2026, esquemas `clima` y `suelo`).
 4. **Vecindad con SQL** (`h3_grid_disk`) y una tabla con la resolución de origen de cada variable.
 5. ~~Un extracto congelado por paper~~: hecho el 1-nov-2026 (`extracto.py`).
 
