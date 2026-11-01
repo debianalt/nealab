@@ -177,7 +177,11 @@ FUENTES = [
                        '(h3, año, clase, píxeles) queda en parquet; Postgres guarda ‰ por grupo de clases cada 5 años y la trayectoria '
                        '1985–2025 de cada celda.'),
         asignacion_celda='Píxeles de 30 m con centro dentro de la celda (~110–130 por celda); fracción = píxeles de la clase / píxeles de la celda.',
-        validacion='Internamente: ‰ por celda suma 1000. Contra estadísticas oficiales de superficie: pendiente (ver uso.validacion si existe).',
+        validacion=('‰ por celda suma 1000 en todas las filas. Contra la superficie sembrada del MAGyP (Estimaciones agrícolas 2026-03) por '
+                    'departamento, unidos por nombre (los códigos de Chaco y Formosa del Hexoma no son los del MAGyP): cultivo temporal '
+                    'frente a cultivos de verano r 0,87–0,95 (75 departamentos, 2000–2025), cociente 1,3–2,3; cultivo perenne frente a '
+                    'yerba, té y cítricos r 0,81–0,89, cociente ~3. Sirve para ubicar la agricultura, no para medir la superficie de un '
+                    'cultivo. Detalle: uso.validacion y pipeline/hexoma/validacion_uso.md.'),
         limitaciones=('Clasificación automática por año: los cambios de un año a otro incluyen ruido (cambios_dominante lo cuenta). La leyenda '
                       'en castellano es traducción propia de la del asset. «Mosaico de agricultura y pastura» mezcla usos.'),
         uso_recomendado='Trayectoria de uso por celda, validación de la aptitud por cultivo (A4), pérdida de bosque y avance agrícola.',

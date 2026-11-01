@@ -2,7 +2,8 @@
 
 Dato independiente: MAGyP, Estimaciones agrícolas (datos.magyp.gob.ar, archivo 2026-03), superficie sembrada por
 departamento y campaña. Comparaciones por departamento del NEA argentino (departamento de la celda = el de su
-centro, hexagonos.redcode = departamento_id del MAGyP):
+centro, hexagonos.redcode → limites.nombre). La unión con el MAGyP es por NOMBRE de departamento dentro de la
+provincia (normalizado): los códigos del Hexoma en Chaco y Formosa no son los del INDEC/MAGyP (0 de 35 coinciden):
   - cultivo temporal (clase 19) del mapa del año Y frente a los cultivos de verano de la campaña (Y−1)/Y y Y/(Y+1):
     algodón + arroz + girasol + maíz + soja de primera + sorgo (sin soja de segunda: repite la superficie del trigo);
   - cultivo perenne (clase 36) frente a yerba mate + té + naranja + mandarina + limón + pomelo.
@@ -46,9 +47,34 @@ def main() -> None:
         subprocess.run(['curl', '-s', '-f', '-o', str(MAGYP), MAGYP_URL], check=True)
     m = pd.read_csv(MAGYP, encoding='utf-8')
     m = m[m.provincia_id.isin([18, 22, 34, 54])].copy()
-    m['dep'] = m.departamento_id.astype('Int64').astype(str).str.zfill(5)
     m['inicio'] = m.campania.str[:4].astype(int)
     conn = connect(DB)
+    lim = pd.read_sql("""SELECT l.redcode, l.nombre, t.etiqueta AS provincia FROM limites l
+                         JOIN territorios t USING (territorio_id)""", conn)
+    import difflib
+    import unicodedata
+
+    def norm(x):
+        x = unicodedata.normalize('NFKD', str(x)).encode('ascii', 'ignore').decode().lower()
+        for a, b in (('gral.', 'general'), ('gral ', 'general '), ('pte.', 'presidencia'), ('1° ', 'primero '), ('1 de', 'primero de'),
+                     ('lib.', 'libertador'), ('cnel.', 'coronel'), ('dr.', 'doctor'), ('.', ' ')):
+            x = x.replace(a, b)
+        return ' '.join(x.split())
+    mapa, sin_par = {}, []
+    for prov, g in m.groupby('provincia'):
+        cands = lim[lim.provincia == prov]
+        nombres = {norm(n): r for n, r in zip(cands.nombre, cands.redcode)}
+        for d in g.departamento.unique():
+            k = norm(d)
+            hit = nombres.get(k) or (nombres[difflib.get_close_matches(k, list(nombres), 1, 0.75)[0]]
+                                     if difflib.get_close_matches(k, list(nombres), 1, 0.75) else None)
+            if hit:
+                mapa[(prov, d)] = hit
+            else:
+                sin_par.append(f'{d} ({prov})')
+    m['dep'] = [mapa.get((p_, d)) for p_, d in zip(m.provincia, m.departamento)]
+    m = m[m.dep.notna()]
+    log(f'departamentos MAGyP unidos por nombre: {len(mapa)}; sin par: {sin_par}')
     uso = pd.read_sql("""SELECT x.redcode AS dep, u.anio,
                                 sum(u.cultivo * h3_cell_area(u.h3, 'km^2')) / 10 AS temporal_ha,
                                 sum(u.cultivo_perenne * h3_cell_area(u.h3, 'km^2')) / 10 AS perenne_ha

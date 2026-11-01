@@ -193,6 +193,16 @@ Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 con go
 
 Tamaño: `clima` 2,0 GB (la mitad es `anomalia`), `suelo` 0,36 GB.
 
+## Uso del suelo por celda (esquema `uso`, fase A2)
+MapBiomas Argentina Colección 3 (1985–2025, ~30 m, 19 clases), por celda: `uso.h3_anio` (‰ por grupo cada 5 años),
+`uso.h3_trayectoria` (dominante 1985 y 2025, % de bosque y agrícola, primer año agrícola, año de pérdida de bosque) y
+la serie anual completa por clase en `%HEXOMA_FUENTES%/uso/uso_h3_anio_clase.parquet` (683 MB, DuckDB). En 2025: bosque
+5,66 M ha en Chaco, 5,79 M en Formosa, 1,61 M en Misiones; bosque del NEA 16,2 M ha en 1985 → 13,8 M en 2025.
+Validación contra el MAGyP por departamento (`validar_uso.py`, `validacion_uso.md`): cultivo temporal r 0,87–0,95,
+perenne r 0,81–0,89; MapBiomas sobreestima la superficie (×1,3–3), ubica bien la agricultura. **Trampa:** los códigos
+de departamento del Hexoma en Chaco y Formosa no son los del INDEC/MAGyP: unir por nombre.
+`python pipeline/hexoma/build_hexoma_uso.py` (~45 min; `--solo-carga` usa lo ya bajado) y después `validar_uso.py`.
+
 ## Estaciones: la referencia obligada (esquema `estaciones`)
 Toda afirmación del Hexoma sobre temperatura, heladas o lluvia se contrasta con las estaciones: son la única medición
 directa. 50 estaciones (17 GHCN-Daily, 33 INTA SIGA), 526 mil días tal cual, con un QC que marca y no borra

@@ -303,15 +303,15 @@ def cargar() -> None:
 def verificar(conn) -> None:
     with conn.cursor() as cur:
         cur.execute("""SELECT t.territorio, round(avg(n_px)) px,
-                              round(sum(bosque * h3_cell_area(u.h3, 'km^2')) / 1000 / 100) AS bosque_kha,
-                              round(sum((cultivo + mosaico_agro + cultivo_perenne) * h3_cell_area(u.h3, 'km^2')) / 1000 / 100) AS agro_kha,
-                              round(sum(plantacion * h3_cell_area(u.h3, 'km^2')) / 1000 / 100) AS plant_kha
+                              round(sum(bosque * h3_cell_area(u.h3, 'km^2')) / 10000) AS bosque_kha,
+                              round(sum((cultivo + mosaico_agro + cultivo_perenne) * h3_cell_area(u.h3, 'km^2')) / 10000) AS agro_kha,
+                              round(sum(plantacion * h3_cell_area(u.h3, 'km^2')) / 10000) AS plant_kha
                        FROM uso.h3_anio u JOIN (SELECT DISTINCT ON (h3) h3, territorio_id FROM hexagonos) x USING (h3)
                        JOIN territorios t USING (territorio_id) WHERE anio = 2025 GROUP BY 1 ORDER BY 1""")
         print('  2025: territorio, píxeles por celda, bosque, agrícola y plantación (miles de ha):')
         for r in cur.fetchall():
             print('   ', r)
-        cur.execute("""SELECT anio, round(sum(bosque * h3_cell_area(h3, 'km^2')) / 1000 / 100) FROM uso.h3_anio
+        cur.execute("""SELECT anio, round(sum(bosque * h3_cell_area(h3, 'km^2')) / 10000) FROM uso.h3_anio
                        GROUP BY 1 ORDER BY 1""")
         print('  bosque del NEA por año (miles de ha):', cur.fetchall())
         cur.execute("""SELECT count(*) FILTER (WHERE bosque + arbustal + pastizal + plantacion + pastura + cultivo + mosaico_agro
