@@ -8,13 +8,13 @@
 		data = new Map() as Map<string, Record<string, any>>,
 		variable = '',
 		xLabel = 'score',
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		markers = [] as Array<{ value: number; color: string }>,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
 		xLabel?: string;
-		onBrushSelect?: (h3s: string[]) => void;
+		onBrushSelect?: (h3s: string[], origin?: string) => void;
 		// Vertical lines at given values (e.g. the census tracts selected on the map).
 		markers?: Array<{ value: number; color: string }>;
 	} = $props();
@@ -149,7 +149,8 @@
 				if (isFinite(v) && v >= vLo && v <= vHi) h3s.push(h3);
 			}
 			selectedCount = h3s.length;
-			onBrushSelect(h3s);
+			const f = (v: number) => v.toLocaleString(i18n.locale, { maximumFractionDigits: Math.abs(v) >= 100 ? 0 : Math.abs(v) >= 1 ? 1 : 2 });
+			onBrushSelect(h3s, i18n.t('zone.o.hist').replace('{lo}', f(vLo)).replace('{hi}', f(vHi)));
 		};
 
 		window.addEventListener('mousemove', onMove);

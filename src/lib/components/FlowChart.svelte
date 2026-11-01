@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { DIV, MAP_TIERRA, inkOn } from '$lib/utils/sello';
 	import ChartFrame from './ChartFrame.svelte';
+	import { i18n } from '$lib/stores/i18n.svelte';
 	import { CHART_PX, INK, svgScale, dockBoost, measure } from '$lib/utils/chartType';
 	import type { FlowBands } from '$lib/config';
 
@@ -9,13 +10,13 @@
 		temporalPeriods = null as { baseline: string; current: string } | null,
 		bands = null as FlowBands | null,
 		emptyHint = 'seleccioná un departamento',
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
 		temporalPeriods?: { baseline: string; current: string } | null;
 		bands?: FlowBands | null;
 		emptyHint?: string;
-		onBrushSelect?: (h3s: string[]) => void;
+		onBrushSelect?: (h3s: string[], origin?: string) => void;
 	} = $props();
 
 	// Default banding: composite score 0-100 with 33/67 cuts (legacy behaviour).
@@ -172,7 +173,7 @@
 			activeFlow = null; onBrushSelect([]); return;
 		}
 		activeFlow = [from, to]; activeSide = null; activeBand = null;
-		onBrushSelect(matrix[from][to]);
+		onBrushSelect(matrix[from][to], i18n.t('zone.o.flow').replace('{from}', cfg.labels[from]).replace('{to}', cfg.labels[to]));
 	}
 
 	function selectBand(side: 'from' | 'to', band: number) {
@@ -183,7 +184,7 @@
 		const h3s = side === 'from'
 			? entries.filter(e => e.from === band).map(e => e.h3)
 			: entries.filter(e => e.to   === band).map(e => e.h3);
-		onBrushSelect(h3s);
+		onBrushSelect(h3s, i18n.t('zone.o.flowBand').replace('{band}', `${cfg.labels[band]} (${side === 'from' ? 'baseline' : 'actual'})`));
 	}
 
 	$effect(() => {

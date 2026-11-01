@@ -8,13 +8,13 @@
 		data = new Map() as Map<string, Record<string, any>>,
 		variable = '',
 		label = '',
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
 		// What is being summed, without unit ("Edificios en zona baja").
 		label?: string;
-		onBrushSelect?: (h3s: string[]) => void;
+		onBrushSelect?: (h3s: string[], origin?: string) => void;
 	} = $props();
 
 	const PAD_L = 34, PAD_R = 10, PAD_T = 10, PAD_B = 38;
@@ -111,7 +111,7 @@
 	}
 	function applyCut(f: number) {
 		cut = f;
-		onBrushSelect(sorted.slice(0, cutCount).map(r => r.h3));
+		onBrushSelect(sorted.slice(0, cutCount).map(r => r.h3), i18n.t('zone.o.conc').replace('{p}', pct(cutCount / nAll)));
 	}
 	function startDrag(e: MouseEvent) {
 		if (total <= 0) return;

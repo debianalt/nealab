@@ -172,6 +172,29 @@ const dict: Record<string, Record<Locale, string>> = {
 	'chart.bivariate.paintMap': { es: 'Pintar el mapa con las dos capas (3×3)', en: 'Paint the map with both layers (3×3)', gn: 'Pintar el mapa con las dos capas (3×3)', pt: 'Pintar o mapa com as duas camadas (3×3)' }, // gn: pendiente
 	'chart.bivariate.paintMapOff': { es: 'Volver al mapa de la capa', en: 'Back to the layer map', gn: 'Volver al mapa de la capa', pt: 'Voltar ao mapa da camada' }, // gn: pendiente
 	'chart.bivariate.legendNote': { es: 'Cada eje en tercios de hexágonos (bajo, medio, alto); un valor repetido queda junto en su clase. Tocá una celda para ver esos hexágonos; el número es cuántos hay.', en: 'Each axis in thirds of hexagons (low, mid, high); a repeated value stays together in its class. Tap a cell to see those hexagons; the number is how many.', gn: 'Cada eje en tercios de hexágonos (bajo, medio, alto); un valor repetido queda junto en su clase. Tocá una celda para ver esos hexágonos; el número es cuántos hay.', pt: 'Cada eixo em terços de hexágonos (baixo, médio, alto); um valor repetido fica junto na sua classe. Toque uma célula para ver esses hexágonos; o número é quantos há.' }, // gn: pendiente
+	'zone.origin.lasso': { es: 'Lazo', en: 'Lasso', gn: 'Lazo', pt: 'Laço' }, // gn: pendiente
+	'zone.sel.hexes': { es: 'hexágonos', en: 'hexagons', gn: 'hexágonos', pt: 'hexágonos' }, // gn: pendiente
+	'zone.sel.save': { es: 'Guardar como zona', en: 'Save as zone', gn: 'Guardar como zona', pt: 'Salvar como zona' }, // gn: pendiente
+	'zone.sel.clear': { es: 'Quitar la selección', en: 'Clear selection', gn: 'Quitar la selección', pt: 'Limpar seleção' }, // gn: pendiente
+	'zone.sel.saved': { es: '✓ guardada como zona {id} (arriba)', en: '✓ saved as zone {id} (above)', gn: '✓ guardada como zona {id} (arriba)', pt: '✓ salva como zona {id} (acima)' }, // gn: pendiente
+	'zone.block': { es: 'Zonas ({n})', en: 'Zones ({n})', gn: 'Zonas ({n})', pt: 'Zonas ({n})' }, // gn: pendiente
+	'zone.report.button': { es: 'Solicitar informe de estas zonas', en: 'Request a report on these zones', gn: 'Solicitar informe de estas zonas', pt: 'Solicitar relatório destas zonas' }, // gn: pendiente
+	'zone.report.copy': { es: 'copiar email', en: 'copy email', gn: 'copiar email', pt: 'copiar email' }, // gn: pendiente
+	'zone.report.subject': { es: 'informe', en: 'report', gn: 'informe', pt: 'relatório' }, // gn: pendiente
+	'zone.report.intro': { es: 'Hola, me interesa un informe sobre estas zonas de Spatia.', en: 'Hello, I would like a report on these Spatia zones.', gn: 'Hola, me interesa un informe sobre estas zonas de Spatia.', pt: 'Olá, tenho interesse em um relatório sobre estas zonas do Spatia.' }, // gn: pendiente
+	'zone.report.layer': { es: 'Capa', en: 'Layer', gn: 'Capa', pt: 'Camada' }, // gn: pendiente
+	'zone.report.where': { es: 'Lugar', en: 'Place', gn: 'Lugar', pt: 'Local' }, // gn: pendiente
+	'zone.report.link': { es: 'Enlace', en: 'Link', gn: 'Enlace', pt: 'Link' }, // gn: pendiente
+	'zone.report.attach': { es: '(Si querés, adjuntá el CSV de las zonas: tiene cada hexágono.)', en: '(You may attach the zones CSV: it lists every hexagon.)', gn: '(Si querés, adjuntá el CSV de las zonas: tiene cada hexágono.)', pt: '(Se quiser, anexe o CSV das zonas: tem cada hexágono.)' }, // gn: pendiente
+	'zone.o.hist': { es: 'Distribución {lo}–{hi}', en: 'Distribution {lo}–{hi}', gn: 'Distribución {lo}–{hi}', pt: 'Distribuição {lo}–{hi}' }, // gn: pendiente
+	'zone.o.conc': { es: 'Concentración: el {p} % con más valor', en: 'Concentration: top {p} %', gn: 'Concentración: el {p} % con más valor', pt: 'Concentração: os {p} % com mais valor' }, // gn: pendiente
+	'zone.o.moran': { es: 'Moran: recuadro', en: 'Moran: box', gn: 'Moran: recuadro', pt: 'Moran: retângulo' }, // gn: pendiente
+	'zone.o.bivBox': { es: 'Bivariado: recuadro', en: 'Bivariate: box', gn: 'Bivariado: recuadro', pt: 'Bivariado: retângulo' }, // gn: pendiente
+	'zone.o.bivQuad': { es: 'Bivariado: X {x} · Y {y}', en: 'Bivariate: X {x} · Y {y}', gn: 'Bivariado: X {x} · Y {y}', pt: 'Bivariado: X {x} · Y {y}' }, // gn: pendiente
+	'zone.o.bivCell': { es: 'Bivariado: celda X {x} · Y {y}', en: 'Bivariate: cell X {x} · Y {y}', gn: 'Bivariado: celda X {x} · Y {y}', pt: 'Bivariado: célula X {x} · Y {y}' }, // gn: pendiente
+	'zone.o.profile': { es: 'Perfil: {band} · {target}', en: 'Profile: {band} · {target}', gn: 'Perfil: {band} · {target}', pt: 'Perfil: {band} · {target}' }, // gn: pendiente
+	'zone.o.flow': { es: 'Flujo: {from} → {to}', en: 'Flow: {from} → {to}', gn: 'Flujo: {from} → {to}', pt: 'Fluxo: {from} → {to}' }, // gn: pendiente
+	'zone.o.flowBand': { es: 'Flujo: {band}', en: 'Flow: {band}', gn: 'Flujo: {band}', pt: 'Fluxo: {band}' }, // gn: pendiente
 	'chart.bivariate.noY': { es: 'sin dato en Y: {n} hexágonos', en: 'no Y value: {n} hexagons', gn: 'sin dato en Y: {n} hexágonos', pt: 'sem dado em Y: {n} hexágonos' }, // gn: pendiente
 	'chart.bivariate.classShare': { es: 'En {axis}, «{cls}» reúne el {p} % de los hexágonos: {range}.', en: 'On {axis}, “{cls}” holds {p} % of the hexagons: {range}.', gn: 'En {axis}, «{cls}» reúne el {p} % de los hexágonos: {range}.', pt: 'Em {axis}, “{cls}” reúne {p} % dos hexágonos: {range}.' }, // gn: pendiente
 	'chart.bivariate.allAt': { es: 'todos valen {v}', en: 'all at {v}', gn: 'todos valen {v}', pt: 'todos valem {v}' }, // gn: pendiente

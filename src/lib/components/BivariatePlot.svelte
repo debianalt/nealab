@@ -19,7 +19,7 @@
 		deptName = null as string | null,
 		deptKey = null as string | null,
 		deptUrl = (_id: string, _key: string) => null as string | null,
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		onShowBivariateMap = (_entries: { h3index: string; value: number | null; nodata?: boolean }[]) => {},
 		defaultCollapsed = true,
 	}: {
@@ -33,7 +33,7 @@
 		deptKey?: string | null;
 		// Per-department parquet URL of a layer in the active territory.
 		deptUrl?: (layerId: string, key: string) => string | null;
-		onBrushSelect?: (h3s: string[]) => void;
+		onBrushSelect?: (h3s: string[], origin?: string) => void;
 		// Paints the map with the 3×3 classes ([] restores the layer's choropleth).
 		onShowBivariateMap?: (entries: { h3index: string; value: number | null; nodata?: boolean }[]) => void;
 		defaultCollapsed?: boolean;
@@ -229,7 +229,7 @@
 				}
 			}
 			selectedCount = h3s.length;
-			onBrushSelect(h3s);
+			onBrushSelect(h3s, i18n.t('zone.o.bivBox'));
 		};
 
 		window.addEventListener('mousemove', onMove);
@@ -272,7 +272,8 @@
 		activeQuad = q;
 		const h3s = allPoints.filter(pt => inQuad(pt, q)).map(pt => pt.h3);
 		selectedCount = h3s.length;
-		onBrushSelect(h3s);
+		const hl = (hi: boolean) => i18n.t(hi ? 'chart.bivariate.hi' : 'chart.bivariate.lo');
+		onBrushSelect(h3s, i18n.t('zone.o.bivQuad').replace('{x}', hl(xHi)).replace('{y}', hl(yHi)));
 	}
 
 	$effect(() => {
@@ -384,7 +385,8 @@
 		activeCell = cls;
 		const h3s = allPoints.filter(p => classOf(p) === cls).map(p => p.h3);
 		selectedCount = h3s.length;
-		onBrushSelect(h3s);
+		const lv = (t: number) => i18n.t(['chart.bivariate.clsLow', 'chart.bivariate.clsMid', 'chart.bivariate.clsHigh'][t]);
+		onBrushSelect(h3s, i18n.t('zone.o.bivCell').replace('{x}', lv((cls - 1) % 3)).replace('{y}', lv(Math.floor((cls - 1) / 3))));
 	}
 
 	// New data, layer or Y: the classes no longer describe the map → switch off.

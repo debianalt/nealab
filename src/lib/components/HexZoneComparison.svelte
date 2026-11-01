@@ -2,6 +2,8 @@
 	import type { HexStore, HexZone } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
+	import { formatDept } from '$lib/utils/format';
+	import { territoryRef } from '$lib/utils/territoryRef';
 	import {
 		downloadCsvFromRows,
 		downloadGeoJsonFromPolygon,
@@ -37,7 +39,7 @@
 	function getDominantType(zone: HexZone): string | null {
 		const counts = new Map<string, number>();
 		for (const h3 of zone.h3indices) {
-			const d = hexStore.visibleData.get(h3);
+			const d = hexStore.zoneRow(h3);
 			const t = d?.type_label;
 			if (typeof t === 'string') counts.set(t, (counts.get(t) ?? 0) + 1);
 		}
@@ -54,42 +56,74 @@
 
 	function downloadZoneHexesCsv(zone: HexZone) {
 		const rows = zone.h3indices.map((h3) => {
-			const data = hexStore.visibleData.get(h3) ?? {};
-			return { h3index: h3, ...data };
+			const data = hexStore.zoneRow(h3) ?? {};
+			return { h3index: h3, zone: zone.id, origin: zone.origin, ...data };
 		});
 		if (rows.length === 0) return;
-		const allCols = new Set<string>(['h3index']);
+		const allCols = new Set<string>(['h3index', 'zone', 'origin']);
 		for (const row of rows) for (const k of Object.keys(row)) allCols.add(k);
 		downloadCsvFromRows(rows, [...allCols], `${zoneFilenameBase(zone)}_hexes.csv`);
 	}
 
 	function downloadZoneHexesGeoJson(zone: HexZone) {
 		if (zone.h3indices.length === 0) return;
-		downloadGeoJsonFromHexList(zone.h3indices, hexStore.visibleData, `${zoneFilenameBase(zone)}_hexes.geojson`);
+		// Rows from zoneRow: chart zones are res-9 cells of the analysis data.
+		const rows = new Map<string, Record<string, unknown>>();
+		for (const h3 of zone.h3indices) rows.set(h3, { zone: zone.id, origin: zone.origin, ...(hexStore.zoneRow(h3) ?? {}) });
+		downloadGeoJsonFromHexList(zone.h3indices, rows, `${zoneFilenameBase(zone)}_hexes.geojson`);
 	}
 
 	function downloadZonePolygonGeoJson(zone: HexZone) {
+		if (!zone.polygon) return;
 		const props: Record<string, unknown> = {
 			zone: zone.id,
+			origin: zone.origin,
 			color: zone.color,
 			hex_count: zone.stats.hexCount,
 			layer: hexStore.activeLayer?.id ?? null,
 		};
-		const NON_NUMERIC: Record<string, true> = { type: true, type_label: true, pca_1: true, pca_2: true, pca_3: true, score: true, flood_risk_score: true, risk_score: true, territorial_type: true };
-		variables.forEach((v, i) => {
-			if (v.col in NON_NUMERIC) return;
-			props[v.col] = zone.stats.rawValues[i];
+		// rawValues is indexed by numericVariables (the old loop used the index over
+		// ALL variables, shifting values whenever a non-numeric one came first).
+		numVars.forEach((v, i) => {
+			const x = zone.stats.rawValues[i];
+			props[v.col] = Number.isFinite(x) ? x : null;
 		});
 		downloadGeoJsonFromPolygon(zone.polygon, props, `${zoneFilenameBase(zone)}_polygon.geojson`);
 	}
 
+	// «Solicitar informe»: a mail with what was selected (not the H3 codes: they can be
+	// thousands; the body asks to attach the CSV). Copy-the-address as fallback.
+	const EMAIL = 'nealab@spatia.ar';
+	const reportHref = $derived.by(() => {
+		const layer = hexStore.activeLayer ? i18n.t(hexStore.activeLayer.titleKey) : '';
+		const dept = hexStore.selectedDpto ? formatDept(hexStore.selectedDpto) : '';
+		const where = [dept, territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · ');
+		const subject = `Spatia — ${i18n.t('zone.report.subject')}: ${layer}${dept ? ' · ' + dept : ''}`;
+		const lines = [
+			i18n.t('zone.report.intro'),
+			'',
+			`${i18n.t('zone.report.layer')}: ${layer}`,
+			`${i18n.t('zone.report.where')}: ${where}`,
+			...zones.map(z => `${i18n.t('zone.title')} ${z.id} · ${z.origin} · ${z.stats.hexCount} hex`),
+			'',
+			`${i18n.t('zone.report.link')}: ${typeof location !== 'undefined' ? location.href : ''}`,
+			'',
+			i18n.t('zone.report.attach'),
+		];
+		return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+	});
+	let copied = $state(false);
+	async function copyEmail() {
+		try { await navigator.clipboard.writeText(EMAIL); copied = true; setTimeout(() => (copied = false), 2000); } catch { /* clipboard blocked */ }
+	}
+
 	function downloadZonesSummaryCsv() {
 		if (zones.length === 0) return;
-		const NON_NUMERIC: Record<string, true> = { type: true, type_label: true, pca_1: true, pca_2: true, pca_3: true, score: true, flood_risk_score: true, risk_score: true, territorial_type: true };
-		const numericVars = variables.filter((v) => !(v.col in NON_NUMERIC));
+		const numericVars = numVars;
 		const rows = zones.map((z) => {
 			const row: Record<string, unknown> = {
 				zone: z.id,
+				origin: z.origin,
 				hex_count: z.stats.hexCount,
 				layer: hexStore.activeLayer?.id ?? '',
 			};
@@ -117,7 +151,8 @@
 		{#each zones as zone}
 			<span class="hzc-chip">
 				<span class="hzc-dot" style:background={zone.color}></span>
-				<span class="hzc-chip-label">{i18n.t('zone.title')} {zone.id}</span>
+				<span class="hzc-chip-label">{zone.id}</span>
+				{#if zone.origin}<span class="hzc-chip-origin">{zone.origin}</span>{/if}
 				<button class="hzc-remove" onclick={() => onRemoveHexZone(zone.id)}>&#10005;</button>
 			</span>
 		{/each}
@@ -130,7 +165,8 @@
 				<div class="zone-id">
 					<span class="hzc-dot" style:background={zone.color}></span>
 					{i18n.t('zone.title')} {zone.id}
-					<span class="zone-hex-count">{zone.stats.hexCount} hex</span>
+					{#if zone.origin}<span class="zone-origin">· {zone.origin}</span>{/if}
+					<span class="zone-hex-count">{zone.stats.hexCount.toLocaleString(i18n.locale)} hex</span>
 				</div>
 				{#if getDominantType(zone)}
 					<div class="zone-type">{getDominantType(zone)}</div>
@@ -145,7 +181,9 @@
 				<div class="zone-dl">
 					<button class="hzc-dl-btn" title="Hexágonos CSV" onclick={() => downloadZoneHexesCsv(zone)}>csv</button>
 					<button class="hzc-dl-btn" title="Hexágonos GeoJSON" onclick={() => downloadZoneHexesGeoJson(zone)}>geo</button>
-					<button class="hzc-dl-btn" title="Polígono GeoJSON" onclick={() => downloadZonePolygonGeoJson(zone)}>poly</button>
+					{#if zone.polygon}
+						<button class="hzc-dl-btn" title="Polígono GeoJSON" onclick={() => downloadZonePolygonGeoJson(zone)}>poly</button>
+					{/if}
 				</div>
 			</div>
 		{/each}
@@ -156,6 +194,10 @@
 			<button class="hzc-download-btn" onclick={downloadZonesSummaryCsv}>
 				↓ Resumen comparativo (CSV)
 			</button>
+		</div>
+		<div class="hzc-report">
+			<a class="hzc-report-btn" href={reportHref}>{i18n.t('zone.report.button')}</a>
+			<button class="hzc-report-copy" onclick={copyEmail}>{copied ? `${EMAIL} ✓` : i18n.t('zone.report.copy')}</button>
 		</div>
 	{/if}
 </div>
@@ -208,7 +250,14 @@
 		border-radius: 50%;
 		flex-shrink: 0;
 	}
-	.hzc-chip-label { font-weight: 500; }
+	.hzc-chip-label { font-weight: 600; }
+	.hzc-chip-origin { color: var(--s-ink-2); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.zone-origin { font-weight: 400; color: var(--s-ink-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.hzc-report { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
+	.hzc-report-btn { flex: 1; text-align: center; padding: 6px 10px; border-radius: 4px; font-size: 12px; text-decoration: none; color: var(--s-ink-1); border: 1px solid var(--s-cat-1); background: rgba(196, 87, 47, 0.14); }
+	.hzc-report-btn:hover { background: rgba(196, 87, 47, 0.26); }
+	.hzc-report-copy { font: inherit; font-size: 11.5px; padding: 6px 8px; border-radius: 4px; cursor: pointer; color: var(--s-ink-2); background: none; border: 1px solid rgba(255,255,255,0.12); }
+	.hzc-report-copy:hover { color: var(--s-ink-1); }
 	.hzc-remove {
 		background: none;
 		border: none;

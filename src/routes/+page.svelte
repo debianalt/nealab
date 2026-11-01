@@ -518,7 +518,7 @@
 				// Hex mode: find hexagons in polygon
 				const h3indices = hexStore.findHexesInPolygon(polygon);
 				if (h3indices.length === 0) return;
-				await hexStore.createHexZone(h3indices, polygon);
+				await hexStore.createHexZone(h3indices, polygon, i18n.t('zone.origin.lasso'));
 				updateHexZoneHighlights();
 			} else {
 				const redcodes = await lassoStore.findRadiosInPolygon(polygon);
@@ -847,9 +847,9 @@
 		}, 300);
 	}
 
-	function handleMoranBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
+	function handleMoranBrush(h3s: string[], origin = '') { chartPick(h3s, origin); }
 
-	function handleHistogramBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
+	function handleHistogramBrush(h3s: string[], origin = '') { chartPick(h3s, origin); }
 
 	function handleRadioCensusBrush(redcodes: string[]) {
 		if (redcodes.length === 0) {
@@ -859,9 +859,9 @@
 		mapComponent?.setRadioBrushHighlight(redcodes);
 	}
 
-	function handleBivariateBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
+	function handleBivariateBrush(h3s: string[], origin = '') { chartPick(h3s, origin); }
 
-	function handleFlowBrush(h3s: string[]) { applyChartHighlight(h3s, SELLO_HEX.cat[0]); }
+	function handleFlowBrush(h3s: string[], origin = '') { chartPick(h3s, origin); }
 
 	// Charts select res-9 cells of the whole department; the map may be drawing the
 	// coarse overview or a res-9 viewport. Project to what is drawn, and keep the last
@@ -874,9 +874,35 @@
 		lastClassMap = null;
 	});
 	function applyChartHighlight(h3s: string[], color: string) {
-		if (h3s.length === 0) { lastHighlight = null; mapComponent?.clearHexZoneHighlight(); return; }
-		lastHighlight = { h3s, color };
-		mapComponent?.setHexZoneHighlight([{ h3indices: hexStore.displayCells(h3s), color }], hexStore.boundaryCache);
+		lastHighlight = h3s.length === 0 ? null : { h3s, color };
+		refreshHighlights();
+	}
+	// A chart selection: remember it (the panel offers «Guardar como zona») and paint it.
+	function chartPick(h3s: string[], origin: string) {
+		hexStore.setChartSelection(h3s, origin);
+		applyChartHighlight(h3s, SELLO_HEX.cat[0]);
+	}
+	// Saved zones and the live chart selection share one map layer: draw both, the
+	// selection last (on top). Cells are projected to what the map draws.
+	function refreshHighlights() {
+		const layers = hexStore.hexZones.map(z => ({ h3indices: hexStore.displayCells(z.h3indices), color: z.color }));
+		if (lastHighlight) layers.push({ h3indices: hexStore.displayCells(lastHighlight.h3s), color: lastHighlight.color });
+		if (layers.length === 0) mapComponent?.clearHexZoneHighlight();
+		else mapComponent?.setHexZoneHighlight(layers, hexStore.boundaryCache);
+	}
+	async function handleSaveChartSelection(): Promise<string | null> {
+		const sel = hexStore.chartSelection;
+		if (!sel) return null;
+		const id = await hexStore.createHexZone(sel.h3s, null, sel.origin);
+		hexStore.chartSelection = null;
+		lastHighlight = null;
+		refreshHighlights();
+		return id;
+	}
+	function handleClearChartSelection() {
+		hexStore.chartSelection = null;
+		lastHighlight = null;
+		refreshHighlights();
 	}
 	function paintClassMap() {
 		if (!lastClassMap) return;
@@ -1031,7 +1057,7 @@
 					if (hexStore.activeLayer.temporal && hexStore.temporalMode === 'delta') cs = 'diverging';
 					mapComponent?.setHexChoropleth(entries, cs, hexStore.colorDomain ?? undefined, colorClassesFor(cs));
 				}
-				if (lastHighlight) applyChartHighlight(lastHighlight.h3s, lastHighlight.color);
+				if (lastHighlight || hexStore.hexZones.length) refreshHighlights();
 			}).catch(() => {});
 		};
 
@@ -1551,10 +1577,7 @@
 
 	// ── Hex selection + zone helpers ─────────────────────────────────────
 
-	function updateHexZoneHighlights() {
-		const zones = hexStore.hexZones.map(z => ({ h3indices: z.h3indices, color: z.color }));
-		mapComponent?.setHexZoneHighlight(zones, hexStore.boundaryCache);
-	}
+	function updateHexZoneHighlights() { refreshHighlights(); }
 
 	function handleRemoveHexZone(id: string) {
 		hexStore.removeHexZone(id);
@@ -1563,7 +1586,7 @@
 
 	function handleClearHexZones() {
 		hexStore.clearHexZones();
-		mapComponent?.clearHexZoneHighlight();
+		refreshHighlights();
 	}
 
 	function handleSelectCatastroDpto(centroid: [number, number] | null, deptCode?: string | null) {
@@ -2006,6 +2029,8 @@
 			onBivariateBrush={handleBivariateBrush}
 			onShowBivariateMap={handleShowBivariateMap}
 			onFlowBrush={handleFlowBrush}
+			onSaveChartSelection={handleSaveChartSelection}
+			onClearChartSelection={handleClearChartSelection}
 			onRadioCensusBrush={handleRadioCensusBrush}
 			onCensoDeptSelect={handleCensoDeptSelect}
 			onRemoveDistrict={handleRemoveDistrict}

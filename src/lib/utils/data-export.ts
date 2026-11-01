@@ -4,6 +4,8 @@ import { initDuckDB, query } from '$lib/stores/duckdb';
 
 function escapeCsvValue(val: unknown): string {
 	if (val == null) return '';
+	// No data stays an empty cell, never the text «NaN».
+	if (typeof val === 'number' && !Number.isFinite(val)) return '';
 	if (typeof val === 'bigint') return val.toString();
 	const str = String(val);
 	if (str.includes(',') || str.includes('"') || str.includes('\n') || str.includes('\r')) {

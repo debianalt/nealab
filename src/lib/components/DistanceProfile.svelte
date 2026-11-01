@@ -16,7 +16,7 @@
 		deptName = null as string | null,
 		deptKey = null as string | null,
 		deptUrl = (_id: string, _key: string) => null as string | null,
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
@@ -27,7 +27,7 @@
 		deptName?: string | null;
 		deptKey?: string | null;
 		deptUrl?: (layerId: string, key: string) => string | null;
-		onBrushSelect?: (h3s: string[]) => void;
+		onBrushSelect?: (h3s: string[], origin?: string) => void;
 	} = $props();
 
 	// Physical distance/time columns of the accessibility layer. dist_primary_m_raw
@@ -140,7 +140,7 @@
 	function selectBand(i: number) {
 		if (activeBand === i) { clearBand(); return; }
 		activeBand = i;
-		onBrushSelect(bands[i].h3s);
+		onBrushSelect(bands[i].h3s, i18n.t('zone.o.profile').replace('{band}', `${bands[i].label} ${dist.unit}`).replace('{target}', i18n.t(dist.key)));
 	}
 	function clearBand() {
 		activeBand = null;

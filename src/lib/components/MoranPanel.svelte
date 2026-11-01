@@ -12,7 +12,7 @@
 		label = '',
 		boundaryCache = new Map() as Map<string, number[][]>,
 		onShowLisa = (_entries: { h3index: string; value: number; boundary?: number[][] }[]) => {},
-		onBrushSelect = (_h3s: string[]) => {},
+		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		defaultCollapsed = true,
 	} = $props();
 
@@ -320,7 +320,7 @@
 						d3.select(this).attr('opacity', inside ? 1 : 0.08).attr('r', inside ? 3 : 2);
 					});
 					brushCount = selectedSet.size;
-					onBrushSelect([...selectedSet]);
+					onBrushSelect([...selectedSet], i18n.t('zone.o.moran'));
 				}
 
 				window.addEventListener('mousemove', onMove);

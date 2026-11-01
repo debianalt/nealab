@@ -46,7 +46,8 @@ function estimateRes9Cells(ring: number[][]): number {
 	return Math.abs(wKm * hKm) / 0.105;
 }
 
-const ZONE_COLORS = ['#60a5fa', '#f97316', '#22c55e', '#a855f7', '#ef4444', '#eab308'];
+// Zone identities, kept away from tierra (#c4572f), which marks the live chart selection.
+const ZONE_COLORS = ['#60a5fa', '#22c55e', '#eab308', '#a855f7', '#2dd4bf', '#f472b6'];
 const ZONE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 // Persistent cache that survives clearAll() / layer toggling
@@ -127,8 +128,17 @@ export interface HexZone {
 	id: string;
 	color: string;
 	h3indices: string[];
-	polygon: [number, number][];
+	/** Lasso outline; null for zones saved from a chart selection (not contiguous). */
+	polygon: [number, number][] | null;
+	/** Where the zone came from, shown next to its letter: «Lazo», «Moran: recuadro»… */
+	origin: string;
 	stats: HexZoneStats;
+}
+
+/** Hexagons picked in a chart (histogram, Moran, bivariate, profile…), not yet saved. */
+export interface ChartSelection {
+	h3s: string[];
+	origin: string;
 }
 
 const NON_NUMERIC_COLS = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'score', 'flood_risk_score', 'risk_score', 'territorial_type']);
@@ -176,6 +186,11 @@ export class HexStore {
 	}
 	selectedHexes: Map<string, HexSelectionData> = $state(new Map());
 	hexZones: HexZone[] = $state([]);
+	// Live selection from a chart, until it is saved as a zone or cleared.
+	chartSelection: ChartSelection | null = $state.raw(null);
+	setChartSelection(h3s: string[], origin = '') {
+		this.chartSelection = h3s.length ? { h3s, origin } : null;
+	}
 	loading: boolean = $state(false);
 	loadError: string | null = $state(null);
 	temporalMode: TemporalMode = $state('current');
@@ -289,6 +304,7 @@ export class HexStore {
 			this.dataVersion++;
 			this.clearSelection();
 			this.clearHexZones();
+			this.chartSelection = null;
 			return;
 		}
 		const cfg = HEX_LAYER_REGISTRY[layerId];
@@ -484,6 +500,7 @@ export class HexStore {
 		this.analysisResLevel = null;
 		this.clearSelection();
 		this.clearHexZones();
+		this.chartSelection = null;
 		this.clearCompareDept();
 		this.clearRegionalData();
 		// Note: dataVersion is NOT incremented here — we only increment after data is ready.
@@ -1644,43 +1661,49 @@ export class HexStore {
 		});
 	}
 
-	async createHexZone(h3indices: string[], polygon: [number, number][]): Promise<void> {
-		if (h3indices.length === 0 || !this.activeLayer) return;
-		if (!isReady()) return;
+	/** Row of a zone cell: res-9 chart cells live in chartData (analysis data, also
+	 *  under the coarse overview); lasso cells are whatever the map draws. */
+	zoneRow(h3: string): Record<string, any> | undefined {
+		return this.chartData.get(h3) ?? this.visibleData.get(h3);
+	}
 
-		const layer = this.activeLayer;
-		const idx = this.hexZones.length % ZONE_COLORS.length;
-		const id = ZONE_LABELS[idx] || String.fromCharCode(65 + this.hexZones.length);
-		const color = ZONE_COLORS[idx];
+	async createHexZone(h3indices: string[], polygon: [number, number][] | null, origin: string): Promise<string | null> {
+		if (h3indices.length === 0 || !this.activeLayer) return null;
+		if (!isReady()) return null;
+
+		// First free letter, so removing A and adding again never repeats B.
+		const used = new Set(this.hexZones.map(z => z.id));
+		const idx = ZONE_LABELS.findIndex(l => !used.has(l));
+		const slot = idx >= 0 ? idx : this.hexZones.length % ZONE_COLORS.length;
+		const id = idx >= 0 ? ZONE_LABELS[idx] : String.fromCharCode(65 + this.hexZones.length);
+		const color = ZONE_COLORS[slot % ZONE_COLORS.length];
 
 		try {
 			const provAvg = await this.ensureProvincialAvg();
 
-			// Compute averages from visibleData (numeric vars only)
+			// Mean of each numeric variable over the cells that HAVE a value: a cell
+			// without data is not a zero (it pulled every zone mean down before).
 			const numVars = this.numericVariables;
-			const rawValues = new Array(numVars.length).fill(0);
-			let count = 0;
+			const sums = new Array(numVars.length).fill(0);
+			const ns = new Array(numVars.length).fill(0);
 			for (const h3index of h3indices) {
-				const data = this.visibleData.get(h3index);
+				const data = this.zoneRow(h3index);
 				if (!data) continue;
-				count++;
 				for (let v = 0; v < numVars.length; v++) {
-					rawValues[v] += data[numVars[v].col] || 0;
+					const x = data[numVars[v].col];
+					if (typeof x === 'number' && Number.isFinite(x)) { sums[v] += x; ns[v]++; }
 				}
 			}
-			if (count > 0) {
-				for (let v = 0; v < rawValues.length; v++) {
-					rawValues[v] /= count;
-				}
-			}
+			const rawValues = sums.map((t, v) => (ns[v] > 0 ? t / ns[v] : NaN));
 
-			const normalizedValues = this.normalize(rawValues, provAvg);
+		const normalizedValues = this.normalize(rawValues, provAvg);
 
 			const zone: HexZone = {
 				id,
 				color,
 				h3indices,
 				polygon,
+				origin,
 				stats: {
 					hexCount: h3indices.length,
 					rawValues,
@@ -1689,8 +1712,10 @@ export class HexStore {
 			};
 
 			this.hexZones = [...this.hexZones, zone];
+			return id;
 		} catch (e) {
 			console.warn('Failed to create hex zone:', e);
+			return null;
 		}
 	}
 
@@ -1755,6 +1780,7 @@ export class HexStore {
 		this.dataVersion++;
 		this.selectedHexes = new Map();
 		this.hexZones = [];
+		this.chartSelection = null;
 		this.colorIndex = 0;
 		this.provincialAvg = null;
 		this.colorDomain = null;

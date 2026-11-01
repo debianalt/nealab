@@ -29,6 +29,7 @@
 	import HexFicha from './HexFicha.svelte';
 	import { fichaStore } from '$lib/stores/ficha.svelte';
 	import BivariatePlot from './BivariatePlot.svelte';
+	import ChartSelectionBar from './ChartSelectionBar.svelte';
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
@@ -64,6 +65,8 @@
 		onBivariateBrush,
 		onShowBivariateMap,
 		onFlowBrush,
+		onSaveChartSelection,
+		onClearChartSelection,
 		onRadioCensusBrush,
 		onCensoDeptSelect,
 	}: {
@@ -92,11 +95,13 @@
 		onDownloadRadioGeoJson?: (redcode: string, properties: Record<string, any>) => void;
 		onDownloadRadiosSummary?: () => void;
 		onShowLisa?: (entries: { h3index: string; value: number; boundary?: number[][] }[]) => void;
-		onMoranBrush?: (h3s: string[]) => void;
-		onHistogramBrush?: (h3s: string[]) => void;
-		onBivariateBrush?: (h3s: string[]) => void;
+		onMoranBrush?: (h3s: string[], origin?: string) => void;
+		onHistogramBrush?: (h3s: string[], origin?: string) => void;
+		onBivariateBrush?: (h3s: string[], origin?: string) => void;
 		onShowBivariateMap?: (entries: { h3index: string; value: number | null; nodata?: boolean }[]) => void;
-		onFlowBrush?: (h3s: string[]) => void;
+		onFlowBrush?: (h3s: string[], origin?: string) => void;
+		onSaveChartSelection?: () => Promise<string | null>;
+		onClearChartSelection?: () => void;
 		onRadioCensusBrush?: (redcodes: string[]) => void;
 		onCensoDeptSelect?: (feature: any | null) => void;
 	} = $props();
@@ -118,6 +123,14 @@
 		(ANALYSIS_REGISTRY.find(a => a.id === 'accessibility')?.coverage as Record<string, string> | undefined)?.[hexStore.territoryId] !== 'unavailable'
 	);
 	let chartsOpen = $state(true);
+	// Zones block above the charts: opens by itself when a zone is added.
+	let zonesOpen = $state(true);
+	let prevZoneCount = 0;
+	$effect(() => {
+		const n = hexStore.hexZones.length;
+		if (n > prevZoneCount) zonesOpen = true;
+		prevZoneCount = n;
+	});
 
 	// Auto-open when actual results exist
 	$effect(() => {
@@ -204,13 +217,6 @@
 
 			<CTADiagnostic />
 		</div>
-	{:else if hexStore.hexZones.length > 0}
-		<div class="chart-scroll">
-			<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
-			{#if hexStore.activeLayer?.id === 'censo_temporal'}
-				<CensoTemporalPanel {hexStore} />
-			{/if}
-		</div>
 	{:else if lassoStore.zones.length > 0}
 		<div class="chart-scroll">
 			{#if isCatastroAnalysis}
@@ -234,6 +240,14 @@
 			<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
 		{/if}
 		<div class="chart-scroll">
+			{#if hexStore.hexZones.length > 0}
+				<button class="charts-divider charts-toggle zones-toggle" onclick={() => zonesOpen = !zonesOpen}>
+					{i18n.t('zone.block').replace('{n}', String(hexStore.hexZones.length))} {zonesOpen ? '▾' : '▸'}
+				</button>
+				{#if zonesOpen}
+					<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
+				{/if}
+			{/if}
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} {onCensoDeptSelect} />
 			<!-- FlowChart: perDepartment temporal layers (score or flowBands data
 			     arrives with the dept selection) plus global temporal layers that
@@ -259,6 +273,7 @@
 					Gráficos {chartsOpen ? '▾' : '▸'}
 				</button>
 				{#if chartsOpen}
+					<ChartSelectionBar {hexStore} onSave={onSaveChartSelection ?? (async () => null)} onClear={onClearChartSelection ?? (() => {})} />
 					{#if hexStore.analysisResLevel != null}
 						<p class="charts-res-note">{i18n.t('chart.analysisCoarse').replace('{res}', String(hexStore.analysisResLevel))}</p>
 					{/if}
@@ -492,5 +507,6 @@
 		padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
 	}
 	.charts-scope-all:hover { color: var(--s-ink-1); }
+	.zones-toggle { margin-top: 4px; }
 	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
 </style>
