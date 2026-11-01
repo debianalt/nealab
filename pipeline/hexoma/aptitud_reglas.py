@@ -74,7 +74,7 @@ REGLAS = {
     'maiz': [
         ('t_media', 'tm_sep_feb', 'rango', dict(s1=(18, 33), lim=(10, 47)), 'ECOCROP'),
         ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1200), lim=(400, None)), 'ECOCROP'),
-        ('ph', 'ph', 'rango', dict(s1=(5.0, 7.0), lim=(4.5, 8.5)), 'ECOCROP'),
+        ('ph', 'ph', 'rango', dict(s1=(5.5, 7.0), lim=(5.0, 8.0)), 'Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
     'algodon': [
@@ -82,7 +82,7 @@ REGLAS = {
         ('grados_dia', 'gdd12_oct_mar', 'min', dict(s1=1645, s2=None), 'Colombo 2019 (INTA Reconquista)'),
         ('libre_heladas', 'libre_heladas', 'min', dict(s1=200, s2=None), 'FAO Crop info'),
         ('lluvia', 'p_mm', 'rango', dict(s1=(750, 1200), lim=(450, None)), 'ECOCROP'),
-        ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(5.0, 9.5)), 'ECOCROP'),
+        ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(5.0, 9.5)), 'ECOCROP (regla 1 precisada: el 5,2–6,0 de la tabla UNLP no tiene ensayo local y contradice lo observado)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
     'girasol': [
@@ -90,12 +90,12 @@ REGLAS = {
         ('grados_dia', 'gdd7_ago_dic', 'min', dict(s1=1600, s2=None), 'ASAGIR'),
         ('helada_tardia', 'heladas5_oct', 'cero', {}, 'ASAGIR (6–8 hojas y botón)'),
         ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1000), lim=(300, None)), 'ECOCROP; INTA Las Breñas'),
-        ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(5.5, 8.0)), 'ECOCROP'),
+        ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(6.0, 7.5)), 'ECOCROP (óptimo; la tabla UNLP no da óptimo); Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999) (tolerancia)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
     'arroz': [
         ('frio_microsporogenesis', 'frio_decendio', 'rango', dict(s1=(None, 0), lim=(None, 1)), 'SOSBAI 2025; Steinmetz et al. 2004; Steinmetz & Amaral 2002 (decenios)'),
-        ('ph', 'ph', 'rango', dict(s1=(5.5, 7.0), lim=(4.5, 9.0)), 'ECOCROP; SOSBAI'),
+        ('ph', 'ph', 'rango', dict(s1=(5.0, 7.0), lim=(4.0, 8.0)), 'Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999)'),
         ('suelo_hidromorfico', 'inundable', 'hidro', {}, 'SOSBAI 2025'),
         ('pendiente', 'pendiente', 'pend', dict(s1=1, s2=3), 'RENARE (Uruguay); Sys et al. 1993'),
     ],

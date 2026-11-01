@@ -6,13 +6,17 @@ La aptitud se calcula en A4 paso 2, sobre la temperatura corregida con estacione
 
 ## Reglas decididas (1-nov-2026)
 1. **Precedencia de fuentes, en toda la tabla:** regionales (INTA, INYM, ASAGIR, universidades del NEA; sur de Brasil,
-   Paraguay y Uruguay) → FAO ECOCROP → FAO 66 y FAO Crop info → otras internacionales. FAO queda sólo donde ECOCROP
+   Paraguay y Uruguay) → FAO ECOCROP → FAO 66 y FAO Crop info → otras internacionales. *Precisada el 1-nov-2026:*
+   «regional» = dato de ensayos o relevamientos de la región. Una compilación de manual extranjero citada en material
+   argentino, sin ensayo local que la respalde y que contradice a las demás fuentes y a lo observado, no cuenta como
+   regional. FAO queda sólo donde ECOCROP
    no tiene el dato (temperatura base de grados-día, días de anegamiento, período libre de heladas, agua del ciclo).
 2. **Pendiente:** clases de Sys et al. (1993) por defecto para todos los cultivos: S1 0–8 %, S2 8–16 %, S3 16–30 %,
    N1 30–50 %, N2 > 50 %. Donde hay fuente propia del cultivo, esa fija el óptimo (S1); ninguna funciona como límite de
    exclusión por sí sola.
 3. **pH de la yerba:** fuentes regionales (4,5–5,5; tolera hasta 4). Se descartan ECOCROP e ICRAF (6,5–7; 5,8–6,8).
-4. **pH del algodón:** ECOCROP antes que FAO: 6,0–7,5 óptimo, 5,0–9,5 absoluto.
+4. **pH del algodón:** ECOCROP antes que FAO (6,0–7,5; 5,0–9,5). *Reemplazada el 1-nov-2026 por la regla 1 al aparecer
+   una fuente argentina (ajuste 5).*
 5. **Calor:** ninguna fuente dice cuántos días > 35 °C tolera un cultivo: se informa el conteo por campaña sin
    convertirlo en clase.
 6. **Arroz:** aptitud térmica y de suelo, rotulada «sin dato de agua de riego».
@@ -41,6 +45,16 @@ autor pidió corregirlos. Cada ajuste tiene su evidencia:
    (verificado sobre la página); Vázquez et al. (2012, *Ciencia del Suelo* 30(1), pp. 48–49) confirman el óptimo 6–7
    con tolerancia 4,5–7. Se usa S1 6,0–7,0 y límite 4,5–7,5. Las otras fuentes de la búsqueda (Embrapa 5,5–6,0 para
    oxisoles; Sainz Rozas et al. 2011, 6–7,5 para los cultivos de la región) están en la evidencia.
+5. **pH de maíz, algodón, girasol y arroz:** la misma tabla argentina (Vázquez & Pagani 2018, UNLP, Tabla 2, de Porta et
+   al. 1999; verificada sobre la imagen de la página) trae valores para estos cultivos. Por la regla 1 (regionales antes
+   que ECOCROP) reemplaza a ECOCROP: maíz 5,5–7,0 (tolerancia 5,0–8,0); algodón 5,2–6,0 (4,8–7,5); arroz 5,0–7,0
+   (4,0–8,0); girasol sólo tolerancia 6,0–7,5, con el óptimo de ECOCROP. Advertencia: el óptimo del algodón (5,2–6,0) es
+   más ácido que el de todas las otras fuentes (FAO 7–8; ECOCROP 6–7,5), y los autores aclaran que los valores son
+   «sólo orientativos». **Se probó y se descartó para el algodón:** con 5,2–6,0 el lift de S1 contra MapBiomas cayó de
+   2,33 a 0,11 y la correlación por departamento con el MAGyP quedó negativa (−0,22), porque el algodonero del Chaco está
+   en suelos de pH 6,5–7,5. El algodón vuelve a ECOCROP (6,0–7,5; 5,0–9,5) por la regla 1 precisada. Maíz, girasol y
+   arroz quedan con la tabla UNLP (no contradice lo observado: maíz igual, girasol y arroz mejoran levemente); la soja
+   también, respaldada además por un ensayo argentino (Vázquez et al. 2012).
 
 ## Cómo se armó
 - Tres búsquedas en paralelo (perennes; extensivos; arroz y pasturas), con cita completa, página o tabla, URL y cita
@@ -125,7 +139,7 @@ pendiente de la regla 2.
 | Grados-día | Tbase 8 °C, Tupper 30 °C | — | FAO 66 p. 119 | ECOCROP no tiene base; Bautista INTA 2.045 GD a madurez |
 | Calor en floración | — | — | INTA IIACS (> 35 °C) | regla 5 |
 | Agua (lluvia de la campaña) | 600–1.200 mm | ≥ 400 mm | [E] | |
-| pH | 5,0–7,0 | 4,5–8,5 | [E] | |
+| pH | 5,5–7,0 | 5,0–8,0 | Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999 | ajuste 5 (antes [E] 5,0–7,0 / 4,5–8,5) |
 | Pendiente | Sys | Sys | Verdoodt & Van Ranst 2003 | |
 
 ### Algodón (secano)
@@ -136,7 +150,7 @@ pendiente de la regla 2.
 | Período libre de heladas | ≥ 200 días | — | FAO CI | ECOCROP no lo tiene |
 | Calor reproductivo | — | — | Colombo 2019 p. 5 (> 33 °C) | regla 5 |
 | Agua (lluvia de la campaña) | 750–1.200 mm | ≥ 450 mm | [E] | |
-| pH | 6,0–7,5 | 5,0–9,5 | [E] | regla 4 |
+| pH | 6,0–7,5 | 5,0–9,5 | [E] | regla 1 precisada (ajuste 5): la tabla UNLP (5,2–6,0) se probó y se descartó |
 | Pendiente | Sys | Sys | — | |
 
 ### Girasol (secano)
@@ -147,7 +161,7 @@ pendiente de la regla 2.
 | Helada tardía (5 cm) | sin heladas a 5 cm con 6–8 hojas o botón (0 °C) | cotiledón sobrevive −5 °C | ASAGIR | INTA Las Breñas: siembra de agosto al 10-sep en el Chaco |
 | Calor en llenado | — | — | ASAGIR (> 35 °C baja el aceite) | regla 5 |
 | Agua (lluvia de la campaña) | 600–1.000 mm | ≥ 300 mm | [E]; INTA Las Breñas (360 mm de agua útil) | |
-| pH | 6,0–7,5 | 5,5–8,0 | [E] | |
+| pH | 6,0–7,5 | 6,0–7,5 | [E] (óptimo; la tabla UNLP no da óptimo); Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999 (tolerancia) | ajuste 5 (antes límite [E] 5,5–8,0) |
 | Pendiente | Sys | Sys | — | |
 
 ### Arroz (riego por inundación) — sin dato de agua de riego
@@ -156,7 +170,7 @@ pendiente de la regla 2.
 | Frío en microsporogénesis | Tmin > 17–19 °C (sensibles) | > 15 °C (tolerantes) | SOSBAI 2025 p. 32; Steinmetz et al. 2004 p. 35 | días con Tmin < 15 °C en ene–feb, del diario corregido (A4) |
 | Calor en antesis | Tmax ≤ 35 °C | — | SOSBAI 2025 p. 32 | regla 5 |
 | Agua | — | — | Currie & Ruberto 2003 (12.500–15.000 m³/ha·ciclo) | regla 6: rótulo «sin dato de agua de riego» |
-| pH | 5,5–7,0 | 4,5–9,0 | [E]; SOSBAI p. 42 (encalar < 5,5) | |
+| pH | 5,0–7,0 | 4,0–8,0 | Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999; SOSBAI p. 42 (encalar < 5,5) | ajuste 5 (antes [E] 5,5–7,0 / 4,5–9,0) |
 | Suelo | hidromórfico, horizonte poco permeable | — | SOSBAI p. 29 | proxy: pastizal inundable y arcilla alta |
 | Pendiente | 0,5–1 % | ≤ 3 % | guía RENARE (Uruguay) p. 6 | regional |
 
