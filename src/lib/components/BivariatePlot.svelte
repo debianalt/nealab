@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { RIO, SELECT, SURFACE } from '$lib/utils/sello';
+	import { RIO, SELECT, SURFACE, BIVAR_NODATA } from '$lib/utils/sello';
 	import { query } from '$lib/stores/duckdb';
 	import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getHexAxisLabel } from '$lib/config';
 	import { cellToParent, getResolution } from 'h3-js';
 	import { layerDeptUrl } from '$lib/utils/layerDeptUrl';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import ChartFrame from './ChartFrame.svelte';
-	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure, quantile, BIVAR_COLORS } from '$lib/utils/chartType';
+	import { CHART_PX, INK, svgScale, median, fitLabel, dockBoost, measure, quantile, BIVAR } from '$lib/utils/chartType';
 	import { untrack, onDestroy } from 'svelte';
 
 	let {
@@ -317,6 +317,24 @@
 	let mapOn = $state(false);
 	let activeCell: number | null = $state(null);
 
+	// Ties at the low cut go to "low" (zero-inflated layers): say how big "low" got
+	// when it is far from a third, so the legend does not promise thirds it lacks.
+	const lowNotes = $derived.by(() => {
+		if (!mapOn || allPoints.length === 0) return [];
+		const out: { axis: string; pct: number; cut: number }[] = [];
+		for (const axis of ['x', 'y'] as const) {
+			const cut = tert[axis][0];
+			const n = allPoints.reduce((k, p) => k + (p[axis] <= cut ? 1 : 0), 0);
+			const pct = Math.round((100 * n) / allPoints.length);
+			if (pct >= 40) out.push({ axis: axis.toUpperCase(), pct, cut });
+		}
+		return out;
+	});
+	// Hexagons of the open department with no Y value (painted BIVAR_NODATA).
+	const noY = $derived(mapOn ? Math.max(0, data.size - allPoints.length) : 0);
+	// Legend cells dark enough on the dark grid to need light ink (sello.ts BIVAR_HEX).
+	const DARK_CELLS = new Set([1, 2, 4]);
+
 	function paintMap() {
 		const withY = new Set<string>();
 		const entries: { h3index: string; value: number | null; nodata?: boolean }[] = [];
@@ -418,7 +436,7 @@
 				<circle
 					cx={svgX(pt.x)} cy={svgY(pt.y)}
 					r="1.4"
-					fill={inBrush ? SELECT : mapOn ? BIVAR_COLORS[classOf(pt) - 1] : RIO}
+					fill={inBrush ? SELECT : mapOn ? BIVAR[classOf(pt) - 1] : RIO}
 					opacity={(brushRect !== null || activeCell) && !inBrush ? 0.1 : mapOn ? 0.85 : 0.5}
 				/>
 			{/each}
@@ -493,15 +511,23 @@
 					{#each [2, 1, 0] as yi}
 						{#each [0, 1, 2] as xi}
 							{@const cls = 1 + yi * 3 + xi}
-							<button class="bv-cell" class:bv-cell-on={activeCell === cls}
-								style="background: {BIVAR_COLORS[cls - 1]}"
+							<button class="bv-cell" class:bv-cell-on={activeCell === cls} class:bv-cell-dark={DARK_CELLS.has(cls)}
+								style="background: {BIVAR[cls - 1]}"
 								title="{classCounts[cls - 1].toLocaleString()} hex"
 								onclick={() => selectCell(cls)}>{classCounts[cls - 1].toLocaleString()}</button>
 						{/each}
 					{/each}
 				</div>
 				<div class="bv-legend-x">X →</div>
-				<p class="bv-legend-note">{i18n.t('chart.bivariate.legendNote')}</p>
+				<div class="bv-legend-notes">
+					<p class="bv-legend-note">{i18n.t('chart.bivariate.legendNote')}</p>
+					{#if noY > 0}
+						<p class="bv-legend-note bv-legend-low"><span class="bv-nodata" style="background: {BIVAR_NODATA}"></span>{i18n.t('chart.bivariate.noY').replace('{n}', noY.toLocaleString())}</p>
+					{/if}
+					{#each lowNotes as n}
+						<p class="bv-legend-note bv-legend-low">{i18n.t('chart.bivariate.lowShare').replace('{axis}', n.axis).replace('{p}', String(n.pct)).replace('{v}', fmtTick(n.cut))}</p>
+					{/each}
+				</div>
 			</div>
 		{/if}
 	{/if}
@@ -618,14 +644,15 @@
 		gap: 2px;
 	}
 	.bv-legend-x { grid-column: 2; font-size: 11px; color: rgba(255,255,255,0.6); text-align: center; }
+	.bv-legend-notes { grid-column: 3; grid-row: 1; }
 	.bv-legend-note {
-		grid-column: 3;
-		grid-row: 1;
 		margin: 0;
 		font-size: 11px;
 		line-height: 1.45;
 		color: rgba(255,255,255,0.55);
 	}
+	.bv-legend-low { margin-top: 4px; color: var(--s-ink-2); }
+	.bv-nodata { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; border: 1px solid var(--s-axis); border-radius: 2px; }
 	.bv-cell {
 		border: 2px solid transparent;
 		border-radius: 2px;
@@ -637,6 +664,8 @@
 	}
 	.bv-cell:hover { border-color: rgba(255,255,255,0.7); }
 	.bv-cell-on { border-color: var(--s-cat-1); }
+	.bv-cell-dark { color: rgba(245, 245, 244, 0.92); }
+	@media print { .bv-cell-dark { color: rgba(15, 23, 42, 0.85); } }
 	.bvpanel-empty-prompt {
 		font-size: 11px;
 		color: rgba(255,255,255,0.55);

@@ -3,7 +3,7 @@
 // (or to the expanded floating window), so a viewBox font-size would grow and
 // shrink with the width. Charts multiply these sizes by `k = viewBoxW / renderedW`
 // to keep text at the same pixel size everywhere.
-import { FONT, BIVAR_HEX } from './sello';
+import { FONT, BIVAR_HEX, BIVAR } from './sello';
 
 export const CHART_PX = { tick: 11, label: 12 } as const;
 
@@ -97,10 +97,12 @@ export function measure(node: HTMLElement, onSize: (w: number, h: number) => voi
 
 export const dockBoost = (docked: boolean): number => (docked ? 1.2 : 1);
 
-// 3×3 bivariate palette: the Sello's tierra × río grid (see sello.ts), shared by
-// the scatter, its legend and the map. Replaced Stevens' pink/teal grid, which
+// 3×3 bivariate palette: the Sello's tierra × río grid (see sello.ts). The map
+// needs hex (BIVAR_COLORS); the scatter and its legend use the CSS vars (BIVAR),
+// so paper gets the light grid. Replaced Stevens' pink/teal grid, which
 // collapsed two classes under deuteranopia (ΔE 2.2).
 export const BIVAR_COLORS = BIVAR_HEX;
+export { BIVAR };
 
 export function quantile(sorted: number[], q: number): number {
 	if (sorted.length === 0) return NaN;

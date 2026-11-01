@@ -37,6 +37,10 @@
 	/* Moran quadrants by class code: 1 LL río · 2 LH light río · 3 HL light tierra · 4 HH tierra.
 	   Outliers are the light tint in both modes (on paper the diverging extremes are the dark end). */
 	--s-lisa-1: #3d7fc4; --s-lisa-2: #7fb0e6; --s-lisa-3: #ea9070; --s-lisa-4: #c4572f;
+	/* 3×3 bivariate, class 1..9 (= BIVAR_HEX in sello.ts): additive on the dark map */
+	--s-bivar-1: #3c3f44; --s-bivar-2: #9a6b56; --s-bivar-3: #ef864e;
+	--s-bivar-4: #3e799e; --s-bivar-5: #9b9ba5; --s-bivar-6: #f7bda9;
+	--s-bivar-7: #2da7e6; --s-bivar-8: #a4cbee; --s-bivar-9: #fae4e8;
 	/* ink: text never wears a series color */
 	--s-ink-1: #e8e6e3; --s-ink-2: #b9bec6; --s-ink-3: #9aa1ab;
 	--s-grid: rgba(255, 255, 255, 0.1);
@@ -52,6 +56,9 @@
 		--s-div-1: #1b4a7a; --s-div-2: #2b6fb0; --s-div-3: #8fb3da; --s-div-4: #a2a7af;
 		--s-div-5: #e7a58d; --s-div-6: #b4482a; --s-div-7: #7a2f1a;
 		--s-lisa-1: #2b6fb0; --s-lisa-2: #8fb3da; --s-lisa-3: #e7a58d; --s-lisa-4: #b4482a;
+		--s-bivar-1: #f2f0ed; --s-bivar-2: #efb39b; --s-bivar-3: #e8825a;
+		--s-bivar-4: #b3d0ef; --s-bivar-5: #b19b9c; --s-bivar-6: #ab705b;
+		--s-bivar-7: #78afe8; --s-bivar-8: #768298; --s-bivar-9: #735d58;
 		--s-ink-1: #1f2328; --s-ink-2: #3f454d; --s-ink-3: #5b6169;
 		--s-grid: rgba(0, 0, 0, 0.12);
 		--s-axis: rgba(0, 0, 0, 0.35);

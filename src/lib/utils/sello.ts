@@ -52,18 +52,35 @@ export const SELLO_HEX = {
 export const LISA = ['var(--s-lisa-1)', 'var(--s-lisa-2)', 'var(--s-lisa-3)', 'var(--s-lisa-4)'] as const;
 export const LISA_HEX: Record<number, string> = { 1: '#3d7fc4', 2: '#7fb0e6', 3: '#ea9070', 4: '#c4572f' };
 
-// 3×3 bivariate: tierra (X) × río (Y), multiplicative mix with light poles so the
-// high-high class still clears 3:1 on the dark map. Index = class − 1 with
+// 3×3 bivariate: tierra (X) × río (Y). Index = class − 1 with
 // class = 1 + yTercile·3 + xTercile (rows low Y → high Y, X grows to the right).
-// Validated --pairs all on #0e1117: CVD worst ΔE 8.8 (Stevens' grid: 2.2),
-// normal-vision worst 11.1 (Stevens: 7.6), all 9 ≥ 3:1 (Stevens: one at 2.3).
-// No 3×3 reaches the 15 normal-vision floor across all pairs: the legend grid
-// stays next to the map.
+// Dark map (BIVAR_HEX): additive, like light on the dark map — low-low is a dark
+// neutral that recedes, each axis brightens in its hue and high-high is the light
+// mix. The first grid (= BIVAR_HEX_LIGHT) had light poles: low-low #f2f0ed was the
+// brightest class on #0e1117, and with zero-inflated layers (flood: ~98 % of
+// hexagons at 0 fall in "low") the map read as a white sheet (fixed 1-nov-2026).
+// Validated --pairs all as drawn (fill 0.78 over #0e1117 and over the gray
+// territory backdrop #29303d): CVD worst ΔE 7.7 both (light grid: 7.1 / 6.9),
+// normal-vision 8.8 / 8.6 (9.0 / 8.9), the 8 non-low-low classes ≥ 2.2:1 drawn
+// and ≥ 3:1 at full opacity; low-low 1.5 / 1.2:1, present but quiet.
+// No 3×3 reaches the 15 normal-vision floor: the legend grid stays next to the map.
 export const BIVAR_HEX = [
+	'#3c3f44', '#9a6b56', '#ef864e',
+	'#3e799e', '#9b9ba5', '#f7bda9',
+	'#2da7e6', '#a4cbee', '#fae4e8',
+] as const;
+// Light grid (multiplicative, light poles): paper / print now, the Claro theme later.
+export const BIVAR_HEX_LIGHT = [
 	'#f2f0ed', '#efb39b', '#e8825a',
 	'#b3d0ef', '#b19b9c', '#ab705b',
 	'#78afe8', '#768298', '#735d58',
 ] as const;
+// Hexagons without a Y value on the bivariate map: darker than low-low and quiet
+// (the generic no-data gray #6b7280 out-shone most classes, and with a census Y
+// most rural hexagons have no Y).
+export const BIVAR_NODATA = '#23272e';
+// Charts and legend read the CSS vars (print swaps them to the light grid).
+export const BIVAR = Array.from({ length: 9 }, (_, i) => `var(--s-bivar-${i + 1})`);
 
 // ── Map ramps (S4) ─────────────────────────────────────────────────────────────
 // Validated against the dark basemap (#0e1117). On the dark map "more" is

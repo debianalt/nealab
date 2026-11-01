@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
-	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor } from '$lib/utils/sello';
+	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA } from '$lib/utils/sello';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -3067,7 +3067,7 @@
 					properties: {
 						h3index: entry.h3index,
 						value: null,
-						color: NODATA_COLOR,
+						color: colorScale === 'bivariate' ? BIVAR_NODATA : NODATA_COLOR,
 						nodata: true,
 						type_label: entry.properties?.type_label
 					},
