@@ -27,8 +27,11 @@ export const INK_3 = 'var(--s-ink-3)';
 export const GRID = 'var(--s-grid)';
 export const AXIS = 'var(--s-axis)';
 // What the reader picked (chart brush, the hexagon in the ficha): tierra in the
-// chart and the same tierra outline on the map.
+// chart and a tierra tint on the map.
 export const SELECT = TIERRA;
+// Outline of anything selected on the map (click, lasso, chart, compare, census
+// radios): white over the dark basemap. A light basemap will need a dark one.
+export const SELECT_OUTLINE = '#ffffff';
 export const SURFACE = 'var(--s-surface)';
 
 export const FONT = {

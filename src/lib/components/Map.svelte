@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
 	import { BIVAR_COLORS } from '$lib/utils/chartType';
-	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA } from '$lib/utils/sello';
+	import { LISA_HEX, SELLO_HEX, MAP_TIERRA, MAP_SELVA, rampColor, divColor, BIVAR_NODATA, SELECT_OUTLINE } from '$lib/utils/sello';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, BASEMAP, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
@@ -898,7 +898,7 @@
 				type: 'line',
 				source: 'radios',
 				'source-layer': 'radios',
-				paint: { 'line-color': SELLO_HEX.cat[0], 'line-width': 1.5, 'line-opacity': 0.9 },
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 1.5, 'line-opacity': 0.9 },
 				filter: emptyFilter
 			});
 			// Building outlines tinted by zone color (visible in 3D)
@@ -1125,11 +1125,20 @@
 				source: 'hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
 			}, firstSymbolId);
+			// Selected hexagons: white outline (SELECT_OUTLINE) plus a faint tint of each
+			// hexagon's panel colour, so several picks stay tellable apart on the map.
+			map.addLayer({
+				id: 'hex-selected-fill',
+				type: 'fill',
+				source: 'hexagons',
+				paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.25 },
+				filter: ['==', ['get', 'h3index'], '']
+			}, firstSymbolId);
 			map.addLayer({
 				id: 'hex-selected',
 				type: 'line',
 				source: 'hexagons',
-				paint: { 'line-color': '#ffffff', 'line-width': 3, 'line-opacity': 0.9 },
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 3, 'line-opacity': 0.9 },
 				filter: ['==', ['get', 'h3index'], '']
 			}, firstSymbolId);
 
@@ -1161,10 +1170,17 @@
 				paint: { 'line-color': '#0f172a', 'line-width': 0.5, 'line-opacity': 0 }
 			});
 			map.addLayer({
+				id: 'compare-hex-selected-fill',
+				type: 'fill',
+				source: 'compare-hexagons',
+				paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.25 },
+				filter: ['==', ['get', 'h3index'], '']
+			});
+			map.addLayer({
 				id: 'compare-hex-selected',
 				type: 'line',
 				source: 'compare-hexagons',
-				paint: { 'line-color': '#f59e0b', 'line-width': 3, 'line-opacity': 0.9 },
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 3, 'line-opacity': 0.9 },
 				filter: ['==', ['get', 'h3index'], '']
 			});
 
@@ -1201,7 +1217,8 @@
 				id: 'hex-zone-line',
 				type: 'line',
 				source: 'hex-zones',
-				paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.8 }
+				// Outline white like every selection; the zone's colour stays in the fill.
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2, 'line-opacity': 0.8 }
 			});
 
 			gateEmptyOverlaySources();
@@ -3200,8 +3217,8 @@
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
 		if (map.getLayer('hex-fill')) map.setPaintProperty('hex-fill', 'fill-opacity', 0);
 		if (map.getLayer('hex-line')) map.setPaintProperty('hex-line', 'line-opacity', 0);
-		if (map.getLayer('hex-selected')) map.setFilter('hex-selected', ['==', ['get', 'h3index'], '']);
-		if (map.getLayer('compare-hex-selected')) map.setFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
+		setSelFilter('hex-selected', ['==', ['get', 'h3index'], '']);
+		setSelFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
 		const bgSrc = map.getSource('territory-bg') as maplibregl.GeoJSONSource | undefined;
 		if (bgSrc) bgSrc.setData({ type: 'FeatureCollection', features: [] });
 	}
@@ -3271,7 +3288,7 @@
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
 		if (map.getLayer('compare-hex-fill')) map.setPaintProperty('compare-hex-fill', 'fill-opacity', 0);
 		if (map.getLayer('compare-hex-line')) map.setPaintProperty('compare-hex-line', 'line-opacity', 0);
-		if (map.getLayer('compare-hex-selected')) map.setFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
+		setSelFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
 	}
 
 	export function setRegionalHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number], classes?: ColorClasses) {
@@ -3427,13 +3444,16 @@
 		applyHexOpacity();
 	}
 
+	// The outline layer and its tint share one filter (white outline + panel colour fill).
+	function setSelFilter(line: 'hex-selected' | 'compare-hex-selected', filter: any) {
+		if (!map) return;
+		if (map.getLayer(line)) map.setFilter(line, filter);
+		if (map.getLayer(`${line}-fill`)) map.setFilter(`${line}-fill`, filter);
+	}
+
 	export function highlightHexagon(h3index: string) {
 		if (!map || !map.getLayer('hex-selected')) return;
-		if (!h3index) {
-			map.setFilter('hex-selected', ['==', ['get', 'h3index'], '']);
-			return;
-		}
-		map.setFilter('hex-selected', ['==', ['get', 'h3index'], h3index]);
+		setSelFilter('hex-selected', ['==', ['get', 'h3index'], h3index || '']);
 	}
 
 	export function highlightHexagons(
@@ -3442,27 +3462,27 @@
 	) {
 		if (!map || !map.getLayer('hex-selected')) return;
 		if (hexes.length === 0) {
-			map.setFilter('hex-selected', ['==', ['get', 'h3index'], '']);
+			setSelFilter('hex-selected', ['==', ['get', 'h3index'], '']);
 		} else {
 			const ids = hexes.map(h => h.h3index);
 			const matchExpr: any = ['match', ['get', 'h3index']];
 			for (const h of hexes) matchExpr.push(h.h3index, h.color);
 			matchExpr.push('#ffffff');
-			map.setPaintProperty('hex-selected', 'line-color', matchExpr);
-			map.setFilter('hex-selected', ['in', ['get', 'h3index'], ['literal', ids]]);
+			if (map.getLayer('hex-selected-fill')) map.setPaintProperty('hex-selected-fill', 'fill-color', matchExpr);
+			setSelFilter('hex-selected', ['in', ['get', 'h3index'], ['literal', ids]]);
 		}
 
 		if (!map.getLayer('compare-hex-selected')) return;
 		if (!compareHexes || compareHexes.length === 0) {
-			map.setFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
+			setSelFilter('compare-hex-selected', ['==', ['get', 'h3index'], '']);
 			return;
 		}
 		const cIds = compareHexes.map(h => h.h3index);
 		const cMatch: any = ['match', ['get', 'h3index']];
 		for (const h of compareHexes) cMatch.push(h.h3index, h.color);
 		cMatch.push('#f59e0b');
-		map.setPaintProperty('compare-hex-selected', 'line-color', cMatch);
-		map.setFilter('compare-hex-selected', ['in', ['get', 'h3index'], ['literal', cIds]]);
+		if (map.getLayer('compare-hex-selected-fill')) map.setPaintProperty('compare-hex-selected-fill', 'fill-color', cMatch);
+		setSelFilter('compare-hex-selected', ['in', ['get', 'h3index'], ['literal', cIds]]);
 	}
 
 	// ── Hex zone highlight functions ──────────────────────────────────────
