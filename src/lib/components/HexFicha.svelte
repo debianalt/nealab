@@ -162,6 +162,7 @@
 								{:else if p.text}
 									<div class="fi-val"><span class="fi-big fi-big-text">{p.text}</span></div>
 								{:else}
+									{#if l.primaryNamed}<div class="fi-type">{i18n.t(p.labelKey)}</div>{/if}
 									<div class="fi-val">
 										<span class="fi-big num">{fmt(p.value)}</span>{#if p.unit}<span class="fi-unit">{p.unit}</span>{/if}
 										<span class="fi-ctx tnum">{ctxLine(p)}</span>

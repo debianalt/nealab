@@ -215,6 +215,12 @@ y en la ficha `aptitud_cultivo` de `meta.procesos`. Tras los ajustes de aplicaci
 soja (1,50, con el pH argentino 6–7); pasturas sin S1 (el óptimo no se alcanza en el NEA); para cítricos no hay prueba
 válida contra MapBiomas; las correlaciones por departamento con el MAGyP son débiles a moderadas.
 
+**En spatia.ar (desde el 1-nov-2026).** La capa «potencial agrícola» de la web sale de acá, sin goalposts y sólo
+en el NEA argentino: `python pipeline/hexoma/exportar_agri_web.py` escribe `pipeline/output/hexoma/web/{prefijo}sat_agri_apt*.parquet`
+(valores físicos normales 1991–2020, `apt_<cultivo>_clase` y `apt_<cultivo>_pct`) y los cuatro resúmenes con el ranking por
+cultivo en `src/lib/data/`. Después: subir a R2 con las claves `data/…` (`upload_to_r2.upload_file`), `npm run purge-cdn` y,
+si cambia el esquema, subir `sat_agri_apt` en `getParquetUrl`. `build_layer_ranks.py` ya no toca esta capa.
+
 ## Estaciones: la referencia obligada (esquema `estaciones`)
 Toda afirmación del Hexoma sobre temperatura, heladas o lluvia se contrasta con las estaciones: son la única medición
 directa. 50 estaciones (17 GHCN-Daily, 33 INTA SIGA), 526 mil días tal cual, con un QC que marca y no borra

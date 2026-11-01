@@ -51,6 +51,7 @@
 	let container: HTMLDivElement;
 	let hexLayerTitle = '';
 	let hexLayerIsCategorical = false;
+	let hexClassesOrdinal: ColorClasses | null = null; // painted classes are codes (S1…N): tooltip shows the label
 	let hexLayerUnit = ''; // physical unit of the primary variable (tC/ha, min, %…); '' = no suffix
 	let map: maplibregl.Map;
 	let firstSymbolId: string | undefined; // basemap's first label layer — hex fills sit below it
@@ -1731,6 +1732,9 @@
 				valueLine = `<span style="color:#94a3b8;font-weight:600;font-style:italic">${i18n.t('legend.noData')}</span>`;
 			} else if (hexLayerIsCategorical && p.type_label) {
 				valueLine = `<span style="color:#e2e8f0;font-weight:600">${p.type_label}</span>`;
+			} else if (hexClassesOrdinal && p.value != null && hexClassesOrdinal.steps.some(s => s.from === Number(p.value))) {
+				const st = hexClassesOrdinal.steps.find(s => s.from === Number(p.value))!;
+				valueLine = `<span style="color:#e2e8f0;font-weight:600">${i18n.t(st.labelKey)}</span>`;
 			} else {
 				const score = p.value != null ? Number(p.value).toFixed(1) : '—';
 				// Physical unit of the primary variable (tC/ha, min, %…), set per layer.
@@ -3106,6 +3110,7 @@
 
 	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' | 'bivariate' = 'flood', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
+		hexClassesOrdinal = classes?.ordinal ? classes : null;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
 

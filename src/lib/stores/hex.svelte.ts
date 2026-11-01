@@ -242,7 +242,7 @@ export class HexStore {
 	compareDeptBbox: [number, number, number, number] | null = $state(null);
 
 	get numericVariables(): HexVariable[] {
-		return this.activeLayer?.variables.filter(v => !NON_NUMERIC_COLS.has(v.col)) ?? [];
+		return this.activeLayer?.variables.filter(v => !NON_NUMERIC_COLS.has(v.col) && !v.hidden) ?? [];
 	}
 
 	// Monotonic counter: increments on every meaningful visibleData change.
@@ -1736,8 +1736,14 @@ export class HexStore {
 		}));
 	}
 
+	// Indexes (into numericVariables) of the flower's petals: all but noPetal variables.
+	private get petalIdx(): number[] {
+		return this.numericVariables.flatMap((v, i) => (v.noPetal ? [] : [i]));
+	}
+
 	get petalLabels(): string[] {
-		return this.numericVariables.map(v => i18n.t(v.labelKey));
+		const vars = this.numericVariables;
+		return this.petalIdx.map(i => i18n.t(vars[i].labelKey));
 	}
 
 	// ── Selection petal data (individual hex clicks) ─────────────────────
@@ -1750,7 +1756,7 @@ export class HexStore {
 		for (const [, sel] of this.selectedHexes) {
 			const rawValues = vars.map(v => sel.data[v.col] ?? 0);
 			const normalizedValues = this.normalize(rawValues, provAvg);
-			result.push({ values: normalizedValues, color: sel.color });
+			result.push({ values: this.petalIdx.map(i => normalizedValues[i]), color: sel.color });
 		}
 		return result;
 	}

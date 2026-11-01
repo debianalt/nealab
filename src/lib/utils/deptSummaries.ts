@@ -2,7 +2,7 @@
 // Each loader returns the bundled JSON for a given analysis × territory.
 
 const SAT_SUMMARIES: Record<string, () => Promise<any>> = {
-	agri_potential:         () => import('$lib/data/sat_agri_potential_dept_summary.json'),
+	agri_potential:         () => import('$lib/data/sat_agri_apt_dept_summary.json'),
 	forestry_aptitude:      () => import('$lib/data/sat_forestry_aptitude_dept_summary.json'),
 	service_deprivation:    () => import('$lib/data/sat_service_deprivation_dept_summary.json'),
 	health_access:          () => import('$lib/data/sat_health_access_dept_summary.json'),
@@ -19,7 +19,6 @@ const SAT_SUMMARIES: Record<string, () => Promise<any>> = {
 
 const ITAPUA_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics: () => import('$lib/data/itapua_py_sat_deforestation_dynamics_summary.json'),
-	agri_potential:         () => import('$lib/data/itapua_py_sat_agri_potential_summary.json'),
 	pm25_drivers:           () => import('$lib/data/itapua_py_sat_pm25_drivers_summary.json'),
 	forestry_aptitude:      () => import('$lib/data/itapua_py_sat_forestry_aptitude_summary.json'),
 	land_use:               () => import('$lib/data/itapua_py_sat_land_use_summary.json'),
@@ -28,7 +27,7 @@ const ITAPUA_SUMMARIES: Record<string, () => Promise<any>> = {
 };
 
 const CORRIENTES_SUMMARIES: Record<string, () => Promise<any>> = {
-	agri_potential:         () => import('$lib/data/corrientes_sat_agri_potential_summary.json'),
+	agri_potential:         () => import('$lib/data/corrientes_sat_agri_apt_summary.json'),
 	accessibility:          () => import('$lib/data/corrientes_sat_accessibility_summary.json'),
 	pm25_drivers:           () => import('$lib/data/corrientes_sat_pm25_drivers_summary.json'),
 	land_use:               () => import('$lib/data/corrientes_sat_land_use_summary.json'),
@@ -45,7 +44,6 @@ const CORRIENTES_SUMMARIES: Record<string, () => Promise<any>> = {
 
 // Alto Paraná (PY) — Phase 1: 6 core satellite analyses. More added per phase.
 const ALTO_PARANA_SUMMARIES: Record<string, () => Promise<any>> = {
-	agri_potential:         () => import('$lib/data/alto_parana_py_sat_agri_potential_summary.json'),
 	deforestation_dynamics: () => import('$lib/data/alto_parana_py_sat_deforestation_dynamics_summary.json'),
 	forestry_aptitude:      () => import('$lib/data/alto_parana_py_sat_forestry_aptitude_summary.json'),
 	land_use:               () => import('$lib/data/alto_parana_py_sat_land_use_summary.json'),
@@ -59,7 +57,7 @@ const CHACO_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/chaco_flood_dept_summary.json'),
 	pm25_drivers            : () => import('$lib/data/chaco_sat_pm25_drivers_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/chaco_sat_forestry_aptitude_summary.json'),
-	agri_potential          : () => import('$lib/data/chaco_sat_agri_potential_summary.json'),
+	agri_potential          : () => import('$lib/data/chaco_sat_agri_apt_summary.json'),
 	land_use                : () => import('$lib/data/chaco_sat_land_use_summary.json'),
 	accessibility           : () => import('$lib/data/chaco_sat_accessibility_summary.json'),
 	economic_activity       : () => import('$lib/data/chaco_sat_economic_activity_summary.json'),
@@ -74,7 +72,7 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	deforestation_dynamics  : () => import('$lib/data/formosa_sat_deforestation_dynamics_summary.json'),
 	flood_risk              : () => import('$lib/data/formosa_flood_dept_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/formosa_sat_forestry_aptitude_summary.json'),
-	agri_potential          : () => import('$lib/data/formosa_sat_agri_potential_summary.json'),
+	agri_potential          : () => import('$lib/data/formosa_sat_agri_apt_summary.json'),
 	land_use                : () => import('$lib/data/formosa_sat_land_use_summary.json'),
 	accessibility           : () => import('$lib/data/formosa_sat_accessibility_summary.json'),
 	economic_activity       : () => import('$lib/data/formosa_sat_economic_activity_summary.json'),
@@ -89,7 +87,6 @@ const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/parana_br_flood_dept_summary.json'),
 	pm25_drivers            : () => import('$lib/data/parana_br_sat_pm25_drivers_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/parana_br_sat_forestry_aptitude_summary.json'),
-	agri_potential          : () => import('$lib/data/parana_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/parana_br_sat_land_use_summary.json'),
 	accessibility           : () => import('$lib/data/parana_br_sat_accessibility_summary.json'),
 };
@@ -98,7 +95,6 @@ const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	pm25_drivers            : () => import('$lib/data/santa_catarina_br_sat_pm25_drivers_summary.json'),
 	flood_risk              : () => import('$lib/data/santa_catarina_br_flood_dept_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/santa_catarina_br_sat_forestry_aptitude_summary.json'),
-	agri_potential          : () => import('$lib/data/santa_catarina_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/santa_catarina_br_sat_land_use_summary.json'),
 	accessibility           : () => import('$lib/data/santa_catarina_br_sat_accessibility_summary.json'),
 };
@@ -107,7 +103,6 @@ const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
 	flood_risk              : () => import('$lib/data/rio_grande_sul_br_flood_dept_summary.json'),
 	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),
 	forestry_aptitude       : () => import('$lib/data/rio_grande_sul_br_sat_forestry_aptitude_summary.json'),
-	agri_potential          : () => import('$lib/data/rio_grande_sul_br_sat_agri_potential_summary.json'),
 	land_use                : () => import('$lib/data/rio_grande_sul_br_sat_land_use_summary.json'),
 	accessibility           : () => import('$lib/data/rio_grande_sul_br_sat_accessibility_summary.json'),
 };
@@ -122,7 +117,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 	'santa_catarina_br/': SANTA_CATARINA_BR_SUMMARIES,
 	'rio_grande_sul_br/': RIO_GRANDE_SUL_BR_SUMMARIES,
 	'concepcion_py/': {
-		agri_potential:         () => import('$lib/data/concepcion_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/concepcion_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/concepcion_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/concepcion_py_sat_pm25_drivers_summary.json'),
@@ -131,7 +125,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/concepcion_py_flood_dept_summary.json'),
 	},
 	'san_pedro_py/': {
-		agri_potential:         () => import('$lib/data/san_pedro_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/san_pedro_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/san_pedro_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/san_pedro_py_sat_pm25_drivers_summary.json'),
@@ -140,7 +133,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/san_pedro_py_flood_dept_summary.json'),
 	},
 	'cordillera_py/': {
-		agri_potential:         () => import('$lib/data/cordillera_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/cordillera_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/cordillera_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/cordillera_py_sat_pm25_drivers_summary.json'),
@@ -149,7 +141,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/cordillera_py_flood_dept_summary.json'),
 	},
 	'guaira_py/': {
-		agri_potential:         () => import('$lib/data/guaira_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/guaira_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/guaira_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/guaira_py_sat_pm25_drivers_summary.json'),
@@ -158,7 +149,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/guaira_py_flood_dept_summary.json'),
 	},
 	'caaguazu_py/': {
-		agri_potential:         () => import('$lib/data/caaguazu_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/caaguazu_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/caaguazu_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/caaguazu_py_sat_pm25_drivers_summary.json'),
@@ -167,7 +157,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/caaguazu_py_flood_dept_summary.json'),
 	},
 	'caazapa_py/': {
-		agri_potential:         () => import('$lib/data/caazapa_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/caazapa_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/caazapa_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/caazapa_py_sat_pm25_drivers_summary.json'),
@@ -176,7 +165,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/caazapa_py_flood_dept_summary.json'),
 	},
 	'misiones_py/': {
-		agri_potential:         () => import('$lib/data/misiones_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/misiones_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/misiones_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/misiones_py_sat_pm25_drivers_summary.json'),
@@ -185,7 +173,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/misiones_py_flood_dept_summary.json'),
 	},
 	'paraguari_py/': {
-		agri_potential:         () => import('$lib/data/paraguari_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/paraguari_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/paraguari_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/paraguari_py_sat_pm25_drivers_summary.json'),
@@ -194,7 +181,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/paraguari_py_flood_dept_summary.json'),
 	},
 	'central_py/': {
-		agri_potential:         () => import('$lib/data/central_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/central_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/central_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/central_py_sat_pm25_drivers_summary.json'),
@@ -203,7 +189,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/central_py_flood_dept_summary.json'),
 	},
 	'neembucu_py/': {
-		agri_potential:         () => import('$lib/data/neembucu_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/neembucu_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/neembucu_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/neembucu_py_sat_pm25_drivers_summary.json'),
@@ -212,7 +197,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/neembucu_py_flood_dept_summary.json'),
 	},
 	'amambay_py/': {
-		agri_potential:         () => import('$lib/data/amambay_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/amambay_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/amambay_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/amambay_py_sat_pm25_drivers_summary.json'),
@@ -221,7 +205,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/amambay_py_flood_dept_summary.json'),
 	},
 	'canindeyu_py/': {
-		agri_potential:         () => import('$lib/data/canindeyu_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/canindeyu_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/canindeyu_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/canindeyu_py_sat_pm25_drivers_summary.json'),
@@ -230,7 +213,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/canindeyu_py_flood_dept_summary.json'),
 	},
 	'presidente_hayes_py/': {
-		agri_potential:         () => import('$lib/data/presidente_hayes_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/presidente_hayes_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/presidente_hayes_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/presidente_hayes_py_sat_pm25_drivers_summary.json'),
@@ -239,7 +221,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/presidente_hayes_py_flood_dept_summary.json'),
 	},
 	'boqueron_py/': {
-		agri_potential:         () => import('$lib/data/boqueron_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/boqueron_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/boqueron_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/boqueron_py_sat_pm25_drivers_summary.json'),
@@ -248,7 +229,6 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 		flood_risk:             () => import('$lib/data/boqueron_py_flood_dept_summary.json'),
 	},
 	'alto_paraguay_py/': {
-		agri_potential:         () => import('$lib/data/alto_paraguay_py_sat_agri_potential_summary.json'),
 		forestry_aptitude:      () => import('$lib/data/alto_paraguay_py_sat_forestry_aptitude_summary.json'),
 		deforestation_dynamics: () => import('$lib/data/alto_paraguay_py_sat_deforestation_dynamics_summary.json'),
 		pm25_drivers:           () => import('$lib/data/alto_paraguay_py_sat_pm25_drivers_summary.json'),

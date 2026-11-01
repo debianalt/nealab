@@ -400,7 +400,7 @@
 
 	// Component variables (skip score, type, type_label, pca)
 	const componentVars = $derived(
-		layerCfg?.variables.filter(v =>
+		layerCfg?.variables.filter(v => !v.hidden &&
 			!['score', 'flood_risk_score', 'risk_score', 'type', 'type_label', 'territorial_type', 'pca_1', 'pca_2'].includes(v.col)
 		) ?? []
 	);
@@ -417,7 +417,7 @@
 	});
 
 	// ── Cross-analysis profile for selected hex ──
-	const CROSS_ANALYSIS_IDS = ['agri_potential', 'accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
+	const CROSS_ANALYSIS_IDS = ['accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
 	const CROSS_TITLE_KEYS: Record<string, string> = { land_use: 'sat.landUse.title' };
 	const CROSS_ANALYSES = $derived(
 		CROSS_ANALYSIS_IDS.map(id => {
@@ -959,7 +959,9 @@
 		</div>
 		{/if}
 
-		{#if analysis.comparable}
+		<!-- Goalpost check (quartiles of the 0–100 primary per territory). Not for class
+		     codes (agri suitability S1…N): their quartiles say nothing. -->
+		{#if analysis.comparable && !layerCfg?.colorClasses?.ordinal}
 			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
 				<summary class="method-summary">{i18n.t('analysis.distByTerritory')}</summary>
 				<div class="method-body">

@@ -14,8 +14,9 @@ department in the layer's dept summary JSON (src/lib/data):
 - Physical layers (24 territories): area-weighted (H3 res-9 cells are equal
   area). PM2.5 and accessibility describe the territory, not its people:
   Paraguay and Brazil have no population per hexagon here.
-- forestry_aptitude / agri_potential are 0–100 composite scores: the ranking
-  uses hectares with score ≥ HIGH_SCORE on the fixed scale, not the mean score.
+- forestry_aptitude is a 0–100 composite score: the ranking uses hectares
+  with score ≥ HIGH_SCORE on the fixed scale, not the mean score.
+- agri_potential is not built here (pipeline/hexoma/exportar_agri_web.py).
 
     python pipeline/build_layer_ranks.py                    # every layer, every territory
     python pipeline/build_layer_ranks.py --layer pm25_drivers
@@ -66,10 +67,8 @@ SPECS = {
         'high_ha': (f'SUM(CASE WHEN score >= {HIGH_SCORE} THEN 1 ELSE 0 END) * {HA}', 0),
         'high_pct': (f'100 * AVG(CASE WHEN score >= {HIGH_SCORE} THEN 1.0 ELSE 0 END)', 1),
     },
-    'agri_potential': {
-        'high_ha': (f'SUM(CASE WHEN score >= {HIGH_SCORE} THEN 1 ELSE 0 END) * {HA}', 0),
-        'high_pct': (f'100 * AVG(CASE WHEN score >= {HIGH_SCORE} THEN 1.0 ELSE 0 END)', 1),
-    },
+    # agri_potential: its per-crop rank (ha and % in class S1–S2) is written by
+    # pipeline/hexoma/exportar_agri_web.py since 1-nov-2026; not here, or it would be overwritten.
     'service_deprivation': {
         'nbi_pct': (rate('c_nbi', 'hog_total'), 1), 'nbi_n': (count('c_nbi', 'hog_total'), 0),
         'cloacas_pct': (rate('c_sin_cloacas', 'hog_total'), 1), 'cloacas_n': (count('c_sin_cloacas', 'hog_total'), 0),

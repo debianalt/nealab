@@ -39,7 +39,7 @@
 		// type_label is surfaced as the classification chip (gated, hidden when null) —
 		// excluding it here avoids a duplicate "Clasificación" row that renders
 		// "Sin cobertura" (legend.noData) on unscored hexes (e.g. forestry on water).
-		variables.filter(v => !['score', 'type', 'type_label', 'pca_1', 'pca_2'].includes(v.col))
+		variables.filter(v => !v.hidden && !['score', 'type', 'type_label', 'pca_1', 'pca_2'].includes(v.col))
 	);
 	const petalLayers = $derived(hexStore.selectionPetalLayers);
 	const petalLabels = $derived(hexStore.petalLabels);

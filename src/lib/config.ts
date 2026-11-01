@@ -105,6 +105,7 @@ export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=39',
 		sat_agri_potential: '?v=36',
+		sat_agri_apt: '?v=1',
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=32',
 		sat_health_access: '?v=30',
@@ -136,7 +137,10 @@ export function getScoresDptoUrl(parquetKey: string, territoryPrefix = ''): stri
 }
 
 export function getSatDptoUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}sat_dpto/sat_${analysisId}_${parquetKey}.parquet?v=${DEPT_V}`;
+	// File stem = the layer's parquet name: sat_<id> for every layer except agri_potential,
+	// whose empirical version (physical units + crop suitability) ships as sat_agri_apt.
+	const stem = HEX_LAYER_REGISTRY[analysisId]?.parquet ?? `sat_${analysisId}`;
+	return `${getBase()}/data/${territoryPrefix}sat_dpto/${stem}_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
 // EUDR refresh manifest — written by pipeline/combine_eudr_parquets.py on each
@@ -222,6 +226,7 @@ export const PARQUETS = {
 	get overture_base() { return getParquetUrl('overture_base'); },
 	// Satellite composite scores
 	get sat_agri_potential() { return getParquetUrl('sat_agri_potential'); },
+	get sat_agri_apt() { return getParquetUrl('sat_agri_apt'); },
 	get sat_forestry_aptitude() { return getParquetUrl('sat_forestry_aptitude'); },
 	get sat_service_deprivation() { return getParquetUrl('sat_service_deprivation'); },
 	get sat_land_use() { return getParquetUrl('sat_land_use'); },
@@ -478,6 +483,12 @@ export interface HexVariable {
 	scale?: number;   // multiply the stored value for display (e.g. DW land-cover fractions 0–1 → % with scale 100)
 	baseCol?: string; // column with the households/people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
 	hideIfZero?: boolean;
+	// Loaded with the layer (the map can paint it) but not listed in the hex panel,
+	// zone comparison or ficha: agri suitability classes 1–4 (S1…N).
+	hidden?: boolean;
+	// Listed in the panel table but left out of the hex panel's flower (agri: the 9
+	// «% campañas aptas» would turn it into 19 unreadable petals).
+	noPetal?: boolean;
 }
 
 export type TemporalMode = 'current' | 'baseline' | 'delta';
@@ -569,6 +580,9 @@ export interface ColorClasses {
 	// under half a building reads as none).
 	zeroBelow?: number;
 	steps: ColorClass[];
+	// true → values are class codes (each step.from is one class): the map tooltip
+	// shows the class label instead of the number (agri suitability S1…N).
+	ordinal?: boolean;
 	// true → a cut belongs to the class below (value > from), matching FlowChart
 	// bands; default → to the class above (value >= from).
 	upperInclusive?: boolean;
@@ -583,6 +597,18 @@ export function colorForClass(value: number, classes: ColorClasses): string {
 	for (const s of classes.steps) if (classes.upperInclusive ? value > s.from : value >= s.from) color = s.color;
 	return color;
 }
+
+// Crop suitability (pipeline/hexoma, A4): median class of the 1991/92–2024/25 campaigns,
+// 1 S1 optimum … 4 N not suitable (FAO, most limiting factor). Colors: Tierra colorada.
+export const AGRI_APT_CLASSES: ColorClasses = {
+	ordinal: true,
+	steps: [
+		{ from: 1, color: '#1f7a52', labelKey: 'agri.class.s1' },
+		{ from: 2, color: '#86c49c', labelKey: 'agri.class.s2' },
+		{ from: 3, color: '#d4a53c', labelKey: 'agri.class.s3' },
+		{ from: 4, color: '#b4482a', labelKey: 'agri.class.n' },
+	],
+};
 
 // JRC occurrence (% of 1984–2021 with water). Cuts match the methodology text
 // (<5 / 5–20 / >20). 0 % = Landsat never saw water there — a real reading, not a
@@ -811,30 +837,74 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Satellite composite scores ──
 	agri_potential: {
 		id: 'agri_potential',
-		// Department ranking — pipeline/build_layer_ranks.py.
+		// Empirical version (1-nov-2026, pipeline/hexoma/exportar_agri_web.py): physical units and
+		// crop suitability from the Hexoma, no goalposts. NEA AR only. The ranking tabs pick the
+		// crop the map paints (same mechanism as the flood tabs).
 		deptRank: {
-			field: 'high_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+			field: 'soja_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
 			titleKey: 'rank.agri.title', noteKey: 'rank.agri.note',
-			extraField: 'high_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+			extraField: 'soja_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+			hexVariable: 'apt_soja_clase',
+			metrics: [
+				{ tabKey: 'rank.agri.tab.soja' },
+				{ tabKey: 'rank.agri.tab.maiz', field: 'maiz_ha', extraField: 'maiz_pct', hexVariable: 'apt_maiz_clase' },
+				{ tabKey: 'rank.agri.tab.algodon', field: 'algodon_ha', extraField: 'algodon_pct', hexVariable: 'apt_algodon_clase' },
+				{ tabKey: 'rank.agri.tab.girasol', field: 'girasol_ha', extraField: 'girasol_pct', hexVariable: 'apt_girasol_clase' },
+				{ tabKey: 'rank.agri.tab.arroz', field: 'arroz_ha', extraField: 'arroz_pct', hexVariable: 'apt_arroz_clase' },
+				{ tabKey: 'rank.agri.tab.yerba', field: 'yerba_ha', extraField: 'yerba_pct', hexVariable: 'apt_yerba_clase' },
+				{ tabKey: 'rank.agri.tab.te', field: 'te_ha', extraField: 'te_pct', hexVariable: 'apt_te_clase' },
+				{ tabKey: 'rank.agri.tab.citricos', field: 'citricos_ha', extraField: 'citricos_pct', hexVariable: 'apt_citricos_clase' },
+				{ tabKey: 'rank.agri.tab.pasturas', field: 'pasturas_ha', extraField: 'pasturas_pct', hexVariable: 'apt_pasturas_clase' },
+			],
 		},
-		parquet: 'sat_agri_potential',
+		parquet: 'sat_agri_apt',
 		variables: [
-			{ col: 'c_soc', labelKey: 'sat.agri.soc', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_ph_optimal', labelKey: 'sat.agri.phOptimal', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_clay', labelKey: 'sat.agri.clay', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_precipitation', labelKey: 'sat.agri.precip', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_gdd', labelKey: 'sat.agri.gdd', aggregation: 'mean', unit: '/100' },
-			{ col: 'c_slope', labelKey: 'sat.agri.slope', aggregation: 'mean', unit: '/100' },
-			{ col: 'score', labelKey: 'sat.agri.score', aggregation: 'mean', unit: '/100' },
+			{ col: 'apt_soja_pct', labelKey: 'sat.agri.apt.soja', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_maiz_pct', labelKey: 'sat.agri.apt.maiz', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_algodon_pct', labelKey: 'sat.agri.apt.algodon', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_girasol_pct', labelKey: 'sat.agri.apt.girasol', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_arroz_pct', labelKey: 'sat.agri.apt.arroz', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_yerba_pct', labelKey: 'sat.agri.apt.yerba', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_te_pct', labelKey: 'sat.agri.apt.te', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_citricos_pct', labelKey: 'sat.agri.apt.citricos', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'apt_pasturas_pct', labelKey: 'sat.agri.apt.pasturas', aggregation: 'mean', unit: '% campañas', noPetal: true },
+			{ col: 'p_normal_mm', labelKey: 'sat.agri.pNormal', aggregation: 'mean', unit: 'mm' },
+			{ col: 'balance_normal_mm', labelKey: 'sat.agri.balance', aggregation: 'mean', unit: 'mm' },
+			{ col: 'gdd_normal', labelKey: 'sat.agri.gddNormal', aggregation: 'mean', unit: '°C·d' },
+			{ col: 'heladas_normal', labelKey: 'sat.agri.heladas', aggregation: 'mean', unit: 'días/año' },
+			{ col: 'heladas5_normal', labelKey: 'sat.agri.heladas5', aggregation: 'mean', unit: 'días/año' },
+			{ col: 'calor35_normal', labelKey: 'sat.agri.calor35', aggregation: 'mean', unit: 'días/año' },
+			{ col: 'ph', labelKey: 'sat.agri.phSuelo', aggregation: 'mean', unit: 'pH' },
+			{ col: 'arcilla_pct', labelKey: 'sat.agri.arcilla', aggregation: 'mean', unit: '%' },
+			{ col: 'pendiente_pct', labelKey: 'sat.agri.pendiente', aggregation: 'mean', unit: '%' },
+			{ col: 'elev_m', labelKey: 'sat.agri.elev', aggregation: 'mean', unit: 'm' },
+			{ col: 'apt_soja_clase', labelKey: 'sat.agri.clase.soja', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_maiz_clase', labelKey: 'sat.agri.clase.maiz', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_algodon_clase', labelKey: 'sat.agri.clase.algodon', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_girasol_clase', labelKey: 'sat.agri.clase.girasol', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_arroz_clase', labelKey: 'sat.agri.clase.arroz', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_yerba_clase', labelKey: 'sat.agri.clase.yerba', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_te_clase', labelKey: 'sat.agri.clase.te', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_citricos_clase', labelKey: 'sat.agri.clase.citricos', aggregation: 'mean', unit: 'S1–N', hidden: true },
+			{ col: 'apt_pasturas_clase', labelKey: 'sat.agri.clase.pasturas', aggregation: 'mean', unit: 'S1–N', hidden: true },
 		],
-		primaryVariable: 'c_ph_optimal',
+		petalVars: [
+			{ col: 'p_normal_mm', labelKey: 'sat.agri.pNormal', aggregation: 'mean' },
+			{ col: 'gdd_normal', labelKey: 'sat.agri.gddNormal', aggregation: 'mean' },
+			{ col: 'heladas5_normal', labelKey: 'sat.agri.heladas5', aggregation: 'mean' },
+			{ col: 'ph', labelKey: 'sat.agri.phSuelo', aggregation: 'mean' },
+			{ col: 'arcilla_pct', labelKey: 'sat.agri.arcilla', aggregation: 'mean' },
+			{ col: 'pendiente_pct', labelKey: 'sat.agri.pendiente', aggregation: 'mean' },
+		],
+		primaryVariable: 'apt_soja_clase',
 		colorScale: 'green',
 		aggregation: 'mean',
 		titleKey: 'sat.agri.title',
+		legendHighKey: 'legend.agri.highN',
 		perDepartment: true,
-		legendLowKey: 'legend.agri.low',
-		legendHighKey: 'legend.agri.high',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		colorClasses: AGRI_APT_CLASSES,
+		variableClasses: { apt_soja_clase: AGRI_APT_CLASSES, apt_maiz_clase: AGRI_APT_CLASSES, apt_algodon_clase: AGRI_APT_CLASSES, apt_girasol_clase: AGRI_APT_CLASSES, apt_arroz_clase: AGRI_APT_CLASSES, apt_yerba_clase: AGRI_APT_CLASSES, apt_te_clase: AGRI_APT_CLASSES, apt_citricos_clase: AGRI_APT_CLASSES, apt_pasturas_clase: AGRI_APT_CLASSES },
+		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
@@ -1358,7 +1428,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'produccion',
 		titleKey: 'sat.agri.title',
 		descKey: 'sat.agri.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
+		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 		comparable: true,
 		rigorBadge: 'modeled',
 		status: 'available',
@@ -1717,6 +1787,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	// generic «satellite» list). processedDate = last reprocess (git) or, where
 	// none is recorded, the publication date of the file in R2.
 	sat_agri_potential: { dataDate: 'Baseline SoilGrids / CHIRPS / ERA5 2019-2024', processedDate: '20/04/2026', sourceKey: 'layer.source.agri' },
+	sat_agri_apt: { dataDate: 'CHIRPS v3 1981–2026 · ERA5-Land corregido con 48 estaciones 1950–2026 · SoilGrids 2.0 · FABDEM · normal 1991–2020', processedDate: '01/11/2026', sourceKey: 'layer.source.agri' },
 	sat_forestry_aptitude: { dataDate: 'ERA5/CHIRPS/SoilGrids/SRTM 2019-2023', processedDate: '20/06/2026', sourceKey: 'layer.source.forestry' },
 	sat_service_deprivation: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
 	sat_health_access: { dataDate: 'Oxford MAP 2019 + OSM + Censo 2022', processedDate: '30/10/2026', sourceKey: 'layer.source.health' },

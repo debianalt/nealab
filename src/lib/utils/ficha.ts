@@ -46,6 +46,9 @@ export interface FichaLayer {
 	found: boolean;            // the cell is in this layer's file
 	typeLabel: string | null;
 	primary: FichaVar | null;
+	// The summary value is not the layer's own reading (its primary is a hidden class
+	// code): the card names the variable (agri: «Soja: campañas aptas»).
+	primaryNamed?: boolean;
 	vars: FichaVar[];
 	error?: boolean;
 }
@@ -141,7 +144,7 @@ export async function loadFicha(
 		};
 		if (!name) { out.push({ ...base, error: true }); continue; }
 		try {
-			const vars = layer.variables.filter(v => !HIDDEN.has(v.col));
+			const vars = layer.variables.filter(v => !HIDDEN.has(v.col) && !v.hidden);
 			// The summary row shows the layer's primary even when the table hides it
 			// (forestry's primary is its /100 score, not the first covariate).
 			const pv = layer.primaryVariable;
@@ -195,6 +198,7 @@ export async function loadFicha(
 				found: row >= 0,
 				typeLabel: row >= 0 && typeVec ? (typeVec.get(row) as string | null) ?? null : null,
 				primary,
+				primaryNamed: !!primaryVar?.hidden,
 				vars: fv,
 			});
 		} catch {
