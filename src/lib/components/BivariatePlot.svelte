@@ -456,9 +456,9 @@
 			<!-- Quadrant guide lines at each axis median -->
 			{#if isFinite(xMed) && isFinite(yMed)}
 				<line x1={svgX(xMed)} x2={svgX(xMed)} y1={PAD_T} y2={PAD_T + plotH}
-					stroke="rgba(255,255,255,0.32)" stroke-width="1" stroke-dasharray="3 2" />
+					style="stroke: rgba(var(--c-fg-rgb), 0.32)" stroke-width="1" stroke-dasharray="3 2" />
 				<line x1={PAD_L} x2={PAD_L + plotW} y1={svgY(yMed)} y2={svgY(yMed)}
-					stroke="rgba(255,255,255,0.32)" stroke-width="1" stroke-dasharray="3 2" />
+					style="stroke: rgba(var(--c-fg-rgb), 0.32)" stroke-width="1" stroke-dasharray="3 2" />
 			{/if}
 
 			<!-- Scatter points -->

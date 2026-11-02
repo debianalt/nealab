@@ -922,7 +922,7 @@
 									{@const maxV = Math.max(...LOSS_YEARS.map((yy) => result?.loss_by_year?.[yy] || 0), 0.01)}
 									{@const h = (v / maxV) * 38}
 									<rect x={i * YEAR_SLOT + 5} y={50 - h} width={YEAR_SLOT - 10} height={h} fill={yearBarColor(v)} rx="2"/>
-									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="IBM Plex Mono, monospace">{y}</text>
+									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" style="fill: var(--c-ink-3)" font-family="IBM Plex Mono, monospace">{y}</text>
 									{#if v > 0.01}
 										<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="IBM Plex Mono, monospace">{v.toFixed(2)}%</text>
 									{/if}
@@ -1036,7 +1036,7 @@
 									{@const maxV = Math.max(...LOSS_YEARS.map((yy) => polygonResult?.loss_by_year?.[yy] || 0), 0.01)}
 									{@const h = (v / maxV) * 38}
 									<rect x={i * YEAR_SLOT + 5} y={50 - h} width={YEAR_SLOT - 10} height={h} fill={yearBarColor(v)} rx="2"/>
-									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="IBM Plex Mono, monospace">{y}</text>
+									<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y="61" text-anchor="middle" font-size="9" style="fill: var(--c-ink-3)" font-family="IBM Plex Mono, monospace">{y}</text>
 									{#if v > 0.01}
 										<text x={i * YEAR_SLOT + YEAR_SLOT / 2} y={48 - h} text-anchor="middle" font-size="8" fill={yearBarColor(v)} font-family="IBM Plex Mono, monospace">{v.toFixed(2)}%</text>
 									{/if}
