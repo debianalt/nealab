@@ -3,8 +3,9 @@
 	// totals per census year (sat_censo_temporal_dept.parquet, built by
 	// pipeline/build_censo_temporal_dept.py). Companion to the hex apportionment —
 	// these are the published aggregates, the hexagons remain the fine estimate.
-	// Same look as the deptRank ranking of the perDepartment layers, but without
-	// the province dept fill: here the territory's hexagons are already on the map.
+	// Same look as the deptRank ranking of the perDepartment layers, and the same
+	// province dept fill (the province view painted nothing: 2-nov-2026).
+	import { onDestroy, untrack } from 'svelte';
 	import ChartFrame from './ChartFrame.svelte';
 	import { ensureArBoundaries, getArFeatures } from '$lib/utils/deptBoundaries';
 	import { query } from '$lib/stores/duckdb';
@@ -109,6 +110,24 @@
 	$effect(() => {
 		if (!hexStore.deptFilter && expandedCode) expandedCode = null;
 	});
+
+	// Province view: departments painted with the active reading, on the bars' scale.
+	// An open department shows its hexagons instead.
+	const territoryId = $derived(Object.values(TERRITORY_REGISTRY).find((t) => t.parquetPrefix === hexStore.territoryPrefix)?.id ?? '');
+	$effect(() => {
+		const show = !!sorted && !expandedCode && !!territoryId;
+		const f = show ? {
+			territory: territoryId,
+			values: sorted!.map((r) => ({ name: r.name, value: reading.value(r) })),
+			max: rankMax,
+			signed: reading.signed,
+			decimals: reading.decimals,
+			unit: i18n.t(reading.unitKey),
+			title: i18n.t(reading.titleKey),
+		} : null;
+		untrack(() => hexStore.setDeptFill(f));
+	});
+	onDestroy(() => hexStore.setDeptFill(null));
 
 	function toggleRow(r: Row) {
 		if (expandedCode === r.code) { expandedCode = null; onSelectDept?.(null); return; }

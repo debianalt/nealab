@@ -531,6 +531,9 @@ export interface HexLayerConfig {
 	// Classes for other variables the map can paint instead of the primary
 	// (hexStore.colorVariable, set from the active ranking tab).
 	variableClasses?: Record<string, ColorClasses>;
+	// Legend end labels for those other variables (i18n keys), when the layer's
+	// legendLowKey/HighKey describe only the primary.
+	variableLegend?: Record<string, { low: string; high: string }>;
 	// Two color scales, switched from the legend (URL ?escala=regional):
 	// 'provincial' (default) = P2–P98 of the active territory from scaleStats —
 	// the province/department/state is the governing unit; 'regional' = this
@@ -570,6 +573,9 @@ export interface DeptRank {
 	// has a value (order not stable). Change tab: 'change'.
 	province?: string;
 	hexVariable?: string;
+	// The reading exists only by department (no per-hex column): the panel says so and
+	// names what the hexagons show instead.
+	hexNone?: boolean;
 }
 
 export interface ColorClass {
@@ -689,6 +695,18 @@ export const ACCESS_TIME_CLASSES: ColorClasses = {
 		{ from: 120, color: MAP_ACCESS_5[2], labelKey: 'legend.access.c3' },
 		{ from: 240, color: MAP_ACCESS_5[3], labelKey: 'legend.access.c4' },
 		{ from: 480, color: MAP_ACCESS_5[4], labelKey: 'legend.access.c5' },
+	],
+};
+
+// Distance to the nearest hospital (accessibility, Hospital tab), km.
+export const ACCESS_KM_CLASSES: ColorClasses = {
+	unit: 'km',
+	steps: [
+		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.accessKm.c1' },
+		{ from: 5, color: MAP_ACCESS_5[1], labelKey: 'legend.accessKm.c2' },
+		{ from: 10, color: MAP_ACCESS_5[2], labelKey: 'legend.accessKm.c3' },
+		{ from: 20, color: MAP_ACCESS_5[3], labelKey: 'legend.accessKm.c4' },
+		{ from: 40, color: MAP_ACCESS_5[4], labelKey: 'legend.accessKm.c5' },
 	],
 };
 
@@ -943,13 +961,13 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'service_deprivation',
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'nbi_pct', unit: '%', decimals: 1,
+			field: 'nbi_pct', unit: '%', decimals: 1, hexVariable: 'c_nbi',
 			titleKey: 'rank.service.title', noteKey: 'rank.service.note',
 			extraField: 'nbi_n', extraUnitKey: 'rank.unit.hogares', extraDecimals: 0,
 			metrics: [
 				{ tabKey: 'rank.service.tab.nbi' },
-				{ tabKey: 'rank.service.tab.cloacas', field: 'cloacas_pct', extraField: 'cloacas_n' },
-				{ tabKey: 'rank.service.tab.hacin', field: 'hacin_pct', extraField: 'hacin_n' },
+				{ tabKey: 'rank.service.tab.cloacas', field: 'cloacas_pct', extraField: 'cloacas_n', hexVariable: 'c_sin_cloacas' },
+				{ tabKey: 'rank.service.tab.hacin', field: 'hacin_pct', extraField: 'hacin_n', hexVariable: 'c_hacinamiento' },
 			],
 		},
 		parquet: 'sat_service_deprivation',
@@ -1005,11 +1023,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'education_capital',
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'noschool_pct', unit: '%', decimals: 1,
+			field: 'noschool_pct', unit: '%', decimals: 1, hexVariable: 'c_no_schooling',
 			titleKey: 'rank.educap.title', noteKey: 'rank.educap.note',
 			metrics: [
 				{ tabKey: 'rank.educap.tab.noschool' },
-				{ tabKey: 'rank.educap.tab.univ', field: 'univ_pct' },
+				{ tabKey: 'rank.educap.tab.univ', field: 'univ_pct', hexVariable: 'c_university' },
 			],
 		},
 		parquet: 'sat_education_capital',
@@ -1028,17 +1046,18 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.eduCap.low',
 		legendHighKey: 'legend.eduCap.high',
+		variableLegend: { c_university: { low: 'legend.univ.low', high: 'legend.univ.high' } },
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 	education_flow: {
 		id: 'education_flow',
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'dropout_sec_pct', unit: '%', decimals: 1,
+			field: 'dropout_sec_pct', unit: '%', decimals: 1, hexVariable: 'c_dropout_secondary',
 			titleKey: 'rank.eduflow.title', noteKey: 'rank.eduflow.note',
 			metrics: [
 				{ tabKey: 'rank.eduflow.tab.dropout' },
-				{ tabKey: 'rank.eduflow.tab.teen', field: 'teen_preg_pct' },
+				{ tabKey: 'rank.eduflow.tab.teen', field: 'teen_preg_pct', hexNone: true },
 			],
 		},
 		parquet: 'sat_education_flow',
@@ -1064,13 +1083,13 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'land_use',
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'trees_pct', unit: '%', decimals: 1,
+			field: 'trees_pct', unit: '%', decimals: 1, hexVariable: 'frac_trees',
 			titleKey: 'rank.landuse.title', noteKey: 'rank.landuse.note.trees',
 			extraField: 'trees_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0,
 			metrics: [
 				{ tabKey: 'rank.landuse.tab.trees' },
-				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha', noteKey: 'rank.landuse.note.crops' },
-				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha', noteKey: 'rank.landuse.note.built' },
+				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha', noteKey: 'rank.landuse.note.crops', hexVariable: 'frac_crops' },
+				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha', noteKey: 'rank.landuse.note.built', hexVariable: 'frac_built' },
 			],
 		},
 		parquet: 'sat_land_use',
@@ -1096,6 +1115,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.landUse.low',
 		legendHighKey: 'legend.landUse.high',
+		variableLegend: {
+			frac_crops: { low: 'legend.crops.low', high: 'legend.crops.high' },
+			frac_built: { low: 'legend.built.low', high: 'legend.built.high' },
+		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', cordillera_py: 'available', san_pedro_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
 	// ── Migrated from radio/catastro to H3 ──
@@ -1172,12 +1195,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		// Department ranking — pipeline/build_layer_ranks.py: Σ rate·base / Σ base over
 		// the department's hexagons (same INDEC definition in the 4 provinces).
 		deptRank: {
-			field: 'empleo_pct', unit: '%', decimals: 1,
+			field: 'empleo_pct', unit: '%', decimals: 1, hexVariable: 'tasa_empleo',
 			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note',
 			metrics: [
 				{ tabKey: 'rank.econ.tab.empleo' },
-				{ tabKey: 'rank.econ.tab.univ', field: 'univ_pct', noteKey: 'rank.econ.note.univ' },
-				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs' },
+				{ tabKey: 'rank.econ.tab.univ', field: 'univ_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
+				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
 			],
 		},
 		parquet: 'sat_economic_activity',
@@ -1197,18 +1220,22 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.economic.low',
 		legendHighKey: 'legend.economic.high',
+		variableLegend: {
+			tasa_empleo: { low: 'legend.empleo.low', high: 'legend.empleo.high' },
+			pct_universitario: { low: 'legend.univ.low', high: 'legend.univ.high' },
+		},
 		coverage: { alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 	accessibility: {
 		id: 'accessibility',
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
-			field: 'min_cabecera', unit: 'min', decimals: 0,
+			field: 'min_cabecera', unit: 'min', decimals: 0, hexVariable: 'travel_min_cabecera_raw',
 			titleKey: 'rank.access.title', noteKey: 'rank.access.note',
 			metrics: [
 				{ tabKey: 'rank.access.tab.cabecera' },
-				{ tabKey: 'rank.access.tab.capital', field: 'min_capital' },
-				{ tabKey: 'rank.access.tab.hospital', field: 'km_hospital', unit: 'km', decimals: 1, noteKey: 'rank.access.note.hospital' },
+				{ tabKey: 'rank.access.tab.capital', field: 'min_capital', hexVariable: 'travel_min_capital_raw' },
+				{ tabKey: 'rank.access.tab.hospital', field: 'km_hospital', unit: 'km', decimals: 1, noteKey: 'rank.access.note.hospital', hexVariable: 'dist_nearest_hospital_km_raw' },
 			],
 		},
 		parquet: 'sat_accessibility',
@@ -1222,6 +1249,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		primaryVariable: 'travel_min_capital_raw',
 		colorScale: 'flood',
 		colorClasses: ACCESS_TIME_CLASSES,
+		variableClasses: { dist_nearest_hospital_km_raw: ACCESS_KM_CLASSES },
 		aggregation: 'mean',
 		titleKey: 'analysis.accessibility.title',
 		perDepartment: true,
@@ -1293,10 +1321,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.deforest.title.ha', noteKey: 'rank.deforest.note.ha',
 			metrics: [
 				{ tabKey: 'rank.deforest.tab.ha' },
-				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2,
+				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2, hexNone: true,
 				  titleKey: 'rank.deforest.title.pct', noteKey: 'rank.deforest.note.pct',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
-				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 0, signed: true,
+				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 0, signed: true, hexNone: true,
 				  titleKey: 'rank.deforest.title.change', noteKey: 'rank.deforest.note.change',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
 			],
@@ -1353,10 +1381,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.eudr.title.ha', noteKey: 'rank.eudr.note.ha',
 			metrics: [
 				{ tabKey: 'rank.deforest.tab.ha' },
-				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%', unitKey: 'rank.unit.pct', decimals: 1,
+				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%', unitKey: 'rank.unit.pct', decimals: 1, hexNone: true,
 				  titleKey: 'rank.eudr.title.pct', noteKey: 'rank.eudr.note.pct',
 				  extraField: 'loss_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0 },
-				{ tabKey: 'rank.eudr.tab.fire', field: 'fire_native_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+				{ tabKey: 'rank.eudr.tab.fire', field: 'fire_native_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexNone: true,
 				  titleKey: 'rank.eudr.title.fire', noteKey: 'rank.eudr.note.fire' },
 			],
 		},

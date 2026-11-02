@@ -78,6 +78,7 @@
 
 	<section class="section">
 		<h2>{i18n.t('section.howToRead')}</h2>
+		{#if data.deptView}<p>{i18n.t('analysis.howToRead.deptView')}</p>{/if}
 		<p>{@html data.content.howToRead[locale] ?? data.content.howToRead.es}</p>
 	</section>
 

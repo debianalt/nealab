@@ -48,7 +48,7 @@
 		if (!layer) return '';
 		const named = hexStore.colorVariable ? pv === hexStore.colorVariable : !!layer.deptRank?.hexVariable;
 		if (!named) return '';
-		const v = layer.variables?.find((x: any) => x.col === pv);
+		const v = layer.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
 		return v ? i18n.t(v.labelKey) : '';
 	});
 	const title = $derived(layer ? i18n.t(layer.titleKey) + (paintedLabel ? ` · ${paintedLabel}` : '') : '');
@@ -143,6 +143,7 @@
 	const lowLabel = $derived(
 		isDangerDelta ? i18n.t('temporal.legend.worse')
 		: isDiverging ? i18n.t('temporal.legend.decrease')
+		: layer?.variableLegend?.[hexStore.effectivePrimary] ? i18n.t(layer.variableLegend[hexStore.effectivePrimary].low)
 		: layer?.legendLowKey ? i18n.t(layer.legendLowKey)
 		: isFlood ? i18n.t('legend.lowRisk')
 		: i18n.t('legend.low')
@@ -150,6 +151,7 @@
 	const highLabel = $derived(
 		isDangerDelta ? i18n.t('temporal.legend.better')
 		: isDiverging ? i18n.t('temporal.legend.increase')
+		: layer?.variableLegend?.[hexStore.effectivePrimary] ? i18n.t(layer.variableLegend[hexStore.effectivePrimary].high)
 		: layer?.legendHighKey ? i18n.t(layer.legendHighKey)
 		: isFlood ? i18n.t('legend.highRisk')
 		: i18n.t('legend.high')

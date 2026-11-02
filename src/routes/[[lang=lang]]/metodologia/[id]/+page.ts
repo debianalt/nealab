@@ -27,5 +27,7 @@ export function load({ params }: { params: { id: string } }) {
 		colorScale: layerCfg?.colorScale,
 		scaleStats: layerCfg?.scaleStats ?? null,
 		regionalColorDomain: layerCfg?.regionalColorDomain ?? null,
+		// Ranked layers: «Cómo leer» opens with the department view (flood says it itself).
+		deptView: !!layerCfg?.deptRank && params.id !== 'flood_risk',
 	};
 }

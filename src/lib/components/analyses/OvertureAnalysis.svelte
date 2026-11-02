@@ -178,6 +178,16 @@
 		return m ? { ...base, ...m } : base;
 	});
 	const rankUnit = $derived(rankCfg ? (rankCfg.unitKey ? i18n.t(rankCfg.unitKey) : rankCfg.unit) : '');
+	// «Cómo leer» opens with the department view on every ranked layer; flood explains
+	// it in its own text (tab by tab).
+	const showDeptView = $derived(!!layerCfg?.deptRank && layerCfg.id !== 'flood_risk');
+	// A reading that exists only by department: say what the hexagons show instead.
+	const hexNoneNote = $derived.by(() => {
+		if (!rankCfg?.hexNone || !layerCfg) return '';
+		const pv = hexStore.effectivePrimary;
+		const v = layerCfg.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
+		return v ? i18n.t('rank.hexNone').replace('{v}', i18n.t(v.labelKey)) : '';
+	});
 	// rankBars: departments with a value for the active reading. rankProvince: the
 	// territory-wide block (deptRank.province), shown above the bars or instead of them.
 	const rankBars = $derived(!!rankCfg && !!rankSummary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null));
@@ -711,13 +721,14 @@
 
 		<div class="dept-active-title">{formatDept(selectedDpto)}</div>
 
-		{#if hasRank && rankMetrics.length > 1 && !rankPlain && rankCfg?.hexVariable}
+		{#if hasRank && rankMetrics.length > 1 && !rankPlain && (rankCfg?.hexVariable || layerCfg?.deptRank?.metrics?.some((m) => m.hexNone))}
 			<div class="rank-tabs rank-tabs-dept">
 				{#each rankMetrics as m, i}
 					<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
 				{/each}
 			</div>
 		{/if}
+		{#if hexNoneNote}<p class="explain-text rank-hexnone">{hexNoneNote}</p>{/if}
 		{#if selectedRankPos && rankCfg}
 			<div class="rank-selected">
 				<span class="rank-selected-pos">{selectedRankPos.pos}.º {i18n.t('rank.of')} {selectedRankPos.total}</span>
@@ -782,6 +793,7 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>
 				<div class="method-body">
+					{#if showDeptView}<p class="explain-text">{i18n.t('analysis.howToRead.deptView')}</p>{/if}
 					<p class="explain-text">{content.howToRead[i18n.locale] ?? content.howToRead.es}</p>
 				</div>
 			</details>
@@ -987,6 +999,7 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>
 				<div class="method-body">
+					{#if showDeptView}<p class="explain-text">{i18n.t('analysis.howToRead.deptView')}</p>{/if}
 					<p class="explain-text">{content.howToRead[i18n.locale] ?? content.howToRead.es}</p>
 				</div>
 			</details>
@@ -1102,6 +1115,7 @@
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>
 				<div class="method-body">
+					{#if showDeptView}<p class="explain-text">{i18n.t('analysis.howToRead.deptView')}</p>{/if}
 					<p class="explain-text">{content.howToRead[i18n.locale] ?? content.howToRead.es}</p>
 				</div>
 			</details>
