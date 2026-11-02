@@ -1331,6 +1331,9 @@
 
 	.panel { width: 384px; max-width: 100%; overflow-y: auto; padding: 24px 24px 30px; background: var(--panel);
 		border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
+	/* Panel text justified (author, 1-nov-2026); hyphenation (lang es) keeps the narrow
+	   column from opening wide gaps between words. */
+	.panel p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 	.kicker { margin: 0; color: var(--ink-3); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
 	h1 { margin: 6px 0 0; font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: 0; line-height: 1.15; color: var(--ink); }
 	h2 { margin: 0 0 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
