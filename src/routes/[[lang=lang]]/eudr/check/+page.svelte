@@ -858,7 +858,7 @@
 						<!-- El score pondera el fuego SOBRE NATIVA LENOSA; el total se muestra al lado
 						     porque en pastizal y humedal el fuego es regimen natural, no conversion. -->
 						<div class="bg-white/[0.03] rounded p-3">
-							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.fire_post_2020')}</div>
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t(result.fire_native_post_2020_pct !== null ? 'eudr.check.fire_post_2020' : 'eudr.check.fire_all_post_2020')}</div>
 							{#if result.fire_native_post_2020_pct !== null}
 								<div class="text-lg font-bold" style="color: {(result.fire_native_post_2020_pct ?? 0) > 0 ? '#f59e0b' : '#9ca3af'};">
 									{fmt(result.fire_native_post_2020_pct)}%

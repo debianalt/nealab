@@ -8,8 +8,9 @@ classes and point to the legend, which draws the active theme's colours.
 Decided with the author on 2-nov-2026.
 
 Scope: the howToRead texts in content/methodology.ts and config.ts, and the
-*howToRead* / guide*Body keys in i18n (es, en, pt; gn is checked against its
-own colour words).
+*howToRead* / guide*Body / *note* / temporal.hint.* / legend.* keys in i18n
+(es, en, pt; gn is checked against its own colour words). Notes and hints were
+added on 2-nov-2026: ranking notes still said «rojo/verde» after the sello.
 
 Usage: python scripts/check_color_words.py   (exit 1 on any hit)
 """
@@ -19,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FILES = ['src/lib/content/methodology.ts', 'src/lib/config.ts', 'src/lib/stores/i18n.svelte.ts']
 KEY = re.compile(r"^\s*['\"]?([\w.]+)['\"]?\s*:\s*\{")
-SCOPE = re.compile(r'howToRead|guide\w*Body', re.I)
+SCOPE = re.compile(r'howToRead|guide\w*Body|note|temporal\.hint|^legend\.', re.I)
 STR = re.compile(r"\b(es|en|pt|gn)\s*:\s*(['\"`])((?:\\.|(?!\2).)*)\2")
 WORDS = {
 	'es': r'oscur[oa]s?|azul(es)?|amarill[oa]s?|roj[oa]s?|verdes?|naranjas?|violetas?|púrpuras?|morad[oa]s?|gris(es)?|blanc[oa]s?|negr[oa]s?|dorad[oa]s?|celestes?|cyan|marr[oó]n|pard[oa]s?|ámbar|cálid[oa]s?',

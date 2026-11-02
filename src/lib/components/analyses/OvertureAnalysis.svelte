@@ -602,7 +602,7 @@
 		const results = await Promise.all(available.map(async (t: TerritoryConfig) => {
 			const url = getSatGlobalUrl(layerCfg!.id, t.parquetPrefix);
 			try {
-				const r = await query(`SELECT quantile_disc("${col}", 0.25) as p25, quantile_disc("${col}", 0.5) as p50, quantile_disc("${col}", 0.75) as p75, avg("${col}") as avg_score FROM '${url}' WHERE "${col}" IS NOT NULL AND "${col}" > 0`);
+				const r = await query(`SELECT quantile_disc("${col}", 0.25) as p25, quantile_disc("${col}", 0.5) as p50, quantile_disc("${col}", 0.75) as p75, avg("${col}") as avg_score FROM '${url}' WHERE "${col}" IS NOT NULL`);
 				if (r.numRows === 0) return null;
 				const row = r.get(0)!.toJSON() as Record<string, any>;
 				return { territory: t, p25: Number(row.p25), p50: Number(row.p50), p75: Number(row.p75), avg: Number(row.avg_score) } as CalibRow;
@@ -954,8 +954,8 @@
 		</div>
 		{/if}
 
-		<!-- Goalpost check (quartiles of the 0–100 primary per territory). Not for class
-		     codes (agri suitability S1…N): their quartiles say nothing. -->
+		<!-- Quartiles of the painted variable per territory. Not for class codes (agri
+		     suitability S1…N): their quartiles say nothing. -->
 		{#if analysis.comparable && !layerCfg?.colorClasses?.ordinal}
 			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
 				<summary class="method-summary">{i18n.t('analysis.distByTerritory')}</summary>
@@ -977,7 +977,7 @@
 							{/each}
 							</tbody>
 						</table>
-						<p class="explain-text" style="margin-top:4px">Distribuciones similares entre provincias, departamentos y estados confirman que los goalposts están bien calibrados.</p>
+						<p class="explain-text" style="margin-top:4px">{i18n.t('analysis.distByTerritory.note')}</p>
 					{/if}
 				</div>
 			</details>

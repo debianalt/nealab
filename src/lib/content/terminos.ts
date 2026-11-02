@@ -62,7 +62,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s2Title: '2. Naturaleza del servicio',
 		s2P1: 'Spatia es una <strong>herramienta de análisis geoespacial académico</strong> de acceso abierto, desarrollada en el marco del Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET, Argentina), la Secretaría de Investigación y Posgrado (SINVyP) de la Facultad de Humanidades y Ciencias Sociales (FHyCS) y la Universidad Nacional de Misiones (UNaM). Integra datos públicos de fuentes declaradas para generar visualizaciones e indicadores sobre el noreste argentino y sus regiones transfronterizas.',
 		s2P2: 'Spatia <strong>no es</strong> un sistema de recomendación, un sistema de certificación, un peritaje técnico ni una consultoría profesional de ningún tipo. Sus análisis son síntesis cuantitativas de variables observables desde percepción remota, censos y fuentes administrativas, y deben entenderse como <strong>hipótesis a contrastar</strong>, nunca como verdades a aplicar directamente.',
-		s2P3: 'El acceso libre y abierto a Spatia forma parte del <strong>Servicio Tecnológico de Alto Nivel (STAN) del CONICET</strong> «Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales». Los diagnósticos a medida, asesoramientos y capacitaciones de ese servicio se contratan aparte y se rigen por las condiciones que se acuerden con cada contratante, no por estos términos: lo que se trabaja para un contratante (sus datos, resultados e informes) es <strong>confidencial</strong> y no se publica en Spatia ni se comparte con terceros, salvo que el contratante lo autorice por escrito.',
+		s2P3: 'El acceso a Spatia es libre y gratuito. Los diagnósticos a medida, asesoramientos y capacitaciones se prestan aparte, como <strong>Servicio Tecnológico de Alto Nivel (STAN) del CONICET</strong> «Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales»; se contratan por separado y se rigen por las condiciones que se acuerden con cada contratante, no por estos términos: lo que se trabaja para un contratante (sus datos, resultados e informes) es <strong>confidencial</strong> y no se publica en Spatia ni se comparte con terceros, salvo que el contratante lo autorice por escrito.',
 		s3Title: '3. Exclusión de garantías',
 		s3Intro: 'La plataforma y toda la información que contiene se proveen <strong>tal cual (as-is)</strong>, sin garantías de ningún tipo, expresas ni implícitas, incluyendo pero no limitado a:',
 		s3List: [
@@ -74,7 +74,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		],
 		s3P2: 'Los datos satelitales, censales y administrativos que integra Spatia pueden contener errores, desfasajes temporales o limitaciones metodológicas documentadas en la ficha técnica de cada capa. Es responsabilidad del usuario verificar la adecuación de esa información para el uso que pretende darle.',
 		s4Title: '4. Limitación de responsabilidad',
-		s4Intro: 'En la máxima medida permitida por la legislación aplicable, <strong>Raimundo Elias Gomez, el Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), la Universidad Nacional de Misiones (UNaM) y su Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> no serán responsables por daños de ningún tipo derivados del uso o la imposibilidad de uso de Spatia, incluyendo pero no limitado a:',
+		s4Intro: 'En la máxima medida permitida por la legislación aplicable, <strong>Raimundo Elías Gómez, el Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), la Universidad Nacional de Misiones (UNaM) y su Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> no serán responsables por daños de ningún tipo derivados del uso o la imposibilidad de uso de Spatia, incluyendo pero no limitado a:',
 		s4List: [
 			'Daños directos, indirectos, incidentales, especiales o consecuentes',
 			'Pérdidas económicas, pérdida de ganancias o de oportunidades de negocio',
@@ -91,7 +91,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s6List: [
 			'Consulta, exploración y visualización de datos geoespaciales públicos',
 			'Investigación académica y producción científica',
-			'Educación, docencia y ciencia ciudadana',
+			'Educación y docencia',
 			'Diagnósticos no vinculantes como insumo de deliberación o planificación',
 			'Generación de hipótesis que serán contrastadas con fuentes primarias y trabajo de campo',
 		],
@@ -104,7 +104,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 			'Reproducir o redistribuir los análisis de Spatia atribuyéndoles una precisión, autoridad o vigencia que el servicio no garantiza.',
 		],
 		s8Title: '8. Propiedad intelectual',
-		s8P1: 'Los datos integrados por Spatia provienen de fuentes públicas declaradas en la ficha técnica de cada capa — entre otras, el Instituto Nacional de Estadística y Censos (INDEC), el Instituto Geográfico Nacional (IGN), el Joint Research Centre (JRC) de la Comisión Europea, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas y OpenStreetMap (OSM) — y se usan conforme a sus licencias originales. El pipeline de procesamiento, el código de la plataforma y las visualizaciones son de autoría de Raimundo Elias Gomez, están registrados en la Dirección Nacional del Derecho de Autor (DNDA) y el código fuente se publica bajo licencia GPL-3.0 en <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Pueden citarse según la referencia indicada en <a href="/servicios">spatia.ar/servicios</a>.',
+		s8P1: 'Los datos integrados por Spatia provienen de fuentes públicas declaradas en la ficha técnica de cada capa — entre otras, el Instituto Nacional de Estadística y Censos (INDEC), el Instituto Geográfico Nacional (IGN), el Joint Research Centre (JRC) de la Comisión Europea, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas y OpenStreetMap (OSM) — y se usan conforme a sus licencias originales. El pipeline de procesamiento, el código de la plataforma y las visualizaciones son de autoría de Raimundo Elías Gómez, están registrados en la Dirección Nacional del Derecho de Autor (DNDA) y el código fuente se publica bajo licencia AGPL-3.0 en <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Pueden citarse según la referencia indicada en <a href="/servicios">spatia.ar/servicios</a>.',
 		s9Title: '9. Privacidad y datos',
 		s9P1: 'Spatia no recopila datos personales de los usuarios. El acceso a la plataforma puede generar registros técnicos estándar (dirección IP, timestamp, ruta de acceso) utilizados exclusivamente para monitoreo de infraestructura y detección de errores. Estos registros no se comparten con terceros ni se usan para identificar personas.',
 		s9P2: 'La aceptación de estos términos se registra localmente en el navegador del usuario (localStorage) y no se transmite a ningún servidor.',
@@ -132,7 +132,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s2Title: '2. Nature of the service',
 		s2P1: 'Spatia is an open-access <strong>academic geospatial analysis tool</strong>, developed within the framework of the National Scientific and Technical Research Council (CONICET, Argentina), the Research and Postgraduate Secretariat (SINVyP) of the Faculty of Humanities and Social Sciences (FHyCS) and the National University of Misiones (UNaM). It integrates public data from declared sources to generate visualisations and indicators about northeast Argentina and its cross-border regions.',
 		s2P2: 'Spatia is <strong>not</strong> a recommendation system, certification system, technical expert assessment or professional consultancy of any kind. Its analyses are quantitative summaries of variables observable through remote sensing, censuses and administrative sources, and must be understood as <strong>hypotheses to be tested</strong>, never as truths to be applied directly.',
-		s2P3: 'Free and open access to Spatia is part of CONICET\'s <strong>High-Level Technological Service (STAN)</strong> «Advice and training in integrated socio-economic, productive and environmental geospatial analysis». The tailored diagnostics, advice and training of that service are contracted separately and governed by the conditions agreed with each client, not by these terms: work done for a client (its data, results and reports) is <strong>confidential</strong> and is neither published on Spatia nor shared with third parties unless the client authorises it in writing.',
+		s2P3: 'Access to Spatia is free of charge. Tailored diagnostics, advice and training are provided separately, as a CONICET <strong>High-Level Technological Service (STAN)</strong> «Advice and training in integrated socio-economic, productive and environmental geospatial analysis»; they are contracted separately and governed by the conditions agreed with each client, not by these terms: work done for a client (its data, results and reports) is <strong>confidential</strong> and is neither published on Spatia nor shared with third parties unless the client authorises it in writing.',
 		s3Title: '3. Disclaimer of warranties',
 		s3Intro: 'The platform and all information it contains are provided <strong>as-is</strong>, without warranties of any kind, express or implied, including but not limited to:',
 		s3List: [
@@ -144,7 +144,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		],
 		s3P2: 'Satellite, census and administrative data integrated by Spatia may contain errors, time lags or methodological limitations documented in each layer\'s technical fact sheet. It is the user\'s responsibility to verify the suitability of that information for the intended use.',
 		s4Title: '4. Limitation of liability',
-		s4Intro: 'To the maximum extent permitted by applicable law, <strong>Raimundo Elias Gomez, the National Scientific and Technical Research Council (CONICET), the National University of Misiones (UNaM) and its Faculty of Humanities and Social Sciences (FHyCS)</strong> shall not be liable for damages of any kind arising from the use or inability to use Spatia, including but not limited to:',
+		s4Intro: 'To the maximum extent permitted by applicable law, <strong>Raimundo Elías Gómez, the National Scientific and Technical Research Council (CONICET), the National University of Misiones (UNaM) and its Faculty of Humanities and Social Sciences (FHyCS)</strong> shall not be liable for damages of any kind arising from the use or inability to use Spatia, including but not limited to:',
 		s4List: [
 			'Direct, indirect, incidental, special or consequential damages',
 			'Economic losses, loss of profit or business opportunities',
@@ -161,7 +161,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s6List: [
 			'Consultation, exploration and visualisation of public geospatial data',
 			'Academic research and scientific production',
-			'Education, teaching and citizen science',
+			'Education and teaching',
 			'Non-binding diagnostics as input for deliberation or planning',
 			'Generation of hypotheses to be tested against primary sources and fieldwork',
 		],
@@ -174,7 +174,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 			'Reproducing or redistributing Spatia analyses attributing to them an accuracy, authority or currency that the service does not guarantee.',
 		],
 		s8Title: '8. Intellectual property',
-		s8P1: 'Data integrated by Spatia comes from public sources declared in each layer\'s technical fact sheet — including the National Institute of Statistics and Censuses (INDEC), the National Geographic Institute (IGN), the Joint Research Centre (JRC) of the European Commission, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas and OpenStreetMap (OSM) — and is used in accordance with their original licences. The processing pipeline, platform code and visualisations are authored by Raimundo Elias Gomez and registered with Argentina\'s National Copyright Office (DNDA); the source code is published under the GPL-3.0 licence at <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. They may be cited as indicated in <a href="/en/servicios">spatia.ar/en/servicios</a>.',
+		s8P1: 'Data integrated by Spatia comes from public sources declared in each layer\'s technical fact sheet — including the National Institute of Statistics and Censuses (INDEC), the National Geographic Institute (IGN), the Joint Research Centre (JRC) of the European Commission, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas and OpenStreetMap (OSM) — and is used in accordance with their original licences. The processing pipeline, platform code and visualisations are authored by Raimundo Elías Gómez and registered with Argentina\'s National Copyright Office (DNDA); the source code is published under the AGPL-3.0 licence at <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. They may be cited as indicated in <a href="/en/servicios">spatia.ar/en/servicios</a>.',
 		s9Title: '9. Privacy and data',
 		s9P1: 'Spatia does not collect personal data from users. Access to the platform may generate standard technical logs (IP address, timestamp, access path) used exclusively for infrastructure monitoring and error detection. These logs are not shared with third parties or used to identify individuals.',
 		s9P2: 'Acceptance of these terms is recorded locally in the user\'s browser (localStorage) and is not transmitted to any server.',
@@ -202,7 +202,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s2Title: '2. Natureza do serviço',
 		s2P1: 'Spatia é uma <strong>ferramenta de análise geoespacial acadêmica</strong> de acesso aberto, desenvolvida no âmbito do Conselho Nacional de Pesquisas Científicas e Técnicas (CONICET, Argentina), da Secretaria de Pesquisa e Pós-Graduação (SINVyP) da Faculdade de Humanidades e Ciências Sociais (FHyCS) e da Universidade Nacional de Misiones (UNaM). Integra dados públicos de fontes declaradas para gerar visualizações e indicadores sobre o nordeste argentino e suas regiões transfronteiriças.',
 		s2P2: 'Spatia <strong>não é</strong> um sistema de recomendação, um sistema de certificação, uma perícia técnica nem uma consultoria profissional de qualquer natureza. Suas análises são sínteses quantitativas de variáveis observáveis por percepção remota, censos e fontes administrativas, e devem ser entendidas como <strong>hipóteses a serem testadas</strong>, nunca como verdades a serem aplicadas diretamente.',
-		s2P3: 'O acesso livre e aberto ao Spatia faz parte do <strong>Serviço Tecnológico de Alto Nível (STAN) do CONICET</strong> «Assessoria e capacitação em análises geoespaciais integradas socioeconômicas, produtivas e ambientais». Os diagnósticos sob medida, assessorias e capacitações desse serviço são contratados à parte e regidos pelas condições acordadas com cada contratante, não por estes termos: o trabalho feito para um contratante (seus dados, resultados e relatórios) é <strong>confidencial</strong> e não é publicado no Spatia nem compartilhado com terceiros, salvo autorização por escrito do contratante.',
+		s2P3: 'O acesso ao Spatia é livre e gratuito. Os diagnósticos sob medida, assessorias e capacitações são prestados à parte, como <strong>Serviço Tecnológico de Alto Nível (STAN) do CONICET</strong> «Assessoria e capacitação em análises geoespaciais integradas socioeconômicas, produtivas e ambientais»; são contratados separadamente e regidos pelas condições acordadas com cada contratante, não por estes termos: o trabalho feito para um contratante (seus dados, resultados e relatórios) é <strong>confidencial</strong> e não é publicado no Spatia nem compartilhado com terceiros, salvo autorização por escrito do contratante.',
 		s3Title: '3. Exclusão de garantias',
 		s3Intro: 'A plataforma e todas as informações que contém são fornecidas <strong>no estado em que se encontram (as-is)</strong>, sem garantias de qualquer espécie, expressas ou implícitas, incluindo, mas não se limitando a:',
 		s3List: [
@@ -214,7 +214,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		],
 		s3P2: 'Os dados satelitais, censitários e administrativos integrados pelo Spatia podem conter erros, defasagens temporais ou limitações metodológicas documentadas na ficha técnica de cada camada. É responsabilidade do usuário verificar a adequação dessas informações para o uso que pretende fazer.',
 		s4Title: '4. Limitação de responsabilidade',
-		s4Intro: 'Na máxima extensão permitida pela legislação aplicável, <strong>Raimundo Elias Gomez, o Conselho Nacional de Pesquisas Científicas e Técnicas (CONICET), a Universidade Nacional de Misiones (UNaM) e sua Faculdade de Humanidades e Ciências Sociais (FHyCS)</strong> não serão responsáveis por danos de qualquer natureza decorrentes do uso ou da impossibilidade de uso do Spatia, incluindo, mas não se limitando a:',
+		s4Intro: 'Na máxima extensão permitida pela legislação aplicável, <strong>Raimundo Elías Gómez, o Conselho Nacional de Pesquisas Científicas e Técnicas (CONICET), a Universidade Nacional de Misiones (UNaM) e sua Faculdade de Humanidades e Ciências Sociais (FHyCS)</strong> não serão responsáveis por danos de qualquer natureza decorrentes do uso ou da impossibilidade de uso do Spatia, incluindo, mas não se limitando a:',
 		s4List: [
 			'Danos diretos, indiretos, incidentais, especiais ou consequentes',
 			'Perdas econômicas, perda de lucros ou de oportunidades de negócio',
@@ -231,7 +231,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s6List: [
 			'Consulta, exploração e visualização de dados geoespaciais públicos',
 			'Pesquisa acadêmica e produção científica',
-			'Educação, ensino e ciência cidadã',
+			'Educação e ensino',
 			'Diagnósticos não vinculantes como insumo para deliberação ou planejamento',
 			'Geração de hipóteses a serem testadas com fontes primárias e trabalho de campo',
 		],
@@ -244,7 +244,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 			'Reproduzir ou redistribuir as análises do Spatia atribuindo-lhes uma precisão, autoridade ou atualidade que o serviço não garante.',
 		],
 		s8Title: '8. Propriedade intelectual',
-		s8P1: 'Os dados integrados pelo Spatia provêm de fontes públicas declaradas na ficha técnica de cada camada — entre outras, o Instituto Nacional de Estatística e Censos (INDEC), o Instituto Geográfico Nacional (IGN), o Joint Research Centre (JRC) da Comissão Europeia, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas e OpenStreetMap (OSM) — e são utilizados conforme suas licenças originais. O pipeline de processamento, o código da plataforma e as visualizações são de autoria de Raimundo Elias Gomez e estão registrados na Direção Nacional do Direito Autoral da Argentina (DNDA); o código-fonte é publicado sob a licença GPL-3.0 em <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Podem ser citados conforme a referência indicada em <a href="/pt/servicios">spatia.ar/pt/servicios</a>.',
+		s8P1: 'Os dados integrados pelo Spatia provêm de fontes públicas declaradas na ficha técnica de cada camada — entre outras, o Instituto Nacional de Estatística e Censos (INDEC), o Instituto Geográfico Nacional (IGN), o Joint Research Centre (JRC) da Comissão Europeia, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas e OpenStreetMap (OSM) — e são utilizados conforme suas licenças originais. O pipeline de processamento, o código da plataforma e as visualizações são de autoria de Raimundo Elías Gómez e estão registrados na Direção Nacional do Direito Autoral da Argentina (DNDA); o código-fonte é publicado sob a licença AGPL-3.0 em <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Podem ser citados conforme a referência indicada em <a href="/pt/servicios">spatia.ar/pt/servicios</a>.',
 		s9Title: '9. Privacidade e dados',
 		s9P1: 'Spatia não coleta dados pessoais dos usuários. O acesso à plataforma pode gerar registros técnicos padrão (endereço IP, timestamp, caminho de acesso) utilizados exclusivamente para monitoramento de infraestrutura e detecção de erros. Esses registros não são compartilhados com terceiros nem utilizados para identificar pessoas.',
 		s9P2: 'A aceitação destes termos é registrada localmente no navegador do usuário (localStorage) e não é transmitida a nenhum servidor.',
@@ -272,7 +272,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s2Title: '2. Servicío rehegua',
 		s2P1: 'Spatia es una <strong>herramienta de análisis geoespacial académico</strong> de acceso abierto, desarrollada en el marco del Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET, Argentina), la Secretaría de Investigación y Posgrado (SINVyP) de la Facultad de Humanidades y Ciencias Sociales (FHyCS) y la Universidad Nacional de Misiones (UNaM). Integra datos públicos de fuentes declaradas para generar visualizaciones e indicadores sobre el noreste argentino y sus regiones transfronterizas.',
 		s2P2: 'Spatia <strong>ndoikói</strong> sistema de recomendación, sistema de certificación, peritaje técnico ni consultoría profesional. Análisis-kuéra oĩ síntesis cuantitativa variables observables percepción remota, censos ha fuentes administrativas-gui, ha ojehechauka <strong>hipótesis ojehekáva</strong> ikatúva, araka\'eve ndaha\'éi verdades ojeporu hagua.',
-		s2P3: 'El acceso libre y abierto a Spatia forma parte del <strong>Servicio Tecnológico de Alto Nivel (STAN) del CONICET</strong> «Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales». Los diagnósticos a medida, asesoramientos y capacitaciones de ese servicio se contratan aparte y se rigen por las condiciones que se acuerden con cada contratante, no por estos términos: lo que se trabaja para un contratante (sus datos, resultados e informes) es <strong>confidencial</strong> y no se publica en Spatia ni se comparte con terceros, salvo que el contratante lo autorice por escrito.',
+		s2P3: 'El acceso a Spatia es libre y gratuito. Los diagnósticos a medida, asesoramientos y capacitaciones se prestan aparte, como <strong>Servicio Tecnológico de Alto Nivel (STAN) del CONICET</strong> «Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales»; se contratan por separado y se rigen por las condiciones que se acuerden con cada contratante, no por estos términos: lo que se trabaja para un contratante (sus datos, resultados e informes) es <strong>confidencial</strong> y no se publica en Spatia ni se comparte con terceros, salvo que el contratante lo autorice por escrito.',
 		s3Title: '3. Garantías ndoĩhaguépe',
 		s3Intro: 'Plataforma ha información oĩva ojemoĩ <strong>as-is</strong>, garantías ndoĩhaguépe, expresas ni implícitas, oĩ peteĩva:',
 		s3List: [
@@ -284,7 +284,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		],
 		s3P2: 'Datos satelitales, censales ha administrativos Spatia-pe oĩva ikatu oĩ errores, desfasajes temporales ha limitaciones metodológicas ficha técnica-pe oñembyaikuaáva. Usuario omba\'apo verificar upe información adecuación ojeporu hagua.',
 		s4Title: '4. Responsabilidad limitación',
-		s4Intro: 'En la máxima medida permitida por la legislación aplicable, <strong>Raimundo Elias Gomez, el Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), la Universidad Nacional de Misiones (UNaM) y su Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> no serán responsables por daños de ningún tipo derivados del uso o la imposibilidad de uso de Spatia, incluyendo pero no limitado a:',
+		s4Intro: 'En la máxima medida permitida por la legislación aplicable, <strong>Raimundo Elías Gómez, el Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), la Universidad Nacional de Misiones (UNaM) y su Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> no serán responsables por daños de ningún tipo derivados del uso o la imposibilidad de uso de Spatia, incluyendo pero no limitado a:',
 		s4List: [
 			'Daños directos, indirectos, incidentales, especiales ha consecuentes',
 			'Pérdidas económicas, ganancias ha oportunidades de negocio',
@@ -301,7 +301,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		s6List: [
 			'Consulta, exploración ha visualización datos geoespaciales públicos rehegua',
 			'Investigación académica ha producción científica',
-			'Educación, docencia ha ciencia ciudadana',
+			'Educación ha docencia',
 			'Diagnósticos no vinculantes insumo deliberación térã planificación-pe',
 			'Hipótesis oñemboguapy fuentes primarias ha trabajo de campo ndive',
 		],
@@ -314,7 +314,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 			'Análisis Spatia oñemomba\'e exactitud, autoridad ha vigencia servicio ndojeguaraíva.',
 		],
 		s8Title: '8. Propiedad intelectual',
-		s8P1: 'Los datos integrados por Spatia provienen de fuentes públicas declaradas en la ficha técnica de cada capa — entre otras, el Instituto Nacional de Estadística y Censos (INDEC), el Instituto Geográfico Nacional (IGN), el Joint Research Centre (JRC) de la Comisión Europea, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas y OpenStreetMap (OSM) — y se usan conforme a sus licencias originales. El pipeline de procesamiento, el código de la plataforma y las visualizaciones son de autoría de Raimundo Elias Gomez, están registrados en la Dirección Nacional del Derecho de Autor (DNDA) y el código fuente se publica bajo licencia GPL-3.0 en <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Pueden citarse según la referencia indicada en <a href="/gn/servicios">spatia.ar/gn/servicios</a>.',
+		s8P1: 'Los datos integrados por Spatia provienen de fuentes públicas declaradas en la ficha técnica de cada capa — entre otras, el Instituto Nacional de Estadística y Censos (INDEC), el Instituto Geográfico Nacional (IGN), el Joint Research Centre (JRC) de la Comisión Europea, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas y OpenStreetMap (OSM) — y se usan conforme a sus licencias originales. El pipeline de procesamiento, el código de la plataforma y las visualizaciones son de autoría de Raimundo Elías Gómez, están registrados en la Dirección Nacional del Derecho de Autor (DNDA) y el código fuente se publica bajo licencia AGPL-3.0 en <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Pueden citarse según la referencia indicada en <a href="/gn/servicios">spatia.ar/gn/servicios</a>.',
 		s9Title: '9. Privacidad ha datos',
 		s9P1: 'Spatia ndoipotái datos personales usuarios-gui. Acceso plataforma-pe ikatu oñemoheẽ registros técnicos (IP, timestamp, ruta) infraestructura monitoreo ha errores detección hag̃ua. Registros ndojejapói terceros-pe ni personas oñembohecha hag̃ua.',
 		s9P2: 'Términos aceptación oñemoĩ localmente usuario navegador-pe (localStorage) ha ndojejapói servidor-pe.',

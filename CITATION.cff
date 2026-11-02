@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "nealab: A Reproducible Platform for Subnational Geospatial Analysis"
+title: "Spatia: A Reproducible Platform for Subnational Geospatial Analysis"
 message: "If you use this software, please cite it using these metadata."
 type: software
 authors:
@@ -25,15 +25,17 @@ keywords:
   - Misiones
   - Argentina
 abstract: >-
-  nealab is a reproducible platform for subnational territorial
-  analysis. It combines satellite imagery (Sentinel-1/2, MODIS, Landsat),
-  census data, and open geospatial datasets into PCA-validated composite
-  indicators on a hexagonal grid (H3 resolution 9). The pipeline runs on
-  Google Earth Engine, processes rasters into H3 zonal statistics, computes
-  scores using geometric means validated by KMO/Bartlett/PCA diagnostics
-  (OECD Handbook / UNDP HDI methodology), and serves results via DuckDB-WASM
-  on Cloudflare Pages. Applied to 24 subnational territories across the NEA
-  (northeast Argentina) and its cross-border regions (Paraguay, southern
-  Brazil), ranging from ~320,000 hexagons for Misiones to ~1.1 million for
-  Chaco, with 16 hexagon-level analyses and 8 census-tract-level analyses
-  across four thematic lenses: investment, production, services, and housing.
+  Spatia is a reproducible, open platform for subnational geospatial
+  analysis of northeast Argentina (NEA) and its cross-border regions
+  (Paraguay, southern Brazil). It combines satellite imagery (Sentinel-1/2,
+  Landsat, MODIS, VIIRS), census data and open geospatial datasets on a
+  hexagonal grid (H3 resolution 9), from ~320,000 hexagons for Misiones to
+  more than a million for Corrientes and Chaco, across 24 provinces,
+  departments and states. Most layers report physical values directly
+  (percent of buildings on low ground, tree cover loss rate, PM2.5 in
+  ug/m3, travel minutes, census rates); the few composite scores use
+  equal-weight geometric means of PCA-selected components. The pipeline
+  runs on Google Earth Engine, processes rasters into H3 zonal statistics
+  and serves results via DuckDB-WASM on Cloudflare Pages. It offers 15
+  analyses across four thematic lenses: environment and risk, production
+  and land, population and services, and economy and trade.

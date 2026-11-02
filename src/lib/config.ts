@@ -473,7 +473,7 @@ export const LENS_CONFIG: Record<LensId, LensConfig> = {
 	ambiente:   { label: { es: 'Ambiente y riesgo',          en: 'Environment & risk',        gn: 'Yvypóra',    pt: 'Ambiente e risco'          }, color: '#ef4444' },
 	produccion: { label: { es: 'Producción y suelo',         en: 'Production & land',         gn: "Mba'apo",    pt: 'Produção e solo'            }, color: '#22c55e' },
 	poblacion:  { label: { es: 'Población y servicios',      en: 'Population & services',     gn: 'Tetã kuéra', pt: 'População e serviços'       }, color: '#3b82f6' },
-	economia:   { label: { es: 'Economía e infraestructura', en: 'Economy & infrastructure',  gn: 'Moĩ viru',   pt: 'Economia e infraestrutura'  }, color: '#f59e0b' },
+	economia:   { label: { es: 'Economía y comercio',        en: 'Economy & trade',           gn: 'Moĩ viru',   pt: 'Economia e comércio'        }, color: '#f59e0b' },
 } as const;
 
 // ── Hex layer system (multi-resolution) ──────────────────────────────────────
@@ -1469,7 +1469,9 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		descKey: 'analysis.accessibility.desc',
 		status: 'available',
 		spatialUnit: 'hexagon',
-		comparable: true,
+		// Not comparable: each hexagon is timed to its own capital (province, PY department
+		// or BR state), so minutes do not compare across countries (methodology). No
+		// `comparable` flag on purpose.
 		rigorBadge: 'physical',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', central_py: 'available', neembucu_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available', misiones_py: 'available', paraguari_py: 'available', amambay_py: 'available'},
 	},
@@ -1537,7 +1539,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
-	// ── Economía e infraestructura ──
+	// ── Economía y comercio ──
 	{
 		id: 'economic_activity',
 		lensId: 'economia',
@@ -1785,8 +1787,8 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'layer.source.censoTemporal' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS + GBA 2025', processedDate: '30/10/2026', sourceKey: 'layer.source.economic' },
-	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '30/05/2026', sourceKey: 'layer.source.accessibility' },
-	sat_land_use: { dataDate: 'Dynamic World V1', processedDate: '23/10/2026', sourceKey: 'layer.source.landUse' },
+	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '01/11/2026', sourceKey: 'layer.source.accessibility' },
+	sat_land_use: { dataDate: 'Dynamic World V1, 2024', processedDate: '31/10/2026', sourceKey: 'layer.source.landUse' },
 	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
 	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.12 2001-2024', processedDate: '01/10/2026', sourceKey: 'layer.source.deforestation' },
 	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.

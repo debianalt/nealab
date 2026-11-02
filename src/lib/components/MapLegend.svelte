@@ -40,10 +40,14 @@
 	const isGradient = $derived(isSequential || isFlood || isGreen || isWarm || isNight || isDiverging);
 
 	// When the map paints a variable other than the primary (flood ranking tab),
-	// the title names it.
+	// the title names it. Layers whose tabs repaint the hexes (deptRank.hexVariable)
+	// also name the primary when no tab drives the color (flood on the Chaco plain:
+	// JRC presence), so the legend never reads as the bare layer question.
 	const paintedLabel = $derived.by(() => {
 		const pv = hexStore.effectivePrimary;
-		if (!layer || !hexStore.colorVariable || pv !== hexStore.colorVariable) return '';
+		if (!layer) return '';
+		const named = hexStore.colorVariable ? pv === hexStore.colorVariable : !!layer.deptRank?.hexVariable;
+		if (!named) return '';
 		const v = layer.variables?.find((x: any) => x.col === pv);
 		return v ? i18n.t(v.labelKey) : '';
 	});
@@ -123,8 +127,8 @@
 	// Danger layers (colorScale 'flood', higher = worse) get their delta sign flipped in
 	// the choropleth so an INCREASE renders tierra (left end). In that mode the static layer labels
 	// ("Baja/Alta presión…") would read backwards, so the diverging ends must be labeled
-	// Peor/Mejor instead. Non-danger temporal layers (carbon, censo: sequential) are not
-	// flipped, so their static low/high labels still fit the change ramp.
+	// Peor/Mejor instead. Non-danger temporal layers (censo density) are not flipped:
+	// their ends read Disminuyó/Aumentó (a static "Baja/Alta densidad" is a level, not a change).
 	const isDangerDelta = $derived(isDiverging && layer?.colorScale === 'flood');
 	// P2–P98 domain (census rates): the real values at both ends of the ramp.
 	// Values beyond them take the end color, hence ≤ / ≥.
@@ -138,16 +142,16 @@
 	});
 	const lowLabel = $derived(
 		isDangerDelta ? i18n.t('temporal.legend.worse')
+		: isDiverging ? i18n.t('temporal.legend.decrease')
 		: layer?.legendLowKey ? i18n.t(layer.legendLowKey)
 		: isFlood ? i18n.t('legend.lowRisk')
-		: isDiverging ? i18n.t('temporal.legend.worse')
 		: i18n.t('legend.low')
 	);
 	const highLabel = $derived(
 		isDangerDelta ? i18n.t('temporal.legend.better')
+		: isDiverging ? i18n.t('temporal.legend.increase')
 		: layer?.legendHighKey ? i18n.t(layer.legendHighKey)
 		: isFlood ? i18n.t('legend.highRisk')
-		: isDiverging ? i18n.t('temporal.legend.better')
 		: i18n.t('legend.high')
 	);
 </script>
