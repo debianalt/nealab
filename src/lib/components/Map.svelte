@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
-	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, type MapTema } from '$lib/utils/sello';
+	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, ZERO_CLARO, type MapTema } from '$lib/utils/sello';
 	import { themeStore } from '$lib/stores/theme.svelte';
 	import { makeHexClip, clipCell, type HexClip } from '$lib/utils/hexClip';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
@@ -3034,7 +3034,7 @@
 			matchExpr.push(0);
 
 			applyCatastroChoropleth(appliedTema === 'claro'
-				? ['interpolate', ['linear'], matchExpr, 0, '#d6d3ce', 15, selva[0], 30, selva[1], 50, selva[2], 70, selva[4], 100, selva[5]]
+				? ['interpolate', ['linear'], matchExpr, 0, ZERO_CLARO, 15, selva[0], 30, selva[1], 50, selva[2], 70, selva[4], 100, selva[5]]
 				: [
 					'interpolate', ['linear'], matchExpr,
 					0, '#1e293b', 15, '#334155', 30, '#4a7c59',

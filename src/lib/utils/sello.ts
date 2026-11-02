@@ -235,6 +235,11 @@ export const AGRI_APT_HEX = ['#1f7a52', '#86c49c', '#d4a53c', '#b4482a'] as cons
 export const AGRI_APT_CLARO = ['#257848', '#94c79e', '#cc841c', '#731402'] as const;
 // A measured 0 (zero class) and no reading: quiet grays, zero the lighter one.
 export const ZERO_HEX = '#1e293b';
+// Claro: the measured 0 stays a light warm gray, ΔE2000 4 from the territory
+// backdrop as drawn (paper + territoryBg 0.5, hex fill 0.88). A near-paper 0
+// melted into it (ΔE 0.2–1.9: «no water» read as «no hexagon»), so the
+// separation from «no data» comes from a darker nodata (2-nov-2026).
+export const ZERO_CLARO = '#d6d3ce';
 
 export interface MapPalette {
 	tierra: readonly string[]; selva: readonly string[]; div: readonly string[];
@@ -262,7 +267,9 @@ export const MAP_PALETTE: Record<MapTema, MapPalette> = {
 		warm: MAP_ORO_CLARO, night: MAP_ORO_CLARO,
 		lisa: LISA_HEX_CLARO,
 		bivar: BIVAR_HEX_LIGHT, bivarNodata: '#cdcac4',
-		nodata: '#b1b1ae',
+		// ΔE2000 17 from ZERO_CLARO as drawn (was #b1b1ae: 7.7, the two grays the
+		// texts tell apart looked alike); neutral, so it never reads as a class.
+		nodata: '#8c8d90',
 		hexLine: '#fbfaf7',        // a paper gap, not a dark rule
 	},
 };
@@ -272,7 +279,7 @@ export const MAP_PALETTE: Record<MapTema, MapPalette> = {
 const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
 	[MAP_CLASS_3, MAP_CLASS_3_CLARO], [MAP_CLASS_4, MAP_CLASS_4_CLARO], [MAP_CLASS_5, MAP_CLASS_5_CLARO],
 	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
-	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], ['#d6d3ce']],
+	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], [ZERO_CLARO]],
 ];
 const CLARO_OF = new Map<string, string>();
 for (const [dark, light] of CLASS_PAIRS) dark.forEach((c, i) => {
