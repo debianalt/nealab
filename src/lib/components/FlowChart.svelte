@@ -194,7 +194,7 @@
 
 	$effect(() => {
 		void data.size;
-		void cfg.col;
+		void (bands ?? SCORE_BANDS).col;   // not cfg: it changes with the theme, which must keep the selection
 		activeFlow = null; activeSide = null; activeBand = null;
 	});
 

@@ -1,7 +1,12 @@
 import { COLOR_RAMPS } from '$lib/config';
+import { untrack } from 'svelte';
 import { themeStore } from '$lib/stores/theme.svelte';
 import { BUILDING_VOLUME_CLARO } from '$lib/utils/sello';
 
+// Untracked: these expressions are built inside territory $effects (+page, Map); a
+// tracked read re-ran them on every theme switch and closed the open department
+// (found in prod 1-nov-2026). Map.applyOwnLayersTheme repaints the buildings itself.
+const claroNow = () => untrack(() => themeStore.tema === 'claro');
 // Same breaks, Claro colors (sello.ts): stops [b0, c0, b1, c1, ...] with c swapped.
 const claroStops = (stops: readonly (number | string)[]) =>
 	stops.map((v, i) => (i % 2 === 1 ? BUILDING_VOLUME_CLARO[(i - 1) / 2] ?? v : v));
@@ -99,7 +104,7 @@ export class MapStore {
 		return [
 			'interpolate', ['linear'],
 			value,
-			...(themeStore.tema === 'claro' ? claroStops(ramp.stops) : ramp.stops)
+			...(claroNow() ? claroStops(ramp.stops) : ramp.stops)
 		];
 	}
 
@@ -108,7 +113,7 @@ export class MapStore {
 		return [
 			'interpolate', ['linear'],
 			['coalesce', ['get', ramp.property], 3],
-			...(themeStore.tema === 'claro' ? claroStops(ramp.stops) : ramp.stops)
+			...(claroNow() ? claroStops(ramp.stops) : ramp.stops)
 		];
 	}
 

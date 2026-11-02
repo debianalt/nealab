@@ -90,7 +90,9 @@ async def main():
             await pg.get_by_role('button', name=label, exact=True).click()
             await settle(pg, 4000)
             got = await pg.evaluate("[document.documentElement.dataset.theme, document.documentElement.dataset.fondo, localStorage.getItem('spatia_fondo')]")
-            ok = 'OK' if got[0] == expect else 'FAIL'
+            # the open department must survive a theme switch (a tracked theme read in a
+            # territory $effect closed it, found in prod 1-nov-2026)
+            ok = 'OK' if got[0] == expect and 'dept=Capital' in pg.url else f'FAIL (url {pg.url})'
             print(f'switch {label:9s} → data-theme={got[0]} fondo={got[1]} stored={got[2]}  {ok}')
             await pg.screenshot(path=f'{OUT}/switch_{label.lower()}_{got[1]}.png')
         await ctx.close()
