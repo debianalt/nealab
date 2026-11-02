@@ -444,6 +444,9 @@
 		return (hi >= 20 ? '≈ ' : '') + (lo === hi ? fmt(hi) : `${fmt(lo)} a ${fmt(hi)}`);
 	};
 	// compact band for narrow table cells: "42–48"
+	// A range may break after its dash when a table is out of room ("100–" / "110"); the
+	// numbers are formatted here, so the markup is safe for {@html}.
+	const breakRange = (t: string) => t.replace(/–/g, '–<wbr>');
 	const rc = (a: number, b: number, aprox = false) => {
 		const f = (n: number) => fmt(aprox ? round10(n) : n);
 		const lo = f(Math.min(a, b)), hi = f(Math.max(a, b));
@@ -1072,8 +1075,8 @@
 					<table>
 						<thead><tr><th>Bajo el agua</th><th>{m(stage)}</th>{#each SCEN as s}<th>{s.short}</th>{/each}</tr></thead>
 						<tbody>
-							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0-5'], ['mayores', 'Mayores 65+'], ['ren', 'Barrio popular'], ['esc', 'Escuelas']] as [k, l]}
-								<tr><td>{l}</td>{#each lassoRes.hi as r, i}<td class:cur={i === 0}>{rc(lassoRes.lo[i][k as keyof Lasso], r[k as keyof Lasso], k === 'pers' || k === 'ninos' || k === 'mayores')}</td>{/each}</tr>
+							{#each [['viv', 'Viviendas'], ['pers', 'Personas'], ['ninos', 'Niños 0‑5'], ['mayores', 'Mayores 65+'], ['ren', 'Barrio popular'], ['esc', 'Escuelas']] as [k, l]}
+								<tr><td>{l}</td>{#each lassoRes.hi as r, i}<td class:cur={i === 0}>{@html breakRange(rc(lassoRes.lo[i][k as keyof Lasso], r[k as keyof Lasso], k === 'pers' || k === 'ninos' || k === 'mayores'))}</td>{/each}</tr>
 							{/each}
 						</tbody>
 					</table>
@@ -1419,6 +1422,14 @@
 	/* band cells ("42–48") are wider than single numbers */
 	.card table.band, .card table:has(td.cur) { font-size: 11.5px; }
 	.card table.band td, .card table:has(td.cur) td { white-space: nowrap; padding: 3px 3px; }
+	/* IBM Plex is wider than the old Source Sans: six columns overflowed the card. The row
+	   labels may wrap (the ranges never split), and the numbers take a little less room. */
+	.card table.band, .card table:has(td.cur) { table-layout: auto; font-size: 11px; }
+	.card table.band th, .card table.band td, .card table:has(td.cur) th, .card table:has(td.cur) td { padding: 3px 0 3px 6px; }
+	.card table.band th:first-child, .card table.band td:first-child,
+	.card table:has(td.cur) th:first-child, .card table:has(td.cur) td:first-child { white-space: normal; padding-left: 0; padding-right: 4px; hyphens: auto; }
+	/* the measured area has a seventh column: its ranges break after the dash to fit */
+	.card table:has(td.cur) td:not(:first-child) { white-space: normal; }
 	.close { position: absolute; top: 6px; right: 10px; background: none; border: 0; color: var(--ink-3); font-size: 18px; cursor: pointer; }
 	.close:hover { color: var(--ink); }
 	.bars { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
