@@ -48,6 +48,58 @@
 	--s-surface: #0b0d14;
 }
 
+/* Chrome (panels, text, lines) per theme. Oscuro = the literal values the
+   components always had (every .svelte under src was migrated to these tokens, so the dark
+   theme is unchanged by construction); Claro = the atlas sheet of the El Soberbio
+   demo (paper, warm grays, dark ink, accent #2f6f9f). <html data-theme> is set
+   before the first paint by src/app.html (stores/theme.svelte.ts). */
+:root {
+	--c-ink-0: #ffffff; --c-ink-1: #e2e8f0; --c-ink-1n: #d4d4d4;
+	--c-ink-2: #cbd5e1; --c-ink-2n: #a3a3a3; --c-ink-3: #94a3b8; --c-ink-3n: #9ca3af;
+	--c-ink-4: #64748b; --c-ink-4n: #6b7280;
+	--c-line: #1e293b; --c-line-2: #334155; --c-line-3: #475569;
+	--c-bg: #0a0c12; --c-panel-2: #0f172a;
+	--c-accent: #60a5fa; --c-accent-2: #93c5fd; --c-accent-rgb: 96, 165, 250;
+	--c-fg-rgb: 255, 255, 255; --c-bg-rgb: 10, 12, 18;
+	--text-secondary: var(--c-ink-3);
+}
+/* Ink on paper: --c-ink-1 16.6:1, -2 10.6:1, -3 6.6:1, -4 4.7:1 on #fbfaf7 (WCAG AA ≥ 4.5). */
+:root[data-theme='claro'], .theme-claro {
+	color-scheme: light;
+	--c-ink-0: #1c1c1c; --c-ink-1: #1c1c1c; --c-ink-1n: #262522;
+	--c-ink-2: #3d3b36; --c-ink-2n: #45433e; --c-ink-3: #5c5952; --c-ink-3n: #625f58;
+	--c-ink-4: #74716a; --c-ink-4n: #74716a;
+	--c-line: #e6e3dc; --c-line-2: #d8d5ce; --c-line-3: #c3c0b8;
+	--c-bg: #fbfaf7; --c-panel-2: #f3f1ec;
+	--c-accent: #2f6f9f; --c-accent-2: #2f6f9f; --c-accent-rgb: 47, 111, 159;
+	--c-fg-rgb: 28, 28, 28; --c-bg-rgb: 251, 250, 247;
+	/* Tailwind: white/black utilities (text-white, bg-black/75, border-white/15…)
+	   swap roles, and the @theme tokens follow. */
+	--color-white: #1c1c1c; --color-black: #fbfaf7;
+	--color-bg: #fbfaf7; --color-panel: rgba(251, 250, 247, 0.94); --color-border: #d8d5ce;
+	--color-accent: #2f6f9f; --color-text: #1c1c1c; --color-text-muted: #3d3b36; --color-text-dim: #5c5952;
+	--color-btn-bg: rgba(28, 28, 28, 0.04); --color-btn-border: #d8d5ce;
+	--color-accent-active: rgba(47, 111, 159, 0.14);
+	/* Sello data colors: the paper set (= @media print below). */
+	--s-cat-1: #b4482a; --s-cat-2: #2b6fb0; --s-cat-3: #237a55; --s-cat-4: #a67c12;
+	--s-seq-1: #e38c6d; --s-seq-2: #cc6443; --s-seq-3: #b4482a; --s-seq-4: #86331d; --s-seq-5: #5a2011;
+	--s-div-1: #1b4a7a; --s-div-2: #2b6fb0; --s-div-3: #8fb3da; --s-div-4: #a2a7af;
+	--s-div-5: #e7a58d; --s-div-6: #b4482a; --s-div-7: #7a2f1a;
+	--s-lisa-1: #2b6fb0; --s-lisa-2: #8fb3da; --s-lisa-3: #e7a58d; --s-lisa-4: #b4482a;
+	--s-bivar-1: #f2f0ed; --s-bivar-2: #efb39b; --s-bivar-3: #e8825a;
+	--s-bivar-4: #b3d0ef; --s-bivar-5: #b19b9c; --s-bivar-6: #ab705b;
+	--s-bivar-7: #78afe8; --s-bivar-8: #768298; --s-bivar-9: #735d58;
+	--s-ink-1: #1f2328; --s-ink-2: #3f454d; --s-ink-3: #5b6169;
+	--s-grid: rgba(0, 0, 0, 0.12);
+	--s-axis: rgba(0, 0, 0, 0.35);
+	--s-surface: #fcfcfb;
+}
+
+/* Light text colors of the dark panels (status, accents): exact value on the dark
+   theme, same hue darkened in OKLCH (L 0.45) on paper. */
+:root { --c-t-06b6d4: #06b6d4; --c-t-22c39a: #22c39a; --c-t-4ade80: #4ade80; --c-t-818cf8: #818cf8; --c-t-86efac: #86efac; --c-t-a5b4fc: #a5b4fc; --c-t-a78bfa: #a78bfa; --c-t-bfdbfe: #bfdbfe; --c-t-c3c2b7: #c3c2b7; --c-t-c4b5fd: #c4b5fd; --c-t-d4d3ca: #d4d3ca; --c-t-e5e5e5: #e5e5e5; --c-t-e8e8e6: #e8e8e6; --c-t-f87171: #f87171; --c-t-f8fafc: #f8fafc; --c-t-f9a8d4: #f9a8d4; --c-t-fbbf24: #fbbf24; --c-t-fca5a5: #fca5a5; --c-t-fde68a: #fde68a; --c-t-fecaca: #fecaca; }
+:root[data-theme='claro'], .theme-claro { --c-t-06b6d4: #006585; --c-t-22c39a: #006c48; --c-t-4ade80: #006a28; --c-t-818cf8: #4448a2; --c-t-86efac: #006b2d; --c-t-a5b4fc: #434e94; --c-t-a78bfa: #5b409c; --c-t-bfdbfe: #3c5778; --c-t-c3c2b7: #3d3b36; --c-t-c4b5fd: #59478d; --c-t-d4d3ca: #3d3b36; --c-t-e5e5e5: #3d3b36; --c-t-e8e8e6: #3d3b36; --c-t-f87171: #94292e; --c-t-f8fafc: #3d3b36; --c-t-f9a8d4: #823563; --c-t-fbbf24: #794a00; --c-t-fca5a5: #89363b; --c-t-fde68a: #6b5300; --c-t-fecaca: #754647; }
+
 /* Paper: the same roles, light variants. */
 @media print {
 	:root {
@@ -102,12 +154,13 @@ html, body {
 
 .maplibregl-ctrl-attrib {
 	font-size: 10px !important;
-	background: rgba(0, 0, 0, 0.5) !important;
+	background: rgba(var(--c-bg-rgb), 0.5) !important;
 	border-radius: 4px !important;
 }
 .maplibregl-ctrl-attrib a {
-	color: #94a3b8 !important;
+	color: var(--c-ink-3) !important;
 }
 .maplibregl-ctrl-attrib-button {
-	background-color: rgba(0, 0, 0, 0.5) !important;
+	background-color: rgba(var(--c-bg-rgb), 0.5) !important;
 }
+:root[data-theme='claro'] .maplibregl-ctrl-attrib { color: var(--c-ink-3); background: rgba(251, 250, 247, 0.8) !important; }

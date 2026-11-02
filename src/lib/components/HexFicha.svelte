@@ -223,7 +223,7 @@
 	.fi-actions { display: flex; gap: 6px; margin-top: 6px; }
 	.fi-btn {
 		font-size: 11.5px; font-family: inherit; color: var(--s-ink-1); cursor: pointer;
-		background: rgba(255,255,255,0.06); border: 1px solid #334155; border-radius: 4px; padding: 3px 8px;
+		background: rgba(var(--c-fg-rgb), 0.06); border: 1px solid var(--c-line-2); border-radius: 4px; padding: 3px 8px;
 	}
 	.fi-btn:hover { border-color: var(--s-ink-2); }
 	.fi-state { font-size: 12px; color: var(--s-ink-3); padding: 12px 2px; font-style: italic; }

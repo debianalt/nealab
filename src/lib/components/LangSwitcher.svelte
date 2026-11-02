@@ -32,18 +32,18 @@
 		background: transparent;
 		border: 1px solid transparent;
 		border-radius: 4px;
-		color: rgba(255, 255, 255, 0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 		cursor: pointer;
 		font-family: inherit;
 		text-decoration: none;
 		transition: all 0.15s;
 	}
 	.lang-switcher a:hover {
-		color: rgba(255, 255, 255, 0.8);
+		color: rgba(var(--c-fg-rgb), 0.8);
 	}
 	.lang-switcher a.active {
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.2);
-		color: rgba(255, 255, 255, 0.9);
+		background: rgba(var(--c-fg-rgb), 0.08);
+		border-color: rgba(var(--c-fg-rgb), 0.2);
+		color: rgba(var(--c-fg-rgb), 0.9);
 	}
 </style>

@@ -87,7 +87,7 @@
 							<span><i class="sw" style:background="#38bdf8"></i>Eucaliptos</span>
 							<span><i class="sw" style:background="#f59e0b"></i>Nativas</span>
 							<span><i class="sw" style:background="#a78bfa"></i>Sauces/Álamos</span>
-							<span><i class="sw" style:background="#9ca3af"></i>Otras</span>
+							<span><i class="sw" style:background="var(--c-ink-3n)"></i>Otras</span>
 						</div>
 					{/if}
 					<div class="plant-note">{i18n.t('forestry.overlay.note')}</div>
@@ -105,7 +105,7 @@
 	}
 	.back-btn {
 		font-size: 12px;
-		color: #d4d4d4;
+		color: var(--c-ink-1n);
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -114,7 +114,7 @@
 		transition: color 0.15s;
 		margin-bottom: 6px;
 	}
-	.back-btn:hover { color: #e2e8f0; }
+	.back-btn:hover { color: var(--c-ink-1); }
 	.view-header {
 		display: flex;
 		align-items: center;
@@ -131,7 +131,7 @@
 	.view-title {
 		font-size: 13px;
 		font-weight: 600;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 	.view-lens {
 		font-size: 11.5px;
@@ -147,7 +147,7 @@
 		display: inline-block;
 		font-size: 11.5px;
 		font-weight: 600;
-		color: #d4d4d4;
+		color: var(--c-ink-1n);
 		background: rgba(100,116,139,0.2);
 		padding: 2px 8px;
 		border-radius: 9999px;
@@ -155,12 +155,12 @@
 	}
 	.coming-soon-text {
 		font-size: 12px;
-		color: #cbd5e1;
+		color: var(--c-ink-2);
 		margin: 0 0 6px 0;
 	}
 	.coming-soon-body {
 		font-size: 11.5px;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		margin: 0;
 		line-height: 1.4;
 	}
@@ -168,10 +168,10 @@
 		margin-top: 10px; padding: 8px 10px; border-radius: 6px;
 		background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
 	}
-	.plant-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: #e2e8f0; }
+	.plant-toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--c-ink-1); }
 	.plant-toggle input { cursor: pointer; }
-	.plant-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 6px; font-size: 11.5px; color: #cbd5e1; }
+	.plant-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 6px; font-size: 11.5px; color: var(--c-ink-2); }
 	.plant-legend span { display: inline-flex; align-items: center; gap: 4px; }
 	.plant-legend .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex-shrink: 0; }
-	.plant-note { margin-top: 6px; font-size: 11.5px; color: #94a3b8; line-height: 1.4; }
+	.plant-note { margin-top: 6px; font-size: 11.5px; color: var(--c-ink-3); line-height: 1.4; }
 </style>

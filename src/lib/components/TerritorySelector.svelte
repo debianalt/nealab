@@ -78,8 +78,8 @@
 	}
 
 	.country-btn:hover:not(:disabled) {
-		background: rgba(255, 255, 255, 0.06);
-		border-color: rgba(255, 255, 255, 0.1);
+		background: rgba(var(--c-fg-rgb), 0.06);
+		border-color: rgba(var(--c-fg-rgb), 0.1);
 	}
 
 	.country-btn.active {
@@ -101,17 +101,17 @@
 	.c-label {
 		font-size: 10.5px;
 		font-weight: 500;
-		color: rgba(255, 255, 255, 0.65);
+		color: rgba(var(--c-fg-rgb), 0.65);
 		flex: 1;
 	}
 
 	.country-btn.active .c-label {
-		color: #c4b5fd;
+		color: var(--c-t-c4b5fd);
 		font-weight: 600;
 	}
 
 	.country-btn:hover:not(:disabled) .c-label {
-		color: rgba(255, 255, 255, 0.85);
+		color: rgba(var(--c-fg-rgb), 0.85);
 	}
 
 	.cov-dot {
@@ -126,7 +126,7 @@
 
 	.soon {
 		font-size: 7.5px;
-		color: rgba(255, 255, 255, 0.25);
+		color: rgba(var(--c-fg-rgb), 0.25);
 		font-style: italic;
 	}
 </style>

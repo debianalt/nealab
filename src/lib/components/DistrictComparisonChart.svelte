@@ -113,7 +113,7 @@
 		{#each [...districts.entries()] as [distrito, data]}
 			<button
 				class="chip"
-				style="border-color: {data.color}; color: #e2e8f0;"
+				style="border-color: {data.color}; color: var(--c-ink-1);"
 				onclick={() => onRemoveDistrict(distrito)}
 				title="Deseleccionar">
 				<span class="chip-dot" style="background: {data.color};"></span>
@@ -189,11 +189,11 @@
 		display: flex; justify-content: space-between; align-items: center;
 		margin-bottom: 6px;
 	}
-	.title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+	.title { font-size: 12px; font-weight: 600; color: var(--c-ink-1); }
 	.clear-btn {
 		font-size: 11.5px; padding: 2px 6px; border-radius: 4px;
-		background: rgba(255,255,255,0.06); border: 1px solid #334155;
-		color: #d4d4d4; cursor: pointer; transition: all 0.15s;
+		background: rgba(var(--c-fg-rgb), 0.06); border: 1px solid var(--c-line-2);
+		color: var(--c-ink-1n); cursor: pointer; transition: all 0.15s;
 	}
 	.clear-btn:hover { border-color: #ef4444; color: #ef4444; }
 	.chip {
@@ -205,40 +205,40 @@
 	.chip:hover { opacity: 0.7; }
 	.chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 	.chip-x { font-size: 13px; margin-left: 1px; }
-	.chip-terr { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
-	.loading-note { font-size: 11.5px; color: #94a3b8; margin: 4px 0; }
+	.chip-terr { font-size: 11px; font-weight: 700; color: rgba(var(--c-fg-rgb), 0.55); letter-spacing: 0.04em; }
+	.loading-note { font-size: 11.5px; color: var(--c-ink-3); margin: 4px 0; }
 	.ref-note {
-		font-size: 11px; color: rgba(255,255,255,0.55);
+		font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55);
 		text-align: center; margin: 4px 0 0;
 	}
 	.r-table { margin: 8px 0; }
 	.r-table-header {
 		display: flex; gap: 4px;
 		padding-bottom: 3px;
-		border-bottom: 1px solid #1e293b;
+		border-bottom: 1px solid var(--c-line);
 		margin-bottom: 3px;
 	}
 	.r-table-header .rt-col {
 		font-size: 11.5px; font-weight: 600;
-		color: #a3a3a3; text-transform: uppercase;
+		color: var(--c-ink-2n); text-transform: uppercase;
 	}
 	.r-table-row { display: flex; gap: 4px; padding: 2px 0; }
 	.rt-col { flex: 1; }
-	.rt-zone { flex: 1.4; display: flex; align-items: center; gap: 4px; font-size: 12px; color: #d4d4d4; }
-	.rt-num { text-align: right; color: #cbd5e1; font-size: 12px; font-variant-numeric: tabular-nums; }
+	.rt-zone { flex: 1.4; display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--c-ink-1n); }
+	.rt-num { text-align: right; color: var(--c-ink-2); font-size: 12px; font-variant-numeric: tabular-nums; }
 	.rt-actions { flex: 0.7; display: flex; gap: 3px; justify-content: flex-end; }
 	.r-dl-btn {
-		background: rgba(255,255,255,0.04);
-		border: 1px solid rgba(255,255,255,0.1);
-		color: #94a3b8; font-size: 11px;
+		background: rgba(var(--c-fg-rgb), 0.04);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.1);
+		color: var(--c-ink-3); font-size: 11px;
 		padding: 1px 4px; border-radius: 3px;
 		cursor: pointer; font-family: inherit;
 		transition: all 0.15s;
 	}
 	.r-dl-btn:hover:not(:disabled) {
-		background: rgba(96,165,250,0.15);
-		border-color: rgba(96,165,250,0.4);
-		color: #60a5fa;
+		background: rgba(var(--c-accent-rgb), 0.15);
+		border-color: rgba(var(--c-accent-rgb), 0.4);
+		color: var(--c-accent);
 	}
 	.r-dl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 	.r-dot-sm {
@@ -248,20 +248,20 @@
 	.dl-row { margin-top: 6px; }
 	.dl-btn {
 		display: block; width: 100%; text-align: center;
-		padding: 6px 10px; background: rgba(59,130,246,0.15);
-		border: 1px solid rgba(59,130,246,0.3); border-radius: 4px;
-		color: #60a5fa; font-size: 11.5px; font-weight: 600;
+		padding: 6px 10px; background: rgba(var(--c-accent-rgb), 0.15);
+		border: 1px solid rgba(var(--c-accent-rgb), 0.3); border-radius: 4px;
+		color: var(--c-accent); font-size: 11.5px; font-weight: 600;
 		cursor: pointer; font-family: inherit; transition: all 0.15s;
 	}
-	.dl-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
+	.dl-btn:hover { background: rgba(var(--c-accent-rgb), 0.25); border-color: rgba(var(--c-accent-rgb), 0.5); }
 	.sources {
 		display: flex; flex-direction: column; gap: 1px;
 		margin-top: 12px; padding-top: 8px;
-		border-top: 1px solid rgba(255,255,255,0.06);
-		font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.4;
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.06);
+		font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55); line-height: 1.4;
 	}
 	.sources-title {
-		font-weight: 600; color: rgba(255,255,255,0.55);
+		font-weight: 600; color: rgba(var(--c-fg-rgb), 0.55);
 		margin-bottom: 1px;
 	}
 </style>

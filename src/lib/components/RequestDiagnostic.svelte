@@ -44,7 +44,7 @@
 
 <style>
 	.rd { margin: 10px 0; font-size: 12px; }
-	.rd-welcome { margin-top: 14px; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; }
+	.rd-welcome { margin-top: 14px; padding: 10px 12px; border: 1px solid rgba(var(--c-fg-rgb), 0.08); border-radius: 6px; }
 	.rd-label { font-size: 11.5px; color: var(--s-ink-2); margin-bottom: 8px; line-height: 1.4; }
 	.rd-row { display: flex; gap: 6px; align-items: center; }
 	.rd-btn {
@@ -54,7 +54,7 @@
 	.rd-btn:hover { background: rgba(196, 87, 47, 0.26); }
 	.rd-copy {
 		font: inherit; font-size: 11.5px; padding: 6px 8px; border-radius: 4px; cursor: pointer; white-space: nowrap;
-		color: var(--s-ink-2); background: none; border: 1px solid rgba(255,255,255,0.12);
+		color: var(--s-ink-2); background: none; border: 1px solid rgba(var(--c-fg-rgb), 0.12);
 	}
 	.rd-copy:hover { color: var(--s-ink-1); }
 	.rd-what { margin-top: 5px; }

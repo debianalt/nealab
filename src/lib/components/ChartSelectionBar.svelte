@@ -64,7 +64,7 @@
 	.csb-save:disabled { opacity: 0.6; cursor: wait; }
 	.csb-clear {
 		font: inherit; font-size: 15px; line-height: 1; padding: 2px 6px; cursor: pointer;
-		color: var(--s-ink-2); background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+		color: var(--s-ink-2); background: none; border: 1px solid rgba(var(--c-fg-rgb), 0.12); border-radius: 4px;
 	}
 	.csb-clear:hover { color: var(--s-ink-1); }
 	.csb-done { position: static; border-left-color: var(--s-ink-3); color: var(--s-ink-2); }

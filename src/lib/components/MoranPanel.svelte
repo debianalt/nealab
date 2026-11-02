@@ -415,7 +415,7 @@
 	}
 	.moran-wrap {
 		margin-top: 10px;
-		border-top: 1px solid rgba(255,255,255,0.07);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.07);
 		padding-top: 6px;
 	}
 	.moran-toggle {
@@ -423,7 +423,7 @@
 		align-items: center;
 		gap: 5px;
 		font-size: 12px;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -432,7 +432,7 @@
 		text-align: left;
 		transition: color 0.15s;
 	}
-	.moran-toggle:hover { color: #d4d4d4; }
+	.moran-toggle:hover { color: var(--c-ink-1n); }
 	.moran-arrow { font-size: 11px; }
 	.moran-badge {
 		margin-left: auto;
@@ -451,7 +451,7 @@
 		align-items: center;
 		gap: 6px;
 		font-size: 12px;
-		color: #9ca3af;
+		color: var(--c-ink-3n);
 		padding: 8px 0;
 	}
 	.moran-spinner {
@@ -478,18 +478,18 @@
 	.moran-sel { color: var(--s-ink-1); font-size: 11px; }
 	.moran-btn-clear {
 		font-size: 11px;
-		color: #fbbf24;
+		color: var(--c-t-fbbf24);
 		background: none;
 		border: none;
 		cursor: pointer;
 		padding: 0 2px;
 		transition: color 0.15s;
 	}
-	.moran-btn-clear:hover { color: #fde68a; }
+	.moran-btn-clear:hover { color: var(--c-t-fde68a); }
 	.moran-btn-csv {
 		margin-left: auto;
 		font-size: 11px;
-		color: #9ca3af;
+		color: var(--c-ink-3n);
 		background: none;
 		border: none;
 		cursor: pointer;
@@ -505,19 +505,19 @@
 	.moran-view-btn {
 		font-size: 11px;
 		padding: 2px 8px;
-		border: 1px solid #334155;
+		border: 1px solid var(--c-line-2);
 		border-radius: 3px;
 		background: none;
-		color: #9ca3af;
+		color: var(--c-ink-3n);
 		cursor: pointer;
 		font-family: var(--font-sans);
 		transition: all 0.12s;
 	}
-	.moran-view-btn:hover { color: #d4d4d4; border-color: #4b5563; }
+	.moran-view-btn:hover { color: var(--c-ink-1n); border-color: #4b5563; }
 	.moran-view-btn-active {
 		background: rgba(99,102,241,0.15);
 		border-color: #6366f1;
-		color: #a5b4fc;
+		color: var(--c-t-a5b4fc);
 	}
 	.moran-plot {
 		width: 100%;
@@ -546,7 +546,7 @@
 	.moran-sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
 	.moran-empty {
 		font-size: 12px;
-		color: #9ca3af;
+		color: var(--c-ink-3n);
 		padding: 6px 0;
 	}
 </style>

@@ -265,9 +265,9 @@
 		bottom: 4px;
 		left: 50%;
 		transform: translateX(-50%);
-		background: rgba(10, 12, 18, 0.85);
+		background: rgba(var(--c-bg-rgb), 0.85);
 		backdrop-filter: blur(6px);
-		border: 1px solid rgba(255,255,255,0.08);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.08);
 		border-radius: 6px;
 		padding: 8px 10px;
 		z-index: 10;
@@ -277,7 +277,7 @@
 	.legend-title {
 		font-size: 9px;
 		font-weight: 600;
-		color: rgba(255,255,255,0.7);
+		color: rgba(var(--c-fg-rgb), 0.7);
 		margin-bottom: 6px;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
@@ -285,7 +285,7 @@
 	}
 	.legend-sub {
 		font-size: 10px;
-		color: var(--text-secondary, #94a3b8);
+		color: var(--text-secondary, var(--c-ink-3));
 		margin: -2px 0 6px;
 	}
 
@@ -315,18 +315,18 @@
 		font-size: 8.5px;
 		padding: 2px 6px;
 		border-radius: 3px;
-		border: 1px solid rgba(255,255,255,0.12);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.12);
 		background: transparent;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		cursor: pointer;
 	}
 	.scale-toggle button.active {
-		background: rgba(255,255,255,0.12);
-		color: #e5e7eb;
+		background: rgba(var(--c-fg-rgb), 0.12);
+		color: var(--c-ink-1);
 	}
 	.scale-note {
 		font-size: 7.5px;
-		color: rgba(255,255,255,0.45);
+		color: rgba(var(--c-fg-rgb), 0.45);
 		margin-top: 4px;
 		line-height: 1.35;
 	}
@@ -335,7 +335,7 @@
 	}
 	.legend-label {
 		font-size: 9px;
-		color: #d4d4d4;
+		color: var(--c-ink-1n);
 	}
 	.gradient-bar {
 		height: 8px;
@@ -346,17 +346,17 @@
 		display: flex;
 		justify-content: space-between;
 		font-size: 8px;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		margin-top: 3px;
 	}
 	.gradient-values {
 		margin-top: 1px;
-		color: rgba(255,255,255,0.8);
+		color: rgba(var(--c-fg-rgb), 0.8);
 	}
 	.legend-range {
 		font-size: 8px;
 		font-weight: 400;
-		color: rgba(255,255,255,0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 		letter-spacing: 0;
 		text-transform: none;
 		margin-left: 4px;
@@ -367,22 +367,22 @@
 		gap: 5px;
 		margin-top: 5px;
 		padding-top: 4px;
-		border-top: 1px solid rgba(255,255,255,0.06);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.06);
 	}
 	.nodata-swatch {
 		width: 10px;
 		height: 10px;
 		border-radius: 2px;
-		background: #6b7280;
+		background: var(--c-ink-4n);
 		flex-shrink: 0;
 	}
 	.nodata-label {
 		font-size: 8px;
-		color: rgba(255,255,255,0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 	}
 	.canvas-note {
 		font-size: 7.5px;
-		color: rgba(255,255,255,0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 		font-style: italic;
 		margin-top: 4px;
 		text-align: center;

@@ -55,7 +55,7 @@
 	.temporal-toggle {
 		display: flex;
 		gap: 2px;
-		background: rgba(255,255,255,0.04);
+		background: rgba(var(--c-fg-rgb), 0.04);
 		border-radius: 6px;
 		padding: 2px;
 		margin: 8px 0;
@@ -66,7 +66,7 @@
 		background: none;
 		border: none;
 		border-radius: 4px;
-		color: #9ca3af;
+		color: var(--c-ink-3n);
 		font-size: 11.5px;
 		font-weight: 600;
 		cursor: pointer;
@@ -76,10 +76,10 @@
 		align-items: center;
 		gap: 1px;
 	}
-	.toggle-btn:hover { color: #a3a3a3; }
+	.toggle-btn:hover { color: var(--c-ink-2n); }
 	.toggle-btn.active {
-		background: rgba(255,255,255,0.10);
-		color: #e2e8f0;
+		background: rgba(var(--c-fg-rgb), 0.10);
+		color: var(--c-ink-1);
 	}
 	.toggle-btn.active .period { color: rgba(226,232,240,0.60); }
 	.label { line-height: 1; }
@@ -92,7 +92,7 @@
 	}
 	.temporal-hint {
 		font-size: 11px;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		margin: -4px 0 6px;
 		line-height: 1.3;
 	}

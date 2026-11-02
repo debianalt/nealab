@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { DIV, MAP_TIERRA, inkOn } from '$lib/utils/sello';
+	import { DIV, MAP_TIERRA, inkOn, classColor } from '$lib/utils/sello';
+	import { themeStore } from '$lib/stores/theme.svelte';
 	import ChartFrame from './ChartFrame.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { CHART_PX, INK, svgScale, dockBoost, measure } from '$lib/utils/chartType';
@@ -30,7 +31,11 @@
 		note: 'Flujo de hexágonos entre bandas: Bajo (<33) · Medio (33–67) · Alto (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
 	};
 
-	const cfg = $derived(bands ?? SCORE_BANDS);
+	// Band colors = the map's classes, in the theme on screen (sello.ts classColor).
+	const cfg = $derived.by(() => {
+		const c = bands ?? SCORE_BANDS;
+		return { ...c, colors: c.colors.map((x) => classColor(x, themeStore.tema)) };
+	});
 	const N = $derived(cfg.labels.length);
 
 	const SVG_W = 260;
@@ -368,25 +373,25 @@
 	}
 	.fc-hint {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: rgba(var(--c-fg-rgb), 0.5);
 		font-style: italic;
 	}
 	.fc-clear {
 		font-size: 11px;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		background: none;
 		border: none;
 		cursor: pointer;
 		padding: 0;
 		line-height: 1;
 	}
-	.fc-clear:hover { color: #f87171; }
+	.fc-clear:hover { color: var(--c-t-f87171); }
 	.fc-note {
 		font-size: 11px;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		line-height: 1.5;
 		padding: 3px 2px 2px;
-		border-top: 1px solid rgba(255,255,255,0.06);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.06);
 		margin-top: 1px;
 	}
 </style>

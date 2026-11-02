@@ -383,35 +383,35 @@
 		flex: 1;
 		min-height: 0;
 		scrollbar-width: thin;
-		scrollbar-color: #334155 transparent;
+		scrollbar-color: var(--c-line-2) transparent;
 	}
 	.charts-divider {
 		font-size: 11px;
 		font-weight: 700;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		margin: 12px 0 2px;
 		padding-top: 8px;
-		border-top: 1px solid rgba(255,255,255,0.08);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.08);
 	}
 	.charts-toggle {
 		display: block; width: 100%; text-align: left; background: none;
 		font-family: inherit; cursor: pointer;
 	}
-	.charts-toggle:hover { color: rgba(255,255,255,0.6); }
+	.charts-toggle:hover { color: rgba(var(--c-fg-rgb), 0.6); }
 	.chart-scroll::-webkit-scrollbar { width: 4px; }
 	.chart-scroll::-webkit-scrollbar-track { background: transparent; }
-	.chart-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+	.chart-scroll::-webkit-scrollbar-thumb { background: var(--c-line-2); border-radius: 2px; }
 	.faq-item {
-		border: 1px solid rgba(255,255,255,0.08);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.08);
 		border-radius: 6px;
 		overflow: hidden;
 	}
 	.faq-q {
 		font-size: 12px;
 		font-weight: 600;
-		color: #ffffff;
+		color: var(--c-ink-0);
 		padding: 6px 8px;
 		cursor: pointer;
 		user-select: none;
@@ -428,7 +428,7 @@
 	}
 	.faq-a p {
 		font-size: 12px;
-		color: rgba(255,255,255,0.8);
+		color: rgba(var(--c-fg-rgb), 0.8);
 		margin: 0;
 		line-height: 1.5;
 	}
@@ -438,10 +438,10 @@
 		left: -14px;
 		width: 28px;
 		height: 28px;
-		border: 1px solid rgba(255,255,255,0.1);
-		background: rgba(15, 23, 42, 0.9);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.1);
+		background: rgba(var(--c-bg-rgb), 0.9);
 		border-radius: 6px;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
@@ -449,27 +449,27 @@
 		transition: all 0.15s;
 		z-index: 11;
 	}
-	.collapse-btn:hover { color: #e2e8f0; border-color: #60a5fa; }
+	.collapse-btn:hover { color: var(--c-ink-1); border-color: var(--c-accent); }
 	.welcome-panel { padding-top: 4px; display: flex; flex-direction: column; gap: 16px; }
-	.welcome-brand { font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
-	.welcome-subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: -10px; font-weight: 300; }
-	.welcome-desc { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.7; font-weight: 300; }
-	.welcome-divider { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 10px; }
+	.welcome-brand { font-size: 28px; font-weight: 700; color: var(--c-ink-0); letter-spacing: 0.02em; }
+	.welcome-subtitle { font-size: 14px; color: rgba(var(--c-fg-rgb), 0.7); margin-top: -10px; font-weight: 300; }
+	.welcome-desc { font-size: 13px; color: rgba(var(--c-fg-rgb), 0.8); line-height: 1.7; font-weight: 300; }
+	.welcome-divider { font-size: 12.5px; font-weight: 600; color: rgba(var(--c-fg-rgb), 0.5); letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid rgba(var(--c-fg-rgb), 0.12); padding-top: 10px; }
 	.welcome-lenses { display: flex; flex-direction: column; gap: 8px; }
-	.welcome-lens { display: flex; flex-direction: column; gap: 2px; padding-left: 10px; border-left: 2px solid rgba(255,255,255,0.1); }
+	.welcome-lens { display: flex; flex-direction: column; gap: 2px; padding-left: 10px; border-left: 2px solid rgba(var(--c-fg-rgb), 0.1); }
 	.lens-name { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-	.lens-items { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; font-weight: 300; }
-	.welcome-stats { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; font-weight: 300; }
+	.lens-items { font-size: 13px; color: rgba(var(--c-fg-rgb), 0.55); line-height: 1.6; font-weight: 300; }
+	.welcome-stats { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: rgba(var(--c-fg-rgb), 0.65); line-height: 1.6; font-weight: 300; }
 	.welcome-steps { display: flex; flex-direction: column; gap: 8px; }
-	.welcome-step { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; font-weight: 300; }
-	.step-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 12.5px; font-weight: 700; margin-right: 6px; }
-	.welcome-footer { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; font-weight: 400; }
-	.welcome-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-	.welcome-link { color: rgba(255,255,255,0.55); font-size: 12px; text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
-	.welcome-link:hover { color: #ffffff; }
-	.welcome-link-sep { color: rgba(255,255,255,0.55); font-size: 12px; }
-	.dashboard-link { display: block; font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; text-decoration: none; font-weight: 300; }
-	.dashboard-link:hover { color: rgba(255,255,255,0.8); }
+	.welcome-step { font-size: 13px; color: rgba(var(--c-fg-rgb), 0.75); line-height: 1.5; font-weight: 300; }
+	.step-n { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(var(--c-fg-rgb), 0.1); color: rgba(var(--c-fg-rgb), 0.7); font-size: 12.5px; font-weight: 700; margin-right: 6px; }
+	.welcome-footer { font-size: 13px; color: rgba(var(--c-fg-rgb), 0.55); line-height: 1.6; border-top: 1px solid rgba(var(--c-fg-rgb), 0.1); padding-top: 10px; font-weight: 400; }
+	.welcome-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(var(--c-fg-rgb), 0.1); }
+	.welcome-link { color: rgba(var(--c-fg-rgb), 0.55); font-size: 12px; text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+	.welcome-link:hover { color: var(--c-ink-0); }
+	.welcome-link-sep { color: rgba(var(--c-fg-rgb), 0.55); font-size: 12px; }
+	.dashboard-link { display: block; font-size: 13px; color: rgba(var(--c-fg-rgb), 0.55); line-height: 1.6; text-decoration: none; font-weight: 300; }
+	.dashboard-link:hover { color: rgba(var(--c-fg-rgb), 0.8); }
 	.expand-btn {
 		position: absolute;
 		top: 12px;
@@ -477,18 +477,18 @@
 		z-index: 10;
 		width: 36px;
 		height: 36px;
-		border: 1px solid rgba(255,255,255,0.12);
-		background: rgba(15, 23, 42, 0.85);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.12);
+		background: rgba(var(--c-bg-rgb), 0.85);
 		backdrop-filter: blur(8px);
 		border-radius: 8px;
-		color: #d4d4d4;
+		color: var(--c-ink-1n);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		transition: all 0.15s;
 	}
-	.expand-btn:hover { color: #e2e8f0; border-color: #60a5fa; background: rgba(59,130,246,0.1); }
+	.expand-btn:hover { color: var(--c-ink-1); border-color: var(--c-accent); background: rgba(var(--c-accent-rgb), 0.1); }
 
 	@media (max-width: 768px) {
 		.sidebar {
@@ -502,7 +502,7 @@
 	.charts-scope {
 		display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px;
 		margin: 6px 2px 8px; padding: 6px 8px; border-left: 3px solid var(--s-cat-1);
-		background: rgba(255,255,255,0.04); border-radius: 3px;
+		background: rgba(var(--c-fg-rgb), 0.04); border-radius: 3px;
 		font-size: 12.5px; color: var(--s-ink-1);
 	}
 	.charts-scope-all {
@@ -511,5 +511,5 @@
 	}
 	.charts-scope-all:hover { color: var(--s-ink-1); }
 	.zones-toggle { margin-top: 4px; }
-	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 2px 2px 6px; }
+	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(var(--c-fg-rgb), 0.55); margin: 2px 2px 6px; }
 </style>

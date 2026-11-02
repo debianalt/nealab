@@ -1898,7 +1898,7 @@
 	<div class="flex-1 flex flex-col relative min-w-0">
 		<!-- Header -->
 		<div class="app-header flex items-center justify-between px-4 py-2.5 border-b border-border z-10 shrink-0"
-			style="background: rgba(10,12,18,0.88); backdrop-filter: blur(8px);">
+			style="background: rgba(var(--c-bg-rgb), 0.88); backdrop-filter: blur(8px);">
 			<div class="flex items-center gap-4">
 				<h1 class="app-title text-[15px] font-bold text-white tracking-wide">
 					<button class="app-home cursor-pointer hover:opacity-80 transition-opacity" onclick={goHome} title={i18n.t('header.home')}>
@@ -2053,8 +2053,8 @@
 </div>
 
 {#if duckdbFailed || hexStore.loadError}
-	<div style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:flex-start;gap:12px;border-radius:10px;border:1px solid rgba(239,68,68,0.35);background:rgba(23,5,5,0.92);padding:12px 16px;backdrop-filter:blur(8px);max-width:280px;box-shadow:0 4px 24px rgba(0,0,0,0.6)">
-		<span style="font-size:12px;color:#fca5a5;line-height:1.5;flex:1">
+	<div style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;align-items:flex-start;gap:12px;border-radius:10px;border:1px solid rgba(239,68,68,0.35);background:rgba(var(--c-bg-rgb), 0.92);padding:12px 16px;backdrop-filter:blur(8px);max-width:280px;box-shadow:0 4px 24px rgba(0,0,0,0.6)">
+		<span style="font-size:12px;color:var(--c-t-fca5a5);line-height:1.5;flex:1">
 			{duckdbFailed ? i18n.t('error.engineFailed') : i18n.t('error.dataLoadFailed')}
 		</span>
 		<button
@@ -2068,13 +2068,13 @@
 	.territory-col {
 		width: 145px;
 		flex-shrink: 0;
-		background: rgba(10, 12, 18, 0.88);
+		background: rgba(var(--c-bg-rgb), 0.88);
 		backdrop-filter: blur(8px);
-		border-right: 1px solid rgba(255, 255, 255, 0.07);
+		border-right: 1px solid rgba(var(--c-fg-rgb), 0.07);
 		overflow-y: auto;
 		padding: 10px 6px 16px;
 		scrollbar-width: thin;
-		scrollbar-color: #334155 transparent;
+		scrollbar-color: var(--c-line-2) transparent;
 	}
 	@media (max-width: 768px) {
 		.territory-col { display: none; }
@@ -2090,21 +2090,21 @@
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
-		background: rgba(10, 12, 18, 0.5);
+		background: rgba(var(--c-bg-rgb), 0.5);
 		z-index: 8;
 		pointer-events: none;
 	}
 	.loading-spinner {
 		width: 18px;
 		height: 18px;
-		border: 2px solid rgba(255,255,255,0.15);
-		border-top-color: #60a5fa;
+		border: 2px solid rgba(var(--c-fg-rgb), 0.15);
+		border-top-color: var(--c-accent);
 		border-radius: 50%;
 		animation: spin 0.7s linear infinite;
 	}
 	.loading-text {
 		font-size: 12px;
-		color: rgba(255,255,255,0.7);
+		color: rgba(var(--c-fg-rgb), 0.7);
 		font-weight: 500;
 	}
 	@keyframes spin {
@@ -2135,9 +2135,9 @@
 		bottom: 44px;
 		left: 16px;
 		transform: none;
-		background: rgba(15, 23, 42, 0.88);
+		background: rgba(var(--c-bg-rgb), 0.88);
 		border: 1px solid rgba(139, 92, 246, 0.45);
-		color: #a78bfa;
+		color: var(--c-t-a78bfa);
 		font-size: 10px;
 		font-weight: 600;
 		padding: 4px 12px;

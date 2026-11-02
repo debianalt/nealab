@@ -74,7 +74,7 @@
 		right: 8px;
 		width: 190px;
 		max-height: 340px;
-		background: rgba(15, 23, 42, 0.92);
+		background: rgba(var(--c-bg-rgb), 0.92);
 		border: 1px solid rgba(148, 163, 184, 0.15);
 		border-radius: 6px;
 		display: flex;
@@ -82,7 +82,7 @@
 		z-index: 10;
 		backdrop-filter: blur(4px);
 		font-size: 12.5px;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 
 	.panel-header {
@@ -96,7 +96,7 @@
 
 	.panel-title {
 		font-size: 12px;
-		color: #94a3b8;
+		color: var(--c-ink-3);
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 	}
@@ -104,13 +104,13 @@
 	.close-btn {
 		background: none;
 		border: none;
-		color: #64748b;
+		color: var(--c-ink-4);
 		cursor: pointer;
 		padding: 0;
 		font-size: 12px;
 		line-height: 1;
 	}
-	.close-btn:hover { color: #94a3b8; }
+	.close-btn:hover { color: var(--c-ink-3); }
 
 	.search-input {
 		margin: 5px 8px 3px;
@@ -118,12 +118,12 @@
 		background: rgba(30, 41, 59, 0.8);
 		border: 1px solid rgba(148, 163, 184, 0.2);
 		border-radius: 4px;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 		font-size: 12px;
 		outline: none;
 		flex-shrink: 0;
 	}
-	.search-input::placeholder { color: #475569; }
+	.search-input::placeholder { color: var(--c-line-3); }
 	.search-input:focus { border-color: rgba(244, 114, 182, 0.4); }
 
 	.dept-list {
@@ -139,7 +139,7 @@
 		border: none;
 		text-align: left;
 		padding: 5px 8px;
-		color: #cbd5e1;
+		color: var(--c-ink-2);
 		cursor: pointer;
 		border-radius: 4px;
 		font-size: 12.5px;
@@ -150,12 +150,12 @@
 	}
 	.dept-item:hover {
 		background: rgba(244, 114, 182, 0.12);
-		color: #f9a8d4;
+		color: var(--c-t-f9a8d4);
 	}
 
 	.hint {
 		padding: 8px;
-		color: #64748b;
+		color: var(--c-ink-4);
 		font-size: 12px;
 	}
 </style>

@@ -125,9 +125,9 @@
 		pointer-events: none;
 		background: linear-gradient(
 			90deg,
-			rgba(8, 9, 12, 0.85) 0%,
-			rgba(8, 9, 12, 0.55) 26%,
-			rgba(8, 9, 12, 0) 54%
+			rgba(var(--c-bg-rgb), 0.85) 0%,
+			rgba(var(--c-bg-rgb), 0.55) 26%,
+			rgba(var(--c-bg-rgb), 0) 54%
 		);
 	}
 	.map-loading {
@@ -138,9 +138,9 @@
 		pointer-events: none;
 		font-family: var(--font-mono);
 		font-size: 11px;
-		color: rgba(255, 255, 255, 0.75);
-		background: rgba(10, 12, 18, 0.85);
-		border: 1px solid #1e293b;
+		color: rgba(var(--c-fg-rgb), 0.75);
+		background: rgba(var(--c-bg-rgb), 0.85);
+		border: 1px solid var(--c-line);
 		padding: 4px 8px;
 		border-radius: 4px;
 	}
@@ -156,9 +156,9 @@
 		gap: 2px 6px;
 		font-family: var(--font-mono);
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.7);
-		background: rgba(10, 12, 18, 0.82);
-		border: 1px solid #1e293b;
+		color: rgba(var(--c-fg-rgb), 0.7);
+		background: rgba(var(--c-bg-rgb), 0.82);
+		border: 1px solid var(--c-line);
 		padding: 6px 8px;
 		border-radius: 5px;
 	}
@@ -166,7 +166,7 @@
 		grid-column: 1 / -1;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: rgba(255, 255, 255, 0.5);
+		color: rgba(var(--c-fg-rgb), 0.5);
 	}
 	.lg-ramp {
 		grid-column: 1 / -1;
@@ -186,10 +186,10 @@
 		max-width: 150px;
 		margin-top: 3px;
 		padding-top: 3px;
-		border-top: 1px solid #1e293b;
+		border-top: 1px solid var(--c-line);
 		font-size: 9px;
 		line-height: 1.35;
-		color: rgba(255, 255, 255, 0.45);
+		color: rgba(var(--c-fg-rgb), 0.45);
 		text-wrap: pretty;
 	}
 </style>

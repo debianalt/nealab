@@ -131,7 +131,7 @@
 
 <style>
 	.zone-comparison { font-size: 12.5px; }
-	.ref-note { font-size: 11px; color: #64748b; text-align: center; margin: 4px 0 2px; }
+	.ref-note { font-size: 11px; color: var(--c-ink-4); text-align: center; margin: 4px 0 2px; }
 	.zone-header {
 		display: flex;
 		justify-content: space-between;
@@ -141,15 +141,15 @@
 	.zone-title {
 		font-size: 13px;
 		font-weight: 600;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 	.zone-clear-btn {
 		font-size: 11.5px;
 		padding: 2px 6px;
 		border-radius: 4px;
-		background: rgba(255,255,255,0.06);
-		border: 1px solid #334155;
-		color: #d4d4d4;
+		background: rgba(var(--c-fg-rgb), 0.06);
+		border: 1px solid var(--c-line-2);
+		color: var(--c-ink-1n);
 		cursor: pointer;
 		transition: all 0.15s;
 	}
@@ -167,10 +167,10 @@
 		gap: 4px;
 		padding: 2px 6px;
 		border-radius: 4px;
-		background: rgba(255,255,255,0.06);
-		border: 1px solid #334155;
+		background: rgba(var(--c-fg-rgb), 0.06);
+		border: 1px solid var(--c-line-2);
 		font-size: 12px;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 	.zone-dot {
 		width: 8px;
@@ -189,7 +189,7 @@
 	.zone-remove {
 		background: none;
 		border: none;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		cursor: pointer;
 		font-size: 11.5px;
 		padding: 0 2px;
@@ -202,13 +202,13 @@
 		display: flex;
 		gap: 4px;
 		padding-bottom: 3px;
-		border-bottom: 1px solid #1e293b;
+		border-bottom: 1px solid var(--c-line);
 		margin-bottom: 3px;
 	}
 	.zone-table-header .zt-col {
 		font-size: 11.5px;
 		font-weight: 600;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		text-transform: uppercase;
 	}
 	.zone-table-row {
@@ -218,14 +218,14 @@
 	}
 	.zt-col { flex: 1; }
 	.zt-zone { flex: 0.6; display: flex; align-items: center; gap: 4px; }
-	.zt-num { text-align: right; color: #cbd5e1; font-size: 12px; }
+	.zt-num { text-align: right; color: var(--c-ink-2); font-size: 12px; }
 	.zt-actions { flex: 0.8; display: flex; gap: 3px; justify-content: flex-end; }
-	.zone-dl-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-	.zone-dl-btn:hover { background: rgba(96,165,250,0.15); border-color: rgba(96,165,250,0.4); color: #60a5fa; }
+	.zone-dl-btn { background: rgba(var(--c-fg-rgb), 0.04); border: 1px solid rgba(var(--c-fg-rgb), 0.1); color: var(--c-ink-3); font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.zone-dl-btn:hover { background: rgba(var(--c-accent-rgb), 0.15); border-color: rgba(var(--c-accent-rgb), 0.4); color: var(--c-accent); }
 
 	.zone-download-row { margin-top: 6px; }
-	.zone-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-	.zone-download-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
+	.zone-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(var(--c-accent-rgb), 0.15); border: 1px solid rgba(var(--c-accent-rgb), 0.3); border-radius: 4px; color: var(--c-accent); font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.zone-download-btn:hover { background: rgba(var(--c-accent-rgb), 0.25); border-color: rgba(var(--c-accent-rgb), 0.5); }
 
 	.dim-section { margin: 8px 0; }
 	.dim-row {
@@ -237,7 +237,7 @@
 	.dim-label {
 		width: 65px;
 		flex-shrink: 0;
-		color: #d4d4d4;
+		color: var(--c-ink-1n);
 		font-size: 11.5px;
 		text-align: right;
 		padding-top: 1px;
@@ -250,7 +250,7 @@
 	}
 	.dim-bar-track {
 		height: 5px;
-		background: #1e293b;
+		background: var(--c-line);
 		border-radius: 3px;
 		overflow: hidden;
 	}
@@ -272,6 +272,6 @@
 		font-size: 11px;
 		font-weight: 600;
 		line-height: 7px;
-		color: #cbd5e1;
+		color: var(--c-ink-2);
 	}
 </style>

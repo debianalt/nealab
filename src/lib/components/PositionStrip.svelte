@@ -103,7 +103,7 @@
 	.ps-tip {
 		position: absolute; left: 0; right: 0; transform: translateY(-100%);
 		font-size: 11px; line-height: 1.4; color: var(--s-ink-1); background: var(--s-surface);
-		border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 4px; padding: 3px 6px;
+		border: 1px solid rgba(var(--c-fg-rgb), 0.18); border-radius: 4px; padding: 3px 6px;
 		font-variant-numeric: tabular-nums; pointer-events: none; z-index: 2;
 	}
 </style>

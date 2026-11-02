@@ -34,7 +34,7 @@
 		border: none;
 		border-bottom: 2px solid transparent;
 		background: transparent;
-		color: rgba(255,255,255,0.5);
+		color: rgba(var(--c-fg-rgb), 0.5);
 		font-size: 11px;
 		font-weight: 500;
 		cursor: pointer;
@@ -43,11 +43,11 @@
 		letter-spacing: 0.02em;
 	}
 	.lens-btn:hover {
-		color: rgba(255,255,255,0.8);
-		border-bottom-color: rgba(255,255,255,0.2);
+		color: rgba(var(--c-fg-rgb), 0.8);
+		border-bottom-color: rgba(var(--c-fg-rgb), 0.2);
 	}
 	.lens-btn.active {
-		color: #ffffff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 		border-bottom-color: var(--lc);
 	}

@@ -66,7 +66,7 @@
 	.overlay {
 		position: fixed;
 		inset: 0;
-		background: rgba(0, 0, 0, 0.88);
+		background: rgba(var(--c-bg-rgb), 0.88);
 		backdrop-filter: blur(4px);
 		z-index: 9999;
 		display: flex;
@@ -78,7 +78,7 @@
 
 	.modal {
 		background: #111111;
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.15);
 		max-width: 560px;
 		width: 100%;
 		padding: 48px 40px 40px;
@@ -91,7 +91,7 @@
 
 	.kicker {
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		margin-bottom: 12px;
@@ -100,14 +100,14 @@
 	.title {
 		font-size: 22px;
 		font-weight: 700;
-		color: #ffffff;
+		color: var(--c-ink-0);
 		margin: 0 0 16px;
 		line-height: 1.2;
 	}
 
 	.platform-intro {
 		font-size: 12px;
-		color: rgba(255, 255, 255, 0.75);
+		color: rgba(var(--c-fg-rgb), 0.75);
 		margin: 0 0 14px;
 		line-height: 1.65;
 	}
@@ -117,22 +117,22 @@
 		flex-wrap: wrap;
 		gap: 4px 0;
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.35);
+		color: rgba(var(--c-fg-rgb), 0.35);
 		letter-spacing: 0.04em;
 		margin-bottom: 28px;
 	}
 
 	.stat-sep {
 		margin: 0 8px;
-		color: rgba(255, 255, 255, 0.18);
+		color: rgba(var(--c-fg-rgb), 0.18);
 	}
 
 	.stats-divider {
 		font-size: 9px;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: rgba(255, 255, 255, 0.25);
-		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		color: rgba(var(--c-fg-rgb), 0.25);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.08);
 		padding-top: 16px;
 		margin-bottom: 16px;
 	}
@@ -149,7 +149,7 @@
 
 	.points li {
 		font-size: 12px;
-		color: rgba(255, 255, 255, 0.7);
+		color: rgba(var(--c-fg-rgb), 0.7);
 		line-height: 1.55;
 		padding-left: 14px;
 		position: relative;
@@ -159,11 +159,11 @@
 		content: '—';
 		position: absolute;
 		left: 0;
-		color: rgba(255, 255, 255, 0.3);
+		color: rgba(var(--c-fg-rgb), 0.3);
 	}
 
 	.label {
-		color: #ffffff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 	}
 
@@ -179,8 +179,8 @@
 	}
 
 	.btn-primary {
-		background: #ffffff;
-		color: #000000;
+		background: var(--c-ink-0);
+		color: var(--c-bg);
 		border: none;
 		padding: 12px 20px;
 		font-family: inherit;
@@ -198,8 +198,8 @@
 
 	.btn-secondary {
 		display: block;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		color: rgba(255, 255, 255, 0.6);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.25);
+		color: rgba(var(--c-fg-rgb), 0.6);
 		padding: 10px 20px;
 		font-family: inherit;
 		font-size: 11px;
@@ -210,7 +210,7 @@
 	}
 
 	.btn-secondary:hover {
-		border-color: rgba(255, 255, 255, 0.6);
-		color: #ffffff;
+		border-color: rgba(var(--c-fg-rgb), 0.6);
+		color: var(--c-ink-0);
 	}
 </style>

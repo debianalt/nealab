@@ -232,17 +232,17 @@
 	.dp-label { font-size: 11px; color: var(--s-ink-2); white-space: nowrap; }
 	.dp-select {
 		flex: 1; min-width: 0;
-		background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 3px;
-		color: rgba(255,255,255,0.85); font-size: 12px; font-family: inherit; padding: 2px 4px; cursor: pointer;
+		background: rgba(var(--c-fg-rgb), 0.04); border: 1px solid rgba(var(--c-fg-rgb), 0.12); border-radius: 3px;
+		color: rgba(var(--c-fg-rgb), 0.85); font-size: 12px; font-family: inherit; padding: 2px 4px; cursor: pointer;
 	}
-	.dp-select option { background: #1e293b; color: #e2e8f0; }
+	.dp-select option { background: var(--c-line); color: var(--c-ink-1); }
 	.dp-head { margin: 2px 2px 4px; font-size: 13px; line-height: 1.5; color: var(--s-ink-1); }
 	.dp-head strong { color: var(--s-ink-1); font-family: var(--font-serif); font-variant-numeric: tabular-nums; font-size: 16px; font-weight: 600; }
 	.dp-sub { padding: 0 2px; min-height: 16px; }
 	.dp-sel { font-size: 11px; color: var(--s-ink-1); }
 	.dp-hint { font-size: 11px; color: var(--s-ink-3); font-style: italic; }
 	.dp-state { font-size: 11px; color: var(--s-ink-3); padding: 12px 2px; font-style: italic; }
-	.dp-error { color: #f87171; }
+	.dp-error { color: var(--c-t-f87171); }
 	.dp-note { font-size: 11px; line-height: 1.45; color: var(--s-ink-3); padding: 4px 2px 0; }
 	.dp-band { cursor: pointer; }
 	.dp-band:hover rect:nth-child(2) { opacity: 1; }

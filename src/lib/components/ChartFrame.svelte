@@ -310,8 +310,8 @@
 	.chart-frame {
 		display: flex;
 		flex-direction: column;
-		background: rgba(15, 23, 42, 0.5);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(var(--c-bg-rgb), 0.5);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.08);
 		border-radius: 6px;
 		margin: 6px 0;
 		overflow: hidden;
@@ -324,9 +324,9 @@
 		bottom: 0;
 		width: var(--dock-w);
 		z-index: 1000;
-		background: #0a0e1a;
+		background: var(--c-bg);
 		border: none;
-		border-left: 1px solid rgba(255, 255, 255, 0.18);
+		border-left: 1px solid rgba(var(--c-fg-rgb), 0.18);
 		border-radius: 0;
 		box-shadow: -12px 0 40px rgba(0, 0, 0, 0.55);
 		overflow: hidden;
@@ -341,18 +341,18 @@
 		cursor: ew-resize;
 		z-index: 2;
 	}
-	.chart-frame-dock-handle:hover { background: rgba(96, 165, 250, 0.35); }
+	.chart-frame-dock-handle:hover { background: rgba(var(--c-accent-rgb), 0.35); }
 
 	.chart-frame-header {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		padding: 5px 8px;
-		background: rgba(255, 255, 255, 0.04);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		background: rgba(var(--c-fg-rgb), 0.04);
+		border-bottom: 1px solid rgba(var(--c-fg-rgb), 0.06);
 		font-size: 12px;
 		font-weight: 600;
-		color: rgba(255, 255, 255, 0.75);
+		color: rgba(var(--c-fg-rgb), 0.75);
 		flex-shrink: 0;
 	}
 
@@ -371,11 +371,11 @@
 	}
 
 	.chart-frame-header-clickable { cursor: pointer; }
-	.chart-frame-header-clickable:hover { background: rgba(255, 255, 255, 0.07); }
+	.chart-frame-header-clickable:hover { background: rgba(var(--c-fg-rgb), 0.07); }
 
 	.chart-frame-chevron {
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.45);
+		color: rgba(var(--c-fg-rgb), 0.45);
 		transition: transform 0.15s;
 	}
 	.chart-frame-chevron-open { transform: rotate(90deg); }
@@ -392,7 +392,7 @@
 	.chart-frame-btn {
 		background: none;
 		border: 1px solid transparent;
-		color: rgba(255, 255, 255, 0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		font-size: 13px;
 		line-height: 1;
 		padding: 3px 7px;
@@ -402,9 +402,9 @@
 		transition: all 0.12s;
 	}
 	.chart-frame-btn:hover {
-		color: #fff;
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.18);
+		color: var(--c-ink-0);
+		background: rgba(var(--c-fg-rgb), 0.08);
+		border-color: rgba(var(--c-fg-rgb), 0.18);
 	}
 
 	.chart-frame-export-wrap {
@@ -415,8 +415,8 @@
 		position: absolute;
 		top: calc(100% + 4px);
 		right: 0;
-		background: rgba(10, 14, 26, 0.98);
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		background: rgba(var(--c-bg-rgb), 0.98);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.15);
 		border-radius: 5px;
 		padding: 3px;
 		display: flex;
@@ -430,7 +430,7 @@
 	.chart-frame-export-item {
 		background: none;
 		border: none;
-		color: rgba(255, 255, 255, 0.85);
+		color: rgba(var(--c-fg-rgb), 0.85);
 		font-family: inherit;
 		font-size: 12px;
 		text-align: left;
@@ -439,7 +439,7 @@
 		border-radius: 3px;
 		transition: background 0.1s;
 	}
-	.chart-frame-export-item:hover { background: rgba(255, 255, 255, 0.08); }
+	.chart-frame-export-item:hover { background: rgba(var(--c-fg-rgb), 0.08); }
 
 	.chart-frame-body {
 		flex: 1;

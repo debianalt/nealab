@@ -192,15 +192,15 @@
 	.hzc-title {
 		font-size: 13px;
 		font-weight: 600;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 	.hzc-clear-btn {
 		font-size: 11.5px;
 		padding: 2px 6px;
 		border-radius: 4px;
-		background: rgba(255,255,255,0.06);
-		border: 1px solid #334155;
-		color: #d4d4d4;
+		background: rgba(var(--c-fg-rgb), 0.06);
+		border: 1px solid var(--c-line-2);
+		color: var(--c-ink-1n);
 		cursor: pointer;
 		transition: all 0.15s;
 	}
@@ -218,10 +218,10 @@
 		gap: 4px;
 		padding: 2px 6px;
 		border-radius: 4px;
-		background: rgba(255,255,255,0.06);
-		border: 1px solid #334155;
+		background: rgba(var(--c-fg-rgb), 0.06);
+		border: 1px solid var(--c-line-2);
 		font-size: 12px;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 	}
 	.hzc-dot {
 		width: 8px;
@@ -235,7 +235,7 @@
 	.hzc-remove {
 		background: none;
 		border: none;
-		color: #a3a3a3;
+		color: var(--c-ink-2n);
 		cursor: pointer;
 		font-size: 11.5px;
 		padding: 0 2px;
@@ -243,19 +243,19 @@
 	}
 	.hzc-remove:hover { color: #ef4444; }
 
-	.zone-block { margin: 8px 0; padding: 6px 0; border-top: 1px solid rgba(255,255,255,0.06); }
-	.zone-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #e2e8f0; font-weight: 600; margin-bottom: 5px; }
-	.zone-hex-count { font-size: 11.5px; color: rgba(255,255,255,0.55); font-weight: 400; margin-left: auto; }
-	.zone-type { font-size: 12px; color: #e2e8f0; font-weight: 500; background: rgba(255,255,255,0.08); display: inline-block; padding: 1px 6px; border-radius: 3px; margin-bottom: 4px; }
+	.zone-block { margin: 8px 0; padding: 6px 0; border-top: 1px solid rgba(var(--c-fg-rgb), 0.06); }
+	.zone-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--c-ink-1); font-weight: 600; margin-bottom: 5px; }
+	.zone-hex-count { font-size: 11.5px; color: rgba(var(--c-fg-rgb), 0.55); font-weight: 400; margin-left: auto; }
+	.zone-type { font-size: 12px; color: var(--c-ink-1); font-weight: 500; background: rgba(var(--c-fg-rgb), 0.08); display: inline-block; padding: 1px 6px; border-radius: 3px; margin-bottom: 4px; }
 	.cd-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-	.cd-label { font-size: 11.5px; color: #d4d4d4; flex: 0 0 auto; min-width: 100px; }
-	.cd-val { font-size: 12px; font-weight: 600; color: #e2e8f0; text-align: right; margin-left: auto; white-space: nowrap; }
+	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 0 0 auto; min-width: 100px; }
+	.cd-val { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; }
 	.zone-dl { display: flex; gap: 3px; margin-top: 4px; }
 
-	.hzc-dl-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-	.hzc-dl-btn:hover { background: rgba(96,165,250,0.15); border-color: rgba(96,165,250,0.4); color: #60a5fa; }
+	.hzc-dl-btn { background: rgba(var(--c-fg-rgb), 0.04); border: 1px solid rgba(var(--c-fg-rgb), 0.1); color: var(--c-ink-3); font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.hzc-dl-btn:hover { background: rgba(var(--c-accent-rgb), 0.15); border-color: rgba(var(--c-accent-rgb), 0.4); color: var(--c-accent); }
 
 	.hzc-download-row { margin-top: 6px; }
-	.hzc-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #60a5fa; font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-	.hzc-download-btn:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.5); }
+	.hzc-download-btn { display: block; width: 100%; text-align: center; padding: 6px 10px; background: rgba(var(--c-accent-rgb), 0.15); border: 1px solid rgba(var(--c-accent-rgb), 0.3); border-radius: 4px; color: var(--c-accent); font-size: 11.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+	.hzc-download-btn:hover { background: rgba(var(--c-accent-rgb), 0.25); border-color: rgba(var(--c-accent-rgb), 0.5); }
 </style>

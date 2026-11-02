@@ -594,24 +594,24 @@
 	}
 	.picker-label {
 		font-size: 11px;
-		color: rgba(255,255,255,0.6);
+		color: rgba(var(--c-fg-rgb), 0.6);
 		white-space: nowrap;
 	}
 	.picker-fixed {
 		flex: 1;
 		min-width: 0;
 		font-size: 12px;
-		color: rgba(255,255,255,0.85);
+		color: rgba(var(--c-fg-rgb), 0.85);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 	.picker-select {
 		flex: 1;
-		background: rgba(255,255,255,0.04);
-		border: 1px solid rgba(255,255,255,0.12);
+		background: rgba(var(--c-fg-rgb), 0.04);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.12);
 		border-radius: 3px;
-		color: rgba(255,255,255,0.85);
+		color: rgba(var(--c-fg-rgb), 0.85);
 		font-size: 12px;
 		font-family: inherit;
 		padding: 2px 4px;
@@ -620,23 +620,23 @@
 	}
 	.picker-select:focus {
 		outline: none;
-		border-color: rgba(255,255,255,0.28);
+		border-color: rgba(var(--c-fg-rgb), 0.28);
 	}
 	.picker-select option {
-		background: #1e293b;
-		color: #e2e8f0;
+		background: var(--c-line);
+		color: var(--c-ink-1);
 	}
 	.bvpanel-state {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: rgba(var(--c-fg-rgb), 0.5);
 		text-align: center;
 		padding: 16px 0;
 		font-style: italic;
 	}
-	.bvpanel-error { color: #f87171; }
+	.bvpanel-error { color: var(--c-t-f87171); }
 	.bvpanel-note {
 		font-size: 11px;
-		color: rgba(255,255,255,0.5);
+		color: rgba(var(--c-fg-rgb), 0.5);
 		line-height: 1.45;
 		padding: 4px 2px 0;
 	}
@@ -651,14 +651,14 @@
 		padding: 6px 8px;
 		font-size: 12px;
 		font-family: inherit;
-		color: #e2e8f0;
+		color: var(--c-ink-1);
 		background: rgba(99, 102, 241, 0.14);
 		border: 1px solid rgba(129, 140, 248, 0.45);
 		border-radius: 4px;
 		cursor: pointer;
 	}
 	.bv-mapbtn:hover { background: rgba(99, 102, 241, 0.26); }
-	.bv-mapbtn-on { background: rgba(99, 102, 241, 0.32); border-color: #818cf8; }
+	.bv-mapbtn-on { background: rgba(99, 102, 241, 0.32); border-color: var(--c-t-818cf8); }
 	.bv-legend {
 		display: grid;
 		grid-template-columns: auto auto 1fr;
@@ -667,20 +667,20 @@
 		align-items: center;
 		margin-top: 8px;
 	}
-	.bv-legend-y { font-size: 11px; color: rgba(255,255,255,0.6); }
+	.bv-legend-y { font-size: 11px; color: rgba(var(--c-fg-rgb), 0.6); }
 	.bv-legend-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 44px);
 		grid-auto-rows: 26px;
 		gap: 2px;
 	}
-	.bv-legend-x { grid-column: 2; font-size: 11px; color: rgba(255,255,255,0.6); text-align: center; }
+	.bv-legend-x { grid-column: 2; font-size: 11px; color: rgba(var(--c-fg-rgb), 0.6); text-align: center; }
 	.bv-legend-notes { grid-column: 3; grid-row: 1; }
 	.bv-legend-note {
 		margin: 0;
 		font-size: 11px;
 		line-height: 1.45;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 	}
 	.bv-legend-low { margin-top: 4px; color: var(--s-ink-2); }
 	/* A hexagon, not a square: a bordered square read as an empty checkbox. */
@@ -692,20 +692,20 @@
 		border-radius: 2px;
 		font-size: 10px;
 		font-family: inherit;
-		color: rgba(15, 23, 42, 0.85);
+		color: rgba(var(--c-bg-rgb), 0.85);
 		cursor: pointer;
 		padding: 0;
 	}
-	.bv-cell:hover { border-color: rgba(255,255,255,0.7); }
+	.bv-cell:hover { border-color: rgba(var(--c-fg-rgb), 0.7); }
 	.bv-cell-on { border-color: var(--s-cat-1); }
-	.bv-cell-dark { color: rgba(245, 245, 244, 0.92); }
-	@media print { .bv-cell-dark { color: rgba(15, 23, 42, 0.85); } }
+	.bv-cell-dark { color: rgba(var(--c-fg-rgb), 0.92); }
+	@media print { .bv-cell-dark { color: rgba(var(--c-bg-rgb), 0.85); } }
 	.bvpanel-empty-prompt {
 		font-size: 11px;
-		color: rgba(255,255,255,0.55);
+		color: rgba(var(--c-fg-rgb), 0.55);
 		padding: 8px 2px 10px;
 		line-height: 1.5;
-		border: 1px dashed rgba(255,255,255,0.1);
+		border: 1px dashed rgba(var(--c-fg-rgb), 0.1);
 		border-radius: 4px;
 		padding: 10px 8px;
 		margin: 2px 0 4px;

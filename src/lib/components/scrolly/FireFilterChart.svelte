@@ -144,7 +144,7 @@
 	.fc {
 		margin: 0;
 		font-family: 'Roboto Condensed', system-ui, sans-serif;
-		color: #fff;
+		color: var(--c-ink-0);
 	}
 	.hero {
 		display: flex;
@@ -165,14 +165,14 @@
 		max-width: 22rem;
 		font-size: 0.95rem;
 		line-height: 1.45;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 	}
 	.legend {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1.4rem;
 		font-size: 0.82rem;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 		margin-bottom: 1.15rem;
 	}
 	.key {
@@ -212,11 +212,11 @@
 		font-family: var(--font-mono);
 		font-size: 0.82rem;
 		text-align: right;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 	}
 	.row.total .rl,
 	.row.keyrow .rl {
-		color: #fff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 	}
 	.track {
@@ -254,7 +254,7 @@
 		padding-left: 0.55rem;
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 		white-space: nowrap;
 	}
 	figcaption {
@@ -274,7 +274,7 @@
 		padding: 0.55rem 0.7rem;
 		font-family: var(--font-mono);
 		font-size: 0.74rem;
-		color: #fff;
+		color: var(--c-ink-0);
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
@@ -287,7 +287,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 	}
 	.tooltip .d {
 		width: 9px;

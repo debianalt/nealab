@@ -1308,9 +1308,9 @@
 		tooltip.id = 'hover-tooltip';
 		tooltip.style.cssText = `
 			position: fixed; pointer-events: none; z-index: 20; display: none;
-			background: rgba(8,10,20,0.92); backdrop-filter: blur(12px);
-			border: 1px solid rgba(96,165,250,0.3); border-radius: 8px;
-			padding: 10px 14px; font-size: 12px; line-height: 1.7; color: #cbd5e1;
+			background: rgba(var(--c-bg-rgb),0.94); backdrop-filter: blur(12px);
+			border: 1px solid rgba(var(--c-accent-rgb),0.3); border-radius: 8px;
+			padding: 10px 14px; font-size: 12px; line-height: 1.7; color: var(--c-ink-2);
 			box-shadow: 0 4px 24px rgba(0,0,0,0.6); max-width: 260px;
 		`;
 		document.body.appendChild(tooltip);
@@ -1331,7 +1331,7 @@
 				}
 				const v = hit.value == null ? '—'
 					: (deptFill.signed && hit.value > 0 ? '+' : '') + hit.value.toLocaleString(i18n.locale, { minimumFractionDigits: deptFill.decimals, maximumFractionDigits: deptFill.decimals }) + ' ' + deptFill.unit;
-				tooltip.innerHTML = `<b style="color:#e2e8f0">${formatDept(hit.name)}</b><br>${v} · ${hit.pos}.º ${i18n.t('rank.of')} ${deptFill.values.length}`;
+				tooltip.innerHTML = `<b style="color:var(--c-ink-1)">${formatDept(hit.name)}</b><br>${v} · ${hit.pos}.º ${i18n.t('rank.of')} ${deptFill.values.length}`;
 				tooltip.style.display = 'block';
 				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 				tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1355,13 +1355,13 @@
 			const radioHog = parseInt(p.radio_hogares) || 0;
 			const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-			let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2<br>` +
-				`<b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
+			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2<br>` +
+				`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
 			if (redcode) {
-				html += `<br><span style="color:#a3a3a3">\u2500\u2500\u2500</span><br>` +
-					`<b style="color:#d4d4d4">${i18n.t('tip.radio')}</b> <span style="color:#d4d4d4">${redcode}</span><br>` +
-					`<b style="color:#d4d4d4">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('tip.density')}</b> ${radioDens} hab/km\u00B2<br>` +
-					`<b style="color:#d4d4d4">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.area')}:</b> ${radioAreaKm2} km\u00B2`;
+				html += `<br><span style="color:var(--c-ink-2n)">\u2500\u2500\u2500</span><br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('tip.density')}</b> ${radioDens} hab/km\u00B2<br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.area')}:</b> ${radioAreaKm2} km\u00B2`;
 			}
 			tooltip.innerHTML = html;
 			tooltip.style.display = 'block';
@@ -1393,13 +1393,13 @@
 			const radioHog = parseInt(p.radio_hogares) || 0;
 			const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-			let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
-				`<b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
+			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
+				`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
 			if (redcode) {
-				html += `<br><span style="color:#a3a3a3">───</span><br>` +
-					`<b style="color:#d4d4d4">${i18n.t('tip.radio')}</b> <span style="color:#d4d4d4">${redcode}</span><br>` +
-					`<b style="color:#d4d4d4">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('tip.density')}</b> ${radioDens} hab/km²<br>` +
-					`<b style="color:#d4d4d4">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.area')}:</b> ${radioAreaKm2} km²`;
+				html += `<br><span style="color:var(--c-ink-2n)">───</span><br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('tip.density')}</b> ${radioDens} hab/km²<br>` +
+					`<b style="color:var(--c-ink-1n)">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.area')}:</b> ${radioAreaKm2} km²`;
 			}
 			tooltip.innerHTML = html;
 			tooltip.style.display = 'block';
@@ -1436,13 +1436,13 @@
 				const radioHog = parseInt(p.radio_hogares) || 0;
 				const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-				let html = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
-					`<b style="color:#60a5fa">${i18n.t('tip.estPersons')}</b> <span style="color:#60a5fa;font-weight:600">${pers}</span>`;
+				let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
+					`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
 				if (redcode) {
-					html += `<br><span style="color:#a3a3a3">───</span><br>` +
-						`<b style="color:#d4d4d4">${i18n.t('tip.radio')}</b> <span style="color:#d4d4d4">${redcode}</span><br>` +
-						`<b style="color:#d4d4d4">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('tip.density')}</b> ${radioDens} hab/km²<br>` +
-						`<b style="color:#d4d4d4">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:#d4d4d4">${i18n.t('label.area')}:</b> ${radioAreaKm2} km²`;
+					html += `<br><span style="color:var(--c-ink-2n)">───</span><br>` +
+						`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
+						`<b style="color:var(--c-ink-1n)">${i18n.t('tip.pop')}</b> ${radioPop.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('tip.density')}</b> ${radioDens} hab/km²<br>` +
+						`<b style="color:var(--c-ink-1n)">${i18n.t('label.dwellings')}:</b> ${radioViv.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.households')}:</b> ${radioHog.toLocaleString()} &nbsp; <b style="color:var(--c-ink-1n)">${i18n.t('label.area')}:</b> ${radioAreaKm2} km²`;
 				}
 				tooltip.innerHTML = html;
 				tooltip.style.display = 'block';
@@ -1468,7 +1468,7 @@
 			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
 			const dist = p.distrito || '';
 			const est = p.est_personas > 0 ? ` | ~${p.est_personas} pers.` : '';
-			tooltip.innerHTML = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${h} m | ${a} m\u00B2 | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
+			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m\u00B2 | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1491,7 +1491,7 @@
 			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
 			const dist = p.distrito || '';
 			const est = p.est_personas > 0 ? ` | ~${p.est_personas} pers.` : '';
-			tooltip.innerHTML = `<b style="color:#60a5fa">${i18n.t('tip.building')}</b> ${h} m | ${a} m² | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
+			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m² | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1759,25 +1759,25 @@
 			if (!p.h3index) return;
 			map.getCanvas().style.cursor = 'pointer';
 
-			const titleLine = hexLayerTitle ? `<div style="color:rgba(255,255,255,0.5);font-size:9px;margin-bottom:2px">${hexLayerTitle}</div>` : '';
+			const titleLine = hexLayerTitle ? `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-bottom:2px">${hexLayerTitle}</div>` : '';
 
 			let valueLine: string;
 			if (p.nodata === true || p.nodata === 'true') {
-				valueLine = `<span style="color:#94a3b8;font-weight:600;font-style:italic">${i18n.t('legend.noData')}</span>`;
+				valueLine = `<span style="color:var(--c-ink-3);font-weight:600;font-style:italic">${i18n.t('legend.noData')}</span>`;
 			} else if (hexLayerIsCategorical && p.type_label) {
-				valueLine = `<span style="color:#e2e8f0;font-weight:600">${p.type_label}</span>`;
+				valueLine = `<span style="color:var(--c-ink-1);font-weight:600">${p.type_label}</span>`;
 			} else if (hexClassesOrdinal && p.value != null && hexClassesOrdinal.steps.some(s => s.from === Number(p.value))) {
 				const st = hexClassesOrdinal.steps.find(s => s.from === Number(p.value))!;
-				valueLine = `<span style="color:#e2e8f0;font-weight:600">${i18n.t(st.labelKey)}</span>`;
+				valueLine = `<span style="color:var(--c-ink-1);font-weight:600">${i18n.t(st.labelKey)}</span>`;
 			} else {
 				const score = p.value != null ? Number(p.value).toFixed(1) : '—';
 				// Physical unit of the primary variable (tC/ha, min, %…), set per layer.
 				// Empty → no suffix. Replaces the old hardcoded "/100", which mislabeled
 				// every raw layer as a 0-100 score.
 				const suffix = hexLayerUnit
-					? `<span style="color:rgba(255,255,255,0.4);font-size:9px"> ${hexLayerUnit}</span>`
+					? `<span style="color:rgba(var(--c-fg-rgb), 0.4);font-size:9px"> ${hexLayerUnit}</span>`
 					: '';
-				valueLine = `<span style="color:#e2e8f0;font-weight:600">${score}</span>${suffix}`;
+				valueLine = `<span style="color:var(--c-ink-1);font-weight:600">${score}</span>${suffix}`;
 			}
 
 			tooltip.innerHTML = `${titleLine}${valueLine}`;
@@ -1809,8 +1809,8 @@
 		const pickLabel = document.createElement('div');
 		pickLabel.style.cssText = `
 			position: fixed; display: none; pointer-events: none; z-index: 9999;
-			background: rgba(15,23,42,0.92); border: 1px solid rgba(244,114,182,0.45);
-			border-radius: 6px; padding: 4px 9px; font-size: 11px; color: #e2e8f0;
+			background: rgba(var(--c-bg-rgb),0.92); border: 1px solid rgba(var(--c-fg-rgb),0.25);
+			border-radius: 6px; padding: 4px 9px; font-size: 11px; color: var(--c-ink-1);
 			box-shadow: 0 2px 12px rgba(0,0,0,0.5); white-space: nowrap;
 		`;
 		document.body.appendChild(pickLabel);
@@ -3859,7 +3859,7 @@
 	:global(.maplibregl-ctrl-attrib),
 	:global(.maplibregl-ctrl-attrib a),
 	:global(.maplibregl-ctrl-attrib-inner a) {
-		color: #fff !important;
+		color: var(--c-ink-0) !important;
 		font-size: 9px;
 		line-height: 1.25;
 		text-decoration: none;

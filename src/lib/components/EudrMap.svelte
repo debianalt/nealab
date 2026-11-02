@@ -376,7 +376,7 @@
 
 <style>
 	:global(.eudr-label) {
-		color: rgba(255, 255, 255, 0.6);
+		color: rgba(var(--c-fg-rgb), 0.6);
 		font-size: 11px;
 		font-family: var(--font-mono);
 		font-weight: 600;

@@ -264,7 +264,7 @@
 
 	.informe {
 		font-family: 'Roboto Condensed', system-ui, sans-serif;
-		color: #e8e8e6;
+		color: var(--c-t-e8e8e6);
 		padding-bottom: 5rem;
 	}
 
@@ -280,14 +280,14 @@
 		background:
 			radial-gradient(1100px 520px at 12% -8%, rgba(57, 135, 229, 0.16), transparent 60%),
 			radial-gradient(900px 500px at 92% 108%, rgba(217, 89, 38, 0.14), transparent 62%),
-			#0a0a0a;
+			var(--c-bg);
 		border-bottom: 1px solid #171922;
 	}
 	.hero::before {
 		content: '';
 		position: absolute;
 		inset: 0;
-		background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+		background-image: radial-gradient(rgba(var(--c-fg-rgb), 0.05) 1px, transparent 1px);
 		background-size: 26px 26px;
 		mask-image: linear-gradient(to bottom, #000, transparent 85%);
 		pointer-events: none;
@@ -303,7 +303,7 @@
 		font-size: 0.72rem;
 		text-transform: uppercase;
 		letter-spacing: 0.22em;
-		color: #22c39a;
+		color: var(--c-t-22c39a);
 		margin: 0 0 1.4rem;
 	}
 	.hero-title {
@@ -312,13 +312,13 @@
 		line-height: 1;
 		letter-spacing: -0.02em;
 		margin: 0 0 1.4rem;
-		color: #fff;
+		color: var(--c-ink-0);
 		text-wrap: balance;
 	}
 	.hero-sub {
 		font-size: clamp(1.15rem, 2.3vw, 1.45rem);
 		line-height: 1.58;
-		color: #d4d3ca;
+		color: var(--c-t-d4d3ca);
 		max-width: 56rem;
 		margin: 0 0 2.5rem;
 		text-align: justify;
@@ -340,11 +340,11 @@
 		font-family: var(--font-mono);
 		font-size: clamp(1.6rem, 4vw, 2.3rem);
 		font-weight: 700;
-		color: #fff;
+		color: var(--c-ink-0);
 		line-height: 1;
 	}
 	.stat:first-child .sv {
-		color: #a78bfa;
+		color: var(--c-t-a78bfa);
 	}
 	.stat .sl {
 		font-size: 0.8rem;
@@ -386,7 +386,7 @@
 		max-width: 44rem;
 		font-size: 1.1rem;
 		line-height: 1.72;
-		color: #d4d3ca;
+		color: var(--c-t-d4d3ca);
 		text-align: justify;
 		text-justify: inter-word;
 		hyphens: auto;
@@ -398,7 +398,7 @@
 		margin-bottom: 0;
 	}
 	.prose :global(strong) {
-		color: #fff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 	}
 	.lead {
@@ -411,7 +411,7 @@
 		margin-inline: auto;
 		font-size: clamp(1.2rem, 2.4vw, 1.45rem);
 		line-height: 1.6;
-		color: #e8e8e6;
+		color: var(--c-t-e8e8e6);
 	}
 	/* drop-cap on the lead */
 	.lead-prose :global(p:first-child::first-letter) {
@@ -446,14 +446,14 @@
 		font-family: 'Roboto Condensed', system-ui, sans-serif;
 		font-size: clamp(1.4rem, 3vw, 1.9rem);
 		font-weight: 700;
-		color: #fff;
+		color: var(--c-ink-0);
 		margin: 0 0 1.1rem;
 		line-height: 1.1;
 	}
 
 	/* ---------- Findings header ---------- */
 	.findings-head {
-		background: linear-gradient(180deg, #0a0a0a, #0d0f16);
+		background: linear-gradient(180deg, var(--c-bg), #0d0f16);
 		border-top: 1px solid #171922;
 		text-align: center;
 		padding: 4.5rem 1.5rem 2.5rem;
@@ -463,12 +463,12 @@
 		font-size: 0.74rem;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
-		color: #a78bfa;
+		color: var(--c-t-a78bfa);
 	}
 	.fh-title {
 		font-size: clamp(1.8rem, 5vw, 3rem);
 		font-weight: 700;
-		color: #fff;
+		color: var(--c-ink-0);
 		margin: 0.8rem 0 0.6rem;
 	}
 	.fh-hint {
@@ -498,7 +498,7 @@
 
 	/* ---------- CTA ---------- */
 	.cta {
-		background: linear-gradient(180deg, #0d0f16, #0a0a0a);
+		background: linear-gradient(180deg, #0d0f16, var(--c-bg));
 		border-top: 1px solid #171922;
 		border-bottom: 1px solid #171922;
 		padding: 4rem 1.5rem;
@@ -510,7 +510,7 @@
 	.cta-h {
 		font-size: clamp(1.4rem, 3vw, 1.9rem);
 		font-weight: 700;
-		color: #fff;
+		color: var(--c-ink-0);
 		margin: 0 0 1rem;
 	}
 	.cta-btn {
@@ -518,7 +518,7 @@
 		margin-top: 1.4rem;
 		font-family: var(--font-mono);
 		font-size: 0.9rem;
-		color: #0a0a0a;
+		color: var(--c-bg);
 		background: #22c39a;
 		padding: 0.85rem 1.4rem;
 		border-radius: 7px;
@@ -544,7 +544,7 @@
 		font-size: 0.82rem;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
-		color: #22c39a;
+		color: var(--c-t-22c39a);
 		margin: 0 0 1rem;
 		padding-bottom: 0.5rem;
 		border-bottom: 1px solid #24252b;
@@ -562,14 +562,14 @@
 	/* MapBiomas is the one required (CC-BY) citation — same list format as the
 	   other sources, only a touch brighter to mark it as the cited source. */
 	.src-cite {
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 	}
 	.cc {
-		color: #22c39a;
+		color: var(--c-t-22c39a);
 		font-weight: 700;
 	}
 	.sources a {
-		color: #22c39a;
+		color: var(--c-t-22c39a);
 		text-decoration: none;
 	}
 	.sources a:hover {

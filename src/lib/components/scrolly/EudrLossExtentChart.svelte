@@ -84,11 +84,11 @@
 	.lc {
 		margin: 0;
 		font-family: 'Roboto Condensed', system-ui, sans-serif;
-		color: #fff;
+		color: var(--c-ink-0);
 	}
 	.title {
 		font-size: 0.92rem;
-		color: #fff;
+		color: var(--c-ink-0);
 		margin-bottom: 1.1rem;
 		display: flex;
 		flex-direction: column;
@@ -118,7 +118,7 @@
 		font-family: var(--font-mono);
 		font-size: 0.82rem;
 		text-align: right;
-		color: #c3c2b7;
+		color: var(--c-t-c3c2b7);
 	}
 	.track {
 		position: relative;
@@ -127,7 +127,7 @@
 		height: 26px;
 	}
 	.row.total .rl {
-		color: #fff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 	}
 	.row.total .track {
@@ -151,7 +151,7 @@
 		font-family: var(--font-mono);
 		font-size: 0.78rem;
 		font-weight: 600;
-		color: #fff;
+		color: var(--c-ink-0);
 		white-space: nowrap;
 	}
 	.note {

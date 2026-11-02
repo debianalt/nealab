@@ -1091,15 +1091,15 @@
 		max-height: calc(100dvh - 64px);
 		overflow-y: auto;
 		box-sizing: border-box;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid rgba(var(--c-fg-rgb), 0.2);
+		background: rgba(var(--c-fg-rgb), 0.02);
 		padding: 36px 32px 32px;
 		font-family: var(--font-sans);
 	}
 
 	.eudr-gate-kicker {
 		font-size: 10px;
-		color: rgba(255, 255, 255, 0.35);
+		color: rgba(var(--c-fg-rgb), 0.35);
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		margin-bottom: 14px;
@@ -1108,7 +1108,7 @@
 	.eudr-gate-title {
 		font-size: 18px;
 		font-weight: 700;
-		color: #ffffff;
+		color: var(--c-ink-0);
 		margin: 0 0 20px;
 		line-height: 1.3;
 	}
@@ -1124,7 +1124,7 @@
 
 	.eudr-gate-points li {
 		font-size: 12px;
-		color: rgba(255, 255, 255, 0.7);
+		color: rgba(var(--c-fg-rgb), 0.7);
 		line-height: 1.55;
 		padding-left: 14px;
 		position: relative;
@@ -1134,19 +1134,19 @@
 		content: '—';
 		position: absolute;
 		left: 0;
-		color: rgba(255, 255, 255, 0.25);
+		color: rgba(var(--c-fg-rgb), 0.25);
 	}
 
 	.eudr-gate-label {
-		color: #ffffff;
+		color: var(--c-ink-0);
 		font-weight: 700;
 	}
 
 	.eudr-gate-btn {
 		display: block;
 		width: 100%;
-		background: #ffffff;
-		color: #000000;
+		background: var(--c-ink-0);
+		color: var(--c-bg);
 		border: none;
 		padding: 12px 20px;
 		font-family: inherit;
@@ -1164,14 +1164,14 @@
 	.eudr-gate-cite {
 		margin: 14px 0 10px;
 		padding-top: 12px;
-		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		border-top: 1px solid rgba(var(--c-fg-rgb), 0.08);
 		font-size: 10.5px;
 		line-height: 1.55;
-		color: rgba(255, 255, 255, 0.42);
+		color: rgba(var(--c-fg-rgb), 0.42);
 		text-wrap: pretty;
 	}
 	.eudr-gate-cite a {
-		color: rgba(255, 255, 255, 0.6);
+		color: rgba(var(--c-fg-rgb), 0.6);
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
@@ -1179,12 +1179,12 @@
 		display: block;
 		text-align: center;
 		font-size: 11px;
-		color: rgba(255, 255, 255, 0.4);
+		color: rgba(var(--c-fg-rgb), 0.4);
 		text-decoration: underline;
 		text-decoration-thickness: 1px;
 		text-underline-offset: 3px;
 		transition: color 0.15s;
 	}
 
-	.eudr-gate-link:hover { color: rgba(255, 255, 255, 0.7); }
+	.eudr-gate-link:hover { color: rgba(var(--c-fg-rgb), 0.7); }
 </style>

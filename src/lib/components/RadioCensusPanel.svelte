@@ -113,13 +113,13 @@
 		display: flex; justify-content: space-between; align-items: center;
 		margin-bottom: 2px;
 	}
-	.rc-title { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+	.rc-title { font-size: 12px; font-weight: 600; color: var(--c-ink-1); }
 	.rc-subtitle {
-		font-size: 11.5px; color: rgba(255,255,255,0.55);
+		font-size: 11.5px; color: rgba(var(--c-fg-rgb), 0.55);
 		margin: 0 0 8px;
 	}
 	.rc-msg {
-		font-size: 12px; color: #94a3b8;
+		font-size: 12px; color: var(--c-ink-3);
 		padding: 12px 0; text-align: center;
 	}
 	.rc-select-row {
@@ -128,19 +128,19 @@
 	}
 	.rc-select-label {
 		font-size: 11.5px; font-weight: 600;
-		color: #a3a3a3; text-transform: uppercase;
+		color: var(--c-ink-2n); text-transform: uppercase;
 	}
 	.rc-select {
 		flex: 1;
 		font-size: 12px; padding: 2px 6px; border-radius: 4px;
-		background: #1e293b; border: 1px solid #334155;
-		color: #e2e8f0; cursor: pointer; font-family: inherit;
+		background: var(--c-line); border: 1px solid var(--c-line-2);
+		color: var(--c-ink-1); cursor: pointer; font-family: inherit;
 	}
-	.rc-select option { background: #1e293b; color: #e2e8f0; }
-	.rc-select:focus { outline: none; border-color: #64748b; }
+	.rc-select option { background: var(--c-line); color: var(--c-ink-1); }
+	.rc-select:focus { outline: none; border-color: var(--c-ink-4); }
 	.rc-pos {
 		display: flex; align-items: baseline; gap: 6px;
-		font-size: 12px; color: #cbd5e1;
+		font-size: 12px; color: var(--c-ink-2);
 		margin: 4px 0 0;
 	}
 	.rc-dot {
