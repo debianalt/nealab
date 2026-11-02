@@ -98,7 +98,8 @@
 	function deptFeature(name: string): any | null {
 		const prov = PROV_BY_PREFIX[hexStore.territoryPrefix];
 		if (!prov) return null;
-		const feats = (getArFeatures() ?? []).filter((f: any) => String(f.properties.redcode).startsWith(prov));
+		// Census layer: the INDEC radio partition's polygons (deptBoundaries.ts arBoundarySource).
+		const feats = (getArFeatures('indec') ?? []).filter((f: any) => String(f.properties.redcode).startsWith(prov));
 		return feats.find((f: any) => f.properties.nombre === name)
 			?? feats.find((f: any) => norm(f.properties.nombre) === norm(name))
 			?? null;
