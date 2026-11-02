@@ -38,7 +38,7 @@
 			</li>
 			<li>
 				<span class="label">Sin responsabilidad institucional.</span>
-				CONICET y UNaM son el marco académico de la investigación. No avalan los análisis como
+				El CONICET, la UNaM y su FHyCS son el marco académico de la investigación. No avalan los análisis como
 				documentos oficiales y no asumen responsabilidad por el uso de terceros.
 			</li>
 			<li>
@@ -77,7 +77,7 @@
 	}
 
 	.modal {
-		background: #111111;
+		background: var(--c-modal);
 		border: 1px solid rgba(var(--c-fg-rgb), 0.15);
 		max-width: 560px;
 		width: 100%;
@@ -173,7 +173,7 @@
 		gap: 10px;
 		position: sticky;
 		bottom: 0;
-		background: #111111;
+		background: var(--c-modal);
 		padding-top: 20px;
 		margin-top: auto;
 	}

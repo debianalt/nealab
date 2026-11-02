@@ -268,8 +268,8 @@
 		position: fixed;
 		z-index: 60;
 		pointer-events: none;
-		background: #1a1a19;
-		border: 1px solid #383835;
+		background: var(--c-modal-2);
+		border: 1px solid var(--c-line-2);
 		border-radius: 6px;
 		padding: 0.55rem 0.7rem;
 		font-family: var(--font-mono);
