@@ -2,6 +2,7 @@
 	import { MAP_PALETTE, BUILDING_VOLUME_CLARO, classColor, rampGradient } from '$lib/utils/sello';
 	import { COLOR_RAMPS } from '$lib/config';
 	import { themeStore } from '$lib/stores/theme.svelte';
+	import { lp } from '$lib/utils/locale-path';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
@@ -151,6 +152,12 @@
 	);
 </script>
 
+<!-- The department edge on the map is its cells, not the official limit (methodology). -->
+{#snippet boundsNote()}
+	{#if hexStore.selectedDpto}
+		<a class="bounds-note" href={lp('/metodologia', i18n.locale) + '#limites'}>{i18n.t('legend.boundsNote')}</a>
+	{/if}
+{/snippet}
 {#if layer && fill}
 	<div class="legend">
 		<div class="legend-title">{fill.title}</div>
@@ -169,6 +176,7 @@
 				</div>
 			{/if}
 		</div>
+		{@render boundsNote()}
 	</div>
 {:else if layer && (isCategorical && typeEntries.length > 0)}
 	<div class="legend">
@@ -185,6 +193,7 @@
 			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
+		{@render boundsNote()}
 	</div>
 {:else if layer && classes}
 	<div class="legend">
@@ -207,6 +216,7 @@
 			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
+		{@render boundsNote()}
 	</div>
 {:else if layer && hasScales}
 	<div class="legend">
@@ -225,6 +235,7 @@
 			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
+		{@render boundsNote()}
 	</div>
 {:else if layer && isGradient}
 	<div class="legend">
@@ -244,6 +255,7 @@
 			<span class="nodata-swatch" style:background={P.nodata}></span>
 			<span class="nodata-label">{i18n.t('legend.noData')}</span>
 		</div>
+		{@render boundsNote()}
 	</div>
 {:else if !layer}
 	<!-- Cold-open canvas: GBA buildings coloured by estimated population -->
@@ -397,4 +409,9 @@
 			padding: 6px 8px;
 		}
 	}
+	.bounds-note {
+		display: block; margin-top: 6px; font-size: 10px; line-height: 1.35;
+		color: var(--c-ink-3); text-decoration: none;
+	}
+	.bounds-note:hover { color: var(--c-ink-1); text-decoration: underline; }
 </style>

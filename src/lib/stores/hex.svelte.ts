@@ -1,7 +1,7 @@
 import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
-import { findDeptFeature, ensureArBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
+import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-js';
@@ -493,6 +493,8 @@ export class HexStore {
 		// AR dept polygons back the outline effects (which read a non-reactive module
 		// var) and the hole-fill below — ensure they're loaded before selectedDpto flips.
 		if (isArDeptTerritory(this.territoryPrefix)) await ensureArBoundaries();
+		// PY/BR polygons too: the hexagons are cut at the official limit (Map setHexClip).
+		else if (/_(py|br)\/$/.test(this.territoryPrefix)) await ensureBrBoundaries(this.territoryPrefix.slice(0, -1));
 		this.selectedDpto = dpto;
 		this.selectedParquetKey = parquetKey;
 		this.visibleData = new Map();
@@ -683,7 +685,11 @@ export class HexStore {
 			// Fix: enumerate all H3 res-9 cells inside the real dept polygon and add any
 			// that are missing from the parquet as nodata hexes (rendered "Sin cobertura").
 			// Only applicable to AR territories where we have polygon data.
-			const deptFeature = findDeptFeature(dpto, this.territoryPrefix);
+			// Not in PY: its district polygons now load for the map's clipping (Map setHexClip),
+			// but the cells inside them that a district file lacks belong to the neighbour
+			// district (the polygon and the partition disagree there): filled as "Sin
+			// cobertura" they painted gray blocks inside Encarnación (1-nov-2026).
+			const deptFeature = this.territoryPrefix.endsWith('_py/') ? null : findDeptFeature(dpto, this.territoryPrefix);
 			if (deptFeature?.geometry) {
 				const geom = deptFeature.geometry;
 				const polygons: number[][][][] = geom.type === 'MultiPolygon'

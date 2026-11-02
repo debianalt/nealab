@@ -3,6 +3,7 @@
 	import * as maplibregl from '$lib/maplibre';
 	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, type MapTema } from '$lib/utils/sello';
 	import { themeStore } from '$lib/stores/theme.svelte';
+	import { makeHexClip, clipCell, type HexClip } from '$lib/utils/hexClip';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
 	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
@@ -1207,6 +1208,11 @@
 				source: 'regional-hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
 			});
+			// Neighbours under the department's hexagons (they were on top, even over the
+			// labels): inside the official limit the department's clipped cells cover them,
+			// and a notch left by a cell assigned to the neighbour shows that cell.
+			map.moveLayer('regional-hex-fill', 'hex-fill');
+			map.moveLayer('regional-hex-line', 'hex-fill');
 
 			// ── Hex zone highlight layers (GeoJSON, for lasso zones) ────────
 			map.addSource('hex-zones', {
@@ -3217,11 +3223,34 @@
 	const hexLineOpacity = (o: number): any =>
 		mapStore.basemapMode === 'satellite' ? ['case', ['==', ['get', 'zero'], true], 0, o * 0.32] : o * 0.32;
 
+	// Hexagons cut at the official department limit (utils/hexClip.ts, decided with the
+	// author 1-nov-2026): the line is the official polygon and no cell crosses it. The
+	// last call is kept so a polygon that arrives after the data repaints the layer.
+	let hexClip: HexClip | null = null;
+	let compareHexClip: HexClip | null = null;
+	let hexClipKey: any = null, compareHexClipKey: any = null;
+	let lastHex: Parameters<typeof setHexChoropleth> | null = null;
+	let lastCompareHex: Parameters<typeof setCompareHexChoropleth> | null = null;
+	export function setHexClip(feature: any | null) {
+		if (feature === hexClipKey) return;
+		hexClipKey = feature;
+		hexClip = feature ? makeHexClip(feature) : null;
+		if (import.meta.env.DEV) (window as any).__spatiaClipFeature = feature;   // verify_theme / local checks
+		if (lastHex && lastHex[0].length) setHexChoropleth(...lastHex);
+	}
+	export function setCompareHexClip(feature: any | null) {
+		if (feature === compareHexClipKey) return;
+		compareHexClipKey = feature;
+		compareHexClip = feature ? makeHexClip(feature) : null;
+		if (lastCompareHex && lastCompareHex[0].length) setCompareHexChoropleth(...lastCompareHex);
+	}
+
 	// Track last state to avoid redundant setPaintProperty calls
 	let _hexLayerInitialized = false;
 
 	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' | 'bivariate' = 'flood', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
+		lastHex = [entries, colorScale, domain, classes];
 		hexClassesOrdinal = classes?.ordinal ? classes : null;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -3260,6 +3289,8 @@
 		let fi = 0;
 		for (const entry of entries) {
 			if (!entry.boundary) continue;
+			const geometry = clipCell(hexClip, entry.boundary);
+			if (!geometry) continue;   // wholly outside the department's official limit
 			if (isNodata(entry)) {
 				features[fi++] = {
 					type: 'Feature',
@@ -3271,7 +3302,7 @@
 						nodata: true,
 						type_label: entry.properties?.type_label
 					},
-					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
+					geometry
 				};
 				continue;
 			}
@@ -3285,7 +3316,7 @@
 					zero: entry.value === 0 && !!classes?.zero,
 					type_label: entry.properties?.type_label
 				},
-				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
+				geometry
 			};
 		}
 		if (fi < features.length) features.length = fi;
@@ -3321,6 +3352,7 @@
 	}
 
 	export function setCompareHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' = 'sequential', domain?: [number, number], classes?: ColorClasses) {
+		lastCompareHex = [entries, colorScale, domain, classes];
 		if (!map) return;
 		const src = map.getSource('compare-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
@@ -3355,18 +3387,20 @@
 		let fi = 0;
 		for (const entry of entries) {
 			if (!entry.boundary) continue;
+			const geometry = clipCell(compareHexClip, entry.boundary);
+			if (!geometry) continue;
 			if (isNodata(entry)) {
 				features[fi++] = {
 					type: 'Feature',
 					properties: { h3index: entry.h3index, value: null, color: nodataColor(colorScale, 'oscuro'), color_c: nodataColor(colorScale, 'claro'), nodata: true, type_label: entry.properties?.type_label },
-					geometry: { type: 'Polygon', coordinates: [entry.boundary] }
+					geometry
 				};
 				continue;
 			}
 			features[fi++] = {
 				type: 'Feature',
 				properties: { h3index: entry.h3index, value: entry.value, color: getColor(entry.value as number, 'oscuro'), color_c: getColor(entry.value as number, 'claro'), zero: entry.value === 0 && !!classes?.zero, type_label: entry.properties?.type_label },
-				geometry: { type: 'Polygon', coordinates: [entry.boundary] }
+				geometry
 			};
 		}
 		if (fi < features.length) features.length = fi;

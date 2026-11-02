@@ -56,16 +56,21 @@ export function isArDeptTerritory(territoryPrefix: string): boolean {
 const brBoundariesCache = new Map<string, any>();
 const brBoundariesPending = new Map<string, Promise<any>>();
 
+// BR municipalities and PY districts share the cache. PY: the same polygons the district
+// tiles and the cell crosswalk were built from (pipeline/build_itapua_districts.py
+// --export-geojson → static/data/<stem>_districts.geojson, INE where it exists, else GAUL).
 function brTerritoryId(territoryPrefix: string): string | null {
-	return territoryPrefix.endsWith('_br/') ? territoryPrefix.slice(0, -1) : null;
+	return territoryPrefix.endsWith('_br/') || territoryPrefix.endsWith('_py/') ? territoryPrefix.slice(0, -1) : null;
 }
+const districtsUrl = (territoryId: string) =>
+	territoryId.endsWith('_py') ? `/data/${territoryId.slice(0, -3)}_districts.geojson` : getBrDistrictsUrl(territoryId);
 
 export async function ensureBrBoundaries(territoryId: string): Promise<void> {
-	if (!territoryId.endsWith('_br')) return;
+	if (!territoryId.endsWith('_br') && !territoryId.endsWith('_py')) return;
 	if (brBoundariesCache.has(territoryId)) return;
 	const pending = brBoundariesPending.get(territoryId);
 	if (pending) { await pending; return; }
-	const promise = fetch(getBrDistrictsUrl(territoryId))
+	const promise = fetch(districtsUrl(territoryId))
 		.then(r => r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))
 		.then(fc => { brBoundariesCache.set(territoryId, fc); brBoundariesPending.delete(territoryId); return fc; })
 		.catch(e => { brBoundariesPending.delete(territoryId); console.warn('[ensureBrBoundaries]', territoryId, e); throw e; });
@@ -100,6 +105,10 @@ export function findDeptFeature(deptName: string, territoryPrefix: string): any 
 	if (territoryId) {
 		const fc = brBoundariesCache.get(territoryId);
 		if (!fc) return null;
+		if (territoryId.endsWith('_py')) {
+			const key = normDeptName(deptName);   // summaries and polygons differ in case and accents
+			return fc.features.find((f: any) => normDeptName(f.properties?.district) === key) ?? null;
+		}
 		return fc.features.find((f: any) => f.properties?.district === deptName) ?? null;
 	}
 

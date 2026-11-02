@@ -145,7 +145,7 @@
 		// BR territories: pre-fetch municipality boundaries (fire-and-forget).
 		// First dept click after switch may render polygon outline with a brief lag
 		// (typical 200-500ms on broadband); subsequent clicks are instant.
-		if (t.id.endsWith('_br')) ensureBrBoundaries(t.id);
+		if (t.id.endsWith('_br') || t.id.endsWith('_py')) ensureBrBoundaries(t.id);
 		// Toggle territory-specific layers (mask, province boundary, buildings)
 		mapComponent?.setActiveTerritory(t.id); // applyTerritoryVisibility() respects regionalModeActive
 		// Reload hex choropleth for the new territory
@@ -932,6 +932,7 @@
 	// selectedDpto; the list clears it (feature=null) on deselect/unmount.
 	function handleCensoDeptSelect(feature: any | null) {
 		mapComponent?.setDeptOutline(feature ?? null);
+		mapComponent?.setHexClip(feature?.geometry ? feature : null);
 		if (!feature?.geometry) { hexStore.setDeptFilter(null); return; }
 		// Charts and map narrow to the department, as with the per-department layers.
 		const outer: [number, number][][] = feature.geometry.type === 'Polygon'
@@ -1161,6 +1162,8 @@
 		// live), so below the LOD gate a rural dept is scattered dots with no visible edge.
 		const sparseLayer = lensStore.activeAnalysis?.rigorBadge === 'census';
 		mapComponent?.setDeptOutline(territoryStore.compareModeActive || sparseLayer ? feat : null);
+		// Every layer: hexagons cut at the official limit (the line, drawn or not).
+		mapComponent?.setHexClip(feat);
 
 		const compareDpto = hexStore.compareDpto;
 		const compareTp = hexStore.compareTerritoryPrefix;
@@ -1168,6 +1171,7 @@
 			? findDeptFeature(compareDpto, compareTp)
 			: null;
 		mapComponent?.setCompareDeptOutline(compareFeat);
+		mapComponent?.setCompareHexClip(compareFeat);
 	});
 
 	// ── Clear compare dept when compare mode is exited ───────────────────

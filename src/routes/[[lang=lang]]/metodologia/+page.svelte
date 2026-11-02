@@ -58,6 +58,11 @@
 		</p>
 	</header>
 
+	<section class="lens-section" id="limites">
+		<h2 class="bounds-title">{i18n.t('page.metodologia.boundsTitle')}</h2>
+		<p class="desc">{i18n.t('page.metodologia.boundsText')}</p>
+	</section>
+
 	{#each data.byLens as group}
 		<section class="lens-section">
 			<h2 class="lens-title" style="color: {group.color}">{group.label}</h2>
@@ -271,4 +276,5 @@
 		.footer a { color: var(--c-line-2); }
 		.footer .generated { margin-top: 6pt; font-style: italic; color: var(--c-ink-4); }
 	}
+	.bounds-title { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-2); margin: 0 0 8px; }
 </style>
