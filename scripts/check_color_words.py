@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FILES = ['src/lib/content/methodology.ts', 'src/lib/config.ts', 'src/lib/stores/i18n.svelte.ts']
 KEY = re.compile(r"^\s*['\"]?([\w.]+)['\"]?\s*:\s*\{")
-SCOPE = re.compile(r'howToRead|guide\w*Body|note|temporal\.hint|^legend\.', re.I)
+SCOPE = re.compile(r'howToRead|implications|guide\w*Body|note|temporal\.hint|^legend\.', re.I)
 STR = re.compile(r"\b(es|en|pt|gn)\s*:\s*(['\"`])((?:\\.|(?!\2).)*)\2")
 WORDS = {
 	'es': r'oscur[oa]s?|azul(es)?|amarill[oa]s?|roj[oa]s?|verdes?|naranjas?|violetas?|púrpuras?|morad[oa]s?|gris(es)?|blanc[oa]s?|negr[oa]s?|dorad[oa]s?|celestes?|cyan|marr[oó]n|pard[oa]s?|ámbar|cálid[oa]s?',

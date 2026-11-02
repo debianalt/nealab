@@ -2,61 +2,41 @@
 	import { terms } from '$lib/stores/terms.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { lp } from '$lib/utils/locale-path';
+	import { ANALYSIS_REGISTRY } from '$lib/config';
+	// Counted, not written: the modal said «23 análisis» while there were 15.
+	const nAnalyses = ANALYSIS_REGISTRY.filter((a) => a.status === 'available').length;
 </script>
 
 <div class="overlay">
 	<div class="modal">
 		<div class="kicker">spatia.ar</div>
-		<h1 class="title">Análisis geoespacial, acceso abierto</h1>
+		<h1 class="title">{i18n.t('terms.modal.title')}</h1>
 
-		<p class="platform-intro">
-			Análisis geoespacial sobre el Noreste Argentino — NEA (Misiones, Corrientes, Chaco, Formosa) —
-			todo Paraguay (17 departamentos) y el sur de Brasil (Paraná, Santa Catarina, Rio Grande do Sul):
-			deforestación, calidad del aire, riesgo hídrico, actividad productiva y más.
-			Cobertura específica por capa. Sin costo, sin registro.
-		</p>
+		<p class="platform-intro">{i18n.t('terms.modal.intro')}</p>
 
 		<div class="platform-stats">
-			<span>319.871 hexágonos H3</span>
+			<span>{i18n.t('terms.modal.grid')}</span>
 			<span class="stat-sep">·</span>
-			<span>23 análisis</span>
+			<span>{i18n.t('terms.modal.analyses').replace('{n}', String(nAnalyses))}</span>
 			<span class="stat-sep">·</span>
-			<span>CONICET / UNaM</span>
+			<span>CONICET / FHyCS-UNaM</span>
 		</div>
 
-		<div class="stats-divider">Condiciones de uso</div>
+		<div class="stats-divider">{i18n.t('terms.modal.conditions')}</div>
 
 		<ul class="points">
-			<li>
-				<span class="label">Herramienta analítica, no prescriptiva.</span>
-				Ningún análisis constituye una recomendación de acción, certificación ni consultoría profesional.
-			</li>
-			<li>
-				<span class="label">Sin garantía de exactitud.</span>
-				Los datos se proveen tal cual (as-is), sin garantías expresas ni implícitas sobre exactitud,
-				completitud o actualización.
-			</li>
-			<li>
-				<span class="label">Sin responsabilidad institucional.</span>
-				El CONICET, la UNaM y su FHyCS son el marco académico de la investigación. No avalan los análisis como
-				documentos oficiales y no asumen responsabilidad por el uso de terceros.
-			</li>
-			<li>
-				<span class="label">Responsabilidad del usuario.</span>
-				Quien use Spatia en decisiones de gestión, inversión, investigación o política pública
-				asume la responsabilidad de ese uso y debe complementarlo con validación independiente.
-			</li>
-			<li>
-				<span class="label">Ley aplicable.</span>
-				Estos términos se rigen por las leyes de la República Argentina. Jurisdicción: tribunales
-				ordinarios de Posadas, Misiones.
-			</li>
+			{#each [1, 2, 3, 4, 5] as n}
+				<li>
+					<span class="label">{i18n.t(`terms.modal.p${n}.label`)}</span>
+					{i18n.t(`terms.modal.p${n}`)}
+				</li>
+			{/each}
 		</ul>
 
 		<div class="actions">
-			<a class="btn-secondary" href={lp('/terminos', i18n.locale)}>Leer términos completos →</a>
+			<a class="btn-secondary" href={lp('/terminos', i18n.locale)}>{i18n.t('terms.modal.read')}</a>
 			<button class="btn-primary" onclick={() => terms.accept()}>
-				Acepto, quiero explorar
+				{i18n.t('terms.modal.accept')}
 			</button>
 		</div>
 	</div>

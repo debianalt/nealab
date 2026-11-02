@@ -433,7 +433,7 @@
 	</div>
 
 	{#if bLoading}
-		<div class="bvpanel-state">cargando…</div>
+		<div class="bvpanel-state">{i18n.t('common.loading')}</div>
 	{:else if bError}
 		<div class="bvpanel-state bvpanel-error">{i18n.t('chart.loadError')}</div>
 	{:else if !selectedB}

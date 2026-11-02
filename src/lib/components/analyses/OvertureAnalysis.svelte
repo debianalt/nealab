@@ -761,7 +761,7 @@
 
 		{#if content}
 			<a class="methodology-link" href={lp(`/metodologia/${analysis.id}`, i18n.locale)} target="_blank" rel="noopener">
-				¿Cómo se calcula? →
+				{i18n.t('analysis.howCalc')}
 			</a>
 		{/if}
 
@@ -940,7 +940,7 @@
 				</div>
 			{:else}
 				{#if !selectedDpto}
-					<p class="dept-select-hint">▼ Seleccioná un sector para ver el análisis</p>
+					<p class="dept-select-hint">{i18n.t('analysis.selectSector')}</p>
 				{/if}
 				{#if deptList.length > 12}
 					<input
@@ -976,7 +976,7 @@
 						<p class="explain-text">{i18n.t('common.loading')}</p>
 					{:else if calibrationData.length > 0}
 						<table class="calib-table">
-							<thead><tr><th>Provincia, departamento o estado</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
+							<thead><tr><th>{i18n.t('analysis.distByTerritory.col')}</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
 							<tbody>
 							{#each calibrationData as d}
 								<tr>
@@ -1110,7 +1110,7 @@
 
 		{#if content}
 			<a class="methodology-link" href={lp(`/metodologia/${analysis.id}`, i18n.locale)} target="_blank" rel="noopener">
-				¿Cómo se calcula? →
+				{i18n.t('analysis.howCalc')}
 			</a>
 			<details class="method-details">
 				<summary class="method-summary">{i18n.t('section.howToRead')}</summary>

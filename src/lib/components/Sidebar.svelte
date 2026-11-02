@@ -207,11 +207,11 @@
 				<div>{i18n.t('side.welcome.footer.author')}</div>
 				<div>{i18n.t('side.welcome.footer.affiliation')}</div>
 				<div class="welcome-links">
-					<a href={lp('/servicios', i18n.locale)} class="welcome-link">Ver servicios →</a>
+					<a href={lp('/servicios', i18n.locale)} class="welcome-link">{i18n.t('side.link.servicios')}</a>
 					<span class="welcome-link-sep">·</span>
-					<a href={lp('/metodologia', i18n.locale)} class="welcome-link">Metodología e indicadores →</a>
+					<a href={lp('/metodologia', i18n.locale)} class="welcome-link">{i18n.t('side.link.metodologia')}</a>
 					<span class="welcome-link-sep">·</span>
-					<a href={lp('/terminos', i18n.locale)} class="welcome-link">Términos →</a>
+					<a href={lp('/terminos', i18n.locale)} class="welcome-link">{i18n.t('side.link.terminos')}</a>
 				</div>
 			</div>
 
@@ -268,7 +268,7 @@
 					data={hexStore.chartData}
 					temporalPeriods={hexStore.activeLayer.temporalPeriods ?? null}
 					bands={hexStore.activeLayer.flowBands ?? null}
-					emptyHint={hexStore.activeLayer.perDepartment ? 'seleccioná un departamento' : withRef(i18n.t('analysis.loadingTerritory'), hexStore.territoryId, i18n.locale)}
+					emptyHint={hexStore.activeLayer.perDepartment ? i18n.t('flow.selectDept') : withRef(i18n.t('analysis.loadingTerritory'), hexStore.territoryId, i18n.locale)}
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}

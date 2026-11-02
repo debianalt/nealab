@@ -10,7 +10,7 @@
 		data = new Map() as Map<string, Record<string, any>>,
 		temporalPeriods = null as { baseline: string; current: string } | null,
 		bands = null as FlowBands | null,
-		emptyHint = 'seleccioná un departamento',
+		emptyHint = '',
 		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 	}: {
 		data: Map<string, Record<string, any>>;
@@ -25,16 +25,24 @@
 		col: 'score',
 		baselineCol: 'score_baseline',
 		breaks: [33, 67],
-		labels: ['Bajo', 'Medio', 'Alto'],
+		labels: ['flow.band.low', 'flow.band.mid', 'flow.band.high'],
 		colors: [MAP_TIERRA[0], MAP_TIERRA[2], MAP_TIERRA[4]],
 		higherIsWorse: false,
-		note: 'Flujo de hexágonos entre bandas: Bajo (<33) · Medio (33–67) · Alto (≥67) · Clic en un flujo o banda para ver esos hexágonos en el mapa',
+		note: 'flow.score.note',
 	};
 
 	// Band colors = the map's classes, in the theme on screen (sello.ts classColor).
 	const cfg = $derived.by(() => {
 		const c = bands ?? SCORE_BANDS;
-		return { ...c, colors: c.colors.map((x) => classColor(x, themeStore.tema)) };
+		// labels/note/up/down are i18n keys (config.ts); t() returns a non-key unchanged.
+		return {
+			...c,
+			labels: c.labels.map((l) => i18n.t(l)),
+			note: c.note ? i18n.t(c.note) : c.note,
+			upLabel: i18n.t(c.upLabel ?? 'flow.improved'),
+			downLabel: i18n.t(c.downLabel ?? 'flow.worsened'),
+			colors: c.colors.map((x) => classColor(x, themeStore.tema)),
+		};
 	});
 	const N = $derived(cfg.labels.length);
 
@@ -94,7 +102,7 @@
 	const stable     = $derived(entries.filter(e => e.to === e.from).length);
 
 	// Magnitude on the raw values, independent of the bands.
-	const fmt1 = (v: number) => v.toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	const fmt1 = (v: number) => v.toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 	const signed = (v: number) => (v < 0 ? '−' : '+') + fmt1(Math.abs(v));
 	const magnitude = $derived.by(() => {
 		if (!cfg.unit) return [] as string[];
@@ -110,11 +118,12 @@
 		const mb = sb / n, mc = s / n, d = mc - mb;
 		const pct = mb !== 0 ? `; ${signed((d / mb) * 100)} %` : '';
 		const moves = [
-			down > 0 ? `bajó en ${fmt1((down / n) * 100)} %` : '',
-			up > 0 ? `subió en ${fmt1((up / n) * 100)} %` : '',
-		].filter(Boolean).join(' y ');
+			down > 0 ? i18n.t('flow.down').replace('{p}', fmt1((down / n) * 100)) : '',
+			up > 0 ? i18n.t('flow.up').replace('{p}', fmt1((up / n) * 100)) : '',
+		].filter(Boolean).join(i18n.t('flow.and'));
 		// Two lines: the panel is ~330 px wide, one line at 11 px would overflow.
-		return [`media ${fmt1(mb)} → ${fmt1(mc)} ${cfg.unit} (${signed(d)}${pct})`, moves ? `${moves} de los hexágonos` : '']
+		const mean = i18n.t('flow.mean').replace('{a}', fmt1(mb)).replace('{b}', fmt1(mc)).replace('{u}', cfg.unit).replace('{d}', `${signed(d)}${pct}`);
+		return [mean, moves ? i18n.t('flow.ofHex').replace('{m}', moves) : '']
 			.filter(Boolean);
 	});
 	const SVG_H = $derived(PAD_T + plotH + (magnitude.length + 1) * LINE + 6 * k);
@@ -189,7 +198,7 @@
 		const h3s = side === 'from'
 			? entries.filter(e => e.from === band).map(e => e.h3)
 			: entries.filter(e => e.to   === band).map(e => e.h3);
-		onBrushSelect(h3s, i18n.t('zone.o.flowBand').replace('{band}', `${cfg.labels[band]} (${side === 'from' ? 'baseline' : 'actual'})`));
+		onBrushSelect(h3s, i18n.t('zone.o.flowBand').replace('{band}', `${cfg.labels[band]} (${i18n.t(side === 'from' ? 'flow.baseline' : 'flow.current')})`));
 	}
 
 	$effect(() => {
@@ -209,21 +218,21 @@
 	const reverseBands = $derived([...bandIdx].reverse());
 </script>
 
-<ChartFrame bind:expanded={docked} title="Evolución" csvRows={csvRows} csvFilename="spatia_flow">
+<ChartFrame bind:expanded={docked} title={i18n.t('flow.title')} csvRows={csvRows} csvFilename="spatia_flow">
 	<div class="fc-panel">
 	<div class="fc-subheader">
 		{#if activeFlow !== null}
 			<span class="fc-active">
 				{cfg.labels[activeFlow[0]]}→{cfg.labels[activeFlow[1]]}: {matrix[activeFlow[0]][activeFlow[1]].length.toLocaleString()} hex
-				<button class="fc-clear" onclick={() => { activeFlow = null; onBrushSelect([]); }}>× quitar</button>
+				<button class="fc-clear" onclick={() => { activeFlow = null; onBrushSelect([]); }}>{i18n.t('flow.clear')}</button>
 			</span>
 		{:else if activeSide !== null && activeBand !== null}
 			<span class="fc-active">
-				{cfg.labels[activeBand]} ({activeSide === 'from' ? 'baseline' : 'actual'}): {(activeSide === 'from' ? fromTotals : toTotals)[activeBand].toLocaleString()} hex
-				<button class="fc-clear" onclick={() => { activeSide = null; activeBand = null; onBrushSelect([]); }}>× quitar</button>
+				{cfg.labels[activeBand]} ({i18n.t(activeSide === 'from' ? 'flow.baseline' : 'flow.current')}): {(activeSide === 'from' ? fromTotals : toTotals)[activeBand].toLocaleString()} hex
+				<button class="fc-clear" onclick={() => { activeSide = null; activeBand = null; onBrushSelect([]); }}>{i18n.t('flow.clear')}</button>
 			</span>
 		{:else if total === 0}
-			<span class="fc-hint">{emptyHint}</span>
+			<span class="fc-hint">{emptyHint || i18n.t('flow.selectDept')}</span>
 		{/if}
 	</div>
 
@@ -330,10 +339,10 @@
 			<!-- Period labels -->
 			<text x={LEFT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
 				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
-			>{temporalPeriods?.baseline ?? 'Baseline'}</text>
+			>{temporalPeriods?.baseline ?? i18n.t('flow.baseline')}</text>
 			<text x={RIGHT_X + BAND_W / 2} y={PAD_T - 6 * k} text-anchor="middle"
 				fill={INK.label} font-size={CHART_PX.label * k} font-weight="600" font-family="'IBM Plex Sans', system-ui, sans-serif"
-			>{temporalPeriods?.current ?? 'Actual'}</text>
+			>{temporalPeriods?.current ?? i18n.t('flow.current')}</text>
 
 			<!-- Summary inside the SVG so PNG/SVG exports are self-contained -->
 			{#each magnitude as line, li}
@@ -343,7 +352,7 @@
 			{/each}
 			<text x={SVG_W / 2} y={PAD_T + plotH + (magnitude.length + 1) * LINE} text-anchor="middle"
 				font-size={CHART_PX.tick * k} font-family="'IBM Plex Sans', system-ui, sans-serif" fill={INK.label}
-			><tspan fill={DIV[1]}>■</tspan> ↑{improved.toLocaleString()} {cfg.upLabel ?? 'mejoraron'}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[5]}>■</tspan> ↓{worsened.toLocaleString()} {cfg.downLabel ?? 'empeoraron'}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[3]}>■</tspan> ={stable.toLocaleString()} estables</text>
+			><tspan fill={DIV[1]}>■</tspan> ↑{improved.toLocaleString()} {cfg.upLabel}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[5]}>■</tspan> ↓{worsened.toLocaleString()} {cfg.downLabel}<tspan fill={INK.hint}>{'\u00a0·\u00a0'}</tspan><tspan fill={DIV[3]}>■</tspan> ={stable.toLocaleString()} {i18n.t('flow.stable')}</text>
 		</svg>
 		</div>
 		<div class="fc-note">{cfg.note}</div>

@@ -1,4 +1,5 @@
 import type { Locale } from '$lib/stores/i18n.svelte';
+import { gnFromEs } from './gnFallback';
 
 export interface ServiciosContent {
 	pageTitle: string;
@@ -40,7 +41,7 @@ export interface ServiciosContent {
 	printGenerated: string;
 }
 
-export const SERVICIOS: Record<Locale, ServiciosContent> = {
+const BASE: Record<'es' | 'en' | 'pt', ServiciosContent> = {
 	es: {
 		pageTitle: 'Spatia — análisis geoespacial abierto para el noreste argentino y sus regiones transfronterizas',
 		metaDesc: 'Spatia es una plataforma de análisis geoespacial orientada al noreste argentino y sus regiones transfronterizas. Reúne análisis satelitales, censales y ambientales para investigación, gestión pública y cooperación internacional.',
@@ -232,74 +233,7 @@ export const SERVICIOS: Record<Locale, ServiciosContent> = {
 		affil: 'CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier',
 		printGenerated: 'Documento gerado em {date} a partir de spatia.ar/servicios',
 	},
-
-	gn: {
-		pageTitle: 'Spatia — análisis geoespacial abierto noreste argentino ha ñembyatyrã rehegua',
-		metaDesc: 'Spatia oñemboguapy análisis geoespacial abierto-pe, noreste argentino ha ñembyatyrã oñondivekuéra rehegua. Oñembyatyrõ mbovymi análisis satelital, censal ha ambiental investigación, gestión pública ha cooperación internacional hag̃ua.',
-		// Both were the Spanish strings verbatim — ogTitle byte-identical to `es`, ogDesc
-		// with only "Hospedado en spatia.ar." changed. Rebuilt from this block's own
-		// pageTitle/metaDesc above (jopara, authored here) rather than newly written
-		// Guaraní. Longer than the short og pattern the other locales use; that is the
-		// cost of not inventing the language.
-		ogTitle: 'Spatia — análisis geoespacial abierto noreste argentino ha ñembyatyrã rehegua',
-		ogDesc: 'Spatia oñemboguapy análisis geoespacial abierto-pe, noreste argentino ha ñembyatyrã oñondivekuéra rehegua.',
-		kicker: 'Análisis geoespacial abierto · Noreste argentino ha ñembyatyrã',
-		subtitle: 'Plataforma de análisis geoespacial noreste argentino ha ñembyatyrã oñondivekuéra rehegua. Mba\'ekuaa, método ha código ojejapóva oñembyaikuaáva. Oñepytyvõ <a href="/">spatia.ar</a>-pe.',
-		queEsTitle: 'Mba\'épa Spatia',
-		queEsP1: '<strong>Spatia</strong> oĩ <strong>análisis geoespacial abierto</strong> rehegua, oñemboguapy <strong>Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET, Argentina)</strong>, <strong>Secretaría de Investigación y Posgrado (SINVyP)</strong> pegua <strong>Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> pegua <strong>Universidad Nacional de Misiones (UNaM)</strong>-pe, ha <strong>Google Earth Engine (GEE) Partner Tier</strong> reheve. Oñembyatyrõ mbovymi análisis noreste argentino ha ñembyatyrã oñondivekuéra rehegua, jechaukávo mba\'éichapa oĩ yvy rekoha ecológico, social ha productivo ñande yvypy pype.',
-		queEsP2: 'Ndoikóri sistema de recomendación, ni oñembyaikuaávape experto rekotee ha decisión política. Oĩ herramienta información pública rekave, oñeñombohovake, ha diagnósticos ojehupytyvo evidencia cuantitativa reproducible rupive.',
-		marcoTitle: 'Marco institucional',
-		// gn: pendiente (castellano hasta traducir)
-		marcoP1: 'Spatia es desarrollada por el Dr. Raimundo Elías Gómez, investigador del <strong>Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET)</strong> en la Facultad de Humanidades y Ciencias Sociales de la Universidad Nacional de Misiones (FHyCS-UNaM). El software está registrado en la <strong>Dirección Nacional del Derecho de Autor (DNDA)</strong>. Los servicios profesionales se prestan como <strong>Servicio Tecnológico de Alto Nivel (STAN) de CONICET</strong>, autorizado en 2026 a través del Centro Científico Tecnológico CONICET Nordeste: <em>Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales</em>. Línea de investigación: <em>Huellas materiales del acuerdo Mercosur–Unión Europea en el Nordeste Argentino: flujos, agentes y transformaciones territoriales</em>.',
-		principiosTitle: 'Principios',
-		principios: [
-			'<strong>Acceso abierto.</strong> Mba\'ekuaa oĩporúva plataforma-pe oú fuentes públicas-gui, ojehechakuaáva ficha metodológica pegua análisis apytépe — oĩ: INDEC, IGN, OpenStreetMap, MapBiomas, Catastro, JRC ha MODIS. Mba\'e peteĩ avave ikatu ohecha upe mba\'ekuaa ha oñembohejakuaa análisis pipeline documentado rupive.',
-			'<strong>Trazabilidad metodológica.</strong> Análisis apytépe oĩ su ficha técnica fuentes, resolución, pipeline, supuestos ha limitaciones oñembyaikuaáva rehegua. Fichas oñehenói panel lateral análisis-pe.',
-			'<strong>Reproducibilidad.</strong> Pipeline ojehechakuaa repositorio público-pe. Análisis ikatu oñembohejakuaa ha oñeikuaaukávo otras jurisdicciones-pe fuentes abiertas rupive.',
-			'<strong>Actualización.</strong> La extensión actual de agua en Misiones, Corrientes, Chaco y Formosa se actualiza sola cada semana de octubre a abril y cada mes el resto del año. El resto de las capas se recalcula a mano cuando cambia la fuente. Cada capa muestra la fecha de sus datos.',
-			'<strong>Acceso abierto a herramientas técnicas.</strong> Plataforma oñepytyvõ gobiernos locales, organizaciones de investigación ha instituciones técnicas-pe oikuaávo mba\'eichaha herramientas organismos multilaterales ojeporu, ha oñemboguapy evidencia geoespacial reproducible diagnósticos pegua pype.',
-			'<strong>Interoperabilidad.</strong> Mba\'e peteĩ vista térã zona ikatu oñemoheẽ CSV térã GeoJSON-pe. Oñemboikuaa sin dificultad workflows existentes gobierno, academia ha consultoría-pe.',
-		],
-		queOfreceTitle: 'Mba\'épa ofrece',
-		queOfreceIntro: 'Spatia oñemboguapy análisis-kuéra mba\'e ñepyrũ ára peteĩ "lentes" irundy reheve, oñemboikuaa jey:',
-		queOfrece: [
-			'<strong>Yvypóra (ambiente ha riesgo).</strong> Riesgo de inundación (JRC + Sentinel-1 SAR), deforestación dinámica, ha calidad del aire (PM2,5).',
-			'<strong>Mba\'apo (producción ha suelo).</strong> Aptitud agrícola por cultivo en unidades físicas (NEA argentino), aptitud forestal (similitud con zonas ya plantadas) y uso y cobertura del suelo.',
-			'<strong>Tetã kuéra (población ha servicios).</strong> En las cuatro provincias argentinas (Misiones, Corrientes, Chaco y Formosa), con el censo del INDEC: carencia de servicios básicos (censo 2022), salud, capital y flujo educativo, perfil sociodemográfico y dinámica de población entre censos (1991–2022). El censo 2022 se reparte a hexágonos H3 por crosswalk dasimétrico y la serie 1991–2022 por interpolación areal. En todos los territorios: aislamiento (tiempo de viaje a la capital y a ciudades de 50 000 habitantes o más).',
-			'<strong>Moĩ viru (economía ha comercio).</strong> Actividad económica (empleo, actividad, formación universitaria, luces nocturnas VIIRS y densidad de edificios; sólo en las cuatro provincias argentinas) y pérdida de bosque posterior a 2020, la fecha de corte del Reglamento de Deforestación de la Unión Europea (EUDR, por sus siglas en inglés).',
-		],
-		queOfreceFootnote: 'Capas oĩva oñemboguapy grilla hexagonal <strong>H3</strong> (sistema geoespacial Uber Technologies ojejapóva) resolución 9 (~0,1 km² hexágono apytépe, de unos 320 000 hexágonos en Misiones a más de un millón en Corrientes y en Chaco), crosswalks radios censales ha parcelas catastrales-pe análisis cruzados hag̃ua.',
-		paraQuienesTitle: 'Mávape',
-		paraQuienes: [
-			'<strong>Organismos multilaterales</strong> — PNUD, BID, Banco Mundial, FAO, CEPAL — ojehekáva diagnósticos geoespaciales noreste argentino ha ñembyatyrã rehegua, mba\'ekuaa curado ha pipelines auditables ndive.',
-			'<strong>Gobiernos provinciales ha municipales</strong> ojehekáva indicadores ambientales, sociales ha productivos planificación sectorial hag̃ua.',
-			'<strong>Investigación académica</strong> ojehekáva mba\'ekuaa curado análisis hag̃ua, ecología, geografía, economía ecológica, ciencias sociales ha salud pública-pe.',
-			'<strong>Organizaciones de la sociedad civil</strong> oñehekáva evidencia cuantitativa denuncias, propuestas ha campañas hag̃ua.',
-			'<strong>Consultoras ambientales, agrícolas ha forestales</strong> ojehekáva evidencia geoespacial verificable diagnósticos ha estudios de base-pe.',
-			'<strong>Mbo\'ehára ha estudiantes</strong> oñeikuaávo análisis geoespacial plataforma castellano-pe ojejapóva, metodologías ha mba\'ekuaa reales ndive.',
-		],
-		serviciosTitle: 'Servicios oĩva',
-		servicios: [
-			'<strong>Asesoría científica aplicada.</strong> Acompañamiento técnico ha científico proyectos diagnóstico, planificación, evaluación de impacto ha diseño de políticas-pe, interpretación experta ha trabajo de campo ndive.',
-			'<strong>Diagnósticos territoriales validación en terreno ndive.</strong> Informes ojejapóva interpretación científica contextualizada ha verificación de campo reheve zona solicitado-pe.',
-			'<strong>Capacitación ha acompañamiento metodológico.</strong> Equipos técnicos ha institucionales formación análisis geoespacial reproducible-pe ha workflows propios estándares abiertos ári.',
-			'<strong>Independencia plataforma rehegua.</strong> Servicios profesionales oĩ asesoría científica conocimiento experto ha trabajo de campo ári. Ndoikói plataforma pública, mba\'ekuaa ni cómputo reventa; opyta gratuitos ha acceso abierto. Lo que se trabaja para cada contratante (sus datos, resultados e informes) es confidencial: no se publica en Spatia ni se comparte con terceros sin su autorización por escrito.',
-		],
-		limitesTitle: 'Análisis límites rehegua',
-		limitesWarning: 'Ko sección oĩporúva ha ojerure ojelee mba\'e peteĩ pyahúpe Spatia ojeporu mboyve mba\'e peteĩ decisión consecuencias reales oĩva rehegua.',
-		limitesP1: '<strong>Spatia oĩ herramienta analítica, no prescriptiva.</strong> Mba\'e peteĩ análisis plataforma-pe ndoikói recomendación de acción, certificación técnica ni consultoría profesional. Scores, tipologías ha rankings oĩ síntesis cuantitativa variables observables percepción remota, censos ha fuentes administrativas-gui. Ndoñemoĩri experto rekotee ni responsabilidad de quien decide.</p>',
-		limitesP2: '<strong>Sin garantía de exactitud.</strong> Plataforma ha información oĩva oñemoĩ as-is, sin garantías exactitud, completitud, actualización ha idoneidad propósito particular-pe. Mba\'ekuaa satelital, censal ha administrativo ikatu oĩ errores, desfasajes temporales ha limitaciones metodológicas ficha técnica-pe oñembyaikuaáva.',
-		limitesP3: '<strong>Mba\'e peteĩ análisis geoespacial ndoñembyaikuaái trabajo de campo.</strong> Percepción remota oipuru condiciones físicas promedio ventanas temporales-pe; ndoipuruĩ procesos sociales, conflictos de uso, restricciones jurídicas ha cambios recientes. Capas Spatia-pe ojejerure validación técnicos-pe ha responsables-pe situación local oikuaáva.',
-		limitesP4: 'Zona oñemboguapýva alta aptitud agrícola oĩ ikatu restricciones de uso, regímenes de tenencia ha condiciones locales mba\'ekuaa disponible-pe ndoĩhágui. Zona bajo riesgo histórico de inundación ikatu oĩ cambios hidrológicos recientes. Mba\'e apytépe, análisis geoespacial oĩ insumo diagnóstico, no resultado de política.',
-		limitesP5: '<strong>Mba\'e peteĩ clasificación Spatia-pe ojehechakuaáva oĩ hipótesis ojehekáva, no resultado definitivo.</strong> Uso responsable ojerure ojelee ficha metodológica análisis apytépe, ojekuaahéta limitaciones, ha oñemboikuaa análisis validación de campo ndive.',
-		liabilityText: '<strong>Responsabilidad.</strong> Mba\'e peteĩ ñepyrũ ára oĩháre autor, Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), Universidad Nacional de Misiones (UNaM) ha Facultad de Humanidades y Ciencias Sociales (FHyCS) ndoikói responsables daños directos, indirectos, incidentales ha consecuentes Spatia ojeporu haguégui. Avave ojeporu plataforma gestión, inversión, investigación ha política pública-pe oñemboguapy responsabilidad upe uso haguégui ha ojejerure validación profesional independiente ndive.',
-		termsLink: 'Términos y condiciones ojehecha →',
-		fuentesTitle: 'Fuentes ha colaboraciones',
-		fuentesP1: 'Spatia oñemboikuaa mba\'ekuaa fuentes públicas-gui, oĩva: INDEC (Censo Nacional 2022), IGN, Catastro Misiones, JRC Global Surface Water, Hansen Global Forest Change, MODIS, MapBiomas, CHIRPS, ERA5, VIIRS, GHSL, SoilGrids, Sentinel/ESA/Copernicus, Global Building Atlas, Overture Maps, OpenStreetMap, Meta/WRI Canopy Height, GEDI L4B, Dynamic World, MERIT Hydro, Copernicus DEM GLO-30, FABDEM, TerraClimate, Google Open Buildings, Inventario Nacional de Plantaciones Forestales (DNDFI), PM2.5 Dalhousie/ACAG, Oxford MAP, DGEEC Paraguay ha IBGE Brasil, ambuéva. Plataforma pública procesamiento oñemboguapy Google Earth Engine-pe, nivel investigación-pe (<strong>Partner Tier</strong>, uso no comercial).',
-		contactoTitle: 'Contacto',
-		contactoContent: '<strong>Raimundo Elías Gómez</strong><br />Investigador CONICET · Facultad de Humanidades y Ciencias Sociales, Universidad Nacional de Misiones (Argentina)<br /><a href="mailto:nealab@spatia.ar">nealab@spatia.ar</a>',
-		citationLabel: 'Omombe hag̃ua rehegua',
-		affil: 'CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier',
-		printGenerated: 'Documento oñemosẽ {date}-pe spatia.ar/servicios-gui',
-	},
 };
+
+// gn = the Spanish text (see gnFromEs).
+export const SERVICIOS: Record<Locale, ServiciosContent> = { ...BASE, gn: gnFromEs(BASE.es) };

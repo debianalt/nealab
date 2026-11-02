@@ -604,49 +604,30 @@
 <div class="eudr-gate">
 	<div class="eudr-gate-card">
 		<div class="eudr-gate-kicker">EUDR Check · Spatia</div>
-		<h1 class="eudr-gate-title">Aviso importante antes de usar esta herramienta</h1>
+		<h1 class="eudr-gate-title">{i18n.t('eudr.gate.title')}</h1>
 		<ul class="eudr-gate-points">
 			<li>
-				<span class="eudr-gate-label">Qué hace esta herramienta.</span>
-				Análisis satelital de pérdida forestal post-2020 (Hansen GFC {hansenVersion} + MODIS de área quemada)
-				sobre hexágonos de ~0,1 km² (H3 res-9). Cobertura: provincias del NEA argentino
-				(Misiones, Corrientes, Chaco y Formosa), departamentos paraguayos y estados del sur de Brasil. Sirve para
-				screening de riesgo EUDR, due-diligence preliminar y soporte técnico de informes.
-				En Argentina (Misiones, Corrientes, Chaco y Formosa) distingue además la pérdida sobre <b>plantación forestal</b>
-				(ciclo de cosecha, conforme) de la <b>deforestación de bosque nativo</b>, cruzando con MapBiomas
-				y un baseline al corte 2020.
+				<span class="eudr-gate-label">{i18n.t('eudr.gate.what.label')}</span>
+				{@html i18n.t('eudr.gate.what').replace('{v}', hansenVersion)}
 			</li>
-			<li>
-				<span class="eudr-gate-label">Alcance regulatorio.</span>
-				El resultado es un análisis técnico, no una certificación formal bajo el Reglamento
-				(UE) 2023/1115. La certificación regulatoria requiere además geometría parcelaria
-				oficial, trazabilidad documental y due-diligence profesional independiente.
-			</li>
-			<li>
-				<span class="eudr-gate-label">Resolución del dato.</span>
-				La señal de pérdida está a 100 m y el área quemada proviene de un producto de 500 m,
-				mayor que la celda evaluada. El resultado refleja el hexágono, no la parcela exacta —
-				usalo como señal espacial robusta, no como medición catastral.
-			</li>
-			<li>
-				<span class="eudr-gate-label">Responsabilidad.</span>
-				Al continuar, aceptás que Spatia, su autor, CONICET y UNaM no asumen responsabilidad
-				por decisiones comerciales o regulatorias basadas exclusivamente en este análisis.
-			</li>
+			{#each ['scope', 'res', 'resp'] as p}
+				<li>
+					<span class="eudr-gate-label">{i18n.t(`eudr.gate.${p}.label`)}</span>
+					{i18n.t(`eudr.gate.${p}`)}
+				</li>
+			{/each}
 		</ul>
 		<button class="eudr-gate-btn" onclick={() => eudrDisclaimerAccepted = true}>
-			Entendido — continuar con el análisis
+			{i18n.t('eudr.gate.ok')}
 		</button>
 		<p class="eudr-gate-cite">
-			<span class="eudr-gate-label">Fuente de cobertura.</span>
-			MapBiomas – Colección 2 de la Serie Anual de Mapas de Cobertura y Uso del Suelo de
-			Argentina, consultada el 24 de julio de 2026 a través del enlace:
+			<span class="eudr-gate-label">{i18n.t('eudr.gate.source.label')}</span>
+			{i18n.t('eudr.gate.source.a')}
 			<a href="https://argentina.mapbiomas.org" target="_blank" rel="noopener">argentina.mapbiomas.org</a>
 			<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY</a>.
-			Pérdida de cobertura arbórea: Hansen/UMD Global Forest Change v1.13. Área quemada:
-			NASA MODIS MCD64A1.
+			{i18n.t('eudr.gate.source.b')}
 		</p>
-		<a class="eudr-gate-link" href={lp('/terminos', i18n.locale)}>Ver términos y condiciones completos →</a>
+		<a class="eudr-gate-link" href={lp('/terminos', i18n.locale)}>{i18n.t('eudr.gate.terms')}</a>
 	</div>
 </div>
 {:else}

@@ -264,7 +264,7 @@
 				{/if}
 			</button>
 			{#if territoryStore.compareModeActive}
-				<button class="close-btn" onclick={() => territoryStore.exitCompareMode()}>← volver</button>
+				<button class="close-btn" onclick={() => territoryStore.exitCompareMode()}>{i18n.t('common.back')}</button>
 			{/if}
 			{#if selectorOpen}
 				<div class="compare-dropdown">
@@ -277,7 +277,7 @@
 					{#each filteredGroups as g (g.territory.id)}
 						<div class="group-header">{g.territory.flag} {g.territory.label}</div>
 						<button class="opt opt-province" onclick={() => selectTarget(g.territory)}>
-							{g.territory.shortLabel} (provincia)
+							{g.territory.shortLabel} {i18n.t('compare.provinceSuffix')}
 						</button>
 						{#each g.depts.filter(d => d.name !== hexStore.selectedDpto) as d (d.parquetKey)}
 							<button class="opt opt-dept" onclick={() => selectTarget(g.territory, d)}>

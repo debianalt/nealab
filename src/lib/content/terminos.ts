@@ -1,4 +1,5 @@
 import type { Locale } from '$lib/stores/i18n.svelte';
+import { gnFromEs } from './gnFallback';
 
 export interface TerminosContent {
 	pageTitle: string;
@@ -48,7 +49,7 @@ export interface TerminosContent {
 	printGenerated: string;
 }
 
-export const TERMINOS: Record<Locale, TerminosContent> = {
+const BASE: Record<'es' | 'en' | 'pt', TerminosContent> = {
 	es: {
 		pageTitle: 'Términos y condiciones — Spatia',
 		metaDesc: 'Términos y condiciones de uso de Spatia, plataforma de análisis geoespacial abierto. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
@@ -258,74 +259,7 @@ export const TERMINOS: Record<Locale, TerminosContent> = {
 		affil: 'CONICET · FHyCS-UNaM',
 		printGenerated: 'Documento gerado em {date} a partir de spatia.ar/terminos',
 	},
-
-	gn: {
-		pageTitle: 'Términos ha condiciones — Spatia',
-		metaDesc: 'Términos ha condiciones de uso Spatia-pegua, plataforma de análisis geoespacial abierto. Exclusión de garantías, limitación de responsabilidad, ley aplicable.',
-		printBrand: 'Spatia · términos ha condiciones · spatia.ar',
-		kicker: 'Términos ha condiciones de uso · Spatia / spatia.ar',
-		title: 'Términos ha condiciones',
-		subtitle: 'Última actualización: noviembre 2026-pe. Spatia ojeporu hagua opayetéma oñe\'ẽve términos oñembohupyty. Ndoañuẽi hagua, ani Spatia ojeporú.',
-		s1Title: '1. Aceptación',
-		s1P1: 'Spatia ojeporu ha mba\'e peteĩ análisis, dato térã visualización oĩva <strong>spatia.ar</strong>-pe oĩ aceptación plena e incondicional términos ha condiciones oĩva rehegua. Ko aceptación oĩ oikovéva usuario plataforma oipyhy aja ha oñe\'ẽ ojelee ha oĩkuaa términos oñemboguapýva.',
-		s1P2: 'Spatia ojeporu hagua organización, institución térã empresa réra-pe, oñembohupyty términos upe entidad réra-pe ha oñe\'ẽ oĩva autoridad.',
-		s2Title: '2. Servicío rehegua',
-		s2P1: 'Spatia es una <strong>herramienta de análisis geoespacial académico</strong> de acceso abierto, desarrollada en el marco del Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET, Argentina), la Secretaría de Investigación y Posgrado (SINVyP) de la Facultad de Humanidades y Ciencias Sociales (FHyCS) y la Universidad Nacional de Misiones (UNaM). Integra datos públicos de fuentes declaradas para generar visualizaciones e indicadores sobre el noreste argentino y sus regiones transfronterizas.',
-		s2P2: 'Spatia <strong>ndoikói</strong> sistema de recomendación, sistema de certificación, peritaje técnico ni consultoría profesional. Análisis-kuéra oĩ síntesis cuantitativa variables observables percepción remota, censos ha fuentes administrativas-gui, ha ojehechauka <strong>hipótesis ojehekáva</strong> ikatúva, araka\'eve ndaha\'éi verdades ojeporu hagua.',
-		s2P3: 'El acceso a Spatia es libre y gratuito. Los diagnósticos a medida, asesoramientos y capacitaciones se prestan aparte, como <strong>Servicio Tecnológico de Alto Nivel (STAN) del CONICET</strong> «Asesoramiento y capacitación en análisis geoespaciales integrados socioeconómicos, productivos y ambientales»; se contratan por separado y se rigen por las condiciones que se acuerden con cada contratante, no por estos términos: lo que se trabaja para un contratante (sus datos, resultados e informes) es <strong>confidencial</strong> y no se publica en Spatia ni se comparte con terceros, salvo que el contratante lo autorice por escrito.',
-		s3Title: '3. Garantías ndoĩhaguépe',
-		s3Intro: 'Plataforma ha información oĩva ojemoĩ <strong>as-is</strong>, garantías ndoĩhaguépe, expresas ni implícitas, oĩ peteĩva:',
-		s3List: [
-			'Datos exactitud térã precisión',
-			'Completitud térã errores ndoĩhaguépe',
-			'Información actualización térã vigencia',
-			'Idoneidad propósito particular-pe',
-			'Interrupciones térã errores técnicos ndoĩhaguépe',
-		],
-		s3P2: 'Datos satelitales, censales ha administrativos Spatia-pe oĩva ikatu oĩ errores, desfasajes temporales ha limitaciones metodológicas ficha técnica-pe oñembyaikuaáva. Usuario omba\'apo verificar upe información adecuación ojeporu hagua.',
-		s4Title: '4. Responsabilidad limitación',
-		s4Intro: 'En la máxima medida permitida por la legislación aplicable, <strong>Raimundo Elías Gómez, el Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET), la Universidad Nacional de Misiones (UNaM) y su Facultad de Humanidades y Ciencias Sociales (FHyCS)</strong> no serán responsables por daños de ningún tipo derivados del uso o la imposibilidad de uso de Spatia, incluyendo pero no limitado a:',
-		s4List: [
-			'Daños directos, indirectos, incidentales, especiales ha consecuentes',
-			'Pérdidas económicas, ganancias ha oportunidades de negocio',
-			'Decisiones de inversión, gestión térã política pública análisis-gui',
-			'Consecuencias jurídicas, regulatorias ha comerciales',
-			'Datos oñembohu térã oñembovai',
-		],
-		s4P2: 'Ko limitación oĩ daños ojehechauka hagua térã oñe\'ẽ hagua posibilidad rehegua.',
-		s5Title: '5. Marco institucional',
-		s5P1: 'El Consejo Nacional de Investigaciones Científicas y Técnicas (CONICET) y la Universidad Nacional de Misiones (UNaM), a través de la Facultad de Humanidades y Ciencias Sociales (FHyCS), son el <strong>marco académico e institucional</strong> de la investigación que dio origen a Spatia. No son proveedores de la plataforma en sentido comercial, no avalan los análisis como documentos oficiales de ninguna institución pública o privada y no asumen responsabilidad por el uso que terceros hagan de la información disponible en la plataforma.',
-		s5P2: 'La mención del CONICET, la UNaM y la FHyCS en esta plataforma refleja el origen académico del desarrollo, no un aval institucional sobre la exactitud, completitud o idoneidad de ningún análisis particular.',
-		s6Title: '6. Uso permitido',
-		s6Intro: 'Spatia ikatu ojeporu:',
-		s6List: [
-			'Consulta, exploración ha visualización datos geoespaciales públicos rehegua',
-			'Investigación académica ha producción científica',
-			'Educación ha docencia',
-			'Diagnósticos no vinculantes insumo deliberación térã planificación-pe',
-			'Hipótesis oñemboguapy fuentes primarias ha trabajo de campo ndive',
-		],
-		s6P2: 'Decisiones jurídicas, económicas, territoriales ha política pública oĩva rehegua ojeporu <strong>validación independiente</strong> profesionales habilitados ha trabajo de campo ojerure.',
-		s7Title: '7. Uso prohibido',
-		s7Intro: 'Oñeprohíbe:',
-		s7List: [
-			'Análisis Spatia ojehechauka certificaciones técnicas, peritajes, informes oficiales térã documentos jurídicos ikatúva ndaha\'éi naturaleza indicativa ha limitaciones metodológicas ojehechakuaáva.',
-			'Spatia ojeporu due-diligence única fuente contextos regulatorios certificación profesional ojeruréva (EUDR, evaluaciones de impacto ambiental térã tasaciones-pe).',
-			'Análisis Spatia oñemomba\'e exactitud, autoridad ha vigencia servicio ndojeguaraíva.',
-		],
-		s8Title: '8. Propiedad intelectual',
-		s8P1: 'Los datos integrados por Spatia provienen de fuentes públicas declaradas en la ficha técnica de cada capa — entre otras, el Instituto Nacional de Estadística y Censos (INDEC), el Instituto Geográfico Nacional (IGN), el Joint Research Centre (JRC) de la Comisión Europea, Hansen Global Forest Change (GFC), MODIS (Moderate Resolution Imaging Spectroradiometer), MapBiomas y OpenStreetMap (OSM) — y se usan conforme a sus licencias originales. El pipeline de procesamiento, el código de la plataforma y las visualizaciones son de autoría de Raimundo Elías Gómez, están registrados en la Dirección Nacional del Derecho de Autor (DNDA) y el código fuente se publica bajo licencia AGPL-3.0 en <a href="https://github.com/debianalt/nealab">github.com/debianalt/nealab</a>. Pueden citarse según la referencia indicada en <a href="/gn/servicios">spatia.ar/gn/servicios</a>.',
-		s9Title: '9. Privacidad ha datos',
-		s9P1: 'Spatia ndoipotái datos personales usuarios-gui. Acceso plataforma-pe ikatu oñemoheẽ registros técnicos (IP, timestamp, ruta) infraestructura monitoreo ha errores detección hag̃ua. Registros ndojejapói terceros-pe ni personas oñembohecha hag̃ua.',
-		s9P2: 'Términos aceptación oñemoĩ localmente usuario navegador-pe (localStorage) ha ndojejapói servidor-pe.',
-		s10Title: '10. Modificaciones',
-		s10P1: 'Términos ikatu oñemoambue. Versión vigente oĩ <strong>spatia.ar/terminos</strong>-pe. Cambios sustanciales responsabilidad ha uso-pe oñejerure nueva aceptación explícita, plataforma oñejerure upe usuario-pe.',
-		s11Title: '11. Ley aplicable ha jurisdicción',
-		s11P1: 'Términos ha condiciones oñemboguapy leyes <strong>República Argentina</strong>-pegua rupive, Código Civil ha Comercial de la Nación (Ley 26.994) rupive. Spatia ojeporu hagua controversia oĩ hagua, <strong>tribunales ordinarios Posadas, Misiones</strong>-pe oñemboguapy, ambuéva fuero ojepe\'a.',
-		acceptText: 'Botón de abajo oipyhy hagua confirmás términos ha condiciones opayetéma ojelee ha ojembohupyty.',
-		acceptBtn: 'Oñembohupyty términos — Spatia-pe oike',
-		footerVersion: 'spatia.ar/terminos · Versión noviembre 2026',
-		affil: 'CONICET · FHyCS-UNaM',
-		printGenerated: 'Documento oñemosẽ {date}-pe spatia.ar/terminos-gui',
-	},
 };
+
+// gn = the Spanish text (see gnFromEs).
+export const TERMINOS: Record<Locale, TerminosContent> = { ...BASE, gn: gnFromEs(BASE.es) };
