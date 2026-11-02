@@ -51,6 +51,7 @@
 			<h2>{c.s2Title}</h2>
 			<p>{@html c.s2P1}</p>
 			<p>{@html c.s2P2}</p>
+			<p>{@html c.s2P3}</p>
 		</section>
 
 		<section class="section">
