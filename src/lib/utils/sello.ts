@@ -285,10 +285,11 @@ export function classColor(c: string, t: MapTema): string {
 	return t === 'claro' ? CLARO_OF.get(c.toLowerCase()) ?? c : c;
 }
 
-// 3D buildings by built volume (m³), Claro: ink from pale warm gray (a house) to
-// almost black (a tower). Variant A of the 1-nov comparison; the dark set is
-// config COLOR_RAMPS.volume. Same breaks.
-export const BUILDING_VOLUME_CLARO = ['#d1cac2', '#b4ada5', '#958d84', '#766e66', '#544d46', '#342e28', '#16110c'] as const;
+// 3D buildings by built volume (m³), Claro: dark ink, a house mid gray, a tower
+// almost black (variant D, chosen by the author on 1-nov over A pale warm gray, B
+// uniform charcoal without the volume, C tierra, which competes with the risk
+// layers). The dark set is config COLOR_RAMPS.volume. Same breaks.
+export const BUILDING_VOLUME_CLARO = ['#8e8881', '#746e67', '#5b554f', '#423d37', '#2b2621', '#17130f', '#070401'] as const;
 
 /** Readable ink on a coloured fill (labels drawn on bands, swatches). */
 export function inkOn(hex: string): string {
