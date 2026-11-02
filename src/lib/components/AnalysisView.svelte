@@ -6,7 +6,6 @@
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import OvertureAnalysis from './analyses/OvertureAnalysis.svelte';
-	import CatastroAnalysis from './analyses/CatastroAnalysis.svelte';
 
 	let {
 		lensStore,
@@ -16,10 +15,6 @@
 		onBack,
 		onRemoveRadio,
 		onSelectFloodDpto,
-		onSelectFloodCatastroDpto,
-		onSelectCatastroDpto,
-		onSelectScoresCatastroDpto,
-		onSelectRadioAnalysisDpto,
 		onCensoDeptSelect,
 	}: {
 		lensStore: LensStore;
@@ -29,10 +24,6 @@
 		onBack: () => void;
 		onRemoveRadio: (redcode: string) => void;
 		onSelectFloodDpto: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectFloodCatastroDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectCatastroDpto?: (centroid: [number, number] | null, deptCode?: string | null) => void;
-		onSelectScoresCatastroDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectRadioAnalysisDpto?: (dpto: string, analysisId: string, centroid: [number, number]) => void;
 		onCensoDeptSelect?: (feature: any | null) => void;
 	} = $props();
 
@@ -71,8 +62,6 @@
 				<p class="coming-soon-text">{i18n.t(analysis.descKey)}</p>
 				<p class="coming-soon-body">{i18n.t('analysis.comingSoon.body')}</p>
 			</div>
-		{:else if analysis.spatialUnit === 'catastro'}
-			<CatastroAnalysis {lensStore} {mapStore} {onRemoveRadio} {onSelectCatastroDpto} />
 		{:else if HEX_LAYER_REGISTRY[analysis.id]}
 			<OvertureAnalysis {analysis} {hexStore} {territoryStore} onSelectDpto={onSelectFloodDpto} {onCensoDeptSelect} />
 			{#if showPlantControl}

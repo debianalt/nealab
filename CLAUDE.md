@@ -8,16 +8,15 @@
 - Cloudflare: Pages, Workers, R2, D1
 - DuckDB-WASM (parquet queries from R2)
 - MapLibre GL 6 + PMTiles. Importar siempre `import * as maplibregl from '$lib/maplibre'`, nunca `'maplibre-gl'` directo: la 6 es sólo ESM y ese módulo registra el worker (`setWorkerUrl`); sin él el mapa no carga. Filtros siempre como expresiones (`['geometry-type']`, `['get', …]`), no la sintaxis legacy (`'$type'`).
-- Claude SDK (Haiku) via Pages Function proxy (`functions/api/chat.ts`)
 
 ## Project Structure
 ```
 src/                    # SvelteKit app
   lib/config.ts         # PARQUETS URLs, HEX_LAYER_REGISTRY, ANALYSIS_REGISTRY
   lib/stores/           # hex.svelte.ts, map.svelte.ts, i18n.svelte.ts, duckdb.ts
-  lib/components/analyses/  # CatastroAnalysis, OvertureAnalysis (panel de capa hex)
+  lib/components/analyses/  # OvertureAnalysis (panel de capa hex)
   routes/+page.svelte   # Main page (map, hex click, analysis choropleth)
-functions/api/          # Cloudflare Pages Functions (chat proxy)
+functions/api/          # Cloudflare Pages Functions (eudr, satellite, esri)
 pipeline/               # Python GEE/raster pipeline
   config.py             # MISIONES_BBOX, H3_RESOLUTION, thresholds
   gee_flood_detection.py  # S1 SAR water detection + export
@@ -30,9 +29,8 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 
 ## Critical Rules
 - **Nunca romper funcionalidad existente al implementar features nuevas.**
-- Antes de editar archivos compartidos (chat, comparison, map components), listar qué funciona actualmente y verificar que sigue funcionando después de los cambios.
+- Antes de editar archivos compartidos (comparison, map components), listar qué funciona actualmente y verificar que sigue funcionando después de los cambios.
 - Para bugs de radio/click: simular el escenario de first-click.
-- Para chat flows: verificar cadena completa (user input → LLM → tool call → map action → response).
 
 ## Development Practices
 - Después de implementar features UI/mapa, describir qué debería ser visible y pedir confirmación visual antes de avanzar.
@@ -61,7 +59,7 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 ## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
 nealab has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
 
-- **`--mode comparable`**: fixed goalpost P2/P98 normalization → cross-territory comparable. Score 60 in Misiones = 60 in Itapúa. PCA variable selection LOCKED from `goalposts.json:pca_variable_selection`. Used for the 23 comparable satellite layers.
+- **`--mode comparable`**: fixed goalpost P2/P98 normalization → cross-territory comparable. Score 60 in Misiones = 60 in Itapúa. PCA variable selection LOCKED from `goalposts.json:pca_variable_selection`. Hoy (nov-2026) casi todas las capas publican valores físicos o tasas censales crudas; los goalposts sobreviven en las tipologías (aislamiento) y el flag `comparable` de ANALYSIS_REGISTRY sólo decide agrupación en el menú y el comparador entre territorios.
 - **`--mode local`**: percentile rank within territory (default historical). Used for census-based layers whose schemas differ across countries (INDEC vs DGEEC).
 
 UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
@@ -75,9 +73,8 @@ UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
 **`pipeline/compute_goalposts.py`**: recalculates Tier 2 bounds from pooled territory data. Run only on a bump. Tier 1 entries never touched. Re-runs PCA variable selection on pooled normalized data.
 
 ## Flood Risk Layer
-- **Data sources**: JRC Global Surface Water v1.4 (Landsat 1984–2021) + Sentinel-1 SAR (current extent)
-- **Parquet columns**: `h3index`, `jrc_occurrence` (0-100%), `jrc_recurrence` (0-100%), `jrc_seasonality` (0-12), `flood_extent_pct` (0-100%), `flood_risk_score` (0-100)
-- **Score formula**: Geometric mean of PCA-validated components (occurrence, recurrence, extent)
+- **Lo que pinta el mapa**: exposición por relieve (HAND < 5 m, MERIT Hydro) con Google Open Buildings: pestañas % de edificios / edificios / % de tierra / edificios nuevos 2016–2023 (`pipeline/build_flood_rank.py`, columnas hex `low_bld_n`, `low_land_pct`, `low_bld_new_n`). En la llanura chaqueña (ranking saturado) pinta `jrc_occurrence` (JRC GSW 1984–2021). Sentinel-1 = extensión actual (`flood_extent_pct`). Sin score compuesto (`flood_risk_score` retirado de la UI en jun-2026).
+- **Parquet columns**: `h3index`, `jrc_occurrence`, `jrc_recurrence`, `jrc_seasonality`, `flood_extent_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`
 - **Pipeline**: `python pipeline/run_flood_update.py --skip-gee` (con rasters locales)
 
 ## Deployment

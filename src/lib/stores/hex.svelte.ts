@@ -1635,8 +1635,8 @@ export class HexStore {
 
 		try {
 			// Resolve the per-territory primary fallback BEFORE querying: MIN/MAX on a
-			// column the parquet lacks is a Binder error (economic_activity AR has no
-			// viirs_mean_radiance). getParquetCols caches, so this is one-time per URL.
+			// column the parquet lacks is a Binder error (a territory published without the
+			// primary column). getParquetCols caches, so this is one-time per URL.
 			this.updatePrimaryOverride(layer, await getParquetCols(dataUrl));
 			const pv = this.effectivePrimary;
 			// No WHERE … IS NOT NULL: MIN/MAX already ignore NULLs, and the predicate

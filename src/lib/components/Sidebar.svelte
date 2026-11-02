@@ -7,7 +7,6 @@
 	import AnalysisMenu from './AnalysisMenu.svelte';
 	import AnalysisView from './AnalysisView.svelte';
 	import ZoneComparison from './ZoneComparison.svelte';
-	import CatastroZoneComparison from './CatastroZoneComparison.svelte';
 	import HexComparison from './HexComparison.svelte';
 	import HexZoneComparison from './HexZoneComparison.svelte';
 	import ComparisonPanel from './ComparisonPanel.svelte';
@@ -52,10 +51,6 @@
 		onRemoveHexZone,
 		onClearHexZones,
 		onSelectFloodDpto,
-		onSelectFloodCatastroDpto,
-		onSelectCatastroDpto,
-		onSelectScoresCatastroDpto,
-		onSelectRadioAnalysisDpto,
 		onDownloadRadioCsv,
 		onDownloadRadioGeoJson,
 		onDownloadRadiosSummary,
@@ -87,10 +82,6 @@
 		onRemoveHexZone: (id: string) => void;
 		onClearHexZones: () => void;
 		onSelectFloodDpto: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectFloodCatastroDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectCatastroDpto?: (centroid: [number, number] | null, deptCode?: string | null) => void;
-		onSelectScoresCatastroDpto?: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
-		onSelectRadioAnalysisDpto?: (dpto: string, analysisId: string, centroid: [number, number]) => void;
 		onDownloadRadioCsv?: (redcode: string) => void;
 		onDownloadRadioGeoJson?: (redcode: string, properties: Record<string, any>) => void;
 		onDownloadRadiosSummary?: () => void;
@@ -158,7 +149,6 @@
 		prevLens = lens;
 	});
 
-	const isCatastroAnalysis = $derived(lensStore.activeAnalysis?.id === 'catastro');
 	// Territories with radio/setor-level census data for the base-map RadioCensusPanel.
 	const CENSUS_TERRITORIES = new Set([
 		'misiones', 'corrientes', 'chaco', 'formosa',
@@ -219,11 +209,7 @@
 		</div>
 	{:else if lassoStore.zones.length > 0}
 		<div class="chart-scroll">
-			{#if isCatastroAnalysis}
-				<CatastroZoneComparison {lassoStore} {lensStore} {onRemoveZone} {onClearZones} />
-			{:else}
-				<ZoneComparison {lassoStore} {onRemoveZone} {onClearZones} />
-			{/if}
+			<ZoneComparison {lassoStore} {onRemoveZone} {onClearZones} />
 		</div>
 	{:else if hexStore.selectedHexes.size > 0}
 		<div class="chart-scroll">
@@ -248,7 +234,7 @@
 					<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
 				{/if}
 			{/if}
-			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onSelectFloodCatastroDpto} {onSelectCatastroDpto} {onSelectScoresCatastroDpto} {onSelectRadioAnalysisDpto} {onCensoDeptSelect} />
+			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onCensoDeptSelect} />
 			<!-- Above every chart (Evolución included) and outside the «Gráficos» fold:
 			     below them it was drawn off-screen for a FlowChart pick, and a folded
 			     «Gráficos» hid it. Sticky, so it stays in view while scrolling the charts. -->

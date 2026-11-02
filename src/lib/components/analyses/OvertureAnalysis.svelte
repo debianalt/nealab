@@ -11,7 +11,7 @@
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
 	import CensoTemporalDeptList from '$lib/components/CensoTemporalDeptList.svelte';
-	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, getTemporalCol, getDeptSummaryUrl, TERRITORY_REGISTRY, getSatGlobalUrl, type AnalysisConfig, type TemporalMode, type TerritoryConfig, type CountryId } from '$lib/config';
+	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, TERRITORY_REGISTRY, type AnalysisConfig, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { withRef, territoryRef } from '$lib/utils/territoryRef';
 	import { query } from '$lib/stores/duckdb';
@@ -38,14 +38,7 @@
 	const selectedHexes = $derived(hexStore.selectedHexes);
 	const isPerDept = $derived(layerCfg?.perDepartment === true);
 	const selectedDpto = $derived(hexStore.selectedDpto);
-	const selectedHex = $derived.by(() => {
-		if (selectedHexes.size === 0) return null;
-		const [h3index, sel] = [...selectedHexes.entries()][0];
-		return { h3index, ...sel.data };
-	});
 
-	// Census-based analyses: hide petals (radio-level data → identical within radio, not informative)
-	const CENSUS_ANALYSES = new Set(['service_deprivation', 'health_access', 'education_capital', 'education_flow', 'economic_activity', 'accessibility']);
 
 	// Department summaries for perDepartment layers
 	let deptSummary = $state<any>(null);
@@ -149,12 +142,11 @@
 	// Department ranking (layerCfg.deptRank): physical metric per department from
 	// the summary's `rank` block. Only when the active territory's summary has it.
 	// The pipeline flags territories where the metric does not separate departments
-	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %). There the ranking
-	// switches to deptRank.plain when the summary carries it and it spreads
-	// (metadata.rank.plain.shown); otherwise a note replaces the bars.
+	// (flood HAND < 5 m on the Chaco plain: medians 85–100 %). There a note replaces
+	// the bars (the radar ranking for the plain was retired: Sentinel-1 overestimates
+	// water on the Chaco plain).
 	const rankSummary = $derived(allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary);
 	const rankSaturatedRaw = $derived(!!rankSummary?.metadata?.rank?.saturated);
-	const rankPlain = $derived(rankSaturatedRaw && !!rankSummary?.metadata?.rank?.plain?.shown && !!layerCfg?.deptRank?.plain);
 	// deptRank.metrics: several readings of the layer, switched from tabs.
 	// Only readings with data in the active territory get a tab (accessibility has
 	// no cabecera times in Chaco/Formosa, no hospital distances in Brazil).
@@ -173,7 +165,6 @@
 	const rankCfg = $derived.by(() => {
 		const base = layerCfg?.deptRank ?? null;
 		if (!base) return null;
-		if (rankPlain) return { ...base, ...base.plain!, extraField: undefined, extraUnitKey: undefined };
 		const m = rankMetrics[rankMetricIdx];
 		return m ? { ...base, ...m } : base;
 	});
@@ -198,15 +189,15 @@
 	});
 	const hasRank = $derived.by(() => {
 		if (!rankCfg) return false;
-		if (rankSaturatedRaw && !rankPlain) return false;
+		if (rankSaturatedRaw) return false;
 		return rankBars || !!rankProvince;
 	});
 	const activeTerritoryLabel = $derived(TERRITORY_REGISTRY[activeTab]?.label ?? '');
-	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw && !rankPlain);
+	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw);
 	// The map paints the active reading's per-hex variable (deptRank.hexVariable), so
 	// an open department reads like its bar. No ranking (saturated plain) → primary.
 	$effect(() => {
-		const v = hasRank && !rankPlain ? (rankCfg?.hexVariable ?? null) : null;
+		const v = hasRank ? (rankCfg?.hexVariable ?? null) : null;
 		untrack(() => hexStore.setColorVariable(v));
 	});
 
@@ -269,41 +260,7 @@
 		return PALETTE[(type - 1) % PALETTE.length];
 	}
 
-	function getScoreColor(score: number): string {
-		if (isCategorical) return getTypeColor(Math.round(score));
-		if (colorScale === 'flood') {
-			if (score >= 10) return MAP_TIERRA[4];
-			if (score >= 4)  return MAP_TIERRA[2];
-			return MAP_TIERRA[0];
-		}
-		if (colorScale === 'green') {
-			if (score >= 70) return MAP_SELVA[5];
-			if (score >= 40) return MAP_SELVA[3];
-			return MAP_SELVA[0];
-		}
-		if (colorScale === 'warm') {
-			if (score >= 70) return '#fde725';
-			if (score >= 40) return '#f59e0b';
-			return '#0f172a';
-		}
-		// Sequential (viridis)
-		if (score >= 70) return '#fde725';
-		if (score >= 40) return '#21918c';
-		return '#440154';
-	}
 
-	function getScoreLevel(score: number): string {
-		if (colorScale === 'flood') {
-			if (score >= 10) return i18n.t('legend.high');
-			if (score >= 4)  return i18n.t('legend.medium');
-			if (score >= 2)  return i18n.t('legend.low');
-			return i18n.t('legend.veryLow');
-		}
-		if (score >= 70) return i18n.t('legend.high');
-		if (score >= 40) return i18n.t('legend.medium');
-		if (score >= 20) return i18n.t('legend.low');
-		return i18n.t('legend.veryLow');
-	}
 
 	const legendGradient = $derived(
 		colorScale === 'flood'
@@ -417,14 +374,6 @@
 
 	// Petal chart data for selected hex
 	const petalLabels = $derived(componentVars.map(v => i18n.t(v.labelKey)));
-	const hexPetalLayers = $derived.by(() => {
-		if (!selectedHex || componentVars.length === 0) return [];
-		const values = componentVars.map(v => {
-			const val = selectedHex[v.col];
-			return typeof val === 'number' ? Math.min(100, Math.max(0, val)) : 0;
-		});
-		return [{ values, color: getTypeColor(selectedHex.type ?? 1) }];
-	});
 
 	// ── Cross-analysis profile for selected hex ──
 	const CROSS_ANALYSIS_IDS = ['accessibility', 'deforestation_dynamics', 'land_use', 'flood_risk'];
@@ -436,42 +385,6 @@
 			return { id, label: i18n.t(titleKey) };
 		})
 	);
-
-	let crossProfile = $state<{ label: string; typeLabel: string }[]>([]);
-	let _crossProfileGen = 0;
-
-	$effect(() => {
-		const hex = selectedHex;
-		const dpto = selectedDpto;
-		if (!hex || !dpto || !deptList.length) { crossProfile = []; return; }
-
-		const dept = deptList.find((d: any) => (d.dpto ?? d.distrito ?? d.municipio) === dpto);
-		if (!dept) { crossProfile = []; return; }
-
-		const gen = ++_crossProfileGen;
-		const h3 = hex.h3index;
-		const promises = CROSS_ANALYSES
-			.filter(a => a.id !== analysis.id)
-			.map(async (a) => {
-				try {
-					let url: string;
-					if (a.id === 'flood_risk') url = getFloodDptoUrl(dept.parquetKey);
-					else if (a.id === 'territorial_scores') url = getScoresDptoUrl(dept.parquetKey);
-					else url = getSatDptoUrl(a.id, dept.parquetKey);
-					const r = await query(`SELECT type_label FROM '${url}' WHERE h3index = '${h3}'`);
-					if (r.numRows > 0) {
-						const row = r.get(0)!.toJSON() as Record<string, any>;
-						return { label: a.label, typeLabel: String(row.type_label || '—') };
-					}
-				} catch { /* skip unavailable */ }
-				return { label: a.label, typeLabel: '—' };
-			});
-
-		Promise.all(promises).then(results => {
-			if (_crossProfileGen !== gen) return; // newer dept selected
-			crossProfile = results;
-		});
-	});
 
 	// ── Type distribution for selected department ──
 	let typeDistribution = $state<{ type: number; label: string; count: number; pct: number; avgScore: number | null }[]>([]);
@@ -544,15 +457,7 @@
 	const isTemporal = $derived(layerCfg?.temporal === true);
 	const tMode = $derived(hexStore.temporalMode);
 
-	function getDisplayCol(col: string): string {
-		if (!isTemporal || tMode === 'current') return col;
-		return getTemporalCol(col, tMode);
-	}
 
-	function getDisplayVal(hex: Record<string, any>, col: string): number | null {
-		const tCol = getDisplayCol(col);
-		return hex[tCol] !== undefined ? (hex[tCol] as number) : null;
-	}
 
 	const effectiveLegendGradient = $derived(
 		isTemporal && tMode === 'delta'
@@ -565,22 +470,11 @@
 			: legendLabels
 	);
 
-	const displayScore = $derived(selectedHex ? (getDisplayVal(selectedHex, hexStore.effectivePrimary) ?? 0) : 0);
 
 	/**
 	 * Adaptive number formatter — picks precision based on magnitude so that
 	 * fractional values like NDVI (0.85) do not collapse to "1" via toFixed(0).
 	 */
-	function fmtSmart(v: unknown): string {
-		if (typeof v !== 'number' || !Number.isFinite(v)) return '—';
-		if (v === 0) return '0';
-		const abs = Math.abs(v);
-		if (abs < 0.01) return v.toExponential(1);
-		if (abs < 1) return v.toFixed(2);
-		if (abs < 10) return v.toFixed(2);
-		if (abs < 100) return v.toFixed(1);
-		return v.toFixed(0);
-	}
 
 	// «Pedir un diagnóstico a medida»: this layer + the open department, or the territory.
 	const layerRequestCtx = $derived({
@@ -588,40 +482,6 @@
 		place: [selectedDpto ? formatDept(selectedDpto) : '', territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · '),
 	});
 
-	// ── Calibration distribution ──
-	interface CalibRow { territory: TerritoryConfig; p25: number; p50: number; p75: number; avg: number }
-	let calibrationData = $state<CalibRow[]>([]);
-	let calibrationLoading = $state(false);
-	let calibrationLoaded = $state(false);
-
-	$effect(() => {
-		// Reset calibration when analysis changes
-		analysis.id;
-		calibrationLoaded = false;
-		calibrationLoading = false;
-		calibrationData = [];
-	});
-
-	async function loadCalibration() {
-		if (calibrationLoaded || calibrationLoading || !layerCfg) return;
-		calibrationLoading = true;
-		const col = layerCfg.primaryVariable ?? 'score';
-		const available = Object.values(TERRITORY_REGISTRY).filter((t: TerritoryConfig) =>
-			t.available && (layerCfg.coverage?.[t.id] ?? 'available') === 'available'
-		);
-		const results = await Promise.all(available.map(async (t: TerritoryConfig) => {
-			const url = getSatGlobalUrl(layerCfg!.id, t.parquetPrefix);
-			try {
-				const r = await query(`SELECT quantile_disc("${col}", 0.25) as p25, quantile_disc("${col}", 0.5) as p50, quantile_disc("${col}", 0.75) as p75, avg("${col}") as avg_score FROM '${url}' WHERE "${col}" IS NOT NULL`);
-				if (r.numRows === 0) return null;
-				const row = r.get(0)!.toJSON() as Record<string, any>;
-				return { territory: t, p25: Number(row.p25), p50: Number(row.p50), p75: Number(row.p75), avg: Number(row.avg_score) } as CalibRow;
-			} catch { return null; }
-		}));
-		calibrationData = results.filter(Boolean) as CalibRow[];
-		calibrationLoaded = true;
-		calibrationLoading = false;
-	}
 </script>
 
 <!-- Flood "current extent": Sentinel-1 SAR snapshot date + revisit cadence.
@@ -633,95 +493,14 @@
 	{/if}
 {/snippet}
 
-{#if selectedHex && selectedDpto && isPerDept}
-	<!-- ═══ HEX DETAIL VIEW ═══ -->
-	<div class="view">
-		<button class="back-btn" onclick={handleBackToDepts}>{i18n.t('analysis.flood.topDepts')}</button>
-
-		<div class="hex-header">
-			<div class="hex-id" title={selectedHex.h3index}>
-				{selectedHex.h3index.slice(0, 4)}...{selectedHex.h3index.slice(-4)}
-			</div>
-			{#if selectedHex.type_label}
-				<div class="risk-badge" style:background={getTypeColor(selectedHex.type ?? 1)}>
-					{selectedHex.type_label}
-				</div>
-			{:else if !isCategorical}
-				<div class="risk-badge" style:background={getScoreColor(displayScore)}>
-					{getScoreLevel(displayScore)}
-				</div>
-			{/if}
-		</div>
-
-		{#if isTemporal}
-			<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
-		{/if}
-
-		{#if hexPetalLayers.length > 0}
-			<div class="petal-section">
-				<div class="petal-wrapper">
-					<PetalChart layers={hexPetalLayers} labels={petalLabels} size={240} />
-				</div>
-				<p class="petal-hint">{analysis.comparable ? i18n.t('analysis.petalHint.fixed') : withRef(i18n.t('analysis.petalHint.local'), hexStore.territoryId, i18n.locale)}</p>
-			</div>
-		{/if}
-		{#if CENSUS_ANALYSES.has(analysis.id) && componentVars.length > 0}
-			<div class="census-detail">
-				{#each componentVars as v}
-					{@const val = selectedHex[v.col]}
-					{@const rawVal = v.rawCol ? selectedHex[v.rawCol] : null}
-					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : val}
-					<!-- fmtSmart renders '—' for a missing value; coercing to 0 here used to
-					     display a fake "0 <unit>" when the column wasn't in the loaded data
-					     (stale cache / schema drift). A real 0 still shows as 0. -->
-					<div class="cd-row">
-						<span class="cd-label">{i18n.t(v.labelKey)}</span>
-						<span class="cd-val-data">{fmtSmart(displayVal)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
-					</div>
-				{/each}
-			</div>
-		{/if}
-
-		{#if crossProfile.length > 0}
-			<div class="cross-profile">
-				<div class="cross-title">{i18n.t('section.territorialProfile')}</div>
-				{#each crossProfile as cp}
-					<div class="cross-row">
-						<span class="cross-label">{cp.label}</span>
-						<span class="cross-value">{cp.typeLabel}</span>
-					</div>
-				{/each}
-			</div>
-		{/if}
-
-		{#if dataUrl}
-			<div class="download-row">
-				<button class="download-btn" onclick={handleDownloadCsv} disabled={downloadState !== 'idle'} title="CSV del departamento (todos los hexágonos)">
-					{downloadState === 'csv' ? '…' : 'CSV'}
-				</button>
-				<button class="download-btn download-secondary" onclick={handleDownloadGeoJson} disabled={downloadState !== 'idle'} title="GeoJSON del departamento (polígonos H3)">
-					{downloadState === 'geojson' ? '…' : 'GeoJSON'}
-				</button>
-			</div>
-		{/if}
-
-		{#if freshness}
-			<div class="source-note-box">
-				<div><strong>{i18n.t('section.source')}:</strong> {i18n.t(freshness.sourceKey)}</div>
-				<div><strong>{i18n.t('section.processed')}:</strong> {processedDisplay}</div>
-				{@render sarFreshness()}
-			</div>
-		{/if}
-	</div>
-
-{:else if selectedDpto && isPerDept}
+{#if selectedDpto && isPerDept}
 	<!-- ═══ DEPARTMENT SELECTED (minimal, like FloodRisk) ═══ -->
 	<div class="view">
 		<button class="back-btn" onclick={handleBackToDepts}>{i18n.t('analysis.flood.topDepts')}</button>
 
 		<div class="dept-active-title">{formatDept(selectedDpto)}</div>
 
-		{#if hasRank && rankMetrics.length > 1 && !rankPlain && (rankCfg?.hexVariable || layerCfg?.deptRank?.metrics?.some((m) => m.hexNone))}
+		{#if hasRank && rankMetrics.length > 1 && (rankCfg?.hexVariable || layerCfg?.deptRank?.metrics?.some((m) => m.hexNone))}
 			<div class="rank-tabs rank-tabs-dept">
 				{#each rankMetrics as m, i}
 					<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
@@ -852,7 +631,7 @@
 		{#if hasRank && rankCfg}
 			<div class="dept-section rank-section">
 				<div class="rank-title">{i18n.t(rankCfg.titleKey)}{#if activeTerritoryLabel} <span class="rank-territory">· {activeTerritoryLabel}</span>{/if}</div>
-				{#if rankMetrics.length > 1 && !rankPlain}
+				{#if rankMetrics.length > 1}
 					<div class="rank-tabs">
 						{#each rankMetrics as m, i}
 							<button class="rank-tab" class:active={rankMetricIdx === i} onclick={() => (rankMetricIdx = i)}>{i18n.t(m.tabKey)}</button>
@@ -964,35 +743,6 @@
 				</div>
 			{/if}
 		</div>
-		{/if}
-
-		<!-- Quartiles of the painted variable per territory. Not for class codes (agri
-		     suitability S1…N): their quartiles say nothing. -->
-		{#if analysis.comparable && !layerCfg?.colorClasses?.ordinal}
-			<details class="method-details" ontoggle={(e) => { if ((e.target as HTMLDetailsElement).open) loadCalibration(); }}>
-				<summary class="method-summary">{i18n.t('analysis.distByTerritory')}</summary>
-				<div class="method-body">
-					{#if calibrationLoading}
-						<p class="explain-text">{i18n.t('common.loading')}</p>
-					{:else if calibrationData.length > 0}
-						<table class="calib-table">
-							<thead><tr><th>{i18n.t('analysis.distByTerritory.col')}</th><th>P25</th><th>Med</th><th>P75</th><th>Avg</th></tr></thead>
-							<tbody>
-							{#each calibrationData as d}
-								<tr>
-									<td>{d.territory.flag} {d.territory.shortLabel}</td>
-									<td>{d.p25.toFixed(0)}</td>
-									<td>{d.p50.toFixed(0)}</td>
-									<td>{d.p75.toFixed(0)}</td>
-									<td>{d.avg.toFixed(1)}</td>
-								</tr>
-							{/each}
-							</tbody>
-						</table>
-						<p class="explain-text" style="margin-top:4px">{i18n.t('analysis.distByTerritory.note')}</p>
-					{/if}
-				</div>
-			</details>
 		{/if}
 
 		{#if content}
@@ -1326,9 +1076,4 @@
 	.temporal-toggle button:hover:not(.active) { background: rgba(var(--c-fg-rgb), 0.06); }
 
 	/* ── Calibration table ── */
-	.calib-table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 4px; }
-	.calib-table th { color: var(--c-ink-3n); font-weight: 600; text-align: right; padding: 2px 4px; }
-	.calib-table th:first-child { text-align: left; }
-	.calib-table td { color: var(--c-ink-1n); text-align: right; padding: 2px 4px; border-top: 1px solid rgba(var(--c-fg-rgb), 0.04); font-variant-numeric: tabular-nums; }
-	.calib-table td:first-child { text-align: left; color: var(--c-ink-2n); }
 </style>

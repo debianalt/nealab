@@ -559,8 +559,6 @@ export interface DeptRank {
 	extraUnitKey?: string; // i18n key
 	extraDecimals?: number;
 	saturatedKey?: string; // i18n note shown instead of bars when the summary flags metadata.rank.saturated
-	// Metric used instead where the summary flags saturation and metadata.rank.plain.shown.
-	plain?: { field: string; unit: string; decimals: number; titleKey: string; noteKey: string };
 	unitKey?: string;     // i18n unit, preferred over `unit` when set
 	signed?: boolean;     // values can be negative: bar by |value|, green below 0, "+" shown
 	// Several readings of the same layer, switched from tabs above the ranking; each
@@ -836,8 +834,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			extraField: 'land_hand5_pct', extraUnitKey: 'rank.unit.land', extraDecimals: 1,
 			saturatedKey: 'rank.flood.saturated',
 			hexVariable: 'low_bld_n',
-			// Chaco plain: recurrent waterlogging by radar (HAND < 1 m ranked it backwards).
-			plain: { field: 's1_land_pct', unit: '%', decimals: 1, titleKey: 'rank.flood.plain.title', noteKey: 'rank.flood.plain.note' },
 			// Three readings of the same HAND export: share of buildings (default),
 			// number of buildings (magnitude, follows population), share of land (rural).
 			metrics: [
@@ -1093,7 +1089,8 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			],
 		},
 		parquet: 'sat_land_use',
-		// Dynamic World v1 (Google/WRI, 10m): 9 land-cover probability fractions [0-1].
+		// Dynamic World v1 (Google/WRI, 10m): % of the hexagon's area in each of the 9 classes
+		// (dw_cover, 31-oct-2026; stored as fractions, scale 100).
 		// Global product, identical method across AR/PY/BR → cross-territory comparable.
 		// (Earlier config declared MapBiomas cols that do not exist in the parquet, so
 		// every hex rendered as "Sin cobertura"; realigned to the real Dynamic World schema.)
@@ -1257,7 +1254,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		legendHighKey: 'legend.accessibility.high',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', central_py: 'available', neembucu_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available', misiones_py: 'available', paraguari_py: 'available', amambay_py: 'available'},
 	},
-	// ── PM2.5 Drivers (25-year ML decomposition) ──
+	// ── PM2.5 (ACAG V6 annual mean, µg/m³; 2001–2010 vs 2013–2022) ──
 	pm25_drivers: {
 		id: 'pm25_drivers',
 		// Department ranking — pipeline/build_layer_ranks.py.
@@ -1622,134 +1619,8 @@ export const TERRITORIAL_COMPONENT_COLS = [
 	'segment_count', 'water_kring_total',
 ] as const;
 
-// ── Radio-based analysis configurations ─────────────────────────────────────
-export type RadioPetalCol = {
-	col: string;
-	label: { es: string; en: string };
-	desc: { es: string; en: string };
-	invert: boolean;
-	source?: 'catastro_by_radio';
-};
 
-export type RadioAnalysisConfig = {
-	id: string;
-	choroplethCol: string;
-	colorScale: 'price' | 'sequential' | 'flood';
-	invertChoropleth?: boolean;
-	petalCols: RadioPetalCol[];
-	howToRead: { es: string; en: string };
-	implications: { es: string; en: string };
-	methodology: { es: string; en: string };
-};
 
-export const RADIO_ANALYSIS_REGISTRY: Record<string, RadioAnalysisConfig> = {
-	investment_value: {
-		id: 'investment_value',
-		choroplethCol: 're_median_usd_m2',
-		colorScale: 'price',
-		petalCols: [
-			{ col: 're_median_usd_m2', label: { es: 'Precio USD/m²', en: 'Price USD/m²' }, desc: { es: 'Mediana de publicaciones activas', en: 'Median of active listings' }, invert: false },
-			{ col: 're_n_listings', label: { es: 'Publicaciones', en: 'Listings' }, desc: { es: 'Cantidad de avisos activos en la zona', en: 'Number of active listings in the area' }, invert: false },
-			{ col: 'opportunity_score', label: { es: 'Oportunidad', en: 'Opportunity' }, desc: { es: 'Score compuesto de potencial de inversión', en: 'Composite investment potential score' }, invert: false },
-			{ col: 're_attract_score', label: { es: 'Atractivo inmob.', en: 'RE Attractiveness' }, desc: { es: 'Score de atractivo para el mercado', en: 'Market attractiveness score' }, invert: false },
-			{ col: 'building_density_per_km2', label: { es: 'Densidad edilicia', en: 'Building density' }, desc: { es: 'Edificios por km²', en: 'Buildings per km²' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según el precio mediano USD/m² de la zona. La leyenda muestra la escala, de menor a mayor precio. El pétalo compara precio, oferta, oportunidad, atractivo y densidad de la zona.', en: 'Parcels are coloured by median USD/m² price. The legend shows the scale, from lower to higher price. The petal compares price, supply, opportunity, attractiveness and density.' },
-		implications: { es: 'Zonas con alto precio y pocas publicaciones indican mercado cerrado. Zonas con score de oportunidad alto y precio bajo pueden representar oportunidades de inversión.', en: 'High price with few listings indicates a closed market. High opportunity score with low price may represent investment opportunities.' },
-		methodology: { es: 'Precio mediano USD/m² de publicaciones activas (MeLi/Argenprop). Score de oportunidad = precio bajo + accesibilidad alta + consolidación urbana. Cobertura: 26% de radios con datos de mercado.', en: 'Median USD/m² from active listings (MeLi/Argenprop). Opportunity score = low price + high accessibility + urban consolidation. Coverage: 26% of radios with market data.' },
-	},
-	natural_risks: {
-		id: 'natural_risks',
-		choroplethCol: 'landslide_score',
-		colorScale: 'flood',
-		petalCols: [
-			{ col: 'flood_frequency', label: { es: 'Inundación', en: 'Flooding' }, desc: { es: 'Frecuencia histórica de inundaciones', en: 'Historical flood frequency' }, invert: false },
-			{ col: 'twi_mean', label: { es: 'Humedad topogr.', en: 'Topo. wetness' }, desc: { es: 'Índice de humedad topográfica — proxy de inestabilidad del terreno (SRTM TWI)', en: 'Topographic wetness index — terrain instability proxy (SRTM TWI)' }, invert: false },
-			{ col: 'rusle_mean', label: { es: 'Erosión', en: 'Erosion' }, desc: { es: 'Potencial de erosión hídrica (RUSLE)', en: 'Water erosion potential (RUSLE)' }, invert: false },
-			{ col: 'slope_mean', label: { es: 'Pendiente', en: 'Slope' }, desc: { es: 'Pendiente media del terreno (%)', en: 'Mean terrain slope (%)' }, invert: false },
-			{ col: 'deforest_pressure_score', label: { es: 'Presión deforest.', en: 'Deforestation' }, desc: { es: 'Presión de deforestación en la zona', en: 'Deforestation pressure in the area' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según la susceptibilidad histórica a deslizamientos. La leyenda muestra la escala, de menor a mayor susceptibilidad. El pétalo muestra 5 métricas de riesgo natural: inundación, humedad topográfica, erosión, pendiente y presión de deforestación.', en: 'Parcels are coloured by historical landslide susceptibility. The legend shows the scale, from lower to higher susceptibility. The petal shows 5 natural risk metrics: flooding, topographic wetness, erosion, slope and deforestation pressure.' },
-		implications: { es: 'Parcelas con múltiples riesgos altos requieren estudios de suelo antes de invertir. Pendiente alta + erosión alta señalan terrenos inestables. La deforestación reciente agrava todos los riesgos.', en: 'Parcels with multiple high risks require soil studies before investing. High slope + high erosion indicate unstable terrain.' },
-		methodology: { es: 'Índice 0–100: media geométrica de componentes validados por PCA. Indicadores: frecuencia de inundación JRC, susceptibilidad deslizamiento, erosión RUSLE, pendiente FABDEM, presión de deforestación Hansen.', en: 'Index 0–100: geometric mean of PCA-validated components. Indicators: JRC flood frequency, landslide susceptibility, RUSLE erosion, mean slope, deforestation pressure.' },
-	},
-	accessibility: {
-		id: 'accessibility',
-		choroplethCol: 'travel_min_capital',
-		colorScale: 'sequential',
-		invertChoropleth: true,
-		petalCols: [
-			{ col: 'travel_min_capital', label: { es: 'Tiempo a capital', en: 'Time to capital' }, desc: { es: 'Minutos de viaje a la capital provincial', en: 'Travel minutes to the provincial capital' }, invert: true },
-			{ col: 'travel_min_cabecera', label: { es: 'Tiempo a ciudad ≥50k', en: 'Time to city ≥50k' }, desc: { es: 'Minutos a la ciudad de 50.000 habitantes o más más cercana (Oxford)', en: 'Minutes to the nearest city of 50,000 or more (Oxford)' }, invert: true },
-			{ col: 'dist_nearest_hospital_km', label: { es: 'Hospital', en: 'Hospital' }, desc: { es: 'Distancia al hospital más cercano (km)', en: 'Distance to nearest hospital (km)' }, invert: true },
-			{ col: 'dist_nearest_secundaria_km', label: { es: 'Escuela sec.', en: 'High school' }, desc: { es: 'Distancia a escuela secundaria (km)', en: 'Distance to high school (km)' }, invert: true },
-			{ col: 'dist_primary_m', label: { es: 'Ruta principal', en: 'Main road' }, desc: { es: 'Distancia a ruta primaria (km)', en: 'Distance to primary road (km)' }, invert: true },
-		],
-		howToRead: { es: 'Los hexágonos se colorean por el tiempo de viaje a la capital, en cinco clases: menos de 1 h, 1–2 h, 2–4 h, 4–8 h y más de 8 h. La leyenda muestra las clases, de la más cercana a la más aislada. El pétalo muestra accesibilidad a servicios clave: mayor extensión = mejor acceso (menor distancia/tiempo).', en: 'Hexagons are coloured by travel time to the capital in five classes: under 1 h, 1–2 h, 2–4 h, 4–8 h and over 8 h. The legend shows the classes from nearest to most isolated. The petal shows accessibility to key services: larger = better access.' },
-		implications: { es: 'Zonas a más de 2 horas de la capital y sin hospital cercano representan alto riesgo para familias. La distancia a ruta principal determina el costo logístico para producción.', en: 'Areas over 2 hours from the capital without a nearby hospital represent high risk for families.' },
-		methodology: { es: 'Tiempo de viaje motorizado a la capital y cabecera departamental (superficie de fricción Oxford MAP). Distancia a hospitales, escuelas y rutas principales (OSM). Fuente: Nelson et al. 2019 + Oxford MAP 2019 + OSM.', en: 'Motorised travel time to capital and dept seat (Oxford MAP friction surface). Distance to hospitals, schools and primary roads (OSM).' },
-	},
-	change_dynamics: {
-		id: 'change_dynamics',
-		choroplethCol: 'deforest_pressure_score',
-		colorScale: 'sequential',
-		petalCols: [
-			{ col: 'n_new_parcels_90d', label: { es: 'Parcelas nuevas', en: 'New parcels' }, desc: { es: 'Parcelas creadas en últimos 90 días', en: 'Parcels created in last 90 days' }, invert: false, source: 'catastro_by_radio' },
-			{ col: 'deforest_pressure_score', label: { es: 'Presión deforest.', en: 'Deforestation' }, desc: { es: 'Intensidad de deforestación reciente', en: 'Recent deforestation intensity' }, invert: false },
-			{ col: 'building_density_per_km2', label: { es: 'Densidad edilicia', en: 'Building density' }, desc: { es: 'Edificios por km² (proxy presión urbana)', en: 'Buildings per km² (urban pressure proxy)' }, invert: false },
-			{ col: 'mb_urban_frac', label: { es: 'Fracción urbana', en: 'Urban fraction' }, desc: { es: '% de superficie urbanizada', en: '% urbanised surface' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según la presión de deforestación. Mayor intensidad de color = mayor cambio. El pétalo muestra 4 indicadores de dinámica geoespacial.', en: 'Parcels are coloured by deforestation pressure. Higher intensity = more change.' },
-		implications: { es: 'Zonas con muchas parcelas nuevas y alta presión de deforestación están en transición activa — posible valorización pero también riesgo ambiental. Alta densidad edilicia + baja fracción urbana indica expansión informal.', en: 'Areas with many new parcels and high deforestation pressure are in active transition.' },
-		methodology: { es: 'Parcelas nuevas: Catastro Misiones (ventana 90 días). Deforestación: Hansen GFC pérdida acumulada. Densidad edilicia: Global Building Atlas. Fracción urbana: MapBiomas Argentina.', en: 'New parcels: Misiones Cadastre (90-day window). Deforestation: Hansen GFC cumulative loss. Building density: GBA. Urban fraction: MapBiomas.' },
-	},
-	sociodemographic: {
-		id: 'sociodemographic',
-		choroplethCol: 'pct_nbi',
-		colorScale: 'flood',
-		petalCols: [
-			{ col: 'densidad_hab_km2', label: { es: 'Densidad hab.', en: 'Pop. density' }, desc: { es: 'Habitantes por km²', en: 'Inhabitants per km²' }, invert: false },
-			{ col: 'pct_nbi', label: { es: 'NBI', en: 'UBN' }, desc: { es: '% hogares con necesidades básicas insatisfechas', en: '% households with unmet basic needs' }, invert: false },
-			{ col: 'pct_hacinamiento', label: { es: 'Hacinamiento', en: 'Overcrowding' }, desc: { es: '% hogares en condiciones de hacinamiento', en: '% households in overcrowded conditions' }, invert: false },
-			{ col: 'pct_propietario', label: { es: 'Propietarios', en: 'Homeowners' }, desc: { es: '% hogares propietarios de la vivienda', en: '% homeowner households' }, invert: false },
-			{ col: 'tamano_medio_hogar', label: { es: 'Tamaño hogar', en: 'Household size' }, desc: { es: 'Personas promedio por hogar', en: 'Average persons per household' }, invert: false },
-			{ col: 'pct_computadora', label: { es: 'Computadora', en: 'Computer' }, desc: { es: '% hogares con computadora', en: '% households with computer' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según el % de NBI (necesidades básicas insatisfechas). La leyenda muestra la escala, de menor a mayor pobreza. El pétalo muestra el perfil sociodemográfico de la zona: densidad, NBI, hacinamiento, propiedad, tamaño de hogar y acceso digital.', en: 'Parcels are coloured by UBN %. The legend shows the scale, from lower to higher poverty. The petal shows the sociodemographic profile.' },
-		implications: { es: 'Zonas con alto NBI y hacinamiento requieren políticas de vivienda social. Alto % de propietarios indica estabilidad residencial. Baja conectividad digital limita servicios y educación remota.', en: 'High UBN and overcrowding require social housing policies. High homeownership indicates residential stability.' },
-		methodology: { es: 'Fuente: INDEC Censo Nacional de Población, Hogares y Viviendas 2022. Variables a nivel radio censal (2,012 radios). NBI según metodología INDEC. Densidad calculada como personas/km².', en: 'Source: INDEC National Population Census 2022. Variables at radio censal level (2,012 radios). UBN per INDEC methodology.' },
-	},
-	forest_potential: {
-		id: 'forest_potential',
-		choroplethCol: 'canopy_cover',
-		colorScale: 'sequential',
-		petalCols: [
-			{ col: 'canopy_cover', label: { es: 'Cobertura dosel', en: 'Canopy cover' }, desc: { es: 'Fracción de suelo cubierto por dosel arbóreo', en: 'Fraction of ground covered by tree canopy' }, invert: false },
-			{ col: 'canopy_height_mean', label: { es: 'Altura dosel', en: 'Canopy height' }, desc: { es: 'Altura media del dosel en metros (GEDI)', en: 'Mean canopy height in meters (GEDI)' }, invert: false },
-			{ col: 'ndvi_mean', label: { es: 'NDVI', en: 'NDVI' }, desc: { es: 'Índice de vegetación (0-1, mayor = más verde)', en: 'Vegetation index (0-1, higher = greener)' }, invert: false },
-			{ col: 'frac_bosque_nativo', label: { es: 'Bosque nativo', en: 'Native forest' }, desc: { es: 'Fracción de bosque nativo remanente', en: 'Remaining native forest fraction' }, invert: false },
-			{ col: 'treecover2000', label: { es: 'Cobertura 2000', en: 'Treecover 2000' }, desc: { es: '% de cobertura arbórea en el año 2000 (Hansen)', en: '% tree cover in year 2000 (Hansen)' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según la cobertura de dosel arbóreo. La leyenda muestra la escala, de menor a mayor cobertura. El pétalo muestra 5 métricas de vegetación: cobertura, altura, verdor, bosque nativo y cobertura histórica.', en: 'Parcels are coloured by canopy cover. The legend shows the scale, from less to more cover. The petal shows 5 vegetation metrics.' },
-		implications: { es: 'Alta cobertura de dosel + bosque nativo alto indica zonas de conservación prioritaria. Baja cobertura con alto treecover2000 sugiere deforestación reciente. NDVI alto con baja altura de dosel puede indicar plantaciones vs bosque nativo.', en: 'High canopy cover + native forest indicates priority conservation areas.' },
-		methodology: { es: 'Cobertura de dosel: Meta/WRI Canopy Height v2 (1m agregado a 10m). NDVI: MODIS 250m promedio 2019-2024. Bosque nativo: MapBiomas Argentina. Cobertura histórica: Hansen GFC baseline 2000.', en: 'Canopy cover: Meta/WRI CHM v2. NDVI: MODIS 250m mean 2019-2024. Native forest: MapBiomas. Historical cover: Hansen GFC 2000.' },
-	},
-	economic_activity: {
-		id: 'economic_activity',
-		choroplethCol: 'tasa_empleo',
-		colorScale: 'sequential',
-		petalCols: [
-			{ col: 'tasa_empleo', label: { es: 'Empleo', en: 'Employment' }, desc: { es: 'Tasa de empleo (% población ocupada)', en: 'Employment rate (% employed population)' }, invert: false },
-			{ col: 'tasa_actividad', label: { es: 'Actividad', en: 'Activity' }, desc: { es: 'Tasa de actividad económica', en: 'Economic activity rate' }, invert: false },
-			{ col: 'pct_universitario', label: { es: 'Universitarios', en: 'University' }, desc: { es: '% población con título universitario', en: '% population with university degree' }, invert: false },
-			{ col: 'viirs_mean_radiance', label: { es: 'Luces nocturnas', en: 'Night lights' }, desc: { es: 'Radiancia media nocturna (proxy actividad económica)', en: 'Mean night-time radiance (economic activity proxy)' }, invert: false },
-			{ col: 'building_density_per_km2', label: { es: 'Densidad edilicia', en: 'Building density' }, desc: { es: 'Edificios por km²', en: 'Buildings per km²' }, invert: false },
-		],
-		howToRead: { es: 'Las parcelas se colorean según la tasa de empleo. La leyenda muestra la escala, de menor a mayor empleo. El pétalo combina empleo, actividad económica, formación universitaria, luces nocturnas y densidad edilicia como indicadores de dinamismo.', en: 'Parcels are coloured by employment rate. The legend shows the scale, from lower to higher employment.' },
-		implications: { es: 'Zonas con alta tasa de empleo + universitarios + luces nocturnas son centros económicos consolidados. Zonas con alta actividad pero bajo empleo pueden tener alta informalidad. Baja radiancia nocturna indica zonas rurales o de baja actividad.', en: 'High employment + university + night lights indicate consolidated economic centres.' },
-		methodology: { es: 'Empleo y actividad: Censo 2022 INDEC (población 14+ años). Universitarios: Censo 2022. Luces nocturnas: VIIRS 500m promedio 2022-2024. Densidad edilicia: Global Building Atlas 2025.', en: 'Employment and activity: INDEC Census 2022 (14+ population). Night lights: VIIRS 500m mean 2022-2024. Building density: GBA 2025.' },
-	},
-};
 
 export function getAnalysesForLens(lensId: LensId): AnalysisConfig[] {
 	return ANALYSIS_REGISTRY.filter(a => a.lensId === lensId);

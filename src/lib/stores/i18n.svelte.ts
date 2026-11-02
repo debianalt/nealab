@@ -7,42 +7,23 @@ const dict: Record<string, Record<Locale, string>> = {
 	'lens.close': { es: 'Cerrar: volver a los edificios y radios censales', en: 'Close: back to buildings and census tracts', gn: 'Cerrar: volver a los edificios y radios censales', pt: 'Fechar: voltar aos edifícios e setores censitários' },
 	'header.whatIsThis': { es: '¿Qué es esto?', en: 'What is this?', gn: "Mba'épa ko?", pt: 'O que é isso?' },
 	'header.subtitle': { es: 'Análisis geoespacial', en: 'Geospatial analysis', gn: "Yvy Rekokatu", pt: 'Análise geoespacial' },
-	'header.nav.map': { es: 'Mapa', en: 'Map', gn: 'Mapa', pt: 'Mapa' },
-	'header.nav.dashboards': { es: 'Trade', en: 'Trade', gn: 'Trade', pt: 'Trade' },
 
 	// Controls
-	'ctrl.tilt': { es: 'Inclinación', en: 'Tilt', gn: "Je'apy", pt: 'Inclinação' },
 	'ctrl.clear': { es: 'Limpiar', en: 'Clear', gn: "Mopotĩ", pt: 'Limpar' },
 
 	// Sidebar
-	'side.hover': { es: 'Scroll para zoom · Click derecho + arrastrar para rotar el mapa', en: 'Scroll to zoom · Right-click + drag to rotate the map', gn: "Scroll zoom hag̃ua · Click derecho + arrastrar mapa mbojere hag̃ua", pt: 'Role para zoom · Clique direito + arraste para girar o mapa' },
 	'side.deselect': { es: 'Click para quitar', en: 'Click to remove', gn: "Ehesakutu emboguete hag̃ua", pt: 'Clique para remover' },
 
 	// Radio stats sections
-	'stats.buildingEstimates': { es: 'Estimaciones por edificaciones', en: 'Building estimates', gn: "Óga rehegua", pt: 'Estimativas por edificações' },
-	'stats.census': { es: 'Censo 2022', en: 'Census 2022', gn: "Papapy 2022", pt: 'Censo 2022' },
-	'stats.socioeconomic': { es: 'Socioeconómico', en: 'Socioeconomic', gn: "Teko porã", pt: 'Socioeconômico' },
-	'stats.comparison': { es: 'Comparación', en: 'Comparison', gn: "Jojaha", pt: 'Comparação' },
-	'stats.selection': { es: 'Selección', en: 'Selection', gn: 'Jeporavo', pt: 'Seleção' },
 
 	// Stat labels
-	'label.population': { es: 'Población', en: 'Population', gn: 'Yvypóra', pt: 'População' },
-	'label.males': { es: 'Varones', en: 'Males', gn: "Kuimba'e", pt: 'Homens' },
-	'label.females': { es: 'Mujeres', en: 'Females', gn: 'Kuña', pt: 'Mulheres' },
 	'label.dwellings': { es: 'Viviendas', en: 'Dwellings', gn: 'Óga', pt: 'Domicílios' },
 	'label.households': { es: 'Hogares', en: 'Households', gn: 'Ógape', pt: 'Lares' },
 	'label.area': { es: 'Área', en: 'Area', gn: "Yvy", pt: 'Área' },
 	'label.activityRate': { es: 'Tasa de actividad', en: 'Econ. activity rate', gn: "Tembiapo jeku'e", pt: 'Taxa de atividade' },
 	'label.employmentRate': { es: 'Tasa de empleo', en: 'Employment rate', gn: "Tembiapo reko", pt: 'Taxa de emprego' },
-	'label.unemploymentRate': { es: 'Tasa de desocupación', en: 'Unemployment rate', gn: "Tembiapo'ỹ", pt: 'Taxa de desemprego' },
-	'label.avgHousehold': { es: 'Tamaño medio hogar', en: 'Avg household size', gn: "Óga tuichakue", pt: 'Tamanho médio do lar' },
 	'label.ubn': { es: 'NBI (%)', en: 'UBN (%)', gn: "NBI (%)", pt: 'NBI (%)' },
 	'label.overcrowding': { es: 'Hacinamiento (%)', en: 'Overcrowding (%)', gn: "Ñembyaty (%)", pt: 'Superlotação (%)' },
-	'label.masculinityRate': { es: 'Tasa de masculinidad', en: 'Masculinity rate', gn: "Kuimba'e jeku'e", pt: 'Taxa de masculinidade' },
-	'label.coverage': { es: 'Cobertura', en: 'Coverage', gn: "Joapy", pt: 'Cobertura' },
-	'label.buildings': { es: 'Edificaciones', en: 'Buildings', gn: 'Óga', pt: 'Edificações' },
-	'label.totalArea': { es: 'Área total', en: 'Total area', gn: 'Yvy opavave', pt: 'Área total' },
-	'label.avgHeight': { es: 'Altura promedio (pond.)', en: 'Avg height (weighted)', gn: "Yvatekue", pt: 'Altura média (pond.)' },
 
 	// Tooltip
 	'tip.building': { es: 'Edificación:', en: 'Building:', gn: 'Óga:', pt: 'Edificação:' },
@@ -55,16 +36,12 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// Legend
 	'legend.estPersons': { es: 'Población estimada por edificación', en: 'Est. population per building', gn: "Yvypóra óga pegua", pt: 'População estimada por edificação' },
-	'legend.estPersonsNote': { es: 'estimación dasimétrica (no medición)', en: 'dasymetric estimate (not measured)', gn: 'estimación dasimétrica', pt: 'estimativa dasimétrica (não medição)' },
 	'legend.buildingVolume': { es: 'Volumen construido (área × altura)', en: 'Built volume (area × height)', gn: 'Óga tuichakue', pt: 'Volume construído (área × altura)' },
 	'legend.buildingVolumeNote': { es: 'huellas: GBA, Google Open Buildings, Microsoft, Overture/OSM', en: 'footprints: GBA, Google Open Buildings, Microsoft, Overture/OSM', gn: 'huellas: GBA, Google Open Buildings, Microsoft, Overture/OSM', pt: 'pegadas: GBA, Google Open Buildings, Microsoft, Overture/OSM' },
 	'legend.buildingsCanvas': { es: 'Edificios — GBA, Google/Microsoft, Overture', en: 'Buildings — GBA, Google/Microsoft, Overture', gn: 'Óga — GBA, Google/Microsoft, Overture', pt: 'Edifícios — GBA, Google/Microsoft, Overture' },
-	'analysis.scores.score': { es: 'Score de consolidación', en: 'Consolidation score', gn: 'Score consolidación', pt: 'Score de consolidação' },
-	'analysis.accessibility.score': { es: 'Score accesibilidad', en: 'Accessibility score', gn: 'Score accesibilidad', pt: 'Score de acessibilidade' },
 	'legend.low': { es: 'Bajo', en: 'Low', gn: 'Michĩ', pt: 'Baixo' },
 	'legend.medium': { es: 'Medio', en: 'Medium', gn: 'Mbyte', pt: 'Médio' },
 	'legend.high': { es: 'Alto', en: 'High', gn: 'Yvate', pt: 'Alto' },
-	'legend.veryLow': { es: 'Muy bajo', en: 'Very low', gn: 'Michĩmĩ', pt: 'Muito baixo' },
 	'legend.lowRisk': { es: 'Bajo riesgo', en: 'Low risk', gn: 'Michĩ riesgo', pt: 'Baixo risco' },
 	'legend.highRisk': { es: 'Alto riesgo', en: 'High risk', gn: 'Yvate riesgo', pt: 'Alto risco' },
 	// Per-analysis legend labels
@@ -72,15 +49,11 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.flood.low': { es: 'Baja (<5 %)', en: 'Low (<5%)', gn: 'Michĩ (<5 %)', pt: 'Baixa (<5 %)' },
 	'legend.flood.mid': { es: 'Moderada (5–20 %)', en: 'Moderate (5–20%)', gn: 'Mbyte (5–20 %)', pt: 'Moderada (5–20 %)' },
 	'legend.flood.high': { es: 'Alta (>20 %)', en: 'High (>20%)', gn: 'Guasu (>20 %)', pt: 'Alta (>20 %)' },
-	'legend.locValue.low': { es: 'Peor ubicación', en: 'Worse location', gn: 'Michĩ valor', pt: 'Pior localização' },
-	'legend.locValue.high': { es: 'Mejor ubicación', en: 'Better location', gn: 'Tuicha valor', pt: 'Melhor localização' },
 	'legend.agri.highN': { es: 'N · no apto (S1 = óptimo)', en: 'N · not suitable (S1 = optimal)', gn: 'N · no apto (S1 = óptimo)', pt: 'N · não apto (S1 = ótimo)' },
 	'legend.forestry.low': { es: 'Menor aptitud forestal', en: 'Lower forestry aptitude', gn: "Michĩ aptitud forestal", pt: 'Menor aptidão florestal' },
 	'legend.forestry.high': { es: 'Mayor aptitud forestal', en: 'Higher forestry aptitude', gn: "Tuicha aptitud forestal", pt: 'Maior aptidão florestal' },
 	'legend.deprivation.low': { es: 'Baja carencia', en: 'Low deprivation', gn: 'Michĩ mba\'e\'ỹ' , pt: 'Baixa carência' },
 	'legend.deprivation.high': { es: 'Alta carencia', en: 'High deprivation', gn: 'Tuicha mba\'e\'ỹ' , pt: 'Alta carência' },
-	'legend.isolation.low': { es: 'Bajo aislamiento', en: 'Low isolation', gn: 'Michĩ mombyry', pt: 'Baixo isolamento' },
-	'legend.isolation.high': { es: 'Alto aislamiento', en: 'High isolation', gn: 'Tuicha mombyry', pt: 'Alto isolamento' },
 	'legend.health.low': { es: 'Buen acceso', en: 'Good access', gn: 'Porã access', pt: 'Bom acesso' },
 	'legend.health.high': { es: 'Mal acceso', en: 'Poor access', gn: 'Vai access', pt: 'Mau acesso' },
 	'legend.eduCap.low': { es: 'Alto capital', en: 'High capital', gn: 'Tuicha capital', pt: 'Alto capital' },
@@ -115,8 +88,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.socio.high': { es: 'Alto NBI', en: 'High NBI', gn: 'Tuicha NBI', pt: 'Alto NBI' },
 	'legend.economic.low': { es: 'Menos luz nocturna', en: 'Less night light', gn: 'Michĩ', pt: 'Menos luz noturna' },
 	'legend.economic.high': { es: 'Más luz nocturna', en: 'More night light', gn: 'Tuicha', pt: 'Mais luz noturna' },
-	'legend.scores.low': { es: 'Menor consolidación', en: 'Less consolidated', gn: 'Michĩ', pt: 'Menor consolidação' },
-	'legend.scores.high': { es: 'Mayor consolidación', en: 'More consolidated', gn: 'Tuicha', pt: 'Maior consolidação' },
 	'legend.range': { es: 'Score 0–100', en: 'Score 0–100', gn: 'Score 0–100', pt: 'Score 0–100' },
 	'legend.highValue': { es: 'Valor alto', en: 'High value', gn: 'Valor yvate', pt: 'Valor alto' },
 	'unit.pctlProv': { es: 'percentil prov.', en: 'prov. percentile', gn: 'percentil prov.', pt: 'percentil prov.' },
@@ -185,7 +156,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'compare.provinceSuffix': { es: '(provincia)', en: '(province)', gn: '(provincia)', pt: '(província)' },
 	'analysis.howCalc': { es: '¿Cómo se calcula? →', en: 'How is it computed? →', gn: '¿Cómo se calcula? →', pt: 'Como é calculado? →' },
 	'analysis.selectSector': { es: '▼ Seleccioná un sector para ver el análisis', en: '▼ Pick a sector to see the analysis', gn: '▼ Seleccioná un sector para ver el análisis', pt: '▼ Selecione um setor para ver a análise' },
-	'analysis.distByTerritory.col': { es: 'Provincia, departamento o estado', en: 'Province, department or state', gn: 'Provincia, departamento o estado', pt: 'Província, departamento ou estado' },
 	'page.citeLabel': { es: 'Citación sugerida:', en: 'Suggested citation:', gn: 'Citación sugerida:', pt: 'Citação sugerida:' },
 	'page.generated': { es: 'Documento generado el {date} desde {url}', en: 'Document generated on {date} from {url}', gn: 'Documento generado el {date} desde {url}', pt: 'Documento gerado em {date} a partir de {url}' },
 	'error.notFound': { es: 'La página que buscás no existe.', en: 'The page you are looking for does not exist.', gn: 'La página que buscás no existe.', pt: 'A página que você procura não existe.' },
@@ -248,8 +218,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	// ── Analysis panel ──
 	'analysis.noDeptData': { es: 'No hay datos departamentales para {ref}.', en: 'No department-level data for {ref}.', gn: 'No hay datos departamentales para {ref}.', pt: 'Não há dados departamentais para {ref}.' },
 	'analysis.loadingTerritory': { es: 'cargando datos {ofRef}…', en: 'loading data {ofRef}…', gn: 'cargando datos {ofRef}…', pt: 'carregando dados {ofRef}…' },
-	'analysis.distByTerritory': { es: 'Distribución por provincia, departamento y estado', en: 'Distribution by province, department and state', gn: 'Distribución por provincia, departamento y estado', pt: 'Distribuição por província, departamento e estado' },
-	'analysis.distByTerritory.note': { es: 'Cuartiles y promedio de la variable que pinta el mapa, sobre los hexágonos con dato de cada provincia, departamento o estado.', en: 'Quartiles and mean of the variable the map paints, over the hexagons with data in each province, department or state.', gn: 'Cuartiles y promedio de la variable que pinta el mapa, sobre los hexágonos con dato de cada provincia, departamento o estado.', pt: 'Quartis e média da variável que o mapa pinta, sobre os hexágonos com dado de cada província, departamento ou estado.' },
 
 	// ── Chart panels ──
 	// Hints and empty states that were Spanish literals in the markup. The two *.note
@@ -275,14 +243,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'zone.sel.clear': { es: 'Quitar la selección', en: 'Clear selection', gn: 'Quitar la selección', pt: 'Limpar seleção' }, // gn: pendiente
 	'zone.sel.saved': { es: '✓ guardada como zona {id} (arriba)', en: '✓ saved as zone {id} (above)', gn: '✓ guardada como zona {id} (arriba)', pt: '✓ salva como zona {id} (acima)' }, // gn: pendiente
 	'zone.block': { es: 'Zonas ({n})', en: 'Zones ({n})', gn: 'Zonas ({n})', pt: 'Zonas ({n})' }, // gn: pendiente
-	'zone.report.button': { es: 'Solicitar informe de estas zonas', en: 'Request a report on these zones', gn: 'Solicitar informe de estas zonas', pt: 'Solicitar relatório destas zonas' }, // gn: pendiente
-	'zone.report.copy': { es: 'copiar email', en: 'copy email', gn: 'copiar email', pt: 'copiar email' }, // gn: pendiente
-	'zone.report.subject': { es: 'informe', en: 'report', gn: 'informe', pt: 'relatório' }, // gn: pendiente
-	'zone.report.intro': { es: 'Hola, me interesa un informe sobre estas zonas de Spatia.', en: 'Hello, I would like a report on these Spatia zones.', gn: 'Hola, me interesa un informe sobre estas zonas de Spatia.', pt: 'Olá, tenho interesse em um relatório sobre estas zonas do Spatia.' }, // gn: pendiente
-	'zone.report.layer': { es: 'Capa', en: 'Layer', gn: 'Capa', pt: 'Camada' }, // gn: pendiente
-	'zone.report.where': { es: 'Lugar', en: 'Place', gn: 'Lugar', pt: 'Local' }, // gn: pendiente
-	'zone.report.link': { es: 'Enlace', en: 'Link', gn: 'Enlace', pt: 'Link' }, // gn: pendiente
-	'zone.report.attach': { es: '(Si querés, adjuntá el CSV de las zonas: tiene cada hexágono.)', en: '(You may attach the zones CSV: it lists every hexagon.)', gn: '(Si querés, adjuntá el CSV de las zonas: tiene cada hexágono.)', pt: '(Se quiser, anexe o CSV das zonas: tem cada hexágono.)' }, // gn: pendiente
 	'zone.o.hist': { es: 'Distribución {lo}–{hi}', en: 'Distribution {lo}–{hi}', gn: 'Distribución {lo}–{hi}', pt: 'Distribuição {lo}–{hi}' }, // gn: pendiente
 	'zone.o.conc': { es: 'Concentración: el {p} % con más valor', en: 'Concentration: top {p} %', gn: 'Concentración: el {p} % con más valor', pt: 'Concentração: os {p} % com mais valor' }, // gn: pendiente
 	'zone.o.moran': { es: 'Moran: recuadro', en: 'Moran: box', gn: 'Moran: recuadro', pt: 'Moran: retângulo' }, // gn: pendiente
@@ -326,8 +286,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'ficha.copyLink': { es: 'Copiar enlace', en: 'Copy link', gn: 'Copiar enlace', pt: 'Copiar link' }, // gn: pendiente
 	'ficha.copied': { es: 'Enlace copiado', en: 'Link copied', gn: 'Enlace copiado', pt: 'Link copiado' }, // gn: pendiente
 	'ficha.close': { es: 'Cerrar', en: 'Close', gn: 'Cerrar', pt: 'Fechar' }, // gn: pendiente
-	'ficha.legend': { es: 'Cada capa con su valor en este hexágono. P = percentil en el departamento: qué parte de sus hexágonos tiene un valor menor (P90 = más alto que el 90 %). Tocá una capa para ver todas sus variables y el promedio del departamento.', en: 'Each layer with its value in this hexagon. P = percentile within the department: share of its hexagons with a lower value (P90 = higher than 90 %). Tap a layer for all its variables and the department mean.', gn: 'Cada capa con su valor en este hexágono. P = percentil en el departamento: qué parte de sus hexágonos tiene un valor menor (P90 = más alto que el 90 %). Tocá una capa para ver todas sus variables y el promedio del departamento.', pt: 'Cada camada com seu valor neste hexágono. P = percentil no departamento: parte dos hexágonos com valor menor (P90 = maior que 90 %). Toque uma camada para ver todas as variáveis e a média do departamento.' }, // gn: pendiente
-	'ficha.pctlHint': { es: 'Percentil dentro del departamento', en: 'Percentile within the department', gn: 'Percentil dentro del departamento', pt: 'Percentil no departamento' }, // gn: pendiente
 	'ficha.noData': { es: 'sin dato en este hexágono', en: 'no data for this hexagon', gn: 'sin dato en este hexágono', pt: 'sem dado neste hexágono' }, // gn: pendiente
 	'ficha.noPop': { es: 'sin población estimada (sin edificios)', en: 'no estimated population (no buildings)', gn: 'sin población estimada (sin edificios)', pt: 'sem população estimada (sem edificações)' }, // gn: pendiente
 	'ficha.colValue': { es: 'Valor', en: 'Value', gn: 'Valor', pt: 'Valor' }, // gn: pendiente
@@ -360,10 +318,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'censo.deptScopeAll': { es: 'ver {ref} completa', en: 'show all of {ref}', gn: 'ver {ref} completa', pt: 'ver {ref} inteira' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
-	'chart.bump.hint': { es: 'pasá el mouse para explorar', en: 'hover to explore', gn: 'pasá el mouse para explorar', pt: 'passe o mouse para explorar' }, // gn: pendiente
-	'chart.bump.axis': { es: 'posición relativa (#1 = mejor)', en: 'relative rank (#1 = best)', gn: 'posición relativa (#1 = mejor)', pt: 'posição relativa (#1 = melhor)' }, // gn: pendiente
-	'chart.bump.note': { es: '#1 = mejor posición siempre · En <em>riesgo/aislamiento</em> (Inund., Amb., Acceso): #1 = menos expuesto · En <em>potencial</em> (resto): #1 = mayor valor', en: '#1 = best rank always · Under <em>risk/isolation</em> (Flood, Env., Access): #1 = least exposed · Under <em>potential</em> (the rest): #1 = highest value', gn: '#1 = mejor posición siempre · En <em>riesgo/aislamiento</em> (Inund., Amb., Acceso): #1 = menos expuesto · En <em>potencial</em> (resto): #1 = mayor valor', pt: '#1 = melhor posição sempre · Em <em>risco/isolamento</em> (Inund., Amb., Acesso): #1 = menos exposto · Em <em>potencial</em> (o resto): #1 = maior valor' }, // gn: pendiente
-	'chart.bump.noData': { es: 'sin datos comparables disponibles', en: 'no comparable data available', gn: 'sin datos comparables disponibles', pt: 'sem dados comparáveis disponíveis' }, // gn: pendiente
 	'chart.histogram.dragRange': { es: 'arrastrá para seleccionar rango', en: 'drag to select a range', gn: 'arrastrá para seleccionar rango', pt: 'arraste para selecionar o intervalo' }, // gn: pendiente
 	'chart.moran.title': { es: 'Autocorrelación espacial (Moran)', en: 'Spatial autocorrelation (Moran)', gn: 'Autocorrelación espacial (Moran)', pt: 'Autocorrelação espacial (Moran)' },
 	'chart.moran.computing': { es: 'Calculando I de Moran…', en: 'Computing Moran’s I…', gn: 'Calculando I de Moran…', pt: 'Calculando o I de Moran…' },
@@ -404,15 +358,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	// The six definitions keep their <strong> and render via {@html}. Indicator
 	// acronyms (NBI) stay as-is — they name the official INDEC indicator; the gloss
 	// after the colon is what gets translated.
-	'flood.loadingProfile': { es: 'Cargando perfil de vulnerabilidad...', en: 'Loading vulnerability profile...', gn: 'Cargando perfil de vulnerabilidad...', pt: 'Carregando perfil de vulnerabilidade...' }, // gn: pendiente
-	'flood.profileTitle': { es: 'Perfil de vulnerabilidad hídrica', en: 'Water vulnerability profile', gn: 'Perfil de vulnerabilidad hídrica', pt: 'Perfil de vulnerabilidade hídrica' }, // gn: pendiente
-	'flood.petalNote': { es: 'Relativo al promedio {ofRef}, ponderado por población (50 = promedio). Mayor extensión = mayor riesgo.', en: 'Relative to the population-weighted average {ofRef} (50 = average). Larger extent = higher risk.', gn: 'Relativo al promedio {ofRef}, ponderado por población (50 = promedio). Mayor extensión = mayor riesgo.', pt: 'Relativo à média {ofRef}, ponderada pela população (50 = média). Maior extensão = maior risco.' },
-	'flood.def.freq': { es: '<strong>Frec. inundación:</strong> frecuencia histórica de anegamiento (satelital)', en: '<strong>Flood freq.:</strong> historical flooding frequency (satellite)', gn: '<strong>Frec. inundación:</strong> frecuencia histórica de anegamiento (satelital)', pt: '<strong>Freq. inundação:</strong> frequência histórica de alagamento (satélite)' }, // gn: pendiente
-	'flood.def.hand': { es: '<strong>Altura s/ drenaje:</strong> elevación sobre el curso de agua más cercano', en: '<strong>Height above drainage:</strong> elevation above the nearest watercourse', gn: '<strong>Altura s/ drenaje:</strong> elevación sobre el curso de agua más cercano', pt: '<strong>Altura s/ drenagem:</strong> elevação acima do curso de água mais próximo' }, // gn: pendiente
-	'flood.def.nbi': { es: '<strong>NBI:</strong> hogares con necesidades básicas insatisfechas (Censo 2022)', en: '<strong>NBI:</strong> households with unsatisfied basic needs (2022 Census)', gn: '<strong>NBI:</strong> hogares con necesidades básicas insatisfechas (Censo 2022)', pt: '<strong>NBI:</strong> domicílios com necessidades básicas insatisfeitas (Censo 2022)' }, // gn: pendiente
-	'flood.def.sewer': { es: '<strong>Sin cloacas:</strong> hogares sin red cloacal (Censo 2022)', en: '<strong>No sewerage:</strong> households not connected to a sewer network (2022 Census)', gn: '<strong>Sin cloacas:</strong> hogares sin red cloacal (Censo 2022)', pt: '<strong>Sem esgoto:</strong> domicílios sem rede de esgoto (Censo 2022)' }, // gn: pendiente
-	'flood.def.water': { es: '<strong>Sin agua de red:</strong> hogares sin agua de red pública (Censo 2022)', en: '<strong>No piped water:</strong> households without public piped water (2022 Census)', gn: '<strong>Sin agua de red:</strong> hogares sin agua de red pública (Censo 2022)', pt: '<strong>Sem água encanada:</strong> domicílios sem água da rede pública (Censo 2022)' }, // gn: pendiente
-	'flood.def.infra': { es: '<strong>Déficit infra:</strong> índice compuesto de carencias en servicios básicos', en: '<strong>Infra. deficit:</strong> composite index of basic-service shortfalls', gn: '<strong>Déficit infra:</strong> índice compuesto de carencias en servicios básicos', pt: '<strong>Déficit infra:</strong> índice composto de carências em serviços básicos' }, // gn: pendiente
 	'section.howToRead': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ehechakuaa ko mapa", pt: 'Como ler este mapa' },
 	'section.implications': { es: 'Implicancias', en: 'Implications', gn: 'Implicancia', pt: 'Implicações' },
 	'section.methodology': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
@@ -428,9 +373,7 @@ const dict: Record<string, Record<Locale, string>> = {
 		pt: 'Esta seção está disponível apenas em espanhol.',
 	},
 	'section.typeDistribution': { es: 'Distribución de tipos', en: 'Type distribution', gn: 'Laja papapy', pt: 'Distribuição de tipos' },
-	'section.territorialProfile': { es: 'Perfil geoespacial', en: 'Geospatial profile', gn: "Yvy rekokatu", pt: 'Perfil geoespacial' },
 	'section.zonesAnalyzed': { es: 'Zonas analizadas', en: 'Zones analysed', gn: "Zona ojestudiáva", pt: 'Zonas analisadas' },
-	'section.requestReport': { es: 'Solicitar informe', en: 'Request report', gn: 'Ejerure informe', pt: 'Solicitar relatório' },
 	'section.source': { es: 'Fuente', en: 'Source', gn: 'Fuente', pt: 'Fonte' },
 	'section.processed': { es: 'Procesado', en: 'Processed', gn: 'Procesado', pt: 'Processado' },
 	'section.sarImage': { es: 'Imagen SAR (extensión actual)', en: 'SAR image (current extent)', gn: 'SAR (extensión actual)', pt: 'Imagem SAR (extensão atual)' },
@@ -439,15 +382,11 @@ const dict: Record<string, Record<Locale, string>> = {
 	'legend.highMeansGood': { es: 'Score alto = mejor aptitud', en: 'High score = better aptitude', gn: 'Score yvate = iporãve', pt: 'Score alto = melhor aptidão' },
 
 	// Language selector
-	'lang.note': { es: '', en: '', gn: '* Ñe\'ẽ guaraní: traducción aproximada' , pt: '' },
 
 	// Partial warning
-	'warn.partial': { es: '\u26A0 Algunas edificaciones pueden estar fuera de la vista actual.', en: '\u26A0 Some buildings may be outside the current view.', gn: "\u26A0 Oĩ óga oimeraẽva okápe.", pt: '⚠ Algumas edificações podem estar fora da vista atual.' },
 	'warn.censusCrossCountry': { es: '⚠ Estás comparando radios de distintos países. Los datos censales (INDEC AR · DGEEC PY · IBGE BR) usan definiciones distintas.', en: '⚠ You are comparing tracts from different countries. Census data (INDEC AR · DGEEC PY · IBGE BR) uses different definitions.', gn: "⚠ Eñembojoja hína radio ambue tetãgui. Censo mba'ekuaa (INDEC AR · DGEEC PY · IBGE BR) oiporu definición iñambuéva.", pt: '⚠ Você está comparando setores de países diferentes. Os dados censitários (INDEC AR · DGEEC PY · IBGE BR) usam definições distintas.' },
 
 	// Chart
-	'chart.absolute': { es: 'Valores absolutos', en: 'Absolute values', gn: "Papapy", pt: 'Valores absolutos' },
-	'chart.rates': { es: 'Tasas (%)', en: 'Rates (%)', gn: "Jeku'e (%)", pt: 'Taxas (%)' },
 
 	'error.dataLoadFailed': { es: 'No se pudieron cargar los datos', en: 'Failed to load data', gn: "Ndaikatúi oñemyenyhẽ mba'ekuaa", pt: 'Não foi possível carregar os dados' },
 	'error.engineFailed': { es: 'Error al iniciar el motor de datos', en: 'Data engine failed to start', gn: "Mba'ekuaa ndoikói", pt: 'Erro ao iniciar o motor de dados' },
@@ -459,63 +398,33 @@ const dict: Record<string, Record<Locale, string>> = {
 	'label.br.garbageCollected': { es: 'Basura recolectada (%)', en: 'Garbage collected (%)', gn: 'Taky jeheja (%)', pt: 'Lixo coletado (%)' },
 	'label.br.literacy':         { es: 'Alfabetismo (%)',      en: 'Literacy (%)',          gn: 'Moñe\'ẽ porã (%)', pt: 'Alfabetismo (%)' },
 	'label.br.noBathroom':       { es: 'Sin baño exclusivo (%)', en: 'No private bathroom (%)', gn: 'Ysyryrogue ỹre (%)', pt: 'Sem banheiro exclusivo (%)' },
-	'label.dependencyIndex': { es: 'Índ. dependencia', en: 'Dependency index', gn: "Ñemomba'e", pt: 'Índ. dependência' },
 	'label.university': { es: 'Universitario (%)', en: 'University (%)', gn: "Mbo'ehára (%)", pt: 'Universitário (%)' },
-	'label.healthCoverage': { es: 'Cobertura salud (%)', en: 'Health coverage (%)', gn: "Tesãi joapy (%)", pt: 'Cobertura de saúde (%)' },
-	'label.teenMotherhood': { es: 'Maternidad (%)', en: 'Motherhood (%)', gn: "Sy reko (%)", pt: 'Maternidade (%)' },
 
 	// ── Lens system ──────────────────────────────────────────────────────────
 	'lens.selectRadio': { es: 'Seleccioná un radio iluminado', en: 'Select a highlighted census tract', gn: 'Eiporavo peteĩ radio', pt: 'Selecione um setor destacado' },
 
-	'card.territory': { es: 'Huella espacial', en: 'Spatial footprint', gn: 'Yvy rapykuere', pt: 'Pegada espacial' },
 
 	'lens.loading': { es: 'Cargando...', en: 'Loading...', gn: 'Oñemyenyhẽ...', pt: 'Carregando...' },
 
 	// ── Analysis system ─────────────────────────────────────────────────────
-	'analysis.menu.title': { es: 'Análisis disponibles', en: 'Available analyses', gn: "Mba'ekuaa oĩva", pt: 'Análises disponíveis' },
-	'analysis.status.available': { es: 'Disponible', en: 'Available', gn: 'Oĩma', pt: 'Disponível' },
 	'analysis.status.comingSoon': { es: 'En desarrollo', en: 'Coming soon', gn: 'Oguerahátama', pt: 'Em desenvolvimento' },
 	'analysis.coverage.pending': { es: 'próximamente', en: 'Coming soon', gn: 'Oguerahátama', pt: 'em breve' },
 	'analysis.coverage.unavailable': { es: 'no disponible {inRef}', en: 'not available {inRef}', gn: 'no disponible {inRef}', pt: 'não disponível {inRef}' },
-	'analysis.petalHint.fixed': { es: 'Puntaje 0-100 en la escala fija regional (NEA y región transfronteriza): el mismo valor significa lo mismo en Argentina, Paraguay y Brasil. Mayor extensión = mayor intensidad.', en: 'Score 0-100 on the fixed regional scale (NEA and cross-border region): the same value means the same in Argentina, Paraguay and Brazil. Larger petal = higher intensity.', gn: 'Puntaje 0-100 en la escala fija regional (NEA y región transfronteriza): el mismo valor significa lo mismo en Argentina, Paraguay y Brasil. Mayor extensión = mayor intensidad.', pt: 'Pontuação 0-100 na escala fixa regional (NEA e região transfronteiriça): o mesmo valor significa o mesmo na Argentina, no Paraguai e no Brasil. Maior extensão = maior intensidade.' },
-	'analysis.petalHint.local': { es: 'Percentil dentro {ofRef} (0-100). Mayor extensión = mayor intensidad relativa.', en: 'Percentile within {ref} (0-100). Larger petal = higher relative intensity.', gn: 'Percentil dentro {ofRef} (0-100). Mayor extensión = mayor intensidad relativa.', pt: 'Percentil dentro {ofRef} (0-100). Maior extensão = maior intensidade relativa.' },
-	'analysis.back': { es: '← Análisis', en: '← Analyses', gn: "← Mba'ekuaa", pt: '← Análises' },
-	'analysis.noData': { es: 'Sin datos para este radio', en: 'No data for this census tract', gn: "Mba'ekuaa'ỹ ko radio-pe", pt: 'Sem dados para este setor' },
 	'analysis.loading': { es: 'Cargando datos...', en: 'Loading data...', gn: "Oñemyenyhẽ mba'ekuaa...", pt: 'Carregando dados...' },
 	'analysis.comingSoon.body': { es: 'Este análisis está en desarrollo. Próximamente disponible con datos actualizados.', en: 'This analysis is under development. Coming soon with updated data.', gn: "Ko mba'ekuaa oñemoĩhína. Oguerahátama.", pt: 'Esta análise está em desenvolvimento. Em breve disponível com dados atualizados.' },
 
 	// Flood risk analysis
 	'analysis.floodRisk.title': { es: '¿Dónde es mayor el riesgo de inundación?', en: 'Where is flood risk highest?', gn: "Moõpa ysoguy mba'asy tuichavéva?", pt: 'Onde o risco de inundação é maior?' },
 	'analysis.floodRisk.desc': { es: 'Edificios y tierra en zona baja (relieve, MERIT Hydro), presencia histórica de agua (JRC 1984–2021) e inundación actual (Sentinel-1) por hexágono', en: 'Buildings and land on low ground (terrain, MERIT Hydro), historical water presence (JRC 1984–2021) and current flooding (Sentinel-1) per hexagon', gn: "Y rehegua historia guive (JRC 1984–2021) ha ko'ag̃a ysoguy (Sentinel-1 SAR) yvy rupi", pt: 'Edifícios e terra em terreno baixo (relevo, MERIT Hydro), presença histórica de água (JRC 1984–2021) e inundação atual (Sentinel-1) por hexágono' },
-	'analysis.floodRisk.legend': { es: 'Presencia histórica (%)', en: 'Historical presence (%)', gn: "Y historia rehegua (%)", pt: 'Presença histórica (%)' },
-	'analysis.flood.petal.occurrence': { es: 'Ocurrencia', en: 'Occurrence', gn: 'Oiko', pt: 'Ocorrência' },
-	'analysis.flood.petal.recurrence': { es: 'Recurrencia', en: 'Recurrence', gn: 'Jey', pt: 'Recorrência' },
-	'analysis.flood.petal.seasonality': { es: 'Estacionalidad', en: 'Seasonality', gn: "Ára rehe", pt: 'Sazonalidade' },
-	'analysis.flood.petal.extent': { es: 'Extensión actual', en: 'Current extent', gn: "Ko'ãga", pt: 'Extensão atual' },
-	'analysis.flood.riskScore': { es: 'Score de riesgo', en: 'Risk score', gn: "Mba'asy score", pt: 'Score de risco' },
-	'analysis.flood.recurrence': { es: 'Recurrencia', en: 'Recurrence', gn: 'Jey', pt: 'Recorrência' },
-	'analysis.flood.recurrenceDesc': { es: '% de meses con agua detectada', en: '% of months with water detected', gn: '% jasy y reheve', pt: '% de meses com água detectada' },
 	'analysis.flood.jrcOccurrence': { es: 'Presencia histórica de agua (%)', en: 'Historical water presence (%)', gn: "Y rehegua historia (%)", pt: 'Presença histórica de água (%)' },
-	'analysis.flood.jrcOccurrenceDesc': { es: '% del tiempo con agua detectada (Landsat 1984–2021)', en: '% of time with water detected (Landsat 1984–2021)', gn: '% ára y reheve (Landsat 1984–2021)', pt: '% do tempo com água detectada (Landsat 1984–2021)' },
 	'analysis.flood.jrcRecurrence': { es: 'Recurrencia interanual (%)', en: 'Year-to-year recurrence (%)', gn: 'Jey ary ha ary (%)', pt: 'Recorrência interanual (%)' },
-	'analysis.flood.jrcRecurrenceDesc': { es: '% de años en que el agua vuelve a aparecer', en: '% of years water reappears', gn: '% ary y ojekuaa jey', pt: '% de anos em que a água reaparece' },
 	'analysis.flood.jrcSeasonality': { es: 'Estacionalidad (meses)', en: 'Seasonality (months)', gn: "Ára reípe (jasy)", pt: 'Sazonalidade (meses)' },
-	'analysis.flood.jrcSeasonalityDesc': { es: 'Cantidad de meses con agua por año', en: 'Number of months with water per year', gn: 'Mboy jasy y reheve ary pe', pt: 'Número de meses com água por ano' },
 	'analysis.flood.currentExtent': { es: 'Extensión actual', en: 'Current extent', gn: "Ko'ãga tuichakue", pt: 'Extensão atual' },
-	'analysis.flood.currentExtentDesc': { es: '% de la zona inundada', en: '% of the area flooded', gn: '% yvy y guype oĩva', pt: '% da zona inundada' },
-	'analysis.flood.riskHigh': { es: 'Riesgo alto', en: 'High risk', gn: "Mba'asy guasu", pt: 'Alto risco' },
-	'analysis.flood.riskMedium': { es: 'Riesgo medio', en: 'Medium risk', gn: "Mba'asy mbyte", pt: 'Risco médio' },
-	'analysis.flood.riskLow': { es: 'Riesgo bajo', en: 'Low risk', gn: "Mba'asy michĩ", pt: 'Baixo risco' },
-	'analysis.flood.totalHex': { es: 'Zonas analizadas', en: 'Areas analysed', gn: 'Yvy ojehechauka', pt: 'Zonas analisadas' },
-	'analysis.flood.highRecurrence': { es: 'Recurrencia >10%', en: 'Recurrence >10%', gn: 'Jey >10%', pt: 'Recorrência >10%' },
-	'analysis.flood.avgScore': { es: 'Score promedio', en: 'Avg score', gn: 'Score mbytekue', pt: 'Score médio' },
 	'analysis.flood.topDepts': { es: 'Seleccioná un departamento', en: 'Select a department', gn: "Eiporavo departamento", pt: 'Selecione um departamento' },
 	'rank.flood.title': { es: '¿Dónde es mayor la parte de los edificios en zona baja?', en: 'Where is the share of buildings on low ground largest?', gn: '¿Dónde es mayor la parte de los edificios en zona baja?', pt: 'Onde é maior a parte dos edifícios em terreno baixo?' },
 	'rank.flood.note': { es: '% de los edificios de cada departamento a menos de 5 m sobre el río o arroyo más cercano (HAND, MERIT Hydro). Al lado, % de la tierra en la misma condición, sin ríos ni embalses. Mide exposición por relieve, no frecuencia de inundación; las otras pestañas ordenan por cantidad de edificios y por % de tierra. Clic en una barra para abrir el departamento.', en: 'Share of each department’s buildings less than 5 m above the nearest river or stream (HAND, MERIT Hydro). Next to it, share of land in the same condition, rivers and reservoirs excluded. It measures exposure by terrain, not flood frequency; the other tabs rank by number of buildings and by share of land. Click a bar to open the department.', gn: '% de los edificios de cada departamento a menos de 5 m sobre el río o arroyo más cercano (HAND, MERIT Hydro). Al lado, % de la tierra en la misma condición, sin ríos ni embalses. Mide exposición por relieve, no frecuencia de inundación; las otras pestañas ordenan por cantidad de edificios y por % de tierra. Clic en una barra para abrir el departamento.', pt: '% dos edifícios de cada departamento a menos de 5 m acima do rio ou arroio mais próximo (HAND, MERIT Hydro). Ao lado, % da terra na mesma condição, sem rios nem represas. Mede exposição pelo relevo, não frequência de inundação; as outras abas ordenam por quantidade de edifícios e por % de terra. Clique numa barra para abrir o departamento.' },
 	'rank.flood.saturated': { es: 'En la llanura casi todo está a menos de 5 m sobre algún curso de agua (HAND, MERIT Hydro), y el relieve no distingue un departamento de otro. Acá el anegamiento depende más de la lluvia y del drenaje del suelo que de la altura sobre el río.', en: 'On the plain nearly everything lies less than 5 m above some watercourse (HAND, MERIT Hydro), so terrain does not tell one department from another. Here waterlogging depends more on rainfall and soil drainage than on height above the river.', gn: 'En la llanura casi todo está a menos de 5 m sobre algún curso de agua (HAND, MERIT Hydro), y el relieve no distingue un departamento de otro. Acá el anegamiento depende más de la lluvia y del drenaje del suelo que de la altura sobre el río.', pt: 'Na planície quase tudo está a menos de 5 m acima de algum curso de água (HAND, MERIT Hydro), e o relevo não distingue um departamento de outro. Aqui o alagamento depende mais da chuva e da drenagem do solo do que da altura sobre o rio.' },
 	'rank.saturated.head': { es: 'Sin ranking por relieve {inRef}', en: 'No terrain ranking {inRef}', gn: 'Sin ranking por relieve {inRef}', pt: 'Sem ranking por relevo {inRef}' },
-	'rank.flood.plain.title': { es: '¿Dónde se anega más la tierra?', en: 'Where does the land waterlog most?', gn: '¿Dónde se anega más la tierra?', pt: 'Onde a terra mais alaga?' },
-	'rank.flood.plain.note': { es: '% de la tierra de cada departamento —sin ríos ni lagunas permanentes— que tuvo agua en al menos el 10 % de los meses desde 2015 (radar Sentinel-1, que ve a través de las nubes). En la llanura el relieve no distingue departamentos, así que acá se mide el anegamiento recurrente; una crecida corta de río pesa poco. Clic en una barra para abrir el departamento.', en: 'Share of each department’s land —permanent rivers and lagoons excluded— that held water in at least 10% of months since 2015 (Sentinel-1 radar, which sees through clouds). On the plain terrain does not tell departments apart, so this measures recurrent waterlogging; a short river flood weighs little. Click a bar to open the department.', gn: '% de la tierra de cada departamento —sin ríos ni lagunas permanentes— que tuvo agua en al menos el 10 % de los meses desde 2015 (radar Sentinel-1, que ve a través de las nubes). En la llanura el relieve no distingue departamentos, así que acá se mide el anegamiento recurrente; una crecida corta de río pesa poco. Clic en una barra para abrir el departamento.', pt: '% da terra de cada departamento —sem rios nem lagoas permanentes— que teve água em pelo menos 10 % dos meses desde 2015 (radar Sentinel-1, que vê através das nuvens). Na planície o relevo não distingue departamentos, então aqui se mede o alagamento recorrente; uma cheia curta de rio pesa pouco. Clique numa barra para abrir o departamento.' },
 	'rank.unit.haYr': { es: 'ha/año', en: 'ha/yr', gn: 'ha/año', pt: 'ha/ano' },
 	'rank.unit.pctYr': { es: '%/año', en: '%/yr', gn: '%/año', pt: '%/ano' },
 	'rank.deforest.tab.ha': { es: 'Hectáreas', en: 'Hectares', gn: 'Hectáreas', pt: 'Hectares' },
@@ -636,12 +545,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'rank.censo.note.total': { es: 'Población del Censo 2022 (totales oficiales INDEC) y, al lado, viviendas.', en: '2022 Census population (INDEC official totals) and, next to it, dwellings.', gn: 'Población del Censo 2022 (totales oficiales INDEC) y, al lado, viviendas.', pt: 'População do Censo 2022 (totais oficiais do INDEC) e, ao lado, moradias.' },
 	'rank.unit.people': { es: 'personas', en: 'people', gn: 'personas', pt: 'pessoas' },
 	'rank.unit.dwellings': { es: 'viviendas', en: 'dwellings', gn: 'óga', pt: 'moradias' },
-	'analysis.flood.clickHint': { es: 'Hacé click en una parcela para ver detalle', en: 'Click a parcel for details', gn: 'Ehesakutu peteĩ yvy ehecha hag̃ua', pt: 'Clique em uma parcela para ver detalhes' },
 	'analysis.hex.clickHint': { es: 'Hacé click en un hexágono para ver el detalle', en: 'Click a hexagon for details', gn: 'Ehesakutu peteĩ hexágono ehecha hag̃ua', pt: 'Clique em um hexágono para ver o detalhe' },
 	// No "Fuente:" prefix: the panel prints the label before it.
 	'analysis.flood.source': { es: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', en: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', gn: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', pt: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)' },
 	'data.source.censo': { es: 'Fuente: INDEC — Censo Nacional de Población 2022', en: 'Source: INDEC — National Population Census 2022', gn: "Moñe'ẽha: INDEC — Censo Nacional 2022", pt: 'Fonte: INDEC — Censo Nacional de Población 2022' },
-	'data.source.realEstate': { es: 'Fuente: Relevamiento de mercado inmobiliario', en: 'Source: Real estate market survey', gn: "Moñe'ẽha: Relevamiento óga ñemuhague", pt: 'Fonte: Levantamento do mercado imobiliário' },
 	'data.source.buildings': { es: 'Fuente: Detección por IA sobre imágenes satelitales', en: 'Source: AI detection on satellite imagery', gn: "Moñe'ẽha: IA ohechaukáva satélite ra'ãnga rupi", pt: 'Fonte: Detecção por IA em imagens de satélite' },
 	'data.source.catastro': { es: 'Fuente: Dirección General de Catastro, Misiones', en: 'Source: Dirección General de Catastro, Misiones', gn: "Moñe'ẽha: Catastro, Misiones", pt: 'Fonte: Dirección General de Catastro, Misiones' },
 	'data.source.overture': { es: 'Fuente: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', en: 'Source: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', gn: "Moñe'ẽha: Overture Maps Foundation (CC BY 4.0)", pt: 'Fonte: Overture Maps Foundation via walkthru.earth (CC BY 4.0)' },
@@ -659,7 +566,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'layer.source.eudr': { es: 'Hansen Global Forest Change v1.13 + MODIS MCD64A1 (área quemada) + MapBiomas Colección 2', en: 'Hansen Global Forest Change v1.13 + MODIS MCD64A1 (burned area) + MapBiomas Collection 2', gn: 'Hansen Global Forest Change v1.13 + MODIS MCD64A1 (área quemada) + MapBiomas Colección 2', pt: 'Hansen Global Forest Change v1.13 + MODIS MCD64A1 (área queimada) + MapBiomas Coleção 2' }, // gn: pendiente
 
 	// ── EUDR variables ──
-	'eudr.riskScore': { es: 'Score de riesgo EUDR', en: 'EUDR risk score', gn: 'EUDR riesgo', pt: 'Score de risco EUDR' },
 	'eudr.lossPost2020': { es: 'Pérdida post-2020 (%)', en: 'Post-2020 loss (%)', gn: 'Pérdida post-2020', pt: 'Perda pós-2020 (%)' },
 	'eudr.firePost2020': { es: 'Fuego post-2020, total (%)', en: 'Post-2020 fire, total (%)', gn: 'Fuego post-2020, opavave', pt: 'Fogo pós-2020, total (%)' },
 	'eudr.fireNativePost2020': { es: 'Fuego sobre nativa leñosa (%)', en: 'Fire on native woody cover (%)', gn: 'Fuego ka’aguy ypykuére (%)', pt: 'Fogo sobre nativa lenhosa (%)' },
@@ -667,22 +573,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.forestCurrent': { es: 'Cobertura arbórea actual, aprox. (%)', en: 'Current tree cover, approx. (%)', gn: "Ka'aguy ko'ãga (%)", pt: 'Cobertura arbórea atual, aprox. (%)' },
 
 	// ── Migrated radio/catastro to H3 ──
-	'analysis.scores.type': { es: 'Tipo de consolidación', en: 'Consolidation type', gn: 'Tipo', pt: 'Tipo de consolidação' },
-	'analysis.scores.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
 	'analysis.socio.type': { es: 'Tipo sociodemografico', en: 'Sociodemographic type', gn: 'Tipo', pt: 'Tipo sociodemográfico' },
 	'analysis.socio.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
-	'analysis.economic.type': { es: 'Tipo económico', en: 'Economic type', gn: 'Tipo', pt: 'Tipo econômico' },
-	'analysis.economic.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
-	'analysis.accessibility.type': { es: 'Tipo de accesibilidad', en: 'Accessibility type', gn: 'Tipo', pt: 'Tipo de acessibilidade' },
-	'analysis.accessibility.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
-	'scores.urbanConsolidation': { es: 'Consolidacion urbana', en: 'Urban consolidation', gn: 'Consolidacion', pt: 'Consolidação urbana' },
-	'scores.paving': { es: 'Pavimentación', en: 'Paving', gn: 'Tape', pt: 'Pavimentação' },
-	'scores.serviceAccess': { es: 'Acceso a servicios', en: 'Service access', gn: 'Servicios', pt: 'Acesso a serviços' },
-	'scores.commercial': { es: 'Vitalidad comercial', en: 'Commercial vitality', gn: 'Comercio', pt: 'Vitalidade comercial' },
-	'scores.roadConnectivity': { es: 'Conectividad vial', en: 'Road connectivity', gn: 'Tape joapy', pt: 'Conectividade viária' },
-	'scores.buildingMix': { es: 'Mix edilicio', en: 'Building mix', gn: 'Oga', pt: 'Mix edilício' },
-	'scores.urbanization': { es: 'Urbanizacion', en: 'Urbanisation', gn: 'Tava', pt: 'Urbanização' },
-	'scores.waterExposure': { es: 'Exposición hidrica', en: 'Water exposure', gn: 'Y', pt: 'Exposição hídrica' },
 	'radio.densidad': { es: 'Habitantes por km² (estimado en el hexágono)', en: 'Inhabitants per km² (estimated in the hexagon)', gn: 'Habitantes por km² (estimado en el hexágono)', pt: 'Habitantes por km² (estimado no hexágono)' },
 	'radio.nbi': { es: 'Hogares con NBI (% de hogares)', en: 'Households with UBN (% of households)', gn: 'Hogares con NBI (% de hogares)', pt: 'Lares com NBI (% dos lares)' },
 	'radio.hacinamiento': { es: 'Hacinamiento (% de hogares)', en: 'Overcrowding (% of households)', gn: 'Hacinamiento (% de hogares)', pt: 'Superlotação (% dos lares)' },
@@ -743,16 +635,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'temporal.legend.increase': { es: 'Aumentó', en: 'Increased', gn: 'Aumentó', pt: 'Aumentou' },
 
 	// ── Satellite composite analyses ──
-	'sat.locValue.title': { es: '¿Qué tan bien ubicada está esta zona?', en: 'How well located is this area?', gn: "Iporãpa oĩhápe ko yvy? (Misiones)", pt: 'Quão bem localizada está esta zona?' },
-	'sat.locValue.desc': { es: 'Valor posicional: accesibilidad, salud, actividad económica, topografía y vialidad', en: 'Location value: accessibility, healthcare, economic activity, topography and roads', gn: "Yvy hepy", pt: 'Valor posicional: acessibilidade, saúde, atividade econômica, topografia e malha viária' },
-	'sat.locValue.score': { es: 'Score de valor', en: 'Value score', gn: 'Score', pt: 'Score de valor' },
-	'sat.locValue.access20k': { es: 'Acceso a ciudad 20 mil hab.', en: 'Access to 20k city', gn: "Tape táva 20k", pt: 'Acesso a cidade de 20 mil hab.' },
-	'sat.locValue.healthcare': { es: 'Acceso a salud', en: 'Healthcare access', gn: 'Tasyo', pt: 'Acesso à saúde' },
-	'sat.locValue.nightlights': { es: 'Actividad económica (luces)', en: 'Economic activity (lights)', gn: "Tesa'y", pt: 'Atividade econômica (luzes)' },
-	'sat.locValue.slope': { es: 'Pendiente del terreno', en: 'Terrain slope', gn: "Yvy sa'i", pt: 'Declividade do terreno' },
-	'sat.locValue.roadDist': { es: 'Distancia a ruta pavimentada', en: 'Paved road distance', gn: "Tape mombyry", pt: 'Distância a rodovia pavimentada' },
-	'sat.locValue.type': { es: 'Tipo posicional', en: 'Location type', gn: 'Tendaguépe laja', pt: 'Tipo posicional' },
-	'sat.locValue.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	'sat.agri.apt.soja': { es: 'Soja: campañas aptas', en: 'Soybean: suitable seasons', gn: 'Soja: campañas aptas', pt: 'Soja: safras aptas' },
 	'sat.agri.clase.soja': { es: 'Soja: clase de aptitud', en: 'Soybean: suitability class', gn: 'Soja: clase de aptitud', pt: 'Soja: classe de aptidão' },
 	'rank.agri.tab.soja': { es: 'Soja', en: 'Soybean', gn: 'Soja', pt: 'Soja' },
@@ -796,32 +678,15 @@ const dict: Record<string, Record<Locale, string>> = {
 	'agri.class.n': { es: 'N · no apto', en: 'N · not suitable', gn: 'N · no apto', pt: 'N · não apto' },
 	'sat.agri.title': { es: '¿Qué potencial agrícola tiene?', en: 'What agricultural potential?', gn: "Mba'éichapa yvy temity?", pt: 'Qual o potencial agrícola?' },
 	'sat.agri.desc': { es: 'Unidades físicas (lluvia, temperatura corregida con estaciones, heladas, suelo, pendiente) y aptitud de 9 cultivos con umbrales publicados', en: 'Physical units (rainfall, station-corrected temperature, frost, soil, slope) and suitability for 9 crops from published thresholds', gn: 'Unidades físicas (lluvia, temperatura corregida con estaciones, heladas, suelo, pendiente) y aptitud de 9 cultivos con umbrales publicados', pt: 'Unidades físicas (chuva, temperatura corrigida com estações, geadas, solo, declividade) e aptidão de 9 cultivos com limiares publicados' },
-	'sat.soilW.title': { es: '¿Cuánta agua tiene el suelo?', en: 'How much water does the soil hold?', gn: "Mbovy y oĩ yvýpe?", pt: 'Quanta água tem o solo?' },
-	'sat.soilW.desc': { es: 'Disponibilidad de agua en el suelo: humedad del suelo (ERA5-Land), precipitación media anual (CHIRPS) y evapotranspiración real (MODIS MOD16). Período 2019-2024. Cubre Misiones e Itapúa.', en: 'Soil water availability: soil moisture (ERA5-Land), mean annual precipitation (CHIRPS) and actual evapotranspiration (MODIS MOD16). Period 2019-2024. Covers Misiones and Itapúa.', gn: "Yvy y", pt: 'Disponibilidade de água no solo: umidade do solo (ERA5-Land), precipitação média anual (CHIRPS) e evapotranspiração real (MODIS MOD16). Período 2019-2024. Cobre Misiones e Itapúa.' },
-	'sat.soilW.score': { es: 'Score de disponibilidad hídrica', en: 'Water availability score', gn: 'Score', pt: 'Score de disponibilidade hídrica' },
-	'sat.soilW.soilMoisture': { es: 'Humedad media del suelo', en: 'Mean soil moisture', gn: "Yvy yvytu", pt: 'Umidade média do solo' },
-	'sat.soilW.drySeason': { es: 'Humedad en época seca (jun-ago)', en: 'Dry season soil moisture (Jun-Aug)', gn: "Yvytu kyrépe", pt: 'Umidade na época seca (jun-ago)' },
-	'sat.soilW.precipitation': { es: 'Precipitación anual (CHIRPS)', en: 'Annual precipitation (CHIRPS)', gn: "Ama ary", pt: 'Precipitação anual (CHIRPS)' },
-	'sat.soilW.actualEt': { es: 'Evapotranspiración real (MODIS)', en: 'Actual evapotranspiration (MODIS)', gn: "Y okakuaa porã", pt: 'Evapotranspiração real (MODIS)' },
-	'sat.soilW.type': { es: 'Tipo hídrico', en: 'Water type', gn: 'Y laja', pt: 'Tipo hídrico' },
-	'sat.soilW.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
-	'legend.soilW.low': { es: 'Suelo seco / poca capacidad', en: 'Dry soil / low capacity', gn: "Yvy ko'ẽ", pt: 'Solo seco / baixa capacidade' },
-	'legend.soilW.high': { es: 'Suelo húmedo / alta capacidad', en: 'Moist soil / high capacity', gn: "Yvy yvytu porã", pt: 'Solo úmido / alta capacidade' },
 	'sat.forestry.title': { es: '¿Qué zonas se parecen a las que ya tienen plantaciones forestales?', en: 'Which areas resemble those that already have forestry plantations?', gn: "Mba'e tenda ojogua umi ka'aguy oĩmava rendápe?", pt: 'Quais zonas se assemelham às que já têm plantações florestais?' },
 	'sat.forestry.desc': { es: 'Modelo SDM entrenado sobre el Inventario Nacional de Plantaciones Forestales (DNDFI 2026) como presencia. Dos nichos: comercial (pino/eucalyptus) en Misiones y Corrientes; especies nativas en Chaco y Formosa. Score = probabilidad de condiciones análogas a donde ya hay plantaciones. Excluye agua y zonas urbanas. En Paraguay y Brasil, extrapolación bioclimática sin inventario local.', en: 'SDM trained on the National Forestry Plantation Inventory (DNDFI 2026) as presence. Two niches: commercial (pine/eucalyptus) in Misiones and Corrientes; native species in Chaco and Formosa. Score = probability of conditions analogous to where plantations already exist. Excludes water and urban areas. In Paraguay and Brazil, a bioclimatic extrapolation with no local inventory.', gn: "Ka'aguy modelo (DNDFI 2026)", pt: 'Modelo SDM treinado sobre o Inventário Nacional de Plantações Florestais (DNDFI 2026) como presença. Dois nichos: comercial (pinho/eucalipto) em Misiones e Corrientes; espécies nativas no Chaco e Formosa. Score = probabilidade de condições análogas às onde já há plantações. Exclui água e áreas urbanas. No Paraguai e no Brasil, extrapolação bioclimática sem inventário local.' },
-	'sat.forestry.ph': { es: 'pH (ácido=mejor)', en: 'pH (acidic=better)', gn: 'pH', pt: 'pH (ácido=melhor)' },
 	'sat.forestry.clay': { es: 'Arcilla (%)', en: 'Clay (%)', gn: 'Ñaũ', pt: 'Argila (%)' },
 	'sat.forestry.precip': { es: 'Precipitación anual (mm)', en: 'Annual rainfall (mm)', gn: 'Ama', pt: 'Precipitação anual (mm)' },
 	'sat.forestry.waterDeficit': { es: 'Déficit hídrico', en: 'Water deficit', gn: "Y ho'o", pt: 'Déficit hídrico' },
-	'sat.forestry.frostDays': { es: 'Días de helada', en: 'Frost days', gn: "Ára ro'y", pt: 'Dias de geada' },
 	'sat.forestry.slope': { es: 'Pendiente (°)', en: 'Slope (°)', gn: "Yvy sa'i", pt: 'Declividade (°)' },
-	'sat.forestry.roadDist': { es: 'Distancia a ruta', en: 'Road distance', gn: "Tape mombyry", pt: 'Distância a rodovia' },
-	'sat.forestry.access50k': { es: 'Acceso a ciudad 50 mil hab.', en: 'Access to 50k city', gn: "Tape táva 50k", pt: 'Acesso a cidade de 50 mil hab.' },
 	'sat.forestry.soc': { es: 'Carbono orgánico', en: 'Organic carbon', gn: 'Carbono', pt: 'Carbono orgânico' },
 	'sat.forestry.score': { es: 'Puntuación SDM (/100)', en: 'SDM score (/100)', gn: 'SDM', pt: 'Pontuação SDM (/100)' },
-	'sat.forestry.elevation': { es: 'Elevación', en: 'Elevation', gn: "Yvy yvate", pt: 'Elevação' },
 	'sat.forestry.gdd': { es: 'Grados-día', en: 'Growing degree days', gn: "Aku ára", pt: 'Graus-dia' },
-	'sat.forestry.type': { es: 'Tipo de aptitud', en: 'Aptitude type', gn: 'Laja', pt: 'Tipo de aptidão' },
 	'sat.forestry.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	'forestry.overlay.toggle': { es: 'Plantaciones existentes (DNDFI 2026)', en: 'Existing plantations (DNDFI 2026)', gn: "Ka'aguy oĩmava (DNDFI 2026)", pt: 'Plantações existentes (DNDFI 2026)' },
 	'forestry.overlay.note': { es: 'Inventario Nacional de Plantaciones Forestales — la misma base que define el score. En Chaco y Formosa son de especies nativas, un nicho distinto del comercial.', en: 'National Forestry Plantation Inventory — the same basis that defines the score. In Chaco and Formosa these are native species, a niche distinct from the commercial one.', gn: 'Inventario Nacional de Plantaciones Forestales. Chaco ha Formosa-pe nativas.', pt: 'Inventário Nacional de Plantações Florestais — a mesma base que define o score. No Chaco e Formosa são espécies nativas, um nicho distinto do comercial.' },
@@ -833,61 +698,25 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.deprivation.hacinamiento': { es: 'Hacinamiento (% de hogares)', en: 'Overcrowding (% of households)', gn: 'Hacinamiento (% de hogares)', pt: 'Superlotação (% dos lares)' },
 	'sat.deprivation.hacinamientoCrit': { es: 'Hacinamiento crítico (% de hogares)', en: 'Critical overcrowding (% of households)', gn: 'Hacinamiento crítico (% de hogares)', pt: 'Superlotação crítica (% dos lares)' },
 	'sat.deprivation.sinComputadora': { es: 'Sin computadora (% de hogares)', en: 'No computer (% of households)', gn: 'Sin computadora (% de hogares)', pt: 'Sem computador (% dos lares)' },
-	'sat.isolation.title': { es: '¿Dónde hay mayor aislamiento geoespacial?', en: 'Where is geospatial isolation greatest?', gn: "Moõpa oĩve mombyry?", pt: 'Onde há maior isolamento geoespacial?' },
-	'sat.isolation.desc': { es: 'Aislamiento geográfico: acceso a ciudades, salud, distancia a rutas, densidad vial, luces y población', en: 'Geographic isolation: access to cities, health, road distance, road density, lights and population', gn: "Mombyry", pt: 'Isolamento geográfico: acesso a cidades, saúde, distância a rodovias, densidade viária, luzes e população' },
-	'sat.isolation.accessCities': { es: 'Acceso a ciudades', en: 'City access (min)', gn: "Táva gotyo", pt: 'Acesso a cidades' },
-	'sat.isolation.accessHealth': { es: 'Acceso a salud', en: 'Health access (min)', gn: "Tesãi gotyo", pt: 'Acesso à saúde' },
-	'sat.isolation.roadDist': { es: 'Distancia a ruta', en: 'Road distance', gn: "Tape gotyo", pt: 'Distância a rodovia' },
-	'sat.isolation.roadDensity': { es: 'Densidad vial', en: 'Road density', gn: "Tape heta", pt: 'Densidade viária' },
-	'sat.isolation.nightlights': { es: 'Actividad nocturna', en: 'Night-time activity', gn: "Tesa'y", pt: 'Atividade noturna' },
-	'sat.isolation.popDensity': { es: 'Densidad poblacional', en: 'Pop. density', gn: "Yvypóra heta", pt: 'Densidade populacional' },
-	'sat.isolation.type': { es: 'Tipo de aislamiento', en: 'Isolation type', gn: "Mombyry laja", pt: 'Tipo de isolamento' },
-	'sat.isolation.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	'sat.health.title': { es: '¿Dónde queda más lejos la atención de salud?', en: 'Where is healthcare farthest away?', gn: "Moõpa oĩ'ỹ tasyo?", pt: 'Onde o atendimento de saúde fica mais longe?' },
 	'sat.health.desc': { es: 'Brecha de acceso a salud: tiempo al centro de salud, demanda poblacional, cobertura y vulnerabilidad social', en: 'Health access gap: travel time to healthcare, population demand, coverage and social vulnerability', gn: "Tasyo rape", pt: 'Brecha de acesso à saúde: tempo ao centro de saúde, demanda populacional, cobertura e vulnerabilidade social' },
-	'sat.health.score': { es: 'Score déficit salud', en: 'Health gap score', gn: 'Score', pt: 'Score déficit saúde' },
 	'sat.health.time': { es: 'Tiempo al centro de salud más cercano', en: 'Time to the nearest healthcare facility', gn: 'Tiempo al centro de salud más cercano', pt: 'Tempo ao centro de saúde mais próximo' },
 	'sat.health.coverage': { es: 'Con obra social o prepaga (% de personas)', en: 'With health insurance (% of people)', gn: 'Con obra social o prepaga (% de personas)', pt: 'Com plano de saúde (% das pessoas)' },
 	'sat.health.nbi': { es: 'Hogares con NBI (% de hogares)', en: 'Households with UBN (% of households)', gn: 'Hogares con NBI (% de hogares)', pt: 'Lares com NBI (% dos lares)' },
 	'sat.health.elderly': { es: '65 años y más (% de personas)', en: 'Aged 65+ (% of people)', gn: '65 años y más (% de personas)', pt: '65 anos ou mais (% das pessoas)' },
 	'sat.health.children': { es: 'Menores de 18 años (% de personas)', en: 'Under 18 (% of people)', gn: 'Menores de 18 años (% de personas)', pt: 'Menores de 18 anos (% das pessoas)' },
 	'sat.health.popDensity': { es: 'Habitantes por km² (estimado en el hexágono)', en: 'Inhabitants per km² (estimated in the hexagon)', gn: 'Habitantes por km² (estimado en el hexágono)', pt: 'Habitantes por km² (estimado no hexágono)' },
-	'sat.health.roadDensity': { es: 'Densidad vial', en: 'Road density', gn: "Tape heta", pt: 'Densidade viária' },
-	'sat.health.nightlights': { es: 'Luces nocturnas', en: 'Night lights', gn: "Tesa'y", pt: 'Luzes noturnas' },
-	'sat.health.accessCities': { es: 'Acceso a ciudades', en: 'City access', gn: "Táva gotyo", pt: 'Acesso a cidades' },
-	'sat.health.distPrimary': { es: 'Dist. a escuela primaria', en: 'Primary school distance', gn: "Mbo'ehao gotyo", pt: 'Dist. a escola primária' },
-	'sat.health.type': { es: 'Tipo de acceso', en: 'Access type', gn: 'Tasyo laja', pt: 'Tipo de acesso' },
-	'sat.health.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	'sat.eduCap.title': { es: '¿Dónde hay menor capital educativo?', en: 'Where is education capital lowest?', gn: "Moõpa oĩ'ỹve mbo'ehao?", pt: 'Onde há menor capital educacional?' },
 	'sat.eduCap.desc': { es: 'Capital educativo: nivel de instrucción de la población de 18 años y más (sin instrucción o primario incompleto, secundario completo o más, terciario o universitario completo, universitario completo)', en: 'Education capital: schooling level of people aged 18+ (no schooling or incomplete primary, completed secondary or higher, completed tertiary or university, completed university)', gn: "Mbo'ehao capital", pt: 'Capital educacional: nível de instrução da população de 18 anos ou mais (sem instrução ou fundamental incompleto, ensino médio completo ou mais, superior completo, universitário completo)' },
 	'sat.eduCap.noSchooling': { es: 'Sin instrucción o primario incompleto (% de 18 años y más)', en: 'No schooling or incomplete primary (% of people aged 18+)', gn: 'Sin instrucción o primario incompleto (% de 18 años y más)', pt: 'Sem instrução ou fundamental incompleto (% de 18 anos ou mais)' },
 	'sat.eduCap.secondaryPlus': { es: 'Secundario completo o más (% de 18 años y más)', en: 'Completed secondary or higher (% of people aged 18+)', gn: 'Secundario completo o más (% de 18 años y más)', pt: 'Ensino médio completo ou mais (% de 18 anos ou mais)' },
 	'sat.eduCap.higherEdu': { es: 'Terciario o universitario completo (% de 18 años y más)', en: 'Completed tertiary or university (% of people aged 18+)', gn: 'Terciario o universitario completo (% de 18 años y más)', pt: 'Superior completo (% de 18 anos ou mais)' },
 	'sat.eduCap.university': { es: 'Universitario completo (% de 18 años y más)', en: 'Completed university (% of people aged 18+)', gn: 'Universitario completo (% de 18 años y más)', pt: 'Universitário completo (% de 18 anos ou mais)' },
-	'sat.eduCap.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
-	'sat.eduCap.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	'sat.eduFlow.title': { es: '¿Dónde hay más problemas educativos?', en: 'Where are education problems greatest?', gn: "Moõpa oĩve mbo'ehao apañuãi?", pt: 'Onde há mais problemas educacionais?' },
 	'sat.eduFlow.desc': { es: 'Flujo educativo: inasistencia escolar de 6 a 12 y de 13 a 18 años, y maternidad adolescente (por departamento)', en: 'Education flow: school non-attendance at ages 6–12 and 13–18, and teenage motherhood (by department)', gn: "Mbo'ehao flujo", pt: 'Fluxo educacional: não frequência escolar de 6 a 12 e de 13 a 18 anos, e maternidade na adolescência (por departamento)' },
 	'sat.eduFlow.dropoutPrimary': { es: 'No asisten a la escuela (% de 6 a 12 años)', en: 'Not attending school (% of children aged 6–12)', gn: 'No asisten a la escuela (% de 6 a 12 años)', pt: 'Não frequentam a escola (% de 6 a 12 anos)' },
 	'sat.eduFlow.dropoutSecondary': { es: 'No asisten a la escuela (% de 13 a 18 años)', en: 'Not attending school (% of people aged 13–18)', gn: 'No asisten a la escuela (% de 13 a 18 años)', pt: 'Não frequentam a escola (% de 13 a 18 anos)' },
-	'sat.eduFlow.nbi': { es: 'NBI', en: 'Unmet basic needs', gn: 'NBI', pt: 'NBI' },
-	'sat.eduFlow.youthPct': { es: '% jóvenes 18-29', en: '% youth 18-29', gn: "Mitã 18-29", pt: '% jovens 18-29' },
-	'sat.eduFlow.femaleHeaded': { es: 'Jefatura femenina', en: 'Female-headed', gn: "Kuña ñangareko", pt: 'Chefia feminina' },
-	'sat.eduFlow.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
-	'sat.eduFlow.typeLabel': { es: 'Clasificación', en: 'Classification', gn: 'Clasificación', pt: 'Classificação' },
 	// ── Productive Activity ──
-	'sat.prodAct.title': { es: '¿Dónde se concentra la actividad económica?', en: 'Where is economic activity concentrated?', gn: "Moope tembiapo economico oime? (Misiones)", pt: 'Onde se concentra a atividade econômica?' },
-	'sat.prodAct.desc': { es: '6 indicadores satelitales de actividad económica en valores reales: luces nocturnas (VIIRS), productividad vegetal (NPP), verdor (NDVI), superficie construida (GHSL), conversión forestal (Hansen) y temperatura superficial (LST). Cada hexágono muestra el valor real del pixel satelital. Comparación temporal con línea base.', en: '6 satellite economic activity indicators in real values: nightlights (VIIRS), vegetation productivity (NPP), greenness (NDVI), built surface (GHSL), forest conversion (Hansen) and surface temperature (LST). Each hexagon shows the real satellite pixel value. Temporal comparison with baseline.', gn: "6 tembiapo indicador", pt: '6 indicadores satelitais de atividade econômica em valores reais: luzes noturnas (VIIRS), produtividade vegetal (NPP), verdor (NDVI), superfície construída (GHSL), conversão florestal (Hansen) e temperatura superficial (LST). Cada hexágono mostra o valor real do pixel satelital. Comparação temporal com linha de base.' },
-	'sat.prodAct.type': { es: 'Nivel', en: 'Level', gn: 'Nivel', pt: 'Nível' },
-	'sat.prodAct.typeLabel': { es: 'Nivel de actividad', en: 'Activity level', gn: 'Nivel', pt: 'Nível de atividade' },
-	'sat.prodAct.viirs': { es: 'Luces nocturnas (nW/cm2/sr)', en: 'Nightlights (nW/cm2/sr)', gn: 'Tesa pyharekue', pt: 'Luzes noturnas (nW/cm²/sr)' },
-	'sat.prodAct.npp': { es: 'Productividad vegetal (gC/m2/ano)', en: 'Vegetation productivity (gC/m2/yr)', gn: 'NPP', pt: 'Produtividade vegetal (gC/m²/ano)' },
-	'sat.prodAct.ndvi': { es: 'Verdor (NDVI)', en: 'Greenness (NDVI)', gn: 'NDVI', pt: 'Verdor (NDVI)' },
-	'sat.prodAct.built': { es: 'Superficie construida', en: 'Built surface', gn: "Mba'e apopyra", pt: 'Superfície construída' },
-	'sat.prodAct.loss': { es: 'Pérdida forestal', en: 'Forest loss', gn: "Ka'aguy okañy", pt: 'Perda florestal' },
-	'sat.prodAct.lst': { es: 'Temperatura superficial (C)', en: 'Surface temperature (C)', gn: 'Aku', pt: 'Temperatura superficial (°C)' },
-	'legend.prodAct.low': { es: 'Baja actividad', en: 'Low activity', gn: "Michimi", pt: 'Baixa atividade' },
-	'legend.prodAct.high': { es: 'Alta actividad', en: 'High activity', gn: "Tuicha", pt: 'Alta atividade' },
 	// ── Deforestation Dynamics ──
 	'sat.deforest.title': { es: '¿Cómo avanza la deforestación?', en: 'How is deforestation progressing?', gn: "Mba'eichapa ka'aguy okany?", pt: 'Como avança o desmatamento?' },
 	'sat.deforest.desc': { es: 'Dinámica de deforestación observada (Hansen/Landsat 2001-2024). Tasa de pérdida forestal anual, acumulada, y cambio respecto a la línea base (2001-2010).', en: 'Observed deforestation dynamics (Hansen/Landsat 2001-2024). Annual forest loss rate, cumulative, and change from baseline (2001-2010).', gn: "Ka'aguy okany 2001-2024", pt: 'Dinâmica de desmatamento observada (Hansen/Landsat 2001-2024). Taxa de perda florestal anual, acumulada e variação em relação à linha de base (2001-2010).' },
@@ -915,18 +744,7 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	'sat.landUse.title': { es: '¿Qué uso de suelo tiene esta zona?', en: 'What land use does this area have?', gn: "Mba'éichapa ojepuru ko yvy?", pt: 'Qual o uso do solo nesta zona?' },
 	'sat.landUse.desc': { es: 'Composición de cobertura del suelo por hexágono (color = fracción arbórea): árboles, cultivos, pasturas, arbustos, construido, agua (Dynamic World 10m, Google/WRI — comparable entre Argentina, Paraguay y Brasil)', en: 'Land-cover composition per hexagon (colour = tree fraction): trees, crops, grass, shrub, built, water (Dynamic World 10m, Google/WRI — comparable across Argentina, Paraguay and Brazil)', gn: 'Composición de cobertura del suelo por hexágono (color = fracción arbórea): árboles, cultivos, pasturas, arbustos, construido, agua (Dynamic World 10m, Google/WRI — comparable entre Argentina, Paraguay y Brasil)', pt: 'Composição da cobertura do solo por hexágono (cor = fração arbórea): árvores, cultivos, pastagem, arbustos, construído, água (Dynamic World 10m, Google/WRI — comparável entre Argentina, Paraguai e Brasil)' },
-	'sat.landUse.score': { es: 'Tipo de cobertura', en: 'Cover type', gn: 'Score', pt: 'Tipo de cobertura' },
-	'sat.landUse.type': { es: 'Tipo', en: 'Type', gn: 'Laja', pt: 'Tipo' },
-	'sat.landUse.typeLabel': { es: 'Tipo de cobertura', en: 'Cover type', gn: 'Laja', pt: 'Tipo de cobertura' },
-	'sat.landUse.nativeForest': { es: 'Selva nativa (%)', en: 'Native forest (%)', gn: "Ka'aguy", pt: 'Floresta nativa (%)' },
-	'sat.landUse.plantation': { es: 'Plantacion forestal (%)', en: 'Forest plantation (%)', gn: "Ka'aguy oñemity", pt: 'Plantação florestal (%)' },
-	'sat.landUse.agriculture': { es: 'Agricultura (%)', en: 'Agriculture (%)', gn: 'Temity', pt: 'Agricultura (%)' },
-	'sat.landUse.pasture': { es: 'Pastizal (%)', en: 'Pasture (%)', gn: 'Pasto', pt: 'Pastagem (%)' },
-	'sat.landUse.grassland': { es: 'Pastizal natural (%)', en: 'Natural grassland (%)', gn: 'Pasto', pt: 'Pastagem natural (%)' },
-	'sat.landUse.wetland': { es: 'Humedal (%)', en: 'Wetland (%)', gn: "Yvy y", pt: 'Área úmida (%)' },
-	'sat.landUse.urban': { es: 'Urbano (%)', en: 'Urban (%)', gn: 'Tava', pt: 'Urbano (%)' },
 	'sat.landUse.water': { es: 'Agua', en: 'Water', gn: 'Y', pt: 'Água' },
-	'sat.landUse.mosaic': { es: 'Mosaico agropecuario (%)', en: 'Agricultural mosaic (%)', gn: 'Mosaiko', pt: 'Mosaico agropecuário (%)' },
 	'sat.landUse.bare': { es: 'Suelo desnudo', en: 'Bare soil', gn: "Yvy ñu'ã", pt: 'Solo exposto' },
 	'sat.landUse.trees': { es: 'Árboles (incl. plantaciones)', en: 'Trees (incl. plantations)', gn: "Ka'aguy", pt: 'Árvores (incl. plantações)' },
 	'sat.landUse.crops': { es: 'Cultivos', en: 'Crops', gn: 'Temity', pt: 'Cultivos' },
@@ -937,161 +755,22 @@ const dict: Record<string, Record<Locale, string>> = {
 	'sat.landUse.snow': { es: 'Nieve/hielo', en: 'Snow/ice', gn: 'Roy', pt: 'Neve/gelo' },
 
 	// ── Radio-based analyses ──
-	'analysis.investment.title': { es: '¿Cómo es el mercado inmobiliario en esta zona?', en: 'What is the real estate market like in this area?', gn: "Mba'éichapa yvy ñemuhague ko'ápe?", pt: 'Como é o mercado imobiliário nesta zona?' },
-	'analysis.investment.desc': { es: 'Precios, oferta, oportunidad y atractivo del mercado inmobiliario por parcela', en: 'Prices, supply, opportunity and real estate market attractiveness per parcel', gn: "Hepy, teko porã ha ñemuhague yvy rupi", pt: 'Preços, oferta, oportunidade e atratividade do mercado imobiliário por parcela' },
-	'analysis.risks.title': { es: '¿Dónde se concentran los riesgos naturales?', en: 'Where are natural hazards concentrated?', gn: "Moõpa oñembyaty mba'asy naturaléva?", pt: 'Onde se concentram os riscos naturais?' },
-	'analysis.risks.desc': { es: 'Inundación, deslizamiento, erosión, pendiente y deforestación — riesgo integral por parcela', en: 'Flooding, landslide, erosion, slope and deforestation — integrated risk per parcel', gn: "Ysoguy, yvy ho'a, yvy ñembyai — mba'asy yvy rupi", pt: 'Inundação, deslizamento, erosão, declividade e desmatamento — risco integral por parcela' },
-	'analysis.aptitude.title': { es: '¿Qué condiciones productivas tiene el suelo?', en: 'What productive conditions does the soil have?', gn: "Mba'éichapa yvy temitỹ rehegua?", pt: 'Que condições produtivas tem o solo?' },
-	'analysis.aptitude.desc': { es: 'Suelo, lluvia, pendiente y aptitud agrícola — potencial productivo por parcela', en: 'Soil, rainfall, slope and agricultural aptitude — productive potential per parcel', gn: "Yvy, ama, yvy ho'a ha temitỹ teko porã", pt: 'Solo, chuva, declividade e aptidão agrícola — potencial produtivo por parcela' },
 	'analysis.accessibility.title': { es: '¿Qué zonas están más aisladas?', en: 'Which areas are most isolated?', gn: "Mba'e yvýpa oĩ mombyryve?", pt: 'Quais zonas estão mais isoladas?' },
 	'analysis.accessibility.desc': { es: 'Tiempo de viaje a la capital y a ciudades de 50.000 habitantes o más; distancia a hospital, escuela y ruta — aislamiento por hexágono', en: 'Travel time to the capital and to cities of 50,000 or more; distance to hospital, school and road — isolation per hexagon', gn: "Aravo taviguasu peve, hospital, mbo'ehao ha tape", pt: 'Tempo de viagem até a capital e até cidades de 50 mil habitantes ou mais; distância a hospital, escola e rodovia — isolamento por hexágono' },
-	'analysis.change.title': { es: '¿Qué zonas se están transformando más rápido?', en: 'Which areas are transforming fastest?', gn: "Mba'e yvýpa oñemoambue pya'evéva?", pt: 'Quais zonas estão se transformando mais rápido?' },
-	'analysis.change.desc': { es: 'Parcelas nuevas, deforestación, densidad edilicia — dinámica de cambio', en: 'New parcels, deforestation, building density — change dynamics', gn: "Yvy pyahu, ka'aguy jepe'a, óga papapy", pt: 'Parcelas novas, desmatamento, densidade edilícia — dinâmica de mudança' },
 	'analysis.socio.title': { es: '¿Dónde son mayores las carencias sociales?', en: 'Where are social deprivations greatest?', gn: "Moõpa oĩ mba'e'ỹ tuichavéva?", pt: 'Onde são maiores as carências sociais?' },
 	'analysis.socio.desc': { es: 'Densidad, pobreza, hacinamiento, propiedad y conectividad — perfil censal por hexágono', en: 'Density, poverty, overcrowding, homeownership and connectivity — census profile per hexagon', gn: "Yvypóra papapy, mba'e'ỹ, oiko hatã ha ñanduti", pt: 'Densidade, pobreza, superlotação, propriedade e conectividade — perfil censitário por hexágono' },
-	'analysis.forest.title': { es: '¿Dónde está la mayor riqueza forestal?', en: 'Where is forest cover richest?', gn: "Moõpa oĩ ka'aguy tuichavéva?", pt: 'Onde está a maior riqueza florestal?' },
-	'analysis.forest.desc': { es: 'Cobertura arbórea, altura de dosel, NDVI, bosque nativo — perfil vegetal por parcela', en: 'Tree cover, canopy height, NDVI, native forest — vegetation profile per parcel', gn: "Ka'aguy, yvyra yvatekue, NDVI", pt: 'Cobertura arbórea, altura do dossel, NDVI, floresta nativa — perfil vegetal por parcela' },
 	'analysis.economic.title': { es: '¿Dónde se concentra la actividad económica?', en: 'Where is economic activity concentrated?', gn: "Moõpa oñembyaty mba'apo?", pt: 'Onde se concentra a atividade econômica?' },
 	'analysis.economic.desc': { es: 'Empleo, actividad, formación universitaria, luces nocturnas — dinamismo económico por hexágono', en: 'Employment, activity, university education, night lights — economic dynamism per hexagon', gn: "Mba'apo, teko, mbo'ehao guasu, pytũ rendy", pt: 'Emprego, atividade, formação universitária, luzes noturnas — dinamismo econômico por hexágono' },
 
 	// ── Territorial Scores ──
-	'analysis.scores.title': { es: '¿Dónde hay más infraestructura y servicios?', en: 'Where is there more infrastructure and services?', gn: "Moõpa oĩve mba'apo ha servicio?", pt: 'Onde há mais infraestrutura e serviços?' },
-	'analysis.scores.desc': { es: 'Pavimentación, consolidación, servicios, comercio, conectividad, urbanización y más — 8 indicadores por hexágono', en: 'Paving, consolidation, services, commerce, connectivity, urbanisation and more — 8 indicators per hexagon', gn: "8 rechaukaha yvy rupi: tape, óga, servicio, tape joapy, mba'apo", pt: 'Pavimentação, consolidação, serviços, comércio, conectividade, urbanização e mais — 8 indicadores por hexágono' },
-	'analysis.scores.selectDept': { es: 'Seleccioná un departamento', en: 'Select a department', gn: 'Eiporavo departamento', pt: 'Selecione um departamento' },
-	'analysis.scores.clickHint': { es: 'Hacé click en el mapa para ver el perfil de la parcela', en: 'Click on the map to see the parcel profile', gn: 'Ehesakutu mapa-pe ehecha hag̃ua yvy rechaukaha', pt: 'Clique no mapa para ver o perfil da parcela' },
-	'analysis.scores.selectIndicator': { es: 'Indicador del mapa', en: 'Map indicator', gn: "Mapa rechaukaha", pt: 'Indicador do mapa' },
-	'analysis.scores.overall': { es: 'Promedio general', en: 'Overall average', gn: 'Mbytekue', pt: 'Média geral' },
-	'analysis.scores.hexCount': { es: 'Zonas analizadas', en: 'Areas analysed', gn: 'Yvy ojehechauka', pt: 'Zonas analisadas' },
 
-	'analysis.catastro.title': { es: '¿Cómo está parcelada la tierra?', en: 'How is the land divided into parcels?', gn: '¿Cómo está parcelada la tierra?', pt: 'Como está parcelada a terra?' },
-	'analysis.catastro.desc': { es: 'Estructura catastral: densidad de parcelas urbanas y rurales, áreas medias y cambios registrados en el WFS de Catastro Misiones', en: 'Cadastral structure: urban and rural parcel density, average areas and changes registered in the Catastro Misiones WFS', gn: "Yvy ñemohenda táva ha ka'aguy rupi", pt: 'Estrutura cadastral: densidade de parcelas urbanas e rurais, áreas médias e mudanças registradas no WFS do Catastro Misiones' },
-	'analysis.catastro.legend': { es: 'Total parcelas por radio', en: 'Total parcels per tract', gn: "Yvy opaite rupi", pt: 'Total de parcelas por setor' },
-	'analysis.catastro.totalUrban': { es: 'Parcelas urbanas', en: 'Urban parcels', gn: "Yvy táva", pt: 'Parcelas urbanas' },
-	'analysis.catastro.totalRural': { es: 'Parcelas rurales', en: 'Rural parcels', gn: "Yvy ka'aguy", pt: 'Parcelas rurais' },
-	'analysis.catastro.avgAreaUrban': { es: 'Área media urbana', en: 'Avg urban area', gn: "Yvy mbytekue táva", pt: 'Área média urbana' },
-	'analysis.catastro.avgAreaRural': { es: 'Área media rural', en: 'Avg rural area', gn: "Yvy mbytekue ka'aguy", pt: 'Área média rural' },
-	'analysis.catastro.newParcels': { es: 'Nuevas (90 días)', en: 'New (90 days)', gn: "Ipyahu (90 ára)", pt: 'Novas (90 dias)' },
-	'analysis.catastro.removedParcels': { es: 'Removidas', en: 'Removed', gn: "Oñembogueva", pt: 'Removidas' },
-	'analysis.catastro.new90d': { es: 'nuevas 90d', en: 'new 90d', gn: "ipyahu 90 ára", pt: 'novas 90d' },
-	'analysis.catastro.new7d': { es: 'Nuevas (7 días)', en: 'New (7 days)', gn: "Ipyahu (7 ára)", pt: 'Novas (7 dias)' },
-	'analysis.catastro.totalParcels': { es: 'Total parcelas', en: 'Total parcels', gn: "Yvy opaite", pt: 'Total de parcelas' },
-	'analysis.catastro.changeHistory': { es: 'Historial de cambios', en: 'Change history', gn: "Mba'e ojejapo vaekue", pt: 'Histórico de mudanças' },
-	'analysis.catastro.backToDepts': { es: '\u2190 Departamentos', en: '\u2190 Departments', gn: "\u2190 Departamento", pt: '← Departamentos' },
-	'analysis.catastro.topDepts': { es: 'Seleccioná un departamento', en: 'Select a department', gn: "Eiporavo departamento", pt: 'Selecione um departamento' },
-	'analysis.catastro.howToReadTitle': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ejapokuaa ko mapa", pt: 'Como ler este mapa' },
-	'analysis.catastro.howToReadBody': {
-		es: 'Las parcelas catastrales se muestran coloreadas según su tipo, urbana o rural. Al seleccionar un departamento, el mapa muestra todas las parcelas registradas en la Dirección General de Catastro de Misiones. Hacé click en un radio censal para ver estadísticas detalladas.',
-		en: 'Cadastral parcels are coloured by type, urban or rural. When you select a department, the map shows all parcels registered with the Misiones cadastre office. Click a census tract for detailed statistics.',
-		gn: "Yvy oñembosa'y tipo rupi: táva térã ka'aguy. Eiporavo departamento, mapa ohechauka yvy opaite. Ehesakutu radio ehecha hag̃ua estadística.",
-		pt: 'As parcelas cadastrais são mostradas coloridas por tipo, urbana ou rural. Ao selecionar um departamento, o mapa mostra todas as parcelas registradas na Dirección General de Catastro de Misiones. Clique em um setor censitário para ver estatísticas detalhadas.',
-	},
-	'analysis.catastro.implicationsTitle': { es: 'Implicancias', en: 'Implications', gn: "Mba'e he'ise", pt: 'Implicações' },
-	'analysis.catastro.implicationsBody': {
-		es: 'La cantidad de parcelas nuevas en los últimos 90 días indica la presión inmobiliaria sobre cada zona. Un crecimiento alto de parcelas urbanas puede señalar expansión urbana, demanda de servicios y necesidad de planificación.',
-		en: 'The number of new parcels in the last 90 days indicates real estate pressure on each area. High growth of urban parcels may signal urban expansion, service demand and the need for planning.',
-		gn: "Yvy pyahu 90 ára pe ohechauka presión inmobiliaria. Yvy táva oikuaaukáva ikatu he'ise táva oñembotuicha, oikotevẽ servicio ha planificación.",
-		pt: 'A quantidade de parcelas novas nos últimos 90 dias indica a pressão imobiliária sobre cada zona. Um crescimento alto de parcelas urbanas pode sinalizar expansão urbana, demanda por serviços e necessidade de planejamento.',
-	},
-	'analysis.catastro.methodTitle': { es: 'Metodología', en: 'Methodology', gn: 'Metodología', pt: 'Metodologia' },
-	'analysis.catastro.methodBody': {
-		es: 'Datos catastrales de la Dirección General de Catastro de Misiones procesados a nivel de radio censal INDEC 2022. Cada parcela se clasifica como urbana o rural según su código catastral. Superficie media y conteo de parcelas nuevas (últimos 90 días) se calculan por radio censal. Actualización mensual.',
-		en: 'Cadastral data from the Misiones General Cadastre Office processed at INDEC 2022 census tract level. Each parcel is classified as urban or rural by its cadastral code. Average area and new parcel counts (last 90 days) are computed per census tract. Monthly update.',
-		gn: 'Catastro Misiones datos radio censal INDEC 2022 rupi. Yvy oñemboja urbano térã rural. Actualización jasy peteĩ.',
-		pt: 'Dados cadastrais da Dirección General de Catastro de Misiones processados no nível de setor censitário INDEC 2022. Cada parcela é classificada como urbana ou rural segundo seu código cadastral. Superfície média e contagem de parcelas novas (últimos 90 dias) são calculados por setor censitário. Atualização mensal.',
-	},
-	'analysis.catastro.guideDeptTitle': { es: 'Guía rápida', en: 'Quick guide', gn: "Ñemoañete pya'e", pt: 'Guia rápido' },
-	'analysis.catastro.guideDeptBody': {
-		es: 'Las parcelas urbanas y las rurales llevan colores distintos. Hacé click en cualquier edificio o zona del mapa para seleccionar un radio censal y ver sus estadísticas: cantidad de parcelas, áreas medias, parcelas nuevas y calidad habitacional.',
-		en: 'Urban and rural parcels have different colours. Click any building or map area to select a census tract and see its statistics: parcel counts, average areas, new parcels and housing quality.',
-		gn: "Yvy táva ha ka'aguy sa'y iñambue. Ehesakutu óga térã mapa-pe eiporavo hag̃ua radio ha ehecha estadística.",
-		pt: 'As parcelas urbanas e as rurais têm cores distintas. Clique em qualquer edificação ou zona do mapa para selecionar um setor censitário e ver suas estatísticas: quantidade de parcelas, áreas médias, parcelas novas e qualidade habitacional.',
-	},
-	'analysis.catastro.vsAvg': { es: 'vs promedio provincial', en: 'vs provincial average', gn: 'vs tetã mbytekue', pt: 'vs média provincial' },
-	'analysis.catastro.pressure': { es: 'Presión inmobiliaria', en: 'Real estate pressure', gn: "Yvy ñemuha reko", pt: 'Pressão imobiliária' },
-	'analysis.catastro.parcels': { es: 'parcelas', en: 'parcels', gn: 'yvy', pt: 'parcelas' },
-	'analysis.catastro.updateFreq': { es: 'Datos catastrales actualizados semanalmente', en: 'Cadastral data updated weekly', gn: "Mba'ekuaa catastro oñembopyahu arapokõindy", pt: 'Dados cadastrais atualizados semanalmente' },
-	'analysis.catastro.clickDept': { es: 'Parcelas visibles en el mapa — hacé click en un radio para detalle', en: 'Parcels visible on map — click a tract for detail', gn: "Yvy ojehecha mapápe — eñemí peteĩ radio-pe", pt: 'Parcelas visíveis no mapa — clique em um setor para detalhes' },
-	'analysis.catastro.thisRadio': { es: 'Este radio', en: 'This tract', gn: 'Ko radio', pt: 'Este setor' },
-	'analysis.catastro.deptAvg': { es: 'Prom. depto', en: 'Dept avg', gn: 'Depto mbytekue', pt: 'Méd. depto' },
-	'analysis.catastro.provAvg': { es: 'Prom. provincia', en: 'Province avg', gn: 'Tetã mbytekue', pt: 'Méd. provincial' },
-	'analysis.catastro.housingTitle': { es: 'Calidad habitacional', en: 'Housing quality', gn: "Óga rekoporã", pt: 'Qualidade habitacional' },
-	'analysis.catastro.h.agua': { es: 'Con agua de red', en: 'With piped water', gn: "Y oĩva", pt: 'Com água de rede' },
-	'analysis.catastro.h.cloacas': { es: 'Con cloacas', en: 'Sewerage', gn: "Ysyry guasu", pt: 'Com esgoto' },
-	'analysis.catastro.h.alumbrado': { es: 'Con alumbrado', en: 'With street lights', gn: "Tape rendy oĩva", pt: 'Com iluminação' },
-	'analysis.catastro.h.pavimento': { es: 'Con pavimento', en: 'With paved roads', gn: "Tape porã oĩva", pt: 'Com pavimento' },
-	'analysis.catastro.h.hacinamiento': { es: 'Hacinamiento', en: 'Overcrowding', gn: "Hetaiterei", pt: 'Superlotação' },
-	'analysis.catastro.h.nbi': { es: 'NBI', en: 'Unmet needs', gn: "Oikotevẽva", pt: 'NBI' },
-	'analysis.catastro.petalHint': { es: 'Pétalo: más grande = mejor · punteada = prom. de la provincia de Misiones', en: 'Petal: larger = better · dashed = Misiones Province avg', gn: 'Pétalo: más grande = mejor · punteada = prom. de la provincia de Misiones', pt: 'Pétala: maior = melhor · pontilhada = méd. da província de Misiones' },
-	'analysis.catastro.clearAll': { es: 'Limpiar', en: 'Clear all', gn: "Mopotĩ", pt: 'Limpar' },
-	'analysis.catastro.legendUrban': { es: 'Parcela urbana', en: 'Urban parcel', gn: "Yvy táva", pt: 'Parcela urbana' },
-	'analysis.catastro.legendRural': { es: 'Parcela rural', en: 'Rural parcel', gn: "Yvy ka'aguy", pt: 'Parcela rural' },
-	'analysis.catastro.legendNew': { es: 'Nueva', en: 'New', gn: "Ipyahu", pt: 'Nova' },
-	'analysis.catastro.legendRemoved': { es: 'Eliminada', en: 'Removed', gn: "Okañy", pt: 'Removida' },
 	'data.updatedAt': { es: 'Procesado al', en: 'Processed', gn: 'Oñembopyahu', pt: 'Processado em' },
-	'analysis.flood.methodTitle': { es: 'Metodología', en: 'Methodology', gn: "Mba'eichapa", pt: 'Metodologia' },
-	'analysis.flood.methodRecurrence': {
-		es: 'Presencia histórica de agua derivada de JRC Global Surface Water (Landsat, 1984–2021). Occurrence indica el % del tiempo con agua detectada; recurrence indica el % de años en que el agua vuelve a aparecer; estacionalidad indica cuántos meses al año hay agua sobre la superficie del suelo.',
-		en: 'Historical water presence from JRC Global Surface Water (Landsat, 1984–2021). Occurrence indicates % of time with water detected; recurrence indicates % of years water reappears; seasonality indicates months per year with water on the land surface.',
-		gn: "Y rehegua historia guive JRC Global Surface Water (Landsat, 1984–2021). Occurrence he'ise % ára y reheve; recurrence he'ise % ary y ojekuaa jey; estacionalidad he'ise mboy jasy y reheve ary pe.",
-		pt: 'Presença histórica de água derivada do JRC Global Surface Water (Landsat, 1984–2021). Occurrence indica o % do tempo com água detectada; recurrence indica o % de anos em que a água reaparece; sazonalidade indica quantos meses por ano há água sobre a superfície do solo.',
-	},
-	'analysis.flood.methodExtent': {
-		es: 'Porcentaje de la zona cubierto por agua en la observación más reciente (última imagen SAR procesada). Mide cuánto de la zona está inundado actualmente.',
-		en: 'Percentage of the area covered by water in the most recent observation (latest processed SAR image). Measures how much of the area is currently flooded.',
-		gn: "Mboy % yvy y guype oime ko'ag̃a imagen SAR ipahague rupi.",
-		pt: 'Percentagem da zona coberta por água na observação mais recente (última imagem SAR processada). Mede quanto da zona está inundado atualmente.',
-	},
-	'analysis.flood.methodScore': {
-		es: 'Índice compuesto 0–100: media geométrica de componentes validados por PCA (presencia histórica, recurrencia interanual, extensión actual). Fuentes: JRC Global Surface Water + Sentinel-1 SAR. Una zona permanentemente sobre un río tendrá score alto; una zona seca con inundación actual también.',
-		en: 'Composite index 0–100: geometric mean of PCA-validated components (historical presence, year-to-year recurrence, current extent). Sources: JRC Global Surface Water + Sentinel-1 SAR. An area permanently on a river scores high; a dry area with current flooding also scores high.',
-		gn: "Índice 0–100: media geométrica componente PCA rehegua (y rehegua, jey ary ha ary, ko'ag̃a tuichakue). JRC + Sentinel-1 SAR.",
-		pt: 'Índice composto 0–100: média geométrica de componentes validados por PCA (presença histórica, recorrência interanual, extensão atual). Fontes: JRC Global Surface Water + Sentinel-1 SAR. Uma zona permanentemente sobre um rio terá score alto; uma zona seca com inundação atual também.',
-	},
 	// Explanatory panels — flood risk
-	'analysis.flood.howToReadTitle': { es: 'Cómo leer este mapa', en: 'How to read this map', gn: "Mba'eichapa ejapokuaa ko mapa", pt: 'Como ler este mapa' },
-	'analysis.flood.howToReadBody': {
-		es: 'Los colores representan la presencia histórica de agua en cada zona (JRC Global Surface Water, Landsat 1984–2021), en cuatro clases que muestra la leyenda: sin agua detectada en todo el período (0%), baja presencia (<5%), presencia moderada (5–20%) y alta presencia (>20%). Seleccioná un departamento para ver el detalle a nivel de parcela catastral.',
-		en: 'Colours represent historical water presence per area (JRC Global Surface Water, Landsat 1984–2021), in four classes shown in the legend: no water detected in the whole period (0%), low presence (<5%), moderate presence (5–20%) and high presence (>20%). Select a department to view parcel-level detail.',
-		gn: "Sa'y ohechauka y rehegua historia yvy peteĩ-pe (JRC, Landsat 1984–2021). Leyenda ohechauka irundy clase: ndaipóri y ojehecháva (0%); michĩ (<5%); mbyte (5–20%); guasu (>20%). Eiporavo departamento ehecha hag̃ua yvy peteĩteĩ.",
-		pt: 'As cores representam a presença histórica de água em cada zona (JRC Global Surface Water, Landsat 1984–2021), em quatro classes mostradas na legenda: sem água detectada em todo o período (0%), baixa presença (<5%), presença moderada (5–20%) e alta presença (>20%). Selecione um departamento para ver o detalhe no nível de parcela cadastral.',
-	},
-	'analysis.flood.keyFindingsTitle': { es: 'Hallazgos clave', en: 'Key findings', gn: 'Ojejuhúva guasu', pt: 'Principais achados' },
-	'analysis.flood.implicationsTitle': { es: 'Implicancias', en: 'Implications', gn: "Mba'e he'ise", pt: 'Implicações' },
-	'analysis.flood.implicationsBody': {
-		es: 'Las parcelas en zonas de riesgo alto pueden enfrentar anegamientos recurrentes, afectando el valor inmobiliario y la habitabilidad. La infraestructura de servicios básicos (agua, cloacas) en estas zonas requiere diseño resiliente.',
-		en: 'Parcels in high-risk areas may face recurrent flooding, affecting property values and habitability. Basic service infrastructure (water, sewerage) in these areas requires resilient design.',
-		gn: "Yvy mba'asy guasu rehegua ikatu oguereko ysoguy jey, ojapo hag̃ua óga ha tape ivaivéva.",
-		pt: 'As parcelas em zonas de alto risco podem enfrentar inundações recorrentes, afetando o valor imobiliário e a habitabilidade. A infraestrutura de serviços básicos (água, esgoto) nessas zonas requer design resiliente.',
-	},
-	'analysis.flood.statusWet': { es: 'Agua detectada en superficie', en: 'Surface water detected', gn: "Y ojehecha yvy ári", pt: 'Água detectada na superfície' },
-	'analysis.flood.statusDry': { es: 'Sin agua detectada en la última imagen', en: 'No water detected in latest image', gn: "Ndaipóri y ojehechaukáva", pt: 'Sem água detectada na última imagem' },
-	'analysis.flood.statusDate': { es: 'Imagen SAR:', en: 'SAR image:', gn: "SAR ra'ãnga:", pt: 'Imagem SAR:' },
-	'analysis.flood.howToReadDeptTitle': { es: 'Guía rápida', en: 'Quick guide', gn: "Ñemoañete pya'e", pt: 'Guia rápido' },
-	'analysis.flood.howToReadDeptBody': {
-		es: 'Cada parcela catastral está coloreada según la presencia histórica de agua (JRC, %). Hacé click en una parcela para ver las métricas físicas: presencia histórica, recurrencia interanual, estacionalidad y extensión actual. Podés seleccionar varias parcelas para compararlas.',
-		en: 'Each cadastral parcel is coloured by historical water presence (JRC, %). Click a parcel to see the physical metrics: historical presence, year-to-year recurrence, seasonality and current extent. You can select multiple parcels to compare them.',
-		gn: "Yvy peteĩteĩ oñembosa'y y historia rehegua rupi (JRC, %). Ehesakutu peteĩ ehecha hag̃ua métricas físicas. Ikatu eiporavo heta yvy ejojaha hag̃ua.",
-		pt: 'Cada parcela cadastral está colorida pela presença histórica de água (JRC, %). Clique em uma parcela para ver as métricas físicas: presença histórica, recorrência interanual, sazonalidade e extensão atual. Você pode selecionar várias parcelas para compará-las.',
-	},
 
 	// Real estate analysis labels
-	'analysis.re.provincial': { es: 'Resumen provincial', en: 'Provincial summary', gn: "Tetã guasu rehegua", pt: 'Resumo provincial' },
-	'analysis.re.listings': { es: 'Avisos activos', en: 'Active listings', gn: "Mba'e oñevendéva", pt: 'Anúncios ativos' },
-	'analysis.re.medianPrice': { es: 'Precio mediano USD/m²', en: 'Median price USD/m²', gn: 'Hepy mbytekue USD/m²', pt: 'Preço mediano USD/m²' },
-	'analysis.re.medianTotal': { es: 'Precio mediano USD', en: 'Median price USD', gn: 'Hepy mbytekue USD', pt: 'Preço mediano USD' },
-	'analysis.re.houses': { es: 'Casas', en: 'Houses', gn: 'Óga', pt: 'Casas' },
-	'analysis.re.apartments': { es: 'Departamentos', en: 'Apartments', gn: "Óga guasu", pt: 'Apartamentos' },
-	'analysis.re.lots': { es: 'Lotes', en: 'Lots', gn: 'Yvy', pt: 'Lotes' },
-	'analysis.re.avgArea': { es: 'Superficie promedio', en: 'Average area', gn: "Yvy tuichakue", pt: 'Superfície média' },
-	'analysis.re.vsMedian': { es: 'vs. mediana departamental', en: 'vs. department median', gn: 'vs. departamento mbytekue', pt: 'vs. mediana departamental' },
-	'analysis.re.topDepts': { es: 'Top departamentos', en: 'Top departments', gn: 'Departamento iporãvéva', pt: 'Top departamentos' },
-	'analysis.re.radioDetail': { es: 'Detalle del radio', en: 'Census tract detail', gn: 'Radio rehegua', pt: 'Detalhe do setor' },
-	'analysis.re.propertyTypes': { es: 'Tipos de propiedad', en: 'Property types', gn: "Mba'e lája", pt: 'Tipos de propriedade' },
 
 	// ── Lasso / Zones ──────────────────────────────────────────────────────
 	'lasso.toggle': { es: 'Lazo', en: 'Lasso', gn: 'Lazo', pt: 'Lasso' },
-	'lasso.drawing': { es: 'Dibujando zona...', en: 'Drawing zone...', gn: 'Oñembosako\'i...' , pt: 'Desenhando zona...' },
-	'lasso.cancel': { es: 'Cancelar lazo', en: 'Cancel lasso', gn: 'Eheja lazo', pt: 'Cancelar lasso' },
 	'lasso.clearZones': { es: 'Limpiar zonas', en: 'Clear zones', gn: 'Emopotĩ zona', pt: 'Limpar zonas' },
 	'side.radios': { es: 'Radios censales', en: 'Census tracts', gn: 'Radio censal', pt: 'Setores censitários' },
 	'side.clearRadios': { es: 'Limpiar', en: 'Clear', gn: 'Emopotĩ', pt: 'Limpar' },
@@ -1115,16 +794,12 @@ const dict: Record<string, Record<Locale, string>> = {
 	'zone.population': { es: 'Población', en: 'Population', gn: 'Yvypóra', pt: 'População' },
 	'zone.area': { es: 'Área km²', en: 'Area km²', gn: 'Yvy km²', pt: 'Área km²' },
 	'zone.radios': { es: 'Radios', en: 'Tracts', gn: 'Radio', pt: 'Setores' },
-	'zone.noRadios': { es: 'Sin radios en la selección', en: 'No tracts in selection', gn: "Radio'ỹ jeporavópe", pt: 'Sem setores na seleção' },
 	'zone.petalNote': { es: 'Relativo al promedio {ofRef}, ponderado por población (línea punteada = promedio)', en: 'Relative to the population-weighted average {ofRef} (dashed line = average)', gn: 'Relativo al promedio {ofRef}, ponderado por población (línea punteada = promedio)', pt: 'Relativo à média {ofRef}, ponderada pela população (linha pontilhada = média)' },
 	'zone.petalNoteMulti': { es: 'Cada zona, relativa al promedio de su provincia, ponderado por población (línea punteada = promedio): {list}', en: 'Each zone relative to its own province’s population-weighted average (dashed line = average): {list}', gn: 'Cada zona, relativa al promedio de su provincia, ponderado por población (línea punteada = promedio): {list}', pt: 'Cada zona relativa à média da sua província, ponderada pela população (linha pontilhada = média): {list}' },
 
 	// ── Hex comparison / hex zones ──────────────────────────────────────
 	'hex.comparison': { es: 'Comparación de hexágonos', en: 'Hexagon comparison', gn: 'Hexágono jojaha', pt: 'Comparação de hexágonos' },
-	'hex.hexCount': { es: 'Hexágonos', en: 'Hexagons', gn: 'Hexágono', pt: 'Hexágonos' },
 	'hexZone.title': { es: 'Zonas hexagonales', en: 'Hex zones', gn: 'Hexágono zona', pt: 'Zonas hexagonais' },
-	'hex.resolution': { es: 'Resolución H3', en: 'H3 resolution', gn: 'H3 tuichakue', pt: 'Resolução H3' },
-	'hex.loading': { es: 'Cargando hexágonos...', en: 'Loading hexagons...', gn: 'Oñemyenyhẽ hexágono...', pt: 'Carregando hexágonos...' },
 	'hex.petalRelative': { es: 'Flor (lectura relativa):', en: 'Flower (relative reading):', gn: 'Yvoty:', pt: 'Flor (leitura relativa):' },
 	'hex.avgOf': { es: 'promedio {ofRef}', en: 'average {ofRef}', gn: 'promedio {ofRef}', pt: 'média {ofRef}' },
 	'hex.goalpostNote': { es: 'Valores /100: escala fija regional, idéntica en Argentina, Paraguay y Brasil — 100 es el techo del rango de referencia (NEA + región transfronteriza), no el máximo {ofRef}. Solo la flor de arriba compara contra el promedio {ofRef}.', en: 'Values /100: fixed regional scale, identical in Argentina, Paraguay and Brazil — 100 is the ceiling of the reference range (NEA + cross-border region), not the maximum {ofRef}. Only the flower above compares against the average {ofRef}.', gn: 'Valores /100: escala fija regional, idéntica en Argentina, Paraguay y Brasil — 100 es el techo del rango de referencia (NEA + región transfronteriza), no el máximo {ofRef}. Solo la flor de arriba compara contra el promedio {ofRef}.', pt: 'Valores /100: escala fixa regional, idêntica na Argentina, no Paraguai e no Brasil — 100 é o teto do intervalo de referência (NEA + região transfronteiriça), não o máximo {ofRef}. Apenas a flor acima compara contra a média {ofRef}.' },
@@ -1136,8 +811,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.base.pob_total': { es: 'Personas (estimado)', en: 'People (estimate)', gn: 'Personas (estimado)', pt: 'Pessoas (estimado)' },
 	'hex.base.pob_6_12': { es: 'Chicos de 6 a 12 años (estimado)', en: 'Children aged 6–12 (estimate)', gn: 'Chicos de 6 a 12 años (estimado)', pt: 'Crianças de 6 a 12 anos (estimado)' },
 	'hex.base.pob_13_18': { es: 'Personas de 13 a 18 años (estimado)', en: 'People aged 13–18 (estimate)', gn: 'Personas de 13 a 18 años (estimado)', pt: 'Pessoas de 13 a 18 anos (estimado)' },
-	'hex.popEst': { es: 'Población estimada', en: 'Estimated population', gn: 'Tekohára papapy', pt: 'População estimada' },
-	'hex.households': { es: 'Hogares estimados', en: 'Estimated households', gn: 'Óga papapy', pt: 'Domicílios estimados' },
 	'hex.estPctNote': { es: 'Valores estimados por hexágono: el dato del radio censal se redistribuye a los hexágonos ponderando por edificios (método dasimétrico).', en: 'Estimated values per hexagon: the census-tract value is redistributed to hexagons weighted by buildings (dasymetric method).', gn: 'Papapy hexágono rehegua: radio censal-gui oñemboja\'o hexágono-pe óga rupive (dasimétrico).', pt: 'Valores estimados por hexágono: o dado do setor censitário é redistribuído aos hexágonos ponderando por edifícios (método dasimétrico).' },
 	'hex.baseNote': { es: 'Cada % es la tasa del radio censal que cubre el hexágono (ponderada si son varios), sobre el total que dice su etiqueta: hogares o personas de cierta edad. Las filas «(estimado)» dicen cuántos de esos hogares o personas hay en el hexágono. «Sin cobertura»: el radio tiene menos de 30 en ese total, demasiado pocos para una tasa.', en: 'Each % is the rate of the census tract covering the hexagon (weighted if there are several), over the total its label names: households or people of a given age. The “(estimate)” rows say how many of those households or people are in the hexagon. “No data”: the tract has fewer than 30 in that total, too few for a rate.', gn: 'Cada % es la tasa del radio censal que cubre el hexágono (ponderada si son varios), sobre el total que dice su etiqueta: hogares o personas de cierta edad. Las filas «(estimado)» dicen cuántos de esos hogares o personas hay en el hexágono. «Sin cobertura»: el radio tiene menos de 30 en ese total, demasiado pocos para una tasa.', pt: 'Cada % é a taxa do setor censitário que cobre o hexágono (ponderada se forem vários), sobre o total que diz o seu rótulo: lares ou pessoas de certa idade. As linhas «(estimado)» dizem quantos desses lares ou pessoas há no hexágono. «Sem cobertura»: o setor tem menos de 30 nesse total, poucos demais para uma taxa.' },
 
@@ -1158,8 +831,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'side.welcome.showPanel': { es: 'Mostrar panel', en: 'Show panel', gn: 'Ehechauka panel', pt: 'Mostrar painel' },
 
 	// ── CTA diagnóstico territorial ───────────────────────────────────────
-	'cta.diagnostic.label': { es: '¿Necesitás un diagnóstico personalizado?', en: 'Need a custom geospatial diagnosis?', gn: "Reikotevẽ diagnóstico?", pt: 'Precisa de um diagnóstico personalizado?' },
-	'cta.diagnostic.button': { es: 'Solicitar diagnóstico geoespacial', en: 'Request geospatial diagnosis', gn: 'Ejerure diagnóstico', pt: 'Solicitar diagnóstico geoespacial' },
 
 	// ── EUDR product page ─────────────────────────────────────────────────
 	'eudr.disclaimer_short': { es: 'Evaluación indicativa. No constituye certificación legal bajo Reg. (UE) 2023/1115.', en: 'Indicative assessment. Not legal certification under Reg. (EU) 2023/1115.', gn: 'EUDR', pt: 'Avaliação indicativa. Não constitui certificação legal sob Reg. (UE) 2023/1115.' },
