@@ -18,6 +18,7 @@
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { page } from '$app/state';
 	import { BASEMAP, TERRAIN_DEM, getTilesUrl } from '$lib/config';
+	import { themeStore } from '$lib/stores/theme.svelte';
 	import { pointInPolygon } from '$lib/utils/geometry';
 
 	const CDN = 'https://cdn.spatia.ar/data/demo/el_nino';
@@ -46,9 +47,6 @@
 			label: '#1c1c1c', halo: 'rgba(251, 250, 247, 0.92)', peakOff: '#dcd8cf', peakOn: '#3a7fb0', peakLine: '#1c1c1c' },
 		oscuro: { sel: '#f3efe6', dry: '#4a4c52', ctx: '#26282d', nrWet: '#4a5560', sym: '#d8d4ca', symFill: '#1c1e22', radioLine: '#e6e2d8', casing: INK_BG, iso: '#b6a1dc',
 			label: '#ebe8e1', halo: 'rgba(19, 20, 23, 0.92)', peakOff: '#2d2f36', peakOn: '#7fb3d1', peakLine: '#ebe8e1' }
-	};
-	const temaInicial = (): Tema => {
-		try { return localStorage.getItem('demo-el-nino-tema') === 'oscuro' ? 'oscuro' : 'claro'; } catch { return 'claro'; }
 	};
 	// Positron restyled as an atlas sheet: paper, no land-cover blotches, no POIs, no flat buildings (the demo
 	// draws its own), and shaded relief from the site's Mapterhorn tiles under the roads: the Uruguay's
@@ -235,7 +233,8 @@
 	let selected = $state<Record<string, any> | null>(null);
 	let error = $state('');
 	let capa = $state('agua');
-	let tema = $state<Tema>(temaInicial());
+	// The site's theme (Claro · Oscuro; Satélite shows oscuro): one choice for the whole site.
+	const tema: Tema = $derived(themeStore.tema);
 	let registro = $state<Registro | null>(null);
 	let verif = $state<Verif | null>(null);
 	const T = $derived(TH[tema]);
@@ -418,7 +417,7 @@
 		g.fillStyle = color; g.fill();
 		g.lineWidth = 3; g.strokeStyle = INK_BG; g.stroke();
 		g.fillStyle = starText(color);
-		g.font = `700 ${n > 9 ? 22 : 27}px 'Source Sans 3', sans-serif`;
+		g.font = `600 ${n > 9 ? 22 : 27}px 'IBM Plex Sans', system-ui, sans-serif`;
 		g.textAlign = 'center'; g.textBaseline = 'middle';
 		g.fillText(String(n), 12 * k, 13.9 * k);
 		return g.getImageData(0, 0, S, S);
@@ -598,7 +597,6 @@
 	let styleTema: Tema | null = null;
 	$effect(() => {
 		const tm = tema;
-		try { localStorage.setItem('demo-el-nino-tema', tm); } catch {}
 		if (!map || styleTema === null || styleTema === tm) return;
 		loadStyle(tm).then((s) => { if (tema === tm) { styleTema = tm; map.setStyle(s, { diff: false }); } });
 	});
@@ -987,7 +985,6 @@
 <svelte:head>
 	<title>El Niño en El Soberbio · Spatia</title>
 	<meta name="robots" content="noindex, nofollow" />
-	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <div class="demo" class:light={tema === 'claro'}>
@@ -996,7 +993,7 @@
 		<div class="tools">
 			<button onclick={() => view(town())}>Pueblo 3D</button>
 			<button onclick={() => view(MUNI)}>Municipio</button>
-			<button class="tema" onclick={() => (tema = tema === 'claro' ? 'oscuro' : 'claro')} title="Fondo del mapa" aria-label="Cambiar fondo del mapa">{tema === 'claro' ? 'Oscuro' : 'Claro'}</button>
+			<button class="tema" onclick={() => themeStore.set(tema === 'claro' ? 'oscuro' : 'claro')} title="Fondo del mapa" aria-label="Cambiar fondo del mapa">{tema === 'claro' ? 'Oscuro' : 'Claro'}</button>
 			{#if lassoOn}
 				<button class="on" onclick={() => endLasso(false)}>Cancelar</button>
 			{:else}
@@ -1310,19 +1307,18 @@
 <style>
 	/* Chrome: warm graphite with off-white text, one hydrographic blue for the river height and the
 	   active state, amber and lavender only where the data mean something (flooded, isolated).
-	   Type: Source Serif 4 for the title, the height and zone names; Source Sans 3 for everything else. */
-	.demo { --bg: #131417; --panel: #18191d; --card: #1d1f24; --line: #2d2f36; --line-soft: #23252b;
-		--ink: #ebe8e1; --ink-2: #b4b0a7; --ink-3: #7e7b74; --accent: #7fb3d1; --accent-soft: rgba(127, 179, 209, 0.12);
+	   Type and colors: the site's sello (Newsreader for the title, the height and zone names; IBM Plex
+	   Sans for everything else) and its theme tokens (app.css --c-*), so it follows Claro · Oscuro. */
+	.demo { --bg: var(--c-bg); --panel: var(--c-bg); --card: var(--c-panel-2); --line: var(--c-line-2); --line-soft: var(--c-line);
+		--ink: var(--c-ink-1); --ink-2: var(--c-ink-2); --ink-3: var(--c-ink-3); --accent: var(--c-accent);
+		--accent-soft: rgba(var(--c-accent-rgb), 0.1);
 		--amber: #e2b06a; --lavender: #b6a1dc; --red: #d1484a; --red-soft: #e49799;
-		--serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-		--sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
-		--glass: rgba(19, 20, 23, 0.82); --hover: rgba(235, 232, 225, 0.06);
+		--serif: var(--font-serif);
+		--sans: var(--font-sans);
+		--glass: rgba(var(--c-bg-rgb), 0.85); --hover: rgba(var(--c-fg-rgb), 0.05);
 		position: fixed; inset: 0; display: flex; background: var(--bg); color: var(--ink); font-size: 13.5px; font-family: var(--sans); }
 	/* light theme: the printed sheet's paper and ink; accents darkened to keep contrast on white */
-	.demo.light { --bg: #fbfaf7; --panel: #ffffff; --card: #f6f4ef; --line: #d8d5ce; --line-soft: #e8e5de;
-		--ink: #1c1c1c; --ink-2: #3d3b36; --ink-3: #7a776f; --accent: #2f6f9f; --accent-soft: rgba(47, 111, 159, 0.08);
-		--amber: #9a5512; --lavender: #5f45a8; --red: #c0392b; --red-soft: #b03a3c;
-		--glass: rgba(255, 255, 255, 0.9); --hover: rgba(28, 28, 28, 0.04); }
+	.demo.light { --amber: #9a5512; --lavender: #5f45a8; --red: #c0392b; --red-soft: #b03a3c; }
 	.mapwrap { flex: 1; min-width: 0; position: relative; }
 	.map { position: absolute; inset: 0; }
 	.tools { position: absolute; top: 12px; left: 52px; display: flex; gap: 4px; z-index: 2; }
@@ -1345,7 +1341,7 @@
 
 	.control { display: flex; flex-direction: column; gap: 10px; }
 	.stage { display: flex; align-items: baseline; gap: 10px; }
-	.big { white-space: nowrap; font-family: var(--serif); font-size: 42px; font-weight: 500; letter-spacing: -0.01em; color: var(--accent); font-variant-numeric: tabular-nums; }
+	.big { white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; font-family: var(--serif); font-size: 42px; font-weight: 500; letter-spacing: -0.01em; color: var(--accent); font-variant-numeric: tabular-nums; }
 	.slider { position: relative; padding-bottom: 14px; }
 	.slider input[type='range'] { width: 100%; accent-color: var(--accent); margin: 0; }
 	.tick { position: absolute; top: -3px; width: 2px; height: 8px; margin-left: -1px; background: var(--ink-3); pointer-events: none; }
@@ -1449,21 +1445,17 @@
 	footer { color: var(--ink-3); font-size: 11.5px; }
 	.warn { color: var(--red-soft); }
 
-	:global(.demo-tip .maplibregl-popup-content) { background: rgba(24, 25, 29, 0.97); color: #ebe8e1; border: 1px solid #2d2f36;
-		border-radius: 4px; padding: 9px 11px; font: 12.5px/1.45 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
+	:global(.demo-tip .maplibregl-popup-content) { background: rgba(var(--c-bg-rgb), 0.97); color: var(--c-ink-1); border: 1px solid var(--c-line-2);
+		border-radius: 4px; padding: 9px 11px; font: 12.5px/1.45 var(--font-sans);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
 	:global(.demo-tip .maplibregl-popup-tip) { display: none; }
-	.mapwrap :global(.maplibregl-ctrl-scale) { background: rgba(19, 20, 23, 0.7); border-color: #ebe8e1; color: #ebe8e1;
-		font: 11px/1.6 'Source Sans 3', system-ui, sans-serif; }
-	:global(.demo-tip b) { color: #fff; font-weight: 600; }
-	:global(.demo-tip .dim) { color: #b4b0a7; }
+	.mapwrap :global(.maplibregl-ctrl-scale) { background: rgba(var(--c-bg-rgb), 0.75); border-color: var(--c-ink-2); color: var(--c-ink-2);
+		font: 11px/1.6 var(--font-sans); }
+	:global(.demo-tip b) { color: var(--c-ink-1); font-weight: 600; }
+	:global(.demo-tip .dim) { color: var(--c-ink-3); }
 	:global(.demo-tip .r) { color: #e49799; }
-	.demo.light :global(.demo-tip .maplibregl-popup-content) { background: rgba(255, 255, 255, 0.98); color: #1c1c1c; border-color: #d8d5ce;
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
-	.demo.light :global(.demo-tip b) { color: #1c1c1c; }
-	.demo.light :global(.demo-tip .dim) { color: #5a5750; }
+	.demo.light :global(.demo-tip .maplibregl-popup-content) { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); }
 	.demo.light :global(.demo-tip .r) { color: #b03a3c; }
-	.demo.light .mapwrap :global(.maplibregl-ctrl-scale) { background: rgba(255, 255, 255, 0.8); border-color: #3d3b36; color: #3d3b36; }
 	.demo.light .mapwrap :global(.maplibregl-ctrl-attrib) { background: rgba(255, 255, 255, 0.85); color: #5a5750; }
 	.demo.light .mapwrap :global(.maplibregl-ctrl-attrib a) { color: #3d3b36; }
 
@@ -1477,10 +1469,10 @@
 		:global(body *:not(:has(.ficha)):not(.ficha):not(.ficha *)) { display: none !important; }
 		:global(body *:has(.ficha)) { background: none !important; min-height: 0 !important; border: 0 !important; box-shadow: none !important; }
 		.demo { display: none; }
-		.ficha { display: block; color: #1c1c1c; background: #fff; font: 10.5px/1.4 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+		.ficha { display: block; color: #1c1c1c; background: #fff; font: 10.5px/1.4 var(--font-sans); }
 		.ficha b { color: #1c1c1c; }
 		.ficha .fk { margin: 0; color: #5a5750; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
-		.ficha h1 { margin: 3px 0 2px; font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; font-size: 21px; font-weight: 500; letter-spacing: 0; color: #1c1c1c; }
+		.ficha h1 { margin: 3px 0 2px; font-family: var(--font-serif); font-size: 21px; font-weight: 500; letter-spacing: 0; color: #1c1c1c; }
 		.ficha h2 { margin: 9px 0 3px; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #5a5750; }
 		.ficha .fs { margin: 0 0 6px; color: #3d3b36; }
 		.ficha img { display: block; width: 100%; max-height: 92mm; object-fit: cover; border: 1px solid #d8d5ce; }
