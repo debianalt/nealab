@@ -10,8 +10,9 @@ export type Fondo = 'claro' | 'oscuro' | 'satelite';
 export type Tema = 'claro' | 'oscuro';
 
 export const FONDO_KEY = 'spatia_fondo';
-// Oscuro until the panels follow the theme (phase 3); phase 4 switches it to 'claro'.
-export const FONDO_DEFAULT: Fondo = 'oscuro';
+// Claro for everyone on a first visit (decided 31-oct-2026: the atlas, not the vitrina,
+// is what an official or an evaluator should see), not prefers-color-scheme.
+export const FONDO_DEFAULT: Fondo = 'claro';
 const THEME_COLOR: Record<Tema, string> = { claro: '#fbfaf7', oscuro: '#0a0c12' };
 
 const isFondo = (v: unknown): v is Fondo => v === 'claro' || v === 'oscuro' || v === 'satelite';

@@ -133,20 +133,34 @@ export function downloadGeoJsonFromHexList(
 // ── SVG / PNG export for charts ─────────────────────────────────────────────
 
 function inlineSvgStyles(svg: SVGElement): void {
-	// CSS classes don't apply once the SVG leaves the DOM context.
+	// CSS classes and var(--s-*) don't apply once the SVG leaves the DOM context.
 	// Copy computed styles to inline attributes so the file renders identically
-	// in Illustrator/Inkscape (SVG) and on a fresh canvas (PNG).
+	// in Illustrator/Inkscape (SVG) and on a fresh canvas (PNG). The clone is resolved
+	// inside a paper-themed container (.theme-claro, app.css): exports are always light,
+	// whatever the theme on screen. getComputedStyle on a detached clone returned
+	// nothing, so no style was inlined and every var(--s-…) fill came out black.
 	const props = ['fill', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-dasharray',
-		'opacity', 'fill-opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor'];
-	const walk = (node: Element) => {
-		const cs = window.getComputedStyle(node);
-		for (const p of props) {
-			const v = cs.getPropertyValue(p);
-			if (v) (node as SVGElement).style.setProperty(p, v);
-		}
-		for (const child of Array.from(node.children)) walk(child);
-	};
-	walk(svg);
+		'opacity', 'fill-opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor', 'color'];
+	const host = document.createElement('div');
+	host.className = 'theme-claro';
+	host.style.cssText = 'position:fixed;left:-100000px;top:0;visibility:hidden;pointer-events:none';
+	const holder = svg.parentElement === null ? svg : null;
+	host.appendChild(svg);
+	document.body.appendChild(host);
+	try {
+		const walk = (node: Element) => {
+			const cs = window.getComputedStyle(node);
+			for (const p of props) {
+				const v = cs.getPropertyValue(p);
+				if (v) (node as SVGElement).style.setProperty(p, v);
+			}
+			for (const child of Array.from(node.children)) walk(child);
+		};
+		walk(svg);
+	} finally {
+		host.remove();
+		if (holder) host.removeChild(svg);
+	}
 	svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 }
 
@@ -164,7 +178,7 @@ export async function exportSvgAsPng(
 	opts: { scale?: number; background?: string } = {}
 ): Promise<void> {
 	const scale = opts.scale ?? 2;
-	const background = opts.background ?? '#0a0e1a';
+	const background = opts.background ?? '#fbfaf7';   // exports are always on paper
 	const rect = svg.getBoundingClientRect();
 	const width = rect.width || Number(svg.getAttribute('width')) || 600;
 	const height = rect.height || Number(svg.getAttribute('height')) || 400;
