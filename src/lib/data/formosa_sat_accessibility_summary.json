@@ -9,131 +9,131 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 61.6,
-      "hex_count": 40559,
+      "avg_score": 61.9,
+      "hex_count": 42788,
       "centroid": [
-        -62.1413,
-        -23.111
+        -62.1248,
+        -23.1318
       ],
       "rank": {
-        "min_cabecera": 312,
-        "min_capital": 824,
-        "km_hospital": 24.0
+        "min_cabecera": 314,
+        "min_capital": 822,
+        "km_hospital": 24.7
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 59.0,
-      "hex_count": 150491,
+      "avg_score": 59.1,
+      "hex_count": 141295,
       "centroid": [
-        -61.2886,
-        -24.027
+        -61.2683,
+        -24.0356
       ],
       "rank": {
         "min_cabecera": 284,
-        "min_capital": 643,
-        "km_hospital": 31.1
+        "min_capital": 640,
+        "km_hospital": 31.5
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 58.9,
-      "hex_count": 43310,
+      "avg_score": 58.3,
+      "hex_count": 47176,
       "centroid": [
-        -62.0811,
-        -23.8673
+        -62.0564,
+        -23.8606
       ],
       "rank": {
         "min_cabecera": 250,
-        "min_capital": 714,
-        "km_hospital": 24.0
+        "min_capital": 712,
+        "km_hospital": 23.4
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 49.0,
-      "hex_count": 288652,
+      "avg_score": 49.2,
+      "hex_count": 287722,
       "centroid": [
-        -60.0089,
-        -24.8951
+        -59.9786,
+        -24.8681
       ],
       "rank": {
-        "min_cabecera": 181,
-        "min_capital": 422,
-        "km_hospital": 27.2
+        "min_cabecera": 183,
+        "min_capital": 426,
+        "km_hospital": 27.3
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 39.7,
-      "hex_count": 37365,
+      "avg_score": 39.8,
+      "hex_count": 39144,
       "centroid": [
-        -58.6711,
-        -25.1016
+        -58.6647,
+        -25.1049
       ],
       "rank": {
-        "min_cabecera": 116,
-        "min_capital": 232,
-        "km_hospital": 30.3
+        "min_cabecera": 117,
+        "min_capital": 233,
+        "km_hospital": 29.7
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 33.1,
-      "hex_count": 95406,
+      "avg_score": 33.5,
+      "hex_count": 98242,
       "centroid": [
-        -59.1628,
-        -25.7727
+        -59.1699,
+        -25.7599
       ],
       "rank": {
-        "min_cabecera": 104,
-        "min_capital": 228,
-        "km_hospital": 20.5
+        "min_cabecera": 105,
+        "min_capital": 230,
+        "km_hospital": 20.6
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 26.1,
-      "hex_count": 58522,
+      "avg_score": 26.2,
+      "hex_count": 58208,
       "centroid": [
-        -58.0456,
-        -25.3808
+        -58.0591,
+        -25.373
       ],
       "rank": {
         "min_cabecera": 72,
-        "min_capital": 153,
-        "km_hospital": 17.2
+        "min_capital": 152,
+        "km_hospital": 17.3
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 25.6,
-      "hex_count": 71783,
+      "avg_score": 25.5,
+      "hex_count": 70695,
       "centroid": [
-        -58.3872,
-        -25.9345
+        -58.3746,
+        -25.9392
       ],
       "rank": {
         "min_cabecera": 75,
-        "min_capital": 101,
-        "km_hospital": 20.5
+        "min_capital": 100,
+        "km_hospital": 20.6
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
       "avg_score": 22.4,
-      "hex_count": 39672,
+      "hex_count": 40490,
       "centroid": [
-        -58.5513,
-        -26.4647
+        -58.5622,
+        -26.4606
       ],
       "rank": {
         "min_cabecera": 82,
@@ -141,5 +141,6 @@
         "km_hospital": 13.0
       }
     }
-  ]
+  ],
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

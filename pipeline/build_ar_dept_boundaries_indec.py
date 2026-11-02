@@ -1,19 +1,17 @@
 """Argentine department boundaries from INDEC census radios.
 
-src/lib/data/ar_dept_boundaries.json drew GADM 4.1 departments (rebuild_ar_boundaries.py,
-extend_ar_boundaries.py), while every hexagon belongs to its department by the areal
-crosswalk of INDEC 2022 census radios. Two sources: the department line (and the hexagon
-clip, the ?h3= link, the Hexoma `limites`) disagreed with the hexagons in every AR
-department (author, 2-nov-2026). The department here is the union of its INDEC radios,
+src/lib/data/ar_dept_boundaries.json used to draw GADM 4.1 departments
+(rebuild_ar_boundaries.py, extend_ar_boundaries.py, both superseded), while the hexagons
+belonged to their department by INDEC 2022 census radios. The department line (and the
+hexagon clip, the ?h3= link, the Hexoma `limites`) disagreed with the hexagons in every
+AR department (author, 2-nov-2026). The department here is the union of its INDEC radios,
 which nest exactly in INDEC departments.
 
-Two partitions coexist in the data (measured 2-nov-2026, share of each department
-file's cells whose centre falls in its polygon): Misiones and every census layer were
-split by INDEC radios (99.6-99.9 % INDEC); the satellite layers of Corrientes, Chaco and
-Formosa by GADM departments (99.9-100 % GADM, 93.5-97.2 % INDEC; Chaco has 24 GADM
-departments, no "2 de Abril"). So both files stay, and the web picks per layer
-(utils/deptBoundaries.ts arBoundarySource) until those satellite layers are re-split by
-INDEC radios; then the GADM file goes.
+Measured 2-nov-2026: Misiones and every census layer were split by INDEC radios
+(99.6-99.9 % of each file's cells inside its INDEC polygon); the satellite layers of
+Corrientes, Chaco and Formosa by GADM departments. Those were re-split by INDEC the same
+day (repartir_deptos_indec.py; Chaco gained «2 de Abril»), so one polygon set serves
+every layer.
 
 Radios: pipeline/output/radios_misiones.parquet and <prov>/radios_<prov>.parquet
 (redcode = prov 2 + dept 3 + fraction 2 + radio 2). Names: DEPT_NAMES of
@@ -21,7 +19,7 @@ build_censo_temporal_dept.py (INDEC georef table), read without importing it.
 Shared edges stay identical between neighbours (shapely.coverage_simplify, ~10 m).
 Writes nothing if a department is missing or a name does not match the current file.
 
-Output: src/lib/data/ar_dept_boundaries_indec.json (same schema: redcode = INDEC code).
+Output: src/lib/data/ar_dept_boundaries.json (redcode = INDEC department code).
     python pipeline/build_ar_dept_boundaries_indec.py [--dry]
 """
 from __future__ import annotations
@@ -33,8 +31,8 @@ import shapely
 from shapely.geometry import mapping
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / 'src' / 'lib' / 'data' / 'ar_dept_boundaries_indec.json'
-GADM_JSON = REPO / 'src' / 'lib' / 'data' / 'ar_dept_boundaries.json'
+OUT = REPO / 'src' / 'lib' / 'data' / 'ar_dept_boundaries.json'
+GADM_JSON = OUT  # names checked against the current file
 RADIOS = {
     '54': REPO / 'pipeline/output/radios_misiones.parquet',
     '18': REPO / 'pipeline/output/corrientes/radios_corrientes.parquet',
@@ -79,7 +77,7 @@ def main() -> int:
             if not nombre:
                 problems.append(f'{row["dept"]}: no INDEC name'); continue
             if (prov, norm(nombre)) not in old_names:
-                print(f'  note: {row["dept"]} {nombre} has no GADM department (INDEC only)')
+                print(f'  note: {row["dept"]} {nombre} is new in the file')
             g = row['geometry']
             # drop slivers left by radio seams (< 0.01 km² parts)
             if g.geom_type == 'MultiPolygon':

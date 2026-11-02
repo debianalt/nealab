@@ -57,7 +57,7 @@
           "monotonic": true,
           "dept_tilt_p25_p75": [
             0.1,
-            2.8
+            2.9
           ],
           "sign_flips": 2
         },
@@ -72,47 +72,47 @@
   },
   "departments": [
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 1.4,
-      "hex_count": 150491,
-      "high_risk_count": 1046,
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 3.8,
+      "hex_count": 40490,
       "centroid": [
-        -61.282,
-        -24.0314
+        -58.5622,
+        -26.4606
       ],
+      "high_risk_count": 1952,
       "rank": {
-        "bld_hand5_pct": 96.8,
-        "bld_hand5_n": 19274,
-        "bld_total": 19902,
-        "land_hand5_pct": 99.7,
-        "s1_land_pct": 3.5,
-        "low_new_n": 5096,
-        "bld_new_n": 5135,
-        "low_new_share_pct": 99.2,
-        "low_stock16_pct": 96.2,
-        "low_tilt_pts": 3.1,
-        "low_tilt_all": 3.1
+        "bld_hand5_pct": 94.1,
+        "bld_hand5_n": 19393,
+        "bld_total": 20609,
+        "land_hand5_pct": 99.4,
+        "s1_land_pct": 8.9,
+        "low_new_n": 4430,
+        "bld_new_n": 4622,
+        "low_new_share_pct": 95.8,
+        "low_stock16_pct": 93.7,
+        "low_tilt_pts": 2.2,
+        "low_tilt_all": 2.2
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 2.4,
-      "hex_count": 71783,
-      "high_risk_count": 1869,
+      "avg_score": 2.5,
+      "hex_count": 70695,
       "centroid": [
-        -58.3773,
-        -25.9403
+        -58.3746,
+        -25.9392
       ],
+      "high_risk_count": 1858,
       "rank": {
         "bld_hand5_pct": 82.0,
-        "bld_hand5_n": 179679,
-        "bld_total": 219228,
+        "bld_hand5_n": 179654,
+        "bld_total": 219206,
         "land_hand5_pct": 98.9,
         "s1_land_pct": 8.4,
-        "low_new_n": 39370,
-        "bld_new_n": 45586,
+        "low_new_n": 39377,
+        "bld_new_n": 45598,
         "low_new_share_pct": 86.4,
         "low_stock16_pct": 80.9,
         "low_tilt_pts": 5.5,
@@ -120,143 +120,95 @@
       }
     },
     {
-      "dpto": "Laishi",
-      "parquetKey": "laishi",
-      "avg_score": 3.3,
-      "hex_count": 39672,
-      "high_risk_count": 1937,
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 2.4,
+      "hex_count": 58208,
       "centroid": [
-        -58.564,
-        -26.464
+        -58.0591,
+        -25.373
       ],
+      "high_risk_count": 1220,
       "rank": {
-        "bld_hand5_pct": 94.1,
-        "bld_hand5_n": 19355,
-        "bld_total": 20574,
-        "land_hand5_pct": 99.4,
-        "s1_land_pct": 8.9,
-        "low_new_n": 4437,
-        "bld_new_n": 4634,
-        "low_new_share_pct": 95.7,
-        "low_stock16_pct": 93.7,
-        "low_tilt_pts": 2.1,
-        "low_tilt_all": 2.1
-      }
-    },
-    {
-      "dpto": "Matacos",
-      "parquetKey": "matacos",
-      "avg_score": 1.2,
-      "hex_count": 43310,
-      "high_risk_count": 190,
-      "centroid": [
-        -62.0788,
-        -23.8556
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.1,
-        "bld_hand5_n": 15233,
-        "bld_total": 15364,
-        "land_hand5_pct": 99.8,
-        "s1_land_pct": 0.8,
-        "low_new_n": 4399,
-        "bld_new_n": 4458,
-        "low_new_share_pct": 98.7,
-        "low_stock16_pct": 99.3,
-        "low_tilt_pts": -0.6,
-        "low_tilt_all": -0.6
-      }
-    },
-    {
-      "dpto": "Patiño",
-      "parquetKey": "patino",
-      "avg_score": 1.4,
-      "hex_count": 288652,
-      "high_risk_count": 1626,
-      "centroid": [
-        -59.96,
-        -24.8796
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.0,
-        "bld_hand5_n": 88072,
-        "bld_total": 88938,
-        "land_hand5_pct": 99.7,
-        "s1_land_pct": 3.4,
-        "low_new_n": 21401,
-        "bld_new_n": 21614,
-        "low_new_share_pct": 99.0,
-        "low_stock16_pct": 99.1,
-        "low_tilt_pts": -0.0,
-        "low_tilt_all": -0.0
+        "bld_hand5_pct": 87.5,
+        "bld_hand5_n": 89800,
+        "bld_total": 102665,
+        "land_hand5_pct": 98.8,
+        "s1_land_pct": 9.0,
+        "low_new_n": 21076,
+        "bld_new_n": 23538,
+        "low_new_share_pct": 89.5,
+        "low_stock16_pct": 86.7,
+        "low_tilt_pts": 2.8,
+        "low_tilt_all": 2.8
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
       "avg_score": 2.1,
-      "hex_count": 37365,
-      "high_risk_count": 673,
+      "hex_count": 39144,
       "centroid": [
-        -58.6617,
-        -25.1055
+        -58.6647,
+        -25.1049
       ],
+      "high_risk_count": 673,
       "rank": {
-        "bld_hand5_pct": 92.3,
-        "bld_hand5_n": 19041,
-        "bld_total": 20629,
+        "bld_hand5_pct": 92.5,
+        "bld_hand5_n": 19491,
+        "bld_total": 21079,
         "land_hand5_pct": 99.1,
         "s1_land_pct": 1.3,
-        "low_new_n": 3995,
-        "bld_new_n": 4228,
-        "low_new_share_pct": 94.5,
-        "low_stock16_pct": 91.7,
-        "low_tilt_pts": 2.8,
-        "low_tilt_all": 2.8
+        "low_new_n": 4140,
+        "bld_new_n": 4372,
+        "low_new_share_pct": 94.7,
+        "low_stock16_pct": 91.8,
+        "low_tilt_pts": 2.9,
+        "low_tilt_all": 2.9
       }
     },
     {
-      "dpto": "Pilcomayo",
-      "parquetKey": "pilcomayo",
-      "avg_score": 2.4,
-      "hex_count": 58522,
-      "high_risk_count": 1228,
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 1.6,
+      "hex_count": 141295,
       "centroid": [
-        -58.0588,
-        -25.3715
+        -61.2683,
+        -24.0356
       ],
+      "high_risk_count": 1011,
       "rank": {
-        "bld_hand5_pct": 87.5,
-        "bld_hand5_n": 90148,
-        "bld_total": 103013,
-        "land_hand5_pct": 98.8,
-        "s1_land_pct": 9.0,
-        "low_new_n": 21216,
-        "bld_new_n": 23679,
-        "low_new_share_pct": 89.6,
-        "low_stock16_pct": 86.8,
-        "low_tilt_pts": 2.8,
-        "low_tilt_all": 2.8
+        "bld_hand5_pct": 96.8,
+        "bld_hand5_n": 18783,
+        "bld_total": 19395,
+        "land_hand5_pct": 99.7,
+        "s1_land_pct": 3.5,
+        "low_new_n": 4958,
+        "bld_new_n": 4996,
+        "low_new_share_pct": 99.2,
+        "low_stock16_pct": 96.2,
+        "low_tilt_pts": 3.0,
+        "low_tilt_all": 3.0
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 1.5,
-      "hex_count": 95406,
-      "high_risk_count": 639,
+      "avg_score": 1.6,
+      "hex_count": 98242,
       "centroid": [
-        -59.1602,
-        -25.7667
+        -59.1699,
+        -25.7599
       ],
+      "high_risk_count": 654,
       "rank": {
         "bld_hand5_pct": 95.2,
-        "bld_hand5_n": 71539,
-        "bld_total": 75132,
+        "bld_hand5_n": 72039,
+        "bld_total": 75640,
         "land_hand5_pct": 99.4,
         "s1_land_pct": 1.4,
-        "low_new_n": 15070,
-        "bld_new_n": 15617,
+        "low_new_n": 15176,
+        "bld_new_n": 15720,
         "low_new_share_pct": 96.5,
         "low_stock16_pct": 94.9,
         "low_tilt_pts": 1.6,
@@ -264,28 +216,77 @@
       }
     },
     {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 1.4,
+      "hex_count": 287722,
+      "centroid": [
+        -59.9786,
+        -24.8681
+      ],
+      "high_risk_count": 1622,
+      "rank": {
+        "bld_hand5_pct": 99.0,
+        "bld_hand5_n": 87585,
+        "bld_total": 88443,
+        "land_hand5_pct": 99.7,
+        "s1_land_pct": 3.4,
+        "low_new_n": 21303,
+        "bld_new_n": 21518,
+        "low_new_share_pct": 99.0,
+        "low_stock16_pct": 99.1,
+        "low_tilt_pts": -0.1,
+        "low_tilt_all": -0.1
+      }
+    },
+    {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
       "avg_score": 1.3,
-      "hex_count": 40559,
-      "high_risk_count": 60,
+      "hex_count": 42788,
       "centroid": [
-        -62.1402,
-        -23.121
+        -62.1248,
+        -23.1318
       ],
+      "high_risk_count": 80,
       "rank": {
         "bld_hand5_pct": 99.9,
-        "bld_hand5_n": 11291,
-        "bld_total": 11303,
-        "land_hand5_pct": 99.2,
+        "bld_hand5_n": 11354,
+        "bld_total": 11366,
+        "land_hand5_pct": 99.3,
         "s1_land_pct": 0.9,
-        "low_new_n": 4598,
-        "bld_new_n": 4600,
+        "low_new_n": 4628,
+        "bld_new_n": 4629,
         "low_new_share_pct": 100.0,
         "low_stock16_pct": 99.9,
         "low_tilt_pts": 0.1,
         "low_tilt_all": 0.1
       }
+    },
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 1.2,
+      "hex_count": 47176,
+      "centroid": [
+        -62.0564,
+        -23.8606
+      ],
+      "high_risk_count": 198,
+      "rank": {
+        "bld_hand5_pct": 99.1,
+        "bld_hand5_n": 15533,
+        "bld_total": 15681,
+        "land_hand5_pct": 99.8,
+        "s1_land_pct": 0.8,
+        "low_new_n": 4495,
+        "bld_new_n": 4555,
+        "low_new_share_pct": 98.7,
+        "low_stock16_pct": 99.1,
+        "low_tilt_pts": -0.5,
+        "low_tilt_all": -0.5
+      }
     }
-  ]
+  ],
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

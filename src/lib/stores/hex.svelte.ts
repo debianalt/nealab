@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, getAnalysisById, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -689,8 +689,7 @@ export class HexStore {
 			// but the cells inside them that a district file lacks belong to the neighbour
 			// district (the polygon and the partition disagree there): filled as "Sin
 			// cobertura" they painted gray blocks inside Encarnación (1-nov-2026).
-			const census = getAnalysisById(this.activeLayer?.id ?? '')?.rigorBadge === 'census';
-			const deptFeature = this.territoryPrefix.endsWith('_py/') ? null : findDeptFeature(dpto, this.territoryPrefix, census);
+			const deptFeature = this.territoryPrefix.endsWith('_py/') ? null : findDeptFeature(dpto, this.territoryPrefix);
 			if (deptFeature?.geometry) {
 				const geom = deptFeature.geometry;
 				const polygons: number[][][][] = geom.type === 'MultiPolygon'

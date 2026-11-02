@@ -5,7 +5,7 @@
     "rank": {
       "metric": "bld_hand5_pct",
       "definition": "% de edificios (Google Open Buildings 2023) y de la tierra (sin agua permanente JRC) a menos de 5 m sobre el curso de agua más cercano (HAND, MERIT Hydro v1.0.1)",
-      "median": 99.9,
+      "median": 99.8,
       "saturated": true,
       "plain": {
         "metric": "s1_land_pct",
@@ -18,8 +18,8 @@
         "metric": "low_tilt_pts",
         "years": "2016–2023",
         "min_low_new": 200,
-        "rho": 0.59,
-        "n_ranked": 23,
+        "rho": 0.48,
+        "n_ranked": 24,
         "shown": false,
         "province": {
           "low_share_by_year": [
@@ -57,7 +57,7 @@
           "monotonic": true,
           "dept_tilt_p25_p75": [
             0.0,
-            0.5
+            0.4
           ],
           "sign_flips": 6
         },
@@ -72,479 +72,23 @@
   },
   "departments": [
     {
-      "dpto": "Almirante Brown",
-      "parquetKey": "almirante_brown",
-      "avg_score": 1.3,
-      "hex_count": 182902,
-      "high_risk_count": 0,
-      "centroid": [
-        -61.9758,
-        -25.7528
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.9,
-        "bld_hand5_n": 52211,
-        "bld_total": 52239,
-        "land_hand5_pct": 99.9,
-        "s1_land_pct": 16.8,
-        "low_new_n": 14523,
-        "bld_new_n": 14525,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 99.9,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 4.7,
-      "hex_count": 29310,
-      "high_risk_count": 2270,
-      "centroid": [
-        -58.7058,
-        -26.9556
-      ],
-      "rank": {
-        "bld_hand5_pct": 85.6,
-        "bld_hand5_n": 25686,
-        "bld_total": 29992,
-        "land_hand5_pct": 99.2,
-        "s1_land_pct": 13.3,
-        "low_new_n": 5170,
-        "bld_new_n": 5906,
-        "low_new_share_pct": 87.5,
-        "low_stock16_pct": 85.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 2.5
-      }
-    },
-    {
-      "dpto": "Chacabuco",
-      "parquetKey": "chacabuco",
-      "avg_score": 2.1,
-      "hex_count": 15300,
-      "high_risk_count": 0,
-      "centroid": [
-        -61.3184,
-        -27.1102
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.9,
-        "bld_hand5_n": 41533,
-        "bld_total": 41556,
-        "land_hand5_pct": 99.2,
-        "s1_land_pct": 41.7,
-        "low_new_n": 7861,
-        "bld_new_n": 7864,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Comandante Fernández",
-      "parquetKey": "comandante_fernandez",
-      "avg_score": 1.1,
-      "hex_count": 16790,
-      "high_risk_count": 3,
-      "centroid": [
-        -60.4707,
-        -26.7877
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 118448,
-        "bld_total": 118448,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 15.8,
-        "low_new_n": 30001,
-        "bld_new_n": 30001,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Doce de Octubre",
-      "parquetKey": "doce_de_octubre",
-      "avg_score": 2.6,
-      "hex_count": 40893,
-      "high_risk_count": 45,
-      "centroid": [
-        -61.4322,
-        -27.3779
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.5,
-        "bld_hand5_n": 39597,
-        "bld_total": 39791,
-        "land_hand5_pct": 97.4,
-        "s1_land_pct": 50.2,
-        "low_new_n": 7768,
-        "bld_new_n": 7818,
-        "low_new_share_pct": 99.4,
-        "low_stock16_pct": 99.6,
-        "low_tilt_pts": null,
-        "low_tilt_all": -0.2
-      }
-    },
-    {
-      "dpto": "Fray Justo Santa María de Oro",
-      "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 2.1,
-      "hex_count": 33569,
-      "high_risk_count": 211,
-      "centroid": [
-        -61.3311,
-        -27.8232
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.4,
-        "bld_hand5_n": 15696,
-        "bld_total": 15792,
-        "land_hand5_pct": 97.1,
-        "s1_land_pct": 17.5,
-        "low_new_n": 3073,
-        "bld_new_n": 3097,
-        "low_new_share_pct": 99.2,
-        "low_stock16_pct": 99.4,
-        "low_tilt_pts": null,
-        "low_tilt_all": -0.1
-      }
-    },
-    {
-      "dpto": "General Belgrano",
-      "parquetKey": "general_belgrano",
-      "avg_score": 1.5,
-      "hex_count": 14454,
-      "high_risk_count": 0,
-      "centroid": [
-        -61.0789,
-        -26.8336
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 15999,
-        "bld_total": 15999,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 40.4,
-        "low_new_n": 3468,
-        "bld_new_n": 3468,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "General Donovan",
-      "parquetKey": "general_donovan",
-      "avg_score": 1.3,
-      "hex_count": 18640,
-      "high_risk_count": 76,
-      "centroid": [
-        -59.3554,
-        -27.1287
-      ],
-      "rank": {
-        "bld_hand5_pct": 89.9,
-        "bld_hand5_n": 15580,
-        "bld_total": 17333,
-        "land_hand5_pct": 98.9,
-        "s1_land_pct": 1.2,
-        "low_new_n": 3466,
-        "bld_new_n": 3872,
-        "low_new_share_pct": 89.5,
-        "low_stock16_pct": 90.3,
-        "low_tilt_pts": null,
-        "low_tilt_all": -0.8
-      }
-    },
-    {
-      "dpto": "General Güemes",
-      "parquetKey": "general_guemes",
-      "avg_score": 1.2,
-      "hex_count": 289439,
-      "high_risk_count": 1036,
-      "centroid": [
-        -61.3388,
-        -25.2304
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.3,
-        "bld_hand5_n": 92069,
-        "bld_total": 92733,
-        "land_hand5_pct": 99.9,
-        "s1_land_pct": 3.4,
-        "low_new_n": 26895,
-        "bld_new_n": 27069,
-        "low_new_share_pct": 99.4,
-        "low_stock16_pct": 99.2,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.1
-      }
-    },
-    {
-      "dpto": "Independencia",
-      "parquetKey": "independencia",
-      "avg_score": 1.2,
-      "hex_count": 21190,
-      "high_risk_count": 0,
-      "centroid": [
-        -60.7636,
-        -26.7302
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 28097,
-        "bld_total": 28097,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 31.1,
-        "low_new_n": 8174,
-        "bld_new_n": 8174,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Libertad",
-      "parquetKey": "libertad",
-      "avg_score": 1.2,
-      "hex_count": 11409,
-      "high_risk_count": 2,
-      "centroid": [
-        -59.2734,
-        -27.3501
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.4,
-        "bld_hand5_n": 17617,
-        "bld_total": 17717,
-        "land_hand5_pct": 99.9,
-        "s1_land_pct": 1.7,
-        "low_new_n": 5945,
-        "bld_new_n": 5960,
-        "low_new_share_pct": 99.7,
-        "low_stock16_pct": 99.4,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.4
-      }
-    },
-    {
-      "dpto": "Libertador General San Martín",
-      "parquetKey": "libertador_general_san_martin",
-      "avg_score": 1.6,
-      "hex_count": 83469,
-      "high_risk_count": 953,
-      "centroid": [
-        -59.5033,
-        -26.3674
-      ],
-      "rank": {
-        "bld_hand5_pct": 94.9,
-        "bld_hand5_n": 58976,
-        "bld_total": 62143,
-        "land_hand5_pct": 98.5,
-        "s1_land_pct": 1.6,
-        "low_new_n": 11966,
-        "bld_new_n": 12557,
-        "low_new_share_pct": 95.3,
-        "low_stock16_pct": 94.9,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.4
-      }
-    },
-    {
-      "dpto": "Maipú",
-      "parquetKey": "maipu",
-      "avg_score": 1.1,
-      "hex_count": 31826,
-      "high_risk_count": 1,
-      "centroid": [
-        -60.4591,
-        -26.3255
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 29619,
-        "bld_total": 29629,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 14.4,
-        "low_new_n": 8155,
-        "bld_new_n": 8156,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Mayor Luis J. Fontana",
-      "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 1.4,
-      "hex_count": 43497,
-      "high_risk_count": 22,
-      "centroid": [
-        -60.6678,
-        -27.7404
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 69821,
-        "bld_total": 69821,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 11.2,
-        "low_new_n": 18219,
-        "bld_new_n": 18219,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Nueve de Julio",
-      "parquetKey": "nueve_de_julio",
-      "avg_score": 1.8,
-      "hex_count": 25893,
-      "high_risk_count": 2,
-      "centroid": [
-        -61.2742,
-        -26.9367
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.9,
-        "bld_hand5_n": 40064,
-        "bld_total": 40121,
-        "land_hand5_pct": 99.2,
-        "s1_land_pct": 32.9,
-        "low_new_n": 8133,
-        "bld_new_n": 8148,
-        "low_new_share_pct": 99.8,
-        "low_stock16_pct": 99.9,
-        "low_tilt_pts": null,
-        "low_tilt_all": -0.1
-      }
-    },
-    {
-      "dpto": "O'Higgins",
-      "parquetKey": "ohiggins",
-      "avg_score": 1.3,
-      "hex_count": 17997,
-      "high_risk_count": 0,
-      "centroid": [
-        -60.6956,
-        -27.2459
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 23377,
-        "bld_total": 23377,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 17.2,
-        "low_new_n": 6288,
-        "bld_new_n": 6288,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.0
-      }
-    },
-    {
-      "dpto": "Presidencia de la Plaza",
-      "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 1.1,
-      "hex_count": 26903,
-      "high_risk_count": 0,
-      "centroid": [
-        -59.7921,
-        -27.0351
-      ],
-      "rank": {
-        "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 16050,
-        "bld_total": 16050,
-        "land_hand5_pct": 100.0,
-        "s1_land_pct": 2.8,
-        "low_new_n": 3299,
-        "bld_new_n": 3300,
-        "low_new_share_pct": 100.0,
-        "low_stock16_pct": 100.0,
-        "low_tilt_pts": null,
-        "low_tilt_all": -0.0
-      }
-    },
-    {
-      "dpto": "Primero de Mayo",
-      "parquetKey": "primero_de_mayo",
-      "avg_score": 2.6,
-      "hex_count": 15919,
-      "high_risk_count": 466,
-      "centroid": [
-        -58.9668,
-        -27.1625
-      ],
-      "rank": {
-        "bld_hand5_pct": 95.4,
-        "bld_hand5_n": 18483,
-        "bld_total": 19378,
-        "land_hand5_pct": 99.7,
-        "s1_land_pct": 1.5,
-        "low_new_n": 6426,
-        "bld_new_n": 6587,
-        "low_new_share_pct": 97.6,
-        "low_stock16_pct": 94.3,
-        "low_tilt_pts": null,
-        "low_tilt_all": 3.2
-      }
-    },
-    {
-      "dpto": "Quitilipi",
-      "parquetKey": "quitilipi",
-      "avg_score": 1.1,
-      "hex_count": 17728,
-      "high_risk_count": 8,
-      "centroid": [
-        -60.1843,
-        -26.6681
-      ],
-      "rank": {
-        "bld_hand5_pct": 99.8,
-        "bld_hand5_n": 36676,
-        "bld_total": 36736,
-        "land_hand5_pct": 99.8,
-        "s1_land_pct": 4.0,
-        "low_new_n": 7067,
-        "bld_new_n": 7046,
-        "low_new_share_pct": 100.3,
-        "low_stock16_pct": 99.8,
-        "low_tilt_pts": null,
-        "low_tilt_all": 0.5
-      }
-    },
-    {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 4.4,
-      "hex_count": 41114,
-      "high_risk_count": 2837,
+      "avg_score": 6.5,
+      "hex_count": 40334,
       "centroid": [
-        -59.1247,
-        -27.711
+        -59.1203,
+        -27.7115
       ],
+      "high_risk_count": 2842,
       "rank": {
         "bld_hand5_pct": 97.2,
-        "bld_hand5_n": 395139,
-        "bld_total": 406424,
+        "bld_hand5_n": 393476,
+        "bld_total": 404761,
         "land_hand5_pct": 99.1,
         "s1_land_pct": 8.0,
-        "low_new_n": 81951,
-        "bld_new_n": 83816,
+        "low_new_n": 81255,
+        "bld_new_n": 83120,
         "low_new_share_pct": 97.8,
         "low_stock16_pct": 97.1,
         "low_tilt_pts": null,
@@ -552,23 +96,334 @@
       }
     },
     {
-      "dpto": "San Lorenzo",
-      "parquetKey": "san_lorenzo",
-      "avg_score": 1.0,
-      "hex_count": 24894,
-      "high_risk_count": 1,
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 6.2,
+      "hex_count": 29432,
       "centroid": [
-        -60.3762,
-        -27.3894
+        -58.707,
+        -26.9576
       ],
+      "high_risk_count": 2283,
+      "rank": {
+        "bld_hand5_pct": 85.7,
+        "bld_hand5_n": 25706,
+        "bld_total": 30012,
+        "land_hand5_pct": 99.2,
+        "s1_land_pct": 13.3,
+        "low_new_n": 5182,
+        "bld_new_n": 5918,
+        "low_new_share_pct": 87.6,
+        "low_stock16_pct": 85.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 2.5
+      }
+    },
+    {
+      "dpto": "1º de Mayo",
+      "parquetKey": "primero_de_mayo",
+      "avg_score": 3.2,
+      "hex_count": 14565,
+      "centroid": [
+        -58.9592,
+        -27.1683
+      ],
+      "high_risk_count": 438,
+      "rank": {
+        "bld_hand5_pct": 95.3,
+        "bld_hand5_n": 17733,
+        "bld_total": 18614,
+        "land_hand5_pct": 99.7,
+        "s1_land_pct": 1.5,
+        "low_new_n": 6111,
+        "bld_new_n": 6270,
+        "low_new_share_pct": 97.5,
+        "low_stock16_pct": 94.2,
+        "low_tilt_pts": null,
+        "low_tilt_all": 3.3
+      }
+    },
+    {
+      "dpto": "12 de Octubre",
+      "parquetKey": "doce_de_octubre",
+      "avg_score": 2.9,
+      "hex_count": 31254,
+      "centroid": [
+        -61.4769,
+        -27.3359
+      ],
+      "high_risk_count": 55,
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 30387,
+        "bld_total": 30558,
+        "land_hand5_pct": 97.3,
+        "s1_land_pct": 50.2,
+        "low_new_n": 5965,
+        "bld_new_n": 6012,
+        "low_new_share_pct": 99.2,
+        "low_stock16_pct": 99.5,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.3
+      }
+    },
+    {
+      "dpto": "Chacabuco",
+      "parquetKey": "chacabuco",
+      "avg_score": 2.5,
+      "hex_count": 17049,
+      "centroid": [
+        -61.3085,
+        -27.1179
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 42015,
+        "bld_total": 42039,
+        "land_hand5_pct": 99.3,
+        "s1_land_pct": 41.7,
+        "low_new_n": 7892,
+        "bld_new_n": 7894,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "Fray Justo Santa María de Oro",
+      "parquetKey": "fray_justo_santa_maria_de_oro",
+      "avg_score": 2.5,
+      "hex_count": 25284,
+      "centroid": [
+        -61.3025,
+        -27.8657
+      ],
+      "high_risk_count": 184,
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 14040,
+        "bld_total": 14130,
+        "land_hand5_pct": 96.6,
+        "s1_land_pct": 17.5,
+        "low_new_n": 2958,
+        "bld_new_n": 2974,
+        "low_new_share_pct": 99.4,
+        "low_stock16_pct": 99.3,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.1
+      }
+    },
+    {
+      "dpto": "General Belgrano",
+      "parquetKey": "general_belgrano",
+      "avg_score": 2.3,
+      "hex_count": 14611,
+      "centroid": [
+        -61.0714,
+        -26.8498
+      ],
+      "high_risk_count": 0,
       "rank": {
         "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 18375,
-        "bld_total": 18375,
+        "bld_hand5_n": 15943,
+        "bld_total": 15943,
         "land_hand5_pct": 100.0,
-        "s1_land_pct": 2.0,
-        "low_new_n": 4209,
-        "bld_new_n": 4209,
+        "s1_land_pct": 40.4,
+        "low_new_n": 3426,
+        "bld_new_n": 3426,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "2 de Abril",
+      "parquetKey": "2_de_abril",
+      "avg_score": 2.2,
+      "hex_count": 18082,
+      "centroid": [
+        -61.3291,
+        -27.6217
+      ],
+      "high_risk_count": 17,
+      "rank": {
+        "bld_hand5_pct": 99.7,
+        "bld_hand5_n": 10904,
+        "bld_total": 10933,
+        "land_hand5_pct": 98.1,
+        "low_new_n": 1945,
+        "bld_new_n": 1955,
+        "low_new_share_pct": 99.5,
+        "low_stock16_pct": 99.7,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.2
+      }
+    },
+    {
+      "dpto": "9 de Julio",
+      "parquetKey": "nueve_de_julio",
+      "avg_score": 2.1,
+      "hex_count": 24383,
+      "centroid": [
+        -61.2638,
+        -26.9464
+      ],
+      "high_risk_count": 2,
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 39821,
+        "bld_total": 39874,
+        "land_hand5_pct": 99.2,
+        "s1_land_pct": 32.9,
+        "low_new_n": 8170,
+        "bld_new_n": 8183,
+        "low_new_share_pct": 99.8,
+        "low_stock16_pct": 99.9,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.0
+      }
+    },
+    {
+      "dpto": "Independencia",
+      "parquetKey": "independencia",
+      "avg_score": 1.9,
+      "hex_count": 21735,
+      "centroid": [
+        -60.7569,
+        -26.7373
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 28255,
+        "bld_total": 28255,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 31.1,
+        "low_new_n": 8234,
+        "bld_new_n": 8234,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "Libertador General San Martín",
+      "parquetKey": "libertador_general_san_martin",
+      "avg_score": 1.8,
+      "hex_count": 81972,
+      "centroid": [
+        -59.4878,
+        -26.3769
+      ],
+      "high_risk_count": 957,
+      "rank": {
+        "bld_hand5_pct": 94.9,
+        "bld_hand5_n": 58894,
+        "bld_total": 62050,
+        "land_hand5_pct": 98.4,
+        "s1_land_pct": 1.6,
+        "low_new_n": 12025,
+        "bld_new_n": 12618,
+        "low_new_share_pct": 95.3,
+        "low_stock16_pct": 94.9,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.4
+      }
+    },
+    {
+      "dpto": "Almirante Brown",
+      "parquetKey": "almirante_brown",
+      "avg_score": 1.7,
+      "hex_count": 193337,
+      "centroid": [
+        -61.9528,
+        -25.7518
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 99.9,
+        "bld_hand5_n": 53082,
+        "bld_total": 53114,
+        "land_hand5_pct": 99.9,
+        "s1_land_pct": 16.8,
+        "low_new_n": 14724,
+        "bld_new_n": 14728,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 99.9,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "Comandante Fernández",
+      "parquetKey": "comandante_fernandez",
+      "avg_score": 1.7,
+      "hex_count": 17141,
+      "centroid": [
+        -60.4618,
+        -26.787
+      ],
+      "high_risk_count": 3,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 118626,
+        "bld_total": 118626,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 15.8,
+        "low_new_n": 29989,
+        "bld_new_n": 29989,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "Maipú",
+      "parquetKey": "maipu",
+      "avg_score": 1.7,
+      "hex_count": 32945,
+      "centroid": [
+        -60.4547,
+        -26.3211
+      ],
+      "high_risk_count": 1,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 29890,
+        "bld_total": 29900,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 14.4,
+        "low_new_n": 8197,
+        "bld_new_n": 8197,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "O'Higgins",
+      "parquetKey": "ohiggins",
+      "avg_score": 1.7,
+      "hex_count": 17864,
+      "centroid": [
+        -60.6805,
+        -27.2575
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 23376,
+        "bld_total": 23376,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 17.2,
+        "low_new_n": 6304,
+        "bld_new_n": 6304,
         "low_new_share_pct": 100.0,
         "low_stock16_pct": 100.0,
         "low_tilt_pts": null,
@@ -578,74 +433,243 @@
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 1.3,
-      "hex_count": 18197,
-      "high_risk_count": 99,
+      "avg_score": 1.7,
+      "hex_count": 18853,
       "centroid": [
-        -59.5391,
-        -26.7861
+        -59.5193,
+        -26.8004
       ],
+      "high_risk_count": 100,
       "rank": {
-        "bld_hand5_pct": 94.7,
-        "bld_hand5_n": 18054,
-        "bld_total": 19068,
-        "land_hand5_pct": 98.7,
+        "bld_hand5_pct": 94.6,
+        "bld_hand5_n": 18152,
+        "bld_total": 19196,
+        "land_hand5_pct": 98.5,
         "s1_land_pct": 2.3,
-        "low_new_n": 4424,
-        "bld_new_n": 4609,
-        "low_new_share_pct": 96.0,
-        "low_stock16_pct": 94.2,
+        "low_new_n": 4348,
+        "bld_new_n": 4532,
+        "low_new_share_pct": 95.9,
+        "low_stock16_pct": 94.1,
         "low_tilt_pts": null,
         "low_tilt_all": 1.8
       }
     },
     {
-      "dpto": "Tapenagá",
-      "parquetKey": "tapenaga",
-      "avg_score": 1.1,
-      "hex_count": 70098,
-      "high_risk_count": 2,
+      "dpto": "Quitilipi",
+      "parquetKey": "quitilipi",
+      "avg_score": 1.6,
+      "hex_count": 17833,
       "centroid": [
-        -59.837,
-        -27.6559
+        -60.1736,
+        -26.6685
       ],
+      "high_risk_count": 8,
+      "rank": {
+        "bld_hand5_pct": 99.8,
+        "bld_hand5_n": 36549,
+        "bld_total": 36608,
+        "land_hand5_pct": 99.7,
+        "s1_land_pct": 4.0,
+        "low_new_n": 7015,
+        "bld_new_n": 6994,
+        "low_new_share_pct": 100.3,
+        "low_stock16_pct": 99.8,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.5
+      }
+    },
+    {
+      "dpto": "General Donovan",
+      "parquetKey": "general_donovan",
+      "avg_score": 1.5,
+      "hex_count": 17418,
+      "centroid": [
+        -59.3474,
+        -27.1393
+      ],
+      "high_risk_count": 75,
+      "rank": {
+        "bld_hand5_pct": 89.8,
+        "bld_hand5_n": 15245,
+        "bld_total": 16969,
+        "land_hand5_pct": 99.0,
+        "s1_land_pct": 1.2,
+        "low_new_n": 3476,
+        "bld_new_n": 3882,
+        "low_new_share_pct": 89.5,
+        "low_stock16_pct": 90.2,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.7
+      }
+    },
+    {
+      "dpto": "25 de Mayo",
+      "parquetKey": "veinticinco_de_mayo",
+      "avg_score": 1.5,
+      "hex_count": 27214,
+      "centroid": [
+        -60.0194,
+        -26.8195
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 83.3,
+        "bld_hand5_n": 27719,
+        "bld_total": 33272,
+        "land_hand5_pct": 99.8,
+        "s1_land_pct": 6.8,
+        "low_new_n": 5826,
+        "bld_new_n": 6776,
+        "low_new_share_pct": 86.0,
+        "low_stock16_pct": 82.7,
+        "low_tilt_pts": null,
+        "low_tilt_all": 3.3
+      }
+    },
+    {
+      "dpto": "Mayor Luis J. Fontana",
+      "parquetKey": "mayor_luis_j_fontana",
+      "avg_score": 1.4,
+      "hex_count": 42499,
+      "centroid": [
+        -60.657,
+        -27.744
+      ],
+      "high_risk_count": 22,
       "rank": {
         "bld_hand5_pct": 100.0,
-        "bld_hand5_n": 5728,
-        "bld_total": 5728,
+        "bld_hand5_n": 69474,
+        "bld_total": 69474,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 11.2,
+        "low_new_n": 18161,
+        "bld_new_n": 18161,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "General Güemes",
+      "parquetKey": "general_guemes",
+      "avg_score": 1.3,
+      "hex_count": 281279,
+      "centroid": [
+        -61.3271,
+        -25.2213
+      ],
+      "high_risk_count": 1042,
+      "rank": {
+        "bld_hand5_pct": 99.3,
+        "bld_hand5_n": 91659,
+        "bld_total": 92330,
+        "land_hand5_pct": 99.9,
+        "s1_land_pct": 3.4,
+        "low_new_n": 26731,
+        "bld_new_n": 26905,
+        "low_new_share_pct": 99.4,
+        "low_stock16_pct": 99.2,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.1
+      }
+    },
+    {
+      "dpto": "Libertad",
+      "parquetKey": "libertad",
+      "avg_score": 1.3,
+      "hex_count": 11923,
+      "centroid": [
+        -59.2606,
+        -27.3498
+      ],
+      "high_risk_count": 2,
+      "rank": {
+        "bld_hand5_pct": 99.4,
+        "bld_hand5_n": 19766,
+        "bld_total": 19878,
+        "land_hand5_pct": 99.9,
+        "s1_land_pct": 1.7,
+        "low_new_n": 6890,
+        "bld_new_n": 6908,
+        "low_new_share_pct": 99.7,
+        "low_stock16_pct": 99.3,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.4
+      }
+    },
+    {
+      "dpto": "Presidencia de la Plaza",
+      "parquetKey": "presidencia_de_la_plaza",
+      "avg_score": 1.3,
+      "hex_count": 25909,
+      "centroid": [
+        -59.7755,
+        -27.0458
+      ],
+      "high_risk_count": 0,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 15954,
+        "bld_total": 15954,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 2.8,
+        "low_new_n": 3340,
+        "bld_new_n": 3340,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": -0.0
+      }
+    },
+    {
+      "dpto": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "avg_score": 1.3,
+      "hex_count": 24700,
+      "centroid": [
+        -60.3644,
+        -27.395
+      ],
+      "high_risk_count": 1,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 18257,
+        "bld_total": 18257,
+        "land_hand5_pct": 100.0,
+        "s1_land_pct": 2.0,
+        "low_new_n": 4135,
+        "bld_new_n": 4135,
+        "low_new_share_pct": 100.0,
+        "low_stock16_pct": 100.0,
+        "low_tilt_pts": null,
+        "low_tilt_all": 0.0
+      }
+    },
+    {
+      "dpto": "Tapenagá",
+      "parquetKey": "tapenaga",
+      "avg_score": 1.2,
+      "hex_count": 69382,
+      "centroid": [
+        -59.828,
+        -27.6596
+      ],
+      "high_risk_count": 2,
+      "rank": {
+        "bld_hand5_pct": 100.0,
+        "bld_hand5_n": 5693,
+        "bld_total": 5693,
         "land_hand5_pct": 100.0,
         "s1_land_pct": 4.2,
-        "low_new_n": 803,
-        "bld_new_n": 803,
+        "low_new_n": 811,
+        "bld_new_n": 811,
         "low_new_share_pct": 100.0,
         "low_stock16_pct": 100.0,
         "low_tilt_pts": null,
         "low_tilt_all": null
       }
-    },
-    {
-      "dpto": "Veinticinco de Mayo",
-      "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 1.1,
-      "hex_count": 25567,
-      "high_risk_count": 0,
-      "centroid": [
-        -60.0344,
-        -26.8147
-      ],
-      "rank": {
-        "bld_hand5_pct": 83.3,
-        "bld_hand5_n": 27721,
-        "bld_total": 33270,
-        "land_hand5_pct": 99.8,
-        "s1_land_pct": 6.8,
-        "low_new_n": 5826,
-        "bld_new_n": 6779,
-        "low_new_share_pct": 86.0,
-        "low_stock16_pct": 82.7,
-        "low_tilt_pts": null,
-        "low_tilt_all": 3.2
-      }
     }
-  ]
+  ],
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

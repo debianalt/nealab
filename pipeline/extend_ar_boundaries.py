@@ -1,4 +1,7 @@
-"""One-off: extend src/lib/data/ar_dept_boundaries.json with Chaco (codprov 22)
+"""SUPERSEDED 2-nov-2026 by build_ar_dept_boundaries_indec.py (INDEC radios, not GADM).
+Do not run: it would put GADM departments back in ar_dept_boundaries.json.
+
+One-off: extend src/lib/data/ar_dept_boundaries.json with Chaco (codprov 22)
 and Formosa (codprov 34) deptos from GADM_ARG_2 shapefile.
 
 Existing JSON has 17 Misiones (54) + 25 Corrientes (18) deptos. We append 24

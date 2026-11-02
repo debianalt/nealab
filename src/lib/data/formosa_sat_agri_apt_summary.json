@@ -1,281 +1,282 @@
 {
- "territory": "formosa",
- "province": {
-  "total_hexes": 825760,
-  "avg_score": 66.7,
-  "unassigned": 0
- },
- "departments": [
-  {
-   "dpto": "Laishi",
-   "parquetKey": "laishi",
-   "hex_count": 39672,
-   "centroid": [
-    -58.5513,
-    -26.4647
-   ],
-   "avg_score": 36.8,
-   "rank": {
-    "yerba_ha": 130367,
-    "yerba_pct": 36.6,
-    "te_ha": 28341,
-    "te_pct": 8.0,
-    "citricos_ha": 356248,
-    "citricos_pct": 100.0,
-    "soja_ha": 131204,
-    "soja_pct": 36.8,
-    "maiz_ha": 356248,
-    "maiz_pct": 100.0,
-    "algodon_ha": 356248,
-    "algodon_pct": 100.0,
-    "girasol_ha": 332791,
-    "girasol_pct": 93.4,
-    "arroz_ha": 350969,
-    "arroz_pct": 98.5,
-    "pasturas_ha": 356248,
-    "pasturas_pct": 100.0
-   }
+  "territory": "formosa",
+  "province": {
+    "total_hexes": 825760,
+    "avg_score": 66.7,
+    "unassigned": 0
   },
-  {
-   "dpto": "Formosa",
-   "parquetKey": "formosa",
-   "hex_count": 71783,
-   "centroid": [
-    -58.3872,
-    -25.9345
-   ],
-   "avg_score": 21.2,
-   "rank": {
-    "yerba_ha": 135458,
-    "yerba_pct": 20.8,
-    "te_ha": 44859,
-    "te_pct": 6.9,
-    "citricos_ha": 653398,
-    "citricos_pct": 100.0,
-    "soja_ha": 138009,
-    "soja_pct": 21.2,
-    "maiz_ha": 653398,
-    "maiz_pct": 100.0,
-    "algodon_ha": 653398,
-    "algodon_pct": 100.0,
-    "girasol_ha": 611575,
-    "girasol_pct": 93.6,
-    "arroz_ha": 647491,
-    "arroz_pct": 99.1,
-    "pasturas_ha": 653398,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Pirané",
-   "parquetKey": "pirane",
-   "hex_count": 95406,
-   "centroid": [
-    -59.1628,
-    -25.7727
-   ],
-   "avg_score": 64.1,
-   "rank": {
-    "yerba_ha": 441523,
-    "yerba_pct": 51.3,
-    "te_ha": 141557,
-    "te_pct": 16.4,
-    "citricos_ha": 861192,
-    "citricos_pct": 100.0,
-    "soja_ha": 551360,
-    "soja_pct": 64.1,
-    "maiz_ha": 861129,
-    "maiz_pct": 100.0,
-    "algodon_ha": 861201,
-    "algodon_pct": 100.0,
-    "girasol_ha": 821885,
-    "girasol_pct": 95.4,
-    "arroz_ha": 844111,
-    "arroz_pct": 98.0,
-    "pasturas_ha": 861201,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Pilagás",
-   "parquetKey": "pilagas",
-   "hex_count": 37365,
-   "centroid": [
-    -58.6711,
-    -25.1016
-   ],
-   "avg_score": 32.3,
-   "rank": {
-    "yerba_ha": 51851,
-    "yerba_pct": 15.0,
-    "te_ha": 16993,
-    "te_pct": 4.9,
-    "citricos_ha": 344348,
-    "citricos_pct": 100.0,
-    "soja_ha": 111273,
-    "soja_pct": 32.3,
-    "maiz_ha": 344348,
-    "maiz_pct": 100.0,
-    "algodon_ha": 344348,
-    "algodon_pct": 100.0,
-    "girasol_ha": 340839,
-    "girasol_pct": 99.0,
-    "arroz_ha": 342599,
-    "arroz_pct": 99.5,
-    "pasturas_ha": 344348,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Pilcomayo",
-   "parquetKey": "pilcomayo",
-   "hex_count": 58522,
-   "centroid": [
-    -58.0456,
-    -25.3808
-   ],
-   "avg_score": 16.7,
-   "rank": {
-    "yerba_ha": 37346,
-    "yerba_pct": 6.9,
-    "te_ha": 42339,
-    "te_pct": 7.8,
-    "citricos_ha": 541312,
-    "citricos_pct": 100.0,
-    "soja_ha": 90580,
-    "soja_pct": 16.7,
-    "maiz_ha": 541312,
-    "maiz_pct": 100.0,
-    "algodon_ha": 541312,
-    "algodon_pct": 100.0,
-    "girasol_ha": 480427,
-    "girasol_pct": 88.8,
-    "arroz_ha": 536695,
-    "arroz_pct": 99.1,
-    "pasturas_ha": 541312,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Patiño",
-   "parquetKey": "patino",
-   "hex_count": 288652,
-   "centroid": [
-    -60.0089,
-    -24.8951
-   ],
-   "avg_score": 82.1,
-   "rank": {
-    "yerba_ha": 159742,
-    "yerba_pct": 6.1,
-    "te_ha": 102393,
-    "te_pct": 3.9,
-    "citricos_ha": 2623560,
-    "citricos_pct": 100.0,
-    "soja_ha": 2151926,
-    "soja_pct": 82.1,
-    "maiz_ha": 2623560,
-    "maiz_pct": 100.0,
-    "algodon_ha": 2623560,
-    "algodon_pct": 100.0,
-    "girasol_ha": 2619020,
-    "girasol_pct": 99.8,
-    "arroz_ha": 2605599,
-    "arroz_pct": 99.3,
-    "pasturas_ha": 2623560,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Bermejo",
-   "parquetKey": "bermejo",
-   "hex_count": 150491,
-   "centroid": [
-    -61.2886,
-    -24.027
-   ],
-   "avg_score": 84.8,
-   "rank": {
-    "yerba_ha": 0,
-    "yerba_pct": 0.0,
-    "te_ha": 0,
-    "te_pct": 0.0,
-    "citricos_ha": 1398093,
-    "citricos_pct": 100.0,
-    "soja_ha": 1198841,
-    "soja_pct": 85.8,
-    "maiz_ha": 1398093,
-    "maiz_pct": 100.0,
-    "algodon_ha": 1398093,
-    "algodon_pct": 100.0,
-    "girasol_ha": 1398093,
-    "girasol_pct": 100.0,
-    "arroz_ha": 1393943,
-    "arroz_pct": 99.7,
-    "pasturas_ha": 1398093,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Matacos",
-   "parquetKey": "matacos",
-   "hex_count": 43310,
-   "centroid": [
-    -62.0811,
-    -23.8673
-   ],
-   "avg_score": 95.1,
-   "rank": {
-    "yerba_ha": 0,
-    "yerba_pct": 0.0,
-    "te_ha": 0,
-    "te_pct": 0.0,
-    "citricos_ha": 409623,
-    "citricos_pct": 100.0,
-    "soja_ha": 405392,
-    "soja_pct": 99.0,
-    "maiz_ha": 409623,
-    "maiz_pct": 100.0,
-    "algodon_ha": 409623,
-    "algodon_pct": 100.0,
-    "girasol_ha": 409614,
-    "girasol_pct": 100.0,
-    "arroz_ha": 407813,
-    "arroz_pct": 99.6,
-    "pasturas_ha": 409623,
-    "pasturas_pct": 100.0
-   }
-  },
-  {
-   "dpto": "Ramón Lista",
-   "parquetKey": "ramon_lista",
-   "hex_count": 40559,
-   "centroid": [
-    -62.1413,
-    -23.111
-   ],
-   "avg_score": 78.9,
-   "rank": {
-    "yerba_ha": 0,
-    "yerba_pct": 0.0,
-    "te_ha": 0,
-    "te_pct": 0.0,
-    "citricos_ha": 362842,
-    "citricos_pct": 93.7,
-    "soja_ha": 347124,
-    "soja_pct": 89.6,
-    "maiz_ha": 385816,
-    "maiz_pct": 99.6,
-    "algodon_ha": 362842,
-    "algodon_pct": 93.7,
-    "girasol_ha": 387442,
-    "girasol_pct": 100.0,
-    "arroz_ha": 384843,
-    "arroz_pct": 99.3,
-    "pasturas_ha": 300134,
-    "pasturas_pct": 77.6
-   }
-  }
- ],
- "source": "pipeline/hexoma/exportar_agri_web.py (Hexoma: clima corregido, SoilGrids, FABDEM, aptitud A4)"
+  "departments": [
+    {
+      "dpto": "Matacos",
+      "parquetKey": "matacos",
+      "avg_score": 95.3,
+      "hex_count": 47176,
+      "centroid": [
+        -62.0564,
+        -23.8606
+      ],
+      "rank": {
+        "yerba_ha": 0,
+        "yerba_pct": 0.0,
+        "te_ha": 0,
+        "te_pct": 0.0,
+        "citricos_ha": 445966,
+        "citricos_pct": 100.0,
+        "soja_ha": 441408,
+        "soja_pct": 99.0,
+        "maiz_ha": 445966,
+        "maiz_pct": 100.0,
+        "algodon_ha": 445966,
+        "algodon_pct": 100.0,
+        "girasol_ha": 445956,
+        "girasol_pct": 100.0,
+        "arroz_ha": 444091,
+        "arroz_pct": 99.6,
+        "pasturas_ha": 445966,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 84.4,
+      "hex_count": 141295,
+      "centroid": [
+        -61.2683,
+        -24.0356
+      ],
+      "rank": {
+        "yerba_ha": 0,
+        "yerba_pct": 0.0,
+        "te_ha": 0,
+        "te_pct": 0.0,
+        "citricos_ha": 1312233,
+        "citricos_pct": 100.0,
+        "soja_ha": 1118762,
+        "soja_pct": 85.3,
+        "maiz_ha": 1312233,
+        "maiz_pct": 100.0,
+        "algodon_ha": 1312233,
+        "algodon_pct": 100.0,
+        "girasol_ha": 1312233,
+        "girasol_pct": 100.0,
+        "arroz_ha": 1308223,
+        "arroz_pct": 99.7,
+        "pasturas_ha": 1312233,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Patiño",
+      "parquetKey": "patino",
+      "avg_score": 82.4,
+      "hex_count": 287722,
+      "centroid": [
+        -59.9786,
+        -24.8681
+      ],
+      "rank": {
+        "yerba_ha": 144891,
+        "yerba_pct": 5.6,
+        "te_ha": 98304,
+        "te_pct": 3.8,
+        "citricos_ha": 2615394,
+        "citricos_pct": 100.0,
+        "soja_ha": 2152751,
+        "soja_pct": 82.4,
+        "maiz_ha": 2615394,
+        "maiz_pct": 100.0,
+        "algodon_ha": 2615394,
+        "algodon_pct": 100.0,
+        "girasol_ha": 2611266,
+        "girasol_pct": 99.8,
+        "arroz_ha": 2598407,
+        "arroz_pct": 99.3,
+        "pasturas_ha": 2615394,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Ramón Lista",
+      "parquetKey": "ramon_lista",
+      "avg_score": 79.0,
+      "hex_count": 42788,
+      "centroid": [
+        -62.1248,
+        -23.1318
+      ],
+      "rank": {
+        "yerba_ha": 0,
+        "yerba_pct": 0.0,
+        "te_ha": 0,
+        "te_pct": 0.0,
+        "citricos_ha": 383961,
+        "citricos_pct": 94.0,
+        "soja_ha": 364737,
+        "soja_pct": 89.3,
+        "maiz_ha": 406936,
+        "maiz_pct": 99.6,
+        "algodon_ha": 383961,
+        "algodon_pct": 94.0,
+        "girasol_ha": 408562,
+        "girasol_pct": 100.0,
+        "arroz_ha": 405934,
+        "arroz_pct": 99.4,
+        "pasturas_ha": 321254,
+        "pasturas_pct": 78.8
+      }
+    },
+    {
+      "dpto": "Pirané",
+      "parquetKey": "pirane",
+      "avg_score": 64.6,
+      "hex_count": 98242,
+      "centroid": [
+        -59.1699,
+        -25.7599
+      ],
+      "rank": {
+        "yerba_ha": 454935,
+        "yerba_pct": 51.4,
+        "te_ha": 145411,
+        "te_pct": 16.4,
+        "citricos_ha": 886778,
+        "citricos_pct": 100.0,
+        "soja_ha": 572502,
+        "soja_pct": 64.6,
+        "maiz_ha": 886715,
+        "maiz_pct": 100.0,
+        "algodon_ha": 886786,
+        "algodon_pct": 100.0,
+        "girasol_ha": 847032,
+        "girasol_pct": 95.5,
+        "arroz_ha": 868695,
+        "arroz_pct": 98.0,
+        "pasturas_ha": 886786,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Laishi",
+      "parquetKey": "laishi",
+      "avg_score": 36.5,
+      "hex_count": 40490,
+      "centroid": [
+        -58.5622,
+        -26.4606
+      ],
+      "rank": {
+        "yerba_ha": 131989,
+        "yerba_pct": 36.3,
+        "te_ha": 29054,
+        "te_pct": 8.0,
+        "citricos_ha": 363630,
+        "citricos_pct": 100.0,
+        "soja_ha": 132826,
+        "soja_pct": 36.5,
+        "maiz_ha": 363630,
+        "maiz_pct": 100.0,
+        "algodon_ha": 363630,
+        "algodon_pct": 100.0,
+        "girasol_ha": 339577,
+        "girasol_pct": 93.4,
+        "arroz_ha": 358341,
+        "arroz_pct": 98.5,
+        "pasturas_ha": 363630,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Pilagás",
+      "parquetKey": "pilagas",
+      "avg_score": 32.7,
+      "hex_count": 39144,
+      "centroid": [
+        -58.6647,
+        -25.1049
+      ],
+      "rank": {
+        "yerba_ha": 54415,
+        "yerba_pct": 15.1,
+        "te_ha": 18457,
+        "te_pct": 5.1,
+        "citricos_ha": 360730,
+        "citricos_pct": 100.0,
+        "soja_ha": 117943,
+        "soja_pct": 32.7,
+        "maiz_ha": 360730,
+        "maiz_pct": 100.0,
+        "algodon_ha": 360730,
+        "algodon_pct": 100.0,
+        "girasol_ha": 356889,
+        "girasol_pct": 98.9,
+        "arroz_ha": 358898,
+        "arroz_pct": 99.5,
+        "pasturas_ha": 360730,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Formosa",
+      "parquetKey": "formosa",
+      "avg_score": 21.1,
+      "hex_count": 70695,
+      "centroid": [
+        -58.3746,
+        -25.9392
+      ],
+      "rank": {
+        "yerba_ha": 133258,
+        "yerba_pct": 20.7,
+        "te_ha": 43792,
+        "te_pct": 6.8,
+        "citricos_ha": 643535,
+        "citricos_pct": 100.0,
+        "soja_ha": 135663,
+        "soja_pct": 21.1,
+        "maiz_ha": 643535,
+        "maiz_pct": 100.0,
+        "algodon_ha": 643535,
+        "algodon_pct": 100.0,
+        "girasol_ha": 602361,
+        "girasol_pct": 93.6,
+        "arroz_ha": 637499,
+        "arroz_pct": 99.1,
+        "pasturas_ha": 643535,
+        "pasturas_pct": 100.0
+      }
+    },
+    {
+      "dpto": "Pilcomayo",
+      "parquetKey": "pilcomayo",
+      "avg_score": 16.5,
+      "hex_count": 58208,
+      "centroid": [
+        -58.0591,
+        -25.373
+      ],
+      "rank": {
+        "yerba_ha": 36800,
+        "yerba_pct": 6.8,
+        "te_ha": 41463,
+        "te_pct": 7.7,
+        "citricos_ha": 538389,
+        "citricos_pct": 100.0,
+        "soja_ha": 89117,
+        "soja_pct": 16.5,
+        "maiz_ha": 538389,
+        "maiz_pct": 100.0,
+        "algodon_ha": 538389,
+        "algodon_pct": 100.0,
+        "girasol_ha": 477809,
+        "girasol_pct": 88.8,
+        "arroz_ha": 533976,
+        "arroz_pct": 99.2,
+        "pasturas_ha": 538389,
+        "pasturas_pct": 100.0
+      }
+    }
+  ],
+  "source": "pipeline/hexoma/exportar_agri_web.py (Hexoma: clima corregido, SoilGrids, FABDEM, aptitud A4)",
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

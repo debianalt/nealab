@@ -9,434 +9,453 @@
     {
       "dpto": "Quitilipi",
       "parquetKey": "quitilipi",
-      "avg_score": 22.7,
-      "hex_count": 17728,
+      "avg_score": 22.6,
+      "hex_count": 17833,
       "centroid": [
-        -60.1799,
-        -26.6648
+        -60.1736,
+        -26.6685
       ],
       "rank": {
-        "trees_pct": 60.0,
-        "trees_ha": 111977,
-        "crops_pct": 16.5,
-        "crops_ha": 30825,
+        "trees_pct": 60.6,
+        "trees_ha": 113853,
+        "crops_pct": 15.4,
+        "crops_ha": 28880,
         "built_pct": 1.1,
-        "built_ha": 2085
+        "built_ha": 2100
       }
     },
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 22.2,
-      "hex_count": 24894,
+      "avg_score": 22.4,
+      "hex_count": 24700,
       "centroid": [
-        -60.37,
-        -27.4108
+        -60.3644,
+        -27.395
       ],
       "rank": {
-        "trees_pct": 63.5,
-        "trees_ha": 166458,
-        "crops_pct": 4.6,
-        "crops_ha": 12079,
+        "trees_pct": 63.2,
+        "trees_ha": 164456,
+        "crops_pct": 4.0,
+        "crops_ha": 10394,
         "built_pct": 0.5,
-        "built_ha": 1303
-      }
-    },
-    {
-      "dpto": "Mayor Luis J. Fontana",
-      "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 20.8,
-      "hex_count": 43497,
-      "centroid": [
-        -60.6704,
-        -27.742
-      ],
-      "rank": {
-        "trees_pct": 42.5,
-        "trees_ha": 194737,
-        "crops_pct": 28.3,
-        "crops_ha": 129688,
-        "built_pct": 0.9,
-        "built_ha": 4273
-      }
-    },
-    {
-      "dpto": "Veinticinco de Mayo",
-      "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 20.5,
-      "hex_count": 25567,
-      "centroid": [
-        -60.0398,
-        -26.8257
-      ],
-      "rank": {
-        "trees_pct": 64.5,
-        "trees_ha": 173658,
-        "crops_pct": 3.9,
-        "crops_ha": 10609,
-        "built_pct": 0.7,
-        "built_ha": 2003
+        "built_ha": 1307
       }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 19.6,
-      "hex_count": 33569,
+      "avg_score": 21.1,
+      "hex_count": 25284,
       "centroid": [
-        -61.3304,
-        -27.8272
+        -61.3025,
+        -27.8657
       ],
       "rank": {
-        "trees_pct": 27.4,
-        "trees_ha": 96943,
-        "crops_pct": 46.4,
-        "crops_ha": 163903,
-        "built_pct": 0.3,
-        "built_ha": 1150
+        "trees_pct": 27.5,
+        "trees_ha": 73164,
+        "crops_pct": 42.6,
+        "crops_ha": 113570,
+        "built_pct": 0.4,
+        "built_ha": 997
+      }
+    },
+    {
+      "dpto": "Mayor Luis J. Fontana",
+      "parquetKey": "mayor_luis_j_fontana",
+      "avg_score": 20.9,
+      "hex_count": 42499,
+      "centroid": [
+        -60.657,
+        -27.744
+      ],
+      "rank": {
+        "trees_pct": 43.4,
+        "trees_ha": 194070,
+        "crops_pct": 27.2,
+        "crops_ha": 121919,
+        "built_pct": 0.9,
+        "built_ha": 4243
+      }
+    },
+    {
+      "dpto": "25 de Mayo",
+      "parquetKey": "veinticinco_de_mayo",
+      "avg_score": 20.0,
+      "hex_count": 27214,
+      "centroid": [
+        -60.0194,
+        -26.8195
+      ],
+      "rank": {
+        "trees_pct": 65.3,
+        "trees_ha": 187077,
+        "crops_pct": 3.5,
+        "crops_ha": 10013,
+        "built_pct": 0.7,
+        "built_ha": 1978
       }
     },
     {
       "dpto": "Comandante Fernández",
       "parquetKey": "comandante_fernandez",
-      "avg_score": 18.3,
-      "hex_count": 16790,
+      "avg_score": 18.5,
+      "hex_count": 17141,
       "centroid": [
-        -60.4735,
-        -26.7914
+        -60.4618,
+        -26.787
       ],
       "rank": {
-        "trees_pct": 39.9,
-        "trees_ha": 70539,
-        "crops_pct": 47.8,
-        "crops_ha": 84587,
-        "built_pct": 2.8,
-        "built_ha": 4938
+        "trees_pct": 40.5,
+        "trees_ha": 73198,
+        "crops_pct": 46.9,
+        "crops_ha": 84681,
+        "built_pct": 2.7,
+        "built_ha": 4956
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 18.3,
-      "hex_count": 11409,
+      "avg_score": 18.4,
+      "hex_count": 11923,
       "centroid": [
-        -59.2715,
-        -27.3475
+        -59.2606,
+        -27.3498
       ],
       "rank": {
         "trees_pct": 72.9,
-        "trees_ha": 87555,
+        "trees_ha": 91607,
         "crops_pct": 0.5,
-        "crops_ha": 551,
-        "built_pct": 1.2,
-        "built_ha": 1422
+        "crops_ha": 644,
+        "built_pct": 1.4,
+        "built_ha": 1706
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
       "avg_score": 17.6,
-      "hex_count": 29310,
+      "hex_count": 29432,
       "centroid": [
-        -58.7084,
-        -26.9631
+        -58.707,
+        -26.9576
       ],
       "rank": {
         "trees_pct": 61.4,
-        "trees_ha": 189634,
+        "trees_ha": 190229,
         "crops_pct": 2.4,
-        "crops_ha": 7342,
+        "crops_ha": 7344,
         "built_pct": 0.6,
-        "built_ha": 1862
-      }
-    },
-    {
-      "dpto": "Maipú",
-      "parquetKey": "maipu",
-      "avg_score": 17.0,
-      "hex_count": 31826,
-      "centroid": [
-        -60.4564,
-        -26.3289
-      ],
-      "rank": {
-        "trees_pct": 55.3,
-        "trees_ha": 185266,
-        "crops_pct": 33.7,
-        "crops_ha": 113057,
-        "built_pct": 0.6,
-        "built_ha": 2008
+        "built_ha": 1866
       }
     },
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 16.9,
-      "hex_count": 17997,
+      "avg_score": 17.3,
+      "hex_count": 17864,
       "centroid": [
-        -60.692,
-        -27.2479
+        -60.6805,
+        -27.2575
       ],
       "rank": {
-        "trees_pct": 33.1,
-        "trees_ha": 62676,
-        "crops_pct": 56.3,
-        "crops_ha": 106660,
+        "trees_pct": 34.9,
+        "trees_ha": 65633,
+        "crops_pct": 53.3,
+        "crops_ha": 100208,
         "built_pct": 0.7,
-        "built_ha": 1332
+        "built_ha": 1333
+      }
+    },
+    {
+      "dpto": "Maipú",
+      "parquetKey": "maipu",
+      "avg_score": 16.9,
+      "hex_count": 32945,
+      "centroid": [
+        -60.4547,
+        -26.3211
+      ],
+      "rank": {
+        "trees_pct": 55.6,
+        "trees_ha": 193011,
+        "crops_pct": 33.3,
+        "crops_ha": 115661,
+        "built_pct": 0.6,
+        "built_ha": 2032
       }
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 16.9,
-      "hex_count": 41114,
+      "avg_score": 16.8,
+      "hex_count": 40334,
       "centroid": [
-        -59.1267,
-        -27.7065
+        -59.1203,
+        -27.7115
       ],
       "rank": {
         "trees_pct": 68.8,
-        "trees_ha": 297874,
+        "trees_ha": 292399,
         "crops_pct": 2.2,
-        "crops_ha": 9465,
+        "crops_ha": 9377,
         "built_pct": 3.0,
-        "built_ha": 12876
+        "built_ha": 12647
       }
     },
     {
       "dpto": "Sargento Cabral",
       "parquetKey": "sargento_cabral",
-      "avg_score": 16.1,
-      "hex_count": 18197,
+      "avg_score": 16.2,
+      "hex_count": 18853,
       "centroid": [
-        -59.5538,
-        -26.7743
+        -59.5193,
+        -26.8004
       ],
       "rank": {
-        "trees_pct": 72.8,
-        "trees_ha": 139548,
-        "crops_pct": 1.7,
-        "crops_ha": 3254,
+        "trees_pct": 72.6,
+        "trees_ha": 144182,
+        "crops_pct": 1.6,
+        "crops_ha": 3238,
         "built_pct": 0.7,
-        "built_ha": 1316
+        "built_ha": 1355
+      }
+    },
+    {
+      "dpto": "12 de Octubre",
+      "parquetKey": "doce_de_octubre",
+      "avg_score": 15.1,
+      "hex_count": 31254,
+      "centroid": [
+        -61.4769,
+        -27.3359
+      ],
+      "rank": {
+        "trees_pct": 23.7,
+        "trees_ha": 77925,
+        "crops_pct": 66.5,
+        "crops_ha": 218859,
+        "built_pct": 0.6,
+        "built_ha": 2137
+      }
+    },
+    {
+      "dpto": "9 de Julio",
+      "parquetKey": "nueve_de_julio",
+      "avg_score": 14.9,
+      "hex_count": 24383,
+      "centroid": [
+        -61.2638,
+        -26.9464
+      ],
+      "rank": {
+        "trees_pct": 36.5,
+        "trees_ha": 93847,
+        "crops_pct": 58.6,
+        "crops_ha": 150468,
+        "built_pct": 0.8,
+        "built_ha": 2113
       }
     },
     {
       "dpto": "Chacabuco",
       "parquetKey": "chacabuco",
-      "avg_score": 15.0,
-      "hex_count": 15300,
+      "avg_score": 14.8,
+      "hex_count": 17049,
       "centroid": [
-        -61.3118,
-        -27.1138
+        -61.3085,
+        -27.1179
       ],
       "rank": {
-        "trees_pct": 26.0,
-        "trees_ha": 41844,
-        "crops_pct": 66.2,
-        "crops_ha": 106692,
-        "built_pct": 1.4,
-        "built_ha": 2189
-      }
-    },
-    {
-      "dpto": "Nueve de Julio",
-      "parquetKey": "nueve_de_julio",
-      "avg_score": 14.9,
-      "hex_count": 25893,
-      "centroid": [
-        -61.2721,
-        -26.9361
-      ],
-      "rank": {
-        "trees_pct": 36.1,
-        "trees_ha": 98545,
-        "crops_pct": 59.0,
-        "crops_ha": 160943,
-        "built_pct": 0.8,
-        "built_ha": 2154
-      }
-    },
-    {
-      "dpto": "Doce de Octubre",
-      "parquetKey": "doce_de_octubre",
-      "avg_score": 14.4,
-      "hex_count": 40893,
-      "centroid": [
-        -61.4369,
-        -27.3753
-      ],
-      "rank": {
-        "trees_pct": 22.0,
-        "trees_ha": 94860,
-        "crops_pct": 68.8,
-        "crops_ha": 296549,
-        "built_pct": 0.7,
-        "built_ha": 2805
+        "trees_pct": 25.7,
+        "trees_ha": 46069,
+        "crops_pct": 66.7,
+        "crops_ha": 119774,
+        "built_pct": 1.2,
+        "built_ha": 2244
       }
     },
     {
       "dpto": "Independencia",
       "parquetKey": "independencia",
       "avg_score": 14.4,
-      "hex_count": 21190,
+      "hex_count": 21735,
       "centroid": [
-        -60.7604,
-        -26.7362
+        -60.7569,
+        -26.7373
       ],
       "rank": {
         "trees_pct": 33.8,
-        "trees_ha": 75374,
+        "trees_ha": 77344,
         "crops_pct": 61.4,
-        "crops_ha": 137121,
+        "crops_ha": 140477,
         "built_pct": 0.8,
-        "built_ha": 1738
+        "built_ha": 1761
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
       "avg_score": 14.3,
-      "hex_count": 18640,
+      "hex_count": 17418,
       "centroid": [
-        -59.3494,
-        -27.1274
+        -59.3474,
+        -27.1393
       ],
       "rank": {
-        "trees_pct": 78.1,
-        "trees_ha": 153265,
+        "trees_pct": 78.2,
+        "trees_ha": 143521,
         "crops_pct": 0.6,
-        "crops_ha": 1182,
-        "built_pct": 0.6,
-        "built_ha": 1260
+        "crops_ha": 1177,
+        "built_pct": 0.7,
+        "built_ha": 1206
       }
     },
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 14.2,
-      "hex_count": 83469,
+      "avg_score": 14.3,
+      "hex_count": 81972,
       "centroid": [
-        -59.5073,
-        -26.3713
+        -59.4878,
+        -26.3769
       ],
       "rank": {
-        "trees_pct": 73.8,
-        "trees_ha": 648681,
+        "trees_pct": 73.5,
+        "trees_ha": 634388,
         "crops_pct": 2.1,
-        "crops_ha": 18861,
+        "crops_ha": 18455,
         "built_pct": 0.5,
-        "built_ha": 4401
+        "built_ha": 4378
       }
     },
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 13.9,
-      "hex_count": 14454,
+      "avg_score": 14.0,
+      "hex_count": 14611,
       "centroid": [
-        -61.0749,
-        -26.838
+        -61.0714,
+        -26.8498
       ],
       "rank": {
-        "trees_pct": 26.8,
-        "trees_ha": 40840,
-        "crops_pct": 66.9,
-        "crops_ha": 101841,
+        "trees_pct": 25.7,
+        "trees_ha": 39485,
+        "crops_pct": 68.0,
+        "crops_ha": 104670,
         "built_pct": 0.6,
-        "built_ha": 957
+        "built_ha": 938
       }
     },
     {
-      "dpto": "Primero de Mayo",
+      "dpto": "1º de Mayo",
       "parquetKey": "primero_de_mayo",
       "avg_score": 13.6,
-      "hex_count": 15919,
+      "hex_count": 14565,
       "centroid": [
-        -58.9731,
-        -27.1551
+        -58.9592,
+        -27.1683
       ],
       "rank": {
-        "trees_pct": 76.8,
-        "trees_ha": 128779,
+        "trees_pct": 77.0,
+        "trees_ha": 118092,
         "crops_pct": 0.3,
-        "crops_ha": 534,
+        "crops_ha": 509,
         "built_pct": 0.9,
-        "built_ha": 1443
+        "built_ha": 1374
+      }
+    },
+    {
+      "dpto": "2 de Abril",
+      "parquetKey": "2_de_abril",
+      "avg_score": 13.5,
+      "hex_count": 18082,
+      "centroid": [
+        -61.3291,
+        -27.6217
+      ],
+      "rank": {
+        "trees_pct": 21.7,
+        "trees_ha": 41407,
+        "crops_pct": 67.1,
+        "crops_ha": 127845,
+        "built_pct": 0.4,
+        "built_ha": 810
       }
     },
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 13.5,
-      "hex_count": 70098,
+      "avg_score": 13.3,
+      "hex_count": 69382,
       "centroid": [
-        -59.8436,
-        -27.6698
+        -59.828,
+        -27.6596
       ],
       "rank": {
-        "trees_pct": 71.5,
-        "trees_ha": 527922,
+        "trees_pct": 71.7,
+        "trees_ha": 523983,
         "crops_pct": 0.2,
-        "crops_ha": 1590,
+        "crops_ha": 1545,
         "built_pct": 0.1,
-        "built_ha": 597
+        "built_ha": 586
       }
     },
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 12.5,
-      "hex_count": 26903,
+      "avg_score": 12.1,
+      "hex_count": 25909,
       "centroid": [
-        -59.7871,
-        -27.0282
+        -59.7755,
+        -27.0458
       ],
       "rank": {
-        "trees_pct": 80.0,
-        "trees_ha": 226560,
+        "trees_pct": 80.7,
+        "trees_ha": 220158,
         "crops_pct": 0.6,
-        "crops_ha": 1680,
+        "crops_ha": 1617,
         "built_pct": 0.4,
-        "built_ha": 1136
+        "built_ha": 1119
       }
     },
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
       "avg_score": 7.9,
-      "hex_count": 182902,
+      "hex_count": 193337,
       "centroid": [
-        -61.9817,
-        -25.7474
+        -61.9528,
+        -25.7518
       ],
       "rank": {
         "trees_pct": 72.4,
-        "trees_ha": 1394571,
-        "crops_pct": 23.6,
-        "crops_ha": 455407,
+        "trees_ha": 1474153,
+        "crops_pct": 23.7,
+        "crops_ha": 482762,
         "built_pct": 0.2,
-        "built_ha": 3967
+        "built_ha": 4062
       }
     },
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
       "avg_score": 5.2,
-      "hex_count": 289439,
+      "hex_count": 281279,
       "centroid": [
-        -61.3084,
-        -25.2411
+        -61.3271,
+        -25.2213
       ],
       "rank": {
-        "trees_pct": 90.4,
-        "trees_ha": 2754804,
-        "crops_pct": 5.2,
-        "crops_ha": 158047,
+        "trees_pct": 90.8,
+        "trees_ha": 2689658,
+        "crops_pct": 4.7,
+        "crops_ha": 138374,
         "built_pct": 0.2,
-        "built_ha": 6584
+        "built_ha": 6552
       }
     }
-  ]
+  ],
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

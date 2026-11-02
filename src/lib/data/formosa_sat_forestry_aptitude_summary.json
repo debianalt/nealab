@@ -9,53 +9,53 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 65.8,
-      "hex_count": 40559,
+      "avg_score": 65.7,
+      "hex_count": 42788,
       "centroid": [
-        -62.1413,
-        -23.111
+        -62.1248,
+        -23.1318
       ],
       "rank": {
-        "high_ha": 189546,
-        "high_pct": 44.4
+        "high_ha": 193685,
+        "high_pct": 43.0
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 38.3,
-      "hex_count": 37365,
+      "avg_score": 37.8,
+      "hex_count": 39144,
       "centroid": [
-        -58.6711,
-        -25.1016
+        -58.6647,
+        -25.1049
       ],
       "rank": {
-        "high_ha": 33601,
-        "high_pct": 8.5
+        "high_ha": 34359,
+        "high_pct": 8.3
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 29.3,
-      "hex_count": 95406,
+      "avg_score": 29.0,
+      "hex_count": 98242,
       "centroid": [
-        -59.1628,
-        -25.7727
+        -59.1699,
+        -25.7599
       ],
       "rank": {
         "high_ha": 36909,
-        "high_pct": 3.7
+        "high_pct": 3.6
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
       "avg_score": 26.6,
-      "hex_count": 39672,
+      "hex_count": 40490,
       "centroid": [
-        -58.5513,
-        -26.4647
+        -58.5622,
+        -26.4606
       ],
       "rank": {
         "high_ha": 0,
@@ -66,52 +66,52 @@
       "dpto": "Matacos",
       "parquetKey": "matacos",
       "avg_score": 26.3,
-      "hex_count": 43310,
+      "hex_count": 47176,
       "centroid": [
-        -62.0811,
-        -23.8673
+        -62.0564,
+        -23.8606
       ],
       "rank": {
-        "high_ha": 5351,
-        "high_pct": 1.2
-      }
-    },
-    {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 20.2,
-      "hex_count": 150491,
-      "centroid": [
-        -61.2886,
-        -24.027
-      ],
-      "rank": {
-        "high_ha": 67097,
-        "high_pct": 4.2
+        "high_ha": 6446,
+        "high_pct": 1.3
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 20.0,
-      "hex_count": 58522,
+      "avg_score": 19.7,
+      "hex_count": 58208,
       "centroid": [
-        -58.0456,
-        -25.3808
+        -58.0591,
+        -25.373
       ],
       "rank": {
-        "high_ha": 15442,
-        "high_pct": 2.5
+        "high_ha": 14683,
+        "high_pct": 2.4
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 19.6,
+      "hex_count": 141295,
+      "centroid": [
+        -61.2683,
+        -24.0356
+      ],
+      "rank": {
+        "high_ha": 61862,
+        "high_pct": 4.2
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
       "avg_score": 14.5,
-      "hex_count": 71783,
+      "hex_count": 70695,
       "centroid": [
-        -58.3872,
-        -25.9345
+        -58.3746,
+        -25.9392
       ],
       "rank": {
         "high_ha": 0,
@@ -121,16 +121,17 @@
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 12.8,
-      "hex_count": 288652,
+      "avg_score": 12.6,
+      "hex_count": 287722,
       "centroid": [
-        -60.0089,
-        -24.8951
+        -59.9786,
+        -24.8681
       ],
       "rank": {
         "high_ha": 0,
         "high_pct": 0.0
       }
     }
-  ]
+  ],
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

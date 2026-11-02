@@ -10,111 +10,111 @@
       "dpto": "Patiño",
       "parquetKey": "patino",
       "avg_score": 53.8,
-      "hex_count": 288652,
+      "hex_count": 287722,
       "centroid": [
-        -60.0089,
-        -24.8951
+        -59.9786,
+        -24.8681
       ],
       "rank": {
-        "loss_ha_yr": 22966,
-        "loss_pct_forest": 1.47,
+        "loss_ha_yr": 22947,
+        "loss_pct_forest": 1.48,
         "loss_change_pct": 4,
-        "loss_base_ha_yr": 22038
+        "loss_base_ha_yr": 21992
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 51.6,
-      "hex_count": 150491,
+      "avg_score": 51.8,
+      "hex_count": 141295,
       "centroid": [
-        -61.2886,
-        -24.027
+        -61.2683,
+        -24.0356
       ],
       "rank": {
-        "loss_ha_yr": 11250,
-        "loss_pct_forest": 1.72,
-        "loss_change_pct": 101,
-        "loss_base_ha_yr": 5593
+        "loss_ha_yr": 10890,
+        "loss_pct_forest": 1.77,
+        "loss_change_pct": 104,
+        "loss_base_ha_yr": 5347
       }
     },
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 47.8,
-      "hex_count": 40559,
+      "avg_score": 48.1,
+      "hex_count": 42788,
       "centroid": [
-        -62.1413,
-        -23.111
+        -62.1248,
+        -23.1318
       ],
       "rank": {
-        "loss_ha_yr": 785,
-        "loss_pct_forest": 1.12,
-        "loss_change_pct": 11,
-        "loss_base_ha_yr": 707
+        "loss_ha_yr": 950,
+        "loss_pct_forest": 1.24,
+        "loss_change_pct": 29,
+        "loss_base_ha_yr": 737
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 47.2,
-      "hex_count": 95406,
+      "avg_score": 47.3,
+      "hex_count": 98242,
       "centroid": [
-        -59.1628,
-        -25.7727
+        -59.1699,
+        -25.7599
       ],
       "rank": {
-        "loss_ha_yr": 2663,
+        "loss_ha_yr": 2780,
         "loss_pct_forest": 0.57,
-        "loss_change_pct": -4,
-        "loss_base_ha_yr": 2765
+        "loss_change_pct": -7,
+        "loss_base_ha_yr": 2987
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 46.6,
-      "hex_count": 37365,
+      "avg_score": 46.4,
+      "hex_count": 39144,
       "centroid": [
-        -58.6711,
-        -25.1016
+        -58.6647,
+        -25.1049
       ],
       "rank": {
-        "loss_ha_yr": 880,
-        "loss_pct_forest": 0.69,
-        "loss_change_pct": 105,
-        "loss_base_ha_yr": 429
+        "loss_ha_yr": 892,
+        "loss_pct_forest": 0.66,
+        "loss_change_pct": 103,
+        "loss_base_ha_yr": 440
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 46.0,
-      "hex_count": 43310,
+      "avg_score": 46.1,
+      "hex_count": 47176,
       "centroid": [
-        -62.0811,
-        -23.8673
+        -62.0564,
+        -23.8606
       ],
       "rank": {
-        "loss_ha_yr": 582,
-        "loss_pct_forest": 0.42,
-        "loss_change_pct": 168,
-        "loss_base_ha_yr": 217
+        "loss_ha_yr": 687,
+        "loss_pct_forest": 0.44,
+        "loss_change_pct": 174,
+        "loss_base_ha_yr": 250
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 42.7,
-      "hex_count": 58522,
+      "avg_score": 42.6,
+      "hex_count": 58208,
       "centroid": [
-        -58.0456,
-        -25.3808
+        -58.0591,
+        -25.373
       ],
       "rank": {
-        "loss_ha_yr": 128,
+        "loss_ha_yr": 125,
         "loss_pct_forest": 0.11,
-        "loss_change_pct": -5,
+        "loss_change_pct": -8,
         "loss_base_ha_yr": 135
       }
     },
@@ -122,32 +122,32 @@
       "dpto": "Laishi",
       "parquetKey": "laishi",
       "avg_score": 42.5,
-      "hex_count": 39672,
+      "hex_count": 40490,
       "centroid": [
-        -58.5513,
-        -26.4647
+        -58.5622,
+        -26.4606
       ],
       "rank": {
-        "loss_ha_yr": 109,
+        "loss_ha_yr": 110,
         "loss_pct_forest": 0.12,
-        "loss_change_pct": -27,
-        "loss_base_ha_yr": 149
+        "loss_change_pct": -29,
+        "loss_base_ha_yr": 154
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
       "avg_score": 42.2,
-      "hex_count": 71783,
+      "hex_count": 70695,
       "centroid": [
-        -58.3872,
-        -25.9345
+        -58.3746,
+        -25.9392
       ],
       "rank": {
-        "loss_ha_yr": 167,
+        "loss_ha_yr": 150,
         "loss_pct_forest": 0.1,
-        "loss_change_pct": -50,
-        "loss_base_ha_yr": 333
+        "loss_change_pct": -53,
+        "loss_base_ha_yr": 322
       }
     }
   ],
@@ -156,5 +156,6 @@
       "metric": "loss_ha_yr",
       "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
-  }
+  },
+  "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"
 }

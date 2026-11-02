@@ -288,11 +288,14 @@
 			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
 				tick().then(async () => {
 					const summary = await loadDeptSummary(analysisId, hexStore.territoryPrefix);
-					const d = (summary?.departments as any[] | undefined)?.find(
-						(x) => (x.dpto ?? x.distrito ?? x.municipio) === dept
-					);
+					const deps = summary?.departments as any[] | undefined;
+					const nameOf = (x: any) => x.dpto ?? x.distrito ?? x.municipio;
+					// Links shared before 2-nov-2026 carry GADM spellings ("Nueve de Julio");
+					// summaries now use INDEC's ("9 de Julio"): fall back to the normalized key.
+					const d = deps?.find((x) => nameOf(x) === dept)
+						?? deps?.find((x) => normDeptName(nameOf(x)) === normDeptName(dept));
 					if (d?.parquetKey && d?.centroid) {
-						handleSelectFloodDpto(dept, d.parquetKey, d.centroid as [number, number]);
+						handleSelectFloodDpto(nameOf(d), d.parquetKey, d.centroid as [number, number]);
 					}
 				});
 			}
@@ -1129,10 +1132,9 @@
 		const tp = hexStore.territoryPrefix;
 		const compareDpto = hexStore.compareDpto;
 		const compareTp = hexStore.compareTerritoryPrefix;
-		const census = lensStore.activeAnalysis?.rigorBadge === 'census';
-		const primaryHasPolygon = !!(dpto && findDeptFeature(dpto, tp, census));
+		const primaryHasPolygon = !!(dpto && findDeptFeature(dpto, tp));
 		const compareHasPolygon = !!(compareDpto && compareTp != null
-			&& findDeptFeature(compareDpto, compareTp, census));
+			&& findDeptFeature(compareDpto, compareTp));
 		// Primary (celeste) highlight only in compare mode — in single-dept selection it's
 		// redundant with the dept's hexagons. Compare (amber) is kept as the comparison marker.
 		const inCompare = territoryStore.compareModeActive;
@@ -1155,9 +1157,7 @@
 	$effect(() => {
 		const dpto = hexStore.selectedDpto;
 		const tp = hexStore.territoryPrefix;
-		const sparseLayer0 = lensStore.activeAnalysis?.rigorBadge === 'census';
-		// The polygon of the layer's own partition (INDEC radios or GADM, deptBoundaries.ts).
-		const feat = dpto ? findDeptFeature(dpto, tp, sparseLayer0) : null;
+		const feat = dpto ? findDeptFeature(dpto, tp) : null;
 		// The celeste outline of the selected dept is redundant with its hexagons, and the
 		// generalized admin line visibly cuts across rivers on the satellite basemap → only
 		// draw it in compare mode (to mark the primary vs the amber compared dept).
@@ -1171,7 +1171,7 @@
 		const compareDpto = hexStore.compareDpto;
 		const compareTp = hexStore.compareTerritoryPrefix;
 		const compareFeat = compareDpto && compareTp != null
-			? findDeptFeature(compareDpto, compareTp, sparseLayer0)
+			? findDeptFeature(compareDpto, compareTp)
 			: null;
 		mapComponent?.setCompareDeptOutline(compareFeat);
 		mapComponent?.setCompareHexClip(compareFeat);

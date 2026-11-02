@@ -1,4 +1,7 @@
-"""Rebuild src/lib/data/ar_dept_boundaries.json with higher-resolution geometry.
+"""SUPERSEDED 2-nov-2026 by build_ar_dept_boundaries_indec.py (INDEC radios, not GADM).
+Do not run: it would put GADM departments back in ar_dept_boundaries.json.
+
+Rebuild src/lib/data/ar_dept_boundaries.json with higher-resolution geometry.
 
 The highlight of a selected department filters by `nombre`/`redcode`, so the
 EXISTING json is the authority for those (INDEC redcodes). We only swap in the

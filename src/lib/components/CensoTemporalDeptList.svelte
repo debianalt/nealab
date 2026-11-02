@@ -89,8 +89,8 @@
 		return i < 0 ? null : { pos: i + 1, total: sorted.length };
 	});
 
-	// Boundary lookup by NAME: the redcodes in ar_dept_boundaries.json are not
-	// INDEC codes for Chaco/Formosa (sequential 22001…), so code joins mismatch.
+	// Boundary lookup by NAME (ar_dept_boundaries.json = INDEC radios by department since
+	// 2-nov-2026; its redcodes are INDEC codes, the names INDEC's).
 	// Accent/punctuation-insensitive fallback covers spelling drift (Laishí/Laishi).
 	function norm(s: string): string {
 		return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -98,8 +98,7 @@
 	function deptFeature(name: string): any | null {
 		const prov = PROV_BY_PREFIX[hexStore.territoryPrefix];
 		if (!prov) return null;
-		// Census layer: the INDEC radio partition's polygons (deptBoundaries.ts arBoundarySource).
-		const feats = (getArFeatures('indec') ?? []).filter((f: any) => String(f.properties.redcode).startsWith(prov));
+		const feats = (getArFeatures() ?? []).filter((f: any) => String(f.properties.redcode).startsWith(prov));
 		return feats.find((f: any) => f.properties.nombre === name)
 			?? feats.find((f: any) => norm(f.properties.nombre) === norm(name))
 			?? null;

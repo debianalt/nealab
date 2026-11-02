@@ -3,38 +3,23 @@ import { getBrDistrictsUrl } from '$lib/config';
 // AR census dept polygons (~465KB) are only needed for AR perDepartment/census
 // interactions, never on cold open. Lazy-loaded (mirrors ensureBrBoundaries) so they
 // stay out of the initial bundle; findDeptFeature returns null until the import lands.
-//
-// Two AR polygon sets, because two partitions coexist in the data (measured 2-nov-2026,
-// pipeline/build_ar_dept_boundaries_indec.py): Misiones and every census layer were split
-// by INDEC census radios; the satellite layers of Corrientes, Chaco and Formosa by GADM
-// departments. Line, clip and hole-fill must use the polygon of the layer's partition
-// (arBoundarySource), or the hexagons spill over or stop short of the line. INDEC =
-// radios dissolved by department (ar_dept_boundaries_indec.json); GADM = the old file.
-// When those satellite layers are re-split by INDEC radios, the GADM file goes.
-export type ArBoundarySource = 'indec' | 'gadm';
+// Polygons = INDEC 2022 census radios dissolved by department (build_ar_dept_boundaries_indec.py),
+// the partition of every AR department file since 2-nov-2026 (repartir_deptos_indec.py).
 let arFeatures: any[] | null = null;
-let arIndecFeatures: any[] | null = null;
-let arPending: Promise<unknown> | null = null;
+let arPending: Promise<any[]> | null = null;
 
 export async function ensureArBoundaries(): Promise<void> {
-	if (arFeatures && arIndecFeatures) return;
+	if (arFeatures) return;
 	if (!arPending) {
-		arPending = Promise.all([
-			import('$lib/data/ar_dept_boundaries.json').then((m) => (arFeatures = (m.default as any).features as any[])),
-			import('$lib/data/ar_dept_boundaries_indec.json').then((m) => (arIndecFeatures = (m.default as any).features as any[])),
-		]);
+		arPending = import('$lib/data/ar_dept_boundaries.json')
+			.then((m) => (arFeatures = (m.default as any).features as any[]));
 		arPending.catch(() => { arPending = null; }); // retry on transient failure
 	}
 	try { await arPending; } catch { /* swallow: caller tolerates null → outline absent */ }
 }
 
-/** The AR polygons that match a layer's department partition. */
-export function arBoundarySource(territoryPrefix: string, census: boolean): ArBoundarySource {
-	return territoryPrefix === '' || census ? 'indec' : 'gadm';
-}
-
-export function getArFeatures(source: ArBoundarySource = 'gadm'): any[] | null {
-	return source === 'indec' ? arIndecFeatures : arFeatures;
+export function getArFeatures(): any[] | null {
+	return arFeatures;
 }
 
 // Department names differ in case, accents and numerals between the polygons
@@ -99,7 +84,7 @@ export function getBrFeatures(territoryId: string): any[] | null {
 	return brBoundariesCache.get(territoryId)?.features ?? null;
 }
 
-export function findDeptFeature(deptName: string, territoryPrefix: string, census = false): any | null {
+export function findDeptFeature(deptName: string, territoryPrefix: string): any | null {
 	if (!deptName) return null;
 
 	// AR path: bundled GeoJSON, sync lookup by codprov prefix + nombre.
@@ -108,7 +93,7 @@ export function findDeptFeature(deptName: string, territoryPrefix: string, censu
 		// null until ensureArBoundaries() resolves — callers (loadDept hole-fill,
 		// outline render) already tolerate null, same as the BR branch below.
 		const key = normDeptName(deptName);
-		return (getArFeatures(arBoundarySource(territoryPrefix, census)) ?? []).find(f =>
+		return (arFeatures ?? []).find(f =>
 			String(f.properties.redcode).startsWith(provincePrefix) &&
 			normDeptName(f.properties.nombre) === key
 		) || null;

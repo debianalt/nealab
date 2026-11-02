@@ -366,6 +366,18 @@ def load_limites(conn, reg: dict, terr_ids: dict[str, int]) -> None:
     """AR department polygons + the parquetKey the fact sheet reads per layer."""
     gj = json.loads((ROOT / reg['boundaries']['ar']).read_text(encoding='utf-8'))
     with conn.cursor() as cur:
+        # Departments no longer in the file go (the GADM codes 22001…/34001… left when the
+        # file became INDEC radios, 2-nov-2026: an upsert alone kept them, overlapping the
+        # new polygons, and 1.8 M cells kept pointing at them). Their cells are re-pointed
+        # by rebuild_hexagonos.
+        current = [str(f['properties']['redcode']) for f in gj['features']]
+        cur.execute("""SELECT redcode FROM limites WHERE territorio_id = ANY(%s) AND NOT redcode = ANY(%s)""",
+                    (list(terr_ids.values()), current))
+        stale = [r[0] for r in cur.fetchall()]
+        if stale:
+            cur.execute('UPDATE hexagonos SET redcode = NULL WHERE redcode = ANY(%s)', (stale,))
+            cur.execute('DELETE FROM limites WHERE redcode = ANY(%s)', (stale,))  # cascades limites_sub, ficha_claves
+            log(f'limites: {len(stale)} departments no longer in the file removed')
         for f in gj['features']:
             rc = str(f['properties']['redcode'])
             fk = reg['fichaKeys'].get(rc)
