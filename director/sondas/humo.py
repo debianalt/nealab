@@ -18,6 +18,7 @@ async def main():
         page = await ctx.new_page()
         errores = []
         page.on('console', lambda m: errores.append(m.text) if m.type in ('error','warning') else None)
+        page.on('response', lambda r: errores.append(f'HTTP {r.status} {r.url[:120]}') if r.status >= 400 else None)
         page.on('pageerror', lambda e: errores.append('PAGEERROR ' + str(e)))
         gl = await page.evaluate("""() => { const c = document.createElement('canvas');
             const g = c.getContext('webgl2') || c.getContext('webgl'); if (!g) return null;
@@ -36,13 +37,13 @@ async def main():
         await page.wait_for_selector('.loading-overlay', state='detached', timeout=120000)
         await page.wait_for_timeout(8000)
         shot = os.path.join(OUT, 'humo.png')
-        await page.screenshot(path=shot)
+        await page.screenshot(path=shot, timeout=120000, animations='disabled')
         n = await page.evaluate("""() => { const m = window.__spatia?.map; if (!m) return -1;
             return m.queryRenderedFeatures({layers:['hex-fill']}).length; }""")
         leyenda = await page.evaluate("() => document.querySelector('.legend')?.innerText || ''")
         print('features hex-fill:', n, '(-1 = sin gancho __spatia)')
         print('leyenda:', leyenda.replace('\n', ' | ')[:200])
-        print('errores de consola:', json.dumps(errores[:5], ensure_ascii=False))
+        print('errores de consola:', json.dumps([e for e in errores if e.startswith('HTTP')][:8] + [e for e in errores if not e.startswith('HTTP')][:4], ensure_ascii=False))
         await br.close()
         from PIL import Image
         im = Image.open(shot).convert('RGB').resize((320, 200))
