@@ -32,7 +32,7 @@ La lista máquina está en `reglas.yaml → frases_prohibidas`.
 - Chat o asistente conversacional en la UI.
 - GPL: la licencia es **AGPL-3.0**. No mencionar SoftwareX.
 - «riesgo hídrico», «Riesgo alto/bajo», «Score alto», «(invertida)», «media geométrica» en inundación.
-- «Hogares estimados». «0 % = nativo» en PY/BR. «cobertura nativa» en usos del suelo (es «cobertura arbórea»). «Piso inadecuado» (es «Sin piso revestido»).
+- «Hogares estimados». «0 % = nativo» en PY/BR. «Piso inadecuado» (es «Sin piso revestido»).
 - «Tipo 1/2/3» o tipos con nombre de columna.
 - Cifras viejas: «23 análisis», «18 departamentos» de Itapúa (son 17), Hansen v1.12 (es v1.13, 2016–2025).
 - Que la yerba o el té están alcanzados por EUDR: en la región aplica sólo a madera.
@@ -67,7 +67,7 @@ La lista máquina está en `reglas.yaml → frases_prohibidas`.
   - Pestañas % edificios / Edificios / % tierra / Cambio; cada una pinta su propia columna (HAND < 5 m).
   - En la llanura saturada se pinta JRC con una nota, sin barras.
   - La metodología advierte que Sentinel-1 sobreestima el agua en la llanura chaqueña.
-- Usos del suelo: % de superficie DW 2024. Más verde = más.
+- Usos del suelo: desde el 3-nov-2026 sale del Hexoma con MapBiomas Argentina Col. 3 (clases 2025 y 1985, trayectoria; sólo NEA AR), en reemplazo de Dynamic World. Los textos tienen que nombrar la fuente que pinta la capa en producción: si el texto y la config no coinciden, es un hallazgo; si la transición está a medio desplegar, es pregunta, no arreglo.
 - Edificios coloreados por volumen (área × altura).
 - Al mezclar países aparece el aviso de comparabilidad censal (`warn.censusCrossCountry`).
 - Con `a`, `h3`, `dept` o `zona` en la URL no se abre la bienvenida.

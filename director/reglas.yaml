@@ -18,7 +18,6 @@ frases_prohibidas:
   - {re: 'score alto|\(invertida\)', motivo: 'etiquetas retiradas'}
   - {re: 'riesgo (alto|bajo)', motivo: 'inundación sin score de riesgo'}
   - {re: 'hogares estimados', motivo: 'magnitud = sólo edificios'}
-  - {re: 'cobertura nativa', motivo: 'es cobertura arbórea'}
   - {re: 'piso inadecuado', motivo: 'es Sin piso revestido'}
   - {re: '\btipo [0-9]\b', motivo: 'tipos con nombre'}
   - {re: '\b23 an[aá]lisis\b|\b18 departamentos\b', motivo: 'cifras viejas'}
