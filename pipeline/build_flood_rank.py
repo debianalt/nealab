@@ -82,7 +82,8 @@ split_flood_by_dpto.py keeps it when it rewrites the summary.
 
 Per hexagon (`--hex`), so the map paints the variable of the active ranking tab
 when a department is open, instead of JRC occurrence:
-  low_bld_n      buildings at HAND < 5 m            (tabs % edificios, Edificios)
+  low_bld_pct    % of the cell's buildings there    (tab % edificios; 0 = none on low ground or no buildings)
+  low_bld_n      buildings at HAND < 5 m            (tab Edificios)
   low_land_pct   % of the land at HAND < 5 m        (tab % tierra; null over water)
   low_bld_new_n  buildings added there 2016–2023    (tab Cambio; linear trend × 7)
 Written to output/<prefix>flood_hand_hex.parquet (split_flood_by_dpto.py joins it
@@ -447,7 +448,7 @@ def process_change(tid: str) -> None:
           f"low share {share[0]:.2f}→{share[-1]:.2f}% tilt {province['tilt_pts']} {label} {province['windows']} flips {flips}/{len(both)} · top: {top}")
 
 
-HEX_COLS = ['low_bld_n', 'low_land_pct', 'low_bld_new_n']
+HEX_COLS = ['low_bld_pct', 'low_bld_n', 'low_land_pct', 'low_bld_new_n']
 
 
 def hex_path(tid: str) -> str:
@@ -471,6 +472,13 @@ def build_hex(tid: str) -> None:
     c = pd.DataFrame({'h3index': c.h3index, 'low_bld_new_n': np.round(slope * (CHANGE_YEARS[-1] - CHANGE_YEARS[0]), 1)})
     out = a.merge(c, on='h3index', how='outer')
     out['low_bld_n'] = out.bld_low.fillna(0).round(1)
+    # 0, not null, where the count tab reads «sin edificios en zona baja» (under half a
+    # building: the rasters count fractions; FLOOD_LOW_BLD_CLASSES.zeroBelow) — null
+    # would paint most of the land «sin cobertura». Elsewhere at least 0.1, so the two
+    # tabs agree on which cells have buildings on low ground.
+    low = out.bld_low.fillna(0)
+    bld = np.maximum(out.bld.fillna(0), low)
+    out['low_bld_pct'] = np.where(out.low_bld_n >= 0.5, np.clip(np.round(100 * low / bld.where(bld > 0, 1), 1), 0.1, 100), 0.0)
     land = out.land_m2.fillna(0)
     out['low_land_pct'] = np.where(land > 0, np.round(100 * out.low_land_m2.fillna(0) / land.where(land > 0, 1), 1), np.nan)
     out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
@@ -493,8 +501,8 @@ def join_hand_hex(df: pd.DataFrame, t_prefix: str) -> pd.DataFrame:
         return df
     hx = pd.read_parquet(path)
     out = df.drop(columns=[c for c in HEX_COLS if c in df.columns]).merge(hx, on='h3index', how='left')
-    out['low_bld_n'] = out.low_bld_n.fillna(0)
-    out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
+    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n'):
+        out[c] = out[c].fillna(0)
     return out
 
 
@@ -512,8 +520,8 @@ def _fetch(url: str, path: str) -> None:
 def _join_hex(df: pd.DataFrame, hx: pd.DataFrame, label: str) -> pd.DataFrame:
     base = df.drop(columns=[c for c in HEX_COLS if c in df.columns])
     out = base.merge(hx, on='h3index', how='left')
-    out['low_bld_n'] = out.low_bld_n.fillna(0)
-    out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
+    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n'):
+        out[c] = out[c].fillna(0)
     if len(out) != len(df) or set(out.h3index) != set(df.h3index):
         sys.exit(f'{label}: row/h3index mismatch after join ({len(df)} -> {len(out)})')
     return out
@@ -566,7 +574,7 @@ def publish_hex(tids: list, backup_dir: str, dry_run: bool) -> None:
     if dry_run:
         print(f'dry run: {len(staged)} files staged in {stage_dir}, nothing uploaded')
         return
-    with ThreadPoolExecutor(8) as ex:
+    with ThreadPoolExecutor(3) as ex:   # wrangler: 8 in parallel break the OAuth session
         ok = list(ex.map(lambda pk: upload_file(pk[0], pk[1], cache_control=SHORT_CACHE), staged))
     failed = [k for (p, k), o in zip(staged, ok) if not o]
     if failed:

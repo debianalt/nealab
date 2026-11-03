@@ -103,7 +103,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=39',
+		hex_flood_risk: '?v=40',
 		sat_agri_apt: '?v=1',
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=32',
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 34;
+const DEPT_V = 35;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -646,6 +646,16 @@ export const FLOOD_LOW_BLD_CLASSES: ColorClasses = {
 		{ from: 49.5, color: MAP_CLASS_4[3], labelKey: 'legend.lowBld.c4' },
 	],
 };
+// Share of the cell's buildings on low ground (tab % edificios). 0 = none there,
+// or no buildings at all (the pipeline writes 0, not null). Same cuts as % tierra.
+export const FLOOD_LOW_BLD_PCT_CLASSES: ColorClasses = {
+	zero: { color: ZERO_HEX, labelKey: 'legend.lowBld.none' },
+	steps: [
+		{ from: 0, color: MAP_CLASS_3[0], labelKey: 'legend.lowLand.c1' },
+		{ from: 25, color: MAP_CLASS_3[1], labelKey: 'legend.lowLand.c2' },
+		{ from: 75, color: MAP_CLASS_3[2], labelKey: 'legend.lowLand.c3' },
+	],
+};
 export const FLOOD_LOW_LAND_CLASSES: ColorClasses = {
 	zero: { color: ZERO_HEX, labelKey: 'legend.lowLand.none' },
 	steps: [
@@ -806,6 +816,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'jrc_seasonality', labelKey: 'analysis.flood.jrcSeasonality', aggregation: 'mean', unit: 'meses' },
 			{ col: 'flood_extent_pct', labelKey: 'analysis.flood.currentExtent', aggregation: 'mean', unit: '%' },
 			// Relief (build_flood_rank.py --hex): painted from the ranking tabs.
+			{ col: 'low_bld_pct', labelKey: 'analysis.flood.lowBldPct', aggregation: 'mean', unit: '%' },
 			{ col: 'low_bld_n', labelKey: 'analysis.flood.lowBld', aggregation: 'sum', unit: 'edificios' },
 			{ col: 'low_land_pct', labelKey: 'analysis.flood.lowLand', aggregation: 'mean', unit: '%' },
 			{ col: 'low_bld_new_n', labelKey: 'analysis.flood.lowBldNew', aggregation: 'sum', unit: 'edificios' },
@@ -826,7 +837,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		colorClasses: FLOOD_OCCURRENCE_CLASSES,
 		// With a ranking tab active the hexes paint its relief variable, so a
 		// department reads like its bar; JRC stays the color on the saturated plain.
-		variableClasses: { low_bld_n: FLOOD_LOW_BLD_CLASSES, low_land_pct: FLOOD_LOW_LAND_CLASSES, low_bld_new_n: FLOOD_LOW_NEW_CLASSES },
+		variableClasses: { low_bld_pct: FLOOD_LOW_BLD_PCT_CLASSES, low_bld_n: FLOOD_LOW_BLD_CLASSES, low_land_pct: FLOOD_LOW_LAND_CLASSES, low_bld_new_n: FLOOD_LOW_NEW_CLASSES },
 		// Exposure by terrain (HAND < 5 m), not JRC: JRC occurrence ranks river and
 		// reservoir shores (Capital on Yacyretá, Iguazú on Urugua-í) and misses the
 		// short floods of the plateau. pipeline/build_flood_rank.py.
@@ -835,12 +846,13 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.flood.title', noteKey: 'rank.flood.note',
 			extraField: 'land_hand5_pct', extraUnitKey: 'rank.unit.land', extraDecimals: 1,
 			saturatedKey: 'rank.flood.saturated',
-			hexVariable: 'low_bld_n',
+			// Each tab paints its own reading: % of the cell's buildings / buildings.
+			hexVariable: 'low_bld_pct',
 			// Three readings of the same HAND export: share of buildings (default),
 			// number of buildings (magnitude, follows population), share of land (rural).
 			metrics: [
 				{ tabKey: 'rank.flood.tab.pct' },
-				{ tabKey: 'rank.flood.tab.n', field: 'bld_hand5_n', unit: '', unitKey: 'rank.unit.buildings', decimals: 0,
+				{ tabKey: 'rank.flood.tab.n', field: 'bld_hand5_n', unit: '', unitKey: 'rank.unit.buildings', decimals: 0, hexVariable: 'low_bld_n',
 				  titleKey: 'rank.flood.title.n', noteKey: 'rank.flood.note.n',
 				  extraField: 'bld_total', extraUnitKey: 'rank.unit.bldTotal', extraDecimals: 0 },
 				{ tabKey: 'rank.flood.tab.land', field: 'land_hand5_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 1, hexVariable: 'low_land_pct',
