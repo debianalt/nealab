@@ -24,14 +24,15 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install playwright pillow && python -m playwright install --with-deps chromium
-      - name: Qué responde cada dominio desde el runner
-        run: |
-          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
-          for u in https://www.spatia.ar/ https://neahub.pages.dev/ https://cdn.spatia.ar/data/hex_flood_risk.parquet; do
-            echo "$u -> $(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -r 0-99 "$u")"
-          done
-      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out/www || true
-      - run: cd director/sondas && python humo.py https://neahub.pages.dev ../../out/pages
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci && npm run build
+      - run: |
+          nohup npx vite preview --port 5173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:5173/ >/dev/null && break; sleep 1; done
+      - run: cd director/sondas && python humo.py http://localhost:5173 ../../out/local
       - uses: actions/upload-artifact@v4
         if: always()
         with:

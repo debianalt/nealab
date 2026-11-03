@@ -1,6 +1,6 @@
 """Navegador común de las sondas: Chrome del sistema con GPU en Windows,
 Chromium de Playwright con SwiftShader en Linux (runner de GitHub)."""
-import sys
+import os, sys
 
 TERMINOS = "spatia_terms_v2"
 INIT = (f"localStorage.setItem('{TERMINOS}','true');"
@@ -35,7 +35,9 @@ async def contexto_spatia(br, base, locale=None):
     ctx = await br.new_context(viewport=VIEWPORT, user_agent=UA, locale='es-AR')
     init = INIT + (f"localStorage.setItem('nealab-locale','{locale}');" if locale else '')
     await ctx.add_init_script(init)
-    if 'spatia.ar' not in base:  # localhost o pages.dev: R2 no les da CORS
+    # Proxy CORS sólo a pedido (SONDA_PROXY=1): en el runner, Cloudflare desafía las descargas
+    # del proxy. El build local se sirve en localhost:5173, que ya está en cors-rules.json.
+    if os.environ.get('SONDA_PROXY') == '1':
         await ctx.route('**/cdn.spatia.ar/**', _cors)
         await ctx.route('**/*.r2.dev/**', _cors)
     return ctx
