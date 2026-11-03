@@ -17,14 +17,21 @@ async def main():
         ctx = await contexto_spatia(br, BASE)
         page = await ctx.new_page()
         errores = []
-        page.on('console', lambda m: errores.append(m.text) if m.type == 'error' else None)
+        page.on('console', lambda m: errores.append(m.text) if m.type in ('error','warning') else None)
+        page.on('pageerror', lambda e: errores.append('PAGEERROR ' + str(e)))
         gl = await page.evaluate("""() => { const c = document.createElement('canvas');
             const g = c.getContext('webgl2') || c.getContext('webgl'); if (!g) return null;
             const d = g.getExtension('WEBGL_debug_renderer_info');
             return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'webgl sin info'; }""")
         print('WebGL:', gl)
         await page.goto(f'{BASE}/?lens=ambiente&a=flood_risk', wait_until='domcontentloaded')
-        await page.wait_for_selector('canvas.maplibregl-canvas', timeout=60000)
+        try:
+            await page.wait_for_selector('canvas.maplibregl-canvas', timeout=90000)
+        except Exception:
+            await page.screenshot(path=os.path.join(OUT, 'fallo.png'))
+            print('SIN CANVAS. errores:', json.dumps(errores[:10], ensure_ascii=False))
+            print('html:', (await page.evaluate("() => document.body.innerText"))[:800])
+            raise
         await page.wait_for_timeout(4000)
         await page.wait_for_selector('.loading-overlay', state='detached', timeout=120000)
         await page.wait_for_timeout(8000)
