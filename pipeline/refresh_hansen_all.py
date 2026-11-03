@@ -2,8 +2,8 @@
 Refresh deforestation_dynamics in every territory with a new Hansen release.
 
 Per territory (4 in parallel):
-  1. gcloud: satellite/<t>/hansen_lossyear.tif -> output/<t>/ (overwrites the old
-     release; treecover2000 is the same baseline in every release and is reused)
+  1. satellite/<t>/hansen_lossyear.tif -> output/<t>/, then deleted from the bucket
+     (gcs_staging.py; treecover2000 is the same baseline in every release and is reused)
   2. process_hansen_to_h3.py --territory <t> --mode comparable
   3. refresh_dept_parquets.py --layer deforestation_dynamics: each department keeps
      exactly its cells (no re-split; the INDEC partition of 2-nov-2026 stays),
@@ -17,7 +17,6 @@ src/lib/config.ts, deploy, npm run purge-cdn.
 """
 import argparse
 import os
-import shutil
 import subprocess
 import sys
 import time
@@ -25,7 +24,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-from config import OUTPUT_DIR, GCS_BUCKET, TERRITORY_CONFIGS, get_territory
+from config import OUTPUT_DIR, TERRITORY_CONFIGS, get_territory
 
 
 def run(cmd: list[str], log) -> bool:
@@ -36,11 +35,11 @@ def run(cmd: list[str], log) -> bool:
 def one(t: str, backup_dir: str, dry: bool) -> tuple[str, bool]:
     prefix = get_territory(t)['output_prefix']
     t_dir = os.path.join(OUTPUT_DIR, prefix.rstrip('/')) if prefix else OUTPUT_DIR
-    gcs_dir = f'gs://{GCS_BUCKET}/satellite/' + ('' if t == 'misiones' else f'{t}/')
+    gcs_name = 'satellite/' + ('' if t == 'misiones' else f'{t}/') + 'hansen_lossyear.tif'
     with open(os.path.join(OUTPUT_DIR, f'hansen_refresh_{t}.log'), 'w', encoding='utf-8') as log:
         steps = [
-            # shutil.which: gcloud is gcloud.cmd on Windows
-            [shutil.which('gcloud') or 'gcloud', 'storage', 'cp', gcs_dir + 'hansen_lossyear.tif', os.path.join(t_dir, 'hansen_lossyear.tif')],
+            # Download and delete the export from the bucket (gcs_staging.py)
+            [sys.executable, 'gcs_staging.py', gcs_name, os.path.join(t_dir, 'hansen_lossyear.tif')],
             # Guard: a stale GCS file (previous release) passes every other step silently.
             [sys.executable, '-c', "import rasterio,sys; r=rasterio.open(sys.argv[1]); "
              "m=int(r.read(1, out_shape=(max(1,r.height//4), max(1,r.width//4))).max()); "

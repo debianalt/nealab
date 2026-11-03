@@ -47,9 +47,8 @@ def process_territory(t_id: str) -> tuple[str, bool]:
         for fname in ("hansen_lossyear.tif", "hansen_treecover2000.tif"):
             local = os.path.join(t_dir, fname)
             if not os.path.exists(local):
-                gcs = f"gs://{GCS_BUCKET}/satellite/{t_id}/{fname}"
                 log.write(f"\nDownloading {fname}...\n"); log.flush()
-                if not run(f"gcloud storage cp {gcs} {local}", log=log):
+                if not run(f"{sys.executable} gcs_staging.py satellite/{t_id}/{fname} {local}", log=log):   # download + delete
                     log.write(f"FAILED: {fname} not in GCS\n")
                     return t_id, False
 

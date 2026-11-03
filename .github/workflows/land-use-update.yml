@@ -48,21 +48,23 @@ jobs:
       - name: Download from GCS
         run: |
           python -c "
-          import json, os
+          import json, os, sys
           from google.cloud import storage
           from google.oauth2 import service_account
+          sys.path.insert(0, 'pipeline')
+          from gcs_staging import download_and_delete   # the export is re-made every run
 
           key = json.loads(os.environ['GEE_SERVICE_ACCOUNT_KEY'])
           creds = service_account.Credentials.from_service_account_info(key)
           client = storage.Client(credentials=creds, project=key.get('project_id'))
           bucket = client.bucket('spatia-satellite')
 
-          year = '${{ github.event.inputs.year || '2024' }}'
+          year ='${{ github.event.inputs.year || '2024' }}'
           for prefix in [f'dw_cover_{year}']:   # area fractions (not dw_probs: mean probability is not area)
               for blob in bucket.list_blobs(prefix=prefix):
                   local = f'pipeline/output/{blob.name}'
                   os.makedirs(os.path.dirname(local), exist_ok=True)
-                  blob.download_to_filename(local)
+                  download_and_delete(blob, local)
                   print(f'Downloaded: {local} ({blob.size/1024/1024:.1f} MB)')
           "
         env:

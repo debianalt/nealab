@@ -82,13 +82,14 @@ def launch(tid: str):
 def download(tid: str, t_dir: str) -> list:
     """GCS → t_dir with the GEE service account (same client CI already uses)."""
     from download_gcs import get_gcs_client
+    from gcs_staging import download_and_delete   # the export is re-made every run
     os.makedirs(t_dir, exist_ok=True)
     for old in glob.glob(os.path.join(t_dir, f'{NAME}*.tif')):
         os.remove(old)
     bucket = get_gcs_client().bucket(GCS_BUCKET)
     for blob in bucket.list_blobs(prefix=f'{EXPORT_PREFIX}/{tid}/{NAME}'):
         if blob.name.endswith('.tif'):
-            blob.download_to_filename(os.path.join(t_dir, os.path.basename(blob.name)))
+            download_and_delete(blob, os.path.join(t_dir, os.path.basename(blob.name)))
     return sorted(glob.glob(os.path.join(t_dir, f'{NAME}*.tif')))
 
 
