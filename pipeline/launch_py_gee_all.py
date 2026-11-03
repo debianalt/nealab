@@ -44,7 +44,6 @@ EXPORT_GROUPS = {
     "hansen": "python pipeline/gee_export_hansen_loss.py --territory {t} --gcs --no-wait",
     "lv":     "python pipeline/gee_export_location_value.py --territory {t} --gcs --no-wait",
     "sdm":    "python pipeline/gee_export_sdm_covariates.py --territory {t}",
-    "mapbiomas": "python pipeline/gee_export_mapbiomas.py --territory {t} --gcs --no-wait",
 }
 
 
@@ -58,7 +57,7 @@ def run(cmd: str, dry_run: bool) -> int:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default=None,
-                    help="Comma-separated export groups: hansen,lv,sdm,mapbiomas")
+                    help="Comma-separated export groups: hansen,lv,sdm")
     ap.add_argument("--territory", default=None,
                     help="Single territory (default: all 15)")
     ap.add_argument("--dry-run", action="store_true")

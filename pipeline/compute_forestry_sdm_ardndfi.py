@@ -86,6 +86,9 @@ def load_frame(con, t: str):
     # river margins and flood-prone valleys that DW classifies as land — and in Misiones
     # those follow the (river-defined) department borders, leaving "sin cobertura"
     # strips. Keep masked only hexes DW considers majority-water; re-score the rest.
+    # Frozen input (3-nov-2026): the Dynamic World layer left the site and its scripts were deleted; the local
+    # pipeline/output/<t>/sat_land_use.parquet files stay for this mask. If the SDM is rebuilt, take the water
+    # mask from MapBiomas (AR: pipeline/hexoma, class 33) instead.
     luf = pd.read_parquet(os.path.join(out_dir, "sat_land_use.parquet"))
     lu = pd.DataFrame({
         "h3index": luf["h3index"],

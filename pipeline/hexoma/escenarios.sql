@@ -87,24 +87,27 @@ LIMIT 25;
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 3. EUDR: ¿qué hay hoy donde se perdió bosque después de 2020?
 -- En las celdas con pérdida post-2020 (> 0 %), el uso del suelo dominante actual
--- (Dynamic World: la fracción mayor) y cuánto de esa pérdida coincide con fuego
+-- (MapBiomas Argentina Col. 3, 2025: la clase mayor) y cuánto de esa pérdida coincide con fuego
 -- sobre vegetación nativa. Por provincia y uso dominante.
--- Lectura: «cultivos/pasturas» sugiere conversión; «arbustos» puede ser
--- regeneración o degradación; «árboles» (Dynamic World trees: selva paranaense en Misiones,
--- bosque chaqueño al oeste) = la celda perdió una parte y conserva cobertura arbórea.
+-- Lectura: «cultivo»/«pastura» sugiere conversión; «pastizal y arbustal» puede ser
+-- regeneración o degradación; «monte» = la celda perdió una parte y conserva monte nativo;
+-- «plantación» = cosecha o reemplazo de una plantación (Hansen no separa).
 -- loss_post_2020_pct es % del área de la celda (como el summary del sitio): km² = área × %/100.
--- Medido: 14 s. Muestra: Chaco 2.036 km² perdidos en celdas que siguen arboladas y 764 en
--- celdas hoy de cultivos (44 % con fuego sobre nativa).
+-- (Medido con Dynamic World hasta el 3-nov-2026: 14 s; Chaco 2.036 km² en celdas arboladas y 764 en
+-- cultivos. Con MapBiomas cambian las clases: volver a medir tras recargar la capa.)
 -- ─────────────────────────────────────────────────────────────────────────────
 WITH celdas AS (
     SELECT v.territorio, v.h3, v.eudr__loss_post_2020_pct AS perdida,
            v.eudr__fire_native_post_2020_pct AS fuego_nativa,
-           (ARRAY['árboles', 'cultivos', 'pasturas', 'arbustos', 'construido', 'agua', 'veg. inundada', 'suelo desnudo'])[
+           (ARRAY['monte', 'plantación', 'yerba, té y perennes', 'cultivo', 'pastura', 'pastizal y arbustal',
+                  'estero', 'urbano', 'agua'])[
                array_position(
-                   ARRAY[land_use__frac_trees, land_use__frac_crops, land_use__frac_grass, land_use__frac_shrub,
-                         land_use__frac_built, land_use__frac_water, land_use__frac_flooded, land_use__frac_bare],
-                   greatest(land_use__frac_trees, land_use__frac_crops, land_use__frac_grass, land_use__frac_shrub,
-                            land_use__frac_built, land_use__frac_water, land_use__frac_flooded, land_use__frac_bare))
+                   ARRAY[land_use__pct_monte, land_use__pct_plantacion, land_use__pct_perenne, land_use__pct_cultivo,
+                         land_use__pct_pastura, land_use__pct_pastizal, land_use__pct_estero, land_use__pct_urbano,
+                         land_use__pct_agua],
+                   greatest(land_use__pct_monte, land_use__pct_plantacion, land_use__pct_perenne, land_use__pct_cultivo,
+                            land_use__pct_pastura, land_use__pct_pastizal, land_use__pct_estero, land_use__pct_urbano,
+                            land_use__pct_agua))
            ] AS uso_dominante
     FROM v_hexoma v
     WHERE v.eudr__loss_post_2020_pct > 0

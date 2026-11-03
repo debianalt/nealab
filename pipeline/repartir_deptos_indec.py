@@ -58,7 +58,6 @@ FAMILIES = {
     'deforestation_dynamics': ('sat_dpto', 'sat_deforestation_dynamics', 'sat_deforestation_dynamics_summary'),
     'eudr':                   ('sat_dpto', 'sat_eudr', 'sat_eudr_summary'),
     'forestry_aptitude':      ('sat_dpto', 'sat_forestry_aptitude', 'sat_forestry_aptitude_summary'),
-    'land_use':               ('sat_dpto', 'sat_land_use', 'sat_land_use_summary'),
     'pm25_drivers':           ('sat_dpto', 'sat_pm25_drivers', 'sat_pm25_drivers_summary'),
 }
 AGRI_CROPS_PREFIX = 'apt_'

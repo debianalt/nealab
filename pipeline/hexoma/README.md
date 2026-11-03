@@ -202,6 +202,10 @@ Validación contra el MAGyP por departamento (`validar_uso.py`, `validacion_uso.
 perenne r 0,81–0,89; MapBiomas sobreestima la superficie (×1,3–3), ubica bien la agricultura. **Trampa:** los códigos
 de departamento del Hexoma en Chaco y Formosa no son los del INDEC/MAGyP: unir por nombre.
 `python pipeline/hexoma/build_hexoma_uso.py` (~45 min; `--solo-carga` usa lo ya bajado) y después `validar_uso.py`.
+**Capa web (desde el 3-nov-2026):** `python pipeline/hexoma/exportar_uso_web.py` (~2 min) escribe `sat_uso_suelo` (clase
+dominante 2025 y 1985 con «mosaico» si ninguna llega al 50 %, trayectoria, % por clase) y los resúmenes con ranking y
+serie cada 5 años; `--evaluar` sólo imprime la tabla del umbral. Validación y paleta: `validacion_uso_web.md`.
+Reemplazó a Dynamic World en spatia.ar (sólo NEA argentino).
 
 ## Aptitud por cultivo (esquema `aptitud`, fase A4)
 9 cultivos (yerba, té, cítricos, soja, maíz, algodón, girasol, arroz sin agua de riego, pasturas megatérmicas) con los

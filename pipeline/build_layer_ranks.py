@@ -58,11 +58,8 @@ SPECS = {
         'min_capital': ('AVG(travel_min_capital_raw)', 0),
         'km_hospital': ('AVG(dist_nearest_hospital_km_raw)', 1),
     },
-    'land_use': {
-        'trees_pct': ('100 * AVG(frac_trees)', 1), 'trees_ha': (f'SUM(frac_trees) * {HA}', 0),
-        'crops_pct': ('100 * AVG(frac_crops)', 1), 'crops_ha': (f'SUM(frac_crops) * {HA}', 0),
-        'built_pct': ('100 * AVG(frac_built)', 1), 'built_ha': (f'SUM(frac_built) * {HA}', 0),
-    },
+    # land_use: its ranking (monte, plantación, perennes, cultivo y pastura, saldo de monte) and the 1985–2025
+    # series are written by pipeline/hexoma/exportar_uso_web.py since 3-nov-2026; not here, or they would be lost.
     'forestry_aptitude': {
         'high_ha': (f'SUM(CASE WHEN score >= {HIGH_SCORE} THEN 1 ELSE 0 END) * {HA}', 0),
         'high_pct': (f'100 * AVG(CASE WHEN score >= {HIGH_SCORE} THEN 1.0 ELSE 0 END)', 1),

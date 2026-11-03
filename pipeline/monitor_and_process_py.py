@@ -77,30 +77,6 @@ def process_lv(t_id: str) -> bool:
     return True
 
 
-def process_mapbiomas(t_id: str) -> bool:
-    territory = get_territory(t_id)
-    t_prefix = territory['output_prefix']
-    t_dir = os.path.join(OUTPUT_DIR, t_prefix.rstrip('/'))
-    log_path = os.path.join(OUTPUT_DIR, f"land_use_{t_id}.log")
-    with open(log_path, "w") as log:
-        log.write(f"=== {t_id} / land_use ===\n")
-        # Download MapBiomas raster
-        mb_name = f"mapbiomas_{t_id}_2023.tif"
-        local = os.path.join(t_dir, mb_name)
-        if not os.path.exists(local):
-            gcs = f"gs://{GCS_BUCKET}/satellite/{t_id}/{mb_name}"
-            if not run(f"gcloud storage cp {gcs} {local}", log=log):
-                # Try alternative naming
-                gcs2 = f"gs://{GCS_BUCKET}/satellite/{t_id}/mapbiomas_{t_id}_2022.tif"
-                run(f"gcloud storage cp {gcs2} {local}", log=log)
-        if not run(f"python process_mapbiomas_to_h3.py --territory {t_id}", log=log):
-            return False
-        if not run(f"python split_by_admin.py --territory {t_id} --only land_use", log=log):
-            return False
-        upload_parquet(t_prefix, t_dir, "land_use")
-    return True
-
-
 def process_forestry(t_id: str) -> bool:
     territory = get_territory(t_id)
     t_prefix = territory['output_prefix']
@@ -143,11 +119,6 @@ def check_lv_ready(t_id: str) -> bool:
     return gcs_exists(f"gs://{GCS_BUCKET}/satellite/{t_id}/lv_cities_access.tif")
 
 
-def check_mapbiomas_ready(t_id: str) -> bool:
-    return (gcs_exists(f"gs://{GCS_BUCKET}/satellite/{t_id}/mapbiomas_{t_id}_2023.tif") or
-            gcs_exists(f"gs://{GCS_BUCKET}/satellite/{t_id}/mapbiomas_{t_id}_2022.tif"))
-
-
 def check_sdm_ready(t_id: str) -> bool:
     return gcs_exists(f"gs://{GCS_BUCKET}/satellite/{t_id}/sdm_era5_composite.tif")
 
@@ -172,7 +143,6 @@ def main():
     done = {
         "deforestation": set(),
         "accessibility": set(),
-        "land_use": set(),
         "forestry": set(),
         "flood": set(),
     }
@@ -208,14 +178,6 @@ def main():
                         f = pool.submit(process_lv, t)
                         futures.setdefault("accessibility", {})[t] = f
 
-            # --- Land use ---
-            for t in ALL_PY:
-                if t not in done["land_use"] and t not in futures.get("land_use", {}):
-                    if check_mapbiomas_ready(t):
-                        print(f"  [{t}] MapBiomas ready -> land_use")
-                        f = pool.submit(process_mapbiomas, t)
-                        futures.setdefault("land_use", {})[t] = f
-
             # --- Forestry ---
             for t in ALL_PY:
                 if t not in done["forestry"] and t not in futures.get("forestry", {}):
@@ -242,12 +204,11 @@ def main():
                         del fmap[t]
 
             # Status
-            total_needed = len(ALL_PY) * 5  # 5 layers
+            total_needed = len(ALL_PY) * 4  # 4 layers (land_use left Paraguay on 3-nov-2026)
             total_done = sum(len(v) for v in done.values())
             print(f"Progress: {total_done}/{total_needed} | "
                   f"deforest={len(done['deforestation'])} "
                   f"access={len(done['accessibility'])} "
-                  f"landuse={len(done['land_use'])} "
                   f"forestry={len(done['forestry'])} "
                   f"flood={len(done['flood'])}")
 

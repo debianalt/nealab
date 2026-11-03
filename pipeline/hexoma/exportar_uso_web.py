@@ -51,9 +51,6 @@ SERIE_CLASES = FUENTES / 'uso' / 'uso_h3_anio_clase.parquet'
 PREFIJO = {'misiones': '', 'corrientes': 'corrientes/', 'chaco': 'chaco/', 'formosa': 'formosa/'}
 RESUMEN = {'misiones': 'sat_uso_suelo_dept_summary.json', 'corrientes': 'corrientes_sat_uso_suelo_summary.json',
            'chaco': 'chaco_sat_uso_suelo_summary.json', 'formosa': 'formosa_sat_uso_suelo_summary.json'}
-# Resumen viejo (Dynamic World): sólo para nombres y centroides en la primera corrida.
-RESUMEN_DW = {'misiones': 'sat_land_use_dept_summary.json', 'corrientes': 'corrientes_sat_land_use_summary.json',
-              'chaco': 'chaco_sat_land_use_summary.json', 'formosa': 'formosa_sat_land_use_summary.json'}
 
 CLASES = ['monte', 'plantacion', 'perenne', 'cultivo', 'pastura', 'pastizal', 'estero', 'urbano', 'agua', 'otro']
 MAPBIOMAS = {3: 'monte', 4: 'monte', 6: 'monte', 9: 'plantacion', 36: 'perenne', 19: 'cultivo', 21: 'cultivo',
@@ -170,6 +167,12 @@ def rank_de(d: pd.DataFrame) -> dict:
     }
 
 
+def centro(celdas: pd.Series) -> list[float]:
+    import h3
+    ll = np.array([h3.cell_to_latlng(c) for c in celdas])
+    return [round(float(ll[:, 1].mean()), 4), round(float(ll[:, 0].mean()), 4)]
+
+
 def serie_de(s: pd.DataFrame) -> dict:
     """ha por clase cada 5 años de las filas de la serie agregada (un depto o la provincia entera)."""
     t = s.groupby(['k', 'anio']).ha.sum()
@@ -206,8 +209,10 @@ def main() -> None:
         for key, idx in g.groupby('parquet_key').groups.items():
             o.loc[idx].sort_values('h3index').to_parquet(OUT / pre / 'sat_dpto' / f'sat_uso_suelo_{key}.parquet',
                                                          index=False, compression='zstd')
+        # Nombres y centroides (los que usan los enlaces ?dept=) del resumen publicado; si no está, el nombre del
+        # Hexoma y el centro medio de las celdas.
         base_p = DATA / RESUMEN[terr]
-        base = json.loads((base_p if base_p.exists() else DATA / RESUMEN_DW[terr]).read_text(encoding='utf-8'))
+        base = json.loads(base_p.read_text(encoding='utf-8')) if base_p.exists() else {'departments': []}
         meta = {dep['parquetKey']: dep for dep in base['departments']}
         deps = []
         for key, d in g.groupby('parquet_key'):
@@ -215,7 +220,7 @@ def main() -> None:
             rank = rank_de(d)
             deps.append({'dpto': viejo.get('dpto', d.departamento.iloc[0]), 'parquetKey': key,
                          'avg_score': rank['monte_pct'], 'hex_count': int(len(d)),
-                         **({'centroid': viejo['centroid']} if 'centroid' in viejo else {}),
+                         'centroid': viejo.get('centroid') or centro(d.h3),
                          'rank': rank, 'serie': serie_de(serie[(serie.territorio == terr) & (serie.parquet_key == key)])})
         deps.sort(key=lambda x: x['dpto'])
         resumen = {'province': {'total_hexes': int(len(g)), 'avg_score': rank_de(g)['monte_pct'], 'unassigned': 0,

@@ -17,7 +17,8 @@ import pandas as pd
 
 from config import OUTPUT_DIR
 
-# Any full-coverage parquet to extract the complete H3 index
+# Any full-coverage parquet to extract the complete H3 index (the local Dynamic World output, kept as a frozen
+# grid reference after that layer left the site on 3-nov-2026)
 REFERENCE_PARQUET = os.path.join(OUTPUT_DIR, "sat_land_use.parquet")
 
 LIMITED_ANALYSES = ["accessibility", "economic_activity", "sociodemographic"]

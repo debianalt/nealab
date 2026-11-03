@@ -8,11 +8,11 @@ For other territories: uses h3_admin_crosswalk.parquet built by build_admin_cros
 Usage:
   # Misiones (backwards compat):
   python pipeline/split_by_admin.py --territory misiones
-  python pipeline/split_by_admin.py --territory misiones --only forestry_aptitude,land_use
+  python pipeline/split_by_admin.py --territory misiones --only forestry_aptitude
 
   # Itapúa (after build_admin_crosswalk.py is run):
   python pipeline/split_by_admin.py --territory itapua_py
-  python pipeline/split_by_admin.py --territory itapua_py --only land_use
+  python pipeline/split_by_admin.py --territory itapua_py --only accessibility
 
 Output:
   pipeline/output/{prefix}sat_dpto/sat_{ID}_{ADMIN}.parquet
@@ -44,7 +44,7 @@ SUMMARY_METRIC = {
 SAT_ANALYSES = [
     "forestry_aptitude",
     "pm25_drivers", "deforestation_dynamics",
-    "land_use", "accessibility",
+    "accessibility",   # land_use: pipeline/hexoma/exportar_uso_web.py since 3-nov-2026
 ]
 
 # Analyses based on AR census data (Misiones + Corrientes + other AR provinces)

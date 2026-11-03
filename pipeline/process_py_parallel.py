@@ -45,12 +45,6 @@ ANALYSIS_CMDS = {
         "npx wrangler r2 object put neahub/data/{prefix}sat_accessibility.parquet "
         "--file ../output/{t}/sat_accessibility.parquet --remote",
     ],
-    "land_use": [
-        "python process_mapbiomas_to_h3.py --territory {t}",
-        "python split_by_admin.py --territory {t} --only land_use",
-        "npx wrangler r2 object put neahub/data/{prefix}sat_land_use.parquet "
-        "--file ../output/{t}/sat_land_use.parquet --remote",
-    ],
     "forestry": [
         "python compute_forestry_sdm.py --territory {t}",
         "python split_by_admin.py --territory {t} --only forestry_aptitude",
