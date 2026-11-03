@@ -6,6 +6,9 @@ on:
       modo:
         description: 'humo | diagnostico | completo'
         default: humo
+      base:
+        description: 'URL a sondear'
+        default: 'https://neahub.pages.dev'
 
 permissions:
   contents: read
@@ -21,7 +24,13 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install playwright pillow && python -m playwright install --with-deps chromium
-      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out
+      - name: Qué responde cada dominio desde el runner
+        run: |
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
+          for u in https://www.spatia.ar/ https://neahub.pages.dev/ https://cdn.spatia.ar/data/hex_flood_risk.parquet; do
+            echo "$u -> $(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -r 0-99 "$u")"
+          done
+      - run: cd director/sondas && python humo.py ${{ inputs.base || 'https://neahub.pages.dev' }} ../../out
       - uses: actions/upload-artifact@v4
         if: always()
         with:
