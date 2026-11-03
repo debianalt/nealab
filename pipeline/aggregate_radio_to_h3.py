@@ -24,6 +24,7 @@ from sklearn.preprocessing import StandardScaler
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 from config import OUTPUT_DIR
+from socio_types import name_socio_type
 
 CROSSWALK_PATH = os.path.join(OUTPUT_DIR, "h3_radio_crosswalk.parquet")
 RADIO_STATS_PATH = os.path.join(OUTPUT_DIR, "radio_stats_master.parquet")
@@ -187,7 +188,14 @@ def main():
         for c in range(best_k):
             mask = best_labels == c
             cluster_means = df.loc[mask, cols].mean().values
-            label = auto_label(cluster_means, global_means, cols, used_labels)
+            if aid == 'sociodemographic':
+                # Named from the cluster's profile (socio_types.py), not after a column.
+                cm = df.loc[mask, cols].mean()
+                gm = df[cols].mean()
+                label = name_socio_type(cm['densidad_hab_km2'], cm['pct_nbi'], cm['pct_propietario'],
+                                        gm['pct_nbi'], gm['pct_propietario'])
+            else:
+                label = auto_label(cluster_means, global_means, cols, used_labels)
             used_labels.add(label)
             type_labels[c + 1] = label
             count = mask.sum()

@@ -2,14 +2,14 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 1116998,
-    "avg_score": 45.5,
+    "avg_score": 46.2,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 62.0,
+      "avg_score": 67.2,
       "hex_count": 193337,
       "centroid": [
         -61.9528,
@@ -22,99 +22,9 @@
       }
     },
     {
-      "dpto": "Fray Justo Santa María de Oro",
-      "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 54.8,
-      "hex_count": 25284,
-      "centroid": [
-        -61.3025,
-        -27.8657
-      ],
-      "rank": {
-        "min_cabecera": 134,
-        "min_capital": 364,
-        "km_hospital": 13.6
-      }
-    },
-    {
-      "dpto": "2 de Abril",
-      "parquetKey": "2_de_abril",
-      "avg_score": 52.4,
-      "hex_count": 18082,
-      "centroid": [
-        -61.3291,
-        -27.6217
-      ],
-      "rank": {
-        "min_cabecera": 121,
-        "min_capital": 344,
-        "km_hospital": 11.6
-      }
-    },
-    {
-      "dpto": "12 de Octubre",
-      "parquetKey": "doce_de_octubre",
-      "avg_score": 51.5,
-      "hex_count": 31254,
-      "centroid": [
-        -61.4769,
-        -27.3359
-      ],
-      "rank": {
-        "min_cabecera": 110,
-        "min_capital": 337,
-        "km_hospital": 12.3
-      }
-    },
-    {
-      "dpto": "General Güemes",
-      "parquetKey": "general_guemes",
-      "avg_score": 50.9,
-      "hex_count": 281279,
-      "centroid": [
-        -61.3271,
-        -25.2213
-      ],
-      "rank": {
-        "min_cabecera": 146,
-        "min_capital": 488,
-        "km_hospital": 10.7
-      }
-    },
-    {
-      "dpto": "9 de Julio",
-      "parquetKey": "nueve_de_julio",
-      "avg_score": 48.5,
-      "hex_count": 24383,
-      "centroid": [
-        -61.2638,
-        -26.9464
-      ],
-      "rank": {
-        "min_cabecera": 78,
-        "min_capital": 289,
-        "km_hospital": 16.1
-      }
-    },
-    {
-      "dpto": "Mayor Luis J. Fontana",
-      "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 48.1,
-      "hex_count": 42499,
-      "centroid": [
-        -60.657,
-        -27.744
-      ],
-      "rank": {
-        "min_cabecera": 113,
-        "min_capital": 303,
-        "km_hospital": 10.6
-      }
-    },
-    {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 47.4,
+      "avg_score": 64.2,
       "hex_count": 69382,
       "centroid": [
         -59.828,
@@ -127,9 +37,24 @@
       }
     },
     {
+      "dpto": "General Güemes",
+      "parquetKey": "general_guemes",
+      "avg_score": 51.6,
+      "hex_count": 281279,
+      "centroid": [
+        -61.3271,
+        -25.2213
+      ],
+      "rank": {
+        "min_cabecera": 146,
+        "min_capital": 488,
+        "km_hospital": 10.7
+      }
+    },
+    {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 46.7,
+      "avg_score": 47.0,
       "hex_count": 14611,
       "centroid": [
         -61.0714,
@@ -142,69 +67,9 @@
       }
     },
     {
-      "dpto": "San Lorenzo",
-      "parquetKey": "san_lorenzo",
-      "avg_score": 43.9,
-      "hex_count": 24700,
-      "centroid": [
-        -60.3644,
-        -27.395
-      ],
-      "rank": {
-        "min_cabecera": 82,
-        "min_capital": 241,
-        "km_hospital": 12.9
-      }
-    },
-    {
-      "dpto": "Chacabuco",
-      "parquetKey": "chacabuco",
-      "avg_score": 43.8,
-      "hex_count": 17049,
-      "centroid": [
-        -61.3085,
-        -27.1179
-      ],
-      "rank": {
-        "min_cabecera": 90,
-        "min_capital": 305,
-        "km_hospital": 7.9
-      }
-    },
-    {
-      "dpto": "Maipú",
-      "parquetKey": "maipu",
-      "avg_score": 37.3,
-      "hex_count": 32945,
-      "centroid": [
-        -60.4547,
-        -26.3211
-      ],
-      "rank": {
-        "min_cabecera": 52,
-        "min_capital": 239,
-        "km_hospital": 12.2
-      }
-    },
-    {
-      "dpto": "25 de Mayo",
-      "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 37.1,
-      "hex_count": 27214,
-      "centroid": [
-        -60.0194,
-        -26.8195
-      ],
-      "rank": {
-        "min_cabecera": 59,
-        "min_capital": 161,
-        "km_hospital": 15.9
-      }
-    },
-    {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 36.4,
+      "avg_score": 44.0,
       "hex_count": 25909,
       "centroid": [
         -59.7755,
@@ -217,84 +82,39 @@
       }
     },
     {
-      "dpto": "Independencia",
-      "parquetKey": "independencia",
-      "avg_score": 35.3,
-      "hex_count": 21735,
+      "dpto": "Mayor Luis J. Fontana",
+      "parquetKey": "mayor_luis_j_fontana",
+      "avg_score": 42.7,
+      "hex_count": 42499,
       "centroid": [
-        -60.7569,
-        -26.7373
+        -60.657,
+        -27.744
       ],
       "rank": {
-        "min_cabecera": 47,
-        "min_capital": 219,
-        "km_hospital": 12.0
+        "min_cabecera": 113,
+        "min_capital": 303,
+        "km_hospital": 10.6
       }
     },
     {
-      "dpto": "O'Higgins",
-      "parquetKey": "ohiggins",
-      "avg_score": 35.3,
-      "hex_count": 17864,
+      "dpto": "Fray Justo Santa María de Oro",
+      "parquetKey": "fray_justo_santa_maria_de_oro",
+      "avg_score": 41.7,
+      "hex_count": 25284,
       "centroid": [
-        -60.6805,
-        -27.2575
+        -61.3025,
+        -27.8657
       ],
       "rank": {
-        "min_cabecera": 52,
-        "min_capital": 232,
-        "km_hospital": 9.3
-      }
-    },
-    {
-      "dpto": "Libertador General San Martín",
-      "parquetKey": "libertador_general_san_martin",
-      "avg_score": 32.2,
-      "hex_count": 81972,
-      "centroid": [
-        -59.4878,
-        -26.3769
-      ],
-      "rank": {
-        "min_cabecera": 58,
-        "min_capital": 177,
-        "km_hospital": 9.1
-      }
-    },
-    {
-      "dpto": "Quitilipi",
-      "parquetKey": "quitilipi",
-      "avg_score": 30.3,
-      "hex_count": 17833,
-      "centroid": [
-        -60.1736,
-        -26.6685
-      ],
-      "rank": {
-        "min_cabecera": 40,
-        "min_capital": 175,
-        "km_hospital": 11.0
-      }
-    },
-    {
-      "dpto": "Sargento Cabral",
-      "parquetKey": "sargento_cabral",
-      "avg_score": 28.0,
-      "hex_count": 18853,
-      "centroid": [
-        -59.5193,
-        -26.8004
-      ],
-      "rank": {
-        "min_cabecera": 51,
-        "min_capital": 117,
-        "km_hospital": 9.5
+        "min_cabecera": 134,
+        "min_capital": 364,
+        "km_hospital": 13.6
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
-      "avg_score": 26.3,
+      "avg_score": 40.1,
       "hex_count": 17418,
       "centroid": [
         -59.3474,
@@ -307,54 +127,39 @@
       }
     },
     {
-      "dpto": "Bermejo",
-      "parquetKey": "bermejo",
-      "avg_score": 25.9,
-      "hex_count": 29432,
+      "dpto": "San Lorenzo",
+      "parquetKey": "san_lorenzo",
+      "avg_score": 40.0,
+      "hex_count": 24700,
       "centroid": [
-        -58.707,
-        -26.9576
+        -60.3644,
+        -27.395
       ],
       "rank": {
-        "min_cabecera": 68,
-        "min_capital": 97,
-        "km_hospital": 6.4
+        "min_cabecera": 82,
+        "min_capital": 241,
+        "km_hospital": 12.9
       }
     },
     {
-      "dpto": "San Fernando",
-      "parquetKey": "san_fernando",
-      "avg_score": 25.3,
-      "hex_count": 40334,
+      "dpto": "2 de Abril",
+      "parquetKey": "2_de_abril",
+      "avg_score": 38.3,
+      "hex_count": 18082,
       "centroid": [
-        -59.1203,
-        -27.7115
+        -61.3291,
+        -27.6217
       ],
       "rank": {
-        "min_cabecera": 63,
-        "min_capital": 71,
-        "km_hospital": 10.4
-      }
-    },
-    {
-      "dpto": "Comandante Fernández",
-      "parquetKey": "comandante_fernandez",
-      "avg_score": 25.2,
-      "hex_count": 17141,
-      "centroid": [
-        -60.4618,
-        -26.787
-      ],
-      "rank": {
-        "min_cabecera": 23,
-        "min_capital": 182,
-        "km_hospital": 10.4
+        "min_cabecera": 121,
+        "min_capital": 344,
+        "km_hospital": 11.6
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 21.8,
+      "avg_score": 37.6,
       "hex_count": 11923,
       "centroid": [
         -59.2606,
@@ -367,9 +172,129 @@
       }
     },
     {
+      "dpto": "San Fernando",
+      "parquetKey": "san_fernando",
+      "avg_score": 36.9,
+      "hex_count": 40334,
+      "centroid": [
+        -59.1203,
+        -27.7115
+      ],
+      "rank": {
+        "min_cabecera": 63,
+        "min_capital": 71,
+        "km_hospital": 10.4
+      }
+    },
+    {
+      "dpto": "12 de Octubre",
+      "parquetKey": "doce_de_octubre",
+      "avg_score": 36.6,
+      "hex_count": 31254,
+      "centroid": [
+        -61.4769,
+        -27.3359
+      ],
+      "rank": {
+        "min_cabecera": 110,
+        "min_capital": 337,
+        "km_hospital": 12.3
+      }
+    },
+    {
+      "dpto": "25 de Mayo",
+      "parquetKey": "veinticinco_de_mayo",
+      "avg_score": 35.8,
+      "hex_count": 27214,
+      "centroid": [
+        -60.0194,
+        -26.8195
+      ],
+      "rank": {
+        "min_cabecera": 59,
+        "min_capital": 161,
+        "km_hospital": 15.9
+      }
+    },
+    {
+      "dpto": "Maipú",
+      "parquetKey": "maipu",
+      "avg_score": 33.3,
+      "hex_count": 32945,
+      "centroid": [
+        -60.4547,
+        -26.3211
+      ],
+      "rank": {
+        "min_cabecera": 52,
+        "min_capital": 239,
+        "km_hospital": 12.2
+      }
+    },
+    {
+      "dpto": "Independencia",
+      "parquetKey": "independencia",
+      "avg_score": 32.1,
+      "hex_count": 21735,
+      "centroid": [
+        -60.7569,
+        -26.7373
+      ],
+      "rank": {
+        "min_cabecera": 47,
+        "min_capital": 219,
+        "km_hospital": 12.0
+      }
+    },
+    {
+      "dpto": "Libertador General San Martín",
+      "parquetKey": "libertador_general_san_martin",
+      "avg_score": 31.9,
+      "hex_count": 81972,
+      "centroid": [
+        -59.4878,
+        -26.3769
+      ],
+      "rank": {
+        "min_cabecera": 58,
+        "min_capital": 177,
+        "km_hospital": 9.1
+      }
+    },
+    {
+      "dpto": "9 de Julio",
+      "parquetKey": "nueve_de_julio",
+      "avg_score": 31.1,
+      "hex_count": 24383,
+      "centroid": [
+        -61.2638,
+        -26.9464
+      ],
+      "rank": {
+        "min_cabecera": 78,
+        "min_capital": 289,
+        "km_hospital": 16.1
+      }
+    },
+    {
+      "dpto": "Sargento Cabral",
+      "parquetKey": "sargento_cabral",
+      "avg_score": 30.6,
+      "hex_count": 18853,
+      "centroid": [
+        -59.5193,
+        -26.8004
+      ],
+      "rank": {
+        "min_cabecera": 51,
+        "min_capital": 117,
+        "km_hospital": 9.5
+      }
+    },
+    {
       "dpto": "1º de Mayo",
       "parquetKey": "primero_de_mayo",
-      "avg_score": 18.8,
+      "avg_score": 30.4,
       "hex_count": 14565,
       "centroid": [
         -58.9592,
@@ -379,6 +304,81 @@
         "min_cabecera": 42,
         "min_capital": 53,
         "km_hospital": 7.7
+      }
+    },
+    {
+      "dpto": "Chacabuco",
+      "parquetKey": "chacabuco",
+      "avg_score": 27.4,
+      "hex_count": 17049,
+      "centroid": [
+        -61.3085,
+        -27.1179
+      ],
+      "rank": {
+        "min_cabecera": 90,
+        "min_capital": 305,
+        "km_hospital": 7.9
+      }
+    },
+    {
+      "dpto": "Bermejo",
+      "parquetKey": "bermejo",
+      "avg_score": 24.2,
+      "hex_count": 29432,
+      "centroid": [
+        -58.707,
+        -26.9576
+      ],
+      "rank": {
+        "min_cabecera": 68,
+        "min_capital": 97,
+        "km_hospital": 6.4
+      }
+    },
+    {
+      "dpto": "Comandante Fernández",
+      "parquetKey": "comandante_fernandez",
+      "avg_score": 24.2,
+      "hex_count": 17141,
+      "centroid": [
+        -60.4618,
+        -26.787
+      ],
+      "rank": {
+        "min_cabecera": 23,
+        "min_capital": 182,
+        "km_hospital": 10.4
+      }
+    },
+    {
+      "dpto": "O'Higgins",
+      "parquetKey": "ohiggins",
+      "avg_score": 23.4,
+      "hex_count": 17864,
+      "centroid": [
+        -60.6805,
+        -27.2575
+      ],
+      "rank": {
+        "min_cabecera": 52,
+        "min_capital": 232,
+        "km_hospital": 9.3
+      }
+    },
+    {
+      "dpto": "Quitilipi",
+      "parquetKey": "quitilipi",
+      "avg_score": 19.3,
+      "hex_count": 17833,
+      "centroid": [
+        -60.1736,
+        -26.6685
+      ],
+      "rank": {
+        "min_cabecera": 40,
+        "min_capital": 175,
+        "km_hospital": 11.0
       }
     }
   ],
