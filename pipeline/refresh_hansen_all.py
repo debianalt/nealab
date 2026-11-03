@@ -29,7 +29,9 @@ from config import OUTPUT_DIR, TERRITORY_CONFIGS, get_territory
 
 def run(cmd: list[str], log) -> bool:
     log.write(f"\n$ {' '.join(cmd)}\n"); log.flush()
-    return subprocess.run(cmd, cwd=SCRIPT_DIR, stdout=log, stderr=subprocess.STDOUT).returncode == 0
+    # Unbuffered: a killed child must leave in the log every upload it already made.
+    env = {**os.environ, 'PYTHONUNBUFFERED': '1'}
+    return subprocess.run(cmd, cwd=SCRIPT_DIR, stdout=log, stderr=subprocess.STDOUT, env=env).returncode == 0
 
 
 def one(t: str, backup_dir: str, dry: bool) -> tuple[str, bool]:

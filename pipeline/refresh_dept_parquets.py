@@ -53,6 +53,15 @@ def fetch(url: str, path: str) -> None:
         f.write(r.read())
 
 
+def backup(url: str, path: str) -> None:
+    # Never overwrite a backup: a re-run after a run killed mid-upload would
+    # replace what was served before with what that run already published
+    # (3-nov-2026, Rio Grande do Sul: stdout to a file is buffered, so the log
+    # showed nothing of the 97 departments already uploaded).
+    if not os.path.exists(path):
+        fetch(url, path)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('--layer', required=True)
@@ -81,7 +90,7 @@ def main() -> None:
     os.makedirs(os.path.join(stage, 'sat_dpto'), exist_ok=True)
 
     main_key = f'data/{prefix}sat_{layer}.parquet'
-    fetch(f'{CDN}/{prefix}sat_{layer}.parquet', os.path.join(bdir, f'sat_{layer}.parquet'))
+    backup(f'{CDN}/{prefix}sat_{layer}.parquet', os.path.join(bdir, f'sat_{layer}.parquet'))
     served_main = pd.read_parquet(os.path.join(bdir, f'sat_{layer}.parquet'))
     lookup = new
     if args.keep_missing:
@@ -104,7 +113,7 @@ def main() -> None:
         key = d['parquetKey']
         name = f'sat_{layer}_{key}.parquet'
         bpath = os.path.join(bdir, 'sat_dpto', name)
-        fetch(f'{CDN}/{prefix}sat_dpto/{name}', bpath)
+        backup(f'{CDN}/{prefix}sat_dpto/{name}', bpath)
         old = pd.read_parquet(bpath)
         upd = old[['h3index']].merge(lookup, on='h3index', how='left')
         if len(upd) != len(old):

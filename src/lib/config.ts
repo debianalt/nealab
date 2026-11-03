@@ -114,7 +114,7 @@ export function getParquetUrl(name: string): string {
 		sat_economic_activity: '?v=32',   // 2-nov-2026: VIIRS 2025, grilla completa en Ctes/Chaco/Fsa
 		sat_accessibility: '?v=29',
 		sat_pm25_drivers: '?v=19',
-		sat_deforestation_dynamics: '?v=17',   // 2-nov-2026: Hansen v1.13, 2016–2025
+		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
 		sat_land_use: '?v=6',   // 31-oct-2026: área por clase (dw_cover), no probabilidad media
 		sat_censo_temporal: '?v=1',
 		sat_eudr: '?v=1',
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 32;
+const DEPT_V = 33;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
