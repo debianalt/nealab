@@ -1,4 +1,5 @@
-const TERMS_KEY = 'spatia_terms_v1';
+// v2 (3-nov-2026): substantive change to the terms, so everyone accepts again (sección 10).
+const TERMS_KEY = 'spatia_terms_v2';
 
 class TermsStore {
 	accepted: boolean = $state(false);
