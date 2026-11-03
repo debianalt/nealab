@@ -81,7 +81,7 @@
 		background: rgba(var(--c-fg-rgb), 0.10);
 		color: var(--c-ink-1);
 	}
-	.toggle-btn.active .period { color: rgba(226,232,240,0.60); }
+	.toggle-btn.active .period { color: rgba(var(--c-fg-rgb), 0.60); }
 	.label { line-height: 1; }
 	.period {
 		font-size: 11px;

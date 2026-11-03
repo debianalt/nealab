@@ -233,6 +233,11 @@
 				</button>
 				{#if zonesOpen}
 					<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
+					<!-- One 1991→2022 trajectory per lasso zone (ac79774); ab11afb moved the
+					     zones into this block and left the panel out. -->
+					{#if hexStore.activeLayer?.id === 'censo_temporal'}
+						<CensoTemporalPanel {hexStore} />
+					{/if}
 				{/if}
 			{/if}
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onCensoDeptSelect} />

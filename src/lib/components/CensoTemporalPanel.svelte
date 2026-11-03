@@ -80,7 +80,7 @@
 	}
 
 	function fmt(n: number): string {
-		return Math.round(n).toLocaleString('es-AR');
+		return Math.round(n).toLocaleString(i18n.locale);
 	}
 </script>
 
@@ -136,7 +136,7 @@
 					<div class="ct-change">
 						<span class="ct-change-label">{i18n.t('side.censoTemporal.change')}</span>
 						<span class="ct-change-val" class:up={pct >= 0} class:down={pct < 0}>
-							{pct >= 0 ? '+' : ''}{pct.toFixed(0)}%
+							{pct >= 0 ? '+' : '−'}{Math.round(Math.abs(pct)).toLocaleString(i18n.locale)} %
 						</span>
 					</div>
 				{/if}
@@ -163,7 +163,7 @@
 	.ct-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 	.ct-bars { display: flex; align-items: flex-end; gap: 6px; height: 88px; }
 	.ct-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
-	.ct-bar-val { font-size: 11px; color: rgba(226,232,240,0.75); white-space: nowrap; }
+	.ct-bar-val { font-size: 11px; color: var(--c-ink-2n); white-space: nowrap; }
 	.ct-bar-track { width: 60%; flex: 1; display: flex; align-items: flex-end; }
 	.ct-bar-fill { width: 100%; background: linear-gradient(to top, #2563eb, var(--c-accent)); border-radius: 2px 2px 0 0; min-height: 1px; }
 	.ct-bar-year { font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55); }
