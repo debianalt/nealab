@@ -1,0 +1,29 @@
+name: Director de Spatia
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: 'humo | diagnostico | completo'
+        default: humo
+
+permissions:
+  contents: read
+
+jobs:
+  humo:
+    if: github.repository == 'debianalt/spatia-dev' && inputs.modo == 'humo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright pillow && python -m playwright install --with-deps chromium
+      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: humo
+          path: out/
