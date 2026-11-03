@@ -2,9 +2,9 @@
 Export Hansen Global Forest Change loss year raster for Misiones.
 
 Exports a single GeoTIFF where pixel value = year of loss (0 = no loss,
-1-24 = loss in 2001-2024). Also exports treecover2000 baseline.
+1-25 = loss in 2001-2025). Also exports treecover2000 baseline.
 
-Source: UMD/hansen/global_forest_change_2024_v1_12
+Source: UMD/hansen/global_forest_change_2025_v1_13 (same release as EUDR)
 
 Usage:
   python pipeline/gee_export_hansen_loss.py
@@ -23,7 +23,7 @@ from config import MISIONES_BBOX, get_territory
 EXPORT_SCALE = 30  # Hansen native resolution
 DRIVE_FOLDER = 'spatia-satellite'
 GCS_BUCKET = 'spatia-satellite'
-HANSEN = 'UMD/hansen/global_forest_change_2024_v1_12'
+HANSEN = 'UMD/hansen/global_forest_change_2025_v1_13'
 
 
 def authenticate():

@@ -53,6 +53,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--territory', required=True)
     ap.add_argument('--year', type=int, default=2024)
+    ap.add_argument('--density-from-crosswalk', action='store_true',
+                    help='count buildings per hex from the dasymetric crosswalk '
+                         '(h3_radio_crosswalk_<t>.parquet, n_buildings) instead of '
+                         'PostGIS. Same GBA source: equal to the PostGIS count on every '
+                         'cell of Corrientes, Chaco and Formosa (checked 2-nov-2026), '
+                         'after the per-province gba_buildings_* tables were dropped.')
     ap.add_argument('--skip-viirs', action='store_true',
                     help='keep existing viirs_mean_radiance; only recompute '
                          'building_density (use when the VIIRS tif is absent).')
@@ -95,27 +101,36 @@ def main():
     # layer; reading only gba_buildings here left those hexes at 0 edif/km² while
     # the map showed buildings. Mirror the tile builder: union both for Misiones.
     t0 = time.time()
-    if t == 'misiones':
+    if args.density_from_crosswalk:
+        if t == 'misiones':
+            print('ERROR: Misiones needs gba_buildings UNION vida_buildings (PostGIS)')
+            return 1
+        cw = pd.read_parquet(os.path.join(t_dir, f'h3_radio_crosswalk_{t}.parquet'))
+        counts = cw.groupby('h3index')['n_buildings'].sum()
+        counts = {k: int(v) for k, v in counts.items() if v > 0}
+        print(f'[{t}] crosswalk: {sum(counts.values()):,} buildings in {len(counts):,} hexes')
+    elif t == 'misiones':
         sources = [
             'SELECT ST_X(centroid), ST_Y(centroid) FROM gba_buildings',
             'SELECT ST_X(ST_Centroid(geom)), ST_Y(ST_Centroid(geom)) FROM vida_buildings',
         ]
     else:
         sources = [f'SELECT ST_X(centroid), ST_Y(centroid) FROM gba_buildings_{t}']
-    con = psycopg2.connect(**PG)
-    counts: dict[str, int] = {}
-    n = 0
-    for si, src in enumerate(sources):
-        cur = con.cursor(f'bld_stream_{si}')  # server-side cursor: millions of rows
-        cur.itersize = 200_000
-        cur.execute(src)
-        for x, y in cur:
-            ix = h3.latlng_to_cell(y, x, H3_RES)
-            counts[ix] = counts.get(ix, 0) + 1
-            n += 1
-        cur.close()
-    con.close()
-    print(f'[{t}] {n:,} buildings bucketed to {len(counts):,} hexes in {time.time()-t0:.0f}s')
+    if not args.density_from_crosswalk:
+        con = psycopg2.connect(**PG)
+        counts: dict[str, int] = {}
+        n = 0
+        for si, src in enumerate(sources):
+            cur = con.cursor(f'bld_stream_{si}')  # server-side cursor: millions of rows
+            cur.itersize = 200_000
+            cur.execute(src)
+            for x, y in cur:
+                ix = h3.latlng_to_cell(y, x, H3_RES)
+                counts[ix] = counts.get(ix, 0) + 1
+                n += 1
+            cur.close()
+        con.close()
+        print(f'[{t}] {n:,} buildings bucketed to {len(counts):,} hexes in {time.time()-t0:.0f}s')
 
     dens = np.zeros(len(df))
     for i, ix in enumerate(df['h3index']):

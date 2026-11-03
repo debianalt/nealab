@@ -62,6 +62,9 @@ def main() -> None:
     # Allow columns the served parquets do not have yet (appended at the end) and
     # columns the recomputed parquet no longer has (dropped everywhere).
     ap.add_argument('--schema-change', action='store_true')
+    # Cells the served file has and the recomputed one lacks (border cells added when
+    # departments were re-split, e.g. 2-nov-2026 INDEC) keep their served values.
+    ap.add_argument('--keep-missing', action='store_true')
     args = ap.parse_args()
     layer, t = args.layer, args.territory
     prefix = get_territory(t)['output_prefix']
@@ -80,6 +83,15 @@ def main() -> None:
     main_key = f'data/{prefix}sat_{layer}.parquet'
     fetch(f'{CDN}/{prefix}sat_{layer}.parquet', os.path.join(bdir, f'sat_{layer}.parquet'))
     served_main = pd.read_parquet(os.path.join(bdir, f'sat_{layer}.parquet'))
+    lookup = new
+    if args.keep_missing:
+        extra = served_main[~served_main.h3index.isin(new.h3index)]
+        if len(extra):
+            print(f'{t}: {len(extra)} served cells not recomputed, kept with their served values')
+            new = pd.concat([new, extra[list(new.columns)]], ignore_index=True)
+            new = served_main[['h3index']].merge(new, on='h3index', how='left')
+            new.to_parquet(os.path.join(t_dir, f'sat_{layer}.parquet'), index=False)
+        lookup = new
     added = [c for c in new.columns if c not in served_main.columns] if args.schema_change else []
     dropped = [c for c in served_main.columns if c not in new.columns] if args.schema_change else []
     base_cols = [c for c in new.columns if c not in added]
@@ -94,9 +106,16 @@ def main() -> None:
         bpath = os.path.join(bdir, 'sat_dpto', name)
         fetch(f'{CDN}/{prefix}sat_dpto/{name}', bpath)
         old = pd.read_parquet(bpath)
-        upd = old[['h3index']].merge(new, on='h3index', how='left')
-        if upd[cols[0]].isna().all() or len(upd) != len(old):
-            sys.exit(f'{t}/{key}: recomputed parquet does not cover this department')
+        upd = old[['h3index']].merge(lookup, on='h3index', how='left')
+        if len(upd) != len(old):
+            sys.exit(f'{t}/{key}: rows differ from served')
+        if upd[cols[0]].isna().all():
+            # Deforestation: cells with ≤5 % tree cover in 2000 carry no value by rule;
+            # a department made only of them comes out empty. Elsewhere it means the
+            # recompute missed the department: stop unless --keep-missing.
+            if not args.keep_missing:
+                sys.exit(f'{t}/{key}: recomputed parquet does not cover this department')
+            print(f'{t}/{key}: no values in this department (all cells empty)')
         # Per department: a served dept parquet may carry columns its territory
         # parquet lacks (Misiones' depts had the _raw rates, the CDN copy of the
         # territory one did not).

@@ -4,14 +4,14 @@ Process Hansen loss year and treecover2000 rasters to H3 hexagonal grid.
 Uses true zonal statistics (geometry mask over the hex polygon) instead of
 centroid sampling, so each H3 res-9 cell now reports:
   - hex_pixel_count: number of Hansen 30 m pixels covered by the hex polygon
-  - loss_count per year (2001-2024): how many pixels lost forest in that year
+  - loss_count per year (2001-2025): how many pixels lost forest in that year
   - treecover_mean: mean of treecover2000 (%) over the polygon
 
 This replaces the previous centroid-only sample which gave a 0/1 binary for
 the entire hex, severely undersampling actual loss area.
 
 Input:
-  pipeline/output/hansen_lossyear.tif     (pixel = year of loss, 0-24)
+  pipeline/output/hansen_lossyear.tif     (pixel = year of loss, 0-25; Hansen v1.13)
   pipeline/output/hansen_treecover2000.tif (pixel = % tree cover)
   pipeline/output/hexagons-lite.geojson   (H3 res-9 grid)
 
@@ -66,8 +66,8 @@ def set_territory_paths(territory_id: str) -> None:
 
 
 BASELINE_YEARS = range(2001, 2011)
-CURRENT_YEARS = range(2015, 2025)
-LOSS_YEAR_CODES = list(range(1, 25))  # 1..24 -> 2001..2024
+CURRENT_YEARS = range(2016, 2026)   # last 10 years of Hansen v1.13 (same length as the baseline)
+LOSS_YEAR_CODES = list(range(1, 26))  # 1..25 -> 2001..2025
 
 
 def hex_zonal_hansen(features):
@@ -77,7 +77,7 @@ def hex_zonal_hansen(features):
 
     Returns a DataFrame with one row per hex, columns:
       h3index, hex_pixel_count, treecover_mean,
-      loss_y01, loss_y02, ..., loss_y24
+      loss_y01, loss_y02, ..., loss_y25
 
     Each loss_yNN column is the count of Hansen 30 m pixels inside the hex
     polygon whose lossyear == NN (i.e. lost forest in 2000+NN).
@@ -189,21 +189,19 @@ def main():
 
     # ── Build annual panel with proper pixel counts ────────────────────────
     print("\nBuilding annual panel from per-year counts...")
-    long_rows = []
-    for _, row in counts.iterrows():
-        h3id = row["h3index"]
-        hex_px = int(row["hex_pixel_count"])
-        tc = float(row["treecover_mean"])
-        for y in LOSS_YEAR_CODES:
-            long_rows.append({
-                "h3index": h3id,
-                "year": 2000 + y,
-                "lost": int(row[f"loss_y{y:02d}"]),  # NOW: count of pixels lost that year
-                "hex_pixel_count": hex_px,
-                "treecover2000": tc,
-            })
-    panel = pd.DataFrame(long_rows)
-    print(f"  Panel: {len(panel):,} rows ({len(counts):,} hex x 24 years)")
+    # Vectorized (2-nov-2026): the per-row dict loop held hex × 25 Python dicts
+    # (~37 M for Rio Grande do Sul) and ran the machine out of memory. Same rows,
+    # same columns: h3index, year, lost (pixel count), hex_pixel_count, treecover2000.
+    loss_cols = [f"loss_y{y:02d}" for y in LOSS_YEAR_CODES]
+    panel = counts[["h3index", "hex_pixel_count", "treecover_mean"] + loss_cols].melt(
+        id_vars=["h3index", "hex_pixel_count", "treecover_mean"], value_vars=loss_cols,
+        var_name="year", value_name="lost")
+    panel["year"] = 2000 + panel["year"].str[-2:].astype(int)
+    panel["lost"] = panel["lost"].astype(int)
+    panel["hex_pixel_count"] = panel["hex_pixel_count"].astype(int)
+    panel = panel.rename(columns={"treecover_mean": "treecover2000"})[
+        ["h3index", "year", "lost", "hex_pixel_count", "treecover2000"]]
+    print(f"  Panel: {len(panel):,} rows ({len(counts):,} hex x {len(LOSS_YEAR_CODES)} years)")
     panel.to_parquet(ANNUAL_PATH, index=False)
     print(f"  Saved: {ANNUAL_PATH}")
 
@@ -236,7 +234,7 @@ def main():
     result["loss_rate_current"] = (result["loss_current_px"] / safe_px / n_current_years * 100).fillna(0)
     result["loss_delta"] = result["loss_rate_current"] - result["loss_rate_baseline"]
 
-    # Cumulative loss as % of hex area (2001-2024)
+    # Cumulative loss as % of hex area (2001-2025)
     result["loss_cumulative_pct"] = (result["loss_cumulative_px"] / safe_px * 100).fillna(0)
 
     # Only hexagons with some baseline forest

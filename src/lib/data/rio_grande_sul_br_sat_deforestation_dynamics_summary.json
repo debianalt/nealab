@@ -7994,7 +7994,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   }
 }

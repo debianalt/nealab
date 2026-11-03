@@ -2,21 +2,21 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 50.0,
+    "avg_score": 7.8,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 53.8,
+      "avg_score": 11.2,
       "hex_count": 287722,
       "centroid": [
         -59.9786,
         -24.8681
       ],
       "rank": {
-        "loss_ha_yr": 22947,
+        "loss_ha_yr": 22900,
         "loss_pct_forest": 1.48,
         "loss_change_pct": 4,
         "loss_base_ha_yr": 21992
@@ -25,128 +25,128 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 51.8,
+      "avg_score": 10.5,
       "hex_count": 141295,
       "centroid": [
         -61.2683,
         -24.0356
       ],
       "rank": {
-        "loss_ha_yr": 10890,
-        "loss_pct_forest": 1.77,
-        "loss_change_pct": 104,
+        "loss_ha_yr": 10594,
+        "loss_pct_forest": 1.72,
+        "loss_change_pct": 98,
         "loss_base_ha_yr": 5347
       }
     },
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 48.1,
+      "avg_score": 5.9,
       "hex_count": 42788,
       "centroid": [
         -62.1248,
         -23.1318
       ],
       "rank": {
-        "loss_ha_yr": 950,
-        "loss_pct_forest": 1.24,
-        "loss_change_pct": 29,
+        "loss_ha_yr": 759,
+        "loss_pct_forest": 0.99,
+        "loss_change_pct": 3,
         "loss_base_ha_yr": 737
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 47.3,
+      "avg_score": 4.6,
       "hex_count": 98242,
       "centroid": [
         -59.1699,
         -25.7599
       ],
       "rank": {
-        "loss_ha_yr": 2780,
-        "loss_pct_forest": 0.57,
-        "loss_change_pct": -7,
+        "loss_ha_yr": 2545,
+        "loss_pct_forest": 0.52,
+        "loss_change_pct": -15,
         "loss_base_ha_yr": 2987
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 46.4,
+      "avg_score": 3.8,
       "hex_count": 39144,
       "centroid": [
         -58.6647,
         -25.1049
       ],
       "rank": {
-        "loss_ha_yr": 892,
-        "loss_pct_forest": 0.66,
-        "loss_change_pct": 103,
+        "loss_ha_yr": 811,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": 84,
         "loss_base_ha_yr": 440
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 46.1,
+      "avg_score": 3.6,
       "hex_count": 47176,
       "centroid": [
         -62.0564,
         -23.8606
       ],
       "rank": {
-        "loss_ha_yr": 687,
-        "loss_pct_forest": 0.44,
-        "loss_change_pct": 174,
+        "loss_ha_yr": 720,
+        "loss_pct_forest": 0.46,
+        "loss_change_pct": 187,
         "loss_base_ha_yr": 250
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 42.6,
+      "avg_score": 0.8,
       "hex_count": 58208,
       "centroid": [
         -58.0591,
         -25.373
       ],
       "rank": {
-        "loss_ha_yr": 125,
-        "loss_pct_forest": 0.11,
-        "loss_change_pct": -8,
+        "loss_ha_yr": 142,
+        "loss_pct_forest": 0.13,
+        "loss_change_pct": 5,
         "loss_base_ha_yr": 135
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 42.5,
+      "avg_score": 0.8,
       "hex_count": 40490,
       "centroid": [
         -58.5622,
         -26.4606
       ],
       "rank": {
-        "loss_ha_yr": 110,
+        "loss_ha_yr": 112,
         "loss_pct_forest": 0.12,
-        "loss_change_pct": -29,
+        "loss_change_pct": -27,
         "loss_base_ha_yr": 154
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 42.2,
+      "avg_score": 0.7,
       "hex_count": 70695,
       "centroid": [
         -58.3746,
         -25.9392
       ],
       "rank": {
-        "loss_ha_yr": 150,
-        "loss_pct_forest": 0.1,
-        "loss_change_pct": -53,
+        "loss_ha_yr": 171,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": -47,
         "loss_base_ha_yr": 322
       }
     }
@@ -154,7 +154,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   },
   "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"

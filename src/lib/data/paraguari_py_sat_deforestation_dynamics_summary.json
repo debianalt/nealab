@@ -2,14 +2,30 @@
   "territory": "paraguari_py",
   "province": {
     "total_hexes": 94348,
-    "avg_score": 34.9,
+    "avg_score": 4.3,
     "unassigned": 0
   },
   "departments": [
     {
+      "distrito": "Pirayu",
+      "parquetKey": "pirayu",
+      "avg_score": 10.6,
+      "hex_count": 2137,
+      "centroid": [
+        -57.2018,
+        -25.4796
+      ],
+      "rank": {
+        "loss_ha_yr": 114,
+        "loss_pct_forest": 1.38,
+        "loss_change_pct": 127,
+        "loss_base_ha_yr": 50
+      }
+    },
+    {
       "distrito": "La Colmena",
       "parquetKey": "la_colmena",
-      "avg_score": 58.4,
+      "avg_score": 10.1,
       "hex_count": 1230,
       "centroid": [
         -56.8176,
@@ -23,41 +39,57 @@
       }
     },
     {
-      "distrito": "Pirayu",
-      "parquetKey": "pirayu",
-      "avg_score": 55.8,
-      "hex_count": 2137,
+      "distrito": "Ybytymi",
+      "parquetKey": "ybytymi",
+      "avg_score": 9.6,
+      "hex_count": 4447,
       "centroid": [
-        -57.2018,
-        -25.4796
+        -56.7656,
+        -25.7754
       ],
       "rank": {
-        "loss_ha_yr": 112,
-        "loss_pct_forest": 1.36,
-        "loss_change_pct": 123,
-        "loss_base_ha_yr": 50
+        "loss_ha_yr": 202,
+        "loss_pct_forest": 1.53,
+        "loss_change_pct": 224,
+        "loss_base_ha_yr": 62
+      }
+    },
+    {
+      "distrito": "Tebicuarymi",
+      "parquetKey": "tebicuarymi",
+      "avg_score": 7.7,
+      "hex_count": 1751,
+      "centroid": [
+        -56.666,
+        -25.9156
+      ],
+      "rank": {
+        "loss_ha_yr": 63,
+        "loss_pct_forest": 0.85,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 42
       }
     },
     {
       "distrito": "Caballero",
       "parquetKey": "caballero",
-      "avg_score": 52.1,
+      "avg_score": 6.6,
       "hex_count": 2610,
       "centroid": [
         -56.8862,
         -25.7573
       ],
       "rank": {
-        "loss_ha_yr": 85,
-        "loss_pct_forest": 0.81,
-        "loss_change_pct": 33,
+        "loss_ha_yr": 82,
+        "loss_pct_forest": 0.78,
+        "loss_change_pct": 27,
         "loss_base_ha_yr": 64
       }
     },
     {
       "distrito": "Sapucai",
       "parquetKey": "sapucai",
-      "avg_score": 48.9,
+      "avg_score": 6.6,
       "hex_count": 2150,
       "centroid": [
         -56.9738,
@@ -65,63 +97,15 @@
       ],
       "rank": {
         "loss_ha_yr": 62,
-        "loss_pct_forest": 0.68,
-        "loss_change_pct": 7,
+        "loss_pct_forest": 0.69,
+        "loss_change_pct": 8,
         "loss_base_ha_yr": 58
-      }
-    },
-    {
-      "distrito": "Tebicuarymi",
-      "parquetKey": "tebicuarymi",
-      "avg_score": 48.1,
-      "hex_count": 1751,
-      "centroid": [
-        -56.666,
-        -25.9156
-      ],
-      "rank": {
-        "loss_ha_yr": 64,
-        "loss_pct_forest": 0.86,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 42
-      }
-    },
-    {
-      "distrito": "Escobar",
-      "parquetKey": "escobar",
-      "avg_score": 45.7,
-      "hex_count": 3140,
-      "centroid": [
-        -57.0105,
-        -25.6329
-      ],
-      "rank": {
-        "loss_ha_yr": 70,
-        "loss_pct_forest": 0.62,
-        "loss_change_pct": 27,
-        "loss_base_ha_yr": 55
-      }
-    },
-    {
-      "distrito": "Ybytymi",
-      "parquetKey": "ybytymi",
-      "avg_score": 44.5,
-      "hex_count": 4447,
-      "centroid": [
-        -56.7656,
-        -25.7754
-      ],
-      "rank": {
-        "loss_ha_yr": 194,
-        "loss_pct_forest": 1.47,
-        "loss_change_pct": 211,
-        "loss_base_ha_yr": 62
       }
     },
     {
       "distrito": "Ybycui",
       "parquetKey": "ybycui",
-      "avg_score": 42.8,
+      "avg_score": 5.7,
       "hex_count": 8812,
       "centroid": [
         -56.942,
@@ -135,25 +119,9 @@
       }
     },
     {
-      "distrito": "Yaguaron",
-      "parquetKey": "yaguaron",
-      "avg_score": 42.4,
-      "hex_count": 2750,
-      "centroid": [
-        -57.2804,
-        -25.595
-      ],
-      "rank": {
-        "loss_ha_yr": 53,
-        "loss_pct_forest": 0.79,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 27
-      }
-    },
-    {
       "distrito": "Mbuyapey",
       "parquetKey": "mbuyapey",
-      "avg_score": 42.3,
+      "avg_score": 5.3,
       "hex_count": 9725,
       "centroid": [
         -56.8042,
@@ -162,54 +130,86 @@
       "rank": {
         "loss_ha_yr": 249,
         "loss_pct_forest": 0.73,
-        "loss_change_pct": 142,
+        "loss_change_pct": 141,
         "loss_base_ha_yr": 103
       }
     },
     {
-      "distrito": "Acahay",
-      "parquetKey": "acahay",
-      "avg_score": 37.8,
-      "hex_count": 3557,
+      "distrito": "Escobar",
+      "parquetKey": "escobar",
+      "avg_score": 4.7,
+      "hex_count": 3140,
       "centroid": [
-        -57.076,
-        -25.8967
+        -57.0105,
+        -25.6329
       ],
       "rank": {
-        "loss_ha_yr": 63,
-        "loss_pct_forest": 0.68,
+        "loss_ha_yr": 67,
+        "loss_pct_forest": 0.6,
+        "loss_change_pct": 23,
+        "loss_base_ha_yr": 55
+      }
+    },
+    {
+      "distrito": "Yaguaron",
+      "parquetKey": "yaguaron",
+      "avg_score": 4.7,
+      "hex_count": 2750,
+      "centroid": [
+        -57.2804,
+        -25.595
+      ],
+      "rank": {
+        "loss_ha_yr": 56,
+        "loss_pct_forest": 0.83,
         "loss_change_pct": null,
-        "loss_base_ha_yr": 29
+        "loss_base_ha_yr": 27
       }
     },
     {
       "distrito": "Paraguari",
       "parquetKey": "paraguari",
-      "avg_score": 35.0,
+      "avg_score": 4.7,
       "hex_count": 4908,
       "centroid": [
         -57.1351,
         -25.6664
       ],
       "rank": {
-        "loss_ha_yr": 84,
-        "loss_pct_forest": 0.67,
-        "loss_change_pct": 50,
+        "loss_ha_yr": 88,
+        "loss_pct_forest": 0.7,
+        "loss_change_pct": 58,
         "loss_base_ha_yr": 56
+      }
+    },
+    {
+      "distrito": "Acahay",
+      "parquetKey": "acahay",
+      "avg_score": 4.6,
+      "hex_count": 3557,
+      "centroid": [
+        -57.076,
+        -25.8967
+      ],
+      "rank": {
+        "loss_ha_yr": 67,
+        "loss_pct_forest": 0.72,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 29
       }
     },
     {
       "distrito": "Carapegua",
       "parquetKey": "carapegua",
-      "avg_score": 34.3,
+      "avg_score": 3.8,
       "hex_count": 5302,
       "centroid": [
         -57.3255,
         -25.7621
       ],
       "rank": {
-        "loss_ha_yr": 69,
-        "loss_pct_forest": 0.71,
+        "loss_ha_yr": 73,
+        "loss_pct_forest": 0.74,
         "loss_change_pct": null,
         "loss_base_ha_yr": 23
       }
@@ -217,15 +217,15 @@
     {
       "distrito": "San Roque Gonzalez",
       "parquetKey": "san_roque_gonzalez",
-      "avg_score": 33.5,
+      "avg_score": 3.1,
       "hex_count": 2353,
       "centroid": [
         -57.3024,
         -25.8795
       ],
       "rank": {
-        "loss_ha_yr": 23,
-        "loss_pct_forest": 0.52,
+        "loss_ha_yr": 27,
+        "loss_pct_forest": 0.6,
         "loss_change_pct": null,
         "loss_base_ha_yr": 12
       }
@@ -233,7 +233,7 @@
     {
       "distrito": "Quyquyho",
       "parquetKey": "quyquyho",
-      "avg_score": 28.9,
+      "avg_score": 2.0,
       "hex_count": 6662,
       "centroid": [
         -57.0129,
@@ -241,7 +241,7 @@
       ],
       "rank": {
         "loss_ha_yr": 50,
-        "loss_pct_forest": 0.49,
+        "loss_pct_forest": 0.5,
         "loss_change_pct": null,
         "loss_base_ha_yr": 11
       }
@@ -249,15 +249,15 @@
     {
       "distrito": "Quiindy",
       "parquetKey": "quiindy",
-      "avg_score": 25.9,
+      "avg_score": 1.8,
       "hex_count": 6788,
       "centroid": [
         -57.3214,
         -26.0118
       ],
       "rank": {
-        "loss_ha_yr": 35,
-        "loss_pct_forest": 0.26,
+        "loss_ha_yr": 38,
+        "loss_pct_forest": 0.28,
         "loss_change_pct": null,
         "loss_base_ha_yr": 30
       }
@@ -265,14 +265,14 @@
     {
       "distrito": "Caapucu",
       "parquetKey": "caapucu",
-      "avg_score": 22.8,
+      "avg_score": 0.5,
       "hex_count": 26026,
       "centroid": [
         -57.3904,
         -26.3278
       ],
       "rank": {
-        "loss_ha_yr": 43,
+        "loss_ha_yr": 41,
         "loss_pct_forest": 0.11,
         "loss_change_pct": null,
         "loss_base_ha_yr": 33
@@ -282,7 +282,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   }
 }

@@ -2,70 +2,38 @@
   "territory": "neembucu_py",
   "province": {
     "total_hexes": 126524,
-    "avg_score": 16.5,
+    "avg_score": 0.9,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Cerrito",
-      "parquetKey": "cerrito",
-      "avg_score": 27.3,
-      "hex_count": 6459,
+      "distrito": "Villa Franca",
+      "parquetKey": "villa_franca",
+      "avg_score": 4.2,
+      "hex_count": 17143,
       "centroid": [
-        -57.6294,
-        -27.3058
+        -57.9497,
+        -26.3332
       ],
       "rank": {
-        "loss_ha_yr": 3,
-        "loss_pct_forest": 0.02,
+        "loss_ha_yr": 80,
+        "loss_pct_forest": 0.67,
         "loss_change_pct": null,
-        "loss_base_ha_yr": 5
-      }
-    },
-    {
-      "distrito": "Paso De Patria",
-      "parquetKey": "paso_de_patria",
-      "avg_score": 26.2,
-      "hex_count": 2673,
-      "centroid": [
-        -58.5287,
-        -27.2193
-      ],
-      "rank": {
-        "loss_ha_yr": 2,
-        "loss_pct_forest": 0.06,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 4
-      }
-    },
-    {
-      "distrito": "Isla Umbu",
-      "parquetKey": "isla_umbu",
-      "avg_score": 26.1,
-      "hex_count": 5116,
-      "centroid": [
-        -58.309,
-        -26.9676
-      ],
-      "rank": {
-        "loss_ha_yr": 7,
-        "loss_pct_forest": 0.08,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 14
+        "loss_base_ha_yr": 3
       }
     },
     {
       "distrito": "Humaita",
       "parquetKey": "humaita",
-      "avg_score": 25.0,
+      "avg_score": 1.9,
       "hex_count": 3774,
       "centroid": [
         -58.484,
         -27.0909
       ],
       "rank": {
-        "loss_ha_yr": 5,
-        "loss_pct_forest": 0.09,
+        "loss_ha_yr": 13,
+        "loss_pct_forest": 0.22,
         "loss_change_pct": null,
         "loss_base_ha_yr": 7
       }
@@ -73,87 +41,87 @@
     {
       "distrito": "Pilar",
       "parquetKey": "pilar",
-      "avg_score": 22.8,
+      "avg_score": 1.9,
       "hex_count": 3617,
       "centroid": [
         -58.1896,
         -26.8898
       ],
       "rank": {
-        "loss_ha_yr": 18,
-        "loss_pct_forest": 0.43,
+        "loss_ha_yr": 16,
+        "loss_pct_forest": 0.39,
         "loss_change_pct": null,
         "loss_base_ha_yr": 7
       }
     },
     {
+      "distrito": "Paso De Patria",
+      "parquetKey": "paso_de_patria",
+      "avg_score": 1.3,
+      "hex_count": 2673,
+      "centroid": [
+        -58.5287,
+        -27.2193
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.09,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 4
+      }
+    },
+    {
+      "distrito": "Isla Umbu",
+      "parquetKey": "isla_umbu",
+      "avg_score": 0.8,
+      "hex_count": 5116,
+      "centroid": [
+        -58.309,
+        -26.9676
+      ],
+      "rank": {
+        "loss_ha_yr": 11,
+        "loss_pct_forest": 0.13,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 14
+      }
+    },
+    {
       "distrito": "Mayor Martinez",
       "parquetKey": "mayor_martinez",
-      "avg_score": 22.4,
+      "avg_score": 0.6,
       "hex_count": 4179,
       "centroid": [
         -58.136,
         -27.1867
       ],
       "rank": {
-        "loss_ha_yr": 1,
-        "loss_pct_forest": 0.03,
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.13,
         "loss_change_pct": null,
         "loss_base_ha_yr": 3
       }
     },
     {
-      "distrito": "San Juan Bta. Del Neembuc",
-      "parquetKey": "san_juan_bta_del_neembuc",
-      "avg_score": 22.2,
-      "hex_count": 15035,
-      "centroid": [
-        -57.851,
-        -26.6089
-      ],
-      "rank": {
-        "loss_ha_yr": 12,
-        "loss_pct_forest": 0.08,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 5
-      }
-    },
-    {
       "distrito": "Tacuaras",
       "parquetKey": "tacuaras",
-      "avg_score": 21.0,
+      "avg_score": 0.4,
       "hex_count": 14798,
       "centroid": [
         -57.8738,
         -26.8217
       ],
       "rank": {
-        "loss_ha_yr": 9,
-        "loss_pct_forest": 0.06,
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.08,
         "loss_change_pct": null,
         "loss_base_ha_yr": 13
       }
     },
     {
-      "distrito": "Gral. Jose E. Diaz",
-      "parquetKey": "gral_jose_e_diaz",
-      "avg_score": 20.1,
-      "hex_count": 4210,
-      "centroid": [
-        -58.342,
-        -27.1778
-      ],
-      "rank": {
-        "loss_ha_yr": 2,
-        "loss_pct_forest": 0.04,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 3
-      }
-    },
-    {
       "distrito": "Desmochados",
       "parquetKey": "desmochados",
-      "avg_score": 18.9,
+      "avg_score": 0.4,
       "hex_count": 3275,
       "centroid": [
         -58.1239,
@@ -167,33 +135,17 @@
       }
     },
     {
-      "distrito": "Laureles",
-      "parquetKey": "laureles",
-      "avg_score": 16.7,
-      "hex_count": 8951,
-      "centroid": [
-        -57.5826,
-        -27.167
-      ],
-      "rank": {
-        "loss_ha_yr": 2,
-        "loss_pct_forest": 0.04,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 3
-      }
-    },
-    {
       "distrito": "Guazucua",
       "parquetKey": "guazucua",
-      "avg_score": 16.5,
+      "avg_score": 0.4,
       "hex_count": 13430,
       "centroid": [
         -57.7584,
         -26.9915
       ],
       "rank": {
-        "loss_ha_yr": 8,
-        "loss_pct_forest": 0.09,
+        "loss_ha_yr": 10,
+        "loss_pct_forest": 0.1,
         "loss_change_pct": null,
         "loss_base_ha_yr": 3
       }
@@ -201,31 +153,79 @@
     {
       "distrito": "Villalvin",
       "parquetKey": "villalvin",
-      "avg_score": 14.9,
+      "avg_score": 0.4,
       "hex_count": 5319,
       "centroid": [
         -57.9098,
         -27.1694
       ],
       "rank": {
-        "loss_ha_yr": 1,
-        "loss_pct_forest": 0.02,
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.1,
         "loss_change_pct": null,
         "loss_base_ha_yr": 3
       }
     },
     {
-      "distrito": "Villa Franca",
-      "parquetKey": "villa_franca",
-      "avg_score": 11.3,
-      "hex_count": 17143,
+      "distrito": "Cerrito",
+      "parquetKey": "cerrito",
+      "avg_score": 0.3,
+      "hex_count": 6459,
       "centroid": [
-        -57.9497,
-        -26.3332
+        -57.6294,
+        -27.3058
       ],
       "rank": {
-        "loss_ha_yr": 51,
-        "loss_pct_forest": 0.42,
+        "loss_ha_yr": 6,
+        "loss_pct_forest": 0.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
+    },
+    {
+      "distrito": "San Juan Bta. Del Neembuc",
+      "parquetKey": "san_juan_bta_del_neembuc",
+      "avg_score": 0.3,
+      "hex_count": 15035,
+      "centroid": [
+        -57.851,
+        -26.6089
+      ],
+      "rank": {
+        "loss_ha_yr": 12,
+        "loss_pct_forest": 0.08,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 5
+      }
+    },
+    {
+      "distrito": "Gral. Jose E. Diaz",
+      "parquetKey": "gral_jose_e_diaz",
+      "avg_score": 0.2,
+      "hex_count": 4210,
+      "centroid": [
+        -58.342,
+        -27.1778
+      ],
+      "rank": {
+        "loss_ha_yr": 2,
+        "loss_pct_forest": 0.06,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 3
+      }
+    },
+    {
+      "distrito": "Laureles",
+      "parquetKey": "laureles",
+      "avg_score": 0.2,
+      "hex_count": 8951,
+      "centroid": [
+        -57.5826,
+        -27.167
+      ],
+      "rank": {
+        "loss_ha_yr": 3,
+        "loss_pct_forest": 0.05,
         "loss_change_pct": null,
         "loss_base_ha_yr": 3
       }
@@ -233,7 +233,7 @@
     {
       "distrito": "Alberdi",
       "parquetKey": "alberdi",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 1236,
       "centroid": [
         -58.0676,
@@ -249,7 +249,7 @@
     {
       "distrito": "Villa Oliva",
       "parquetKey": "villa_oliva",
-      "avg_score": 0.0,
+      "avg_score": null,
       "hex_count": 17309,
       "centroid": [
         -57.7115,
@@ -266,7 +266,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   }
 }

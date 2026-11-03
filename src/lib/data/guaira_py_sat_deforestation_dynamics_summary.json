@@ -2,94 +2,14 @@
   "territory": "guaira_py",
   "province": {
     "total_hexes": 40805,
-    "avg_score": 41.3,
+    "avg_score": 8.6,
     "unassigned": 0
   },
   "departments": [
     {
-      "distrito": "Numi",
-      "parquetKey": "numi",
-      "avg_score": 50.3,
-      "hex_count": 989,
-      "centroid": [
-        -56.3101,
-        -25.9052
-      ],
-      "rank": {
-        "loss_ha_yr": 41,
-        "loss_pct_forest": 0.93,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 21
-      }
-    },
-    {
-      "distrito": "Capitan Troche",
-      "parquetKey": "capitan_troche",
-      "avg_score": 47.1,
-      "hex_count": 1460,
-      "centroid": [
-        -56.2055,
-        -25.6088
-      ],
-      "rank": {
-        "loss_ha_yr": 45,
-        "loss_pct_forest": 0.81,
-        "loss_change_pct": -36,
-        "loss_base_ha_yr": 71
-      }
-    },
-    {
-      "distrito": "Colonia Independencia",
-      "parquetKey": "colonia_independencia",
-      "avg_score": 47.1,
-      "hex_count": 10105,
-      "centroid": [
-        -56.0671,
-        -25.7311
-      ],
-      "rank": {
-        "loss_ha_yr": 381,
-        "loss_pct_forest": 0.83,
-        "loss_change_pct": -33,
-        "loss_base_ha_yr": 572
-      }
-    },
-    {
-      "distrito": "Jose Fassardi",
-      "parquetKey": "jose_fassardi",
-      "avg_score": 45.5,
-      "hex_count": 3770,
-      "centroid": [
-        -55.9221,
-        -25.8245
-      ],
-      "rank": {
-        "loss_ha_yr": 143,
-        "loss_pct_forest": 0.89,
-        "loss_change_pct": -40,
-        "loss_base_ha_yr": 240
-      }
-    },
-    {
-      "distrito": "Gral Garay",
-      "parquetKey": "gral_garay",
-      "avg_score": 45.3,
-      "hex_count": 2939,
-      "centroid": [
-        -56.1916,
-        -25.9353
-      ],
-      "rank": {
-        "loss_ha_yr": 84,
-        "loss_pct_forest": 0.48,
-        "loss_change_pct": 33,
-        "loss_base_ha_yr": 64
-      }
-    },
-    {
       "distrito": "Itape",
       "parquetKey": "itape",
-      "avg_score": 43.6,
+      "avg_score": 20.8,
       "hex_count": 1683,
       "centroid": [
         -56.561,
@@ -97,103 +17,215 @@
       ],
       "rank": {
         "loss_ha_yr": 197,
-        "loss_pct_forest": 4.57,
+        "loss_pct_forest": 4.58,
         "loss_change_pct": null,
         "loss_base_ha_yr": 23
       }
     },
     {
-      "distrito": "Villarica",
-      "parquetKey": "villarica",
-      "avg_score": 39.0,
-      "hex_count": 3382,
-      "centroid": [
-        -56.4107,
-        -25.8273
-      ],
-      "rank": {
-        "loss_ha_yr": 151,
-        "loss_pct_forest": 1.38,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 27
-      }
-    },
-    {
-      "distrito": "San Salvador",
-      "parquetKey": "san_salvador",
-      "avg_score": 38.8,
-      "hex_count": 1517,
-      "centroid": [
-        -56.4246,
-        -25.953
-      ],
-      "rank": {
-        "loss_ha_yr": 53,
-        "loss_pct_forest": 1.26,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 27
-      }
-    },
-    {
       "distrito": "Borja",
       "parquetKey": "borja",
-      "avg_score": 38.6,
+      "avg_score": 14.9,
       "hex_count": 4475,
       "centroid": [
         -56.609,
         -26.0281
       ],
       "rank": {
-        "loss_ha_yr": 232,
-        "loss_pct_forest": 1.7,
-        "loss_change_pct": 105,
+        "loss_ha_yr": 281,
+        "loss_pct_forest": 2.06,
+        "loss_change_pct": 148,
         "loss_base_ha_yr": 113
       }
     },
     {
-      "distrito": "Natalicio Talavera",
-      "parquetKey": "natalicio_talavera",
-      "avg_score": 37.0,
-      "hex_count": 645,
+      "distrito": "Numi",
+      "parquetKey": "numi",
+      "avg_score": 9.4,
+      "hex_count": 989,
       "centroid": [
-        -56.2826,
-        -25.6601
+        -56.3101,
+        -25.9052
       ],
       "rank": {
-        "loss_ha_yr": 13,
-        "loss_pct_forest": 0.6,
+        "loss_ha_yr": 49,
+        "loss_pct_forest": 1.11,
         "loss_change_pct": null,
-        "loss_base_ha_yr": 11
+        "loss_base_ha_yr": 21
+      }
+    },
+    {
+      "distrito": "Villarica",
+      "parquetKey": "villarica",
+      "avg_score": 8.6,
+      "hex_count": 3382,
+      "centroid": [
+        -56.4107,
+        -25.8273
+      ],
+      "rank": {
+        "loss_ha_yr": 157,
+        "loss_pct_forest": 1.43,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
+    },
+    {
+      "distrito": "Jose Fassardi",
+      "parquetKey": "jose_fassardi",
+      "avg_score": 8.5,
+      "hex_count": 3770,
+      "centroid": [
+        -55.9221,
+        -25.8245
+      ],
+      "rank": {
+        "loss_ha_yr": 153,
+        "loss_pct_forest": 0.95,
+        "loss_change_pct": -36,
+        "loss_base_ha_yr": 240
+      }
+    },
+    {
+      "distrito": "Colonia Independencia",
+      "parquetKey": "colonia_independencia",
+      "avg_score": 8.3,
+      "hex_count": 10105,
+      "centroid": [
+        -56.0671,
+        -25.7311
+      ],
+      "rank": {
+        "loss_ha_yr": 402,
+        "loss_pct_forest": 0.87,
+        "loss_change_pct": -30,
+        "loss_base_ha_yr": 572
+      }
+    },
+    {
+      "distrito": "Cnel Martinez",
+      "parquetKey": "cnel_martinez",
+      "avg_score": 8.1,
+      "hex_count": 2018,
+      "centroid": [
+        -56.648,
+        -25.7972
+      ],
+      "rank": {
+        "loss_ha_yr": 66,
+        "loss_pct_forest": 1.52,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 24
+      }
+    },
+    {
+      "distrito": "San Salvador",
+      "parquetKey": "san_salvador",
+      "avg_score": 7.9,
+      "hex_count": 1517,
+      "centroid": [
+        -56.4246,
+        -25.953
+      ],
+      "rank": {
+        "loss_ha_yr": 58,
+        "loss_pct_forest": 1.38,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 27
+      }
+    },
+    {
+      "distrito": "Iturbe",
+      "parquetKey": "iturbe",
+      "avg_score": 7.2,
+      "hex_count": 2817,
+      "centroid": [
+        -56.4662,
+        -26.0627
+      ],
+      "rank": {
+        "loss_ha_yr": 70,
+        "loss_pct_forest": 0.98,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 15
+      }
+    },
+    {
+      "distrito": "Capitan Troche",
+      "parquetKey": "capitan_troche",
+      "avg_score": 7.0,
+      "hex_count": 1460,
+      "centroid": [
+        -56.2055,
+        -25.6088
+      ],
+      "rank": {
+        "loss_ha_yr": 48,
+        "loss_pct_forest": 0.85,
+        "loss_change_pct": -32,
+        "loss_base_ha_yr": 71
+      }
+    },
+    {
+      "distrito": "Gral Garay",
+      "parquetKey": "gral_garay",
+      "avg_score": 6.3,
+      "hex_count": 2939,
+      "centroid": [
+        -56.1916,
+        -25.9353
+      ],
+      "rank": {
+        "loss_ha_yr": 95,
+        "loss_pct_forest": 0.54,
+        "loss_change_pct": 50,
+        "loss_base_ha_yr": 64
       }
     },
     {
       "distrito": "Mbocayati",
       "parquetKey": "mbocayati",
-      "avg_score": 36.4,
+      "avg_score": 5.2,
       "hex_count": 2122,
       "centroid": [
         -56.3632,
         -25.7041
       ],
       "rank": {
-        "loss_ha_yr": 44,
-        "loss_pct_forest": 0.65,
+        "loss_ha_yr": 50,
+        "loss_pct_forest": 0.74,
         "loss_change_pct": null,
         "loss_base_ha_yr": 44
       }
     },
     {
+      "distrito": "Natalicio Talavera",
+      "parquetKey": "natalicio_talavera",
+      "avg_score": 4.7,
+      "hex_count": 645,
+      "centroid": [
+        -56.2826,
+        -25.6601
+      ],
+      "rank": {
+        "loss_ha_yr": 14,
+        "loss_pct_forest": 0.67,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 11
+      }
+    },
+    {
       "distrito": "Yataity",
       "parquetKey": "yataity",
-      "avg_score": 34.7,
+      "avg_score": 4.4,
       "hex_count": 2112,
       "centroid": [
         -56.501,
         -25.6879
       ],
       "rank": {
-        "loss_ha_yr": 36,
-        "loss_pct_forest": 0.69,
+        "loss_ha_yr": 42,
+        "loss_pct_forest": 0.8,
         "loss_change_pct": null,
         "loss_base_ha_yr": 26
       }
@@ -201,7 +233,7 @@
     {
       "distrito": "Dr. Bottrell",
       "parquetKey": "dr_bottrell",
-      "avg_score": 33.6,
+      "avg_score": 1.7,
       "hex_count": 771,
       "centroid": [
         -56.3675,
@@ -209,48 +241,16 @@
       ],
       "rank": {
         "loss_ha_yr": 6,
-        "loss_pct_forest": 0.22,
+        "loss_pct_forest": 0.24,
         "loss_change_pct": null,
         "loss_base_ha_yr": 19
-      }
-    },
-    {
-      "distrito": "Iturbe",
-      "parquetKey": "iturbe",
-      "avg_score": 30.8,
-      "hex_count": 2817,
-      "centroid": [
-        -56.4662,
-        -26.0627
-      ],
-      "rank": {
-        "loss_ha_yr": 60,
-        "loss_pct_forest": 0.84,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 15
-      }
-    },
-    {
-      "distrito": "Cnel Martinez",
-      "parquetKey": "cnel_martinez",
-      "avg_score": 29.8,
-      "hex_count": 2018,
-      "centroid": [
-        -56.648,
-        -25.7972
-      ],
-      "rank": {
-        "loss_ha_yr": 45,
-        "loss_pct_forest": 1.04,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 24
       }
     }
   ],
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   }
 }

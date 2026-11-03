@@ -2,166 +2,214 @@
   "territory": "corrientes",
   "province": {
     "total_hexes": 1033548,
-    "avg_score": 2.0,
+    "avg_score": 6.0,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "avg_score": 8.0,
+      "avg_score": 17.4,
       "hex_count": 78948,
       "centroid": [
         -56.221,
         -28.2312
       ],
       "rank": {
-        "loss_ha_yr": 4489,
-        "loss_pct_forest": 3.15,
-        "loss_change_pct": 38,
+        "loss_ha_yr": 4269,
+        "loss_pct_forest": 3.0,
+        "loss_change_pct": 31,
         "loss_base_ha_yr": 3261
-      }
-    },
-    {
-      "dpto": "Monte Caseros",
-      "parquetKey": "monte_caseros",
-      "avg_score": 5.5,
-      "hex_count": 32310,
-      "centroid": [
-        -57.8688,
-        -30.2266
-      ],
-      "rank": {
-        "loss_ha_yr": 1081,
-        "loss_pct_forest": 2.95,
-        "loss_change_pct": 103,
-        "loss_base_ha_yr": 532
-      }
-    },
-    {
-      "dpto": "Concepción",
-      "parquetKey": "concepcion",
-      "avg_score": 4.0,
-      "hex_count": 60962,
-      "centroid": [
-        -58.0322,
-        -28.409
-      ],
-      "rank": {
-        "loss_ha_yr": 1572,
-        "loss_pct_forest": 3.43,
-        "loss_change_pct": 102,
-        "loss_base_ha_yr": 778
       }
     },
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "avg_score": 3.7,
+      "avg_score": 16.2,
       "hex_count": 57476,
       "centroid": [
         -57.3023,
         -29.595
       ],
       "rank": {
-        "loss_ha_yr": 1517,
-        "loss_pct_forest": 3.61,
-        "loss_change_pct": 75,
+        "loss_ha_yr": 1314,
+        "loss_pct_forest": 3.12,
+        "loss_change_pct": 52,
         "loss_base_ha_yr": 865
+      }
+    },
+    {
+      "dpto": "Monte Caseros",
+      "parquetKey": "monte_caseros",
+      "avg_score": 15.6,
+      "hex_count": 32310,
+      "centroid": [
+        -57.8688,
+        -30.2266
+      ],
+      "rank": {
+        "loss_ha_yr": 1091,
+        "loss_pct_forest": 2.98,
+        "loss_change_pct": 105,
+        "loss_base_ha_yr": 532
+      }
+    },
+    {
+      "dpto": "Concepción",
+      "parquetKey": "concepcion",
+      "avg_score": 10.9,
+      "hex_count": 60962,
+      "centroid": [
+        -58.0322,
+        -28.409
+      ],
+      "rank": {
+        "loss_ha_yr": 1472,
+        "loss_pct_forest": 3.21,
+        "loss_change_pct": 89,
+        "loss_base_ha_yr": 778
       }
     },
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "avg_score": 3.0,
+      "avg_score": 7.7,
       "hex_count": 105592,
       "centroid": [
         -56.7927,
         -27.9252
       ],
       "rank": {
-        "loss_ha_yr": 2207,
-        "loss_pct_forest": 2.14,
-        "loss_change_pct": 107,
+        "loss_ha_yr": 2244,
+        "loss_pct_forest": 2.18,
+        "loss_change_pct": 110,
         "loss_base_ha_yr": 1068
       }
     },
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "avg_score": 2.3,
+      "avg_score": 7.6,
       "hex_count": 34844,
       "centroid": [
         -57.41,
         -27.8743
       ],
       "rank": {
-        "loss_ha_yr": 519,
-        "loss_pct_forest": 2.19,
-        "loss_change_pct": 47,
+        "loss_ha_yr": 492,
+        "loss_pct_forest": 2.08,
+        "loss_change_pct": 40,
         "loss_base_ha_yr": 352
       }
     },
     {
-      "dpto": "Saladas",
-      "parquetKey": "saladas",
-      "avg_score": 2.2,
-      "hex_count": 22252,
+      "dpto": "General Alvear",
+      "parquetKey": "general_alvear",
+      "avg_score": 6.8,
+      "hex_count": 22100,
       "centroid": [
-        -58.6205,
-        -28.2128
+        -56.5124,
+        -28.7749
       ],
       "rank": {
-        "loss_ha_yr": 291,
-        "loss_pct_forest": 0.88,
-        "loss_change_pct": 113,
-        "loss_base_ha_yr": 137
+        "loss_ha_yr": 204,
+        "loss_pct_forest": 1.78,
+        "loss_change_pct": 120,
+        "loss_base_ha_yr": 93
       }
     },
     {
       "dpto": "San Roque",
       "parquetKey": "san_roque",
-      "avg_score": 1.7,
+      "avg_score": 6.1,
       "hex_count": 28516,
       "centroid": [
         -58.6133,
         -28.7063
       ],
       "rank": {
-        "loss_ha_yr": 302,
-        "loss_pct_forest": 1.54,
-        "loss_change_pct": 43,
+        "loss_ha_yr": 318,
+        "loss_pct_forest": 1.62,
+        "loss_change_pct": 51,
         "loss_base_ha_yr": 210
+      }
+    },
+    {
+      "dpto": "General Paz",
+      "parquetKey": "general_paz",
+      "avg_score": 5.5,
+      "hex_count": 29619,
+      "centroid": [
+        -57.7878,
+        -27.72
+      ],
+      "rank": {
+        "loss_ha_yr": 233,
+        "loss_pct_forest": 1.33,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 41
+      }
+    },
+    {
+      "dpto": "Lavalle",
+      "parquetKey": "lavalle",
+      "avg_score": 5.0,
+      "hex_count": 17633,
+      "centroid": [
+        -58.9322,
+        -28.9875
+      ],
+      "rank": {
+        "loss_ha_yr": 129,
+        "loss_pct_forest": 1.21,
+        "loss_change_pct": -25,
+        "loss_base_ha_yr": 172
+      }
+    },
+    {
+      "dpto": "Saladas",
+      "parquetKey": "saladas",
+      "avg_score": 4.7,
+      "hex_count": 22252,
+      "centroid": [
+        -58.6205,
+        -28.2128
+      ],
+      "rank": {
+        "loss_ha_yr": 305,
+        "loss_pct_forest": 0.92,
+        "loss_change_pct": 123,
+        "loss_base_ha_yr": 137
       }
     },
     {
       "dpto": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 1.5,
+      "avg_score": 4.4,
       "hex_count": 21007,
       "centroid": [
         -58.9321,
         -28.4995
       ],
       "rank": {
-        "loss_ha_yr": 178,
-        "loss_pct_forest": 0.72,
-        "loss_change_pct": 146,
+        "loss_ha_yr": 188,
+        "loss_pct_forest": 0.76,
+        "loss_change_pct": 160,
         "loss_base_ha_yr": 72
       }
     },
     {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
-      "avg_score": 1.5,
+      "avg_score": 3.8,
       "hex_count": 11427,
       "centroid": [
         -58.1856,
         -28.0166
       ],
       "rank": {
-        "loss_ha_yr": 107,
-        "loss_pct_forest": 0.81,
+        "loss_ha_yr": 108,
+        "loss_pct_forest": 0.82,
         "loss_change_pct": null,
         "loss_base_ha_yr": 33
       }
@@ -169,7 +217,7 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "avg_score": 1.4,
+      "avg_score": 3.0,
       "hex_count": 47788,
       "centroid": [
         -59.2355,
@@ -178,86 +226,54 @@
       "rank": {
         "loss_ha_yr": 406,
         "loss_pct_forest": 0.48,
-        "loss_change_pct": -9,
+        "loss_change_pct": -8,
         "loss_base_ha_yr": 444
       }
     },
     {
-      "dpto": "General Paz",
-      "parquetKey": "general_paz",
-      "avg_score": 1.3,
-      "hex_count": 29619,
+      "dpto": "San Martín",
+      "parquetKey": "san_martin",
+      "avg_score": 3.0,
+      "hex_count": 76150,
       "centroid": [
-        -57.7878,
-        -27.72
+        -56.9322,
+        -28.8292
       ],
       "rank": {
-        "loss_ha_yr": 231,
-        "loss_pct_forest": 1.32,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 41
-      }
-    },
-    {
-      "dpto": "General Alvear",
-      "parquetKey": "general_alvear",
-      "avg_score": 1.2,
-      "hex_count": 22100,
-      "centroid": [
-        -56.5124,
-        -28.7749
-      ],
-      "rank": {
-        "loss_ha_yr": 179,
-        "loss_pct_forest": 1.56,
-        "loss_change_pct": 93,
-        "loss_base_ha_yr": 93
-      }
-    },
-    {
-      "dpto": "Lavalle",
-      "parquetKey": "lavalle",
-      "avg_score": 1.2,
-      "hex_count": 17633,
-      "centroid": [
-        -58.9322,
-        -28.9875
-      ],
-      "rank": {
-        "loss_ha_yr": 123,
-        "loss_pct_forest": 1.15,
-        "loss_change_pct": -29,
-        "loss_base_ha_yr": 172
+        "loss_ha_yr": 292,
+        "loss_pct_forest": 0.95,
+        "loss_change_pct": 186,
+        "loss_base_ha_yr": 102
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 1.1,
+      "avg_score": 2.1,
       "hex_count": 6334,
       "centroid": [
         -58.7628,
         -27.5228
       ],
       "rank": {
-        "loss_ha_yr": 39,
-        "loss_pct_forest": 0.36,
-        "loss_change_pct": -46,
+        "loss_ha_yr": 40,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": -45,
         "loss_base_ha_yr": 72
       }
     },
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "avg_score": 1.0,
+      "avg_score": 1.7,
       "hex_count": 6971,
       "centroid": [
         -58.5152,
         -27.3795
       ],
       "rank": {
-        "loss_ha_yr": 38,
-        "loss_pct_forest": 0.28,
+        "loss_ha_yr": 41,
+        "loss_pct_forest": 0.3,
         "loss_change_pct": null,
         "loss_base_ha_yr": 50
       }
@@ -265,63 +281,47 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "avg_score": 0.7,
+      "avg_score": 1.3,
       "hex_count": 29732,
       "centroid": [
         -58.7934,
         -30.0012
       ],
       "rank": {
-        "loss_ha_yr": 126,
-        "loss_pct_forest": 0.25,
-        "loss_change_pct": -5,
+        "loss_ha_yr": 121,
+        "loss_pct_forest": 0.24,
+        "loss_change_pct": -9,
         "loss_base_ha_yr": 133
-      }
-    },
-    {
-      "dpto": "San Martín",
-      "parquetKey": "san_martin",
-      "avg_score": 0.6,
-      "hex_count": 76150,
-      "centroid": [
-        -56.9322,
-        -28.8292
-      ],
-      "rank": {
-        "loss_ha_yr": 301,
-        "loss_pct_forest": 0.98,
-        "loss_change_pct": 195,
-        "loss_base_ha_yr": 102
       }
     },
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "avg_score": 0.5,
+      "avg_score": 1.1,
       "hex_count": 58930,
       "centroid": [
         -59.2644,
         -29.4561
       ],
       "rank": {
-        "loss_ha_yr": 178,
-        "loss_pct_forest": 0.2,
-        "loss_change_pct": -1,
+        "loss_ha_yr": 169,
+        "loss_pct_forest": 0.19,
+        "loss_change_pct": -6,
         "loss_base_ha_yr": 180
       }
     },
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "avg_score": 0.3,
+      "avg_score": 1.0,
       "hex_count": 9854,
       "centroid": [
         -58.0799,
         -27.3451
       ],
       "rank": {
-        "loss_ha_yr": 14,
-        "loss_pct_forest": 0.12,
+        "loss_ha_yr": 21,
+        "loss_pct_forest": 0.18,
         "loss_change_pct": null,
         "loss_base_ha_yr": 17
       }
@@ -329,7 +329,7 @@
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "avg_score": 0.2,
+      "avg_score": 0.9,
       "hex_count": 9234,
       "centroid": [
         -57.6161,
@@ -345,30 +345,30 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "avg_score": 0.2,
+      "avg_score": 0.9,
       "hex_count": 99276,
       "centroid": [
         -58.3255,
         -29.6955
       ],
       "rank": {
-        "loss_ha_yr": 130,
+        "loss_ha_yr": 127,
         "loss_pct_forest": 0.16,
-        "loss_change_pct": -15,
+        "loss_change_pct": -17,
         "loss_base_ha_yr": 152
       }
     },
     {
       "dpto": "Empedrado",
       "parquetKey": "empedrado",
-      "avg_score": 0.2,
+      "avg_score": 0.4,
       "hex_count": 23392,
       "centroid": [
         -58.6718,
         -27.8988
       ],
       "rank": {
-        "loss_ha_yr": 26,
+        "loss_ha_yr": 25,
         "loss_pct_forest": 0.07,
         "loss_change_pct": null,
         "loss_base_ha_yr": 15
@@ -377,16 +377,16 @@
     {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
-      "avg_score": 0.1,
+      "avg_score": 0.4,
       "hex_count": 113872,
       "centroid": [
         -57.8198,
         -29.0657
       ],
       "rank": {
-        "loss_ha_yr": 53,
-        "loss_pct_forest": 0.08,
-        "loss_change_pct": -52,
+        "loss_ha_yr": 51,
+        "loss_pct_forest": 0.07,
+        "loss_change_pct": -54,
         "loss_base_ha_yr": 110
       }
     },
@@ -410,7 +410,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   },
   "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"

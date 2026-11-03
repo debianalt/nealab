@@ -2,14 +2,14 @@
 Department ranking for the deforestation layer: three readings of the same
 Hansen loss, switchable in the panel.
 
-  loss_ha_yr        hectares of tree cover lost per year, 2015–2024     ← default
-  loss_pct_forest   % of the 2000 tree cover lost per year, 2015–2024
+  loss_ha_yr        hectares of tree cover lost per year, 2016–2025     ← default
+  loss_pct_forest   % of the 2000 tree cover lost per year, 2016–2025
   loss_change_pct   change vs 2001–2010 (both periods 10 years); only where the
                     baseline loss is ≥ MIN_BASE_HA ha/yr — from 2 to 6 ha reads
                     +200 % and would top the list on noise
 
 Per hexagon the layer carries c_loss_rate (% of the cell lost per year in
-2015–2024, Hansen 30 m pixels inside the cell), c_loss_rate_baseline (same,
+2016–2025, Hansen 30 m pixels inside the cell), c_loss_rate_baseline (same,
 2001–2010) and c_treecover (% tree cover in 2000). Hexes are equal-area at H3
 res 9, so a department's hectares are sums × the mean cell area. Hansen tree
 cover counts plantations: in Misiones part of the "loss" is pine and eucalyptus
@@ -31,6 +31,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(__file__))
 from config import TERRITORY_CONFIGS, get_territory
+from refresh_dept_parquets import FRESH   # CDN edge-cache buster
 
 CDN = 'https://cdn.spatia.ar/data'
 SRC_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'src', 'lib', 'data')
@@ -56,7 +57,8 @@ def main() -> None:
         with open(path, encoding='utf-8') as f:
             summary = json.load(f)
         prefix = get_territory(tid)['output_prefix']
-        urls = {f"{CDN}/{prefix}sat_dpto/sat_deforestation_dynamics_{d['parquetKey']}.parquet": d['parquetKey']
+        # FRESH: the CDN edge may hold a pre-refresh copy of an unversioned key.
+        urls = {f"{CDN}/{prefix}sat_dpto/sat_deforestation_dynamics_{d['parquetKey']}.parquet?{FRESH}": d['parquetKey']
                 for d in summary['departments']}
         url_list = ', '.join(f"'{u}'" for u in urls)
         agg = con.execute(f"""
@@ -83,7 +85,7 @@ def main() -> None:
             }
         summary.setdefault('metadata', {})['rank'] = {
             'metric': 'loss_ha_yr',
-            'definition': 'Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura '
+            'definition': 'Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura '
                           '2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ '
                           f'{MIN_BASE_HA} ha/año)',
         }

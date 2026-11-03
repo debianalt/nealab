@@ -8,13 +8,13 @@
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "hex_count": 5112,
+      "hex_count": 70698,
       "centroid": [
         -58.174,
         -26.172
       ],
       "rank": {
-        "viirs": 10.7,
+        "viirs": 1.25,
         "empleo_pct": 55.1,
         "univ_pct": 10.5
       }
@@ -22,13 +22,13 @@
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "hex_count": 1032,
+      "hex_count": 47183,
       "centroid": [
         -61.9734,
         -23.902
       ],
       "rank": {
-        "viirs": 2.36,
+        "viirs": 0.38,
         "empleo_pct": 48.5,
         "univ_pct": 5.3
       }
@@ -36,13 +36,13 @@
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "hex_count": 8728,
+      "hex_count": 287728,
       "centroid": [
         -59.0809,
         -24.9268
       ],
       "rank": {
-        "viirs": 1.35,
+        "viirs": 0.36,
         "empleo_pct": 50.2,
         "univ_pct": 5.1
       }
@@ -50,13 +50,13 @@
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "hex_count": 5802,
+      "hex_count": 98309,
       "centroid": [
         -59.0324,
         -25.6655
       ],
       "rank": {
-        "viirs": 1.87,
+        "viirs": 0.45,
         "empleo_pct": 50.8,
         "univ_pct": 4.9
       }
@@ -64,13 +64,13 @@
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "hex_count": 2170,
+      "hex_count": 39152,
       "centroid": [
         -58.7089,
         -24.9733
       ],
       "rank": {
-        "viirs": 1.67,
+        "viirs": 0.45,
         "empleo_pct": 47.0,
         "univ_pct": 4.4
       }
@@ -78,13 +78,13 @@
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "hex_count": 5197,
+      "hex_count": 58213,
       "centroid": [
         -58.1397,
         -25.321
       ],
       "rank": {
-        "viirs": 3.55,
+        "viirs": 0.96,
         "empleo_pct": 52.9,
         "univ_pct": 5.8
       }
@@ -92,13 +92,13 @@
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "hex_count": 2758,
+      "hex_count": 141302,
       "centroid": [
         -61.4778,
         -24.2184
       ],
       "rank": {
-        "viirs": 0.97,
+        "viirs": 0.36,
         "empleo_pct": 45.4,
         "univ_pct": 3.3
       }
@@ -106,13 +106,13 @@
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "hex_count": 3789,
+      "hex_count": 40572,
       "centroid": [
         -58.414,
         -26.4014
       ],
       "rank": {
-        "viirs": 1.0,
+        "viirs": 0.49,
         "empleo_pct": 48.1,
         "univ_pct": 4.5
       }
@@ -120,13 +120,13 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "hex_count": 4527,
+      "hex_count": 42892,
       "centroid": [
         -62.2609,
         -22.9514
       ],
       "rank": {
-        "viirs": 0.11,
+        "viirs": 0.35,
         "empleo_pct": 33.3,
         "univ_pct": 6.2
       }

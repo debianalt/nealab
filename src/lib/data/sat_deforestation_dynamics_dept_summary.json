@@ -2,40 +2,40 @@
   "territory": "misiones",
   "province": {
     "total_hexes": 319870,
-    "avg_score": 16.9,
+    "avg_score": 17.3,
     "unassigned": 0
   },
   "departments": [
     {
-      "dpto": "L.G. San Martín",
-      "parquetKey": "lg_san_martin",
-      "avg_score": 22.8,
-      "hex_count": 15687,
-      "centroid": [
-        -54.9218,
-        -26.8934
-      ],
-      "rank": {
-        "loss_ha_yr": 2128,
-        "loss_pct_forest": 1.69,
-        "loss_change_pct": 14,
-        "loss_base_ha_yr": 1874
-      }
-    },
-    {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 22.5,
+      "avg_score": 23.2,
       "hex_count": 17856,
       "centroid": [
         -54.6382,
         -27.3768
       ],
       "rank": {
-        "loss_ha_yr": 2226,
-        "loss_pct_forest": 1.52,
-        "loss_change_pct": 35,
+        "loss_ha_yr": 2298,
+        "loss_pct_forest": 1.57,
+        "loss_change_pct": 39,
         "loss_base_ha_yr": 1648
+      }
+    },
+    {
+      "dpto": "L.G. San Martín",
+      "parquetKey": "lg_san_martin",
+      "avg_score": 22.6,
+      "hex_count": 15687,
+      "centroid": [
+        -54.9218,
+        -26.8934
+      ],
+      "rank": {
+        "loss_ha_yr": 2097,
+        "loss_pct_forest": 1.67,
+        "loss_change_pct": 12,
+        "loss_base_ha_yr": 1874
       }
     },
     {
@@ -48,8 +48,8 @@
         -26.6682
       ],
       "rank": {
-        "loss_ha_yr": 2497,
-        "loss_pct_forest": 1.48,
+        "loss_ha_yr": 2483,
+        "loss_pct_forest": 1.47,
         "loss_change_pct": -14,
         "loss_base_ha_yr": 2902
       }
@@ -57,176 +57,176 @@
     {
       "dpto": "Eldorado",
       "parquetKey": "eldorado",
-      "avg_score": 19.9,
+      "avg_score": 20.6,
       "hex_count": 18128,
       "centroid": [
         -54.4402,
         -26.3193
       ],
       "rank": {
-        "loss_ha_yr": 2250,
-        "loss_pct_forest": 1.36,
-        "loss_change_pct": -29,
+        "loss_ha_yr": 2330,
+        "loss_pct_forest": 1.41,
+        "loss_change_pct": -27,
         "loss_base_ha_yr": 3173
       }
     },
     {
       "dpto": "Guaraní",
       "parquetKey": "guarani",
-      "avg_score": 19.6,
+      "avg_score": 20.4,
       "hex_count": 35078,
       "centroid": [
         -54.2688,
         -27.0274
       ],
       "rank": {
-        "loss_ha_yr": 3864,
-        "loss_pct_forest": 1.26,
-        "loss_change_pct": 57,
+        "loss_ha_yr": 4023,
+        "loss_pct_forest": 1.31,
+        "loss_change_pct": 64,
         "loss_base_ha_yr": 2456
       }
     },
     {
       "dpto": "Cainguás",
       "parquetKey": "cainguas",
-      "avg_score": 18.6,
+      "avg_score": 19.1,
       "hex_count": 16682,
       "centroid": [
         -54.8072,
         -27.1483
       ],
       "rank": {
-        "loss_ha_yr": 1697,
-        "loss_pct_forest": 1.3,
-        "loss_change_pct": 91,
+        "loss_ha_yr": 1745,
+        "loss_pct_forest": 1.34,
+        "loss_change_pct": 97,
         "loss_base_ha_yr": 888
       }
     },
     {
       "dpto": "San Ignacio",
       "parquetKey": "san_ignacio",
-      "avg_score": 18.3,
+      "avg_score": 18.2,
       "hex_count": 18120,
       "centroid": [
         -55.3377,
         -27.1764
       ],
       "rank": {
-        "loss_ha_yr": 1920,
-        "loss_pct_forest": 1.31,
-        "loss_change_pct": -25,
+        "loss_ha_yr": 1896,
+        "loss_pct_forest": 1.29,
+        "loss_change_pct": -26,
         "loss_base_ha_yr": 2564
       }
     },
     {
       "dpto": "Oberá",
       "parquetKey": "obera",
-      "avg_score": 17.1,
+      "avg_score": 17.7,
       "hex_count": 17136,
       "centroid": [
         -55.0808,
         -27.4651
       ],
       "rank": {
-        "loss_ha_yr": 1608,
-        "loss_pct_forest": 1.21,
-        "loss_change_pct": 46,
+        "loss_ha_yr": 1658,
+        "loss_pct_forest": 1.24,
+        "loss_change_pct": 50,
         "loss_base_ha_yr": 1103
       }
     },
     {
       "dpto": "San Javier",
       "parquetKey": "san_javier",
-      "avg_score": 16.8,
+      "avg_score": 17.7,
       "hex_count": 7286,
       "centroid": [
         -55.1659,
         -27.775
       ],
       "rank": {
-        "loss_ha_yr": 651,
-        "loss_pct_forest": 1.25,
-        "loss_change_pct": 70,
+        "loss_ha_yr": 685,
+        "loss_pct_forest": 1.32,
+        "loss_change_pct": 79,
         "loss_base_ha_yr": 384
       }
     },
     {
       "dpto": "L. N. Alem",
       "parquetKey": "l_n_alem",
-      "avg_score": 15.8,
+      "avg_score": 16.3,
       "hex_count": 11668,
       "centroid": [
         -55.3895,
         -27.6277
       ],
       "rank": {
-        "loss_ha_yr": 999,
-        "loss_pct_forest": 1.08,
-        "loss_change_pct": 14,
+        "loss_ha_yr": 1026,
+        "loss_pct_forest": 1.11,
+        "loss_change_pct": 17,
         "loss_base_ha_yr": 880
       }
     },
     {
       "dpto": "San Pedro",
       "parquetKey": "san_pedro",
-      "avg_score": 15.4,
+      "avg_score": 15.9,
       "hex_count": 42165,
       "centroid": [
         -53.9658,
         -26.6398
       ],
       "rank": {
-        "loss_ha_yr": 3775,
-        "loss_pct_forest": 0.92,
-        "loss_change_pct": 73,
+        "loss_ha_yr": 3903,
+        "loss_pct_forest": 0.96,
+        "loss_change_pct": 79,
         "loss_base_ha_yr": 2183
       }
     },
     {
       "dpto": "G. M. Belgrano",
       "parquetKey": "g_m_belgrano",
-      "avg_score": 15.0,
+      "avg_score": 15.7,
       "hex_count": 32321,
       "centroid": [
         -53.9584,
         -26.0076
       ],
       "rank": {
-        "loss_ha_yr": 2795,
-        "loss_pct_forest": 0.93,
-        "loss_change_pct": 63,
+        "loss_ha_yr": 2922,
+        "loss_pct_forest": 0.98,
+        "loss_change_pct": 70,
         "loss_base_ha_yr": 1718
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 14.7,
+      "avg_score": 15.6,
       "hex_count": 10621,
       "centroid": [
         -55.8579,
         -27.5524
       ],
       "rank": {
-        "loss_ha_yr": 785,
-        "loss_pct_forest": 2.41,
-        "loss_change_pct": 188,
+        "loss_ha_yr": 830,
+        "loss_pct_forest": 2.55,
+        "loss_change_pct": 204,
         "loss_base_ha_yr": 273
       }
     },
     {
       "dpto": "Iguazú",
       "parquetKey": "iguazu",
-      "avg_score": 12.8,
+      "avg_score": 12.3,
       "hex_count": 28650,
       "centroid": [
         -54.4076,
         -25.8818
       ],
       "rank": {
-        "loss_ha_yr": 2213,
-        "loss_pct_forest": 0.84,
-        "loss_change_pct": -63,
+        "loss_ha_yr": 2096,
+        "loss_pct_forest": 0.8,
+        "loss_change_pct": -64,
         "loss_base_ha_yr": 5902
       }
     },
@@ -240,7 +240,7 @@
         -27.9377
       ],
       "rank": {
-        "loss_ha_yr": 499,
+        "loss_ha_yr": 498,
         "loss_pct_forest": 1.02,
         "loss_change_pct": -20,
         "loss_base_ha_yr": 625
@@ -249,16 +249,16 @@
     {
       "dpto": "Candelaria",
       "parquetKey": "candelaria",
-      "avg_score": 10.2,
+      "avg_score": 10.0,
       "hex_count": 10077,
       "centroid": [
         -55.5827,
         -27.4641
       ],
       "rank": {
-        "loss_ha_yr": 586,
-        "loss_pct_forest": 0.86,
-        "loss_change_pct": 18,
+        "loss_ha_yr": 570,
+        "loss_pct_forest": 0.83,
+        "loss_change_pct": 15,
         "loss_base_ha_yr": 498
       }
     },
@@ -272,7 +272,7 @@
         -27.8934
       ],
       "rank": {
-        "loss_ha_yr": 434,
+        "loss_ha_yr": 436,
         "loss_pct_forest": 0.86,
         "loss_change_pct": 29,
         "loss_base_ha_yr": 337
@@ -282,7 +282,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   }
 }

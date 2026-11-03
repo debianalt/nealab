@@ -111,10 +111,10 @@ export function getParquetUrl(name: string): string {
 		sat_education_capital: '?v=29',
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=25',
-		sat_economic_activity: '?v=31',
+		sat_economic_activity: '?v=32',   // 2-nov-2026: VIIRS 2025, grilla completa en Ctes/Chaco/Fsa
 		sat_accessibility: '?v=29',
 		sat_pm25_drivers: '?v=19',
-		sat_deforestation_dynamics: '?v=16',
+		sat_deforestation_dynamics: '?v=17',   // 2-nov-2026: Hansen v1.13, 2016–2025
 		sat_land_use: '?v=6',   // 31-oct-2026: área por clase (dw_cover), no probabilidad media
 		sat_censo_temporal: '?v=1',
 		sat_eudr: '?v=1',
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 31;
+const DEPT_V = 32;
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -665,7 +665,7 @@ export const FLOOD_LOW_NEW_CLASSES: ColorClasses = {
 	],
 };
 
-// Hansen loss rate (%/yr, 2015–2024). Same cuts and colors (MAP_CLASS_3) as the layer's
+// Hansen loss rate (%/yr, 2016–2025). Same cuts and colors (MAP_CLASS_3) as the layer's
 // flowBands so map and flow chart classify a hexagon alike. 0 = no loss
 // detected — in Eldorado half the hexagons, median tree cover 98 %: standing
 // forest, previously painted "Sin cobertura".
@@ -1293,7 +1293,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		scaleStats: PM25_SCALE,
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'available', santa_catarina_br: 'available', rio_grande_sul_br: 'available', concepcion_py: 'available', san_pedro_py: 'available', cordillera_py: 'available', guaira_py: 'available', caaguazu_py: 'available', caazapa_py: 'available', misiones_py: 'available', paraguari_py: 'available', central_py: 'available', neembucu_py: 'available', amambay_py: 'available', canindeyu_py: 'available', presidente_hayes_py: 'available', boqueron_py: 'available', alto_paraguay_py: 'available'},
 	},
-	// ── Deforestation Dynamics (Hansen 2001-2024, observed) ──
+	// ── Deforestation Dynamics (Hansen 2001-2025, observed) ──
 	// No petalVars: only 2 numeric indicators (loss_rate + cumulative) — radar with 2 vars is not meaningful.
 	deforestation_dynamics: {
 		id: 'deforestation_dynamics',
@@ -1310,7 +1310,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		titleKey: 'sat.deforest.title',
 		perDepartment: true,
 		temporal: true,
-		temporalPeriods: { current: '2015–2024', baseline: '2001–2010', source: 'Hansen GFC v1.12' },
+		temporalPeriods: { current: '2016–2025', baseline: '2001–2010', source: 'Hansen GFC v1.13' },
 		// Three readings of the same Hansen loss (pipeline/build_deforest_rank.py):
 		// where the most is lost, where it is most intense, where it sped up or slowed.
 		deptRank: {
@@ -1685,11 +1685,11 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_education_flow: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'layer.source.censoTemporal' },
-	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS + GBA 2025', processedDate: '30/10/2026', sourceKey: 'layer.source.economic' },
+	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2025 + GBA 2025', processedDate: '02/11/2026', sourceKey: 'layer.source.economic' },
 	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '01/11/2026', sourceKey: 'layer.source.accessibility' },
 	sat_land_use: { dataDate: 'Dynamic World V1, 2024', processedDate: '31/10/2026', sourceKey: 'layer.source.landUse' },
 	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
-	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.12 2001-2024', processedDate: '01/10/2026', sourceKey: 'layer.source.deforestation' },
+	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.13 2001-2025', processedDate: '02/11/2026', sourceKey: 'layer.source.deforestation' },
 	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.
 	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '30/10/2026', sourceKey: 'layer.source.eudr' },
 };

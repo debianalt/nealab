@@ -2,407 +2,407 @@
   "territory": "chaco",
   "province": {
     "total_hexes": 1116998,
-    "avg_score": 50.0,
+    "avg_score": 8.9,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "9 de Julio",
       "parquetKey": "nueve_de_julio",
-      "avg_score": 61.2,
+      "avg_score": 19.6,
       "hex_count": 24383,
       "centroid": [
         -61.2638,
         -26.9464
       ],
       "rank": {
-        "loss_ha_yr": 2415,
-        "loss_pct_forest": 3.08,
-        "loss_change_pct": 1,
+        "loss_ha_yr": 2377,
+        "loss_pct_forest": 3.04,
+        "loss_change_pct": -1,
         "loss_base_ha_yr": 2398
-      }
-    },
-    {
-      "dpto": "Maipú",
-      "parquetKey": "maipu",
-      "avg_score": 58.8,
-      "hex_count": 32945,
-      "centroid": [
-        -60.4547,
-        -26.3211
-      ],
-      "rank": {
-        "loss_ha_yr": 2380,
-        "loss_pct_forest": 1.66,
-        "loss_change_pct": -16,
-        "loss_base_ha_yr": 2836
-      }
-    },
-    {
-      "dpto": "Chacabuco",
-      "parquetKey": "chacabuco",
-      "avg_score": 57.3,
-      "hex_count": 17049,
-      "centroid": [
-        -61.3085,
-        -27.1179
-      ],
-      "rank": {
-        "loss_ha_yr": 1140,
-        "loss_pct_forest": 2.91,
-        "loss_change_pct": -19,
-        "loss_base_ha_yr": 1410
       }
     },
     {
       "dpto": "Almirante Brown",
       "parquetKey": "almirante_brown",
-      "avg_score": 57.1,
+      "avg_score": 18.1,
       "hex_count": 193337,
       "centroid": [
         -61.9528,
         -25.7518
       ],
       "rank": {
-        "loss_ha_yr": 25604,
-        "loss_pct_forest": 2.69,
-        "loss_change_pct": 73,
+        "loss_ha_yr": 25250,
+        "loss_pct_forest": 2.66,
+        "loss_change_pct": 71,
         "loss_base_ha_yr": 14803
+      }
+    },
+    {
+      "dpto": "Chacabuco",
+      "parquetKey": "chacabuco",
+      "avg_score": 18.0,
+      "hex_count": 17049,
+      "centroid": [
+        -61.3085,
+        -27.1179
+      ],
+      "rank": {
+        "loss_ha_yr": 1205,
+        "loss_pct_forest": 3.08,
+        "loss_change_pct": -15,
+        "loss_base_ha_yr": 1410
       }
     },
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "avg_score": 56.2,
+      "avg_score": 14.0,
       "hex_count": 14611,
       "centroid": [
         -61.0714,
         -26.8498
       ],
       "rank": {
-        "loss_ha_yr": 693,
-        "loss_pct_forest": 2.27,
-        "loss_change_pct": -40,
+        "loss_ha_yr": 717,
+        "loss_pct_forest": 2.35,
+        "loss_change_pct": -37,
         "loss_base_ha_yr": 1147
       }
     },
     {
-      "dpto": "Independencia",
-      "parquetKey": "independencia",
-      "avg_score": 55.9,
-      "hex_count": 21735,
+      "dpto": "Maipú",
+      "parquetKey": "maipu",
+      "avg_score": 12.9,
+      "hex_count": 32945,
       "centroid": [
-        -60.7569,
-        -26.7373
+        -60.4547,
+        -26.3211
       ],
       "rank": {
-        "loss_ha_yr": 1306,
-        "loss_pct_forest": 1.83,
-        "loss_change_pct": -47,
-        "loss_base_ha_yr": 2475
+        "loss_ha_yr": 2318,
+        "loss_pct_forest": 1.61,
+        "loss_change_pct": -18,
+        "loss_base_ha_yr": 2836
       }
     },
     {
       "dpto": "12 de Octubre",
       "parquetKey": "doce_de_octubre",
-      "avg_score": 52.6,
+      "avg_score": 12.9,
       "hex_count": 31254,
       "centroid": [
         -61.4769,
         -27.3359
       ],
       "rank": {
-        "loss_ha_yr": 1516,
-        "loss_pct_forest": 2.48,
-        "loss_change_pct": -54,
+        "loss_ha_yr": 1475,
+        "loss_pct_forest": 2.41,
+        "loss_change_pct": -55,
         "loss_base_ha_yr": 3292
+      }
+    },
+    {
+      "dpto": "Independencia",
+      "parquetKey": "independencia",
+      "avg_score": 11.8,
+      "hex_count": 21735,
+      "centroid": [
+        -60.7569,
+        -26.7373
+      ],
+      "rank": {
+        "loss_ha_yr": 1200,
+        "loss_pct_forest": 1.68,
+        "loss_change_pct": -51,
+        "loss_base_ha_yr": 2475
       }
     },
     {
       "dpto": "O'Higgins",
       "parquetKey": "ohiggins",
-      "avg_score": 52.5,
+      "avg_score": 10.2,
       "hex_count": 17864,
       "centroid": [
         -60.6805,
         -27.2575
       ],
       "rank": {
-        "loss_ha_yr": 646,
-        "loss_pct_forest": 1.66,
-        "loss_change_pct": -9,
+        "loss_ha_yr": 673,
+        "loss_pct_forest": 1.73,
+        "loss_change_pct": -5,
         "loss_base_ha_yr": 711
-      }
-    },
-    {
-      "dpto": "Comandante Fernández",
-      "parquetKey": "comandante_fernandez",
-      "avg_score": 51.5,
-      "hex_count": 17141,
-      "centroid": [
-        -60.4618,
-        -26.787
-      ],
-      "rank": {
-        "loss_ha_yr": 439,
-        "loss_pct_forest": 0.97,
-        "loss_change_pct": -50,
-        "loss_base_ha_yr": 874
-      }
-    },
-    {
-      "dpto": "General Güemes",
-      "parquetKey": "general_guemes",
-      "avg_score": 50.2,
-      "hex_count": 281279,
-      "centroid": [
-        -61.3271,
-        -25.2213
-      ],
-      "rank": {
-        "loss_ha_yr": 11481,
-        "loss_pct_forest": 1.1,
-        "loss_change_pct": 43,
-        "loss_base_ha_yr": 8012
       }
     },
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "avg_score": 49.8,
+      "avg_score": 9.3,
       "hex_count": 18082,
       "centroid": [
         -61.3291,
         -27.6217
       ],
       "rank": {
-        "loss_ha_yr": 325,
-        "loss_pct_forest": 2.03,
-        "loss_change_pct": -4,
+        "loss_ha_yr": 331,
+        "loss_pct_forest": 2.07,
+        "loss_change_pct": -2,
         "loss_base_ha_yr": 337
+      }
+    },
+    {
+      "dpto": "General Güemes",
+      "parquetKey": "general_guemes",
+      "avg_score": 8.3,
+      "hex_count": 281279,
+      "centroid": [
+        -61.3271,
+        -25.2213
+      ],
+      "rank": {
+        "loss_ha_yr": 11744,
+        "loss_pct_forest": 1.12,
+        "loss_change_pct": 47,
+        "loss_base_ha_yr": 8013
+      }
+    },
+    {
+      "dpto": "Comandante Fernández",
+      "parquetKey": "comandante_fernandez",
+      "avg_score": 6.9,
+      "hex_count": 17141,
+      "centroid": [
+        -60.4618,
+        -26.787
+      ],
+      "rank": {
+        "loss_ha_yr": 441,
+        "loss_pct_forest": 0.97,
+        "loss_change_pct": -50,
+        "loss_base_ha_yr": 874
       }
     },
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "avg_score": 46.7,
+      "avg_score": 6.8,
       "hex_count": 25284,
       "centroid": [
         -61.3025,
         -27.8657
       ],
       "rank": {
-        "loss_ha_yr": 253,
-        "loss_pct_forest": 1.61,
-        "loss_change_pct": -11,
+        "loss_ha_yr": 267,
+        "loss_pct_forest": 1.7,
+        "loss_change_pct": -6,
         "loss_base_ha_yr": 284
-      }
-    },
-    {
-      "dpto": "Quitilipi",
-      "parquetKey": "quitilipi",
-      "avg_score": 45.4,
-      "hex_count": 17833,
-      "centroid": [
-        -60.1736,
-        -26.6685
-      ],
-      "rank": {
-        "loss_ha_yr": 171,
-        "loss_pct_forest": 0.38,
-        "loss_change_pct": -47,
-        "loss_base_ha_yr": 326
       }
     },
     {
       "dpto": "San Lorenzo",
       "parquetKey": "san_lorenzo",
-      "avg_score": 45.4,
+      "avg_score": 3.9,
       "hex_count": 24700,
       "centroid": [
         -60.3644,
         -27.395
       ],
       "rank": {
-        "loss_ha_yr": 427,
-        "loss_pct_forest": 0.71,
-        "loss_change_pct": 112,
+        "loss_ha_yr": 457,
+        "loss_pct_forest": 0.76,
+        "loss_change_pct": 127,
         "loss_base_ha_yr": 201
       }
     },
     {
       "dpto": "Libertador General San Martín",
       "parquetKey": "libertador_general_san_martin",
-      "avg_score": 45.2,
+      "avg_score": 3.1,
       "hex_count": 81972,
       "centroid": [
         -59.4878,
         -26.3769
       ],
       "rank": {
-        "loss_ha_yr": 1103,
-        "loss_pct_forest": 0.34,
-        "loss_change_pct": -39,
+        "loss_ha_yr": 1184,
+        "loss_pct_forest": 0.37,
+        "loss_change_pct": -35,
         "loss_base_ha_yr": 1814
-      }
-    },
-    {
-      "dpto": "25 de Mayo",
-      "parquetKey": "veinticinco_de_mayo",
-      "avg_score": 44.4,
-      "hex_count": 27214,
-      "centroid": [
-        -60.0194,
-        -26.8195
-      ],
-      "rank": {
-        "loss_ha_yr": 210,
-        "loss_pct_forest": 0.25,
-        "loss_change_pct": -63,
-        "loss_base_ha_yr": 560
       }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "avg_score": 43.2,
+      "avg_score": 2.4,
       "hex_count": 42499,
       "centroid": [
         -60.657,
         -27.744
       ],
       "rank": {
-        "loss_ha_yr": 229,
-        "loss_pct_forest": 0.53,
-        "loss_change_pct": -13,
+        "loss_ha_yr": 249,
+        "loss_pct_forest": 0.58,
+        "loss_change_pct": -6,
         "loss_base_ha_yr": 265
       }
     },
     {
-      "dpto": "Sargento Cabral",
-      "parquetKey": "sargento_cabral",
-      "avg_score": 42.9,
-      "hex_count": 18853,
+      "dpto": "Quitilipi",
+      "parquetKey": "quitilipi",
+      "avg_score": 2.2,
+      "hex_count": 17833,
       "centroid": [
-        -59.5193,
-        -26.8004
+        -60.1736,
+        -26.6685
       ],
       "rank": {
-        "loss_ha_yr": 117,
-        "loss_pct_forest": 0.15,
-        "loss_change_pct": -56,
-        "loss_base_ha_yr": 268
+        "loss_ha_yr": 158,
+        "loss_pct_forest": 0.35,
+        "loss_change_pct": -52,
+        "loss_base_ha_yr": 326
+      }
+    },
+    {
+      "dpto": "25 de Mayo",
+      "parquetKey": "veinticinco_de_mayo",
+      "avg_score": 1.8,
+      "hex_count": 27214,
+      "centroid": [
+        -60.0194,
+        -26.8195
+      ],
+      "rank": {
+        "loss_ha_yr": 208,
+        "loss_pct_forest": 0.25,
+        "loss_change_pct": -63,
+        "loss_base_ha_yr": 560
       }
     },
     {
       "dpto": "General Donovan",
       "parquetKey": "general_donovan",
-      "avg_score": 42.7,
+      "avg_score": 1.7,
       "hex_count": 17418,
       "centroid": [
         -59.3474,
         -27.1393
       ],
       "rank": {
-        "loss_ha_yr": 130,
+        "loss_ha_yr": 131,
         "loss_pct_forest": 0.26,
-        "loss_change_pct": -30,
+        "loss_change_pct": -29,
         "loss_base_ha_yr": 185
+      }
+    },
+    {
+      "dpto": "Sargento Cabral",
+      "parquetKey": "sargento_cabral",
+      "avg_score": 1.2,
+      "hex_count": 18853,
+      "centroid": [
+        -59.5193,
+        -26.8004
+      ],
+      "rank": {
+        "loss_ha_yr": 104,
+        "loss_pct_forest": 0.14,
+        "loss_change_pct": -61,
+        "loss_base_ha_yr": 268
       }
     },
     {
       "dpto": "Libertad",
       "parquetKey": "libertad",
-      "avg_score": 42.0,
+      "avg_score": 1.1,
       "hex_count": 11923,
       "centroid": [
         -59.2606,
         -27.3498
       ],
       "rank": {
-        "loss_ha_yr": 56,
-        "loss_pct_forest": 0.18,
-        "loss_change_pct": -28,
+        "loss_ha_yr": 54,
+        "loss_pct_forest": 0.17,
+        "loss_change_pct": -30,
         "loss_base_ha_yr": 78
       }
     },
     {
       "dpto": "Presidencia de la Plaza",
       "parquetKey": "presidencia_de_la_plaza",
-      "avg_score": 41.9,
+      "avg_score": 1.0,
       "hex_count": 25909,
       "centroid": [
         -59.7755,
         -27.0458
       ],
       "rank": {
-        "loss_ha_yr": 123,
-        "loss_pct_forest": 0.14,
-        "loss_change_pct": -65,
+        "loss_ha_yr": 132,
+        "loss_pct_forest": 0.15,
+        "loss_change_pct": -62,
         "loss_base_ha_yr": 346
-      }
-    },
-    {
-      "dpto": "1º de Mayo",
-      "parquetKey": "primero_de_mayo",
-      "avg_score": 41.6,
-      "hex_count": 14565,
-      "centroid": [
-        -58.9592,
-        -27.1683
-      ],
-      "rank": {
-        "loss_ha_yr": 47,
-        "loss_pct_forest": 0.12,
-        "loss_change_pct": null,
-        "loss_base_ha_yr": 33
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 41.3,
+      "avg_score": 0.9,
       "hex_count": 29432,
       "centroid": [
         -58.707,
         -26.9576
       ],
       "rank": {
-        "loss_ha_yr": 77,
-        "loss_pct_forest": 0.1,
-        "loss_change_pct": -39,
+        "loss_ha_yr": 86,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": -31,
         "loss_base_ha_yr": 126
+      }
+    },
+    {
+      "dpto": "1º de Mayo",
+      "parquetKey": "primero_de_mayo",
+      "avg_score": 0.8,
+      "hex_count": 14565,
+      "centroid": [
+        -58.9592,
+        -27.1683
+      ],
+      "rank": {
+        "loss_ha_yr": 43,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": null,
+        "loss_base_ha_yr": 33
       }
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "avg_score": 41.1,
+      "avg_score": 0.7,
       "hex_count": 40334,
       "centroid": [
         -59.1203,
         -27.7115
       ],
       "rank": {
-        "loss_ha_yr": 84,
-        "loss_pct_forest": 0.1,
-        "loss_change_pct": -31,
+        "loss_ha_yr": 90,
+        "loss_pct_forest": 0.11,
+        "loss_change_pct": -26,
         "loss_base_ha_yr": 122
       }
     },
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "avg_score": 40.4,
+      "avg_score": 0.5,
       "hex_count": 69382,
       "centroid": [
         -59.828,
         -27.6596
       ],
       "rank": {
-        "loss_ha_yr": 112,
-        "loss_pct_forest": 0.08,
-        "loss_change_pct": -25,
+        "loss_ha_yr": 129,
+        "loss_pct_forest": 0.09,
+        "loss_change_pct": -14,
         "loss_base_ha_yr": 150
       }
     }
@@ -410,7 +410,7 @@
   "metadata": {
     "rank": {
       "metric": "loss_ha_yr",
-      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2015–2024, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
+      "definition": "Pérdida de cobertura arbórea Hansen GFC (30 m): ha/año 2016–2025, % de la cobertura 2000 por año, y cambio respecto de 2001–2010 (sólo con base ≥ 50 ha/año)"
     }
   },
   "partition": "INDEC 2022 radios (pipeline/repartir_deptos_indec.py, 2-nov-2026)"

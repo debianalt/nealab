@@ -1,6 +1,6 @@
 {
-  "title": "nealab: A Reproducible Platform for Subnational Geospatial Analysis",
-  "description": "Reproducible platform combining satellite imagery, census data, and geospatial datasets into composite indicators over an H3 hexagonal grid. Applied to the NEA (northeast Argentina) and its cross-border regions (Paraguay and southern Brazil), with ~320,000 hexagons per territory across four analytical domains.",
+  "title": "Spatia: A Reproducible Platform for Subnational Geospatial Analysis",
+  "description": "Spatia is a reproducible, open platform for subnational geospatial analysis of northeast Argentina (NEA) and its cross-border regions (Paraguay, southern Brazil). It combines satellite imagery (Sentinel-1/2, Landsat, MODIS, VIIRS), census data and open geospatial datasets on an H3 hexagonal grid (resolution 9), from ~320,000 hexagons for Misiones to more than a million for Corrientes and Chaco, across 24 provinces, departments and states. Most layers report physical values directly (percent of buildings on low ground, tree cover loss rate, PM2.5 in ug/m3, travel minutes, census rates); the few composite scores use equal-weight geometric means of PCA-selected components. It offers 15 analyses across four thematic lenses: environment and risk, production and land, population and services, and economy and trade.",
   "creators": [
     {
       "name": "Gómez, Raimundo Elías",
