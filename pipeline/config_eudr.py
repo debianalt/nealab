@@ -104,7 +104,10 @@ BOUNDARY_PATH = os.path.join(
     PROJECT_ROOT, "src", "lib", "data", "eudr_provinces_boundary.json"
 )
 
-# ── Risk Score Weights ───────────────────────────────────────────────────
+# ── Risk Score Weights (OBSOLETE in the web since 3-nov-2026) ────────────
+# The site no longer reads risk_score: scores carry no weights in Spatia, and
+# /eudr/check and the EUDR report show loss_post_2020_pct with fire apart. The
+# column is still written so the grids keep their schema; do not surface it.
 # risk_score = w_loss * loss_post_2020 + w_fire * fire_post_2020
 #            + w_noforest * (1 - forest_cover_2020)
 WEIGHT_LOSS_POST_2020 = 0.70

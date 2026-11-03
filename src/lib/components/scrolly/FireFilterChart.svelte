@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * FireFilterChart — de toda el area quemada post-2020 de cada provincia, cuanta
-	 * cae sobre vegetacion nativa lenosa (la que el score cuenta como riesgo) y cuanta
+	 * cae sobre vegetacion nativa lenosa (la que el chequeo informa aparte) y cuanta
 	 * sobre pastizal y humedal (regimen natural de fuego, descartada).
 	 *
 	 * Las barras estan en unidades absolutas (% del hexagono quemado) y no en
@@ -61,9 +61,9 @@
 			other: 'sobre pastizal y humedal',
 			heroNum: '94 %',
 			heroLabel:
-				'del área quemada de Corrientes ocurre sobre pastizal y humedal. Es régimen natural de fuego, no conversión de bosque, y el índice ya no lo cuenta como riesgo.',
+				'del área quemada de Corrientes ocurre sobre pastizal y humedal. Es régimen natural de fuego, no conversión de bosque, y por eso se informa aparte.',
 			caption:
-				'Área quemada posterior al corte (MODIS MCD64A1, 2021–2025) separada según la cobertura de 2020. El score de riesgo pondera únicamente la fracción sobre vegetación nativa leñosa.',
+				'Área quemada posterior al corte (MODIS MCD64A1, 2021–2025) separada según la cobertura de 2020. El chequeo informa por separado la fracción sobre vegetación nativa leñosa.',
 			tipNat: 'Nativa leñosa',
 			tipOther: 'Pastizal/humedal'
 		},
@@ -72,9 +72,9 @@
 			other: 'on grassland and wetland',
 			heroNum: '94%',
 			heroLabel:
-				'of the area burned in Corrientes falls on grassland and wetland. That is a natural fire regime, not forest conversion, and the index no longer counts it as risk.',
+				'of the area burned in Corrientes falls on grassland and wetland. That is a natural fire regime, not forest conversion, which is why it is reported apart.',
 			caption:
-				'Post-cutoff burned area (MODIS MCD64A1, 2021–2025) split by 2020 land cover. The risk score weights only the fraction over native woody vegetation.',
+				'Post-cutoff burned area (MODIS MCD64A1, 2021–2025) split by 2020 land cover. The check reports the fraction over native woody vegetation separately.',
 			tipNat: 'Native woody',
 			tipOther: 'Grassland/wetland'
 		}

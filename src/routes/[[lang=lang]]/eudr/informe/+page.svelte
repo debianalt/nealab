@@ -147,8 +147,8 @@
 		<h2 class="fh-title">{t('hallazgosLead')}</h2>
 		<p class="fh-hint">
 			{tr(
-				'Cada paso enfoca una provincia y colorea su riesgo de deforestación post-2020 por hexágono. Para inspeccionar una parcela puntual, al final está la herramienta interactiva.',
-				'Each step focuses on a province and colours its post-2020 deforestation risk per hexagon. To inspect a specific parcel, the interactive tool is at the end.'
+				'Cada paso enfoca una provincia y colorea la pérdida de cobertura arbórea posterior a 2020 por hexágono (% de su superficie). Para inspeccionar una parcela puntual, al final está la herramienta interactiva.',
+				'Each step focuses on a province and colours post-2020 tree-cover loss per hexagon (% of its surface). To inspect a specific parcel, the interactive tool is at the end.'
 			)}
 		</p>
 	</div>

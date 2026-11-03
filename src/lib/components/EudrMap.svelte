@@ -58,15 +58,6 @@
 	const MAP_ZOOM = 5.5;
 	const BASEMAP = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
-	// Risk score color ramp
-	const RISK_COLORS: [number, string][] = [
-		[0, '#22c55e'],    // green — low risk
-		[25, '#84cc16'],   // lime
-		[50, '#f59e0b'],   // amber — medium
-		[75, '#ef4444'],   // red — high
-		[100, '#991b1b'],  // dark red — critical
-	];
-
 	export function flyTo(lat: number, lon: number, zoom = 10) {
 		map?.flyTo({ center: [lon, lat], zoom, duration: 1500 });
 	}
@@ -111,7 +102,7 @@
 		(map?.getSource('eudr-cell') as maplibregl.GeoJSONSource)?.setData({ type: 'FeatureCollection', features: [] });
 	}
 
-	// Polygon mode: draw the input polygon outline + a risk-colored heatmap of
+	// Polygon mode: draw the input polygon outline + a heatmap of post-2020 loss (% of hexagon) of
 	// the res-9 cells it covers, and fit the view to the polygon.
 	export function showPolygon(rings: number[][][]) {
 		if (!map || !map.getSource('eudr-polygon')) return;
@@ -123,7 +114,7 @@
 		if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: 60, duration: 1200, maxZoom: 12 });
 	}
 
-	export function showCells(cells: { h3index: string; risk: number }[]) {
+	export function showCells(cells: { h3index: string; loss: number }[]) {
 		if (!map || !map.getSource('eudr-cells')) return;
 		import('h3-js').then(({ cellToBoundary }) => {
 			const features = cells.map((c) => {
@@ -132,7 +123,7 @@
 				ring.push(ring[0]);
 				return {
 					type: 'Feature' as const,
-					properties: { risk: c.risk ?? 0 },
+					properties: { loss: c.loss ?? 0 },
 					geometry: { type: 'Polygon' as const, coordinates: [ring] },
 				};
 			});
@@ -261,15 +252,16 @@
 				},
 			});
 
-			// Polygon-mode: risk-colored cells (heatmap, warm ramp only)
+			// Polygon-mode: cells coloured by post-2020 loss, % of hexagon (0–40 %, the map
+			// layer's scale; the weighted risk score was withdrawn on 3-nov-2026)
 			map.addLayer({
 				id: 'eudr-cells-fill',
 				type: 'fill',
 				source: 'eudr-cells',
 				paint: {
 					'fill-color': [
-						'interpolate', ['linear'], ['get', 'risk'],
-						0, '#fef3c7', 25, '#fde047', 50, '#f59e0b', 75, '#ef4444', 100, '#991b1b',
+						'interpolate', ['linear'], ['get', 'loss'],
+						0, '#fef3c7', 10, '#fde047', 20, '#f59e0b', 30, '#ef4444', 40, '#991b1b',
 					],
 					'fill-opacity': 0.55,
 				},

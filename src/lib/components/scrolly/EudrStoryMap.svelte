@@ -27,7 +27,7 @@
 	let mapRef: any = $state();
 	let ready = $state(false);
 	let loading = $state(false);
-	const cache = new Map<string, { h3index: string; risk: number }[]>();
+	const cache = new Map<string, { h3index: string; loss: number }[]>();
 
 	const NEA_LIST = "'ar_misiones','ar_corrientes','ar_chaco','ar_formosa'";
 
@@ -36,11 +36,11 @@
 		const url = getEudrParquetUrl('eudr_deforestation');
 		const where = prov === 'ALL' ? `province IN (${NEA_LIST})` : `province = '${prov}'`;
 		const limit = prov === 'ALL' ? 4000 : 2500;
-		const sql = `SELECT h3index, risk_score FROM read_parquet('${url}')
-			WHERE ${where} AND risk_score > 3
-			ORDER BY risk_score DESC LIMIT ${limit}`;
+		const sql = `SELECT h3index, loss_post_2020_pct FROM read_parquet('${url}')
+			WHERE ${where} AND loss_post_2020_pct > 0.5
+			ORDER BY loss_post_2020_pct DESC LIMIT ${limit}`;
 		const rows = (await query(sql)).toArray();
-		const cells = rows.map((r: any) => ({ h3index: String(r.h3index), risk: Number(r.risk_score) }));
+		const cells = rows.map((r: any) => ({ h3index: String(r.h3index), loss: Number(r.loss_post_2020_pct) }));
 		cache.set(prov, cells);
 		return cells;
 	}
@@ -97,14 +97,14 @@
 	{/if}
 
 	<div class="map-legend">
-		<span class="lg-title">{locale === 'en' ? 'risk' : 'riesgo'}</span>
+		<span class="lg-title">{locale === 'en' ? 'post-2020 loss' : 'pérdida post-2020'}</span>
 		<span class="lg-ramp"></span>
-		<span class="lg-lo">{locale === 'en' ? 'low' : 'bajo'}</span>
-		<span class="lg-hi">{locale === 'en' ? 'high' : 'alto'}</span>
+		<span class="lg-lo">0 %</span>
+		<span class="lg-hi">≥ 40 %</span>
 		<span class="lg-note">
 			{locale === 'en'
-				? 'only the highest-risk cells are drawn; blank does not mean zero loss'
-				: 'sólo se dibujan las celdas de mayor riesgo; el vacío no significa pérdida cero'}
+				? 'only the cells with the most loss are drawn; blank does not mean zero loss'
+				: 'sólo se dibujan las celdas con más pérdida; el vacío no significa pérdida cero'}
 		</span>
 	</div>
 </div>

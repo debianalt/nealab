@@ -60,8 +60,6 @@
 		loss_post_2020_pct: number | null;
 		fire_post_2020_pct: number | null;
 		fire_native_post_2020_pct: number | null;
-		risk_score: number | null;
-		risk_level: string;
 		deforestation_post_2020: boolean;
 		eudr_assessment: string;
 		data_vintage?: string;
@@ -120,8 +118,8 @@
 		area_ha: number;
 		deforested_cells: number;
 		deforested_pct: number;
-		mean_risk: number;
-		max_risk: number;
+		mean_loss: number;               // mean post-2020 loss over the covered hexagons, % of hexagon
+		max_loss: number;                // largest post-2020 loss among them, % of hexagon
 		mean_loss_pos: number;
 		provinces: string[];
 		loss_by_year: Record<number, number>;
@@ -145,36 +143,22 @@
 	let batchResult: { processed: number; outside: number; csvUrl: string } | null = $state(null);
 
 
-	// Warm-only risk ramp — no green/blue (matches platform aesthetic on EUDR)
-	function getRiskColor(level: string): string {
-		switch (level) {
-			case 'critical': return '#991b1b';
-			case 'high': return '#ef4444';
-			case 'medium': return '#f59e0b';
-			case 'low': return '#fde047';
-			default: return '#9ca3af';
-		}
-	}
-
+	// The weighted 0–100 risk score (70 % loss + 20 % fire + 10 % no cover in 2000) was
+	// withdrawn on 3-nov-2026: scores carry no weights in Spatia, and the methodology says
+	// this layer is a physical fraction. The verdict is the loss itself; fire is shown apart.
 	function getAssessmentColor(assessment: string): string {
 		switch (assessment) {
 			case 'DEFOREST_DETECTED': return '#ef4444';
-			case 'HIGH_RISK': return '#f59e0b';
-			case 'MEDIUM_RISK': return '#eab308';
-			case 'LOW_RISK': return '#fde047';
+			case 'NO_LOSS': return '#fde047';
 			default: return '#9ca3af';
 		}
 	}
 
 	function getAssessmentLabel(assessment: string): string {
-		if (assessment === 'DEFOREST_DETECTED') return i18n.t('eudr.check.deforest_detected');
-		const labels: Record<string, Record<string, string>> = {
-			HIGH_RISK: { es: 'RIESGO ALTO', en: 'HIGH RISK' },
-			MEDIUM_RISK: { es: 'RIESGO MEDIO', en: 'MEDIUM RISK' },
-			LOW_RISK: { es: 'RIESGO BAJO', en: 'LOW RISK' },
-			OUTSIDE_COVERAGE: { es: 'FUERA DE COBERTURA', en: 'OUTSIDE COVERAGE' },
-		};
-		return labels[assessment]?.[i18n.locale] || assessment;
+		const key = assessment === 'DEFOREST_DETECTED' ? 'eudr.check.deforest_detected'
+			: assessment === 'NO_LOSS' ? 'eudr.check.no_loss'
+			: 'eudr.check.outside_coverage';
+		return i18n.t(key);
 	}
 
 	function yearBarColor(v: number): string {
@@ -185,19 +169,8 @@
 		return '#ef4444';
 	}
 
-	function riskLevel(score: number | null): string {
-		if (score === null) return 'unknown';
-		if (score >= 75) return 'critical';
-		if (score >= 50) return 'high';
-		if (score >= 25) return 'medium';
-		return 'low';
-	}
-
-	function assessment(deforested: boolean, score: number | null): string {
-		if (deforested) return 'DEFOREST_DETECTED';
-		if (score !== null && score >= 50) return 'HIGH_RISK';
-		if (score !== null && score >= 25) return 'MEDIUM_RISK';
-		return 'LOW_RISK';
+	function assessment(deforested: boolean): string {
+		return deforested ? 'DEFOREST_DETECTED' : 'NO_LOSS';
 	}
 
 	async function checkCoordinates(lat: number, lon: number) {
@@ -227,7 +200,6 @@
 					id: 'manual', lat, lon, h3_cell: cell, province: '',
 					forest_cover_2020_pct: null, forest_cover_current_pct: null,
 					loss_post_2020_pct: null, fire_post_2020_pct: null, fire_native_post_2020_pct: null,
-					risk_score: null, risk_level: 'outside_coverage',
 					deforestation_post_2020: false, eudr_assessment: 'OUTSIDE_COVERAGE',
 					data_vintage: dataVintage,
 				};
@@ -235,7 +207,6 @@
 			}
 
 			const r: any = rows[0];
-			const score = r.risk_score === null ? null : Number(r.risk_score);
 			const deforested = Number(r.deforestation_post_2020) > 0;
 			const byYear: Record<number, number> = {};
 			for (const y of LOSS_YEARS) {
@@ -251,10 +222,8 @@
 				fire_post_2020_pct: r.fire_post_2020_pct === null ? null : Number(r.fire_post_2020_pct),
 				fire_native_post_2020_pct:
 					r.fire_native_post_2020_pct == null ? null : Number(r.fire_native_post_2020_pct),
-				risk_score: score,
-				risk_level: riskLevel(score),
 				deforestation_post_2020: deforested,
-				eudr_assessment: assessment(deforested, score),
+				eudr_assessment: assessment(deforested),
 				data_vintage: dataVintage,
 				loss_by_year: byYear,
 				plantation_pct: r.plantation_pct == null ? null : Number(r.plantation_pct),
@@ -264,7 +233,7 @@
 				savanna_2020_pct: r.savanna_2020_pct == null ? null : Number(r.savanna_2020_pct),
 			};
 		} catch (e: any) {
-			error = e?.message || 'Error checking coordinates';
+			error = e?.message || i18n.t('eudr.check.err_generic');
 		} finally {
 			loading = false;
 		}
@@ -328,7 +297,7 @@
 
 			await initDuckDB();
 			const inList = cells.map((c) => `'${c}'`).join(',');
-			const sql = `SELECT e.h3index, e.province, e.risk_score, e.loss_post_2020_pct, e.deforestation_post_2020,
+			const sql = `SELECT e.h3index, e.province, e.loss_post_2020_pct, e.deforestation_post_2020,
 				${LOSS_YEAR_COLS},
 				p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
@@ -362,7 +331,7 @@
 			const defOther = defCover.filter((k) => k === 'other').length;
 			// Observación de posible conversión: bosque nativo en 2020, plantación hoy.
 			const defConversion = deforested.filter((r) => (num(r.native_2020_pct) ?? 0) >= PT && (num(r.plantation_pct) ?? 0) >= PT).length;
-			const risks = rows.map((r) => Number(r.risk_score));
+			const losses = rows.map((r) => Number(r.loss_post_2020_pct) || 0);
 			const lossPos = deforested.map((r) => Number(r.loss_post_2020_pct));
 			const provinces = [...new Set(rows.map((r) => String(r.province)).filter(Boolean))];
 			const lossByYear: Record<number, number> = {};
@@ -378,8 +347,8 @@
 				area_ha: inCov * HEX_AREA_HA,
 				deforested_cells: deforested.length,
 				deforested_pct: inCov ? (deforested.length / inCov) * 100 : 0,
-				mean_risk: inCov ? risks.reduce((a, b) => a + b, 0) / inCov : 0,
-				max_risk: inCov ? Math.max(...risks) : 0,
+				mean_loss: inCov ? losses.reduce((a, b) => a + b, 0) / inCov : 0,
+				max_loss: inCov ? Math.max(...losses) : 0,
 				mean_loss_pos: lossPos.length ? lossPos.reduce((a, b) => a + b, 0) / lossPos.length : 0,
 				provinces,
 				loss_by_year: lossByYear,
@@ -393,9 +362,9 @@
 			};
 
 			mapComponent?.showPolygon(rings);
-			mapComponent?.showCells(rows.map((r) => ({ h3index: String(r.h3index), risk: Number(r.risk_score) })));
+			mapComponent?.showCells(rows.map((r) => ({ h3index: String(r.h3index), loss: Number(r.loss_post_2020_pct) || 0 })));
 		} catch (e: any) {
-			polygonError = e?.message || 'Error procesando el polígono';
+			polygonError = e?.message || i18n.t('eudr.check.err_generic');
 		} finally {
 			polygonLoading = false;
 		}
@@ -440,7 +409,7 @@
 			const inList = uniqueCells.map((c) => `'${c}'`).join(',');
 			const sql = `SELECT e.h3index, e.province, e.forest_cover_2020, e.forest_cover_current,
 				e.loss_post_2020_pct, e.fire_post_2020_pct, e.fire_native_post_2020_pct,
-				e.risk_score, e.deforestation_post_2020,
+				e.deforestation_post_2020,
 				${LOSS_YEAR_COLS}, p.plantation_pct, p.plantation_2020_pct, p.native_2020_pct, p.savanna_pct, p.savanna_2020_pct
 				FROM read_parquet('${getEudrHiresUrl()}') e
 				LEFT JOIN read_parquet('${getEudrPlantationUrl()}') p USING (h3index)
@@ -452,7 +421,7 @@
 			const outHeaders = [
 				'id', 'lat', 'lon', 'h3_cell', 'in_coverage', 'province',
 				'forest_cover_2020', 'forest_cover_current',
-				'loss_post_2020_pct', 'fire_post_2020_pct', 'fire_native_post_2020_pct', 'risk_score',
+				'loss_post_2020_pct', 'fire_post_2020_pct', 'fire_native_post_2020_pct',
 				'deforestation_post_2020', 'eudr_assessment',
 				...LOSS_YEARS.map((y) => `loss_${y}_pct`),
 				'plantation_pct', 'loss_context',
@@ -467,10 +436,9 @@
 				const d = byCell.get(r.cell);
 				if (!d) {
 					outside++;
-					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', ...LOSS_YEARS.map(() => ''), '', ''].map(esc).join(','));
+					csv.push([r.id, r.lat, r.lon, r.cell, 'no', '', '', '', '', '', '', '', 'OUTSIDE_COVERAGE', ...LOSS_YEARS.map(() => ''), '', ''].map(esc).join(','));
 					continue;
 				}
-				const score = d.risk_score === null ? null : Number(d.risk_score);
 				const def = Number(d.deforestation_post_2020) > 0;
 				const plant = d.plantation_pct == null ? null : Number(d.plantation_pct);
 				let lossCtx = '';
@@ -491,8 +459,8 @@
 					r.id, r.lat, r.lon, r.cell, 'yes',
 					d.province ?? '', d.forest_cover_2020 ?? '', d.forest_cover_current ?? '',
 					d.loss_post_2020_pct ?? '', d.fire_post_2020_pct ?? '',
-					d.fire_native_post_2020_pct ?? '', score ?? '',
-					def ? 1 : 0, assessment(def, score),
+					d.fire_native_post_2020_pct ?? '',
+					def ? 1 : 0, assessment(def),
 					...LOSS_YEARS.map((y) => d[`loss_${y}_pct`] ?? ''),
 					plant ?? '', lossCtx,
 				].map(esc).join(','));
@@ -501,7 +469,7 @@
 			if (batchResult?.csvUrl) URL.revokeObjectURL(batchResult.csvUrl);
 			batchResult = { processed: rows.length, outside, csvUrl: URL.createObjectURL(blob) };
 		} catch (e: any) {
-			batchError = e?.message || 'Error procesando CSV';
+			batchError = e?.message || i18n.t('eudr.check.err_generic');
 		} finally {
 			batchLoading = false;
 			input.value = '';
@@ -648,7 +616,7 @@
 			<div class="text-[10px] text-white/70 font-semibold mb-1.5 leading-tight">{i18n.t('eudr.check.legend_title')}</div>
 			<div class="h-2 rounded-full" style="background: linear-gradient(to right, #fef3c7 0%, #fde047 25%, #f59e0b 50%, #ef4444 75%, #991b1b 100%);"></div>
 			<div class="flex justify-between text-[9px] text-white/45 mt-0.5">
-				<span>0 · bajo</span><span>50</span><span>100 · alto</span>
+				<span>0 %</span><span>20 %</span><span>≥ 40 %</span>
 			</div>
 			<div class="text-[9px] text-white/35 mt-1 leading-snug">{i18n.t('eudr.check.legend_note')}</div>
 		</div>
@@ -801,25 +769,6 @@
 						</div>
 					{/if}
 
-					<!-- Risk Score Gauge -->
-					{#if result.risk_score !== null}
-						<div class="mb-4">
-							<div class="flex items-center justify-between text-[11px] text-white/50 mb-1">
-								<span>{i18n.t('eudr.check.risk_score')}</span>
-								<span class="text-lg font-bold" style="color: {getRiskColor(result.risk_level)};">
-									{fmt(result.risk_score, 0)}
-								</span>
-							</div>
-							<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-								<div class="h-full rounded-full transition-all"
-									style="width: {result.risk_score}%; background: {getRiskColor(result.risk_level)};"></div>
-							</div>
-							<div class="flex justify-between text-[9px] text-white/30 mt-0.5">
-								<span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
-							</div>
-						</div>
-					{/if}
-
 					<!-- Metrics Grid -->
 					<div class="grid grid-cols-2 gap-3 mb-4">
 						<div class="bg-white/[0.03] rounded p-3">
@@ -836,8 +785,8 @@
 								{fmt(result.loss_post_2020_pct)}%
 							</div>
 						</div>
-						<!-- El score pondera el fuego SOBRE NATIVA LENOSA; el total se muestra al lado
-						     porque en pastizal y humedal el fuego es regimen natural, no conversion. -->
+						<!-- Fuego sobre vegetación nativa leñosa, con el total al lado: en pastizal y
+						     humedal el fuego es régimen natural, no conversión. Dato aparte, sin pesos. -->
 						<div class="bg-white/[0.03] rounded p-3">
 							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t(result.fire_native_post_2020_pct !== null ? 'eudr.check.fire_post_2020' : 'eudr.check.fire_all_post_2020')}</div>
 							{#if result.fire_native_post_2020_pct !== null}
@@ -915,7 +864,7 @@
 					<!-- Details -->
 					<div class="space-y-2 text-[11px] text-white/50">
 						<div class="flex justify-between">
-							<span>H3 cell</span>
+							<span>{i18n.t('eudr.check.h3_cell')}</span>
 							<span class="font-mono text-white/70">{result.h3_cell}</span>
 						</div>
 						<div class="flex justify-between">
@@ -958,8 +907,8 @@
 					<div class="flex items-center justify-between mb-4">
 						<h3 class="text-sm font-bold text-white">{i18n.t('eudr.check.poly_result_title')}</h3>
 						<span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
-							style="background: {getRiskColor(polygonResult.deforested_pct > 0 ? 'high' : 'low')}20; color: {getRiskColor(polygonResult.deforested_pct > 0 ? 'high' : 'low')};">
-							{polygonResult.deforested_pct > 0 ? i18n.t('eudr.check.deforest_detected') : getAssessmentLabel('LOW_RISK')}
+							style="background: {getAssessmentColor(polygonResult.deforested_pct > 0 ? 'DEFOREST_DETECTED' : 'NO_LOSS')}20; color: {getAssessmentColor(polygonResult.deforested_pct > 0 ? 'DEFOREST_DETECTED' : 'NO_LOSS')};">
+							{getAssessmentLabel(polygonResult.deforested_pct > 0 ? 'DEFOREST_DETECTED' : 'NO_LOSS')}
 						</span>
 					</div>
 
@@ -981,12 +930,12 @@
 							</div>
 						</div>
 						<div class="bg-white/[0.03] rounded p-3">
-							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_max_risk')}</div>
-							<div class="text-lg font-bold text-white">{polygonResult.max_risk.toFixed(0)}</div>
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_max_loss')}</div>
+							<div class="text-lg font-bold text-white">{polygonResult.max_loss.toFixed(0)}%</div>
 						</div>
 						<div class="bg-white/[0.03] rounded p-3">
-							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_mean_risk')}</div>
-							<div class="text-lg font-bold text-white">{polygonResult.mean_risk.toFixed(1)}</div>
+							<div class="text-[10px] text-white/40 uppercase mb-1">{i18n.t('eudr.check.poly_mean_loss')}</div>
+							<div class="text-lg font-bold text-white">{polygonResult.mean_loss.toFixed(1)}%</div>
 						</div>
 					</div>
 
