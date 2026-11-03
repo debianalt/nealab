@@ -72,6 +72,11 @@ def main():
                         help="Force export to GCS (default: auto-detect CI)")
     parser.add_argument("--no-wait", action="store_true",
                         help="Submit tasks and exit without waiting")
+    # One task per territory instead of one per year: the GEE queue runs one task at a
+    # time and per-task overhead dominated (3-nov-2026). Band y<YYYY> per year;
+    # refresh_py_coverage.split_pm25_stack writes sat_pm25_<YYYY>.tif from it.
+    parser.add_argument("--stack", action="store_true",
+                        help="Export all years as one multi-band GeoTIFF sat_pm25_stack.tif (GCS only)")
     args = parser.parse_args()
 
     territory = get_territory(args.territory)
@@ -104,6 +109,18 @@ def main():
     print(f"\nExporting {len(years)} annual PM2.5 rasters at {args.scale}m -> {dest}")
 
     tasks = []
+    if args.stack:
+        col = ee.ImageCollection(COLLECTION)
+        stack = ee.Image.cat([
+            col.filter(ee.Filter.calendarRange(y, y, 'year')).first().rename(f'y{y}')
+            for y in sorted(years)]).clip(bbox).toFloat()
+        task = ee.batch.Export.image.toCloudStorage(
+            image=stack, description=f"{args.territory}_sat_pm25_stack", bucket=GCS_BUCKET,
+            fileNamePrefix=f'satellite/{args.territory}/sat_pm25_stack', region=bbox,
+            scale=args.scale, crs='EPSG:4326', maxPixels=1e9)
+        task.start()
+        print(f"  Started: sat_pm25_stack ({len(years)} bands)")
+        return 0
     for year in sorted(years):
         pm25 = (ee.ImageCollection(COLLECTION)
                 .filter(ee.Filter.calendarRange(year, year, 'year'))

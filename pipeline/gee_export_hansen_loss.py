@@ -48,6 +48,8 @@ def main():
     parser.add_argument("--no-wait", action="store_true")
     parser.add_argument("--territory", default="misiones",
                         help="Territory ID from config.py (default: misiones)")
+    parser.add_argument("--only", default=None,
+                        help="hansen_lossyear or hansen_treecover2000 (default: both)")
     args = parser.parse_args()
 
     is_ci = authenticate()
@@ -63,6 +65,8 @@ def main():
         ('hansen_lossyear', hansen.select('lossyear').clip(bbox).toUint8()),
         ('hansen_treecover2000', hansen.select('treecover2000').clip(bbox).toUint8()),
     ]
+    if args.only:
+        exports = [e for e in exports if e[0] in args.only.split(',')]
 
     dest = f"GCS ({GCS_BUCKET}/satellite/{gcs_subdir})" if use_gcs else f"Drive ({DRIVE_FOLDER})"
     print(f"Exporting {len(exports)} rasters at {EXPORT_SCALE}m -> {dest} [territory={args.territory}]")

@@ -42,6 +42,10 @@ from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, 
 
 _GCLOUD = 'gcloud.cmd' if platform.system() == 'Windows' else 'gcloud'
 
+# overpass-api.de answers 406 to the default python-requests User-Agent (3-nov-2026):
+# with no cache the hospital/road distances came out all-NaN and were scored as neutral.
+OVERPASS_HEADERS = {'User-Agent': 'spatia-pipeline/1.0 (+https://www.spatia.ar)'}
+
 CAPITAL_COORDS = {
     'misiones':              (-27.367,  -55.896),   # Posadas
     'itapua_py':             (-27.336,  -55.869),   # Encarnación
@@ -202,7 +206,7 @@ def fetch_osm_points(bbox: list, amenity_query: str, cache_path: str) -> list:
     for srv in ['https://overpass.kumi.systems/api/interpreter',
                 'https://overpass-api.de/api/interpreter']:
         try:
-            r = requests.post(srv, data=query, timeout=150)
+            r = requests.post(srv, data=query, timeout=150, headers=OVERPASS_HEADERS)
             r.raise_for_status()
             for el in r.json().get('elements', []):
                 if el['type'] == 'node':
@@ -214,9 +218,11 @@ def fetch_osm_points(bbox: list, amenity_query: str, cache_path: str) -> list:
         except Exception as e:
             print(f"  Overpass {srv}: {e}")
 
-    if pts:
-        with open(cache_path, 'w') as f:
-            json.dump(pts, f)
+    if not pts:
+        # An empty list scores every cell as NaN → neutral; stop instead.
+        sys.exit(f"No OSM points for {os.path.basename(cache_path)} (Overpass failed or empty)")
+    with open(cache_path, 'w') as f:
+        json.dump(pts, f)
     return pts
 
 
@@ -244,7 +250,7 @@ out geom;"""
     for srv in ['https://overpass.kumi.systems/api/interpreter',
                 'https://overpass-api.de/api/interpreter']:
         try:
-            r = requests.post(srv, data=query, timeout=150)
+            r = requests.post(srv, data=query, timeout=150, headers=OVERPASS_HEADERS)
             r.raise_for_status()
             for el in r.json().get('elements', []):
                 if el['type'] == 'way' and 'geometry' in el:
@@ -254,9 +260,10 @@ out geom;"""
         except Exception as e:
             print(f"  Overpass {srv}: {e}")
 
-    if pts:
-        with open(cache_path, 'w') as f:
-            json.dump({'road_points': pts}, f)
+    if not pts:
+        sys.exit(f"No OSM road points for {os.path.basename(cache_path)} (Overpass failed or empty)")
+    with open(cache_path, 'w') as f:
+        json.dump({'road_points': pts}, f)
     return pts
 
 

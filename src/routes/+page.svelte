@@ -267,7 +267,9 @@
 				lensStore.setLens(lens);
 				if (analysisId) {
 					const a = getAnalysisById(analysisId);
-					if (a) lensStore.setAnalysis(a);
+					// Links shared before a layer left a territory (3-nov-2026: 15 Paraguayan
+					// departments) would open it with a legend over an empty map.
+					if (a && a.coverage?.[territoryStore.activeTerritory.id] !== 'unavailable') lensStore.setAnalysis(a);
 				}
 			}
 			const tm = params.get('tm');
