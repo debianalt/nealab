@@ -371,6 +371,20 @@ export class HexStore {
 		this.deptFill = f;
 	}
 
+	// A department clicked on the map for a layer whose ranking is not the
+	// perDepartment one (censo_temporal): the list owns the selection, the map only
+	// asks it to pick. The list consumes it (clearDeptPick); `at` drops a request a
+	// list never got to (another province's rows still loading when the layer closed).
+	deptPick: { name: string; prefix: string; at: number } | null = $state(null);
+
+	requestDeptPick(name: string, prefix: string) {
+		this.deptPick = { name, prefix, at: Date.now() };
+	}
+
+	clearDeptPick() {
+		this.deptPick = null;
+	}
+
 	setColorVariable(v: string | null) {
 		if (v === this.colorVariable) return;
 		this.colorVariable = v;

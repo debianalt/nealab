@@ -1841,7 +1841,7 @@
 				if (canvas.style.cursor !== '' && !canvas.dataset.pick) { clearHover(); return; }
 				const { lat, lng } = e.lngLat;
 				const tid = territoryAt(lat, lng);
-				const show = !!tid && (homeView || tid !== activeTerritoryId);
+				const show = !!tid && !unpickable.has(tid) && (homeView || tid !== activeTerritoryId);
 				canvas.style.cursor = show ? 'pointer' : '';
 				if (show) canvas.dataset.pick = '1'; else delete canvas.dataset.pick;
 				if (!show) { clearHover(); return; }
@@ -2290,6 +2290,13 @@
 		if (homeView === on) return;
 		homeView = on;
 		styleActiveTerritory();
+	}
+
+	// Territories the open layer does not cover: a click there is ignored
+	// (+page territory-map-select), so the hover does not offer it.
+	let unpickable = new Set<string>();
+	export function setUnpickableTerritories(ids: string[]) {
+		unpickable = new Set(ids);
 	}
 
 	export function setActiveTerritory(territoryId: string) {

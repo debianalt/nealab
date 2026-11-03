@@ -137,6 +137,11 @@
 		const home = territoryStore.homeView;
 		mapComponent?.setHomeView(home);
 	});
+	// The open layer's uncovered territories are not a pick (see territory-map-select).
+	$effect(() => {
+		const cov = lensStore.activeAnalysis?.coverage ?? {};
+		mapComponent?.setUnpickableTerritories(Object.keys(cov).filter((k) => cov[k] === 'unavailable'));
+	});
 	// Choosing a lens loads the default territory's data: it is no longer the start view.
 	$effect(() => {
 		if (lensStore.activeLens) untrack(() => { territoryStore.homeView = false; });
@@ -322,6 +327,9 @@
 		mapContainer?.addEventListener('territory-map-select', ((e: CustomEvent) => {
 			const { territory } = e.detail;
 			if (!territory) return;
+			// With a layer open, a territory where it does not exist is not a pick: switching
+			// there only ends in «No se pudieron cargar los datos».
+			if (lensStore.activeAnalysis?.coverage?.[territory] === 'unavailable') return;
 			// From the start view the click also picks the default territory (Misiones).
 			if (territory !== territoryStore.activeTerritory.id || territoryStore.homeView) {
 				territoryStore.setTerritory(territory);
@@ -408,6 +416,13 @@
 			}
 			const a = lensStore.activeAnalysis;
 			if (!a) return;
+			// Layers without per-department files (censo_temporal) have their own ranking
+			// list: ask it to pick, as a click on its row would.
+			const layer = HEX_LAYER_REGISTRY[a.id];
+			if (layer && !layer.perDepartment) {
+				hexStore.requestDeptPick(name, t.parquetPrefix);
+				return;
+			}
 			const summary = await loadDeptSummary(a.id, t.parquetPrefix);
 			const depts = summary?.departments as any[] | undefined;
 			if (!depts?.length) return;

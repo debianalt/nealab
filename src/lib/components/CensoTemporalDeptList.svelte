@@ -131,9 +131,29 @@
 
 	function toggleRow(r: Row) {
 		if (expandedCode === r.code) { expandedCode = null; onSelectDept?.(null); return; }
+		openRow(r);
+	}
+	function openRow(r: Row) {
 		expandedCode = r.code;
 		onSelectDept?.(deptFeature(r.name));
 	}
+
+	// A department clicked on the map: open it as a row click would (never closes).
+	// A click in another province switches territory first, so the request waits
+	// until that province's rows are loaded (the list may even remount meanwhile).
+	let listEl = $state<HTMLDivElement | null>(null);
+	$effect(() => {
+		const req = hexStore.deptPick;
+		const rs = rows;
+		if (!req) return;
+		if (Date.now() - req.at > 60000) { untrack(() => hexStore.clearDeptPick()); return; }
+		if (!rs || req.prefix !== hexStore.territoryPrefix || req.prefix !== loadedPrefix) return;
+		untrack(() => hexStore.clearDeptPick());
+		const r = rs.find((x) => x.name === req.name) ?? rs.find((x) => norm(x.name) === norm(req.name));
+		if (!r || r.code === untrack(() => expandedCode)) return;
+		untrack(() => openRow(r));
+		requestAnimationFrame(() => listEl?.querySelector('.rank-row.active')?.scrollIntoView({ block: 'nearest' }));
+	});
 
 	function fmt(n: number): string {
 		return Math.round(n).toLocaleString(i18n.locale);
@@ -174,7 +194,7 @@
 				</div>
 			{/if}
 
-			<div class="cd-list">
+			<div class="cd-list" bind:this={listEl}>
 				{#each sorted as r, i (r.code)}
 					{@const v = reading.value(r)}
 					{@const x = reading.extra?.(r)}
@@ -218,8 +238,9 @@
 	.cd-msg { font-size: 12px; color: var(--c-ink-3); padding: 10px 0; text-align: center; }
 	.cd-list { display: flex; flex-direction: column; gap: 1px; max-height: 340px; overflow-y: auto; }
 
-	/* Same look as the deptRank ranking in OvertureAnalysis (rank-*). Growth green,
-	   decline red, as in the map's change mode. */
+	/* Same look as the deptRank ranking in OvertureAnalysis (rank-*). Growth tierra,
+	   decline río: the colors of the department fill (utils/deptFill.ts) and of the
+	   hexagons' change mode (sello div ramp, positive = tierra). */
 	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
 	.rank-tab { font-size: 12px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: var(--c-ink-3); cursor: pointer; font-family: inherit; }
 	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: var(--c-t-fecaca); }
@@ -231,8 +252,8 @@
 	.rank-pos { font-size: 11.5px; color: var(--c-ink-4); width: 14px; text-align: right; flex-shrink: 0; }
 	.rank-name { font-size: 11.5px; color: var(--c-ink-1n); width: 100px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.rank-bar-wrap { flex: 1; height: 6px; background: rgba(100,116,139,0.15); border-radius: 2px; overflow: hidden; }
-	.rank-bar { display: block; height: 100%; border-radius: 2px; background: var(--s-cat-2); transition: width 0.3s; }   /* growth: río, as the map's change ramp */
-	.rank-bar.down { background: var(--s-cat-1); }   /* loss: tierra */
+	.rank-bar { display: block; height: 100%; border-radius: 2px; background: var(--s-cat-1); transition: width 0.3s; }   /* growth: tierra, as the map */
+	.rank-bar.down { background: var(--s-cat-2); }   /* loss: río */
 	.rank-value { font-size: 12px; font-weight: 600; color: var(--c-ink-1); min-width: 40px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 	.rank-extra { font-size: 11.5px; color: var(--c-ink-4); min-width: 48px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 	.rank-note { font-size: 11.5px; color: var(--c-ink-3); line-height: 1.4; margin: 6px 0 0; }
