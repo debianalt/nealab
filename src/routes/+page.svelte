@@ -1868,7 +1868,7 @@
 			<!-- LOD: giant departments render an aggregated overview; values shown are spatial means -->
 			{#if hexStore.selectedHexResLevel !== null && hexStore.selectedDpto}
 				<div class="lod-hint absolute bottom-28 left-4 z-30 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-amber-400/30 text-[11px] text-amber-200/90 shadow-lg pointer-events-none">
-					🔬 {i18n.t('map.hint.aggregated')}
+					🔬 {i18n.t(hexStore.effectiveColorClasses?.nominal ? 'map.hint.aggregatedMode' : 'map.hint.aggregated')}
 				</div>
 			{/if}
 

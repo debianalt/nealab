@@ -233,6 +233,15 @@ export const MAP_ACCESS_5_CLARO = ['#dad0c2', '#dc9346', '#cb5400', '#9d2c07', '
 // Crop suitability S1 · S2 · S3 · N (config AGRI_APT_CLASSES holds the dark set).
 export const AGRI_APT_HEX = ['#1f7a52', '#86c49c', '#d4a53c', '#b4482a'] as const;
 export const AGRI_APT_CLARO = ['#257848', '#94c79e', '#cc841c', '#731402'] as const;
+// Land use (MapBiomas AR Col. 3), nominal: monte · plantación · yerba/té y perennes · cultivo anual y pastura ·
+// pastizal y arbustal · estero · agua · urbano · mosaico (no class reaches half the cell: a neutral, the «other»).
+// 8 hues at most (dataviz rule). Searched in OKLCH with fixed hue intents and validated AS DRAWN with
+// validate_palette --pairs all (3-nov-2026): dark fill 0.78 over territory-bg → normal ΔE 17.5, CVD 9.4;
+// claro fill 0.88 over paper → 17.1 / 9.0; «sin dato» ≥ 10 and the backdrop ≥ 8 from every class. The
+// lightness-band/chroma FAILs are the neutral mosaico (by design) and the map's own fill, as in CLASS_5.
+// The 1985 → 2025 trajectory reuses these colors (its classes are named by where the cell ended).
+export const USO_HEX = ['#006747', '#4c0354', '#bb5ab1', '#d7cf04', '#a88849', '#2dc3d4', '#1d49b6', '#bc1400', '#eaeaea'] as const;
+export const USO_CLARO = ['#095a39', '#48245f', '#e571dc', '#fec306', '#9e6a2f', '#00988a', '#2561bb', '#b00002', '#b8b5b4'] as const;
 // A measured 0 (zero class) and no reading: quiet grays, zero the lighter one.
 export const ZERO_HEX = '#1e293b';
 // Claro: the measured 0 stays a light warm gray, ΔE2000 4 from the territory
@@ -280,6 +289,7 @@ const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
 	[MAP_CLASS_3, MAP_CLASS_3_CLARO], [MAP_CLASS_4, MAP_CLASS_4_CLARO], [MAP_CLASS_5, MAP_CLASS_5_CLARO],
 	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
 	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], [ZERO_CLARO]],
+	[USO_HEX, USO_CLARO], [MAP_SELVA, MAP_SELVA_CLARO],
 ];
 const CLARO_OF = new Map<string, string>();
 for (const [dark, light] of CLASS_PAIRS) dark.forEach((c, i) => {

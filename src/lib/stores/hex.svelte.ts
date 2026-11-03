@@ -595,6 +595,10 @@ export class HexStore {
 				// (NON_NUMERIC_COLS lists 'score', which would otherwise drop it → blank cells).
 				const LOD_CATEGORICAL = new Set(['type', 'type_label', 'territorial_type']);
 				const numericCols = resultCols.filter((c: string) => !LOD_CATEGORICAL.has(c));
+				// Nominal class codes (land use): the coarse cell takes the most frequent class, never the mean code
+				// (the mean of «monte» 1 and «agro» 4 would paint «perenne» 3).
+				const nominalIdx = numericCols.map((c: string, k: number) => (HexStore.isNominalCol(layer, c) ? k : -1)).filter((k: number) => k >= 0);
+				const modes = new Map<string, Map<number, number>[]>();
 				const labelVec = resultCols.includes('type_label') ? result.getChild('type_label') : null;
 				// Res-9 values for the charts (no geometry), unless the district is too big.
 				const keepRes9 = result.numRows <= ANALYSIS_MAX_ROWS;
@@ -617,6 +621,16 @@ export class HexStore {
 						if (!Number.isFinite(num)) continue;
 						s[k] += num; c[k]++;
 					}
+					if (nominalIdx.length) {
+						let mm = modes.get(parent);
+						if (!mm) { mm = nominalIdx.map(() => new Map<number, number>()); modes.set(parent, mm); }
+						nominalIdx.forEach((k: number, j: number) => {
+							const v = colVecs[numericCols[k]]?.get(i);
+							if (v === null || v === undefined) return;
+							const num = Number(v);
+							if (Number.isFinite(num)) mm![j].set(num, (mm![j].get(num) ?? 0) + 1);
+						});
+					}
 					if (labelVec) {
 						const lv = labelVec.get(i);
 						if (lv !== null && lv !== undefined) {
@@ -633,6 +647,12 @@ export class HexStore {
 					for (let k = 0; k < numericCols.length; k++) {
 						if (c[k] > 0) values[numericCols[k]] = s[k] / c[k]; // spatial mean — display only
 					}
+					const mm = modes.get(parent);
+					if (mm) nominalIdx.forEach((k: number, j: number) => {
+						let best: number | null = null, bestN = -1;
+						for (const [v, n] of mm[j]) if (n > bestN) { bestN = n; best = v; }
+						if (best !== null) values[numericCols[k]] = best;
+					});
 					const lm = labels.get(parent);
 					if (lm) { // modal categorical label
 						let best = '', bestN = -1;
@@ -769,6 +789,13 @@ export class HexStore {
 	}
 
 	// One parquet row → plain values (numbers stay numbers, labels stay strings).
+	/** Column painted with nominal classes (land use): aggregated by mode, not mean. */
+	static isNominalCol(layer: HexLayerConfig | null | undefined, col: string): boolean {
+		if (!layer) return false;
+		const cls = layer.variableClasses?.[col] ?? (col === layer.primaryVariable ? layer.colorClasses : undefined);
+		return !!cls?.nominal;
+	}
+
 	private static rowValues(cols: string[], vecs: Record<string, any>, i: number): Record<string, any> {
 		const values: Record<string, any> = {};
 		for (const col of cols) {

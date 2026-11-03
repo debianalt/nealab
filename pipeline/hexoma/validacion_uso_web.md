@@ -4,40 +4,49 @@ Generado el 03-11-2026 con `pipeline/hexoma/exportar_uso_web.py` (tablas de umbr
 Dynamic World 2024 en spatia.ar para Misiones, Corrientes, Chaco y Formosa; Itapúa y Alto Paraná quedan sin la capa
 (MapBiomas Argentina no los cubre y mezclar colecciones daría leyendas incompatibles).
 
-## Umbral de «mosaico» (ninguna clase llega al X % del hexágono), 2025, 11 clases finales
+## Umbral de «mosaico» (ninguna clase del mapa llega al X % del hexágono), 2025
+
+El mapa usa 8 clases (cultivo anual con pastura, urbano con sin vegetación: la guía de dataviz pone 8 tonos como
+máximo) más el mosaico neutro; el panel conserva las 10. Tabla con esas 8 clases:
 
 | Provincia | celdas | sin clase ≥40 % | ≥50 % | ≥60 % |
 |---|---:|---:|---:|---:|
-| misiones | 319,871 | 4.5 % | 14.4 % | 28.2 % |
-| formosa | 825,760 | 0.9 % | 3.3 % | 9.8 % |
-| corrientes | 1,033,548 | 1.3 % | 4.7 % | 13.5 % |
-| chaco | 1,116,998 | 0.9 % | 4.1 % | 13.1 % |
+| misiones | 319,871 | 3.3 % | 12.2 % | 26.3 % |
+| formosa | 825,760 | 0.7 % | 2.8 % | 9.0 % |
+| corrientes | 1,033,548 | 1.1 % | 4.4 % | 13.1 % |
+| chaco | 1,116,998 | 0.7 % | 3.6 % | 12.5 % |
+
 | Departamento de Misiones | mosaico al 50 % |
 |---|---:|
-| Apóstoles | 30.0 % |
-| Capital | 23.4 % |
-| San Javier | 21.8 % |
-| 25 de Mayo | 20.7 % |
-| L. N. Alem | 20.2 % |
-| Concepción | 19.7 % |
-| Guaraní | 18.6 % |
-| Candelaria | 18.2 % |
-| L.G. San Martín | 15.7 % |
-| Oberá | 14.3 % |
-| San Ignacio | 13.4 % |
-| G. M. Belgrano | 13.3 % |
-| Cainguás | 12.4 % |
-| San Pedro | 10.1 % |
-| Montecarlo | 9.1 % |
-| Eldorado | 8.4 % |
-| Iguazú | 4.0 % |
+| Apóstoles | 27.4 % |
+| Capital | 20.7 % |
+| San Javier | 20.3 % |
+| L. N. Alem | 19.6 % |
+| Concepción | 18.4 % |
+| Candelaria | 16.9 % |
+| 25 de Mayo | 15.9 % |
+| L.G. San Martín | 15.4 % |
+| Oberá | 13.9 % |
+| Guaraní | 13.3 % |
+| San Ignacio | 13.2 % |
+| Cainguás | 11.9 % |
+| G. M. Belgrano | 9.0 % |
+| Montecarlo | 8.6 % |
+| Eldorado | 8.3 % |
+| San Pedro | 6.6 % |
+| Iguazú | 3.9 % |
 
-**Elegido: 50 %.** Con 60 % el mosaico cubre el 28 % de Misiones y domina el mapa; con 40 % casi desaparece (4,5 %).
-Al 50 %, los mosaicos de Misiones son sobre todo monte + perenne (24 %), monte + pastura (16 %), perenne + pastura
-(15 %) y monte + plantación (10 %); la primera y la segunda clase suman en promedio el 75 % del hexágono. Se concentran
-en la zona de colonias (Apóstoles, San Javier, 25 de Mayo, Alem) y casi no aparecen en Iguazú. Están agrupados: el
-30 % de los vecinos de un mosaico es también mosaico, contra el 14 % de base; no son bordes sueltos entre manchas.
-(Evaluado el 3-nov con 9 grupos y repetido con las 11 clases finales: Misiones 14,0 → 14,4 %.)
+**Elegido: 50 %.** Con 60 % el mosaico cubre el 26 % de Misiones y domina el mapa; con 40 % casi desaparece (3,3 %).
+Al 50 % (evaluación del 3-nov con 9 grupos, mosaico 14 %), los mosaicos de Misiones son sobre todo monte + perenne
+(24 %), monte + pastura (16 %), perenne + pastura (15 %) y monte + plantación (10 %); la primera y la segunda clase
+suman en promedio el 75 % del hexágono. Se concentran en la zona de colonias (Apóstoles, San Javier, 25 de Mayo, Alem)
+y casi no aparecen en Iguazú. Están agrupados: el 30 % de los vecinos de un mosaico es también mosaico, contra el 14 %
+de base; no son bordes sueltos entre manchas. Al juntar pastura con cultivo anual baja a 12,2 %.
+
+## Paleta del mapa
+Buscada en OKLCH con la intención de tono fija por clase y validada tal como se dibuja con `validate_palette.js
+--pairs all` (dataviz): oscuro, relleno 0,78 sobre el fondo gris → ΔE normal 17,5, CVD 9,4; claro, 0,88 sobre papel →
+17,1 y 9,0; «sin dato» a ≥ 10 y el fondo a ≥ 8 de toda clase. `src/lib/utils/sello.ts` (USO_HEX, USO_CLARO).
 
 ## Plantación forestal contra el Inventario Nacional de Plantaciones (DNDFI, 23-04-2026), Misiones
 

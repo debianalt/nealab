@@ -9,15 +9,18 @@ partición por departamento de la capa web (`capa_land_use.depto_id`, filas `pri
     pipeline/output/hexoma/web/{prefijo}sat_uso_suelo.parquet                          territorio entero
     src/lib/data/sat_uso_suelo_dept_summary.json (Misiones), {t}_sat_uso_suelo_summary.json (Corrientes, Chaco, Formosa)
 
-Clases (código entero, nominal; MapBiomas → Spatia):
-    1 monte nativo (3, 4, 6) · 2 plantación forestal (9) · 3 yerba, té y otros perennes (36) · 4 cultivo anual (19, 21)
-    5 pastura implantada (15) · 6 pastizal y arbustal (12, 63, 66, 77) · 7 estero y pastizal inundable (11, 73)
-    8 urbano (24) · 9 agua (33) · 10 otro sin vegetación (25, 27, 34) · 11 mosaico (ninguna clase llega al 50 %)
-Trayectoria 1985 → 2025 sobre las clases dominantes:
-    1 monte que sigue · 2 monte → plantación · 3 monte → perenne · 4 monte → uso agropecuario o mosaico (4, 5, 6, 11)
+Clases del panel (pct_*, MapBiomas → Spatia): monte nativo (3, 4, 6) · plantación forestal (9) · yerba, té y otros
+perennes (36) · cultivo anual (19, 21) · pastura implantada (15) · pastizal y arbustal (12, 63, 66, 77) · estero y
+pastizal inundable (11, 73) · urbano (24) · agua (33) · otro: sin vegetación o no observado (25, 27, 34).
+Clases del mapa (dom_*, código nominal; 8 tonos como máximo, regla de dataviz): 1 monte · 2 plantación · 3 perenne ·
+4 cultivo anual y pastura · 5 pastizal y arbustal · 6 estero · 7 agua · 8 urbano y sin vegetación · 9 mosaico
+(ninguna clase del mapa llega al 50 %).
+Trayectoria 1985 → 2025 sobre las clases del mapa:
+    1 monte que sigue · 2 monte → plantación · 3 monte → perenne · 4 monte → cultivo, pastura, pastizal o mosaico
     5 monte → urbano o agua · 6 volvió el monte · 7 otro cambio · 8 sin monte, sin cambio
 
-Columnas por celda (h3index): dom_2025, dom_1985, tray (Int8); pct_<clase> 2025 (Int16, % de la superficie observada).
+Columnas por celda (h3index): dom_2025, dom_1985, tray (Int8); pct_<clase> 2025 y pct_agro = cultivo + pastura
+(Int16, % de la superficie observada).
 Resumen por departamento y provincia: rank.* (ver RANK) y serie = ha por clase cada 5 años, 1985–2025.
 
 Uso (desde neahub/):
@@ -56,15 +59,26 @@ CLASES = ['monte', 'plantacion', 'perenne', 'cultivo', 'pastura', 'pastizal', 'e
 MAPBIOMAS = {3: 'monte', 4: 'monte', 6: 'monte', 9: 'plantacion', 36: 'perenne', 19: 'cultivo', 21: 'cultivo',
              15: 'pastura', 12: 'pastizal', 63: 'pastizal', 66: 'pastizal', 77: 'pastizal', 11: 'estero', 73: 'estero',
              24: 'urbano', 33: 'agua', 25: 'otro', 27: 'otro', 34: 'otro'}
-MOSAICO = 11
+# Clase del mapa de cada clase del panel (índice en CLASES → código 1–8).
+MAPA = [1, 2, 3, 4, 4, 5, 6, 8, 7, 8]
+MOSAICO = 9
 UMBRAL = 0.5
 ANIOS = list(range(1985, 2026, 5))
 
 
+def mapa(f: np.ndarray) -> np.ndarray:
+    """Fracciones de las 10 clases del panel → las 8 del mapa."""
+    g = np.zeros((len(f), 8))
+    for i, k in enumerate(MAPA):
+        g[:, k - 1] += f[:, i]
+    return g
+
+
 def dominante(f: np.ndarray, umbral: float = UMBRAL) -> np.ndarray:
-    """Código 1–10 de la clase con ≥ umbral de la superficie, 11 si ninguna llega; 0 sin observación."""
+    """Código 1–8 de la clase del mapa con ≥ umbral de la superficie, 9 (mosaico) si ninguna llega; 0 sin dato."""
     tiene = f.sum(1) > 0
-    dom = np.where(f.max(1) >= umbral, f.argmax(1) + 1, MOSAICO)
+    g = mapa(f)
+    dom = np.where(g.max(1) >= umbral, g.argmax(1) + 1, MOSAICO)
     return np.where(tiene, dom, 0).astype(np.int8)
 
 
@@ -73,8 +87,8 @@ def trayectoria(d85: np.ndarray, d25: np.ndarray) -> np.ndarray:
     t = np.full(len(d85), 8, np.int8)
     t[(d85 != d25)] = 7
     t[~m85 & m25] = 6
-    t[m85 & np.isin(d25, [8, 9])] = 5
-    t[m85 & np.isin(d25, [4, 5, 6, 11])] = 4
+    t[m85 & np.isin(d25, [7, 8])] = 5
+    t[m85 & np.isin(d25, [4, 5, 9])] = 4
     t[m85 & (d25 == 3)] = 3
     t[m85 & (d25 == 2)] = 2
     t[m85 & m25] = 1
@@ -122,8 +136,7 @@ def fracciones(df: pd.DataFrame, a: int) -> np.ndarray:
 
 def evaluar(df: pd.DataFrame) -> str:
     """Tabla del umbral de mosaico con las 11 clases finales, por provincia y por departamento de Misiones."""
-    f = fracciones(df, 2025)
-    mx = f.max(1)
+    mx = mapa(fracciones(df, 2025)).max(1)
     filas = ['| Provincia | celdas | sin clase ≥40 % | ≥50 % | ≥60 % |', '|---|---:|---:|---:|---:|']
     for terr, g in df.groupby('territorio', sort=False):
         m = mx[g.index]
@@ -178,8 +191,9 @@ def main() -> None:
     out = pd.DataFrame({'h3index': df.h3, 'dom_2025': d25, 'dom_1985': d85, 'tray': trayectoria(d85, d25)})
     for c in CLASES:
         out[f'pct_{c}'] = np.round(100 * df[f'f2025_{c}']).astype('int16')
+    out['pct_agro'] = np.round(100 * (df['f2025_cultivo'] + df['f2025_pastura'])).astype('int16')  # pestaña «Pastura y cultivo»
     sin = d25 == 0
-    for c in ['dom_2025', 'dom_1985', 'tray'] + [f'pct_{c}' for c in CLASES]:
+    for c in ['dom_2025', 'dom_1985', 'tray', 'pct_agro'] + [f'pct_{c}' for c in CLASES]:
         out[c] = out[c].astype('Int16' if c.startswith('pct') else 'Int8')
         out.loc[sin, c] = pd.NA
     log(f'{len(out):,} celdas; sin observación 2025: {int(sin.sum()):,}')

@@ -32,6 +32,7 @@
 	import FlowChart from './FlowChart.svelte';
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
+	import UsoSerie from './UsoSerie.svelte';
 
 	let {
 		mapStore,
@@ -258,7 +259,12 @@
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
-			{#if hexStore.chartData.size > 0 && hexStore.activeLayer?.primaryVariable}
+			{#if hexStore.activeLayer?.classSeries}
+				<UsoSerie {hexStore} />
+			{/if}
+			<!-- Value charts (histogram, Moran, bivariate) read numbers: not over nominal class codes (land use
+			     «Uso 2025», «1985», «Qué cambió»); the % tabs of the same layer keep them. -->
+			{#if hexStore.chartData.size > 0 && hexStore.activeLayer?.primaryVariable && !hexStore.effectiveColorClasses?.nominal}
 				<button class="charts-divider charts-toggle" onclick={() => chartsOpen = !chartsOpen}>
 					Gráficos {chartsOpen ? '▾' : '▸'}
 				</button>

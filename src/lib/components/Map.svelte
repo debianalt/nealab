@@ -3258,7 +3258,7 @@
 	export function setHexChoropleth(entries: { h3index: string; value: number | null; properties?: Record<string, number>; boundary?: number[][]; nodata?: boolean }[], colorScale: 'flood' | 'sequential' | 'diverging' | 'categorical' | 'green' | 'warm' | 'night' | 'lisa' | 'bivariate' = 'flood', domain?: [number, number], classes?: ColorClasses) {
 		if (!map) return;
 		lastHex = [entries, colorScale, domain, classes];
-		hexClassesOrdinal = classes?.ordinal ? classes : null;
+		hexClassesOrdinal = classes?.ordinal || classes?.nominal ? classes : null;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (!src) return;
 

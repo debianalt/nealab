@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, ZERO_HEX } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -115,7 +115,7 @@ export function getParquetUrl(name: string): string {
 		sat_accessibility: '?v=30',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
-		sat_land_use: '?v=6',   // 31-oct-2026: área por clase (dw_cover), no probabilidad media
+		sat_uso_suelo: '?v=1',  // 3-nov-2026: MapBiomas AR Col. 3 (reemplaza Dynamic World)
 		sat_censo_temporal: '?v=1',
 		sat_eudr: '?v=1',
 	};
@@ -227,7 +227,7 @@ export const PARQUETS = {
 	get sat_agri_apt() { return getParquetUrl('sat_agri_apt'); },
 	get sat_forestry_aptitude() { return getParquetUrl('sat_forestry_aptitude'); },
 	get sat_service_deprivation() { return getParquetUrl('sat_service_deprivation'); },
-	get sat_land_use() { return getParquetUrl('sat_land_use'); },
+	get sat_uso_suelo() { return getParquetUrl('sat_uso_suelo'); },
 	get sat_health_access() { return getParquetUrl('sat_health_access'); },
 	get sat_education_capital() { return getParquetUrl('sat_education_capital'); },
 	get sat_education_flow() { return getParquetUrl('sat_education_flow'); },
@@ -531,6 +531,9 @@ export interface HexLayerConfig {
 	// Classes for other variables the map can paint instead of the primary
 	// (hexStore.colorVariable, set from the active ranking tab).
 	variableClasses?: Record<string, ColorClasses>;
+	// The summaries carry a per-department and province series (serie: {anios, ha: {clase: number[]}}),
+	// drawn by UsoSerie.svelte as «Evolución» (land use, 1985–2025).
+	classSeries?: boolean;
 	// Legend end labels for those other variables (i18n keys), when the layer's
 	// legendLowKey/HighKey describe only the primary.
 	variableLegend?: Record<string, { low: string; high: string }>;
@@ -592,6 +595,10 @@ export interface ColorClasses {
 	// true → values are class codes (each step.from is one class): the map tooltip
 	// shows the class label instead of the number (agri suitability S1…N).
 	ordinal?: boolean;
+	// true → class codes with no order (land use: monte, plantación…): tooltip shows the label (as ordinal), the
+	// coarse LOD cell takes the most frequent class instead of the mean code, and the value charts (histogram,
+	// Moran, bivariate) are not drawn over codes.
+	nominal?: boolean;
 	// true → a cut belongs to the class below (value > from), matching FlowChart
 	// bands; default → to the class above (value >= from).
 	upperInclusive?: boolean;
@@ -616,6 +623,50 @@ export const AGRI_APT_CLASSES: ColorClasses = {
 		{ from: 2, color: AGRI_APT_HEX[1], labelKey: 'agri.class.s2' },
 		{ from: 3, color: AGRI_APT_HEX[2], labelKey: 'agri.class.s3' },
 		{ from: 4, color: AGRI_APT_HEX[3], labelKey: 'agri.class.n' },
+	],
+};
+
+// Land use (pipeline/hexoma/exportar_uso_web.py, MapBiomas Argentina Col. 3): class with ≥ 50 % of the cell,
+// 9 = mosaico (none reaches half). Colors: USO_HEX (sello.ts).
+export const USO_CLASSES: ColorClasses = {
+	nominal: true,
+	steps: [
+		{ from: 1, color: USO_HEX[0], labelKey: 'uso.class.monte' },
+		{ from: 2, color: USO_HEX[1], labelKey: 'uso.class.plantacion' },
+		{ from: 3, color: USO_HEX[2], labelKey: 'uso.class.perenne' },
+		{ from: 4, color: USO_HEX[3], labelKey: 'uso.class.agro' },
+		{ from: 5, color: USO_HEX[4], labelKey: 'uso.class.pastizal' },
+		{ from: 6, color: USO_HEX[5], labelKey: 'uso.class.estero' },
+		{ from: 7, color: USO_HEX[6], labelKey: 'uso.class.agua' },
+		{ from: 8, color: USO_HEX[7], labelKey: 'uso.class.urbano' },
+		{ from: 9, color: USO_HEX[8], labelKey: 'uso.class.mosaico' },
+	],
+};
+
+// 1985 → 2025 over the same classes, named by where the cell ended; same colors as its destination class.
+export const USO_TRAY_CLASSES: ColorClasses = {
+	nominal: true,
+	steps: [
+		{ from: 1, color: USO_HEX[0], labelKey: 'uso.tray.monte' },
+		{ from: 2, color: USO_HEX[1], labelKey: 'uso.tray.plantacion' },
+		{ from: 3, color: USO_HEX[2], labelKey: 'uso.tray.perenne' },
+		{ from: 4, color: USO_HEX[3], labelKey: 'uso.tray.agro' },
+		{ from: 5, color: USO_HEX[6], labelKey: 'uso.tray.urbanoAgua' },
+		{ from: 6, color: USO_HEX[5], labelKey: 'uso.tray.volvio' },
+		{ from: 7, color: USO_HEX[4], labelKey: 'uso.tray.otro' },
+		{ from: 8, color: USO_HEX[8], labelKey: 'uso.tray.sinMonte' },
+	],
+};
+
+// % of the cell in one class (Plantación, Yerba y té, Pastura y cultivo tabs). 0 = measured none.
+export const USO_PCT_CLASSES: ColorClasses = {
+	zero: { color: ZERO_HEX, labelKey: 'legend.uso.none' },
+	steps: [
+		{ from: 0, color: MAP_SELVA[1], labelKey: 'legend.uso.lt10' },
+		{ from: 10, color: MAP_SELVA[2], labelKey: 'legend.uso.10_25' },
+		{ from: 25, color: MAP_SELVA[3], labelKey: 'legend.uso.25_50' },
+		{ from: 50, color: MAP_SELVA[4], labelKey: 'legend.uso.50_75' },
+		{ from: 75, color: MAP_SELVA[5], labelKey: 'legend.uso.ge75' },
 	],
 };
 
@@ -1091,46 +1142,62 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// ── Land use / MapBiomas ──
 	land_use: {
 		id: 'land_use',
-		// Department ranking — pipeline/build_layer_ranks.py.
+		// MapBiomas Argentina Colección 3 from the Hexoma (pipeline/hexoma/exportar_uso_web.py, 3-nov-2026), NEA AR
+		// only. Replaces Dynamic World 2024, whose «trees» lumped monte, pine and much of yerba/tea in Misiones.
+		// The map paints a class (≥ 50 % of the cell, else mosaico); the tabs repaint (deptRank.hexVariable).
+		// Rankings and the 1985–2025 series come from the summaries, written by the same script.
 		deptRank: {
-			field: 'trees_pct', unit: '%', decimals: 1, hexVariable: 'frac_trees',
-			titleKey: 'rank.landuse.title', noteKey: 'rank.landuse.note.trees',
-			extraField: 'trees_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0,
+			field: 'monte_pct', unit: '%', unitKey: 'rank.unit.pctArea', decimals: 1, hexVariable: 'dom_2025',
+			titleKey: 'rank.uso.title.monte', noteKey: 'rank.uso.note.monte',
+			extraField: 'monte_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0,
 			metrics: [
-				{ tabKey: 'rank.landuse.tab.trees' },
-				{ tabKey: 'rank.landuse.tab.crops', field: 'crops_pct', extraField: 'crops_ha', noteKey: 'rank.landuse.note.crops', hexVariable: 'frac_crops' },
-				{ tabKey: 'rank.landuse.tab.built', field: 'built_pct', extraField: 'built_ha', noteKey: 'rank.landuse.note.built', hexVariable: 'frac_built' },
+				{ tabKey: 'rank.uso.tab.uso2025' },
+				{ tabKey: 'rank.uso.tab.plantacion', field: 'plantacion_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+				  extraField: 'plantacion_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+				  titleKey: 'rank.uso.title.plantacion', noteKey: 'rank.uso.note.plantacion', hexVariable: 'pct_plantacion' },
+				{ tabKey: 'rank.uso.tab.perenne', field: 'perenne_pct', extraField: undefined,
+				  titleKey: 'rank.uso.title.perenne', noteKey: 'rank.uso.note.perenne', hexVariable: 'pct_perenne' },
+				{ tabKey: 'rank.uso.tab.agro', field: 'agro_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
+				  extraField: 'agro_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
+				  titleKey: 'rank.uso.title.agro', noteKey: 'rank.uso.note.agro', hexVariable: 'pct_agro' },
+				{ tabKey: 'rank.uso.tab.uso1985', field: 'monte85_pct', extraField: 'monte85_ha',
+				  titleKey: 'rank.uso.title.monte85', noteKey: 'rank.uso.note.monte85', hexVariable: 'dom_1985' },
+				{ tabKey: 'rank.uso.tab.cambio', field: 'monte_perdido_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, signed: true,
+				  extraField: 'monte_perdido_pct', extraUnitKey: 'rank.uso.unit.pctMonte85', extraDecimals: 1,
+				  titleKey: 'rank.uso.title.cambio', noteKey: 'rank.uso.note.cambio', hexVariable: 'tray' },
 			],
 		},
-		parquet: 'sat_land_use',
-		// Dynamic World v1 (Google/WRI, 10m): % of the hexagon's area in each of the 9 classes
-		// (dw_cover, 31-oct-2026; stored as fractions, scale 100).
-		// Global product, identical method across AR/PY/BR → cross-territory comparable.
-		// (Earlier config declared MapBiomas cols that do not exist in the parquet, so
-		// every hex rendered as "Sin cobertura"; realigned to the real Dynamic World schema.)
+		parquet: 'sat_uso_suelo',
+		// % of the cell's observed area in 2025 per MapBiomas group (panel); class codes hidden (map only).
 		variables: [
-			{ col: 'frac_trees',   labelKey: 'sat.landUse.trees',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_crops',   labelKey: 'sat.landUse.crops',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_grass',   labelKey: 'sat.landUse.grass',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_shrub',   labelKey: 'sat.landUse.shrub',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_built',   labelKey: 'sat.landUse.built',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_water',   labelKey: 'sat.landUse.water',   aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_flooded', labelKey: 'sat.landUse.flooded', aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_bare',    labelKey: 'sat.landUse.bare',    aggregation: 'mean', unit: '%', scale: 100 },
-			{ col: 'frac_snow',    labelKey: 'sat.landUse.snow',    aggregation: 'mean', unit: '%', scale: 100 },
+			{ col: 'pct_monte',      labelKey: 'uso.var.monte',      aggregation: 'mean', unit: '%' },
+			{ col: 'pct_plantacion', labelKey: 'uso.var.plantacion', aggregation: 'mean', unit: '%' },
+			{ col: 'pct_perenne',    labelKey: 'uso.var.perenne',    aggregation: 'mean', unit: '%' },
+			{ col: 'pct_cultivo',    labelKey: 'uso.var.cultivo',    aggregation: 'mean', unit: '%' },
+			{ col: 'pct_pastura',    labelKey: 'uso.var.pastura',    aggregation: 'mean', unit: '%' },
+			{ col: 'pct_pastizal',   labelKey: 'uso.var.pastizal',   aggregation: 'mean', unit: '%' },
+			{ col: 'pct_estero',     labelKey: 'uso.var.estero',     aggregation: 'mean', unit: '%' },
+			{ col: 'pct_urbano',     labelKey: 'uso.var.urbano',     aggregation: 'mean', unit: '%' },
+			{ col: 'pct_agua',       labelKey: 'uso.var.agua',       aggregation: 'mean', unit: '%' },
+			{ col: 'pct_otro',       labelKey: 'uso.var.otro',       aggregation: 'mean', unit: '%' },
+			{ col: 'pct_agro',       labelKey: 'uso.var.agro',       aggregation: 'mean', unit: '%', hidden: true },
+			{ col: 'dom_2025', labelKey: 'uso.var.dom2025', aggregation: 'mean', unit: 'clase', hidden: true },
+			{ col: 'dom_1985', labelKey: 'uso.var.dom1985', aggregation: 'mean', unit: 'clase', hidden: true },
+			{ col: 'tray',     labelKey: 'uso.var.tray',    aggregation: 'mean', unit: 'clase', hidden: true },
 		],
-		primaryVariable: 'frac_trees',
+		primaryVariable: 'dom_2025',
 		colorScale: 'green',
 		aggregation: 'mean',
 		titleKey: 'sat.landUse.title',
 		perDepartment: true,
-		legendLowKey: 'legend.landUse.low',
-		legendHighKey: 'legend.landUse.high',
-		variableLegend: {
-			frac_crops: { low: 'legend.crops.low', high: 'legend.crops.high' },
-			frac_built: { low: 'legend.built.low', high: 'legend.built.high' },
+		colorClasses: USO_CLASSES,
+		variableClasses: {
+			dom_2025: USO_CLASSES, dom_1985: USO_CLASSES, tray: USO_TRAY_CLASSES,
+			pct_plantacion: USO_PCT_CLASSES, pct_perenne: USO_PCT_CLASSES, pct_agro: USO_PCT_CLASSES,
 		},
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+		// Per-department 1985–2025 series (ha by class every 5 years) in the summaries: UsoSerie.svelte.
+		classSeries: true,
+		coverage: { misiones: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 	},
 	// ── Migrated from radio/catastro to H3 ──
 	sociodemographic: {
@@ -1503,7 +1570,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		lensId: 'produccion',
 		titleKey: 'sat.landUse.title',
 		descKey: 'sat.landUse.desc',
-		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+		coverage: { misiones: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 		comparable: true,
 		rigorBadge: 'physical',
 		status: 'available',
@@ -1710,7 +1777,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'layer.source.censoTemporal' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2025 + GBA 2025', processedDate: '02/11/2026', sourceKey: 'layer.source.economic' },
 	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '01/11/2026', sourceKey: 'layer.source.accessibility' },
-	sat_land_use: { dataDate: 'Dynamic World V1, 2024', processedDate: '31/10/2026', sourceKey: 'layer.source.landUse' },
+	sat_uso_suelo: { dataDate: 'MapBiomas Argentina Colección 3, 1985–2025', processedDate: '03/11/2026', sourceKey: 'layer.source.landUse' },
 	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
 	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.13 2001-2025', processedDate: '02/11/2026', sourceKey: 'layer.source.deforestation' },
 	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.

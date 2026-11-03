@@ -3,7 +3,7 @@
 // cell's position within its department (percentile + mean, computed here from
 // the whole department file). Files are fetched in parallel and queried locally:
 // one serial HTTP query per layer took ~18 s for 14 layers; this is ~1-2 s.
-import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, type HexVariable, type LensId } from '$lib/config';
+import { ANALYSIS_REGISTRY, HEX_LAYER_REGISTRY, getSatGlobalUrl, type HexVariable, type HexLayerConfig, type LensId } from '$lib/config';
 import { query, registerBuffer } from '$lib/stores/duckdb';
 import { layerDeptUrl } from '$lib/utils/layerDeptUrl';
 import { unitLabel } from '$lib/utils/units';
@@ -53,6 +53,15 @@ export interface FichaLayer {
 	primaryNamed?: boolean;
 	vars: FichaVar[];
 	error?: boolean;
+}
+
+// Nominal class layers (land use): the chip names the cell's class («Monte nativo»), as a typology would.
+function nominalLabel(layer: HexLayerConfig, pv: string, tbl: any, cols: Set<string>, row: number): string | null {
+	const cls = layer.variableClasses?.[pv] ?? layer.colorClasses;
+	if (!cls?.nominal || !cols.has(pv)) return null;
+	const v = tbl.getChild(pv)?.get(row);
+	const st = v == null ? undefined : cls.steps.find((s) => s.from === Number(v));
+	return st ? i18n.t(st.labelKey) : null;
 }
 
 // Same exclusions as the hex panel (HexComparison): composite/categorical helpers.
@@ -204,7 +213,8 @@ export async function loadFicha(
 			out.push({
 				...base,
 				found: row >= 0,
-				typeLabel: row >= 0 && typeVec ? displayTypeLabel(typeVec.get(row) as string | null, i18n.locale) : null,
+				typeLabel: row >= 0 && typeVec ? displayTypeLabel(typeVec.get(row) as string | null, i18n.locale)
+					: row >= 0 ? nominalLabel(layer, pv, tbl, cols, row) : null,
 				primary,
 				primaryNamed: !!primaryVar?.hidden,
 				vars: fv,

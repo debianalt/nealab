@@ -694,7 +694,7 @@
 		{/if}
 
 
-		{#if !isCategorical}
+		{#if !isCategorical && !layerCfg?.colorClasses?.nominal}
 			<div class="score-info-box">
 				<span class="score-range">{scoreRangeLabel}</span>
 				{#if highValueLabel}
