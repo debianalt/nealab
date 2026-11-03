@@ -30,7 +30,8 @@ jobs:
           for u in https://www.spatia.ar/ https://neahub.pages.dev/ https://cdn.spatia.ar/data/hex_flood_risk.parquet; do
             echo "$u -> $(curl -s -o /dev/null -w '%{http_code}' -A "$UA" -r 0-99 "$u")"
           done
-      - run: cd director/sondas && python humo.py ${{ inputs.base || 'https://neahub.pages.dev' }} ../../out
+      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out/www || true
+      - run: cd director/sondas && python humo.py https://neahub.pages.dev ../../out/pages
       - uses: actions/upload-artifact@v4
         if: always()
         with:

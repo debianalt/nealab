@@ -7,6 +7,8 @@ INIT = (f"localStorage.setItem('{TERMINOS}','true');"
         "localStorage.setItem('spatia_welcomed_v1','true');"
         "localStorage.setItem('spatia_sonda','1');")
 VIEWPORT = {'width': 1440, 'height': 900}
+# Sin 'HeadlessChrome': la verificación de navegador de Cloudflare desafía ese user-agent.
+UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
 
 
 async def abrir_navegador(p):
@@ -30,10 +32,10 @@ async def _cors(route):
 async def contexto_spatia(br, base, locale=None):
     """Contexto con modales salteados, gancho de sonda y, en localhost, proxy CORS a R2
     (localhost:4173 no está en cors-rules.json)."""
-    ctx = await br.new_context(viewport=VIEWPORT)
+    ctx = await br.new_context(viewport=VIEWPORT, user_agent=UA, locale='es-AR')
     init = INIT + (f"localStorage.setItem('nealab-locale','{locale}');" if locale else '')
     await ctx.add_init_script(init)
-    if 'localhost' in base or '127.0.0.1' in base:
+    if 'spatia.ar' not in base:  # localhost o pages.dev: R2 no les da CORS
         await ctx.route('**/cdn.spatia.ar/**', _cors)
         await ctx.route('**/*.r2.dev/**', _cors)
     return ctx
