@@ -288,15 +288,20 @@
 		const pv = hexStore.effectivePrimary;
 		const v = layerCfg?.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
 		const u = v?.unit;
+		// A fixed colour domain is what the legend shows (EUDR 0–40 %), not the unit's full range.
+		const fd = layerCfg?.fixedColorDomain;
+		if (fd && pv === layerCfg?.primaryVariable) return `${fd[0]}–${fd[1]}${u === '%' ? ' %' : u ? ` ${unitLabel(u)}` : ''}`;
 		if (!u || SCORE_UNITS.has(u)) return i18n.t('legend.range');
 		if (u === '%') return '0–100 %';
 		return unitLabel(u);
 	});
-	const highValueLabel = $derived(
-		layerCfg?.legendHighKey
-			? `${i18n.t('legend.highValue')}: ${i18n.t(layerCfg.legendHighKey)}`
-			: i18n.t(scoreDirection === 'danger' ? 'legend.highMeansDanger' : 'legend.highMeansGood')
-	);
+	// What a high value means for the column the map is painting (the active tab's,
+	// via variableLegend), same rule as MapLegend. No layer-wide "Score alto = …"
+	// fallback any more: most layers publish physical values, not scores.
+	const highValueLabel = $derived.by(() => {
+		const key = layerCfg?.variableLegend?.[hexStore.effectivePrimary]?.high ?? layerCfg?.legendHighKey;
+		return key ? `${i18n.t('legend.highValue')}: ${i18n.t(key)}` : '';
+	});
 
 	// Auto-select top department on first load
 	// Department list loads, user picks manually
@@ -496,7 +501,7 @@
 {#if selectedDpto && isPerDept}
 	<!-- ═══ DEPARTMENT SELECTED (minimal, like FloodRisk) ═══ -->
 	<div class="view">
-		<button class="back-btn" onclick={handleBackToDepts}>{i18n.t('analysis.flood.topDepts')}</button>
+		<button class="back-btn" onclick={handleBackToDepts}>{i18n.t('nav.backToDepts')}</button>
 
 		<div class="dept-active-title">{formatDept(selectedDpto)}</div>
 
@@ -692,7 +697,9 @@
 		{#if !isCategorical}
 			<div class="score-info-box">
 				<span class="score-range">{scoreRangeLabel}</span>
-				<span class="score-dir {scoreDirection === 'danger' ? 'score-dir-danger' : 'score-dir-good'}">{highValueLabel}</span>
+				{#if highValueLabel}
+					<span class="score-dir {scoreDirection === 'danger' ? 'score-dir-danger' : 'score-dir-good'}">{highValueLabel}</span>
+				{/if}
 			</div>
 		{/if}
 

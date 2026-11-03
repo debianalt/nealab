@@ -8,13 +8,17 @@
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
-	const today = browser
-		? new Date().toLocaleDateString('es-AR', {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			})
-		: '';
+	// Formatted in the active language (gn reads the Spanish text, so es-AR).
+	const DATE_LOCALE: Record<string, string> = { es: 'es-AR', en: 'en-GB', pt: 'pt-BR', gn: 'es-AR' };
+	const today = $derived(
+		browser
+			? new Date().toLocaleDateString(DATE_LOCALE[i18n.locale] ?? 'es-AR', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				})
+			: ''
+	);
 
 	const c = $derived(SERVICIOS[i18n.locale] ?? SERVICIOS.es);
 
@@ -33,7 +37,7 @@
 <div class="page">
 	<div class="content">
 	<div class="print-brand">
-		Spatia · análisis geoespacial abierto · spatia.ar
+		{c.printBrand}
 	</div>
 
 	<header class="hdr">
@@ -128,7 +132,7 @@
 
 	<footer class="footer">
 		<p>
-			{c.citationLabel}: Gomez, R. E. (2026). Spatia: A Reproducible Platform for Subnational
+			{c.citationLabel}: Gómez, R. E. (2026). Spatia: A Reproducible Platform for Subnational
 			Geospatial Analysis. Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>

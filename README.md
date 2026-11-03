@@ -1,21 +1,25 @@
 # nealab
 
 Plataforma reproducible de análisis geoespacial subnacional. Publica capas
-hexagonales (H3) sobre el norte argentino, Paraguay y el sur de Brasil, servidas
-como parquet y consultadas desde el navegador con DuckDB-WASM.
+hexagonales (H3) de análisis geoespacial sobre el noreste argentino, Itapúa y
+Alto Paraná; edificios, censo y límites en el resto de Paraguay y el sur de
+Brasil. Las capas se sirven como parquet y se consultan desde el navegador con
+DuckDB-WASM.
 
 **Sitio:** [spatia.ar](https://spatia.ar) · **Licencia:** AGPL-3.0-only ·
 **Archivo citable:** [10.5281/zenodo.19483040](https://doi.org/10.5281/zenodo.19483040)
 
 ---
 
-## EUDR — riesgo de no-conformidad con el Reglamento (UE) 2023/1115
+## EUDR — pérdida de cobertura arbórea posterior al corte del Reglamento (UE) 2023/1115
 
-El trabajo principal de este repositorio. Estima, por hexágono y por parcela, el
-riesgo de que un predio del nordeste argentino no cumpla con el reglamento
-europeo sobre productos libres de deforestación, y **separa la cosecha de una
-plantación forestal de la conversión de bosque nativo** usando la Serie Anual de
-MapBiomas Argentina como línea base del año de corte.
+El trabajo principal de este repositorio. Mide, por hexágono y por parcela, la
+pérdida de cobertura arbórea posterior al 31/12/2020, la fecha de corte del
+reglamento europeo sobre productos libres de deforestación, y **separa la
+cosecha de una plantación forestal de la conversión de bosque nativo** usando la
+Serie Anual de MapBiomas Argentina como línea base del año de corte. El visor
+por parcela cubre el nordeste argentino y además Paraguay (salvo el Chaco
+paraguayo norte) y el sur de Brasil.
 
 | Qué | Dónde |
 |---|---|
@@ -35,24 +39,16 @@ línea base nacional de cobertura, esa fracción se contabilizaría como
 deforestación.
 
 Un segundo resultado: restringir el área quemada a la que ocurre sobre
-vegetación nativa leñosa baja la media regional de 13,40 % a 5,34 % y reordena el
-riesgo provincial, porque en Corrientes el fuego es del humedal del Iberá y
+vegetación nativa leñosa baja la media regional de 13,40 % a 5,34 % y reordena las
+provincias, porque en Corrientes el fuego es del humedal del Iberá y
 pertenece al régimen natural del ecosistema.
 
-### Cómo se construye el score
+### Qué informa el chequeo
 
-```
-score (0–100) = 0,70 × pérdida forestal 2021–2025   (Hansen GFC v1.13, 100 m)
-              + 0,20 × área quemada sobre nativa leñosa (MODIS MCD64A1, 500 m
-                                                          × MapBiomas Col. 2)
-              + 0,10 × ausencia de cobertura arbórea en la línea base Hansen
-                       (treecover2000; aproxima el paisaje ya convertido)
-```
-
-Los pesos son coeficientes, no participaciones: el tercer término tiene el peso
-nominal más bajo y, por la escala de su variable, es el que más aporta al valor
-medio del score. Someterlo al mismo filtro por clase de cobertura que ya recibe
-el fuego es la extensión pendiente del método.
+La pérdida de cobertura arbórea posterior al 31/12/2020 (Hansen GFC v1.13),
+como porcentaje de la superficie del hexágono. El área quemada sobre vegetación
+nativa leñosa (MODIS MCD64A1 × MapBiomas Col. 2) se informa como dato aparte y
+no se combina con la pérdida en un puntaje.
 
 ### Fuente de cobertura y cita
 
@@ -69,7 +65,9 @@ brasileños ("formação savânica") no se aplican a productos de Argentina.
 
 ## Otras capas
 
-- **Riesgo de inundación** — Sentinel-1 SAR, pipeline documentado en
+- **Inundación** — edificios y tierra a menos de 5 m sobre el drenaje (HAND,
+  MERIT Hydro + Google Open Buildings); JRC GSW para la presencia histórica y
+  Sentinel-1 para la extensión actual. Pipeline documentado en
   [`pipeline/README.md`](pipeline/README.md).
 - **Accesibilidad** — tiempos de viaje y clasificación multivariada por hexágono.
 - **Actividad económica** — variables censales, radiancia nocturna y densidad
@@ -77,7 +75,7 @@ brasileños ("formação savânica") no se aplican a productos de Argentina.
 
 ## Stack
 
-SvelteKit 5 + adapter-static · MapLibre GL 5 + PMTiles · DuckDB-WASM sobre
+SvelteKit 5 + adapter-static · MapLibre GL 6 + PMTiles · DuckDB-WASM sobre
 parquet en Cloudflare R2 · pipeline en Python con Google Earth Engine, rasterio y
 h3 · deploy en Cloudflare Pages.
 

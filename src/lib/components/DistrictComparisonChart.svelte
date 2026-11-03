@@ -4,6 +4,7 @@
 	import PetalChart from './PetalChart.svelte';
 	import { formatDept } from '$lib/utils/format';
 	import { downloadCsvFromRows } from '$lib/utils/data-export';
+	import { TERRITORY_REGISTRY } from '$lib/config';
 
 	let {
 		districts,
@@ -55,7 +56,7 @@
 	}
 
 	const entries = $derived.by((): DistrictEntry[] => {
-		const enriched = [...districts.entries()].filter(([, d]) => d.enriched != null);
+		const enriched = [...districts.entries()].filter(([, d]) => d.enriched != null && DEPT_NBI_REF[d.territory]);
 		if (enriched.length === 0) return [];
 
 		return enriched.map(([distrito, d]) => {
@@ -64,7 +65,7 @@
 				return val != null && !isNaN(Number(val)) ? Number(val) : 0;
 			});
 			// Ancla = totales NBI del departamento padre del distrito (no la selección).
-			const ref = DEPT_NBI_REF[d.territory] ?? DEPT_NBI_REF.itapua_py;
+			const ref = DEPT_NBI_REF[d.territory];
 			const pct_nbi_raw = d.enriched!.pct_nbi;
 			return {
 				distrito,
@@ -81,9 +82,16 @@
 	const petalLayers = $derived(entries.map(e => ({ values: e.normalizedValues, color: e.color })));
 	const petalLabels = DISTRICT_PETAL_VARS.map(v => v.label);
 
+	// District NBI exists only for Itapúa and Alto Paraná (INE CNPV 2022 tables loaded
+	// here). Elsewhere in Paraguay a district shows its population only — it used to wait
+	// on "loading" forever, and before that it read Itapúa's table by district name.
 	const pendingDistricts = $derived(
-		[...districts.keys()].filter(d => !entries.find(e => e.distrito === d))
+		[...districts.entries()].filter(([d, data]) => DEPT_NBI_REF[data.territory] && !entries.find(e => e.distrito === d)).map(([d]) => d)
 	);
+	const populationOnly = $derived(
+		[...districts.entries()].filter(([, data]) => !DEPT_NBI_REF[data.territory])
+	);
+	const shortLabel = (t: string) => TERRITORY_REGISTRY[t]?.shortLabel ?? t;
 
 	function downloadDistrictsCsv() {
 		if (entries.length === 0) return;
@@ -104,7 +112,7 @@
 
 <div class="chart-root">
 	<div class="header">
-		<span class="title">Distritos — Paraguay (NBI)</span>
+		<span class="title">Distritos — Paraguay{entries.length > 0 || pendingDistricts.length > 0 ? ' (NBI)' : ''}</span>
 		<button class="clear-btn" onclick={onClearDistricts}>&#10005; Limpiar</button>
 	</div>
 
@@ -118,7 +126,7 @@
 				title="Deseleccionar">
 				<span class="chip-dot" style="background: {data.color};"></span>
 				{formatDept(distrito)}
-				<span class="chip-terr">{data.territory === 'alto_parana_py' ? 'APY' : 'ITA'}</span>
+				<span class="chip-terr">{shortLabel(data.territory)}</span>
 				<span class="chip-x">&times;</span>
 			</button>
 		{/each}
@@ -126,6 +134,13 @@
 
 	{#if pendingDistricts.length > 0}
 		<p class="loading-note">{i18n.t('analysis.loading')}</p>
+	{/if}
+
+	{#if populationOnly.length > 0}
+		{#each populationOnly as [distrito, data]}
+			<p class="ref-note">{formatDept(distrito)} ({shortLabel(data.territory)}): {fmt(data.personas)} {i18n.t('district.people')}</p>
+		{/each}
+		<p class="ref-note">{i18n.t('district.nbiOnlyItaAp')}</p>
 	{/if}
 
 	<!-- Petal chart -->

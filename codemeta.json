@@ -2,15 +2,15 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "name": "nealab",
-  "description": "A reproducible platform for subnational geospatial analysis. Combines satellite imagery, census data, and open geospatial datasets into PCA-validated composite indicators on an H3 hexagonal grid.",
+  "description": "Spatia is a reproducible, open platform for subnational geospatial analysis of northeast Argentina (Misiones, Corrientes, Chaco, Formosa) and the Paraguayan departments of Itapúa and Alto Paraná, with buildings, census and boundaries for the rest of Paraguay and southern Brazil. It combines satellite imagery (Sentinel-1/2, Landsat, MODIS, VIIRS), census data and open geospatial datasets on an H3 hexagonal grid (resolution 9), from ~320,000 hexagons for Misiones to more than a million for Corrientes and Chaco, across 24 provinces, departments and states. Most layers report physical values or census rates directly (percent of buildings on low ground, tree cover loss rate, PM2.5 in ug/m3, travel minutes); the forestry layer is a species-distribution-model probability. It offers 15 analyses across four thematic lenses: environment and risk, production and land, population and services, and economy and trade.",
   "identifier": "https://doi.org/10.5281/zenodo.19483040",
   "codeRepository": "https://github.com/debianalt/nealab",
-  "url": "https://www.spatia.ar",
+  "url": "https://spatia.ar",
   "license": "https://spdx.org/licenses/AGPL-3.0-only",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "dateCreated": "2025-01-01",
   "datePublished": "2026-06-15",
-  "dateModified": "2026-07-24",
+  "dateModified": "2026-11-03",
   "author": [
     {
       "@type": "Person",
@@ -44,7 +44,6 @@
     "geospatial analysis",
     "H3 hexagonal grid",
     "Google Earth Engine",
-    "PCA scoring",
     "DuckDB-WASM",
     "remote sensing",
     "subnational analysis",
@@ -53,17 +52,5 @@
   ],
   "applicationCategory": "Geospatial Analysis",
   "applicationSubCategory": "Geospatial Analysis",
-  "developmentStatus": "active",
-  "referencePublication": {
-    "@type": "ScholarlyArticle",
-    "name": "nealab: A Reproducible Platform for Subnational Geospatial Analysis",
-    "author": "Gómez, R. E.",
-    "isPartOf": {
-      "@type": "PublicationIssue",
-      "isPartOf": {
-        "@type": "Periodical",
-        "name": "SoftwareX"
-      }
-    }
-  }
+  "developmentStatus": "active"
 }

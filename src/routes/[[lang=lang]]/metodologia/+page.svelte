@@ -18,13 +18,19 @@
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
-	const today = browser
-		? new Date().toLocaleDateString('es-AR', {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			})
-		: '';
+	const DATE_LOCALE = { es: 'es-AR', gn: 'es-AR', en: 'en-GB', pt: 'pt-BR' } as const;
+	const today = $derived(
+		browser
+			? new Date().toLocaleDateString(DATE_LOCALE[(i18n.locale as keyof typeof DATE_LOCALE)] ?? 'es-AR', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				})
+			: ''
+	);
+	const BRAND = { es: 'análisis geoespacial abierto', gn: 'análisis geoespacial abierto',
+		en: 'open geospatial analysis', pt: 'análise geoespacial aberta' } as const;
+	const brand = $derived(BRAND[(i18n.locale as keyof typeof BRAND)] ?? BRAND.es);
 
 	function handlePrint() {
 		if (typeof window !== 'undefined') window.print();
@@ -38,7 +44,7 @@
 
 <div class="page">
 	<div class="print-brand">
-		<strong>Spatia</strong> · análisis geoespacial abierto · spatia.ar
+		<strong>Spatia</strong> · {brand} · spatia.ar
 	</div>
 
 	<header class="hdr">
@@ -88,7 +94,7 @@
 			Analysis. Zenodo.
 			<a href="https://doi.org/10.5281/zenodo.19483040">https://doi.org/10.5281/zenodo.19483040</a>
 		</p>
-		<p class="affil">CONICET · FHyCS-UNaM · Google Earth Engine Partner Tier</p>
+		<p class="affil">CONICET / FHyCS-UNaM · GEE Partner</p>
 		<p class="print-only generated">{i18n.t('page.generated').replace('{date}', today).replace('{url}', 'spatia.ar/metodologia')}</p>
 	</footer>
 </div>

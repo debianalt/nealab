@@ -33,7 +33,9 @@
 
 	// Plantations overlay is only meaningful for forestry_aptitude with a department
 	// selected (loads per-dept). Reset the flag otherwise so it never lingers on the map.
-	const showPlantControl = $derived(analysis?.id === 'forestry_aptitude' && !!hexStore.selectedDpto);
+	// DNDFI plantations exist only for Argentina: in Itapúa and Alto Paraná the toggle drew nothing.
+	const showPlantControl = $derived(analysis?.id === 'forestry_aptitude' && !!hexStore.selectedDpto
+		&& territoryStore.activeTerritory.country === 'ar');
 	$effect(() => {
 		if (showPlantControl) {
 			mapStore.plantationsDept = hexStore.selectedDpto;

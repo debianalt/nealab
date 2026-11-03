@@ -9,6 +9,8 @@ import { layerDeptUrl } from '$lib/utils/layerDeptUrl';
 import { unitLabel } from '$lib/utils/units';
 import type { FichaContext } from '$lib/stores/ficha.svelte';
 import { quantile } from '$lib/utils/chartType';
+import { displayTypeLabel } from '$lib/utils/typeLabel';
+import { i18n } from '$lib/stores/i18n.svelte';
 
 // Where a value sits within one comparison area. Today only the department (or
 // the whole territory for layers not split by department) is filled, from the
@@ -147,7 +149,10 @@ export async function loadFicha(
 			const vars = layer.variables.filter(v => !HIDDEN.has(v.col) && !v.hidden);
 			// The summary row shows the layer's primary even when the table hides it
 			// (forestry's primary is its /100 score, not the first covariate).
-			const pv = layer.primaryVariable;
+			// The headline number is what the map paints by default: the default ranking tab's
+			// per-hex column when there is one (flujo educativo 13–18, empleo, tiempo a ciudad),
+			// else the primary — it used to be the primary, which the map often does not show.
+			const pv = layer.deptRank?.hexVariable ?? layer.primaryVariable;
 			const primaryVar = layer.variables.find(v => v.col === pv || v.rawCol === pv);
 			const primaryHidden = !!primaryVar && HIDDEN.has(primaryVar.col);
 			const tbl = await query(`SELECT * FROM read_parquet('${name}')`);
@@ -155,7 +160,10 @@ export async function loadFicha(
 			const h3Vec = tbl.getChild('h3index');
 			let row = -1;
 			for (let i = 0; i < tbl.numRows; i++) if (String(h3Vec?.get(i)) === h3) { row = i; break; }
-			const typeVec = cols.has('type_label') ? tbl.getChild('type_label') : null;
+			// Only layers that declare a typology show it: other parquets carry raw k-means
+			// labels ("tasa_empleo alto", "densidad_hab_km2 bajo") never meant for display.
+			const declaresType = layer.variables.some(v => v.col === 'type_label');
+			const typeVec = declaresType && cols.has('type_label') ? tbl.getChild('type_label') : null;
 			const fv: FichaVar[] = [];
 			for (const v of primaryHidden ? [...vars, primaryVar!] : vars) {
 				const spec = displaySpec(v);
@@ -196,7 +204,7 @@ export async function loadFicha(
 			out.push({
 				...base,
 				found: row >= 0,
-				typeLabel: row >= 0 && typeVec ? (typeVec.get(row) as string | null) ?? null : null,
+				typeLabel: row >= 0 && typeVec ? displayTypeLabel(typeVec.get(row) as string | null, i18n.locale) : null,
 				primary,
 				primaryNamed: !!primaryVar?.hidden,
 				vars: fv,

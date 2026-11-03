@@ -9,13 +9,17 @@
 
 	// Stamps the printout, so it must be the reader's date — computed client-side only,
 	// since prerendering would otherwise freeze the build date into the HTML.
-	const today = browser
-		? new Date().toLocaleDateString('es-AR', {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			})
-		: '';
+	// Formatted in the active language (gn reads the Spanish text, so es-AR).
+	const DATE_LOCALE: Record<string, string> = { es: 'es-AR', en: 'en-GB', pt: 'pt-BR', gn: 'es-AR' };
+	const today = $derived(
+		browser
+			? new Date().toLocaleDateString(DATE_LOCALE[i18n.locale] ?? 'es-AR', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				})
+			: ''
+	);
 
 	const c = $derived(TERMINOS[i18n.locale] ?? TERMINOS.es);
 

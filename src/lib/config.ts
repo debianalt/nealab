@@ -470,7 +470,7 @@ export interface LensConfig {
 }
 
 export const LENS_CONFIG: Record<LensId, LensConfig> = {
-	ambiente:   { label: { es: 'Ambiente y riesgo',          en: 'Environment & risk',        gn: 'Yvypóra',    pt: 'Ambiente e risco'          }, color: '#ef4444' },
+	ambiente:   { label: { es: 'Ambiente y riesgo',          en: 'Environment & risk',        gn: 'Ambiente y riesgo', pt: 'Ambiente e risco'          }, color: '#ef4444' },
 	produccion: { label: { es: 'Producción y suelo',         en: 'Production & land',         gn: "Mba'apo",    pt: 'Produção e solo'            }, color: '#22c55e' },
 	poblacion:  { label: { es: 'Población y servicios',      en: 'Population & services',     gn: 'Tetã kuéra', pt: 'População e serviços'       }, color: '#3b82f6' },
 	economia:   { label: { es: 'Economía y comercio',        en: 'Economy & trade',           gn: 'Moĩ viru',   pt: 'Economia e comércio'        }, color: '#f59e0b' },
@@ -811,6 +811,8 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'low_bld_new_n', labelKey: 'analysis.flood.lowBldNew', aggregation: 'sum', unit: 'edificios' },
 		],
 		primaryVariable: 'jrc_occurrence',
+		legendLowKey: 'legend.flood.lowExp',
+		legendHighKey: 'legend.flood.highExp',
 		colorScale: 'flood',
 		aggregation: 'mean',
 		petalVars: [
@@ -1252,6 +1254,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.accessibility.low',
 		legendHighKey: 'legend.accessibility.high',
+		// Each ranking tab paints its own column: the capital's labels misread the others.
+		variableLegend: {
+			travel_min_cabecera_raw: { low: 'legend.accessCity.low', high: 'legend.accessCity.high' },
+			dist_nearest_hospital_km_raw: { low: 'legend.accessHosp.low', high: 'legend.accessHosp.high' },
+		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', amambay_py: 'unavailable'},
 	},
 	// ── PM2.5 (ACAG V6 annual mean, µg/m³; 2001–2010 vs 2013–2022) ──
@@ -1270,6 +1277,8 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_pm25_mean', unit: 'µg/m³', labelKey: 'sat.pm25.pm25Mean', aggregation: 'mean' },
 		],
 		primaryVariable: 'c_pm25_mean',
+		legendLowKey: 'legend.pm25.low',
+		legendHighKey: 'legend.pm25.high',
 		colorScale: 'flood',
 		aggregation: 'mean',
 		titleKey: 'sat.pm25.title',
@@ -1299,12 +1308,14 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'deforestation_dynamics',
 		parquet: 'sat_deforestation_dynamics',
 		variables: [
-			{ col: 'type', labelKey: 'sat.deforest.type', aggregation: 'mean' },
-			{ col: 'type_label', labelKey: 'sat.deforest.typeLabel', aggregation: 'mean' },
 			{ col: 'c_loss_rate', unit: '%/yr', labelKey: 'sat.deforest.lossRate', aggregation: 'mean' },
 			{ col: 'c_cumulative', unit: '%', labelKey: 'sat.deforest.cumulative', aggregation: 'mean' },
 		],
+		// No type chip: its k-means/goalpost classes ("Baja presión" up to 1.25 %/yr) contradicted
+		// the legend's classes (3-nov-2026 audit).
 		primaryVariable: 'c_loss_rate',
+		legendLowKey: 'legend.deforestLoss.low',
+		legendHighKey: 'legend.deforestLoss.high',
 		colorScale: 'flood',
 		aggregation: 'mean',
 		titleKey: 'sat.deforest.title',
@@ -1448,7 +1459,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		descKey: 'sat.pm25.desc',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 		comparable: true,
-		rigorBadge: 'physical',
+		rigorBadge: 'modeled',
 		status: 'available',
 		spatialUnit: 'hexagon',
 	},
@@ -1497,7 +1508,7 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		// Not comparable: each hexagon is timed to its own capital (province, PY department
 		// or BR state), so minutes do not compare across countries (methodology). No
 		// `comparable` flag on purpose.
-		rigorBadge: 'physical',
+		rigorBadge: 'modeled',
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', amambay_py: 'unavailable'},
 	},
 	{
@@ -1691,7 +1702,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
 	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.13 2001-2025', processedDate: '02/11/2026', sourceKey: 'layer.source.deforestation' },
 	// EUDR: los parquets por depto salen del grid res-9 (build_eudr_dpto.py, 30/10/2026); el refresh mensual del grid está en data/eudr/meta.json.
-	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '30/10/2026', sourceKey: 'layer.source.eudr' },
+	sat_eudr: { dataDate: 'Hansen GFC v1.13 (2021-2025) + MODIS MCD64A1 x MapBiomas Col.2 (cutoff 31/12/2020)', processedDate: '02/11/2026', sourceKey: 'layer.source.eudr' },
 };
 
 // ── EUDR Configuration ──────────────────────────────────────────────────

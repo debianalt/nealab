@@ -203,7 +203,6 @@
 						{/each}
 					</div>
 				{/each}
-				<p class="fi-note">{i18n.t('ficha.pending')}</p>
 				<RequestDiagnostic ctx={{
 					place: [ctx.deptName ? formatDept(ctx.deptName) : '', territoryRef(ctx.territoryId, i18n.locale)].filter(Boolean).join(' · '),
 					h3,

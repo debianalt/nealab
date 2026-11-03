@@ -49,7 +49,7 @@
 			title: 'Hexagons with post-cutoff forest loss',
 			unit: '% of the province’s hexagons',
 			caption:
-				'Presence of loss (at least one pixel) per H3-7 hexagon. In Misiones the loss is both the most widespread and the most intense: it appears in four of every five hexagons and affects 5.5% of each one’s surface, against 1.8% in Corrientes.'
+				'Presence of loss (at least one pixel) per H3-7 hexagon. In Misiones the loss is both the most widespread and the most intense: it appears in four of every five hexagons and reaches 5.5% of the provincial surface, against 1.8% in Corrientes. The two figures measure different things and are not multiplied together.'
 		}
 	} as const;
 	const t = $derived((T as any)[locale] ?? T.es);

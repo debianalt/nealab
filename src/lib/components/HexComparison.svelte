@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { displayTypeLabel } from '$lib/utils/typeLabel';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import PetalChart from './PetalChart.svelte';
 	import { ANALYSIS_REGISTRY } from '$lib/config';
@@ -152,16 +153,21 @@
 				<div class="cd-hex-id">
 					<span class="hc-dot" style:background={hexData.color}></span>
 					{h3index.slice(0, 4)}...{h3index.slice(-4)}
-					{#if hasClassification && hexData.data?.type_label}
-						<span class="cd-type">{hexData.data.type_label}</span>
+					{#if hasClassification && displayTypeLabel(hexData.data?.type_label, i18n.locale)}
+						<span class="cd-type">{displayTypeLabel(hexData.data?.type_label, i18n.locale)}</span>
 					{/if}
 				</div>
 				{#each componentVars as v}
 					{@const val = hexData.data?.[v.col]}
 					{@const rawVal = v.rawCol ? hexData.data?.[v.rawCol] : null}
-					{@const hasData = (typeof val === 'string' && val.length > 0)
-						|| (typeof val === 'number' && Number.isFinite(val))
-						|| (typeof rawVal === 'number' && Number.isFinite(rawVal))}
+					{@const rawLoaded = !!v.rawCol && !!hexData.data && v.rawCol in hexData.data}
+					<!-- When the layer has a raw column and it was loaded, it alone decides: a NULL raw
+					     with a filled normalized value is a placeholder (Chaco and Formosa carry
+					     dist_primary_m = 50 in every cell and no road distance). -->
+					{@const hasData = rawLoaded
+						? (typeof rawVal === 'number' && Number.isFinite(rawVal))
+						: ((typeof val === 'string' && val.length > 0)
+							|| (typeof val === 'number' && Number.isFinite(val)))}
 					{@const isStr = typeof val === 'string' && val.length > 0}
 					{@const numVal = typeof val === 'number' ? val : 0}
 					{@const displayVal = (rawVal != null && typeof rawVal === 'number') ? rawVal : numVal}

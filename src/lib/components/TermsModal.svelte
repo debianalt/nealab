@@ -19,7 +19,7 @@
 			<span class="stat-sep">·</span>
 			<span>{i18n.t('terms.modal.analyses').replace('{n}', String(nAnalyses))}</span>
 			<span class="stat-sep">·</span>
-			<span>CONICET / FHyCS-UNaM</span>
+			<span>CONICET / FHyCS-UNaM · GEE Partner</span>
 		</div>
 
 		<div class="stats-divider">{i18n.t('terms.modal.conditions')}</div>
