@@ -72,3 +72,7 @@ pipeline/**/*_PLAN.md
 
 # Secretos de Pages Functions en local (wrangler pages dev)
 .dev.vars
+
+# Director de Spatia: salida de cada corrida (artefactos de Actions)
+director/run/
+__pycache__/

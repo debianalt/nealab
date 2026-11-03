@@ -1,40 +1,302 @@
 name: Director de Spatia
 
+# Cada 15 días: sondas sobre www.spatia.ar → juez (Claude) → arreglos verificados →
+# deploy a producción → re-sondeo → informe en un issue. Ver director/reglamento.md.
+# Claude corre con la suscripción del autor (secret CLAUDE_CODE_OAUTH_TOKEN).
 on:
+  schedule:
+    - cron: '0 6 * * 0'          # domingos 06:00 UTC (03:00 ART); sigue sólo en semanas ISO pares
   workflow_dispatch:
     inputs:
       modo:
-        description: 'humo | diagnostico | completo'
-        default: humo
-      base:
-        description: 'URL a sondear'
-        default: 'https://neahub.pages.dev'
+        description: 'diagnostico (sólo informa) | completo (arregla y despliega) | humo'
+        default: completo
+      modelo:
+        description: 'Modelo de Claude (vacío = director/config.yaml)'
+        default: ''
+      capas:
+        description: 'Limitar a estas capas (coma), vacío = todas'
+        default: ''
 
 permissions:
-  contents: read
+  contents: write
+  issues: write
+  actions: read
+
+concurrency:
+  group: director
+  cancel-in-progress: false
+
+env:
+  PYTHONIOENCODING: utf-8
+  FORCE_COLOR: '0'
 
 jobs:
+  cadencia:
+    if: github.repository == 'debianalt/spatia-dev'
+    runs-on: ubuntu-latest
+    outputs:
+      correr: ${{ steps.c.outputs.correr }}
+      modo: ${{ steps.c.outputs.modo }}
+    steps:
+      - id: c
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            semana=$(date -u +%V)
+            if [ $((10#$semana % 2)) -eq 0 ]; then echo "correr=si" >> $GITHUB_OUTPUT; else echo "correr=no" >> $GITHUB_OUTPUT; fi
+            echo "modo=completo" >> $GITHUB_OUTPUT
+          else
+            echo "correr=si" >> $GITHUB_OUTPUT
+            echo "modo=${{ inputs.modo || 'completo' }}" >> $GITHUB_OUTPUT
+          fi
+
   humo:
-    if: github.repository == 'debianalt/spatia-dev' && inputs.modo == 'humo'
+    needs: cadencia
+    if: needs.cadencia.outputs.modo == 'humo'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install playwright pillow && python -m playwright install --with-deps chromium
-      - uses: actions/setup-node@v5
-        with:
-          node-version: '22'
-          cache: npm
-      - run: npm ci && npm run build
-      - run: |
-          nohup npx vite preview --port 5173 --strictPort > preview.log 2>&1 &
-          for i in $(seq 1 30); do curl -sf http://localhost:5173/ >/dev/null && break; sleep 1; done
-      - run: cd director/sondas && python humo.py http://localhost:5173 ../../out/local
+        with: { python-version: '3.12' }
+      - run: pip install playwright pyyaml pillow && python -m playwright install --with-deps chromium
+      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: humo, path: out/ }
+
+  sondas:
+    needs: cadencia
+    if: needs.cadencia.outputs.correr == 'si' && needs.cadencia.outputs.modo != 'humo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        sonda:
+          - { nombre: mapa-misiones, cmd: 'mapa.py', args: '--territorios misiones' }
+          - { nombre: mapa-corrientes, cmd: 'mapa.py', args: '--territorios corrientes' }
+          - { nombre: mapa-chaco, cmd: 'mapa.py', args: '--territorios chaco' }
+          - { nombre: mapa-formosa, cmd: 'mapa.py', args: '--territorios formosa' }
+          - { nombre: mapa-py, cmd: 'mapa.py', args: '--territorios itapua_py,alto_parana_py' }
+          - { nombre: textos, cmd: 'textos.py', args: '' }
+          - { nombre: estatico, cmd: 'estatico.py', args: '' }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12', cache: pip }
+      - run: pip install playwright pyyaml pillow duckdb && python -m playwright install --with-deps chromium
+      - name: Sonda ${{ matrix.sonda.nombre }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          CAPAS="${{ inputs.capas }}"
+          EXTRA=""
+          if [ -n "$CAPAS" ] && [ "${{ matrix.sonda.cmd }}" != "estatico.py" ]; then EXTRA="--capas $CAPAS"; fi
+          python director/sondas/${{ matrix.sonda.cmd }} https://www.spatia.ar out/${{ matrix.sonda.nombre }} ${{ matrix.sonda.args }} $EXTRA
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: humo
+          name: sonda-${{ matrix.sonda.nombre }}
           path: out/
+          retention-days: 30
+
+  director:
+    needs: [cadencia, sondas]
+    if: always() && needs.cadencia.outputs.correr == 'si' && needs.cadencia.outputs.modo != 'humo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      MODO: ${{ needs.cadencia.outputs.modo }}
+      GH_TOKEN: ${{ github.token }}
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12', cache: pip }
+      - uses: actions/setup-node@v5
+        with: { node-version: '22', cache: npm }
+      - name: Dependencias
+        run: |
+          pip install playwright pyyaml pillow duckdb && python -m playwright install --with-deps chromium
+          npm ci
+          npm install -g @anthropic-ai/claude-code
+          git config user.name "Director de Spatia"
+          git config user.email "director@spatia.ar"
+          MODELO="${{ inputs.modelo }}"
+          [ -z "$MODELO" ] && MODELO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['modelo'])")
+          ESFUERZO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml')).get('esfuerzo','high'))")
+          echo "MODELO=$MODELO" >> $GITHUB_ENV
+          echo "ESFUERZO=$ESFUERZO" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v4
+        with: { path: director/run/sondas, pattern: 'sonda-*' }
+
+      - name: Unir hallazgos y respuestas del informe anterior
+        run: |
+          python director/unir.py director/run/sondas director/run/hallazgos.json
+          n=$(gh issue list --label director --state open --json number -q '.[0].number' || true)
+          if [ -n "$n" ]; then
+            gh issue view "$n" --json comments,url -q '.url as $u | .comments[] | select(.author.login == "debianalt") | "- \(.createdAt) \($u)#issuecomment-\(.url | split("-") | last): \(.body)"' > director/run/respuestas.md || true
+          fi
+
+      - name: Juez
+        id: juez
+        run: |
+          claude -p "$(cat director/prompts/juez.md)" --model "$MODELO" --effort "$ESFUERZO" \
+            --allowedTools "Read" "Grep" "Glob" "Write(director/run/**)" "Edit(director/ignorar.yaml)" "Edit(director/decisiones.md)" "Write(director/ignorar.yaml)" \
+            --output-format json > director/run/juez_salida.json || echo "fallo=si" >> $GITHUB_OUTPUT
+          python -c "import json;d=json.load(open('director/run/juez_salida.json'));print('costo equivalente USD:',d.get('total_cost_usd'),'turnos:',d.get('num_turns'))" || true
+          test -s director/run/triage.json || { echo "El juez no escribió triage.json"; echo "fallo=si" >> $GITHUB_OUTPUT; }
+
+      - name: Registrar decisiones y falsos positivos
+        if: steps.juez.outputs.fallo != 'si'
+        run: |
+          git add director/ignorar.yaml director/decisiones.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Director: decisiones del autor y falsos positivos ($(date -u +%F))"
+            git pull --rebase origin main && git push origin HEAD:main || echo "no se pudo publicar decisiones.md (se reintenta en la próxima corrida)"
+          fi
+
+      - name: Arreglador
+        id: arreglador
+        if: env.MODO == 'completo' && steps.juez.outputs.fallo != 'si'
+        run: |
+          n=$(python -c "import json;print(len(json.load(open('director/run/triage.json')).get('arreglar',[])))")
+          echo "grupos=$n"
+          [ "$n" = "0" ] && { echo "[]" > director/run/arreglos.json; exit 0; }
+          git rev-parse HEAD > director/run/base_sha
+          claude -p "$(cat director/prompts/arreglador.md)" --model "$MODELO" --effort "$ESFUERZO" \
+            --allowedTools "Read" "Grep" "Glob" "Edit(src/**)" "Write(src/**)" "Edit(static/**)" "Write(static/**)" "Write(director/run/**)" \
+              "Bash(bash director/reprobar.sh:*)" "Bash(git add:*)" "Bash(git commit:*)" "Bash(git diff:*)" "Bash(git status:*)" "Bash(git log:*)" \
+              "Bash(git checkout -- :*)" "Bash(grep:*)" "Bash(npm run build:*)" "Bash(python director/unir.py:*)" "Bash(cat:*)" "Bash(ls:*)" \
+            --output-format json > director/run/arreglador_salida.json || true
+          python -c "import json;d=json.load(open('director/run/arreglador_salida.json'));print('costo equivalente USD:',d.get('total_cost_usd'),'turnos:',d.get('num_turns'))" || true
+          git status --short
+          # Lo que el arreglador dejó sin commitear no se despliega.
+          git stash push --include-untracked -m director-sin-commit -- src static || true
+          nuevos=$(git rev-list --count $(cat director/run/base_sha)..HEAD)
+          echo "commits=$nuevos" >> $GITHUB_OUTPUT
+
+      - name: Guardia y compuerta
+        id: compuerta
+        if: steps.arreglador.outputs.commits != '' && steps.arreglador.outputs.commits != '0'
+        run: |
+          set +e
+          python director/guardia.py $(cat director/run/base_sha) | tee director/run/guardia.txt
+          g=${PIPESTATUS[0]}
+          # Re-sondeo del build local: capas tocadas por los arreglos + control fijo
+          CAPAS=$(python -c "import json;t=json.load(open('director/run/triage.json'));c=set();[c.update(g.get('reprobar',{}).get('capas','').split(',')) for g in t.get('arreglar',[])];c.update(['flood_risk','land_use','service_deprivation']);print(','.join(sorted(x for x in c if x)))")
+          bash director/reprobar.sh director/run/local --territorios misiones,corrientes --capas "$CAPAS" --hover 4
+          python - <<'EOF'
+          import json
+          loc = json.load(open('director/run/local/hallazgos.json'))
+          prod = json.load(open('director/run/hallazgos.json'))
+          pares = {(h.get('territorio'), h.get('capa')) for h in loc} | {(v['territorio'], v['capa']) for v in json.load(open('director/run/local/vistas_mapa.json'))}
+          base = {h['huella'] for h in prod}
+          nuevos = [h for h in loc if h['huella'] not in base and h['severidad'] == 'alta']
+          antes = [h for h in prod if (h.get('territorio'), h.get('capa')) in pares and h.get('sonda') == 'mapa']
+          arreglados = [h for h in antes if h['huella'] not in {x['huella'] for x in loc}]
+          json.dump({'nuevos_altos': nuevos, 'arreglados': len(arreglados), 'antes': len(antes), 'despues': len(loc)}, open('director/run/compuerta.json', 'w'), ensure_ascii=False, indent=1)
+          print(f"antes {len(antes)} · después {len(loc)} · arreglados {len(arreglados)} · nuevos altos {len(nuevos)}")
+          for h in nuevos: print('  NUEVO', h['tipo'], h.get('territorio'), h.get('capa'), h['detalle'][:160])
+          open('director/run/compuerta_ok', 'w').write('si' if not nuevos else 'no')
+          EOF
+          ok=$(cat director/run/compuerta_ok)
+          if [ "$g" = "0" ] && [ "$ok" = "si" ]; then echo "pasa=si" >> $GITHUB_OUTPUT; else echo "pasa=no" >> $GITHUB_OUTPUT; fi
+
+      - name: Publicar y desplegar
+        id: deploy
+        if: steps.compuerta.outputs.pasa == 'si'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          git fetch origin main
+          if ! git rebase origin/main; then
+            git rebase --abort
+            echo "conflicto=si" >> $GITHUB_OUTPUT; exit 0
+          fi
+          npm run build
+          git push origin HEAD:main
+          npx wrangler pages deploy build/ --project-name neahub --branch main
+          git rev-parse HEAD > director/run/deploy_sha
+          echo "desplegado=si" >> $GITHUB_OUTPUT
+
+      - name: Re-sondeo de producción
+        id: post
+        if: steps.deploy.outputs.desplegado == 'si'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          sleep 90
+          CAPAS=$(python -c "import json;print(','.join(sorted({v['capa'] for v in json.load(open('director/run/local/vistas_mapa.json'))})))")
+          python director/sondas/mapa.py https://www.spatia.ar director/run/post --territorios misiones,corrientes --capas "$CAPAS" --hover 4
+          python director/unir.py director/run/post director/run/post/hallazgos.json --comparar director/run/local/hallazgos.json
+          altos=$(python -c "import json;print(sum(1 for h in json.load(open('director/run/post/hallazgos.comparacion.json'))['nuevos'] if h['severidad']=='alta'))")
+          if [ "$altos" != "0" ]; then
+            echo "Producción empeoró: se revierte"
+            base=$(cat director/run/base_sha)
+            git revert --no-edit $base..HEAD
+            npm run build && git push origin HEAD:main && npx wrangler pages deploy build/ --project-name neahub --branch main
+            echo "revertido=si" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Espejo público
+        if: steps.deploy.outputs.desplegado == 'si'
+        env:
+          DEPLOY_KEY: ${{ secrets.NEALAB_DEPLOY_KEY }}
+        run: |
+          [ -z "$DEPLOY_KEY" ] && { echo "sin deploy key del espejo"; exit 0; }
+          mkdir -p ~/.ssh && echo "$DEPLOY_KEY" > ~/.ssh/nealab && chmod 600 ~/.ssh/nealab
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/nealab -o StrictHostKeyChecking=accept-new" git push git@github.com:debianalt/nealab.git HEAD:master || echo "espejo: push falló (se informa)"
+
+      - name: Rama si no se desplegó
+        if: always() && steps.arreglador.outputs.commits != '' && steps.arreglador.outputs.commits != '0' && steps.deploy.outputs.desplegado != 'si'
+        run: |
+          rama="director/$(date -u +%F)"
+          git push origin HEAD:refs/heads/$rama && echo "Cambios en la rama $rama" > director/run/rama.txt
+
+      - name: Informe
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json, os
+          from pathlib import Path
+          r = Path('director/run'); t = []
+          if (r / 'deploy_sha').exists():
+              t.append(f"Desplegado en producción ({(r / 'deploy_sha').read_text().strip()[:8]}).")
+          if '${{ steps.post.outputs.revertido }}' == 'si':
+              t.append('⚠️ El re-sondeo de producción encontró errores nuevos: **se revirtieron los cambios** y se redesplegó.')
+          if '${{ steps.deploy.outputs.conflicto }}' == 'si':
+              t.append('Conflicto al hacer rebase sobre main (cambios tuyos en paralelo): no se desplegó.')
+          if '${{ steps.compuerta.outputs.pasa }}' == 'no':
+              t.append('La guardia o la compuerta rechazó los cambios: no se desplegó.\n\n```\n' + ((r / 'guardia.txt').read_text() if (r / 'guardia.txt').exists() else '') + '\n```')
+          if (r / 'compuerta.json').exists():
+              c = json.loads((r / 'compuerta.json').read_text()); t.append(f"Re-sondeo del build: {c['antes']} hallazgos antes → {c['despues']} después en las vistas tocadas.")
+          if (r / 'rama.txt').exists(): t.append((r / 'rama.txt').read_text())
+          if '${{ steps.juez.outputs.fallo }}' == 'si':
+              t.append('⚠️ El juez no pudo correr (¿token de Claude vencido o cupo agotado?). Revisá el secret CLAUDE_CODE_OAUTH_TOKEN.')
+          if t: (r / 'despliegue.json').write_text(json.dumps({'texto': '\n\n'.join(t)}, ensure_ascii=False))
+          EOF
+          python director/informe.py director/run --publicar
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: director-run
+          path: director/run/
+          retention-days: 30
+
+  falla:
+    needs: [cadencia, sondas, director]
+    if: failure() && needs.cadencia.outputs.correr == 'si'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - run: |
+          gh issue create -R ${{ github.repository }} --title "Director: la corrida falló ($(date -u +%F))" \
+            --body "La corrida ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falló antes de terminar. Mirá el log del job que quedó en rojo."
