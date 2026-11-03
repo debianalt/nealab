@@ -152,7 +152,13 @@
 		const r = rs.find((x) => x.name === req.name) ?? rs.find((x) => norm(x.name) === norm(req.name));
 		if (!r || r.code === untrack(() => expandedCode)) return;
 		untrack(() => openRow(r));
-		requestAnimationFrame(() => listEl?.querySelector('.rank-row.active')?.scrollIntoView({ block: 'nearest' }));
+		// Scroll the list only (scrollIntoView would also move the side panel).
+		requestAnimationFrame(() => {
+			const row = listEl?.querySelector('.rank-row.active');
+			if (!listEl || !row) return;
+			const lr = listEl.getBoundingClientRect(), rr = row.getBoundingClientRect();
+			listEl.scrollTop += rr.top - lr.top - listEl.clientHeight / 3;
+		});
 	});
 
 	function fmt(n: number): string {
@@ -259,10 +265,12 @@
 	.rank-note { font-size: 11.5px; color: var(--c-ink-3); line-height: 1.4; margin: 6px 0 0; }
 
 	.cd-series-label { font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55); margin: 3px 6px 0; }
-	.cd-bars { display: flex; align-items: flex-end; gap: 6px; height: 64px; padding: 4px 6px; margin: 1px 0 3px; background: rgba(var(--c-fg-rgb), 0.03); border-radius: 4px; }
-	.cd-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 3px; }
-	.cd-bar-val { font-size: 11px; color: rgba(226,232,240,0.75); white-space: nowrap; }
-	.cd-bar-track { width: 60%; flex: 1; display: flex; align-items: flex-end; }
+	/* Fixed track height: with flex: 1 the track collapsed to the fill's 1 px
+	   min-height and every bar drew as a line (3-nov-2026). */
+	.cd-bars { display: flex; align-items: flex-end; gap: 6px; padding: 4px 6px; margin: 1px 0 3px; background: rgba(var(--c-fg-rgb), 0.03); border-radius: 4px; }
+	.cd-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; }
+	.cd-bar-val { font-size: 11px; color: var(--c-ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+	.cd-bar-track { width: 60%; height: 40px; display: flex; align-items: flex-end; }
 	.cd-bar-fill { width: 100%; background: var(--s-cat-2); border-radius: 2px 2px 0 0; min-height: 1px; }
 	.cd-bar-fill.viv { background: var(--s-cat-3); }
 	.cd-bar-year { font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55); }
