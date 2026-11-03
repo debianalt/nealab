@@ -21,7 +21,7 @@ from playwright.async_api import async_playwright
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:5174'
 CELLS = sys.argv[2:] or ['89a946191b3ffff']  # Capital (Misiones)
-INIT = "localStorage.setItem('spatia_terms_v1','true');localStorage.setItem('spatia_welcomed_v1','true');"
+INIT = "localStorage.setItem('spatia_terms_v2','true');localStorage.setItem('spatia_welcomed_v1','true');"
 GPU = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist']
 ROWS = "[...document.querySelectorAll('.fi-card')].map(s => s.innerText.replace(/\\s+/g,' ').trim())"
 HEAD = "document.querySelector('.fi-head')?.innerText.replace(/\\s+/g,' ')"

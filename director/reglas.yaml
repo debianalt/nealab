@@ -1,0 +1,39 @@
+# Parte máquina del reglamento (ver reglamento.md). El director no edita este archivo.
+
+territorios_analisis: [misiones, corrientes, chaco, formosa, itapua_py, alto_parana_py]
+
+# Regex (sin distinguir mayúsculas) que no pueden aparecer en el texto visible del sitio.
+# 'excepto' = rutas o claves donde la frase está permitida a propósito.
+frases_prohibidas:
+  - {re: 'inteligencia (geoespacial|territorial|comercial|competitiva)', motivo: 'término rector: análisis geoespacial'}
+  - {re: 'geospatial intelligence|territorial intelligence|intelig[eê]ncia (geoespacial|territorial)', motivo: 'término rector (en/pt)'}
+  - {re: 'ciencia ciudadana|citizen science|ci[eê]ncia cidad[aã]', motivo: 'decisión 2-nov'}
+  - {re: '70\s*/\s*20\s*/\s*10', motivo: 'puntaje EUDR ponderado retirado'}
+  - {re: 'puntaje (de )?riesgo eudr|eudr risk score', motivo: 'puntaje EUDR retirado'}
+  - {re: 'compliance check|certificaci[oó]n eudr|eudr certification|(no )?conforme (con la )?eudr', motivo: 'demandable'}
+  - {re: 'forma parte del stan', motivo: 'el acceso libre no es el STAN'}
+  - {re: '\bGPL\b(?!-?3\.0 Affero)', motivo: 'licencia AGPL-3.0', excepto_re: 'AGPL'}
+  - {re: 'softwarex', motivo: 'no existe'}
+  - {re: 'riesgo h[ií]drico', motivo: 'término retirado'}
+  - {re: 'score alto|\(invertida\)', motivo: 'etiquetas retiradas'}
+  - {re: 'riesgo (alto|bajo)', motivo: 'inundación sin score de riesgo'}
+  - {re: 'hogares estimados', motivo: 'magnitud = sólo edificios'}
+  - {re: 'cobertura nativa', motivo: 'es cobertura arbórea'}
+  - {re: 'piso inadecuado', motivo: 'es Sin piso revestido'}
+  - {re: '\btipo [0-9]\b', motivo: 'tipos con nombre'}
+  - {re: '\b23 an[aá]lisis\b|\b18 departamentos\b', motivo: 'cifras viejas'}
+  - {re: 'hansen[^.]{0,20}v?1\.12', motivo: 'Hansen v1.13'}
+  - {re: 'asistente conversacional|chat con (claude|ia)', motivo: 'sin chat en la UI'}
+
+# Patrones de basura visible en la UI.
+basura_visible:
+  - {re: '\b(NaN|undefined|Infinity|null)\b', motivo: 'valor no calculado'}
+  - {re: '\b[a-z]+(\.[a-z][A-Za-z0-9]+){2,}\b', motivo: 'clave i18n sin traducir', excepto_re: '(spatia\.ar|pages\.dev|github\.com|r2\.dev|\.parquet|\.json|\.pmtiles|www\.)'}
+  - {re: '\b[a-z]{2,}_[a-z0-9_]{2,}\b', motivo: 'nombre de columna visible', excepto_re: '(h3index|@|\.)'}
+
+# Guardia: qué puede cambiar el arreglador.
+rutas_permitidas: ['src/', 'static/', 'director/ignorar.yaml', 'director/decisiones.md']
+rutas_prohibidas_en_src:
+  - 'src/lib/data/'          # datos generados por el pipeline
+max_lineas_cambiadas: 800
+dominios_externos_permitidos_nuevos: []

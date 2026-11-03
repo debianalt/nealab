@@ -23,7 +23,7 @@ from playwright.async_api import async_playwright
 
 BASE, OUT = sys.argv[1], sys.argv[2]
 QS = sys.argv[3] if len(sys.argv) > 3 else '?t=misiones&lens=poblacion&a=service_deprivation&dept=Capital'
-INIT = "localStorage.setItem('spatia_terms_v1','true');localStorage.setItem('spatia_welcomed_v1','true');"
+INIT = "localStorage.setItem('spatia_terms_v2','true');localStorage.setItem('spatia_welcomed_v1','true');"
 GPU = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist']
 LOCAL = 'localhost' in BASE
 

@@ -16,7 +16,7 @@ BASE, OUT = sys.argv[1].rstrip('/'), sys.argv[2]
 os.makedirs(OUT, exist_ok=True)
 GPU = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist']
 LOCAL = 'localhost' in BASE
-INIT = "localStorage.setItem('spatia_terms_v1','true');localStorage.setItem('spatia_welcomed_v1','true');"
+INIT = "localStorage.setItem('spatia_terms_v2','true');localStorage.setItem('spatia_welcomed_v1','true');"
 CASES = [
     ('deforestacion', '/?t=misiones&lens=ambiente&a=deforestation_dynamics&dept=Guaraní'),
     ('pm25', '/?t=misiones&lens=ambiente&a=pm25_drivers&dept=Guaraní'),

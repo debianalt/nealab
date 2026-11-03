@@ -21,7 +21,7 @@ BASE, OUT = sys.argv[1].rstrip('/'), sys.argv[2]
 os.makedirs(OUT, exist_ok=True)
 GPU = ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist']
 LOCAL = 'localhost' in BASE
-BASE_INIT = "localStorage.setItem('spatia_terms_v1','true');localStorage.setItem('spatia_welcomed_v1','true');"
+BASE_INIT = "localStorage.setItem('spatia_terms_v2','true');localStorage.setItem('spatia_welcomed_v1','true');"
 
 VIEWS = [
     ('inicio', '/'),

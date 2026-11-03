@@ -42,7 +42,7 @@
 	import { findDeptFeature, ensureBrBoundaries, ensureArBoundaries, getArFeatures, isArDeptTerritory, normDeptName } from '$lib/utils/deptBoundaries';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import DeptPickerPanel from '$lib/components/DeptPickerPanel.svelte';
-	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getDefaultTerritory, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
+	import { PARQUETS, MAP_INIT, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, ANALYSIS_REGISTRY, getDefaultTerritory, getAnalysisById, getAnalysesForLens, getHexPrimaryUnit, type AnalysisConfig, type LensId, type CountryId } from '$lib/config';
 	import { i18n, type Locale } from '$lib/stores/i18n.svelte';
 	import { terms } from '$lib/stores/terms.svelte';
 	import { page } from '$app/stores';
@@ -432,7 +432,19 @@
 			handleSelectFloodDpto(entry.dpto ?? entry.distrito ?? entry.municipio, entry.parquetKey, entry.centroid as [number, number]);
 		}) as EventListener);
 
-		mapContainer?.addEventListener('map-ready', (() => { mapReady = true; }) as EventListener);
+		mapContainer?.addEventListener('map-ready', (() => {
+			mapReady = true;
+			// Gancho de sondas del director (director/sondas): sólo con localStorage spatia_sonda=1.
+			// Expone el estado real para comparar leyenda, pintura, tooltip y gráficos sin parsear config.ts.
+			try {
+				if (localStorage.getItem('spatia_sonda') === '1') {
+					(window as any).__spatia = {
+						map: mapComponent?.getMap(), hexStore, lensStore, i18n,
+						registros: { TERRITORY_REGISTRY, HEX_LAYER_REGISTRY, ANALYSIS_REGISTRY }
+					};
+				}
+			} catch { /* localStorage bloqueado: sin gancho */ }
+		}) as EventListener);
 
 		mapContainer?.addEventListener('compare-hex-select', ((e: CustomEvent) => {
 			if (lassoStore.active) return;

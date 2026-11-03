@@ -1,0 +1,7 @@
+# Configuración del director. Cambiar el modelo = editar una línea.
+modelo: claude-opus-5-5
+esfuerzo: high            # low | medium | high | xhigh | max
+max_turnos_juez: 60
+max_turnos_arreglador: 150
+cadencia: quincenal       # domingo 06:00 UTC, semanas ISO pares
+base_produccion: https://www.spatia.ar
