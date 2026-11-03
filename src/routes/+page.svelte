@@ -650,8 +650,14 @@
 	let hasShownWelcome = typeof window !== 'undefined'
 		? localStorage.getItem(WELCOMED_KEY) === 'true'
 		: true;
+	// A link to a layer, cell or zone (shared on social media, mail) is not a first
+	// look at the site: the welcome would cover the analysis it asked for, and the
+	// panel that paints the departments would never mount. Skip it, and don't mark
+	// the welcome as seen: it shows on that person's first visit to the home page.
+	const DEEP_LINK_KEYS = ['a', 'h3', 'dept', 'zona'];
+	const arrivedByDeepLink = DEEP_LINK_KEYS.some((k) => new URLSearchParams(initialSearch).has(k));
 	$effect(() => {
-		if (terms.accepted && !hasShownWelcome) {
+		if (terms.accepted && !hasShownWelcome && !arrivedByDeepLink) {
 			showAbout = true;
 			hasShownWelcome = true;
 			if (typeof window !== 'undefined') localStorage.setItem(WELCOMED_KEY, 'true');

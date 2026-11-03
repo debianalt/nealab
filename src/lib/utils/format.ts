@@ -15,5 +15,9 @@ export function formatDept(name: string | null | undefined): string {
 	if (!name) return '';
 	return String(name)
 		.toLowerCase()
-		.replace(/(^|[\s'.-])(\p{L})/gu, (_m, sep, ch) => sep + ch.toUpperCase());
+		.replace(/(^|[\s'.-])(\p{L})/gu, (_m, sep, ch) => sep + ch.toUpperCase())
+		// Particles stay lower case after the first word ("25 de Mayo", "Paso de los
+		// Libres", "São José do Cedro"). Only whole words between spaces: an initial
+		// like the "E." of "Juan E. O'Leary" is followed by a dot and keeps its capital.
+		.replace(/(?<=\s)(De|Del|La|Las|Los|Y|E|Do|Da|Dos|Das)(?=\s)/g, (w) => w.toLowerCase());
 }
