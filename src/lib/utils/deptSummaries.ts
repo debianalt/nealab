@@ -82,30 +82,6 @@ const FORMOSA_SUMMARIES: Record<string, () => Promise<any>> = {
 	education_capital       : () => import('$lib/data/formosa_sat_education_capital_summary.json'),
 	education_flow          : () => import('$lib/data/formosa_sat_education_flow_summary.json'),
 };
-const PARANA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
-	deforestation_dynamics  : () => import('$lib/data/parana_br_sat_deforestation_dynamics_summary.json'),
-	flood_risk              : () => import('$lib/data/parana_br_flood_dept_summary.json'),
-	pm25_drivers            : () => import('$lib/data/parana_br_sat_pm25_drivers_summary.json'),
-	forestry_aptitude       : () => import('$lib/data/parana_br_sat_forestry_aptitude_summary.json'),
-	land_use                : () => import('$lib/data/parana_br_sat_land_use_summary.json'),
-	accessibility           : () => import('$lib/data/parana_br_sat_accessibility_summary.json'),
-};
-const SANTA_CATARINA_BR_SUMMARIES: Record<string, () => Promise<any>> = {
-	deforestation_dynamics  : () => import('$lib/data/santa_catarina_br_sat_deforestation_dynamics_summary.json'),
-	pm25_drivers            : () => import('$lib/data/santa_catarina_br_sat_pm25_drivers_summary.json'),
-	flood_risk              : () => import('$lib/data/santa_catarina_br_flood_dept_summary.json'),
-	forestry_aptitude       : () => import('$lib/data/santa_catarina_br_sat_forestry_aptitude_summary.json'),
-	land_use                : () => import('$lib/data/santa_catarina_br_sat_land_use_summary.json'),
-	accessibility           : () => import('$lib/data/santa_catarina_br_sat_accessibility_summary.json'),
-};
-const RIO_GRANDE_SUL_BR_SUMMARIES: Record<string, () => Promise<any>> = {
-	deforestation_dynamics  : () => import('$lib/data/rio_grande_sul_br_sat_deforestation_dynamics_summary.json'),
-	flood_risk              : () => import('$lib/data/rio_grande_sul_br_flood_dept_summary.json'),
-	pm25_drivers            : () => import('$lib/data/rio_grande_sul_br_sat_pm25_drivers_summary.json'),
-	forestry_aptitude       : () => import('$lib/data/rio_grande_sul_br_sat_forestry_aptitude_summary.json'),
-	land_use                : () => import('$lib/data/rio_grande_sul_br_sat_land_use_summary.json'),
-	accessibility           : () => import('$lib/data/rio_grande_sul_br_sat_accessibility_summary.json'),
-};
 
 const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = {
 	'itapua_py/': ITAPUA_SUMMARIES,
@@ -113,11 +89,9 @@ const TERRITORY_SUMMARIES: Record<string, Record<string, () => Promise<any>>> = 
 	'alto_parana_py/': ALTO_PARANA_SUMMARIES,
 	'chaco/': CHACO_SUMMARIES,
 	'formosa/': FORMOSA_SUMMARIES,
-	'parana_br/': PARANA_BR_SUMMARIES,
-	'santa_catarina_br/': SANTA_CATARINA_BR_SUMMARIES,
-	'rio_grande_sul_br/': RIO_GRANDE_SUL_BR_SUMMARIES,
-	// The other 15 Paraguayan departments keep buildings, district limits and mask only
-	// (3-nov-2026): their analysis layers were taken down — see config.ts coverage.
+	// Analysis layers only where we work (3-nov-2026): NEA AR + Itapúa + Alto Paraná. The
+	// other 15 Paraguayan departments and the 3 Brazilian states keep buildings, census
+	// (IBGE setores in Brazil) and limits — see config.ts coverage.
 };
 
 // EUDR (pipeline/build_eudr_dpto.py): sat_eudr_dept_summary.json (Misiones) and
