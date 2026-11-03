@@ -207,7 +207,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	// Guaraní reader hit the English default on the two hints below — English was never
 	// the right fallback for a reader in the NEA. Spanish is, until these are translated.
 	'map.hover.pick': { es: '{name} · clic para elegir', en: '{name} · click to select', gn: '{name} · clic para elegir', pt: '{name} · clique para escolher' },
-	'map.hint.zoomNeighbours': { es: 'Acercá para ver los hexágonos de las provincias, departamentos y estados vecinos', en: 'Zoom in to load the neighbouring provinces, departments and states', gn: 'Acercá para ver los hexágonos de las provincias, departamentos y estados vecinos', pt: 'Aproxime para ver os hexágonos das províncias, departamentos e estados vizinhos' },
+	'map.hint.zoomNeighbours': { es: 'Acercá para ver los hexágonos de las provincias y departamentos vecinos', en: 'Zoom in to load the neighbouring provinces and departments', gn: 'Acercá para ver los hexágonos de las provincias y departamentos vecinos', pt: 'Aproxime para ver os hexágonos das províncias e departamentos vizinhos' },
 	'map.hint.aggregated': { es: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', en: 'Aggregated overview — spatial means · zoom in for per-hex detail', gn: 'Vista agregada — promedios espaciales · acercá para ver el detalle por hexágono', pt: 'Vista agregada — médias espaciais · aproxime para ver o detalhe por hexágono' }, // gn: pendiente
 	'map.basemap.label': { es: 'Fondo del mapa', en: 'Basemap', gn: 'Fondo del mapa', pt: 'Fundo do mapa' }, // gn: pendiente
 	'map.basemap.claro': { es: 'Claro', en: 'Light', gn: 'Claro', pt: 'Claro' }, // gn: pendiente

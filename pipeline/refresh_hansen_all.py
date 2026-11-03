@@ -1,5 +1,6 @@
 """
-Refresh deforestation_dynamics in every territory with a new Hansen release.
+Refresh deforestation_dynamics in every analysis territory (config.ANALYSIS_TERRITORIES)
+with a new Hansen release.
 
 Per territory (4 in parallel):
   1. satellite/<t>/hansen_lossyear.tif -> output/<t>/, then deleted from the bucket
@@ -24,7 +25,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-from config import OUTPUT_DIR, TERRITORY_CONFIGS, get_territory
+from config import ANALYSIS_TERRITORIES, OUTPUT_DIR, get_territory
 
 
 def run(cmd: list[str], log) -> bool:
@@ -63,7 +64,7 @@ def main() -> int:
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--dry-run', action='store_true')
     a = ap.parse_args()
-    ts = [t.strip() for t in a.only.split(',')] if a.only else list(TERRITORY_CONFIGS)
+    ts = [t.strip() for t in a.only.split(',')] if a.only else list(ANALYSIS_TERRITORIES)
     t0 = time.time()
     failed = []
     with ThreadPoolExecutor(max_workers=a.workers) as pool:

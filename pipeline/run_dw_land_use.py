@@ -29,14 +29,10 @@ SCRIPT_DIR = Path(__file__).parent
 sys.path.insert(0, str(SCRIPT_DIR))
 OUTPUT_DIR = SCRIPT_DIR / 'output'
 
-ALL_TERRITORIES = [
-    'misiones', 'itapua_py', 'alto_parana_py', 'corrientes', 'chaco', 'formosa',
-    'parana_br', 'santa_catarina_br', 'rio_grande_sul_br',
-    'concepcion_py', 'san_pedro_py', 'cordillera_py', 'guaira_py',
-    'caaguazu_py', 'caazapa_py', 'misiones_py', 'paraguari_py',
-    'central_py', 'neembucu_py', 'amambay_py', 'canindeyu_py',
-    'presidente_hayes_py', 'boqueron_py', 'alto_paraguay_py',
-]
+from config import ANALYSIS_TERRITORIES
+
+# Analysis layers only in NEA AR + Itapúa + Alto Paraná (3-nov-2026); pass --territories for others.
+ALL_TERRITORIES = list(ANALYSIS_TERRITORIES)
 
 GCS_PREFIX = 'gs://spatia-satellite/satellite'
 YEAR = 2024

@@ -109,8 +109,13 @@
 	const REGIONAL_NEA_BBOX: [number, number, number, number] = [-59.8, -30.8, -53.6, -25.4];
 
 	function getRegionalOtherPrefixes(countryFilter: CountryId | null, activePrefix: string): string[] {
+		// Only neighbours where the open layer exists (3-nov-2026: analysis layers only in
+		// NEA AR + Itapúa + Alto Paraná). Without this, Itapúa's regional neighbour was
+		// Concepción and the map asked for parquets that are no longer in R2.
+		const a = untrack(() => lensStore.activeAnalysis);
 		return Object.values(TERRITORY_REGISTRY)
 			.filter(t => t.available && (countryFilter === null || t.country === countryFilter))
+			.filter(t => !a || a.coverage?.[t.id] !== 'unavailable')
 			.map(t => t.parquetPrefix)
 			.filter(p => p !== activePrefix);
 	}
@@ -174,7 +179,7 @@
 				untrack(() => territoryStore.countryFilter),
 				t.parquetPrefix
 			);
-			// 1 other (e.g. PY: Itapúa + Alto Paraná): loadFullCompare bails on
+			// 1 other (PY: Itapúa + Alto Paraná, the only PY layers): loadFullCompare bails on
 			// perDepartment analyses, so route the single other to the regional
 			// slot (loadGlobalInto, no perDepartment guard) and keep compare empty.
 			if (others.length === 1) {
@@ -185,6 +190,16 @@
 				hexStore.loadRegionalData(others[1]).catch(() => {});
 			}
 		}
+	});
+
+	// A click on the map, on a Brazilian building or on another territory's department
+	// polygon can switch to a territory where the open layer does not exist (3-nov-2026:
+	// analysis layers only in NEA AR + Itapúa + Alto Paraná). Close the layer, keep the
+	// lens: the menu then shows it as unavailable there.
+	$effect(() => {
+		const tid = territoryStore.activeTerritory.id;
+		const a = untrack(() => lensStore.activeAnalysis);
+		if (a && a.coverage?.[tid] === 'unavailable') lensStore.clearAnalysis();
 	});
 
 	// Regional mode toggle + country filter: zoom to correct bbox, manage hex slots
@@ -1541,6 +1556,9 @@
 	async function fetchDistrictEnrichment(distrito: string, territory: string = 'itapua_py'): Promise<void> {
 		try {
 			await initDuckDB();
+			// Only Itapúa and Alto Paraná have district stats: elsewhere a homonym district
+			// (Bella Vista is in Itapúa and in Amambay) would show Itapúa's figures.
+			if (territory !== 'itapua_py' && territory !== 'alto_parana_py') return;
 			const statsUrl = territory === 'alto_parana_py'
 				? PARQUETS.district_stats_alto_parana
 				: PARQUETS.district_stats_itapua;

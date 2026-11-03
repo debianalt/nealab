@@ -366,6 +366,13 @@ TERRITORY_CONFIGS: dict[str, dict] = {
     },
 }
 
+# Territories that serve analysis layers (3-nov-2026 scope rule): NEA AR + Itapúa +
+# Alto Paraná. The other 15 Paraguayan departments and the 3 Brazilian states keep
+# buildings, census and boundaries only; their configs stay above so a layer can be
+# rebuilt on request. Default territory list for every multi-territory refresh.
+ANALYSIS_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa', 'itapua_py', 'alto_parana_py']
+
+
 def get_territory(territory_id: str) -> dict:
     """Return territory config, raising KeyError with helpful message if not found."""
     if territory_id not in TERRITORY_CONFIGS:
