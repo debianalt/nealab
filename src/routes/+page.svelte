@@ -845,7 +845,11 @@
 	let regionalViewportTooWide = $state(false);
 	let mapReady = $state(false); // set on the map 'load' event; gates the viewport effect
 
+	// LISA quadrants replace the layer's classes on the map: like the bivariate map,
+	// the layer legend steps aside (the Moran panel carries the quadrant key).
+	let lisaMapOn = $state(false);
 	function handleShowLisa(entries: { h3index: string; value: number; boundary?: number[][] }[]) {
+		lisaMapOn = entries.length > 0;
 		if (entries.length === 0) {
 			lastClassMap = null;
 			prevDataVersion = 0;
@@ -1820,7 +1824,7 @@
 		<!-- Map container -->
 		<div bind:this={mapContainer} class="flex-1 relative min-h-0">
 			<MapComponent bind:this={mapComponent} {mapStore} />
-			{#if !bivariateMapOn}<MapLegend {hexStore} />{/if}
+			{#if !bivariateMapOn && !lisaMapOn}<MapLegend {hexStore} />{/if}
 
 			{#if hexStore.loading}
 				<div class="loading-overlay">
