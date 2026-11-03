@@ -218,7 +218,7 @@
 					{/if}
 					<text x={PAD_L + plotW / 2} y={PAD_T + plotH + (2 * CHART_PX.tick + CHART_PX.label + 9) * k} text-anchor="middle"
 						fill={INK.label} font-size={CHART_PX.label * k} font-family="'IBM Plex Sans', system-ui, sans-serif"
-					>{fitLabel(`${i18n.t(dist.key)} (${dist.unit})`, plotW / k, CHART_PX.label)}</text>
+					>{fitLabel(i18n.t(dist.key).includes(`(${dist.unit})`) ? i18n.t(dist.key) : `${i18n.t(dist.key)} (${dist.unit})`, plotW / k, CHART_PX.label)}</text>
 				</svg>
 			</div>
 			<div class="dp-note" title={xLabel}>{i18n.t('chart.dist.note').replace('{v}', xLabel)}</div>
