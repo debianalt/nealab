@@ -288,6 +288,18 @@
 					onBrushSelect={onFlowBrush ?? (() => {})}
 				/>
 			{/if}
+			<!-- Transition chart of the active ranking tab (economic_activity: university 2010→2022, night light
+			     2014→2025): config tabFlows, keyed by the variable the tab paints. -->
+			{#if hexStore.colorVariable && hexStore.activeLayer?.tabFlows?.[hexStore.colorVariable]}
+				{@const tf = hexStore.activeLayer.tabFlows[hexStore.colorVariable]}
+				<FlowChart
+					data={hexStore.chartData}
+					temporalPeriods={tf.periods}
+					bands={tf.bands}
+					emptyHint={i18n.t('flow.selectDept')}
+					onBrushSelect={onFlowBrush ?? (() => {})}
+				/>
+			{/if}
 			{#if hexStore.activeLayer?.classSeries}
 				<UsoSerie {hexStore} />
 			{/if}

@@ -111,7 +111,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_capital: '?v=29',
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=27',   // 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
-		sat_economic_activity: '?v=33',   // 4-nov-2026: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
+		sat_economic_activity: '?v=34',   // 4-nov-2026 (noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=30',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 36;
+const DEPT_V = 37;   // 37: economic_activity con columnas de año base (4-nov-2026)
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -556,6 +556,9 @@ export interface HexLayerConfig {
 	// FlowChart banding over a RAW variable (raw-data-first convention). When
 	// absent, FlowChart falls back to score/score_baseline with 33/67 cuts.
 	flowBands?: FlowBands;
+	// Transition chart per ranking tab, keyed by the tab's hexVariable (economic_activity: university 2010→2022,
+	// night light 2014→2025). The baseline columns ride as hidden variables so the department load brings them.
+	tabFlows?: Record<string, { bands: FlowBands; periods: { baseline: string; current: string } }>;
 	// Department ranking shown first at province level: bars over a physical
 	// metric read from each department's `rank` block in the dept summary JSON
 	// (written by the pipeline), highest first. Absent → plain department list.
@@ -1337,9 +1340,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				{ tabKey: 'rank.econ.tab.desocup', titleKey: 'rank.econ.title.desocup', field: 'desocup_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: true,
 				  extraField: undefined, noteKey: 'rank.econ.note.desocup' },
 				{ tabKey: 'rank.econ.tab.univ', titleKey: 'rank.econ.title.univ', field: 'univ25_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: false,
-				  extraField: undefined, noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
+				  extraField: 'univ_cambio_pts', extraUnitKey: 'rank.econ.unit.univCambio', extraDecimals: 1,
+				  noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
 				{ tabKey: 'rank.econ.tab.viirs', titleKey: 'rank.econ.title.viirs', field: 'viirs', unit: 'nW/cm²/sr', unitKey: undefined, decimals: 2, hexNone: false,
-				  extraField: undefined, noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
+				  extraField: 'viirs_cambio_pct', extraUnitKey: 'rank.econ.unit.viirsCambio', extraDecimals: 0,
+				  noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
 			],
 		},
 		parquet: 'sat_economic_activity',
@@ -1351,7 +1356,31 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 			{ col: 'viirs_mean_radiance', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr' },
 			{ col: 'building_density_per_km2', labelKey: 'radio.buildingDensity', aggregation: 'mean', unit: 'edif/km²' },
+			// Year-base values for the transition charts (pipeline/build_econ_trayectorias.py), not shown in tables.
+			{ col: 'pct_universitario_2010', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%', hidden: true },
+			{ col: 'viirs_2014_neto', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr', hidden: true },
+			{ col: 'viirs_2025_neto', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr', hidden: true },
 		],
+		tabFlows: {
+			pct_universitario: {
+				periods: { baseline: '2010', current: '2022' },
+				bands: {
+					col: 'pct_universitario', baselineCol: 'pct_universitario_2010', breaks: [2, 5, 10],
+					labels: ['flow.univ.b1', 'flow.univ.b2', 'flow.univ.b3', 'flow.univ.b4'],
+					colors: [MAP_SELVA[1], MAP_SELVA[2], MAP_SELVA[4], MAP_SELVA[5]],
+					higherIsWorse: false, unit: '%', upLabel: 'flow.univ.up', downLabel: 'flow.univ.down', note: 'flow.univ.note',
+				},
+			},
+			viirs_mean_radiance: {
+				periods: { baseline: '2014', current: '2025' },
+				bands: {
+					col: 'viirs_2025_neto', baselineCol: 'viirs_2014_neto', breaks: [1, 10],
+					labels: ['flow.viirs.b1', 'flow.viirs.b2', 'flow.viirs.b3'],
+					colors: [...MAP_VIRIDIS_3],
+					higherIsWorse: false, unit: 'nW/cm²/sr', upLabel: 'flow.viirs.up', downLabel: 'flow.viirs.down', note: 'flow.viirs.note',
+				},
+			},
+		},
 		primaryVariable: 'viirs_mean_radiance',
 		colorScale: 'night',
 		aggregation: 'mean',

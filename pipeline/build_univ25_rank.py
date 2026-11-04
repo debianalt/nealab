@@ -43,7 +43,8 @@ PROV = {'misiones': ('misiones', 14), 'corrientes': ('corrientes', 7), 'chaco': 
 LAYERS = ('education_capital', 'economic_activity')
 # Spatia abrevia tres nombres de Misiones
 ALIAS = {'g m belgrano': 'general manuel belgrano', 'l n alem': 'leandro n alem',
-         'lg san martin': 'libertador general san martin', 'l g san martin': 'libertador general san martin'}
+         'lg san martin': 'libertador general san martin', 'l g san martin': 'libertador general san martin',
+         'el dorado': 'eldorado'}   # 2010 escribía «El Dorado»
 C3_POP, C3_UNIV_COMPLETO, C3_POSGRADO = 2, 22, 23
 C2_POSGRADO = 10
 POP_TOLERANCE = 0.005   # población 18+ cuadros vs radios

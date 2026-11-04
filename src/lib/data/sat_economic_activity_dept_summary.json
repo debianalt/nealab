@@ -18,7 +18,8 @@
         "univ25_pct": 5.5,
         "ocupados_n": 32548,
         "ocupados_prov_pct": 6.0,
-        "desocup_pct": 3.5
+        "desocup_pct": 3.5,
+        "univ_cambio_pts": 3.4
       }
     },
     {
@@ -35,7 +36,8 @@
         "univ25_pct": 7.9,
         "ocupados_n": 21447,
         "ocupados_prov_pct": 3.9,
-        "desocup_pct": 4.8
+        "desocup_pct": 4.8,
+        "univ_cambio_pts": 3.9
       }
     },
     {
@@ -52,7 +54,8 @@
         "univ25_pct": 9.4,
         "ocupados_n": 50916,
         "ocupados_prov_pct": 9.3,
-        "desocup_pct": 5.5
+        "desocup_pct": 5.5,
+        "univ_cambio_pts": 4.2
       }
     },
     {
@@ -69,7 +72,8 @@
         "univ25_pct": 5.3,
         "ocupados_n": 24763,
         "ocupados_prov_pct": 4.5,
-        "desocup_pct": 3.9
+        "desocup_pct": 3.9,
+        "univ_cambio_pts": 3.0
       }
     },
     {
@@ -86,7 +90,8 @@
         "univ25_pct": 13.8,
         "ocupados_n": 182802,
         "ocupados_prov_pct": 33.6,
-        "desocup_pct": 7.2
+        "desocup_pct": 7.2,
+        "univ_cambio_pts": 4.8
       }
     },
     {
@@ -103,7 +108,8 @@
         "univ25_pct": 4.3,
         "ocupados_n": 8886,
         "ocupados_prov_pct": 1.6,
-        "desocup_pct": 4.6
+        "desocup_pct": 4.6,
+        "univ_cambio_pts": 2.5
       }
     },
     {
@@ -120,7 +126,8 @@
         "univ25_pct": 3.6,
         "ocupados_n": 13258,
         "ocupados_prov_pct": 2.4,
-        "desocup_pct": 2.5
+        "desocup_pct": 2.5,
+        "univ_cambio_pts": 2.3
       }
     },
     {
@@ -137,7 +144,8 @@
         "univ25_pct": 7.1,
         "ocupados_n": 21125,
         "ocupados_prov_pct": 3.9,
-        "desocup_pct": 5.8
+        "desocup_pct": 5.8,
+        "univ_cambio_pts": 3.4
       }
     },
     {
@@ -154,7 +162,8 @@
         "univ25_pct": 5.5,
         "ocupados_n": 13257,
         "ocupados_prov_pct": 2.4,
-        "desocup_pct": 6.2
+        "desocup_pct": 6.2,
+        "univ_cambio_pts": 3.0
       }
     },
     {
@@ -171,7 +180,8 @@
         "univ25_pct": 7.5,
         "ocupados_n": 21054,
         "ocupados_prov_pct": 3.9,
-        "desocup_pct": 5.6
+        "desocup_pct": 5.6,
+        "univ_cambio_pts": 3.8
       }
     },
     {
@@ -188,7 +198,8 @@
         "univ25_pct": 6.0,
         "ocupados_n": 24883,
         "ocupados_prov_pct": 4.6,
-        "desocup_pct": 5.4
+        "desocup_pct": 5.4,
+        "univ_cambio_pts": 3.2
       }
     },
     {
@@ -205,7 +216,8 @@
         "univ25_pct": 4.8,
         "ocupados_n": 19329,
         "ocupados_prov_pct": 3.5,
-        "desocup_pct": 3.9
+        "desocup_pct": 3.9,
+        "univ_cambio_pts": 2.9
       }
     },
     {
@@ -222,7 +234,8 @@
         "univ25_pct": 8.7,
         "ocupados_n": 36135,
         "ocupados_prov_pct": 6.6,
-        "desocup_pct": 7.6
+        "desocup_pct": 7.6,
+        "univ_cambio_pts": 4.1
       }
     },
     {
@@ -239,7 +252,8 @@
         "univ25_pct": 4.3,
         "ocupados_n": 13329,
         "ocupados_prov_pct": 2.4,
-        "desocup_pct": 3.0
+        "desocup_pct": 3.0,
+        "univ_cambio_pts": 2.6
       }
     },
     {
@@ -256,7 +270,8 @@
         "univ25_pct": 5.0,
         "ocupados_n": 4059,
         "ocupados_prov_pct": 0.7,
-        "desocup_pct": 4.4
+        "desocup_pct": 4.4,
+        "univ_cambio_pts": 3.1
       }
     },
     {
@@ -273,7 +288,8 @@
         "univ25_pct": 7.5,
         "ocupados_n": 41994,
         "ocupados_prov_pct": 7.7,
-        "desocup_pct": 6.2
+        "desocup_pct": 6.2,
+        "univ_cambio_pts": 3.7
       }
     },
     {
@@ -290,7 +306,8 @@
         "univ25_pct": 7.1,
         "ocupados_n": 15004,
         "ocupados_prov_pct": 2.8,
-        "desocup_pct": 6.6
+        "desocup_pct": 6.6,
+        "univ_cambio_pts": 3.5
       }
     }
   ]

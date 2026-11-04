@@ -93,6 +93,9 @@ SPECS = {
         'empleo_pct': (rate('tasa_empleo', 'pob_14_mas'), 1),
         # universitario completo: univ25_pct (25+), pipeline/build_univ25_rank.py
         'viirs': ('AVG(viirs_mean_radiance)', 2),
+        # Luz neta (radiancia − fondo del año, build_econ_trayectorias.py), cambio 2014→2025 en %; sin dato si el
+        # departamento casi no tenía luz en 2014 (un cociente de casi cero no dice nada).
+        'viirs_cambio_pct': ('CASE WHEN AVG(viirs_2014_neto) >= 0.05 THEN 100.0 * (AVG(viirs_2025_neto) / AVG(viirs_2014_neto) - 1) END', 0),
     },
 }
 
