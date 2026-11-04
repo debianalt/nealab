@@ -120,7 +120,8 @@ export async function loadFicha(
 	ctx: FichaContext,
 	deptUrl: (layerId: string, key: string) => string | null,
 ): Promise<FichaLayer[]> {
-	const analyses = ANALYSIS_REGISTRY.filter(a => HEX_LAYER_REGISTRY[a.id]
+	// Macizo layers (forestry_harvest) are polygons, not cells: they have no value for a hexagon.
+	const analyses = ANALYSIS_REGISTRY.filter(a => HEX_LAYER_REGISTRY[a.id] && !HEX_LAYER_REGISTRY[a.id].macizos
 		&& (a.coverage as Record<string, string> | undefined)?.[ctx.territoryId] !== 'unavailable');
 
 	// Resolve and download every layer's file in parallel.

@@ -33,7 +33,7 @@ try {
 	const layers = [];
 	for (const a of cfg.ANALYSIS_REGISTRY) {
 		const l = cfg.HEX_LAYER_REGISTRY[a.id];
-		if (!l) continue;
+		if (!l || l.macizos) continue;   // macizo layers (forestry_harvest): DNDFI polygons, no per-hex parquet
 		const pv = l.primaryVariable;
 		layers.push({
 			id: a.id,

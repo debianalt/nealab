@@ -325,7 +325,7 @@ export class HexStore {
 		// Background-fetch all dept parquets so the first click is fast.
 		if (cfg.perDepartment) {
 			this.loading = false;
-			this._prefetchDeptParquets(cfg);
+			if (!cfg.macizos) this._prefetchDeptParquets(cfg);   // macizo layers have no per-dept parquet
 			return;
 		}
 
