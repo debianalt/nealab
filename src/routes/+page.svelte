@@ -10,6 +10,7 @@
 	import { LensStore } from '$lib/stores/lens.svelte';
 	import { LassoStore } from '$lib/stores/lasso.svelte';
 	import { HexStore } from '$lib/stores/hex.svelte';
+	import { radioUnit, isRadioSupport, codprovOf } from '$lib/stores/radioUnit.svelte';
 	import { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { initDuckDB, query, isReady, getInitError } from '$lib/stores/duckdb';
 	import { cellToLatLng, cellToBoundary, polygonToCells, isValidCell } from 'h3-js';
@@ -681,11 +682,13 @@
 	// hexStore resolves the per-territory primary fallback asynchronously (schema
 	// check on the global parquet); refresh the hover tooltip unit when it lands so
 	// a substituted primary (e.g. score instead of VIIRS) doesn't show the wrong unit.
+	// Also on a tab change: the tab's column is what the map paints (economic_activity's
+	// «Empleo» tab is %, its configured primary VIIRS is nW/cm²/sr — the tooltip kept the latter).
 	$effect(() => {
-		const ov = hexStore.primaryOverride;
+		const pv = hexStore.effectivePrimary;
 		const layerCfg = lensStore.activeAnalysis ? HEX_LAYER_REGISTRY[lensStore.activeAnalysis.id] : null;
-		if (!layerCfg || !ov) return;
-		mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg, ov));
+		if (!layerCfg || hexStore.activeLayer?.id !== layerCfg.id) return;
+		mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg, pv));
 	});
 
 
@@ -1187,6 +1190,18 @@
 		const focus = hexStore.macizoPaintFocus;
 		const pick = !!hexStore.macizoChartFocus;
 		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey, focus, pick } : null);
+	});
+
+	// Census rates: outline the open department's INDEC radios (the unit the rate is measured on)
+	// and the hovered one. Not in compare mode, not for satellite layers or cell-support variables.
+	$effect(() => {
+		const tp = hexStore.territoryPrefix;
+		const key = hexStore.selectedParquetKey;
+		const codprov = codprovOf(tp);
+		const on = !!key && !!codprov && !territoryStore.compareModeActive
+			&& isRadioSupport(hexStore.activeLayer?.id, hexStore.effectivePrimary);
+		if (on) radioUnit.ensure(tp);
+		mapComponent?.setRadioUnit(on ? { prefix: tp, deptKey: key, codprov: codprov! } : null);
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────
@@ -1709,7 +1724,9 @@
 		mapComponent?.clearHexZoneHighlight();
 		mapStore.setActiveHexLayer(hexStore.activeLayer?.id ?? null);
 		if (hexStore.activeLayer) {
-			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical', getHexPrimaryUnit(hexStore.activeLayer));
+			// The unit of what the map paints (the tab's column), not of the layer's configured primary:
+			// economic_activity paints employment (%) while its primary is VIIRS (nW/cm²/sr).
+			mapComponent?.setHexLayerInfo(i18n.t(hexStore.activeLayer.titleKey), hexStore.activeLayer.colorScale === 'categorical', getHexPrimaryUnit(hexStore.activeLayer, hexStore.effectivePrimary));
 		}
 		// Load dept data + compute color domain in parallel.
 		await Promise.all([

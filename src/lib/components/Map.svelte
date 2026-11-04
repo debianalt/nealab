@@ -48,6 +48,7 @@
 	import { territoryAt } from '$lib/utils/territoryAt';
 	import { territoryRef } from '$lib/utils/territoryRef';
 	import regionOutline from '$lib/data/region_outline.json';
+	import { radioUnit } from '$lib/stores/radioUnit.svelte';
 
 	let { mapStore }: { mapStore: MapStore } = $props();
 
@@ -101,6 +102,30 @@
 	let macizoPaint: MacizoPaint | null = null;
 	const PLANT_FILL_DEFAULT: any = ['match', ['get', 'grupo_espe'],
 		'Pinos', '#22c55e', 'Eucaliptos', '#38bdf8', 'Nativas', '#f59e0b', 'Sauces y Álamos', '#a78bfa', '#9ca3af'];
+	// Census rates (radioUnit): the outline of each INDEC radio of the open department over its
+	// cells, and the hovered radio's outline + cells. Null = off (any other layer or variable).
+	type RadioUnitCtx = { prefix: string; deptKey: string | null; codprov: string };
+	let radioUnitCtx: RadioUnitCtx | null = null;
+	let radioHover: string | null = null;
+	export function setRadioUnit(c: RadioUnitCtx | null) {
+		radioUnitCtx = c;
+		applyRadioUnit();
+	}
+	function applyRadioUnit() {
+		if (!map?.getLayer('radio-unit-line')) return;
+		const c = radioUnitCtx;
+		const vis = c ? 'visible' : 'none';
+		for (const id of ['radio-unit-line', 'radio-unit-hover']) map.setLayoutProperty(id, 'visibility', vis);
+		if (!c) { setRadioHover(null); return; }
+		map.setFilter('radio-unit-line', c.deptKey
+			? ['all', ['==', ['get', 'codprov'], c.codprov], ['==', ['get', 'dpto_key'], c.deptKey]]
+			: ['==', ['get', 'codprov'], c.codprov]);
+	}
+	function setRadioHover(redcode: string | null) {
+		if (redcode === radioHover || !map?.getLayer('radio-unit-hover')) return;
+		radioHover = redcode;
+		map.setFilter('radio-unit-hover', ['==', ['get', 'redcode'], redcode ?? '']);
+	}
 	export function setMacizoPaint(p: MacizoPaint | null) {
 		macizoPaint = p;
 		updatePlantationsVisibility();
@@ -1176,6 +1201,29 @@
 				source: 'hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
 			}, firstSymbolId);
+			// Census radios of the open department (setRadioUnit): the unit a census rate is measured on.
+			map.addLayer({
+				id: 'radio-unit-line',
+				type: 'line',
+				source: 'radios',
+				'source-layer': 'radios',
+				layout: { visibility: 'none' },
+				paint: {
+					'line-color': '#93c5fd',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.3, 11, 0.8, 14, 1.4],
+					'line-opacity': 0.6
+				}
+			}, firstSymbolId);
+			map.addLayer({
+				id: 'radio-unit-hover',
+				type: 'line',
+				source: 'radios',
+				'source-layer': 'radios',
+				layout: { visibility: 'none' },
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2.2, 'line-opacity': 0.95 },
+				filter: ['==', ['get', 'redcode'], '']
+			}, firstSymbolId);
+			applyRadioUnit();
 			// Selected hexagons: white outline (SELECT_OUTLINE) plus a faint tint of each
 			// hexagon's panel colour, so several picks stay tellable apart on the map.
 			map.addLayer({
@@ -1854,8 +1902,15 @@
 					: '';
 				valueLine = `<span style="color:var(--c-ink-1);font-weight:600">${score}</span>${suffix}`;
 			}
+			// Census rate: name the radio it comes from and outline it.
+			let radioLine = '';
+			if (radioUnitCtx) {
+				const r = radioUnit.radioOf(radioUnitCtx.prefix, String(p.h3index));
+				setRadioHover(r ? String(r.redcode) : null);
+				if (r) radioLine = `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-top:2px">${i18n.t(Number(r.n_celdas) === 1 ? 'map.radioTip1' : 'map.radioTip').replace('{code}', String(r.redcode)).replace('{n}', Number(r.n_celdas).toLocaleString(i18n.locale))}</div>`;
+			}
 
-			tooltip.innerHTML = `${titleLine}${valueLine}`;
+			tooltip.innerHTML = `${titleLine}${valueLine}${radioLine}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1864,6 +1919,7 @@
 		map.on('mouseleave', 'hex-fill', () => {
 			if (!lassoActive) map.getCanvas().style.cursor = '';
 			tooltip.style.display = 'none';
+			setRadioHover(null);
 		});
 
 		map.on('mousemove', 'compare-hex-fill', () => {
@@ -2523,7 +2579,8 @@
 		for (const id of ['ar-dept-line', 'br-dept-line']) set(id, 'line-color', T.deptLine);
 		set('dept-outline-line', 'line-color', T.accent);
 		set('compare-dept-outline-line', 'line-color', T.compare);
-		for (const id of ['hex-selected', 'compare-hex-selected', 'radio-brush-line', 'hex-zone-line']) set(id, 'line-color', T.select);
+		for (const id of ['hex-selected', 'compare-hex-selected', 'radio-brush-line', 'hex-zone-line', 'radio-unit-hover']) set(id, 'line-color', T.select);
+		set('radio-unit-line', 'line-color', T.deptLine);
 		// Relief: in claro a soft gray ground under roads, labels and data (atlas); in
 		// oscuro where it always was, over the basemap.
 		set('hillshade', 'hillshade-shadow-color', T.hillshade.shadow);

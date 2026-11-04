@@ -30,7 +30,7 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 		parana_br_buildings: 'data/tiles/parana_br_buildings-v8.pmtiles',
 		santa_catarina_br_buildings: 'data/tiles/santa_catarina_br_buildings-v8.pmtiles',
 		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v8.pmtiles',
-		radios: 'data/tiles/radios-v4.pmtiles',
+		radios: 'data/tiles/radios-v5.pmtiles', // v5 (4-nov-2026): every radio in every tile it crosses, + dpto_key
 		hexagons: 'tiles/hexagons-v2.pmtiles',
 		catastro: 'tiles/catastro.pmtiles?v=3',
 		// Paraguay departments — v1 (buildings from Overture, districts from GAUL)

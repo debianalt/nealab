@@ -19,15 +19,19 @@ export const RADIO_SUPPORT: Record<string, ReadonlySet<string>> = {
 	economic_activity: new Set(['tasa_empleo', 'tasa_actividad', 'pct_universitario']),
 };
 
-// Territories with INDEC radios (parquet prefix → has a census_radios file).
-const RADIO_TERRITORIES = new Set(['', 'corrientes/', 'chaco/', 'formosa/']);
+// Territories with INDEC radios: parquet prefix → INDEC province code (codprov of the radio tiles).
+const RADIO_TERRITORIES: Record<string, string> = { '': '54', 'corrientes/': '18', 'chaco/': '22', 'formosa/': '34' };
 
 export function isRadioSupport(layerId: string | null | undefined, col: string | null | undefined): boolean {
 	return !!layerId && !!col && !!RADIO_SUPPORT[layerId]?.has(col);
 }
 
 export function hasRadios(territoryPrefix: string): boolean {
-	return RADIO_TERRITORIES.has(territoryPrefix);
+	return territoryPrefix in RADIO_TERRITORIES;
+}
+
+export function codprovOf(territoryPrefix: string): string | null {
+	return RADIO_TERRITORIES[territoryPrefix] ?? null;
 }
 
 export interface RadioView {
