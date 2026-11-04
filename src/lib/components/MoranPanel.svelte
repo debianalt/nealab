@@ -15,6 +15,11 @@
 		onShowLisa = (_entries: { h3index: string; value: number; boundary?: number[][] }[]) => {},
 		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		defaultCollapsed = true,
+		// Radio unit (census rates): `data` is keyed by radio, `neighbors` gives its queen
+		// neighbours and `expand` turns radios back into the cells the map paints.
+		neighbors = null as ((id: string) => string[]) | null,
+		expand = null as ((ids: string[]) => string[]) | null,
+		unitLabel = null as string | null,
 	} = $props();
 
 	const allH3s = $derived([...data.keys()]);
@@ -58,7 +63,7 @@
 	function csvRows() {
 		if (!result) return [];
 		return result.points.map(p => ({
-			h3index: p.h3,
+			[neighbors ? 'redcode' : 'h3index']: p.h3,
 			std: p.std.toFixed(4),
 			lag: p.lag.toFixed(4),
 			quadrant: p.quad,
@@ -98,7 +103,7 @@
 			// lag is the neighbours' mean and I is the slope of the Moran scatterplot.
 			const nbrs = new Map<string, string[]>();
 			for (const h3 of vals.keys()) {
-				const nb = gridDisk(h3, 1).filter(c => c !== h3 && vals.has(c));
+				const nb = (neighbors ? neighbors(h3) : gridDisk(h3, 1)).filter(c => c !== h3 && vals.has(c));
 				if (nb.length > 0) nbrs.set(h3, nb);
 			}
 			const lag = new Map<string, number>();
@@ -132,7 +137,7 @@
 			const z = varI > 0 ? (I - expected) / Math.sqrt(varI) : 0;
 			const p = 2 * (1 - normalCDF(Math.abs(z)));
 			let res = 9;
-			for (const h3 of vals.keys()) { try { res = getResolution(h3); } catch {} break; }
+			if (!neighbors) for (const h3 of vals.keys()) { try { res = getResolution(h3); } catch {} break; }
 
 			const points: { h3: string; std: number; lag: number; quad: string }[] = [];
 			for (const h3 of vals.keys()) {
@@ -326,7 +331,7 @@
 						d3.select(this).attr('opacity', inside ? 1 : 0.08).attr('r', inside ? 3 : 2);
 					});
 					brushCount = selectedSet.size;
-					onBrushSelect([...selectedSet], i18n.t('zone.o.moran'));
+					onBrushSelect(expand ? expand([...selectedSet]) : [...selectedSet], i18n.t('zone.o.moran'));
 				}
 
 				window.addEventListener('mousemove', onMove);
@@ -352,11 +357,12 @@
 		}
 		if (!result) return;
 		const LISA_COLORS: Record<string, number> = { 'HH': 4, 'LL': 1, 'HL': 3, 'LH': 2 };
-		const entries = result.points.map(p => ({
-			h3index: p.h3,
+		// Radio unit: every cell of the radio wears the radio's quadrant.
+		const entries = result.points.flatMap(p => (expand ? expand([p.h3]) : [p.h3]).map(h3 => ({
+			h3index: h3,
 			value: LISA_COLORS[p.quad] ?? 0,
-			boundary: boundaryCache.get(p.h3),
-		}));
+			boundary: boundaryCache.get(h3),
+		})));
 		lisaMode = true;
 		onShowLisa(entries);
 	}
@@ -376,7 +382,7 @@
 					<span class="moran-dim">E[I] = {result.expected.toFixed(4)}</span>
 					<span class="moran-dim">z = {result.z.toFixed(2)}</span>
 					<span class="{result.p < 0.05 ? 'moran-sig' : 'moran-insig'}">p {result.p < 0.001 ? '< 0.001' : '= ' + result.p.toFixed(3)}</span>
-					<span class="moran-dim">n = {result.n.toLocaleString(i18n.locale)} {result.res < 9 ? i18n.t('chart.moran.nAggregated').replace('{res}', String(result.res)) : i18n.t('chart.moran.nHex')}</span>
+					<span class="moran-dim">n = {result.n.toLocaleString(i18n.locale)} {unitLabel ?? (result.res < 9 ? i18n.t('chart.moran.nAggregated').replace('{res}', String(result.res)) : i18n.t('chart.moran.nHex'))}</span>
 					{#if brushCount > 0}
 						<span class="moran-sel">{brushCount} sel.</span>
 						<button class="moran-btn-clear" onclick={clearBrush}>✕</button>

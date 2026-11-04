@@ -11,6 +11,7 @@ import type { FichaContext } from '$lib/stores/ficha.svelte';
 import { quantile } from '$lib/utils/chartType';
 import { displayTypeLabel } from '$lib/utils/typeLabel';
 import { i18n } from '$lib/stores/i18n.svelte';
+import { radioUnit, isRadioSupport, hasRadios } from '$lib/stores/radioUnit.svelte';
 
 // Where a value sits within one comparison area. Today only the department (or
 // the whole territory for layers not split by department) is filled, from the
@@ -26,6 +27,9 @@ export interface FichaScope {
 	// zero cell is P30, yet it is not "higher than 30 in 100" — it equals 60.
 	below: number;   // % of cells with a strictly lower value
 	equal: number;   // % of cells with the same value
+	// What the distribution counts: cells, or census radios for census rates (their cells
+	// repeat the radio's value, so counting cells would weigh each radio by its size).
+	unit?: 'cell' | 'radio';
 }
 
 export interface FichaVar {
@@ -37,6 +41,8 @@ export interface FichaVar {
 	meanDept: number | null;   // department mean, same units as value
 	scopes: FichaScope[];      // position of the value in each comparison area (display units)
 	nodata: boolean;
+	radio?: string | null;     // census rate: the INDEC radio the value comes from
+	radioMix?: boolean;        // edge cell: its value blends the radios it straddles (building-weighted)
 }
 
 export interface FichaLayer {
@@ -147,6 +153,10 @@ export async function loadFicha(
 		}
 	}));
 
+	// Census rates are positioned among the department's radios, not its cells.
+	if (hasRadios(ctx.territoryPrefix)) { try { await radioUnit.ensure(ctx.territoryPrefix); } catch { /* falls back to cells */ } }
+	const cellRadio = radioUnit.radioOf(ctx.territoryPrefix, h3);
+
 	const out: FichaLayer[] = [];
 	// Local queries: DuckDB-WASM runs them one at a time, but they no longer hit the network.
 	for (const { a, layer, name, scope } of prepared) {
@@ -174,14 +184,24 @@ export async function loadFicha(
 			// labels ("tasa_empleo alto", "densidad_hab_km2 bajo") never meant for display.
 			const declaresType = layer.variables.some(v => v.col === 'type_label');
 			const typeVec = declaresType && cols.has('type_label') ? tbl.getChild('type_label') : null;
+			// The radios behind this file's cells (null outside AR or if the radios did not load).
+			let radios: ReturnType<typeof radioUnit.view> = null;
+			if (vars.some(v => isRadioSupport(a.id, v.col))) {
+				const cells = new Map<string, true>();
+				for (let i = 0; i < tbl.numRows; i++) cells.set(String(h3Vec?.get(i)), true);
+				radios = radioUnit.view(ctx.territoryPrefix, cells);
+			}
 			const fv: FichaVar[] = [];
 			for (const v of primaryHidden ? [...vars, primaryVar!] : vars) {
 				const spec = displaySpec(v);
 				const colName = cols.has(spec.col) ? spec.col : spec.alt && cols.has(spec.alt) ? spec.alt : null;
 				if (!colName) continue;
 				const vec = tbl.getChild(colName);
+				const byRadio = !!radios && isRadioSupport(a.id, v.col);
 				const all: number[] = [];
-				for (let i = 0; i < tbl.numRows; i++) {
+				if (byRadio) {
+					for (const r of radios!.data.values()) { const x = Number(r[v.col]); if (r[v.col] != null && Number.isFinite(x)) all.push(x); }
+				} else for (let i = 0; i < tbl.numRows; i++) {
 					// Number(null) is 0: without this check every "sin dato" cell entered the
 					// department's median, mean and percentile as a zero.
 					const r = vec?.get(i);
@@ -195,7 +215,8 @@ export async function loadFicha(
 				const has = isText ? (raw as string).length > 0 : Number.isFinite(num);
 				all.sort((x, y) => x - y);
 				const mean = all.length ? all.reduce((s, x) => s + x, 0) / all.length : NaN;
-				const scopes = all.length && !isText ? [scopeOf(scope, all, has ? num : null, spec.scale)] : [];
+				const scopes = all.length && !isText
+					? [{ ...scopeOf(scope, all, has ? num : null, spec.scale), unit: byRadio ? 'radio' as const : 'cell' as const }] : [];
 				fv.push({
 					labelKey: v.labelKey,
 					value: has && !isText ? num * spec.scale : null,
@@ -205,6 +226,9 @@ export async function loadFicha(
 					meanDept: Number.isFinite(mean) ? mean * spec.scale : null,
 					scopes,
 					nodata: !has,
+					// One rounding step of tolerance: the cell carries its radio's rate unless it is an edge cell.
+					...(byRadio && has && cellRadio ? (Math.abs(Number(cellRadio[v.col]) - num) <= 0.1001
+						? { radio: String(cellRadio.redcode) } : { radioMix: true }) : {}),
 				});
 			}
 			// Only pop when the appended primary actually made it (its column may be missing).

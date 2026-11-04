@@ -135,6 +135,13 @@ export function getScoresDptoUrl(parquetKey: string, territoryPrefix = ''): stri
 	return `${getBase()}/data/${territoryPrefix}scores_dpto/overture_scores_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
+// INDEC 2022 radios of an AR territory as a unit of their own (pipeline/build_census_radios.py):
+// rates, bases, queen neighbours and the cells that show each radio. Only AR has radios.
+export const CENSUS_RADIOS_V = 1;
+export function getCensusRadiosUrl(territoryPrefix = ''): string {
+	return `${getBase()}/data/${territoryPrefix}census_radios_2022.parquet?v=${CENSUS_RADIOS_V}`;
+}
+
 export function getSatDptoUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
 	// File stem = the layer's parquet name: sat_<id> for every layer except agri_potential,
 	// whose empirical version (physical units + crop suitability) ships as sat_agri_apt.

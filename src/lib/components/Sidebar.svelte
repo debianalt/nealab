@@ -34,6 +34,7 @@
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
 	import UsoSerie from './UsoSerie.svelte';
 	import CosechaGraficos from './CosechaGraficos.svelte';
+	import { radioUnit, isRadioSupport, hasRadios } from '$lib/stores/radioUnit.svelte';
 
 	let {
 		mapStore,
@@ -110,6 +111,28 @@
 	// lacks the configured one).
 	const primaryAxisLabel = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary));
 	const primaryName = $derived(getHexAxisLabel(hexStore.activeLayer, hexStore.effectivePrimary, false));
+
+	// Census rates are measured per INDEC radio: their charts count radios, not the cells that
+	// repeat the radio's value (radioUnit.svelte.ts). Not on an aggregated (coarse) analysis.
+	const radioMode = $derived(
+		isRadioSupport(hexStore.activeLayer?.id, hexStore.effectivePrimary)
+		&& hasRadios(hexStore.territoryPrefix) && hexStore.analysisResLevel == null
+	);
+	$effect(() => { if (radioMode) radioUnit.ensure(hexStore.territoryPrefix); });
+	const radioView = $derived(radioMode ? radioUnit.view(hexStore.territoryPrefix, hexStore.chartData) : null);
+	const unitLabel = $derived(radioView ? i18n.t('chart.unitRadios') : null);
+	const chartUnitData = $derived(radioView?.data ?? hexStore.chartData);
+	const radioExpand = $derived(radioView ? (ids: string[]) => radioView.expand(ids) : null);
+	const radioOfCell = $derived.by(() => {
+		if (!radioView) return null;
+		const m = new Map<string, string>();
+		for (const id of radioView.data.keys()) for (const h of radioView.cellsOf(id)) m.set(h, id);
+		return (h3: string) => m.get(h3) ?? null;
+	});
+	function expandEntries<T extends { h3index: string }>(entries: T[]): T[] {
+		if (!radioView) return entries;
+		return entries.flatMap(e => radioView.cellsOf(e.h3index).map(h3 => ({ ...e, h3index: h3 })));
+	}
 
 	// The distance profile joins the accessibility layer: only where it exists.
 	const accessibilityAvailable = $derived(
@@ -287,10 +310,15 @@
 					{#if hexStore.analysisResLevel != null}
 						<p class="charts-res-note">{i18n.t('chart.analysisCoarse').replace('{res}', String(hexStore.analysisResLevel))}</p>
 					{/if}
+					{#if radioView}
+						<p class="charts-res-note">{i18n.t('chart.radioUnitNote')}</p>
+					{/if}
 					<HistogramPanel
-						data={hexStore.chartData}
+						data={chartUnitData}
 						variable={hexStore.effectivePrimary}
 						xLabel={primaryAxisLabel}
+						expand={radioExpand}
+						{unitLabel}
 						onBrushSelect={onHistogramBrush ?? (() => {})}
 					/>
 					{#if isAdditiveVar(hexStore.activeLayer, hexStore.effectivePrimary)}
@@ -302,16 +330,20 @@
 						/>
 					{/if}
 					<MoranPanel
-						data={hexStore.chartData}
+						data={chartUnitData}
 						variable={hexStore.effectivePrimary}
 						label={primaryName}
 						defaultCollapsed={false}
+						neighbors={radioView ? (id: string) => radioView.neighbors(id) : null}
+						expand={radioExpand}
+						{unitLabel}
 						boundaryCache={hexStore.boundaryCache}
 						onShowLisa={onShowLisa ?? (() => {})}
 						onBrushSelect={onMoranBrush ?? (() => {})}
 					/>
 					<BivariatePlot
-						data={hexStore.chartData}
+						data={chartUnitData}
+						unitOf={radioOfCell}
 						variable={hexStore.effectivePrimary}
 						xLabel={primaryAxisLabel}
 						analysisId={hexStore.activeLayer.id}
@@ -320,8 +352,8 @@
 						deptName={hexStore.selectedDpto}
 						deptKey={hexStore.selectedParquetKey}
 						deptUrl={(id, key) => hexStore.deptUrlForLayer(id, key)}
-						onBrushSelect={onBivariateBrush ?? (() => {})}
-						onShowBivariateMap={onShowBivariateMap ?? (() => {})}
+						onBrushSelect={(ids: string[], origin?: string) => (onBivariateBrush ?? (() => {}))(radioExpand ? radioExpand(ids) : ids, origin)}
+						onShowBivariateMap={(entries) => (onShowBivariateMap ?? (() => {}))(expandEntries(entries))}
 					/>
 					{#if hexStore.activeLayer.id !== 'accessibility' && accessibilityAvailable}
 						<DistanceProfile

@@ -66,22 +66,25 @@
 		if (!s || v.value === null || !Number.isFinite(s.below)) return '';
 		const of = ofPlace(l);
 		const below = Math.floor(s.below), above = Math.floor(100 - s.below - s.equal), eq = Math.round(s.equal);
+		const R = s.unit === 'radio' ? 'R' : '';
 		if (s.equal >= 20) {
-			const head = i18n.t('ficha.w.equal').replace('{n}', String(eq)).replace('{of}', of);
+			const head = i18n.t(`ficha.w.equal${R}`).replace('{n}', String(eq)).replace('{of}', of);
 			if (below >= 1 && below >= above) return head + i18n.t('ficha.w.andHigher').replace('{n}', String(below));
 			if (above >= 1) return head + i18n.t('ficha.w.andLower').replace('{n}', String(above));
 			return head + '.';
 		}
 		return below >= above
-			? i18n.t('ficha.w.higher').replace('{n}', String(below)).replace('{of}', of)
-			: i18n.t('ficha.w.lower').replace('{n}', String(above)).replace('{of}', of);
+			? i18n.t(`ficha.w.higher${R}`).replace('{n}', String(below)).replace('{of}', of)
+			: i18n.t(`ficha.w.lower${R}`).replace('{n}', String(above)).replace('{of}', of);
 	}
 
 	function ctxLine(v: FichaVar): string {
 		const s = v.scopes[0];
 		if (!s) return '';
 		const u = v.unit ? ` ${v.unit}` : '';
-		return i18n.t('ficha.ctx').replace('{med}', fmt(s.p50) + u).replace('{mean}', fmt(s.mean) + u);
+		const line = i18n.t(s.unit === 'radio' ? 'ficha.ctxR' : 'ficha.ctx').replace('{med}', fmt(s.p50) + u).replace('{mean}', fmt(s.mean) + u);
+		if (v.radio) return `${i18n.t('ficha.radio').replace('{code}', v.radio)} · ${line}`;
+		return v.radioMix ? `${i18n.t('ficha.radioMix')} · ${line}` : line;
 	}
 	const fmtN = (x: number) => fmt(x);
 

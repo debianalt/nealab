@@ -22,6 +22,7 @@
 		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		onShowBivariateMap = (_entries: { h3index: string; value: number | null; nodata?: boolean }[]) => {},
 		defaultCollapsed = true,
+		unitOf = null,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
@@ -37,6 +38,9 @@
 		// Paints the map with the 3×3 classes ([] restores the layer's choropleth).
 		onShowBivariateMap?: (entries: { h3index: string; value: number | null; nodata?: boolean }[]) => void;
 		defaultCollapsed?: boolean;
+		// Radio unit (census rates): `data` is keyed by radio and Y is averaged over each radio's
+		// cells (h3 → radio id; null = cell outside the radios shown).
+		unitOf?: ((h3: string) => string | null) | null;
 	} = $props();
 
 	const PAD_L = 44, PAD_R = 8, PAD_T = 8, PAD_B = 38;
@@ -73,6 +77,7 @@
 		const layer = HEX_LAYER_REGISTRY[b];
 		if (!layer) return;
 		const res = xRes;
+		const toUnit = unitOf;
 		void deptKey; void deptName; // reload Y when another department opens
 		bLoading = true;
 		bError = false;
@@ -93,7 +98,8 @@
 				const v = Number(row.val);
 				if (!isFinite(v)) continue;
 				let h3 = String(row.h3index);
-				if (res < 9) { try { h3 = cellToParent(h3, res); } catch { continue; } }
+				if (toUnit) { const u = toUnit(h3); if (!u) continue; h3 = u; }
+				else if (res < 9) { try { h3 = cellToParent(h3, res); } catch { continue; } }
 				sum.set(h3, (sum.get(h3) ?? 0) + v);
 				cnt.set(h3, (cnt.get(h3) ?? 0) + 1);
 			}
@@ -402,7 +408,7 @@
 	onDestroy(() => { if (mapOn) onShowBivariateMap([]); });
 
 	function csvRows() {
-		return allPoints.map(p => ({ h3index: p.h3, x: p.x.toFixed(2), y: p.y.toFixed(2), ...(mapOn ? { clase_3x3: classOf(p) } : {}) }));
+		return allPoints.map(p => ({ [unitOf ? 'redcode' : 'h3index']: p.h3, x: p.x.toFixed(2), y: p.y.toFixed(2), ...(mapOn ? { clase_3x3: classOf(p) } : {}) }));
 	}
 </script>
 

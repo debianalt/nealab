@@ -652,8 +652,14 @@ export class HexStore {
 				const keepRes9 = result.numRows <= ANALYSIS_MAX_ROWS;
 				const res9 = keepRes9 ? new Map<string, Record<string, any>>() : null;
 				const sums = new Map<string, Float64Array>();
-				const counts = new Map<string, Int32Array>();
+				const counts = new Map<string, Float64Array>();
 				const labels = new Map<string, Map<string, number>>();
+				// A census rate with a base column averages as Σ rate·base / Σ base in the coarse
+				// cell (a plain mean weighs each radio by its count of cells).
+				const baseOf = numericCols.map((c: string) => {
+					const bc = layer.variables.find(v => v.col === c)?.baseCol;
+					return bc ? numericCols.indexOf(bc) : -1;
+				});
 				for (let i = 0; i < result.numRows; i++) {
 					let parent: string;
 					const h3i = String(h3indexVec!.get(i));
@@ -661,13 +667,16 @@ export class HexStore {
 					if (res9) res9.set(h3i, HexStore.rowValues(resultCols, colVecs, i));
 					let s = sums.get(parent);
 					let c = counts.get(parent);
-					if (!s || !c) { s = new Float64Array(numericCols.length); c = new Int32Array(numericCols.length); sums.set(parent, s); counts.set(parent, c); }
+					if (!s || !c) { s = new Float64Array(numericCols.length); c = new Float64Array(numericCols.length); sums.set(parent, s); counts.set(parent, c); }
 					for (let k = 0; k < numericCols.length; k++) {
 						const v = colVecs[numericCols[k]]?.get(i);
 						if (v === null || v === undefined) continue;
 						const num = Number(v);
 						if (!Number.isFinite(num)) continue;
-						s[k] += num; c[k]++;
+						const b = baseOf[k];
+						const w = b >= 0 ? Number(colVecs[numericCols[b]]?.get(i)) : 1;
+						if (b >= 0 && !(w > 0)) continue;
+						s[k] += num * w; c[k] += w;
 					}
 					if (nominalIdx.length) {
 						let mm = modes.get(parent);
@@ -1690,7 +1699,12 @@ export class HexStore {
 			if (availableVars.length === 0) {
 				this.provincialAvg = numVars.map(() => 1);
 			} else {
-				const aggExprs = availableVars.map(v => `AVG(${v.col}) as avg_${v.col}`).join(', ');
+				// A rate over a base (households, people) averages as Σ rate·base / Σ base, the
+				// department ranking's rule (build_layer_ranks.py): a plain AVG over cells weighs
+				// each census radio by its number of cells, not by its households.
+				const aggExprs = availableVars.map(v => v.baseCol && actualCols.has(v.baseCol)
+					? `SUM(${v.col} * ${v.baseCol}) / NULLIF(SUM(CASE WHEN ${v.col} IS NOT NULL THEN ${v.baseCol} END), 0) as avg_${v.col}`
+					: `AVG(${v.col}) as avg_${v.col}`).join(', ');
 				const whereClause = actualCols.has(layer.primaryVariable)
 					? `WHERE ${layer.primaryVariable} IS NOT NULL`
 					: '';
@@ -1806,8 +1820,14 @@ export class HexStore {
 				const data = this.zoneRow(h3index);
 				if (!data) continue;
 				for (let v = 0; v < numVars.length; v++) {
+					// A rate with a base column is weighted by it (Σ rate·base / Σ base): the zone
+					// reads like the census radios it covers, not like a count of their cells.
 					const x = data[numVars[v].col];
-					if (typeof x === 'number' && Number.isFinite(x)) { sums[v] += x; ns[v]++; }
+					if (typeof x !== 'number' || !Number.isFinite(x)) continue;
+					const bc = numVars[v].baseCol;
+					const w = bc ? Number(data[bc]) : 1;
+					if (bc && !(w > 0)) continue;
+					sums[v] += x * w; ns[v] += w;
 				}
 			}
 			const rawValues = sums.map((t, v) => (ns[v] > 0 ? t / ns[v] : NaN));

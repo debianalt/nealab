@@ -10,6 +10,8 @@
 		xLabel = 'score',
 		onBrushSelect = (_h3s: string[], _origin?: string) => {},
 		markers = [] as Array<{ value: number; color: string }>,
+		expand = null,
+		unitLabel = null,
 	}: {
 		data: Map<string, Record<string, any>>;
 		variable: string;
@@ -17,6 +19,10 @@
 		onBrushSelect?: (h3s: string[], origin?: string) => void;
 		// Vertical lines at given values (e.g. the census tracts selected on the map).
 		markers?: Array<{ value: number; color: string }>;
+		// Radio unit (census rates): `data` is keyed by radio; `expand` turns the brushed radios
+		// into the cells the map paints, `unitLabel` names what the bars count.
+		expand?: ((ids: string[]) => string[]) | null;
+		unitLabel?: string | null;
 	} = $props();
 
 	function csvRows() {
@@ -149,6 +155,7 @@
 				if (isFinite(v) && v >= vLo && v <= vHi) h3s.push(h3);
 			}
 			selectedCount = h3s.length;
+			if (expand) h3s.splice(0, h3s.length, ...expand(h3s));
 			const f = (v: number) => v.toLocaleString(i18n.locale, { maximumFractionDigits: Math.abs(v) >= 100 ? 0 : Math.abs(v) >= 1 ? 1 : 2 });
 			onBrushSelect(h3s, i18n.t('zone.o.hist').replace('{lo}', f(vLo)).replace('{hi}', f(vHi)));
 		};
@@ -178,11 +185,11 @@
 	<div class="hpanel">
 	<div class="hpanel-subheader">
 		{#if brushLo !== null}
-			<span class="hpanel-count">{selectedCount.toLocaleString()} {i18n.t('chart.hexDblClick')}</span>
+			<span class="hpanel-count">{selectedCount.toLocaleString()} {unitLabel ? `${unitLabel} · ${i18n.t('chart.dblClickClear')}` : i18n.t('chart.hexDblClick')}</span>
 		{:else}
 			<span class="hpanel-hint">{i18n.t('chart.histogram.dragRange')}</span>
 		{/if}
-		<span class="hpanel-unit">{totalHexes.toLocaleString()} {i18n.t('chart.hexShort')}</span>
+		<span class="hpanel-unit">{totalHexes.toLocaleString()} {unitLabel ?? i18n.t('chart.hexShort')}</span>
 	</div>
 	<div use:measure={(w, h) => { renderedW = w; renderedH = h; }}>
 	<!-- svelte-ignore a11y_no_static_element_interactions -->

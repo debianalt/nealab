@@ -319,6 +319,12 @@ const dict: Record<string, Record<Locale, string>> = {
 	'ficha.w.higher': { es: 'Más alto que {n} de cada 100 hexágonos {of}.', en: 'Higher than {n} in 100 hexagons {of}.', gn: 'Más alto que {n} de cada 100 hexágonos {of}.', pt: 'Maior que {n} de cada 100 hexágonos {of}.' }, // gn: pendiente
 	'ficha.w.lower': { es: 'Más bajo que {n} de cada 100 hexágonos {of}.', en: 'Lower than {n} in 100 hexagons {of}.', gn: 'Más bajo que {n} de cada 100 hexágonos {of}.', pt: 'Menor que {n} de cada 100 hexágonos {of}.' }, // gn: pendiente
 	'ficha.w.equal': { es: 'Igual que {n} de cada 100 hexágonos {of}', en: 'Same as {n} in 100 hexagons {of}', gn: 'Igual que {n} de cada 100 hexágonos {of}', pt: 'Igual a {n} de cada 100 hexágonos {of}' }, // gn: pendiente
+	'ficha.w.higherR': { es: 'Más alto que {n} de cada 100 radios censales {of}.', en: 'Higher than {n} in 100 census tracts {of}.', gn: 'Más alto que {n} de cada 100 radios censales {of}.', pt: 'Maior que {n} de cada 100 setores censitários {of}.' }, // gn: pendiente
+	'ficha.w.lowerR': { es: 'Más bajo que {n} de cada 100 radios censales {of}.', en: 'Lower than {n} in 100 census tracts {of}.', gn: 'Más bajo que {n} de cada 100 radios censales {of}.', pt: 'Menor que {n} de cada 100 setores censitários {of}.' }, // gn: pendiente
+	'ficha.w.equalR': { es: 'Igual que {n} de cada 100 radios censales {of}', en: 'Same as {n} in 100 census tracts {of}', gn: 'Igual que {n} de cada 100 radios censales {of}', pt: 'Igual a {n} de cada 100 setores censitários {of}' }, // gn: pendiente
+	'ficha.ctxR': { es: 'entre radios: mediana {med} · promedio {mean}', en: 'across tracts: median {med} · mean {mean}', gn: 'entre radios: mediana {med} · promedio {mean}', pt: 'entre setores: mediana {med} · média {mean}' }, // gn: pendiente
+	'ficha.radio': { es: 'dato del radio censal {code}', en: 'value of census tract {code}', gn: 'dato del radio censal {code}', pt: 'dado do setor censitário {code}' }, // gn: pendiente
+	'ficha.radioMix': { es: 'hexágono de borde: mezcla los radios que toca, por edificios', en: 'edge hexagon: blends the tracts it touches, by buildings', gn: 'hexágono de borde: mezcla los radios que toca, por edificios', pt: 'hexágono de borda: mistura os setores que toca, por edificações' }, // gn: pendiente
 	'ficha.w.andHigher': { es: '; más alto que {n}.', en: '; higher than {n}.', gn: '; más alto que {n}.', pt: '; maior que {n}.' }, // gn: pendiente
 	'ficha.w.andLower': { es: '; más bajo que {n}.', en: '; lower than {n}.', gn: '; más bajo que {n}.', pt: '; menor que {n}.' }, // gn: pendiente
 	'ficha.of.ar': { es: 'del departamento {name}', en: 'in {name} department', gn: 'del departamento {name}', pt: 'do departamento {name}' }, // gn: pendiente
@@ -332,6 +338,9 @@ const dict: Record<string, Record<Locale, string>> = {
 	'censo.deptScopeAll': { es: 'ver {ref} completa', en: 'show all of {ref}', gn: 'ver {ref} completa', pt: 'ver {ref} inteira' }, // gn: pendiente
 	'chart.median': { es: 'mediana', en: 'median', gn: 'mediana', pt: 'mediana' }, // gn: pendiente
 	'chart.hexShort': { es: 'hex.', en: 'hex.', gn: 'hex.', pt: 'hex.' }, // gn: pendiente
+	'chart.dblClickClear': { es: 'doble-clic para limpiar', en: 'double-click to clear', gn: 'doble-clic para limpiar', pt: 'duplo clique para limpar' }, // gn: pendiente
+	'chart.unitRadios': { es: 'radios', en: 'census tracts', gn: 'radios', pt: 'setores' }, // gn: pendiente
+	'chart.radioUnitNote': { es: 'La tasa se mide por radio censal: estos gráficos cuentan radios, no hexágonos (los hexágonos de un radio repiten su valor).', en: 'The rate is measured per census tract: these charts count tracts, not hexagons (the hexagons of a tract repeat its value).', gn: 'La tasa se mide por radio censal: estos gráficos cuentan radios, no hexágonos (los hexágonos de un radio repiten su valor).', pt: 'A taxa é medida por setor censitário (radio do INDEC): estes gráficos contam setores, não hexágonos (os hexágonos de um setor repetem o seu valor).' }, // gn: pendiente
 	'chart.histogram.dragRange': { es: 'arrastrá para seleccionar rango', en: 'drag to select a range', gn: 'arrastrá para seleccionar rango', pt: 'arraste para selecionar o intervalo' }, // gn: pendiente
 	'chart.moran.title': { es: 'Autocorrelación espacial (Moran)', en: 'Spatial autocorrelation (Moran)', gn: 'Autocorrelación espacial (Moran)', pt: 'Autocorrelação espacial (Moran)' },
 	'chart.moran.computing': { es: 'Calculando I de Moran…', en: 'Computing Moran’s I…', gn: 'Calculando I de Moran…', pt: 'Calculando o I de Moran…' },
