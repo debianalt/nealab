@@ -60,10 +60,23 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install playwright pyyaml pillow && python -m playwright install --with-deps chromium
-      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with: { name: humo, path: out/ }
+      - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out || true
+      - name: Claude con la suscripción (mismos flags que juez y revisor)
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          pip install duckdb
+          npm install -g @anthropic-ai/claude-code
+          MODELO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['modelo'])")
+          ESFUERZO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml')).get('esfuerzo','high'))")
+          mkdir -p director/run
+          claude -p "Corré python director/consulta.py \"SELECT count(*) AS n FROM p('hex_flood_risk')\" y escribí el número en director/run/prueba.txt. Respondé sólo con el número." \
+            --model "$MODELO" --effort "$ESFUERZO" \
+            --allowedTools "Read" "Write(director/run/**)" "Bash(python director/consulta.py:*)" \
+            --output-format json > salida.json; echo "exit=$?"
+          python -c "import json;d=json.load(open('salida.json'));print('resultado:',d.get('result'));print('modelo:',list((d.get('modelUsage') or {}).keys()));print('turnos:',d.get('num_turns'),'error:',d.get('is_error'))"
+          echo "archivo: $(cat director/run/prueba.txt 2>/dev/null || echo NO ESCRITO)"
+          test -s director/run/prueba.txt
 
   sondas:
     needs: cadencia
