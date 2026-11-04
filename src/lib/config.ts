@@ -108,10 +108,10 @@ export function getParquetUrl(name: string): string {
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=32',
 		sat_health_access: '?v=30',
-		sat_education_capital: '?v=29',
+		sat_education_capital: '?v=30',
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=27',   // 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
-		sat_economic_activity: '?v=34',   // 4-nov-2026 (noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
+		sat_economic_activity: '?v=35',   // 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=30',
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
@@ -125,7 +125,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 37;   // 37: economic_activity con columnas de año base (4-nov-2026)
+const DEPT_V = 38;   // 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -1139,10 +1139,12 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		// Department ranking — pipeline/build_layer_ranks.py.
 		deptRank: {
 			field: 'noschool_pct', unit: '%', decimals: 1, hexVariable: 'c_no_schooling',
+			extraField: 'noschool_cambio_pts', extraUnitKey: 'rank.educap.unit.noschoolCambio', extraDecimals: 1,
 			titleKey: 'rank.educap.title', noteKey: 'rank.educap.note',
 			metrics: [
 				{ tabKey: 'rank.educap.tab.noschool' },
-				{ tabKey: 'rank.educap.tab.univ', field: 'univ25_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'c_university' },   // 25+: pipeline/build_univ25_rank.py
+				{ tabKey: 'rank.educap.tab.univ', field: 'univ25_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'c_university',   // 25+: pipeline/build_univ25_rank.py
+				  extraField: 'univ_cambio_pts', extraUnitKey: 'rank.econ.unit.univCambio' },
 			],
 		},
 		parquet: 'sat_education_capital',
@@ -1152,7 +1154,30 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_secondary_plus', labelKey: 'sat.eduCap.secondaryPlus', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 			{ col: 'c_higher_edu', labelKey: 'sat.eduCap.higherEdu', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 			{ col: 'c_university', labelKey: 'sat.eduCap.university', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
+			// Censo 2010 with the 2022 apportionment, for the transition charts (pipeline/build_census_trayectorias.py).
+			{ col: 'c_no_schooling_2010', labelKey: 'sat.eduCap.noSchooling', aggregation: 'mean', unit: '%', hidden: true },
+			{ col: 'c_university_2010', labelKey: 'sat.eduCap.university', aggregation: 'mean', unit: '%', hidden: true },
 		],
+		tabFlows: {
+			c_no_schooling: {
+				periods: { baseline: '2010', current: '2022' },
+				bands: {
+					col: 'c_no_schooling', baselineCol: 'c_no_schooling_2010', breaks: [15, 30, 45],
+					labels: ['< 15 %', '15–30 %', '30–45 %', '≥ 45 %'],
+					colors: [MAP_CLASS_4[3], MAP_CLASS_4[2], MAP_CLASS_4[1], MAP_CLASS_4[0]],
+					higherIsWorse: true, unit: '%', note: 'flow.noschool.note',
+				},
+			},
+			c_university: {
+				periods: { baseline: '2010', current: '2022' },
+				bands: {
+					col: 'c_university', baselineCol: 'c_university_2010', breaks: [2, 5, 10],
+					labels: ['flow.univ.b1', 'flow.univ.b2', 'flow.univ.b3', 'flow.univ.b4'],
+					colors: [MAP_SELVA[1], MAP_SELVA[2], MAP_SELVA[4], MAP_SELVA[5]],
+					higherIsWorse: false, unit: '%', upLabel: 'flow.univ.up', downLabel: 'flow.univ.down', note: 'flow.univ.note',
+				},
+			},
+		},
 		quantileDomain: true,
 		primaryVariable: 'c_no_schooling',
 		colorScale: 'flood',

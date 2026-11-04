@@ -15,7 +15,9 @@
       ],
       "rank": {
         "noschool_pct": 20.9,
-        "univ25_pct": 8.2
+        "univ25_pct": 8.2,
+        "noschool_cambio_pts": -16.8,
+        "univ_cambio_pts": 5.1
       }
     },
     {
@@ -28,7 +30,9 @@
       ],
       "rank": {
         "noschool_pct": 24.6,
-        "univ25_pct": 3.9
+        "univ25_pct": 3.9,
+        "noschool_cambio_pts": -16.0,
+        "univ_cambio_pts": 2.6
       }
     },
     {
@@ -41,7 +45,9 @@
       ],
       "rank": {
         "noschool_pct": 16.3,
-        "univ25_pct": 5.8
+        "univ25_pct": 5.8,
+        "noschool_cambio_pts": -13.0,
+        "univ_cambio_pts": 3.4
       }
     },
     {
@@ -54,7 +60,9 @@
       ],
       "rank": {
         "noschool_pct": 14.8,
-        "univ25_pct": 5.5
+        "univ25_pct": 5.5,
+        "noschool_cambio_pts": -10.3,
+        "univ_cambio_pts": 3.1
       }
     },
     {
@@ -67,7 +75,9 @@
       ],
       "rank": {
         "noschool_pct": 15.0,
-        "univ25_pct": 6.2
+        "univ25_pct": 6.2,
+        "noschool_cambio_pts": -10.9,
+        "univ_cambio_pts": 3.7
       }
     },
     {
@@ -80,7 +90,9 @@
       ],
       "rank": {
         "noschool_pct": 10.9,
-        "univ25_pct": 6.7
+        "univ25_pct": 6.7,
+        "noschool_cambio_pts": -7.8,
+        "univ_cambio_pts": 3.1
       }
     },
     {
@@ -93,7 +105,9 @@
       ],
       "rank": {
         "noschool_pct": 13.6,
-        "univ25_pct": 5.1
+        "univ25_pct": 5.1,
+        "noschool_cambio_pts": -11.6,
+        "univ_cambio_pts": 2.8
       }
     },
     {
@@ -106,7 +120,9 @@
       ],
       "rank": {
         "noschool_pct": 14.8,
-        "univ25_pct": 4.9
+        "univ25_pct": 4.9,
+        "noschool_cambio_pts": -12.7,
+        "univ_cambio_pts": 3.2
       }
     },
     {
@@ -119,7 +135,9 @@
       ],
       "rank": {
         "noschool_pct": 6.2,
-        "univ25_pct": 12.2
+        "univ25_pct": 12.2,
+        "noschool_cambio_pts": -5.5,
+        "univ_cambio_pts": 4.6
       }
     }
   ]
