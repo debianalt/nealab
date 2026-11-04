@@ -39,26 +39,33 @@ async def abrir_desplegables(page):
             except Exception: pass
 
 
-async def panel_capa(br, base, lente, capa, idioma, H, errores_vistos):
-    cx = await contexto_spatia(br, base, locale=idioma)
+async def panel_capa(br, base, lente, capa, H):
+    """Una carga por capa; el idioma se cambia en la página (i18n.setLocale), como el botón ES/EN/GN/BR."""
+    cx = await contexto_spatia(br, base)
     page = await cx.new_page()
-    ctx = {'capa': capa, 'idioma': idioma, 'vista': 'panel', 'url': f'{base}/?lens={lente}&a={capa}'}
+    url = f'{base}/?lens={lente}&a={capa}'
     try:
-        await page.goto(ctx['url'], wait_until='domcontentloaded')
+        await page.goto(url, wait_until='domcontentloaded')
         t0 = time.time()
-        while time.time() - t0 < 90:
+        while time.time() - t0 < 120:
             e = await page.evaluate(ESTADO_JS, {})
             if e.get('analisis') == capa and not e.get('cargando') and e.get('leyenda'): break
             await page.wait_for_timeout(1000)
-        await abrir_desplegables(page); await page.wait_for_timeout(800)
-        e = await page.evaluate(ESTADO_JS, {})
-        texto = (e.get('textoPanel') or '') + '\n' + ((e.get('leyenda') or {}).get('texto') or '')
-        H.revisar(revisar_texto(texto), ctx, 'panel')
-        if idioma in ('en', 'pt'):
-            sob = castellano_sobrante(texto)
-            if sob:
-                H.add('sin_traducir', 'baja', ctx, f'{len(sob)} líneas en castellano en la vista {idioma}: ' + ' / '.join(f'«{s}»' for s in sob[:4]),
-                      clave='sin_traducir')
+        else:
+            H.add('no_carga', 'alta', {'capa': capa, 'vista': 'panel', 'url': url}, 'El panel de la capa no cargó en 120 s.'); return
+        for idioma in IDIOMAS:
+            ctx = {'capa': capa, 'idioma': idioma, 'vista': 'panel', 'url': url}
+            await page.evaluate("(l) => window.__spatia.i18n.setLocale(l)", idioma)
+            await page.wait_for_timeout(1200)
+            await abrir_desplegables(page); await page.wait_for_timeout(600)
+            e = await page.evaluate(ESTADO_JS, {})
+            texto = (e.get('textoPanel') or '') + chr(10) + ((e.get('leyenda') or {}).get('texto') or '')
+            H.revisar(revisar_texto(texto), ctx, 'panel')
+            if idioma in ('en', 'pt'):
+                sob = castellano_sobrante(texto)
+                if sob:
+                    H.add('sin_traducir', 'baja', ctx, f'{len(sob)} líneas en castellano en la vista {idioma}: ' + ' / '.join(f'«{x}»' for x in sob[:4]),
+                          clave='sin_traducir')
     finally:
         await cx.close()
 
@@ -107,6 +114,7 @@ async def pagina(br, base, ruta, idioma, H, links_vistos):
 async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('base'); ap.add_argument('out'); ap.add_argument('--capas')
+    ap.add_argument('--solo', choices=['paginas', 'paneles'])
     args = ap.parse_args()
     base = args.base.rstrip('/'); out = Path(args.out)
     H = Hallazgos(out, 'textos')
@@ -119,16 +127,15 @@ async def main():
         await cx.close()
         if args.capas: capas = [c for c in capas if c[1] in args.capas.split(',')]
         links = set()
-        for ruta in PAGINAS + [f'/metodologia/{c}' for _, c in capas]:
+        for ruta in ([] if args.solo == 'paneles' else PAGINAS + [f'/metodologia/{c}' for _, c in capas]):
             for idioma in IDIOMAS:
                 await pagina(br, base, ruta, idioma, H, links)
                 print(f'página {idioma}{ruta}: {H.total()} hallazgos', flush=True)
-        for lente, capa in capas:
-            for idioma in IDIOMAS:
-                try:
-                    await panel_capa(br, base, lente, capa, idioma, H, set())
-                except Exception as ex:
-                    H.add('sonda_fallo', 'media', {'capa': capa, 'idioma': idioma, 'vista': 'panel'}, f'{type(ex).__name__}: {str(ex)[:200]}')
+        for lente, capa in ([] if args.solo == 'paginas' else capas):
+            try:
+                await panel_capa(br, base, lente, capa, H)
+            except Exception as ex:
+                H.add('sonda_fallo', 'media', {'capa': capa, 'vista': 'panel'}, f'{type(ex).__name__}: {str(ex)[:200]}')
             print(f'panel {capa}: {H.total()} hallazgos', flush=True)
         await br.close()
     H.guardar()

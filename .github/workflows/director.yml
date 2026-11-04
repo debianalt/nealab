@@ -79,13 +79,23 @@ jobs:
           - { nombre: mapa-chaco, cmd: 'mapa.py', args: '--territorios chaco' }
           - { nombre: mapa-formosa, cmd: 'mapa.py', args: '--territorios formosa' }
           - { nombre: mapa-py, cmd: 'mapa.py', args: '--territorios itapua_py,alto_parana_py' }
-          - { nombre: textos, cmd: 'textos.py', args: '' }
+          - { nombre: textos-paginas, cmd: 'textos.py', args: '--solo paginas' }
+          - { nombre: textos-paneles, cmd: 'textos.py', args: '--solo paneles' }
           - { nombre: estatico, cmd: 'estatico.py', args: '' }
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with: { python-version: '3.12', cache: pip }
       - run: pip install playwright pyyaml pillow duckdb && python -m playwright install --with-deps chromium
+      - uses: actions/setup-node@v5
+        with: { node-version: '22', cache: npm }
+      # Se sondea el build de main (lo mismo que se despliega) servido en localhost:5173, con los
+      # datos desde r2.dev: www.spatia.ar y cdn.spatia.ar desafían a los runners («¿sos humano?»).
+      - name: Build de main en localhost:5173
+        run: |
+          npm ci && npm run build
+          nohup npx vite preview --port 5173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 40); do curl -sf http://localhost:5173/ > /dev/null && break; sleep 1; done
       - name: Sonda ${{ matrix.sonda.nombre }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -93,7 +103,7 @@ jobs:
           CAPAS="${{ inputs.capas }}"
           EXTRA=""
           if [ -n "$CAPAS" ] && [ "${{ matrix.sonda.cmd }}" != "estatico.py" ]; then EXTRA="--capas $CAPAS"; fi
-          python director/sondas/${{ matrix.sonda.cmd }} https://www.spatia.ar out/${{ matrix.sonda.nombre }} ${{ matrix.sonda.args }} $EXTRA
+          python director/sondas/${{ matrix.sonda.cmd }} http://localhost:5173 out/${{ matrix.sonda.nombre }} ${{ matrix.sonda.args }} $EXTRA
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -107,6 +117,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 240
     env:
+      SONDA_R2DEV: '1'
       MODO: ${{ needs.cadencia.outputs.modo }}
       GH_TOKEN: ${{ github.token }}
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -245,20 +256,24 @@ jobs:
           git rev-parse HEAD > director/run/deploy_sha
           echo "desplegado=si" >> $GITHUB_OUTPUT
 
-      - name: Re-sondeo de producción
+      - name: Verificar que producción sirve el build desplegado
         id: post
         if: steps.deploy.outputs.desplegado == 'si'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          sleep 90
-          CAPAS=$(python -c "import json;print(','.join(sorted({v['capa'] for v in json.load(open('director/run/local/vistas_mapa.json'))})))")
-          python director/sondas/mapa.py https://www.spatia.ar director/run/post --territorios misiones,corrientes --capas "$CAPAS" --hover 4
-          python director/unir.py director/run/post director/run/post/hallazgos.json --comparar director/run/local/hallazgos.json
-          altos=$(python -c "import json;print(sum(1 for h in json.load(open('director/run/post/hallazgos.comparacion.json'))['nuevos'] if h['severidad']=='alta'))")
-          if [ "$altos" != "0" ]; then
-            echo "Producción empeoró: se revierte"
+          # El build ya se sondeó en localhost; acá se confirma que Pages sirve ese mismo build
+          # (pages.dev no está detrás del desafío de spatia.ar).
+          sleep 30
+          local=$(cat build/_app/version.json)
+          remoto=$(curl -s https://neahub.pages.dev/_app/version.json)
+          echo "local: $local · pages: $remoto"
+          if [ "$local" != "$remoto" ]; then
+            sleep 90; remoto=$(curl -s https://neahub.pages.dev/_app/version.json)
+          fi
+          if [ "$local" != "$remoto" ]; then
+            echo "Producción no sirve el build desplegado: se revierte"
             base=$(cat director/run/base_sha)
             git revert --no-edit $base..HEAD
             npm run build && git push origin HEAD:main && npx wrangler pages deploy build/ --project-name neahub --branch main
@@ -290,7 +305,7 @@ jobs:
           if (r / 'deploy_sha').exists():
               t.append(f"Desplegado en producción ({(r / 'deploy_sha').read_text().strip()[:8]}).")
           if '${{ steps.post.outputs.revertido }}' == 'si':
-              t.append('⚠️ El re-sondeo de producción encontró errores nuevos: **se revirtieron los cambios** y se redesplegó.')
+              t.append('⚠️ Producción no quedó sirviendo el build verificado: **se revirtieron los cambios** y se redesplegó.')
           if '${{ steps.deploy.outputs.conflicto }}' == 'si':
               t.append('Conflicto al hacer rebase sobre main (cambios tuyos en paralelo): no se desplegó.')
           if '${{ steps.compuerta.outputs.pasa }}' == 'no':

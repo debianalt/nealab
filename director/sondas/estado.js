@@ -93,7 +93,7 @@
 		}
 	}
 
-	const panel = document.querySelector('.dept-panel, aside, .sidebar');
+	const panel = [...document.querySelectorAll('.sidebar, .dept-panel')];
 	return {
 		unidadEspacial: S.registros.ANALYSIS_REGISTRY.find(a => a.id === l.activeAnalysis?.id)?.spatialUnit ?? 'hexagon',
 		capa: layer?.id ?? null, analisis: l.activeAnalysis?.id ?? null, lente: l.activeLens ?? null,
@@ -117,7 +117,7 @@
 			texto: f.innerText.slice(0, 1500) })),
 		leyenda, hex, enPantalla,
 		toasts: txt('[class*=toast], [role=alert]'),
-		textoPanel: (panel?.innerText ?? '').slice(0, 20000),
+		textoPanel: panel.map(p => p.innerText).join(String.fromCharCode(10)).slice(0, 30000),
 		url: location.href
 	};
 }

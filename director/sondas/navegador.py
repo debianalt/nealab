@@ -29,6 +29,16 @@ async def _cors(route):
         await route.continue_()
 
 
+R2_DEV = 'https://pub-580c676bec7f4eeb96d7d30559a3cab7.r2.dev'
+
+
+async def _a_r2dev(route):
+    # Mismo bucket y mismas reglas CORS que cdn.spatia.ar, pero fuera de la zona de
+    # Cloudflare que desafía a los runners de GitHub ("Verifique que es un ser humano").
+    url = route.request.url
+    await route.continue_(url=R2_DEV + url[url.index('cdn.spatia.ar') + len('cdn.spatia.ar'):])
+
+
 async def contexto_spatia(br, base, locale=None):
     """Contexto con modales salteados, gancho de sonda y, en localhost, proxy CORS a R2
     (localhost:4173 no está en cors-rules.json)."""
@@ -37,6 +47,8 @@ async def contexto_spatia(br, base, locale=None):
     await ctx.add_init_script(init)
     # Proxy CORS sólo a pedido (SONDA_PROXY=1): en el runner, Cloudflare desafía las descargas
     # del proxy. El build local se sirve en localhost:5173, que ya está en cors-rules.json.
+    if 'localhost' in base or os.environ.get('SONDA_R2DEV') == '1':
+        await ctx.route('**/cdn.spatia.ar/**', _a_r2dev)
     if os.environ.get('SONDA_PROXY') == '1':
         await ctx.route('**/cdn.spatia.ar/**', _cors)
         await ctx.route('**/*.r2.dev/**', _cors)

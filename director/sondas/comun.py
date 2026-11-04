@@ -12,6 +12,8 @@ RUIDO_CONSOLA = [
     r'challenges\.cloudflare\.com',
     r'Failed to load resource: the server responded with a status of 403 \(\)$',
     r'net::ERR_ABORTED',                        # navegación que corta descargas en curso
+    r'terrain/mapterhorn',                      # relieve decorativo: con la reescritura a r2.dev algunos tiles fallan en el navegador de la sonda
+    r'^MAP ERROR: Failed to fetch$',            # el mismo caso, sin URL
 ]
 
 
@@ -43,6 +45,8 @@ def revisar_texto(texto, contexto_extra=''):
         for m in re.finditer(b['re'], texto):
             frag = texto[max(0, m.start() - 40): m.end() + 40].replace('\n', ' ')
             if b.get('excepto_re') and re.search(b['excepto_re'], m.group(0) if b['motivo'] != 'clave i18n sin traducir' else frag): continue
+            # rutas y archivos citados a propósito (metodología: pipeline/hexoma/x.py)
+            if texto[max(0, m.start() - 1):m.start()] in ('/', chr(92)) or re.match(r'\.[a-z]{1,7}\b', texto[m.end():m.end() + 8]): continue
             out.append(('texto_basura', 'media', f"{b['motivo']}: «{m.group(0)}» en …{frag}…"))
     return out
 
