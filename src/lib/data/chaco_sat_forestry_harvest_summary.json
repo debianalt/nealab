@@ -1,0 +1,572 @@
+{
+ "province": {
+  "total_hexes": 0,
+  "avg_score": null,
+  "unassigned": 0,
+  "rank": {
+   "plant_ha": 6373,
+   "edad_media": 16.4,
+   "pino_listo_ha": 2,
+   "pino_listo_pct": 5.6,
+   "pino_entra_ha": 0,
+   "euca_listo_ha": 203,
+   "euca_listo_pct": 17.3,
+   "perdida_ha": 61,
+   "perdida_pct": 1.0,
+   "macizos": 1016
+  }
+ },
+ "departments": [
+  {
+   "dpto": "12 de Octubre",
+   "parquetKey": "doce_de_octubre",
+   "centroid": [
+    -61.4769,
+    -27.3359
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 24,
+    "edad_media": 18.4,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 7
+   }
+  },
+  {
+   "dpto": "1º de Mayo",
+   "parquetKey": "primero_de_mayo",
+   "centroid": [
+    -58.9592,
+    -27.1683
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 180,
+    "edad_media": 8.7,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": 0.0,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 14,
+    "perdida_pct": 7.9,
+    "macizos": 45
+   }
+  },
+  {
+   "dpto": "2 de Abril",
+   "parquetKey": "2_de_abril",
+   "centroid": [
+    -61.3291,
+    -27.6217
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 15,
+    "edad_media": 16.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 4
+   }
+  },
+  {
+   "dpto": "25 de Mayo",
+   "parquetKey": "veinticinco_de_mayo",
+   "centroid": [
+    -60.0194,
+    -26.8195
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 58,
+    "edad_media": 16.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 15
+   }
+  },
+  {
+   "dpto": "9 de Julio",
+   "parquetKey": "nueve_de_julio",
+   "centroid": [
+    -61.2638,
+    -26.9464
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 6,
+    "edad_media": null,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 2
+   }
+  },
+  {
+   "dpto": "Almirante Brown",
+   "parquetKey": "almirante_brown",
+   "centroid": [
+    -61.9528,
+    -25.7518
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 594,
+    "edad_media": 20.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 27,
+    "perdida_pct": 4.5,
+    "macizos": 72
+   }
+  },
+  {
+   "dpto": "Bermejo",
+   "parquetKey": "bermejo",
+   "centroid": [
+    -58.707,
+    -26.9576
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 110,
+    "edad_media": 12.1,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 39,
+    "euca_listo_pct": 42.2,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 13
+   }
+  },
+  {
+   "dpto": "Chacabuco",
+   "parquetKey": "chacabuco",
+   "centroid": [
+    -61.3085,
+    -27.1179
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 76,
+    "edad_media": 22.9,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 13
+   }
+  },
+  {
+   "dpto": "Comandante Fernández",
+   "parquetKey": "comandante_fernandez",
+   "centroid": [
+    -60.4618,
+    -26.787
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 308,
+    "edad_media": 20.1,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 3,
+    "perdida_pct": 0.9,
+    "macizos": 77
+   }
+  },
+  {
+   "dpto": "Fray Justo Santa María de Oro",
+   "parquetKey": "fray_justo_santa_maria_de_oro",
+   "centroid": [
+    -61.3025,
+    -27.8657
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 10,
+    "edad_media": 20.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 1
+   }
+  },
+  {
+   "dpto": "General Belgrano",
+   "parquetKey": "general_belgrano",
+   "centroid": [
+    -61.0714,
+    -26.8498
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 133,
+    "edad_media": 24.8,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 15
+   }
+  },
+  {
+   "dpto": "General Donovan",
+   "parquetKey": "general_donovan",
+   "centroid": [
+    -59.3474,
+    -27.1393
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 64,
+    "edad_media": 11.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 15
+   }
+  },
+  {
+   "dpto": "General Güemes",
+   "parquetKey": "general_guemes",
+   "centroid": [
+    -61.3271,
+    -25.2213
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 486,
+    "edad_media": 13.2,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 12,
+    "perdida_pct": 2.5,
+    "macizos": 61
+   }
+  },
+  {
+   "dpto": "Independencia",
+   "parquetKey": "independencia",
+   "centroid": [
+    -60.7569,
+    -26.7373
+   ],
+   "avg_score": 1,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 388,
+    "edad_media": 19.5,
+    "pino_listo_ha": 1,
+    "pino_listo_pct": 100.0,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 3,
+    "perdida_pct": 0.8,
+    "macizos": 81
+   }
+  },
+  {
+   "dpto": "Libertad",
+   "parquetKey": "libertad",
+   "centroid": [
+    -59.2606,
+    -27.3498
+   ],
+   "avg_score": 1,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 831,
+    "edad_media": 9.9,
+    "pino_listo_ha": 1,
+    "pino_listo_pct": 20.0,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 29,
+    "euca_listo_pct": 5.1,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 112
+   }
+  },
+  {
+   "dpto": "Libertador General San Martín",
+   "parquetKey": "libertador_general_san_martin",
+   "centroid": [
+    -59.4878,
+    -26.3769
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 1026,
+    "edad_media": 17.4,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": 0.0,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 147
+   }
+  },
+  {
+   "dpto": "Maipú",
+   "parquetKey": "maipu",
+   "centroid": [
+    -60.4547,
+    -26.3211
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 288,
+    "edad_media": 17.6,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 92
+   }
+  },
+  {
+   "dpto": "Mayor Luis J. Fontana",
+   "parquetKey": "mayor_luis_j_fontana",
+   "centroid": [
+    -60.657,
+    -27.744
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 379,
+    "edad_media": 13.1,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 135,
+    "euca_listo_pct": 90.8,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 56
+   }
+  },
+  {
+   "dpto": "O'Higgins",
+   "parquetKey": "ohiggins",
+   "centroid": [
+    -60.6805,
+    -27.2575
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 580,
+    "edad_media": 22.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 52
+   }
+  },
+  {
+   "dpto": "Presidencia de la Plaza",
+   "parquetKey": "presidencia_de_la_plaza",
+   "centroid": [
+    -59.7755,
+    -27.0458
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 24,
+    "edad_media": 34.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 4
+   }
+  },
+  {
+   "dpto": "Quitilipi",
+   "parquetKey": "quitilipi",
+   "centroid": [
+    -60.1736,
+    -26.6685
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 242,
+    "edad_media": 25.9,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 45
+   }
+  },
+  {
+   "dpto": "San Fernando",
+   "parquetKey": "san_fernando",
+   "centroid": [
+    -59.1203,
+    -27.7115
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 80,
+    "edad_media": 11.5,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 12
+   }
+  },
+  {
+   "dpto": "San Lorenzo",
+   "parquetKey": "san_lorenzo",
+   "centroid": [
+    -60.3644,
+    -27.395
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 392,
+    "edad_media": 23.1,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 2,
+    "perdida_pct": 0.5,
+    "macizos": 51
+   }
+  },
+  {
+   "dpto": "Sargento Cabral",
+   "parquetKey": "sargento_cabral",
+   "centroid": [
+    -59.5193,
+    -26.8004
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 43,
+    "edad_media": 22.6,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 20
+   }
+  },
+  {
+   "dpto": "Tapenagá",
+   "parquetKey": "tapenaga",
+   "centroid": [
+    -59.828,
+    -27.6596
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 35,
+    "edad_media": 27.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 4
+   }
+  }
+ ],
+ "source": "pipeline/forestal/exportar_cosecha_web.py (DNDFI 23-04-2026, Hansen v1.13, turnos validados 3-nov-2026)"
+}

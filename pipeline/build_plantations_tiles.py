@@ -60,7 +60,9 @@ TERRITORY_PROV = {
     "formosa": "FORMOSA",
 }
 
-PROP_COLS = ["especie", "genero", "grupo_espe", "anio_plant", "superficie", "depto", "uso_forest"]
+PROP_COLS = ["id", "especie", "genero", "grupo_espe", "anio_plant", "superficie", "depto", "uso_forest"]
+# --attrs (pipeline/forestal/exportar_cosecha_web.py): per-macizo harvest attributes joined by id → *_v2.pmtiles
+ATTR_COLS = ["dpto_key", "edad", "clase_edad", "situacion", "turno", "anio_perdida"]
 
 
 def _polygonal(geom):
@@ -74,7 +76,7 @@ def _polygonal(geom):
     return None  # Point / LineString -> drop
 
 
-def load_features(con: duckdb.DuckDBPyConnection, prov: str) -> list:
+def load_features(con: duckdb.DuckDBPyConnection, prov: str, attrs: dict | None = None) -> list:
     cols = ", ".join(PROP_COLS)
     rows = con.execute(
         f"SELECT ST_AsWKB(geom) AS wkb, {cols} FROM macizos WHERE prov = ?", [prov]
@@ -92,8 +94,15 @@ def load_features(con: duckdb.DuckDBPyConnection, prov: str) -> list:
             props[col] = round(float(val), 2) if col == "superficie" else (
                 int(val) if col == "anio_plant" else str(val)
             )
+        if attrs is not None:
+            for col, val in (attrs.get(str(props.get("id"))) or {}).items():   # id: text in DuckDB, int in pyogrio
+                if val is None or val != val:   # None / NaN
+                    continue
+                props[col] = str(val) if col == "dpto_key" else int(val)
         features.append({"geometry": geom, "properties": props})
     print(f"  {prov}: {len(features):,} polygonal macizos ({dropped} non-polygonal dropped)")
+    if attrs is not None:
+        print(f"  {prov}: harvest attributes joined on {sum(1 for f in features if 'situacion' in f['properties']):,}")
     return features
 
 
@@ -161,6 +170,7 @@ def main():
     ap = argparse.ArgumentParser(description="Build forestry-plantation PMTiles from DNDFI inventory")
     ap.add_argument("--territory", required=True, help="misiones|corrientes|chaco|formosa|all")
     ap.add_argument("--geojson", default=DEFAULT_GEOJSON)
+    ap.add_argument("--attrs", default=None, help="parquet id → harvest attributes; writes <t>_plantations_v2.pmtiles")
     args = ap.parse_args()
 
     if not os.path.exists(args.geojson):
@@ -182,15 +192,23 @@ def main():
         list(provs),
     )
 
+    attrs = None
+    if args.attrs:
+        import pandas as pd
+        a = pd.read_parquet(args.attrs)
+        attrs = {str(r["id"]): {c: r[c] for c in ATTR_COLS if c in a.columns} for r in a.to_dict("records")}
+        print(f"  harvest attributes for {len(attrs):,} macizos")
+        if not attrs:
+            sys.exit("ERROR: empty --attrs")
     for t in territories:
         print("=" * 60)
         print(f"PLANTATIONS PMTILES — {get_territory(t)['label']} ({t})")
-        feats = load_features(con, TERRITORY_PROV[t])
+        feats = load_features(con, TERRITORY_PROV[t], attrs)
         if not feats:
             print(f"  WARNING: no features for {t}, skipping")
             continue
         w, s, e, n = get_territory(t)["bbox"]
-        out_path = os.path.join(OUTPUT_DIR, f"{t}_plantations.pmtiles")
+        out_path = os.path.join(OUTPUT_DIR, f"{t}_plantations{'_v2' if attrs is not None else ''}.pmtiles")
         generate_pmtiles(feats, {"west": w, "south": s, "east": e, "north": n}, out_path, t)
 
     print("\nNext: upload to R2 with")

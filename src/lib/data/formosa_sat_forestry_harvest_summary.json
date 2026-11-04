@@ -1,0 +1,220 @@
+{
+ "province": {
+  "total_hexes": 0,
+  "avg_score": null,
+  "unassigned": 0,
+  "rank": {
+   "plant_ha": 3022,
+   "edad_media": 15.3,
+   "pino_listo_ha": 0,
+   "pino_listo_pct": null,
+   "pino_entra_ha": 0,
+   "euca_listo_ha": 0,
+   "euca_listo_pct": 0.0,
+   "perdida_ha": 141,
+   "perdida_pct": 4.7,
+   "macizos": 1124
+  }
+ },
+ "departments": [
+  {
+   "dpto": "Bermejo",
+   "parquetKey": "bermejo",
+   "centroid": [
+    -61.2683,
+    -24.0356
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 445,
+    "edad_media": 14.4,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 110,
+    "perdida_pct": 24.8,
+    "macizos": 288
+   }
+  },
+  {
+   "dpto": "Formosa",
+   "parquetKey": "formosa",
+   "centroid": [
+    -58.3746,
+    -25.9392
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 95,
+    "edad_media": 17.2,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 15
+   }
+  },
+  {
+   "dpto": "Laishi",
+   "parquetKey": "laishi",
+   "centroid": [
+    -58.5622,
+    -26.4606
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 23,
+    "edad_media": 15.2,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 5
+   }
+  },
+  {
+   "dpto": "Matacos",
+   "parquetKey": "matacos",
+   "centroid": [
+    -62.0564,
+    -23.8606
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 222,
+    "edad_media": 15.4,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 74
+   }
+  },
+  {
+   "dpto": "Patiño",
+   "parquetKey": "patino",
+   "centroid": [
+    -59.9786,
+    -24.8681
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 324,
+    "edad_media": 15.9,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 17,
+    "perdida_pct": 5.3,
+    "macizos": 50
+   }
+  },
+  {
+   "dpto": "Pilagás",
+   "parquetKey": "pilagas",
+   "centroid": [
+    -58.6647,
+    -25.1049
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 400,
+    "edad_media": 21.0,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 56
+   }
+  },
+  {
+   "dpto": "Pilcomayo",
+   "parquetKey": "pilcomayo",
+   "centroid": [
+    -58.0591,
+    -25.373
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 190,
+    "edad_media": 20.3,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 4,
+    "perdida_pct": 2.2,
+    "macizos": 37
+   }
+  },
+  {
+   "dpto": "Pirané",
+   "parquetKey": "pirane",
+   "centroid": [
+    -59.1699,
+    -25.7599
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 513,
+    "edad_media": 11.5,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": 0.0,
+    "perdida_ha": 0,
+    "perdida_pct": 0.0,
+    "macizos": 54
+   }
+  },
+  {
+   "dpto": "Ramón Lista",
+   "parquetKey": "ramon_lista",
+   "centroid": [
+    -62.1248,
+    -23.1318
+   ],
+   "avg_score": 0,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 810,
+    "edad_media": 13.7,
+    "pino_listo_ha": 0,
+    "pino_listo_pct": null,
+    "pino_entra_ha": 0,
+    "euca_listo_ha": 0,
+    "euca_listo_pct": null,
+    "perdida_ha": 9,
+    "perdida_pct": 1.1,
+    "macizos": 545
+   }
+  }
+ ],
+ "source": "pipeline/forestal/exportar_cosecha_web.py (DNDFI 23-04-2026, Hansen v1.13, turnos validados 3-nov-2026)"
+}

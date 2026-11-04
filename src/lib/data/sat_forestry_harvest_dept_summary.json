@@ -1,0 +1,396 @@
+{
+ "province": {
+  "total_hexes": 0,
+  "avg_score": null,
+  "unassigned": 25,
+  "rank": {
+   "plant_ha": 399861,
+   "edad_media": 15.9,
+   "pino_listo_ha": 136573,
+   "pino_listo_pct": 42.7,
+   "pino_entra_ha": 58917,
+   "euca_listo_ha": 26041,
+   "euca_listo_pct": 65.2,
+   "perdida_ha": 20543,
+   "perdida_pct": 5.1,
+   "macizos": 111094
+  }
+ },
+ "departments": [
+  {
+   "dpto": "25 de Mayo",
+   "parquetKey": "25_de_mayo",
+   "centroid": [
+    -54.3553,
+    -27.386
+   ],
+   "avg_score": 6114,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 17635,
+    "edad_media": 18.4,
+    "pino_listo_ha": 6114,
+    "pino_listo_pct": 52.6,
+    "pino_entra_ha": 1916,
+    "euca_listo_ha": 1184,
+    "euca_listo_pct": 63.5,
+    "perdida_ha": 902,
+    "perdida_pct": 5.1,
+    "macizos": 6720
+   }
+  },
+  {
+   "dpto": "Apóstoles",
+   "parquetKey": "apostoles",
+   "centroid": [
+    -55.8008,
+    -27.8019
+   ],
+   "avg_score": 1853,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 4624,
+    "edad_media": 18.7,
+    "pino_listo_ha": 1853,
+    "pino_listo_pct": 54.5,
+    "pino_entra_ha": 256,
+    "euca_listo_ha": 508,
+    "euca_listo_pct": 47.3,
+    "perdida_ha": 398,
+    "perdida_pct": 8.6,
+    "macizos": 1939
+   }
+  },
+  {
+   "dpto": "Cainguás",
+   "parquetKey": "cainguas",
+   "centroid": [
+    -55.0504,
+    -27.1183
+   ],
+   "avg_score": 2891,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 8300,
+    "edad_media": 19.6,
+    "pino_listo_ha": 2891,
+    "pino_listo_pct": 57.6,
+    "pino_entra_ha": 765,
+    "euca_listo_ha": 794,
+    "euca_listo_pct": 61.5,
+    "perdida_ha": 769,
+    "perdida_pct": 9.3,
+    "macizos": 6062
+   }
+  },
+  {
+   "dpto": "Candelaria",
+   "parquetKey": "candelaria",
+   "centroid": [
+    -55.6454,
+    -27.4717
+   ],
+   "avg_score": 4780,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 10096,
+    "edad_media": 18.1,
+    "pino_listo_ha": 4780,
+    "pino_listo_pct": 51.4,
+    "pino_entra_ha": 1593,
+    "euca_listo_ha": 318,
+    "euca_listo_pct": 64.6,
+    "perdida_ha": 677,
+    "perdida_pct": 6.7,
+    "macizos": 2391
+   }
+  },
+  {
+   "dpto": "Capital",
+   "parquetKey": "capital",
+   "centroid": [
+    -56.0043,
+    -27.4805
+   ],
+   "avg_score": 3087,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 12985,
+    "edad_media": 15.0,
+    "pino_listo_ha": 3087,
+    "pino_listo_pct": 44.5,
+    "pino_entra_ha": 447,
+    "euca_listo_ha": 444,
+    "euca_listo_pct": 11.5,
+    "perdida_ha": 1120,
+    "perdida_pct": 8.6,
+    "macizos": 2505
+   }
+  },
+  {
+   "dpto": "Concepción",
+   "parquetKey": "concepcion",
+   "centroid": [
+    -55.5214,
+    -27.8769
+   ],
+   "avg_score": 5753,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 10771,
+    "edad_media": 18.7,
+    "pino_listo_ha": 5753,
+    "pino_listo_pct": 59.9,
+    "pino_entra_ha": 1787,
+    "euca_listo_ha": 448,
+    "euca_listo_pct": 60.3,
+    "perdida_ha": 619,
+    "perdida_pct": 5.7,
+    "macizos": 2502
+   }
+  },
+  {
+   "dpto": "Eldorado",
+   "parquetKey": "eldorado",
+   "centroid": [
+    -54.3032,
+    -26.4148
+   ],
+   "avg_score": 20241,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 58182,
+    "edad_media": 15.5,
+    "pino_listo_ha": 20241,
+    "pino_listo_pct": 42.1,
+    "pino_entra_ha": 8589,
+    "euca_listo_ha": 4049,
+    "euca_listo_pct": 78.3,
+    "perdida_ha": 3076,
+    "perdida_pct": 5.3,
+    "macizos": 12060
+   }
+  },
+  {
+   "dpto": "G. M. Belgrano",
+   "parquetKey": "g_m_belgrano",
+   "centroid": [
+    -53.7887,
+    -26.3228
+   ],
+   "avg_score": 3911,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 15560,
+    "edad_media": 15.9,
+    "pino_listo_ha": 3911,
+    "pino_listo_pct": 36.2,
+    "pino_entra_ha": 2798,
+    "euca_listo_ha": 647,
+    "euca_listo_pct": 67.9,
+    "perdida_ha": 755,
+    "perdida_pct": 4.9,
+    "macizos": 5700
+   }
+  },
+  {
+   "dpto": "Guaraní",
+   "parquetKey": "guarani",
+   "centroid": [
+    -54.1049,
+    -26.8417
+   ],
+   "avg_score": 5779,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 15571,
+    "edad_media": 18.5,
+    "pino_listo_ha": 5779,
+    "pino_listo_pct": 48.9,
+    "pino_entra_ha": 941,
+    "euca_listo_ha": 994,
+    "euca_listo_pct": 70.0,
+    "perdida_ha": 834,
+    "perdida_pct": 5.4,
+    "macizos": 8009
+   }
+  },
+  {
+   "dpto": "Iguazú",
+   "parquetKey": "iguazu",
+   "centroid": [
+    -54.5746,
+    -26.102
+   ],
+   "avg_score": 16101,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 76955,
+    "edad_media": 11.5,
+    "pino_listo_ha": 16101,
+    "pino_listo_pct": 23.4,
+    "pino_entra_ha": 15527,
+    "euca_listo_ha": 4787,
+    "euca_listo_pct": 77.5,
+    "perdida_ha": 1522,
+    "perdida_pct": 2.0,
+    "macizos": 8637
+   }
+  },
+  {
+   "dpto": "L. N. Alem",
+   "parquetKey": "l_n_alem",
+   "centroid": [
+    -55.5897,
+    -27.6193
+   ],
+   "avg_score": 3567,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 7537,
+    "edad_media": 18.9,
+    "pino_listo_ha": 3567,
+    "pino_listo_pct": 55.9,
+    "pino_entra_ha": 974,
+    "euca_listo_ha": 494,
+    "euca_listo_pct": 63.2,
+    "perdida_ha": 694,
+    "perdida_pct": 9.2,
+    "macizos": 5399
+   }
+  },
+  {
+   "dpto": "L.G. San Martín",
+   "parquetKey": "lg_san_martin",
+   "centroid": [
+    -55.1258,
+    -27.0313
+   ],
+   "avg_score": 11659,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 39415,
+    "edad_media": 16.5,
+    "pino_listo_ha": 11659,
+    "pino_listo_pct": 38.0,
+    "pino_entra_ha": 9828,
+    "euca_listo_ha": 2556,
+    "euca_listo_pct": 56.8,
+    "perdida_ha": 3136,
+    "perdida_pct": 8.0,
+    "macizos": 11509
+   }
+  },
+  {
+   "dpto": "Montecarlo",
+   "parquetKey": "montecarlo",
+   "centroid": [
+    -54.3051,
+    -26.5509
+   ],
+   "avg_score": 15413,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 43848,
+    "edad_media": 16.2,
+    "pino_listo_ha": 15413,
+    "pino_listo_pct": 44.0,
+    "pino_entra_ha": 4889,
+    "euca_listo_ha": 4569,
+    "euca_listo_pct": 85.3,
+    "perdida_ha": 2236,
+    "perdida_pct": 5.1,
+    "macizos": 9790
+   }
+  },
+  {
+   "dpto": "Oberá",
+   "parquetKey": "obera",
+   "centroid": [
+    -55.0601,
+    -27.2555
+   ],
+   "avg_score": 6116,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 17830,
+    "edad_media": 19.6,
+    "pino_listo_ha": 6116,
+    "pino_listo_pct": 44.7,
+    "pino_entra_ha": 1158,
+    "euca_listo_ha": 658,
+    "euca_listo_pct": 61.2,
+    "perdida_ha": 843,
+    "perdida_pct": 4.7,
+    "macizos": 8876
+   }
+  },
+  {
+   "dpto": "San Ignacio",
+   "parquetKey": "san_ignacio",
+   "centroid": [
+    -55.2657,
+    -27.1801
+   ],
+   "avg_score": 18511,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 37611,
+    "edad_media": 17.6,
+    "pino_listo_ha": 18511,
+    "pino_listo_pct": 59.1,
+    "pino_entra_ha": 5220,
+    "euca_listo_ha": 1570,
+    "euca_listo_pct": 57.4,
+    "perdida_ha": 1738,
+    "perdida_pct": 4.6,
+    "macizos": 10168
+   }
+  },
+  {
+   "dpto": "San Javier",
+   "parquetKey": "san_javier",
+   "centroid": [
+    -55.2394,
+    -27.7213
+   ],
+   "avg_score": 2794,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 4906,
+    "edad_media": 20.4,
+    "pino_listo_ha": 2794,
+    "pino_listo_pct": 68.9,
+    "pino_entra_ha": 257,
+    "euca_listo_ha": 430,
+    "euca_listo_pct": 74.0,
+    "perdida_ha": 538,
+    "perdida_pct": 11.0,
+    "macizos": 3062
+   }
+  },
+  {
+   "dpto": "San Pedro",
+   "parquetKey": "san_pedro",
+   "centroid": [
+    -54.0183,
+    -26.7337
+   ],
+   "avg_score": 7855,
+   "hex_count": 0,
+   "rank": {
+    "plant_ha": 17771,
+    "edad_media": 19.0,
+    "pino_listo_ha": 7855,
+    "pino_listo_pct": 59.7,
+    "pino_entra_ha": 1963,
+    "euca_listo_ha": 1583,
+    "euca_listo_pct": 87.3,
+    "perdida_ha": 680,
+    "perdida_pct": 3.8,
+    "macizos": 5660
+   }
+  }
+ ],
+ "source": "pipeline/forestal/exportar_cosecha_web.py (DNDFI 23-04-2026, Hansen v1.13, turnos validados 3-nov-2026)"
+}
