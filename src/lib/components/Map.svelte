@@ -1820,7 +1820,10 @@
 				const st = hexClassesOrdinal.steps.find(s => s.from === Number(p.value))!;
 				valueLine = `<span style="color:var(--c-ink-1);font-weight:600">${i18n.t(st.labelKey)}</span>`;
 			} else {
-				const score = p.value != null ? Number(p.value).toFixed(1) : '—';
+				// Decimal comma like the legend and the panel (MapLegend fmt): en → point, es/pt/gn → comma.
+				const score = p.value != null
+					? Number(p.value).toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+					: '—';
 				// Physical unit of the primary variable (tC/ha, min, %…), set per layer.
 				// Empty → no suffix. Replaces the old hardcoded "/100", which mislabeled
 				// every raw layer as a 0-100 score.
