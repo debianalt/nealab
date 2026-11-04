@@ -1,15 +1,24 @@
 import type { DeptFill } from '$lib/stores/hex.svelte';
-import { SELLO_HEX } from '$lib/utils/sello';
+import { SELLO_HEX, MAP_DIV_CLARO, type MapTema } from '$lib/utils/sello';
 
 // Province view: departments painted with the active ranking reading, on the
-// bars' own linear scale (|value| / max) and colors (tierra, río below zero on
-// signed readings: the Sello's diverging pair, not red/green, which collapses
-// under deuteranopia). Over the dark basemap "more" reads as more opaque tierra.
-// Keep in sync with the ranking bars (OvertureAnalysis RANK_TOWARD/RANK_AWAY).
+// bars' own linear scale (|value| / max). Keep in sync with the ranking bars
+// (OvertureAnalysis: --s-rank unsigned, tierra/río signed).
+//
+// Oscuro: tierra (río below zero on signed readings: the Sello's diverging pair,
+// not red/green, which collapses under deuteranopia), "more" = more opaque.
+// Claro (4-nov-2026): solid classes, the opacity is fixed. A one-color opacity
+// ramp read whatever lay under it, and the low classes melted together; tierra also
+// means "risk" in the Sello, wrong for a ranking of something good. Unsigned = a
+// neutral gray ramp, signed = the hexagons' change ramp (MAP_DIV_CLARO); no data =
+// hatched, because the ramp's middle gray IS the nodata gray.
 export interface FillClass { color: string; opacity: number; lo: number; hi: number }   // lo/hi: fraction of max
+export interface FillNA { color: string; opacity: number; hatch?: boolean }
 
 const RED = SELLO_HEX.cat[0], GREEN = SELLO_HEX.cat[1];   // tierra, río
-export const FILL_NA = { color: '#64748b', opacity: 0.18 };
+export const FILL_NA: FillNA = { color: '#64748b', opacity: 0.18 };
+// Hatch stroke: the Claro map's nodata gray (MAP_PALETTE.claro.nodata).
+export const FILL_NA_CLARO: FillNA = { color: '#8c8d90', opacity: 1, hatch: true };
 
 const UNSIGNED: FillClass[] = [0.12, 0.26, 0.4, 0.55, 0.7].map((opacity, i) => ({ color: RED, opacity, lo: i / 5, hi: (i + 1) / 5 }));
 const SIGNED: FillClass[] = [
@@ -22,14 +31,31 @@ const SIGNED: FillClass[] = [
 	{ color: RED, opacity: 0.7, lo: 0.7, hi: 1 },
 ];
 
-export function deptFillClasses(signed: boolean): FillClass[] {
+// Neutral gray, OKLCH C 0.003 (h 250), drawn at 0.85 over paper #f9fafc to
+// L 0.86 · 0.75 · 0.64 · 0.53 · 0.42 (#cfd1d3 #acaeb0 #8b8c8e #6a6c6d #4c4d4f):
+// adjacent ΔE 11.0, paper → first class 12.5. validate_palette --ordinal passes
+// monotone L and ΔL; the light end sits at 1.47:1 on purpose (2:1 FAILs), as in the
+// other Claro ramps: the low class often holds most departments and must recede.
+export const RANK_GRAY_CLARO = ['#c8cacc', '#9ea1a3', '#78797b', '#515354', '#2d2e30'] as const;
+const CLARO_OPACITY = 0.85;
+const UNSIGNED_CLARO: FillClass[] = RANK_GRAY_CLARO.map((color, i) => ({ color, opacity: CLARO_OPACITY, lo: i / 5, hi: (i + 1) / 5 }));
+// MAP_DIV_CLARO runs worse (tierra) → better (río); the fill runs −1 → +1, and
+// below zero is río on signed rankings (as the bars), so it is read backwards.
+const SIGNED_CLARO: FillClass[] = SIGNED.map((c, i) => ({ ...c, color: MAP_DIV_CLARO[6 - i], opacity: CLARO_OPACITY }));
+
+export function deptFillClasses(signed: boolean, tema: MapTema = 'oscuro'): FillClass[] {
+	if (tema === 'claro') return signed ? SIGNED_CLARO : UNSIGNED_CLARO;
 	return signed ? SIGNED : UNSIGNED;
 }
 
-export function deptFillStyle(v: number | null | undefined, f: DeptFill): { color: string; opacity: number } {
-	if (v == null || !Number.isFinite(v)) return FILL_NA;
+export function deptFillNA(tema: MapTema = 'oscuro'): FillNA {
+	return tema === 'claro' ? FILL_NA_CLARO : FILL_NA;
+}
+
+export function deptFillStyle(v: number | null | undefined, f: DeptFill, tema: MapTema = 'oscuro'): FillNA {
+	if (v == null || !Number.isFinite(v)) return deptFillNA(tema);
 	const r = Math.max(-1, Math.min(1, v / f.max));
-	const classes = deptFillClasses(f.signed);
+	const classes = deptFillClasses(f.signed, tema);
 	const c = classes.find(c => r < c.hi) ?? classes[classes.length - 1];
 	return { color: c.color, opacity: c.opacity };
 }

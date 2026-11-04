@@ -178,7 +178,7 @@ export async function exportSvgAsPng(
 	opts: { scale?: number; background?: string } = {}
 ): Promise<void> {
 	const scale = opts.scale ?? 2;
-	const background = opts.background ?? '#fbfaf7';   // exports are always on paper
+	const background = opts.background ?? '#f9fafc';   // exports are always on paper
 	const rect = svg.getBoundingClientRect();
 	const width = rect.width || Number(svg.getAttribute('width')) || 600;
 	const height = rect.height || Number(svg.getAttribute('height')) || 400;

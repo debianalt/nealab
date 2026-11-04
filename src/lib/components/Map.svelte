@@ -14,7 +14,7 @@
 	import { formatDept } from '$lib/utils/format';
 	import misionesBoundary from '$lib/data/misiones_boundary.json';
 	import { ensureArBoundaries, getArFeatures, ensureBrBoundaries, getBrFeatures, normDeptName } from '$lib/utils/deptBoundaries';
-	import { deptFillStyle, FILL_NA } from '$lib/utils/deptFill';
+	import { deptFillStyle, deptFillNA, type FillNA } from '$lib/utils/deptFill';
 	import type { DeptFill } from '$lib/stores/hex.svelte';
 	import { pointInPolygon } from '$lib/utils/geometry';
 	import misionesMask from '$lib/data/misiones_mask.json';
@@ -182,6 +182,12 @@
 		map.once('style.load', () => {
 			normaliseBasemapOrder(map);
 			applyBasemapTheme(map, appliedTema, null);
+		});
+
+		// Ranking patterns (Claro, deptFill): rebuilt if a sprite change dropped them.
+		map.on('styleimagemissing', (e: any) => {
+			const s = rankPatterns.get(e.id);
+			if (s && !map.hasImage(e.id)) map.addImage(e.id, rankPatternImage(s));
 		});
 
 		map.on('load', () => {
@@ -2100,7 +2106,7 @@
 						map.setPaintProperty(id, 'fill-color', macizoColorExpr(macizoPaint, t));
 						map.setPaintProperty(id, 'fill-opacity', macizoOpacityExpr(macizoPaint, t));
 					} else {
-						map.setPaintProperty(id, 'line-color', t === 'claro' ? '#fbfaf7' : '#111827');
+						map.setPaintProperty(id, 'line-color', t === 'claro' ? '#f9fafc' : '#111827');
 						map.setPaintProperty(id, 'line-width', 0.3);
 						map.setPaintProperty(id, 'line-opacity', 0.6);
 					}
@@ -2707,9 +2713,35 @@
 		return PY_FILL_LAYER[tid] ?? `${tid}-district-fill`;
 	}
 
+	// Claro paints the ranking with fill-pattern (deptFill.ts): a feature cannot mix a
+	// color and a pattern in one layer, and «sin dato» is hatched, so every class is a
+	// pattern too (8×8 solid). Images are rebuilt on demand (styleimagemissing) in
+	// case a sprite change drops them.
+	const rankPatterns = new Map<string, FillNA>();
+	function rankPatternImage(s: FillNA) {
+		const n = 8, data = new Uint8Array(n * n * 4);
+		const rgb = [1, 3, 5].map(i => parseInt(s.color.slice(i, i + 2), 16));
+		for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+			const i = (y * n + x) * 4;
+			const on = !s.hatch || (x + y) % n < 2;   // 45° stripe, seamless across tiles
+			data[i] = rgb[0]; data[i + 1] = rgb[1]; data[i + 2] = rgb[2]; data[i + 3] = on ? 255 : 0;
+		}
+		return { width: n, height: n, data };
+	}
+	function rankPattern(s: FillNA): string {
+		const id = s.hatch ? 'rank-na' : `rank-solid-${s.color.slice(1).toLowerCase()}`;
+		rankPatterns.set(id, s);
+		if (!map.hasImage(id)) map.addImage(id, rankPatternImage(s));
+		return id;
+	}
+
 	// One match expression per paint property, keyed by the polygon's own name.
-	function fillExprs(names: string[], key: (n: string) => string, nameExpr: any, fallback: { color: string; opacity: number }) {
-		const color: any[] = ['match', nameExpr];
+	// `paint` is the fill-color match (oscuro) or the fill-pattern match (claro).
+	function fillExprs(names: string[], key: (n: string) => string, nameExpr: any) {
+		const tema = appliedTema;
+		const fallback = deptFillNA(tema);
+		const val = (s: FillNA) => (tema === 'claro' ? rankPattern(s) : s.color);
+		const paint: any[] = ['match', nameExpr];
 		const opacity: any[] = ['match', nameExpr];
 		const seen = new Set<string>();
 		for (const n of names) {
@@ -2717,51 +2749,72 @@
 			const label = key(n);
 			if (seen.has(label)) continue;
 			seen.add(label);
-			const s = deptFillStyle(deptFillLookup.get(normDeptName(n))?.value, deptFill!);
-			color.push(label, s.color);
+			const s = deptFillStyle(deptFillLookup.get(normDeptName(n))?.value, deptFill!, tema);
+			paint.push(label, val(s));
 			opacity.push(label, s.opacity);
 		}
-		if (!seen.size) return { color: fallback.color as any, opacity: fallback.opacity as any };
-		color.push(fallback.color);
+		const prop: 'fill-pattern' | 'fill-color' = tema === 'claro' ? 'fill-pattern' : 'fill-color';
+		if (!seen.size) return { prop, paint: val(fallback) as any, opacity: fallback.opacity as any };
+		paint.push(val(fallback));
 		opacity.push(fallback.opacity);
-		return { color: color as any, opacity: opacity as any };
+		return { prop, paint: paint as any, opacity: opacity as any };
 	}
 
 	function applyDeptFill() {
 		if (!map?.getStyle()) return;
 		const reset = (id: string, opacity: number) => {
 			if (!map.getLayer(id)) return;
+			// Claro: the solid grays (0.85) buried the place names, so the fill sinks under
+			// the basemap labels, as the hexagons do. Oscuro: back to its own place, right
+			// under its limit line (each fill/line pair was added together).
+			const line = id.replace(/-fill$/, '-line');
+			if (appliedTema === 'claro' && firstSymbolId && map.getLayer(firstSymbolId)) map.moveLayer(id, firstSymbolId);
+			else if (map.getLayer(line)) map.moveLayer(id, line);
+			map.setPaintProperty(id, 'fill-pattern', undefined);
 			map.setPaintProperty(id, 'fill-color', MAP_THEME[appliedTema].accent);
 			map.setPaintProperty(id, 'fill-opacity', opacity);
 		};
 		reset('ar-dept-fill', 0.05);
 		reset('br-dept-fill', 0.05);
-		for (const id of [...Object.values(PY_FILL_LAYER), ...PY_FILL_TERRITORIES.map(t => `${t}-district-fill`)]) reset(id, 0.06);
+		const pyFills = [...Object.values(PY_FILL_LAYER), ...PY_FILL_TERRITORIES.map(t => `${t}-district-fill`)];
+		for (const id of pyFills) reset(id, 0.06);
+		// Claro ranking: the limits are a paper gap between the solid grays (a gray rule
+		// vanished on them, and fill-pattern draws no outline). Back to deptLine otherwise.
+		const lineOf = (fillId: string) => fillId.replace(/-fill$/, '-line');
+		for (const id of ['ar-dept-line', 'br-dept-line', ...pyFills.map(lineOf)]) {
+			if (map.getLayer(id)) map.setPaintProperty(id, 'line-color', MAP_THEME[appliedTema].deptLine);
+		}
 		deptFillLookup = new Map();
 		const f = deptFill;
 		if (!f) return;
 		f.values.forEach((d, i) => deptFillLookup.set(normDeptName(d.name), { name: d.name, value: d.value, pos: i + 1 }));
 		const tid = f.territory;
+		if (appliedTema === 'claro') {
+			const line = AR_CODPROV[tid] ? 'ar-dept-line' : tid.endsWith('_br') ? 'br-dept-line' : lineOf(pyFillLayer(tid));
+			if (map.getLayer(line)) map.setPaintProperty(line, 'line-color', MAP_THEME.claro.paper ?? '#ffffff');
+		}
 		const cp = AR_CODPROV[tid];
 		if (cp) {
 			// The AR source holds the four provinces: paint only the active one.
 			const feats = (getArFeatures() ?? []).filter(x => String(x.properties.redcode).slice(0, 2) === cp);
-			const e = fillExprs(feats.map(x => x.properties.nombre), n => n, ['get', 'nombre'], FILL_NA);
+			const e = fillExprs(feats.map(x => x.properties.nombre), n => n, ['get', 'nombre']);
 			const inProv = ['==', ['slice', ['to-string', ['get', 'redcode']], 0, 2], cp];
-			map.setPaintProperty('ar-dept-fill', 'fill-color', ['case', inProv, e.color, 'rgba(0,0,0,0)'] as any);
+			// Outside the province the opacity is 0; the paint there only has to be valid.
+			const outside = e.prop === 'fill-pattern' ? rankPattern(deptFillNA('claro')) : 'rgba(0,0,0,0)';
+			map.setPaintProperty('ar-dept-fill', e.prop, ['case', inProv, e.paint, outside] as any);
 			map.setPaintProperty('ar-dept-fill', 'fill-opacity', ['case', inProv, e.opacity, 0] as any);
 		} else if (tid.endsWith('_br')) {
 			if (brLoadedFor !== tid) return;   // loadBrDeptSource re-applies once the polygons land
-			const e = fillExprs((getBrFeatures(tid) ?? []).map(x => x.properties.district), n => n, ['get', 'district'], FILL_NA);
-			map.setPaintProperty('br-dept-fill', 'fill-color', e.color);
+			const e = fillExprs((getBrFeatures(tid) ?? []).map(x => x.properties.district), n => n, ['get', 'district']);
+			map.setPaintProperty('br-dept-fill', e.prop, e.paint);
 			map.setPaintProperty('br-dept-fill', 'fill-opacity', e.opacity);
 		} else if (tid.endsWith('_py')) {
 			// Vector tiles: the polygon names are not known here, so key by the summary's
 			// names in lower case (Alto Paraná tiles are upper case, accents match).
 			const id = pyFillLayer(tid);
 			if (!map.getLayer(id)) return;
-			const e = fillExprs(f.values.map(d => d.name), n => n.toLowerCase(), ['downcase', ['get', 'district']], FILL_NA);
-			map.setPaintProperty(id, 'fill-color', e.color);
+			const e = fillExprs(f.values.map(d => d.name), n => n.toLowerCase(), ['downcase', ['get', 'district']]);
+			map.setPaintProperty(id, e.prop, e.paint);
 			map.setPaintProperty(id, 'fill-opacity', e.opacity);
 		}
 	}
@@ -2874,7 +2927,7 @@
 			removedLine: '#fca5a5', addedLine: '#fde68a', line: 'rgba(0,0,0,0.7)', choroLine: '#ffffff' },
 		claro: { urbano: '#7da4c9', rural: '#75b286', urbanoRim: '#1f5ea2', ruralRim: '#1c7b4c',
 			removed: '#bb4f2e', added: '#d89e4a', removedRim: '#641608', addedRim: '#a33c11',
-			removedLine: '#952b12', addedLine: '#a33c11', line: 'rgba(28,28,28,0.55)', choroLine: '#5a5750' },
+			removedLine: '#952b12', addedLine: '#a33c11', line: 'rgba(28,28,28,0.55)', choroLine: '#565759' },
 	} as const;
 	const catastroTipo = (urbano: string, rural: string): any => ['match', ['get', 'tipo'], 'urbano', urbano, 'rural', rural, urbano];
 	// Re-applies the parcel coloring in force (base, flood classes, scores) after a theme switch.

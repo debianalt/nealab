@@ -669,7 +669,7 @@
 							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
 							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 							<div class="dept-bar-wrap rank-bar-wrap">
-								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? RANK_AWAY : RANK_TOWARD}></div>
+								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed ? ((v ?? 0) < 0 ? RANK_AWAY : RANK_TOWARD) : 'var(--s-rank)'}></div>
 							</div>
 							<div class="rank-value">{fmtRank(v, rankCfg.decimals, rankCfg.signed)} {v == null ? '' : rankUnit}</div>
 							{#if rankCfg.extraField}

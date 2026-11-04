@@ -46,6 +46,7 @@
 	--s-grid: rgba(255, 255, 255, 0.1);
 	--s-axis: rgba(255, 255, 255, 0.28);
 	--s-surface: #0b0d14;
+	--s-rank: var(--s-cat-1);   /* ranking bars (unsigned): the map fill, deptFill.ts */
 }
 
 /* Chrome (panels, text, lines) per theme. Oscuro = the literal values the
@@ -64,23 +65,23 @@
 	--text-secondary: var(--c-ink-3);
 	--c-modal: #111111; --c-modal-2: #1a1a19;
 }
-/* Ink on paper: --c-ink-1 16.6:1, -2 10.6:1, -3 6.6:1, -4 4.7:1 on #fbfaf7 (WCAG AA ≥ 4.5). */
+/* Ink on paper: --c-ink-1 16.6:1, -2 10.6:1, -3 6.6:1, -4 4.7:1 on #f9fafc (WCAG AA ≥ 4.5). */
 :root[data-theme='claro'], .theme-claro {
 	color-scheme: light;
-	--c-ink-0: #1c1c1c; --c-ink-1: #1c1c1c; --c-ink-1n: #262522;
-	--c-ink-2: #3d3b36; --c-ink-2n: #45433e; --c-ink-3: #5c5952; --c-ink-3n: #625f58;
-	--c-ink-4: #74716a; --c-ink-4n: #74716a;
-	--c-line: #e6e3dc; --c-line-2: #d8d5ce; --c-line-3: #c3c0b8;
-	--c-bg: #fbfaf7; --c-panel-2: #f3f1ec;
+	--c-ink-0: #1c1c1c; --c-ink-1: #1c1c1c; --c-ink-1n: #242526;
+	--c-ink-2: #3a3b3d; --c-ink-2n: #424345; --c-ink-3: #58595b; --c-ink-3n: #5e5f61;
+	--c-ink-4: #707173; --c-ink-4n: #707173;
+	--c-line: #e2e3e5; --c-line-2: #d4d5d7; --c-line-3: #bfc0c2;
+	--c-bg: #f9fafc; --c-panel-2: #f0f1f3;
 	--c-accent: #2f6f9f; --c-accent-2: #2f6f9f; --c-accent-rgb: 47, 111, 159;
-	--c-fg-rgb: 28, 28, 28; --c-bg-rgb: 251, 250, 247;
-	--c-modal: #fbfaf7; --c-modal-2: #f3f1ec;
+	--c-fg-rgb: 28, 28, 28; --c-bg-rgb: 249, 250, 252;
+	--c-modal: #f9fafc; --c-modal-2: #f0f1f3;
 	/* Tailwind: white/black utilities (text-white, bg-black/75, border-white/15…)
 	   swap roles, and the @theme tokens follow. */
-	--color-white: #1c1c1c; --color-black: #fbfaf7;
-	--color-bg: #fbfaf7; --color-panel: rgba(251, 250, 247, 0.94); --color-border: #d8d5ce;
-	--color-accent: #2f6f9f; --color-text: #1c1c1c; --color-text-muted: #3d3b36; --color-text-dim: #5c5952;
-	--color-btn-bg: rgba(28, 28, 28, 0.04); --color-btn-border: #d8d5ce;
+	--color-white: #1c1c1c; --color-black: #f9fafc;
+	--color-bg: #f9fafc; --color-panel: rgba(249, 250, 252, 0.94); --color-border: #d4d5d7;
+	--color-accent: #2f6f9f; --color-text: #1c1c1c; --color-text-muted: #3a3b3d; --color-text-dim: #58595b;
+	--color-btn-bg: rgba(28, 28, 28, 0.04); --color-btn-border: #d4d5d7;
 	--color-accent-active: rgba(47, 111, 159, 0.14);
 	/* Sello data colors: the paper set (= @media print below). */
 	--s-cat-1: #b4482a; --s-cat-2: #2b6fb0; --s-cat-3: #237a55; --s-cat-4: #a67c12;
@@ -95,12 +96,13 @@
 	--s-grid: rgba(0, 0, 0, 0.12);
 	--s-axis: rgba(0, 0, 0, 0.35);
 	--s-surface: #fcfcfb;
+	--s-rank: #6a6c6d;   /* RANK_GRAY_CLARO class 4 as drawn */
 }
 
 /* Light text colors of the dark panels (status, accents): exact value on the dark
    theme, same hue darkened in OKLCH (L 0.45) on paper. */
 :root { --c-t-06b6d4: #06b6d4; --c-t-22c39a: #22c39a; --c-t-4ade80: #4ade80; --c-t-818cf8: #818cf8; --c-t-86efac: #86efac; --c-t-a5b4fc: #a5b4fc; --c-t-a78bfa: #a78bfa; --c-t-bfdbfe: #bfdbfe; --c-t-c3c2b7: #c3c2b7; --c-t-c4b5fd: #c4b5fd; --c-t-d4d3ca: #d4d3ca; --c-t-e5e5e5: #e5e5e5; --c-t-e8e8e6: #e8e8e6; --c-t-f87171: #f87171; --c-t-f8fafc: #f8fafc; --c-t-f9a8d4: #f9a8d4; --c-t-fbbf24: #fbbf24; --c-t-fca5a5: #fca5a5; --c-t-fde68a: #fde68a; --c-t-fecaca: #fecaca; }
-:root[data-theme='claro'], .theme-claro { --c-t-06b6d4: #006585; --c-t-22c39a: #006c48; --c-t-4ade80: #006a28; --c-t-818cf8: #4448a2; --c-t-86efac: #006b2d; --c-t-a5b4fc: #434e94; --c-t-a78bfa: #5b409c; --c-t-bfdbfe: #3c5778; --c-t-c3c2b7: #3d3b36; --c-t-c4b5fd: #59478d; --c-t-d4d3ca: #3d3b36; --c-t-e5e5e5: #3d3b36; --c-t-e8e8e6: #3d3b36; --c-t-f87171: #94292e; --c-t-f8fafc: #3d3b36; --c-t-f9a8d4: #823563; --c-t-fbbf24: #794a00; --c-t-fca5a5: #89363b; --c-t-fde68a: #6b5300; --c-t-fecaca: #754647; }
+:root[data-theme='claro'], .theme-claro { --c-t-06b6d4: #006585; --c-t-22c39a: #006c48; --c-t-4ade80: #006a28; --c-t-818cf8: #4448a2; --c-t-86efac: #006b2d; --c-t-a5b4fc: #434e94; --c-t-a78bfa: #5b409c; --c-t-bfdbfe: #3c5778; --c-t-c3c2b7: #3a3b3d; --c-t-c4b5fd: #59478d; --c-t-d4d3ca: #3a3b3d; --c-t-e5e5e5: #3a3b3d; --c-t-e8e8e6: #3a3b3d; --c-t-f87171: #94292e; --c-t-f8fafc: #3a3b3d; --c-t-f9a8d4: #823563; --c-t-fbbf24: #794a00; --c-t-fca5a5: #89363b; --c-t-fde68a: #6b5300; --c-t-fecaca: #754647; }
 
 /* Paper: the same roles, light variants. */
 @media print {
@@ -117,6 +119,7 @@
 		--s-grid: rgba(0, 0, 0, 0.12);
 		--s-axis: rgba(0, 0, 0, 0.35);
 		--s-surface: #fcfcfb;
+		--s-rank: #6a6c6d;
 	}
 	html, body { background: #fcfcfb !important; color: #1f2328 !important; }
 	/* The data panel prints as a white sheet with dark ink. */

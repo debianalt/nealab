@@ -13,7 +13,7 @@ export const FONDO_KEY = 'spatia_fondo';
 // Claro for everyone on a first visit (decided 31-oct-2026: the atlas, not the vitrina,
 // is what an official or an evaluator should see), not prefers-color-scheme.
 export const FONDO_DEFAULT: Fondo = 'claro';
-const THEME_COLOR: Record<Tema, string> = { claro: '#fbfaf7', oscuro: '#0a0c12' };
+const THEME_COLOR: Record<Tema, string> = { claro: '#f9fafc', oscuro: '#0a0c12' };
 
 const isFondo = (v: unknown): v is Fondo => v === 'claro' || v === 'oscuro' || v === 'satelite';
 export const temaDe = (f: Fondo): Tema => (f === 'claro' ? 'claro' : 'oscuro');

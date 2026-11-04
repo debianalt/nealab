@@ -75,20 +75,20 @@ export const MAP_THEME: Record<MapTema, MapThemeColors> = {
 		light: { color: '#e0f0ff', intensity: 0.55 },
 	},
 	claro: {
-		paper: '#fbfaf7', water: '#dfe7ec', waterway: '#c9d6de', placeText: '#3d3b36',
-		halo: 'rgba(251,250,247,0.92)', haloWidth: 1.4,
+		paper: '#f9fafc', water: '#dfe7ec', waterway: '#c9d6de', placeText: '#3a3b3d',
+		halo: 'rgba(249,250,252,0.92)', haloWidth: 1.4,
 		// a paper veil: the neighbours stay legible but quiet
-		mask: '#fbfaf7', maskOpacity: 0.7,
-		territoryBg: '#d9d4cb', territoryBgOpacity: 0.5,
-		border: '#5a5750', borderDash: [4, 2],
-		regionOutline: '#5a5750',
-		province: '#8f8b82',
-		deptLine: '#8f8b82',
+		mask: '#f9fafc', maskOpacity: 0.7,
+		territoryBg: '#d3d5d6', territoryBgOpacity: 0.5,
+		border: '#565759', borderDash: [4, 2],
+		regionOutline: '#565759',
+		province: '#8a8b8d',
+		deptLine: '#8a8b8d',
 		accent: '#2f6f9f',
 		compare: '#b7791f',
 		select: '#1c1c1c',
-		hillshade: { shadow: '#8a867c', highlight: '#ffffff', accent: '#b9b4a8', exaggeration: 0.35 },
-		light: { color: '#fff8ec', intensity: 0.7 },
+		hillshade: { shadow: '#858688', highlight: '#ffffff', accent: '#b3b4b6', exaggeration: 0.35 },
+		light: { color: '#f7f9fb', intensity: 0.7 },
 	},
 };
 
@@ -205,7 +205,11 @@ export const MAP_VIRIDIS_3 = ['#5b21b6', '#21918c', '#fde725'] as const;
 // selva = aptitude/cover, río · gris · tierra = change, tierra → oro classes).
 // Generated in OKLCH so that the color AS DRAWN hits its target: hexagons at 0.88
 // (HEX_OPACITY claro: at 0.78 black only reaches L 0.40 on paper and every ramp
-// washed out) over territory-bg #d9d4cb @0.5 over paper #fbfaf7 = #eae7e1.
+// washed out) over territory-bg #d9d4cb @0.5 over paper #fbfaf7 = #eae7e1 (warm paper
+// until 4-nov-2026; now #d3d5d6 over #f9fafc = #e6e8e9, same OKLCH L, neutral. Re-measured
+// in OKLab ×100 against it: zero ↔ backdrop 5.5 and nodata ↔ zero 19.5 (unchanged),
+// USO_CLARO ↔ backdrop ≥ 13.6 (13.5), CLASS_5_CLARO ≥ 7.5 (6.7); the figures below are
+// the 1-nov validation).
 // Validated drawn with dataviz validate_palette (1-nov-2026):
 // - ramps (--ordinal): monotone L, adjacent ΔL ≥ 0.06, hue spread ≤ 22° on the
 //   one-hue ramps. The light end sits at 1.2–1.5:1 on purpose (the 2:1 floor
@@ -253,7 +257,7 @@ export const ZERO_HEX = '#1e293b';
 // backdrop as drawn (paper + territoryBg 0.5, hex fill 0.88). A near-paper 0
 // melted into it (ΔE 0.2–1.9: «no water» read as «no hexagon»), so the
 // separation from «no data» comes from a darker nodata (2-nov-2026).
-export const ZERO_CLARO = '#d6d3ce';
+export const ZERO_CLARO = '#d2d4d5';
 // «Sin dato» as a fixed class (macizos without planting year or cited rotation): the map palette's nodata gray.
 export const NODATA_HEX = '#6b7280';
 
@@ -282,11 +286,11 @@ export const MAP_PALETTE: Record<MapTema, MapPalette> = {
 		seq: MAP_RIO_CLARO,
 		warm: MAP_ORO_CLARO, night: MAP_ORO_CLARO,
 		lisa: LISA_HEX_CLARO,
-		bivar: BIVAR_HEX_LIGHT, bivarNodata: '#cdcac4',
+		bivar: BIVAR_HEX_LIGHT, bivarNodata: '#c9cacc',
 		// ΔE2000 17 from ZERO_CLARO as drawn (was #b1b1ae: 7.7, the two grays the
 		// texts tell apart looked alike); neutral, so it never reads as a class.
 		nodata: '#8c8d90',
-		hexLine: '#fbfaf7',        // a paper gap, not a dark rule
+		hexLine: '#f9fafc',        // a paper gap, not a dark rule
 	},
 };
 

@@ -6,13 +6,14 @@
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
-	import { deptFillClasses, FILL_NA } from '$lib/utils/deptFill';
+	import { deptFillClasses, deptFillNA } from '$lib/utils/deptFill';
 
 	let { hexStore }: { hexStore: HexStore } = $props();
 
 	const PALETTE = ['#1565c0', '#7e57c2', '#4db6ac', '#66bb6a', '#c0ca33', '#ffb74d', '#e65100', '#78909c'];
 
 	const layer = $derived(hexStore.activeLayer);
+	const tema = $derived(themeStore.tema);
 
 	// Province view: the departments painted with the ranking reading (deptFill).
 	const fill = $derived(hexStore.mapDeptFill);
@@ -20,12 +21,14 @@
 	const fillRows = $derived.by(() => {
 		if (!fill) return [];
 		const f = (x: number) => (fill.signed && x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toLocaleString(i18n.locale, { minimumFractionDigits: fill.decimals, maximumFractionDigits: fill.decimals });
-		return deptFillClasses(fill.signed).map(c => ({
+		return deptFillClasses(fill.signed, tema).map(c => ({
 			color: c.color, opacity: c.opacity,
 			label: c.lo < 0 && c.hi > 0 ? `≈ 0 (± ${f(c.hi * fill.max).replace('+', '')})` : `${f(c.lo * fill.max)} – ${f(c.hi * fill.max)}`,
 		}));
 	});
 	const fillHasNull = $derived(!!fill?.values.some(v => v.value == null));
+	// Claro: «sin dato» is hatched on the map (deptFill.ts), so is its swatch.
+	const fillNA = $derived(deptFillNA(tema));
 	// Use diverging scale when temporal delta mode is active, otherwise use layer's configured scale
 	const effectiveScale = $derived(
 		layer?.temporal && hexStore.temporalMode === 'delta' ? 'diverging' : layer?.colorScale
@@ -114,7 +117,6 @@
 	});
 
 	// The map's own colors on the theme in view (sello.ts MAP_PALETTE).
-	const tema = $derived(themeStore.tema);
 	const P = $derived(MAP_PALETTE[tema]);
 	const gradient = $derived(rampGradient(
 		isFlood ? P.tierra : isGreen ? P.selva : isWarm ? P.warm : isNight ? P.night : isDiverging ? P.div : P.seq
@@ -177,7 +179,7 @@
 			{/each}
 			{#if fillHasNull}
 				<div class="legend-item">
-					<span class="legend-swatch" style:background={FILL_NA.color} style:opacity={FILL_NA.opacity}></span>
+					<span class="legend-swatch" class:hatched={fillNA.hatch} style:background={fillNA.hatch ? `repeating-linear-gradient(135deg, ${fillNA.color} 0 1.5px, transparent 1.5px 4px)` : fillNA.color} style:opacity={fillNA.opacity}></span>
 					<span class="legend-label">{i18n.t('legend.deptFill.na')}</span>
 				</div>
 			{/if}
@@ -326,6 +328,7 @@
 		border-radius: 2px;
 		flex-shrink: 0;
 	}
+	.legend-swatch.hatched { box-shadow: inset 0 0 0 1px var(--c-line-3); }
 	.scale-toggle {
 		display: flex;
 		gap: 2px;
