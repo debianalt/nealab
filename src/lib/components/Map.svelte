@@ -115,6 +115,7 @@
 		if (f.anioPlant) c.push(within(num('anio_plant'), f.anioPlant));
 		if (f.anioTurno) c.push(within(['+', num('anio_plant'), num('turno')], f.anioTurno));
 		if (f.anioPerdida) c.push(within(num('anio_perdida'), f.anioPerdida));
+		if (f.bandaPav) c.push(['in', num('banda_pav'), ['literal', f.bandaPav]]);
 		return c.length === 1 ? c[0] : ['all', ...c];
 	}
 	function macizoColorExpr(p: MacizoPaint, t: MapTema): any {
@@ -1433,6 +1434,7 @@
 				if (p.turno) html += ` · ${i18n.t('harvest.tip.turno')} ${p.turno} ${i18n.t('harvest.tip.anios')}`;
 				if (sit) html += `<br><b>${i18n.t(sit.labelKey)}</b>`;
 				if (Number(p.situacion) === 5 && p.anio_perdida) html += ` (${p.anio_perdida})`;
+				if (p.dist_pav_km != null) html += `<br>${Number(p.dist_pav_km) === 0 ? i18n.t('harvest.tip.sobrePav') : i18n.t('harvest.tip.distPav').replace('{d}', fmtN(Number(p.dist_pav_km)))}`;
 				tooltip.innerHTML = html;
 				tooltip.style.display = 'block';
 				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';

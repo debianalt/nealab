@@ -48,6 +48,7 @@ NORTE_MISIONES = {'eldorado', 'san_pedro', 'g_m_belgrano', 'iguazu', 'montecarlo
 TURNO = {'Pinus': (16, 23), 'Araucaria': (25, 31), 'Grevillea': (25, None), 'Paulownia': (12, None),
          'Prosopis': (25, None)}
 EDADES = [-1, 5, 10, 15, 20, 25, 999]
+BANDAS_PAV = [-0.001, 1, 3, 5, 10, np.inf]   # km
 
 
 def turno(genero: str, territorio: str, dpto: str) -> tuple[float, float]:
@@ -86,6 +87,18 @@ def main() -> None:
     c = pd.read_parquet(COSECHA)[['id', 'perdida_post', 'anio_perdida', 'pct_perdida']]
     df = df.merge(c, on='id', how='left')
     df['perdida_post'] = df.perdida_post.fillna(False).astype(bool)
+    # Distancia en línea recta desde el borde del macizo a la ruta pavimentada más cercana (vial.macizos,
+    # pipeline/vial/distancia_macizos.py). Bandas: 1 hasta 1 km · 2 1–3 · 3 3–5 · 4 5–10 · 5 más de 10 · 0 sin dato.
+    conn = connect(DB)
+    dist = pd.read_sql('SELECT id::text AS id_txt, dist_pav_m FROM vial.macizos', conn)
+    conn.close()
+    df['id_txt'] = df.id.astype(str)
+    df = df.merge(dist.drop_duplicates('id_txt'), on='id_txt', how='left')
+    km = df.dist_pav_m / 1000
+    df['dist_pav_km'] = km.round(1)
+    df['banda_pav'] = pd.cut(km, BANDAS_PAV, labels=False).add(1).fillna(0).astype('int8')
+    log(f'distancia a pavimento: {int(df.dist_pav_m.notna().sum()):,} de {len(df):,} macizos; '
+        f'mediana {km.median():.1f} km')
     s = np.full(len(df), 6, np.int8)
     e, t, pz = df.edad.to_numpy(), df.turno.to_numpy(), df.pasado.to_numpy()
     ok = ~np.isnan(e) & ~np.isnan(t)
@@ -96,7 +109,8 @@ def main() -> None:
     s[df.perdida_post.to_numpy()] = 5
     df['situacion'] = s
     OUT.mkdir(parents=True, exist_ok=True)
-    cols = ['id', 'territorio', 'dpto_key', 'edad', 'clase_edad', 'turno', 'pasado', 'situacion', 'anio_perdida', 'pct_perdida']
+    cols = ['id', 'territorio', 'dpto_key', 'edad', 'clase_edad', 'turno', 'pasado', 'situacion', 'anio_perdida', 'pct_perdida',
+            'banda_pav', 'dist_pav_km']
     out = df[cols].copy()
     out['turno'] = out.turno.astype('float32'); out['pasado'] = out.pasado.replace(np.inf, np.nan).astype('float32')
     out.to_parquet(OUT / 'macizos_atributos.parquet', index=False)
@@ -139,7 +153,10 @@ def main() -> None:
         t5 = d.situacion == 5
         ap5 = pd.to_numeric(d.anio_perdida, errors='coerce')
         tal = [(str(a), t5 & (ap5 == a)) for a in range(2001, ANIO)]
-        return {'calendario': columnas(d, cal), 'plantacion': columnas(d, pl), 'talado': columnas(d, tal)}
+        listo = d.situacion.isin([3, 4])
+        dis = [(str(b), listo & (d.banda_pav == b)) for b in range(1, len(BANDAS_PAV))]
+        return {'calendario': columnas(d, cal), 'plantacion': columnas(d, pl), 'talado': columnas(d, tal),
+                'distancia': columnas(d, dis)}
 
     def chequear(r: dict, s: dict, donde: str) -> None:
         hoy_pino = s['calendario']['ha']['pino'][0]
@@ -147,6 +164,10 @@ def main() -> None:
         tal = sum(sum(v) for v in s['talado']['ha'].values())
         celdas = sum(1 for v in s['talado']['ha'].values() for x in v if x)   # cada celda redondeada ±0,5 ha
         assert abs(tal - r['perdida_ha']) <= 1 + 0.5 * celdas, f'{donde}: talado {tal} ≠ perdida {r["perdida_ha"]}'
+        dis = sum(sum(v) for v in s['distancia']['ha'].values())
+        hoy = sum(v[0] for v in s['calendario']['ha'].values())   # todo lo listo, todas las especies
+        celdas = sum(1 for v in s['distancia']['ha'].values() for x in v if x) + 3
+        assert abs(dis - hoy) <= 1 + 0.5 * celdas, f'{donde}: distancia {dis} ≠ listo {hoy} (macizos sin distancia)'
 
     for terr, g in df.groupby('territorio'):
         base = json.loads((DATA / BASE[terr]).read_text(encoding='utf-8'))

@@ -13,7 +13,7 @@
 
 	type Gen = 'pino' | 'euca' | 'otras';
 	type Serie = { rotulos: string[]; ha: Record<Gen, number[]> };
-	type Chart = 'calendario' | 'plantacion' | 'talado' | 'hoy';
+	type Chart = 'calendario' | 'plantacion' | 'talado' | 'distancia' | 'hoy';
 	const GENERO: Record<Gen, string> = { pino: 'Pinus', euca: 'Eucalyptus', otras: 'otras' };
 
 	let { hexStore }: { hexStore: HexStore } = $props();
@@ -64,6 +64,7 @@
 	}
 	const pla = $derived<Serie | null>(scope?.b.plantacion ?? null);
 	const tal = $derived<Serie | null>(scope?.b.talado ?? null);
+	const dis = $derived<Serie | null>(scope?.b.distancia ?? null);   // tiles v3 + summaries of 4-nov-2026
 
 	const t = (key: string, a = '') => i18n.t(key).replace('{a}', a);
 	const yearOf = (r: string) => parseInt(r.replace(/\D/g, ''), 10);
@@ -71,6 +72,7 @@
 	function colName(chart: Chart, r: string): string {
 		if (chart === 'calendario') return r === 'hoy' ? t('harvest.chart.cal.hoy') : t(r.endsWith('+') ? 'harvest.chart.cal.desde' : 'harvest.chart.cal.anio', String(yearOf(r)));
 		if (chart === 'plantacion') return r.startsWith('<') ? t('harvest.chart.pla.antes', String(yearOf(r))) : t('harvest.chart.pla.anio', r);
+		if (chart === 'distancia') return i18n.t(`harvest.chart.dis.b${r}`);
 		return t('harvest.chart.tal.anio', r);
 	}
 
@@ -83,6 +85,7 @@
 			return { genero, sit: [1, 2], anioTurno: r.endsWith('+') ? [y, 9999] : [y, y], label };
 		}
 		if (chart === 'plantacion') return { genero, anioPlant: r.startsWith('<') ? [1901, y - 1] : [y, y], label };
+		if (chart === 'distancia') return { genero, sit: [3, 4], bandaPav: [y], label };
 		return { genero, sit: [5], anioPerdida: [y, y], label };
 	}
 
@@ -139,6 +142,15 @@
 		return i18n.t('harvest.chart.pla.sum').replace('{a}', pla.rotulos[i]).replace('{p}', fmt(tot[i]));
 	});
 	const where = $derived(scope?.name ? ` · ${scope.name}` : '');
+	const disTicks = (s: Serie) => s.rotulos.map((r) => i18n.t(`harvest.chart.dis.t${r}`));
+	const disSummary = $derived.by(() => {
+		if (!dis) return '';
+		const tot = dis.rotulos.map((_, i) => sumCol(dis, i, i + 1));
+		const all = tot.reduce((a, v) => a + v, 0);
+		if (!all) return '';
+		const lejos = tot.slice(2).reduce((a, v) => a + v, 0);   // more than 3 km
+		return i18n.t('harvest.chart.dis.sum').replace('{p}', fmt(100 * lejos / all)).replace('{h}', fmt(lejos));
+	});
 </script>
 
 {#if scope && cal && pla && tal}
@@ -157,6 +169,11 @@
 	<MacizoBarras title={i18n.t('harvest.chart.tal.title') + where} rotulos={ticks(tal, 5)} ha={tal.ha}
 		selected={sel('talado')} onPick={(c, g) => pick('talado', tal, c, g)} summary={talPeak}
 		colName={(c) => colName('talado', tal.rotulos[c])} note={i18n.t('harvest.chart.tal.note')} csvFilename="spatia_cosecha_talado" />
+	{#if dis}
+	<MacizoBarras title={i18n.t('harvest.chart.dis.title') + where} rotulos={disTicks(dis)} ha={dis.ha}
+		selected={sel('distancia')} onPick={(c, g) => pick('distancia', dis, c, g)} summary={disSummary}
+		colName={(c) => colName('distancia', dis.rotulos[c])} note={i18n.t('harvest.chart.dis.note')} csvFilename="spatia_cosecha_distancia_pavimento" />
+	{/if}
 {:else if !summary}
 	<p class="cg-hint">{i18n.t('uso.serie.loading')}</p>
 {/if}

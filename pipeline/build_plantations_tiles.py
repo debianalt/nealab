@@ -61,8 +61,11 @@ TERRITORY_PROV = {
 }
 
 PROP_COLS = ["id", "especie", "genero", "grupo_espe", "anio_plant", "superficie", "depto", "uso_forest"]
-# --attrs (pipeline/forestal/exportar_cosecha_web.py): per-macizo harvest attributes joined by id → *_v2.pmtiles
-ATTR_COLS = ["dpto_key", "edad", "clase_edad", "situacion", "turno", "anio_perdida"]
+# --attrs (pipeline/forestal/exportar_cosecha_web.py): per-macizo harvest attributes joined by id → *_<version>.pmtiles
+# v2 (3-nov-2026): age, rotation situation, Hansen loss. v3 (4-nov-2026): + distance to paved road
+# (pipeline/vial/distancia_macizos.py): banda_pav 1 <1 km · 2 1–3 · 3 3–5 · 4 5–10 · 5 >10 · 0 sin dato; dist_pav_km.
+ATTR_COLS = ["dpto_key", "edad", "clase_edad", "situacion", "turno", "anio_perdida", "banda_pav", "dist_pav_km"]
+FLOAT_ATTRS = {"dist_pav_km"}
 
 
 def _polygonal(geom):
@@ -98,7 +101,7 @@ def load_features(con: duckdb.DuckDBPyConnection, prov: str, attrs: dict | None 
             for col, val in (attrs.get(str(props.get("id"))) or {}).items():   # id: text in DuckDB, int in pyogrio
                 if val is None or val != val:   # None / NaN
                     continue
-                props[col] = str(val) if col == "dpto_key" else int(val)
+                props[col] = str(val) if col == "dpto_key" else round(float(val), 1) if col in FLOAT_ATTRS else int(val)
         features.append({"geometry": geom, "properties": props})
     print(f"  {prov}: {len(features):,} polygonal macizos ({dropped} non-polygonal dropped)")
     if attrs is not None:
@@ -170,7 +173,8 @@ def main():
     ap = argparse.ArgumentParser(description="Build forestry-plantation PMTiles from DNDFI inventory")
     ap.add_argument("--territory", required=True, help="misiones|corrientes|chaco|formosa|all")
     ap.add_argument("--geojson", default=DEFAULT_GEOJSON)
-    ap.add_argument("--attrs", default=None, help="parquet id → harvest attributes; writes <t>_plantations_v2.pmtiles")
+    ap.add_argument("--attrs", default=None, help="parquet id → harvest attributes; writes <t>_plantations_<version>.pmtiles")
+    ap.add_argument("--version", default="v3", help="suffix for the --attrs build (v3 = + distance to paved road)")
     args = ap.parse_args()
 
     if not os.path.exists(args.geojson):
@@ -208,7 +212,7 @@ def main():
             print(f"  WARNING: no features for {t}, skipping")
             continue
         w, s, e, n = get_territory(t)["bbox"]
-        out_path = os.path.join(OUTPUT_DIR, f"{t}_plantations{'_v2' if attrs is not None else ''}.pmtiles")
+        out_path = os.path.join(OUTPUT_DIR, f"{t}_plantations{'_' + args.version if attrs is not None else ''}.pmtiles")
         generate_pmtiles(feats, {"west": w, "south": s, "east": e, "north": n}, out_path, t)
 
     print("\nNext: upload to R2 with")

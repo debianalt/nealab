@@ -16,10 +16,10 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 	}
 	const files: Record<string, string> = {
 		buildings: 'tiles/buildings-v5.pmtiles',
-		misiones_plantations: 'data/tiles/misiones_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
-		corrientes_plantations: 'data/tiles/corrientes_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
-		chaco_plantations: 'data/tiles/chaco_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
-		formosa_plantations: 'data/tiles/formosa_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
+		misiones_plantations: 'data/tiles/misiones_plantations_v3.pmtiles',   // v3: + banda y km a ruta pavimentada (v2: edad, situación de turno, dpto_key)
+		corrientes_plantations: 'data/tiles/corrientes_plantations_v3.pmtiles',   // v3: + banda y km a ruta pavimentada (v2: edad, situación de turno, dpto_key)
+		chaco_plantations: 'data/tiles/chaco_plantations_v3.pmtiles',   // v3: + banda y km a ruta pavimentada (v2: edad, situación de turno, dpto_key)
+		formosa_plantations: 'data/tiles/formosa_plantations_v3.pmtiles',   // v3: + banda y km a ruta pavimentada (v2: edad, situación de turno, dpto_key)
 		itapua_buildings: 'tiles/itapua_buildings-v4.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v4.pmtiles',
@@ -534,7 +534,7 @@ export interface HexLayerConfig {
 	// The summaries carry a per-department and province series (serie: {anios, ha: {clase: number[]}}),
 	// drawn by UsoSerie.svelte as «Evolución» (land use, 1985–2025).
 	classSeries?: boolean;
-	// Drawn as DNDFI plantation polygons (data/tiles/<t>_plantations_v2.pmtiles), not hexagons: no per-hex parquet;
+	// Drawn as DNDFI plantation polygons (data/tiles/<t>_plantations_v3.pmtiles), not hexagons: no per-hex parquet;
 	// the active tab's hexVariable names the tile property painted with that variable's classes (forestry_harvest).
 	macizos?: boolean;
 	// Legend end labels for those other variables (i18n keys), when the layer's
@@ -591,6 +591,7 @@ export interface DeptRank {
 export interface MacizoFocus {
 	genero?: string; sit?: number[];
 	anioPlant?: [number, number]; anioTurno?: [number, number]; anioPerdida?: [number, number];
+	bandaPav?: number[];   // distance band to the nearest paved road (tiles v3): 1 ≤1 km · 2 1–3 · 3 3–5 · 4 5–10 · 5 >10
 	label?: string;
 }
 
