@@ -61,22 +61,22 @@ jobs:
         with: { python-version: '3.12' }
       - run: pip install playwright pyyaml pillow && python -m playwright install --with-deps chromium
       - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out || true
-      - name: Claude con la suscripción (mismos flags que juez y revisor)
+      - name: Claude con la suscripción (permisos de escritura)
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
-          pip install duckdb
           npm install -g @anthropic-ai/claude-code
-          MODELO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['modelo'])")
-          ESFUERZO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml')).get('esfuerzo','high'))")
+          claude --version
           mkdir -p director/run
-          claude -p "Corré python director/consulta.py \"SELECT count(*) AS n FROM p('hex_flood_risk')\" y escribí el número en director/run/prueba.txt. Usá la herramienta Write para el archivo. Respondé sólo con el número." \
-            --model "$MODELO" --effort "$ESFUERZO" \
-            --allowedTools "Read" "Write(director/run/**)" "Bash(python director/consulta.py:*)" \
-            --output-format json > salida.json; echo "exit=$?"
-          python -c "import json;d=json.load(open('salida.json'));print('resultado:',d.get('result'));print('modelo:',list((d.get('modelUsage') or {}).keys()));print('turnos:',d.get('num_turns'),'error:',d.get('is_error'));print('negados:',d.get('permission_denials'))"
-          echo "archivo: $(cat director/run/prueba.txt 2>/dev/null || echo NO ESCRITO)"
-          test -s director/run/prueba.txt
+          for pat in "Write(director/run/**)" "Edit(director/run/**)" "Edit(./director/run/**)" "Edit(/director/run/**)" "Edit(//$PWD/director/run/**)"; do
+            rm -f director/run/x.txt
+            claude -p "Creá el archivo director/run/x.txt con el texto ok usando la herramienta Write. No uses otra herramienta." \
+              --model claude-haiku-5-5 --allowedTools "$pat" --output-format json > salida.json 2>&1 || true
+            echo "PATRON $pat -> $( [ -f director/run/x.txt ] && echo ESCRIBIO || echo no)"
+          done
+          rm -f director/run/x.txt
+          claude -p "Creá el archivo director/run/x.txt con el texto ok usando la herramienta Write." --model claude-haiku-5-5 --allowedTools "Write" "Edit" --output-format json > salida.json 2>&1 || true
+          echo "PATRON Write+Edit sin ruta -> $( [ -f director/run/x.txt ] && echo ESCRIBIO || echo no)"
 
   sondas:
     needs: cadencia
