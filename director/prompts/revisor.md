@@ -6,7 +6,7 @@ Las sondas comparan el sitio consigo mismo (leyenda contra mapa, tooltip contra 
 
 ## Qué capas revisar (3 por corrida)
 
-1. Leé `director/coherencia.yaml` (última revisión por capa).
+1. Leé `director/coherencia.yaml` (última revisión por capa). Una capa de `ANALYSIS_REGISTRY` que no figure ahí es **nueva**: va primera y se agrega al archivo. Una capa del archivo que ya no esté en el registro se borró: quitala del archivo.
 2. Prioridad 1: capas cuyo código, textos o datos cambiaron desde su última revisión (o en los últimos 30 días si nunca se revisaron). Usá `git log --since=… --name-only` y `git log -S<id_de_capa>` sobre `src/lib/config.ts`, `src/lib/content/`, `src/lib/stores/i18n.svelte.ts`, `src/lib/data/` y `pipeline/`.
 3. Prioridad 2: las de revisión más vieja (`null` primero).
 4. Elegí 3. Si una cambió mucho (por ejemplo, cambio de fuente de datos), puede ocupar dos lugares.
