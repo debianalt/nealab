@@ -8,7 +8,7 @@
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "hex_count": 6333,
+      "hex_count": 6335,
       "centroid": [
         -58.756,
         -27.5128
@@ -22,15 +22,15 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "hex_count": 32327,
+      "hex_count": 32742,
       "centroid": [
         -57.8087,
         -30.1335
       ],
       "rank": {
         "viirs": 0.7,
-        "empleo_pct": 52.7,
-        "univ_pct": 5.7
+        "empleo_pct": 53.1,
+        "univ_pct": 5.6
       }
     },
     {
@@ -50,14 +50,14 @@
     {
       "dpto": "General Alvear",
       "parquetKey": "general_alvear",
-      "hex_count": 22103,
+      "hex_count": 22109,
       "centroid": [
         -56.5109,
         -28.8762
       ],
       "rank": {
         "viirs": 0.4,
-        "empleo_pct": 49.0,
+        "empleo_pct": 49.1,
         "univ_pct": 4.6
       }
     },
@@ -78,7 +78,7 @@
     {
       "dpto": "Lavalle",
       "parquetKey": "lavalle",
-      "hex_count": 17637,
+      "hex_count": 17638,
       "centroid": [
         -59.0779,
         -28.9307
@@ -92,7 +92,7 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "hex_count": 99285,
+      "hex_count": 99522,
       "centroid": [
         -58.3625,
         -29.4281
@@ -100,7 +100,7 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 48.4,
-        "univ_pct": 7.7
+        "univ_pct": 7.6
       }
     },
     {
@@ -120,7 +120,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "hex_count": 106139,
+      "hex_count": 106157,
       "centroid": [
         -56.8685,
         -27.7336
@@ -128,13 +128,13 @@
       "rank": {
         "viirs": 0.41,
         "empleo_pct": 52.2,
-        "univ_pct": 6.6
+        "univ_pct": 6.5
       }
     },
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "hex_count": 76154,
+      "hex_count": 76159,
       "centroid": [
         -56.9713,
         -28.8726
@@ -148,7 +148,7 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "hex_count": 79065,
+      "hex_count": 79069,
       "centroid": [
         -55.9812,
         -27.9777
@@ -162,7 +162,7 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "hex_count": 57473,
+      "hex_count": 57479,
       "centroid": [
         -57.2015,
         -29.6765
@@ -170,7 +170,7 @@
       "rank": {
         "viirs": 0.58,
         "empleo_pct": 50.3,
-        "univ_pct": 7.1
+        "univ_pct": 7.0
       }
     },
     {
@@ -183,22 +183,22 @@
       ],
       "rank": {
         "viirs": 0.55,
-        "empleo_pct": 47.4,
-        "univ_pct": 5.1
+        "empleo_pct": 47.9,
+        "univ_pct": 4.8
       }
     },
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "hex_count": 29735,
+      "hex_count": 29952,
       "centroid": [
         -58.8204,
         -30.0776
       ],
       "rank": {
         "viirs": 0.38,
-        "empleo_pct": 48.4,
-        "univ_pct": 5.8
+        "empleo_pct": 47.9,
+        "univ_pct": 5.5
       }
     },
     {
@@ -239,8 +239,8 @@
       ],
       "rank": {
         "viirs": 0.41,
-        "empleo_pct": 48.3,
-        "univ_pct": 5.2
+        "empleo_pct": 47.6,
+        "univ_pct": 5.1
       }
     },
     {
@@ -288,15 +288,15 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "hex_count": 47795,
+      "hex_count": 47934,
       "centroid": [
         -59.2055,
         -29.7808
       ],
       "rank": {
         "viirs": 0.45,
-        "empleo_pct": 48.9,
-        "univ_pct": 6.4
+        "empleo_pct": 47.9,
+        "univ_pct": 6.1
       }
     },
     {
@@ -323,7 +323,7 @@
       ],
       "rank": {
         "viirs": 0.51,
-        "empleo_pct": 42.6,
+        "empleo_pct": 42.5,
         "univ_pct": 5.3
       }
     },
@@ -337,7 +337,7 @@
       ],
       "rank": {
         "viirs": 0.48,
-        "empleo_pct": 44.6,
+        "empleo_pct": 44.5,
         "univ_pct": 5.5
       }
     },
@@ -351,8 +351,8 @@
       ],
       "rank": {
         "viirs": 0.45,
-        "empleo_pct": 42.3,
-        "univ_pct": 4.1
+        "empleo_pct": 42.2,
+        "univ_pct": 4.0
       }
     }
   ]
