@@ -61,22 +61,23 @@ jobs:
         with: { python-version: '3.12' }
       - run: pip install playwright pyyaml pillow && python -m playwright install --with-deps chromium
       - run: cd director/sondas && python humo.py https://www.spatia.ar ../../out || true
-      - name: Claude con la suscripción (permisos de escritura)
+      - name: Claude con la suscripción (mismos flags que juez y revisor)
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: |
-          npm install -g @anthropic-ai/claude-code
+          pip install duckdb
+          npm install -g @anthropic-ai/claude-code@$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['version_claude_code'])")
           claude --version
+          MODELO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['modelo'])")
+          ESFUERZO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml')).get('esfuerzo','high'))")
           mkdir -p director/run
-          for pat in "Write(director/run/**)" "Edit(director/run/**)" "Edit(./director/run/**)" "Edit(/director/run/**)" "Edit(//$PWD/director/run/**)"; do
-            rm -f director/run/x.txt
-            claude -p "Creá el archivo director/run/x.txt con el texto ok usando la herramienta Write. No uses otra herramienta." \
-              --model claude-haiku-5-5 --allowedTools "$pat" --output-format json > salida.json 2>&1 || true
-            echo "PATRON $pat -> $( [ -f director/run/x.txt ] && echo ESCRIBIO || echo no)"
-          done
-          rm -f director/run/x.txt
-          claude -p "Creá el archivo director/run/x.txt con el texto ok usando la herramienta Write." --model claude-haiku-5-5 --allowedTools "Write" "Edit" --output-format json > salida.json 2>&1 || true
-          echo "PATRON Write+Edit sin ruta -> $( [ -f director/run/x.txt ] && echo ESCRIBIO || echo no)"
+          claude -p "Corré python director/consulta.py \"SELECT count(*) AS n FROM p('hex_flood_risk')\" y escribí el número en director/run/prueba.txt con la herramienta Write. Respondé sólo con el número." \
+            --model "$MODELO" --effort "$ESFUERZO" \
+            --allowedTools "Read" "Edit(director/run/**)" "Bash(python director/consulta.py:*)" \
+            --output-format json > salida.json; echo "exit=$?"
+          python -c "import json;d=json.load(open('salida.json'));print('resultado:',d.get('result'));print('modelo:',list((d.get('modelUsage') or {}).keys()));print('negados:',d.get('permission_denials'))"
+          echo "archivo: $(cat director/run/prueba.txt 2>/dev/null || echo NO ESCRITO)"
+          test -s director/run/prueba.txt
 
   sondas:
     needs: cadencia
@@ -152,7 +153,7 @@ jobs:
         run: |
           pip install playwright pyyaml pillow duckdb && python -m playwright install --with-deps chromium
           npm ci
-          npm install -g @anthropic-ai/claude-code
+          npm install -g @anthropic-ai/claude-code@$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['version_claude_code'])")
           git config user.name "Director de Spatia"
           git config user.email "director@spatia.ar"
           MODELO="${{ inputs.modelo }}"
@@ -176,7 +177,7 @@ jobs:
         id: revisor
         run: |
           claude -p "$(cat director/prompts/revisor.md)" --model "$MODELO" --effort "$ESFUERZO" \
-            --allowedTools "Read" "Grep" "Glob" "Write(director/run/**)" "Edit(director/coherencia.yaml)" "Write(director/coherencia.yaml)" \
+            --allowedTools "Read" "Grep" "Glob" "Edit(director/run/**)" "Edit(director/coherencia.yaml)" \
               "Bash(python director/consulta.py:*)" "Bash(git log:*)" "Bash(git diff:*)" "Bash(git show:*)" "Bash(git rev-parse:*)" \
             --output-format json > director/run/revisor_salida.json || echo "fallo=si" >> $GITHUB_OUTPUT
           python -c "import json;d=json.load(open('director/run/revisor_salida.json'));print('costo equivalente USD:',d.get('total_cost_usd'),'turnos:',d.get('num_turns'));print(d.get('result','')[:2000])" || true
@@ -197,7 +198,7 @@ jobs:
         id: juez
         run: |
           claude -p "$(cat director/prompts/juez.md)" --model "$MODELO" --effort "$ESFUERZO" \
-            --allowedTools "Read" "Grep" "Glob" "Write(director/run/**)" "Edit(director/ignorar.yaml)" "Edit(director/decisiones.md)" "Write(director/ignorar.yaml)" \
+            --allowedTools "Read" "Grep" "Glob" "Edit(director/run/**)" "Edit(director/ignorar.yaml)" "Edit(director/decisiones.md)" \
             --output-format json > director/run/juez_salida.json || echo "fallo=si" >> $GITHUB_OUTPUT
           python -c "import json;d=json.load(open('director/run/juez_salida.json'));print('costo equivalente USD:',d.get('total_cost_usd'),'turnos:',d.get('num_turns'))" || true
           test -s director/run/triage.json || { echo "El juez no escribió triage.json"; echo "fallo=si" >> $GITHUB_OUTPUT; }
@@ -220,7 +221,7 @@ jobs:
           [ "$n" = "0" ] && { echo "[]" > director/run/arreglos.json; exit 0; }
           git rev-parse HEAD > director/run/base_sha
           claude -p "$(cat director/prompts/arreglador.md)" --model "$MODELO" --effort "$ESFUERZO" \
-            --allowedTools "Read" "Grep" "Glob" "Edit(src/**)" "Write(src/**)" "Edit(static/**)" "Write(static/**)" "Write(director/run/**)" \
+            --allowedTools "Read" "Grep" "Glob" "Edit(src/**)" "Edit(static/**)" "Edit(director/run/**)" \
               "Bash(bash director/reprobar.sh:*)" "Bash(git add:*)" "Bash(git commit:*)" "Bash(git diff:*)" "Bash(git status:*)" "Bash(git log:*)" \
               "Bash(git checkout -- :*)" "Bash(grep:*)" "Bash(npm run build:*)" "Bash(python director/unir.py:*)" "Bash(cat:*)" "Bash(ls:*)" \
             --output-format json > director/run/arreglador_salida.json || true

@@ -5,3 +5,6 @@ max_turnos_juez: 60
 max_turnos_arreglador: 150
 cadencia: quincenal       # domingo 06:00 UTC, semanas ISO pares
 base_produccion: https://www.spatia.ar
+# Versión fijada de Claude Code en CI: subirla a mano y validar con `gh workflow run director.yml -f modo=humo`
+# (la 2.1.318 cambió los permisos de escritura de Write(ruta) a Edit(ruta)).
+version_claude_code: 2.1.318
