@@ -16,7 +16,10 @@
       "rank": {
         "viirs": 1.25,
         "empleo_pct": 55.1,
-        "univ25_pct": 12.2
+        "univ25_pct": 12.2,
+        "ocupados_n": 116846,
+        "ocupados_prov_pct": 48.4,
+        "desocup_pct": 7.5
       }
     },
     {
@@ -30,7 +33,10 @@
       "rank": {
         "viirs": 0.38,
         "empleo_pct": 48.5,
-        "univ25_pct": 6.2
+        "univ25_pct": 6.2,
+        "ocupados_n": 5914,
+        "ocupados_prov_pct": 2.4,
+        "desocup_pct": 5.4
       }
     },
     {
@@ -44,7 +50,10 @@
       "rank": {
         "viirs": 0.36,
         "empleo_pct": 50.2,
-        "univ25_pct": 5.8
+        "univ25_pct": 5.8,
+        "ocupados_n": 30343,
+        "ocupados_prov_pct": 12.6,
+        "desocup_pct": 6.3
       }
     },
     {
@@ -58,7 +67,10 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 50.8,
-        "univ25_pct": 5.5
+        "univ25_pct": 5.5,
+        "ocupados_n": 27870,
+        "ocupados_prov_pct": 11.5,
+        "desocup_pct": 6.5
       }
     },
     {
@@ -72,7 +84,10 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 47.0,
-        "univ25_pct": 4.9
+        "univ25_pct": 4.9,
+        "ocupados_n": 6715,
+        "ocupados_prov_pct": 2.8,
+        "desocup_pct": 4.1
       }
     },
     {
@@ -86,7 +101,10 @@
       "rank": {
         "viirs": 0.96,
         "empleo_pct": 52.9,
-        "univ25_pct": 6.7
+        "univ25_pct": 6.7,
+        "ocupados_n": 37840,
+        "ocupados_prov_pct": 15.7,
+        "desocup_pct": 5.6
       }
     },
     {
@@ -100,7 +118,10 @@
       "rank": {
         "viirs": 0.36,
         "empleo_pct": 45.4,
-        "univ25_pct": 3.9
+        "univ25_pct": 3.9,
+        "ocupados_n": 5067,
+        "ocupados_prov_pct": 2.1,
+        "desocup_pct": 6.0
       }
     },
     {
@@ -114,7 +135,10 @@
       "rank": {
         "viirs": 0.49,
         "empleo_pct": 48.1,
-        "univ25_pct": 5.1
+        "univ25_pct": 5.1,
+        "ocupados_n": 7047,
+        "ocupados_prov_pct": 2.9,
+        "desocup_pct": 5.5
       }
     },
     {
@@ -128,7 +152,10 @@
       "rank": {
         "viirs": 0.35,
         "empleo_pct": 33.3,
-        "univ25_pct": 8.2
+        "univ25_pct": 8.2,
+        "ocupados_n": 3860,
+        "ocupados_prov_pct": 1.6,
+        "desocup_pct": 7.1
       }
     }
   ]

@@ -1323,13 +1323,23 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'economic_activity',
 		// Department ranking — pipeline/build_layer_ranks.py: Σ rate·base / Σ base over
 		// the department's hexagons (same INDEC definition in the 4 provinces).
+		// Ocupados (cantidad + % de la provincia) y desocupación: pipeline/build_empleo_rank.py, conteos por radio
+		// (por hexágono no hay conteo: hexNone, el mapa sigue con la tasa de empleo). Universitarios 25+:
+		// pipeline/build_univ25_rank.py.
 		deptRank: {
-			field: 'empleo_pct', unit: '%', decimals: 1, hexVariable: 'tasa_empleo',
-			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note',
+			field: 'ocupados_n', unit: 'personas', unitKey: 'rank.unit.people', decimals: 0, hexVariable: 'tasa_empleo', hexNone: true,
+			extraField: 'ocupados_prov_pct', extraUnitKey: 'rank.econ.unit.pctProv', extraDecimals: 1,
+			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note.ocupados',
 			metrics: [
-				{ tabKey: 'rank.econ.tab.empleo' },
-				{ tabKey: 'rank.econ.tab.univ', field: 'univ25_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
-				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
+				{ tabKey: 'rank.econ.tab.ocupados' },
+				{ tabKey: 'rank.econ.tab.empleo', titleKey: 'rank.econ.title.empleo', field: 'empleo_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: false,
+				  extraField: undefined, noteKey: 'rank.econ.note' },
+				{ tabKey: 'rank.econ.tab.desocup', titleKey: 'rank.econ.title.desocup', field: 'desocup_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: true,
+				  extraField: undefined, noteKey: 'rank.econ.note.desocup' },
+				{ tabKey: 'rank.econ.tab.univ', titleKey: 'rank.econ.title.univ', field: 'univ25_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: false,
+				  extraField: undefined, noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
+				{ tabKey: 'rank.econ.tab.viirs', titleKey: 'rank.econ.title.viirs', field: 'viirs', unit: 'nW/cm²/sr', unitKey: undefined, decimals: 2, hexNone: false,
+				  extraField: undefined, noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
 			],
 		},
 		parquet: 'sat_economic_activity',
