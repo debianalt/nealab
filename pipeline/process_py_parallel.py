@@ -4,7 +4,6 @@ Spawns one subprocess per territory simultaneously.
 
 Usage:
   python pipeline/process_py_parallel.py --analysis pm25
-  python pipeline/process_py_parallel.py --analysis carbon
 
 deforestation_dynamics in Paraguay: python pipeline/process_deforestation_py.py (its own runner).
 """
@@ -26,15 +25,9 @@ PY_TERRITORIES = [
 
 # Command templates per analysis
 ANALYSIS_CMDS = {
-    "carbon": [
-        "python process_carbon_to_h3.py --territory {t} --mode comparable",
-        "python split_by_admin.py --territory {t} --only carbon_stock",
-        "npx wrangler r2 object put neahub/data/{prefix}sat_carbon_stock.parquet "
-        "--file ../output/{t}/sat_carbon_stock.parquet --remote",
-    ],
     "pm25": [
         "python process_pm25_annual_to_h3.py --territory {t}",
-        "python compute_pm25_drivers.py --territory {t} --mode comparable",
+        "python compute_pm25_drivers.py --territory {t}",
         "python split_by_admin.py --territory {t} --only pm25_drivers",
         "npx wrangler r2 object put neahub/data/{prefix}sat_pm25_drivers.parquet "
         "--file output/{t}/sat_pm25_drivers.parquet --remote",

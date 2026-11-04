@@ -53,7 +53,7 @@ def process_territory(t_id: str) -> tuple[str, bool]:
                     return t_id, False
 
         # Process hansen → H3 (comparable mode for cross-territory consistency)
-        if not run(f"python process_hansen_to_h3.py --territory {t_id} --mode comparable", log=log):
+        if not run(f"python process_hansen_to_h3.py --territory {t_id}", log=log):
             return t_id, False
 
         # Split by admin

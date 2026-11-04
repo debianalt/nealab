@@ -1,6 +1,6 @@
 """Hexoma → spatia.ar: la capa «potencial agrícola» en unidades físicas y aptitud por cultivo (NEA argentino).
 
-Reemplaza los 6 componentes 0–100 con goalposts de la capa vieja (decisión del autor, 1-nov-2026). Lee del Hexoma
+Reemplaza los 6 componentes 0–100 de la capa vieja (decisión del autor, 1-nov-2026). Lee del Hexoma
 local y escribe los parquets y resúmenes que lee la web, con nombre nuevo (`sat_agri_apt`) para no romper el sitio
 publicado entre la subida y el deploy:
 

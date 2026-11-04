@@ -49,32 +49,15 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 - **Ficha del hexágono: borrada de la web** (2026-11-04). Sus datos están en el Hexoma (`v_hexoma`, `v_hexoma_rangos`; ficha local con `pipeline/hexoma/hexoma_ficha.py`). No reponerla en la web sin pedido del autor.
 - **Índice de departamento por celda** (`pipeline/output/hexoma/ficha_link_index.json`, insumo de la tabla `ficha_enlace` del Hexoma): celdas cuyo archivo de depto no es el del polígono que contiene su centro. Regenerar con `python pipeline/build_ficha_link_index.py` tras cambiar cualquier partición por departamento.
 
-## Scoring Methodology
-- **All composite scores** use PCA-validated geometric mean (OECD Handbook / UNDP HDI style)
-- **Pipeline**: percentile rank → correlation diagnostics → KMO/Bartlett → PCA (varimax) → select variables (drop |r|>0.70) → geometric mean (floor=1.0)
-- **Sin pesos**: los componentes retenidos pesan igual. No hay promedio ponderado en ningún score (el modo `--legacy` y los pesos por componente se borraron el 12-oct-2026).
-- **Shared module**: `pipeline/scoring.py` — all diagnostics and scoring functions
-- **Diagnostics**: `--diagnostics` flag on `compute_satellite_scores.py` emits `*_diagnostics.json` per analysis
-- **Scripts**: `compute_satellite_scores.py` = 4 capas censales (service_deprivation, health_access, education_capital, education_flow). agri_potential NO es un score: sale del Hexoma en unidades físicas y aptitud por cultivo (`pipeline/hexoma/exportar_agri_web.py`); la versión 0–100 y su pipeline se borraron el 1-nov-2026.
-
-## Scoring Modes — Dual Architecture (CRITICAL — do not infer otherwise)
-nealab has TWO scoring modes coexisting. Both are deployed. Do NOT propose "adding a dual mode" — it exists.
-
-- **`--mode comparable`**: fixed goalpost P2/P98 normalization → cross-territory comparable. Score 60 in Misiones = 60 in Itapúa. PCA variable selection LOCKED from `goalposts.json:pca_variable_selection`. Hoy (nov-2026) casi todas las capas publican valores físicos o tasas censales crudas; los goalposts sobreviven en las tipologías (aislamiento) y el flag `comparable` de ANALYSIS_REGISTRY sólo decide agrupación en el menú y el comparador entre territorios.
-- **`--mode local`**: percentile rank within territory (default historical). Used for census-based layers whose schemas differ across countries (INDEC vs DGEEC).
-
-UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
-- "↔ Comparables entre territorios" → layers with `comparable: true` in `ANALYSIS_REGISTRY`
-- "Solo <territorio>" → layers with `comparable: false`
-
-**Tier 1 (physical, invariant)**: c_recurrence, c_occurrence, c_extent, c_treecover, c_water_stress. Fractions/percentages/bounded ratios. NEVER recalibrated.
-
-**Tier 2 frozen v1** (commit `58e225f`): P2/P98 over pooled Mis+Ita reference universe. Intra-ecoregion additions DO NOT recompute. Bump v(n+1) only when leaving the ecoregion OR on deliberate methodological revision (recomputes ALL territories + full history + documents the break).
-
-**`pipeline/compute_goalposts.py`**: recalculates Tier 2 bounds from pooled territory data. Run only on a bump. Tier 1 entries never touched. Re-runs PCA variable selection on pooled normalized data.
+## Valores, no puntajes (CRÍTICO)
+- **Sin goalposts, nunca** (decisión del autor, 2026-11-04): ni la palabra en textos ni el método. Las capas publican y pintan valores físicos (%, µg/m³, %/año, min, km) o tasas censales; no hay normalización a escala fija, puntaje compuesto 0–100 ni `--mode comparable|local`. Se borraron `goalposts.json`, `compute_goalposts.py`, `compute_satellite_scores.py`, `compute_overture_scores.py`, carbono y actividad productiva, y `flood_risk_score`/`score` de los productores (pm25, Hansen, accesibilidad, inundación). No proponer reintroducirlos.
+- Excepciones que no son puntajes: aptitud forestal (probabilidad del SDM × 100) y las clases de aptitud agrícola (FAO S1–N). Las escalas de color fijas (PM2.5 regional 7–20 µg/m³, estiramiento P2–P98 por territorio, EUDR 0–40 %) sólo eligen colores sobre el valor crudo.
+- `comparable: true` en `ANALYSIS_REGISTRY` = misma definición física en todos los territorios que cubre; decide el grupo del menú, el comparador entre territorios y el eje Y del bivariado.
+- Las columnas `score*` que quedan en R2 (pm25, deforestación, inundación) no las lee nadie y desaparecen cuando cada productor vuelve a correr.
+- `pipeline/scoring.py` conserva sólo diagnósticos (correlación, KMO, PCA) y la media geométrica; hoy sólo lo importa `process_air_quality_to_h3.py` (capa vieja, sin uso en la web).
 
 ## Flood Risk Layer
-- **Lo que pinta el mapa**: exposición por relieve (HAND < 5 m, MERIT Hydro) con Google Open Buildings: pestañas % de edificios / edificios / % de tierra / edificios nuevos 2016–2023 (`pipeline/build_flood_rank.py`, columnas hex `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`; cada pestaña pinta la suya). En la llanura chaqueña (ranking saturado) pinta `jrc_occurrence` (JRC GSW 1984–2021). Sentinel-1 = extensión actual (`flood_extent_pct`). Sin score compuesto (`flood_risk_score` retirado de la UI en jun-2026).
+- **Lo que pinta el mapa**: exposición por relieve (HAND < 5 m, MERIT Hydro) con Google Open Buildings: pestañas % de edificios / edificios / % de tierra / edificios nuevos 2016–2023 (`pipeline/build_flood_rank.py`, columnas hex `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`; cada pestaña pinta la suya). En la llanura chaqueña (ranking saturado) pinta `jrc_occurrence` (JRC GSW 1984–2021). Sentinel-1 = extensión actual (`flood_extent_pct`). Sin score compuesto (`flood_risk_score` fuera de la UI en jun-2026 y del pipeline el 4-nov-2026).
 - **Parquet columns**: `h3index`, `jrc_occurrence`, `jrc_recurrence`, `jrc_seasonality`, `flood_extent_pct`, `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`
 - **Pipeline**: `python pipeline/run_flood_update.py --skip-gee` (con rasters locales)
 

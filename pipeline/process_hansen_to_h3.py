@@ -37,7 +37,6 @@ from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
 from config import OUTPUT_DIR
-from scoring import load_goalposts, score_with_goalposts
 
 LOSSYEAR_PATH = os.path.join(OUTPUT_DIR, "hansen_lossyear.tif")
 TREECOVER_PATH = os.path.join(OUTPUT_DIR, "hansen_treecover2000.tif")
@@ -146,24 +145,12 @@ def hex_zonal_hansen(features):
     return df
 
 
-def percentile_rank(series):
-    valid = series.notna()
-    result = pd.Series(np.nan, index=series.index)
-    if valid.sum() > 1:
-        result[valid] = series[valid].rank(pct=True) * 100.0
-    return result.round(1)
-
-
 def main():
     parser = argparse.ArgumentParser(description="Hansen -> H3 zonal stats")
     parser.add_argument("--territory", default="misiones",
                         help="Territory ID (default: misiones)")
-    parser.add_argument("--mode", choices=['comparable', 'local'], default='local',
-                        help="comparable: goalpost normalization. local: percentile rank (default).")
     args = parser.parse_args()
     set_territory_paths(args.territory)
-
-    goalposts = load_goalposts() if args.mode == 'comparable' else None
 
     t0 = time.time()
     print(f"Territory: {args.territory}")
@@ -240,16 +227,7 @@ def main():
     # Only hexagons with some baseline forest
     result = result[result.treecover2000 > 5].copy()
 
-    # Scores (higher loss rate = higher score = more deforestation pressure)
-    if args.mode == 'comparable' and goalposts:
-        gp = goalposts['indicators'].get('c_loss_rate', {'lo': 0, 'hi': 5})
-        result["score"] = score_with_goalposts(result["loss_rate_current"], gp['lo'], gp['hi']).round(1)
-        result["score_baseline"] = score_with_goalposts(result["loss_rate_baseline"], gp['lo'], gp['hi']).round(1)
-    else:
-        result["score"] = percentile_rank(result["loss_rate_current"])
-        result["score_baseline"] = percentile_rank(result["loss_rate_baseline"])
-    result["delta_score"] = (result["score"] - result["score_baseline"]).round(1)
-
+    # Physical values only (no score or score-cut types since 4-nov-2026).
     # Display values
     result["c_loss_rate"] = result["loss_rate_current"].round(3)
     result["c_loss_rate_baseline"] = result["loss_rate_baseline"].round(3)
@@ -257,19 +235,9 @@ def main():
     result["c_cumulative"] = result["loss_cumulative_pct"].round(2)
     result["c_treecover"] = result["treecover2000"].round(0)
 
-    # Type labels
-    try:
-        result["type"] = pd.qcut(result["score"], 4, labels=[1, 2, 3, 4]).astype(int)
-    except ValueError:
-        result["type"] = pd.cut(result["score"], bins=[0, 25, 50, 75, 100],
-                                labels=[1, 2, 3, 4], include_lowest=True).astype(int)
-    type_map = {1: "Baja presion", 2: "Presion moderada",
-                3: "Alta presion", 4: "Presion critica"}
-    result["type_label"] = result["type"].map(type_map)
-
-    out_cols = ["h3index", "score", "score_baseline", "delta_score",
+    out_cols = ["h3index",
                 "c_loss_rate", "c_loss_rate_baseline", "c_loss_rate_delta",
-                "c_cumulative", "c_treecover", "type", "type_label"]
+                "c_cumulative", "c_treecover"]
     result = result[out_cols]
 
     # Summary
@@ -281,7 +249,6 @@ def main():
     print(f"  Delta: mean={result.c_loss_rate_delta.mean():.3f} %/yr")
     print(f"  Cumulative loss: mean={result.c_cumulative.mean():.2f} % of hex area")
     print(f"  Tree cover 2000: mean={result.c_treecover.mean():.0f}%")
-    print(f"  Types: {result.type.value_counts().sort_index().to_dict()}")
     print(f"  Built in {elapsed:.0f}s")
 
     result.to_parquet(SPATIA_PATH, index=False)

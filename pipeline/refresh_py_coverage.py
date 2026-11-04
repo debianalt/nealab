@@ -9,8 +9,8 @@ Per territory (3 in parallel), once its GEE exports are COMPLETED:
   1. download satellite/<t>/{hansen_*, sat_pm25_*, sdm_*, mapbiomas_*}.tif with
      gcs_staging (deleted from the bucket after download); shards are mosaicked
   2. check every raster covers the crosswalk grid (stops otherwise)
-  3. process_hansen_to_h3 --mode comparable; process_pm25_annual_to_h3 +
-     compute_pm25_drivers --mode comparable; process_sdm_covariates_h3 +
+  3. process_hansen_to_h3; process_pm25_annual_to_h3 +
+     compute_pm25_drivers; process_sdm_covariates_h3 +
      compute_forestry_sdm
   4. split_by_admin --only deforestation_dynamics,pm25_drivers,forestry_aptitude
 Nothing is uploaded here.
@@ -157,9 +157,9 @@ def one(t: str, since_ms: float, skip_gee: bool) -> tuple:
         if not check_cover(t, log):
             return t, 'rasters do not cover the grid'
         steps = [
-            [py, 'process_hansen_to_h3.py', '--territory', t, '--mode', 'comparable'],
+            [py, 'process_hansen_to_h3.py', '--territory', t],
             [py, 'process_pm25_annual_to_h3.py', '--territory', t],
-            [py, 'compute_pm25_drivers.py', '--territory', t, '--mode', 'comparable'],
+            [py, 'compute_pm25_drivers.py', '--territory', t],
             [py, 'process_sdm_covariates_h3.py', '--territory', t],
             [py, 'compute_forestry_sdm.py', '--territory', t, '--no-diagnostics'],
             [py, 'split_by_admin.py', '--territory', t, '--only', 'deforestation_dynamics,pm25_drivers,forestry_aptitude'],

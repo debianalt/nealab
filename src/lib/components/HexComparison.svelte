@@ -2,7 +2,6 @@
 	import { displayTypeLabel } from '$lib/utils/typeLabel';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import PetalChart from './PetalChart.svelte';
-	import { ANALYSIS_REGISTRY } from '$lib/config';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
@@ -76,12 +75,6 @@
 	// pob_18_mas, …), one table row per distinct base column.
 	const baseCols = $derived(
 		[...new Set(componentVars.map(v => v.baseCol).filter((c): c is string => !!c))]
-	);
-	// Goalpost-normalized layers show absolute /100 values (frozen regional bounds) —
-	// the opposite reading to the petal (relative to territory avg). Note disambiguates.
-	const isGoalpostLayer = $derived(
-		componentVars.some(v => v.unit === '/100')
-		&& ANALYSIS_REGISTRY.some(a => a.id === layer?.id && a.comparable)
 	);
 	// Only show the classification chip for layers whose K-means typology is
 	// meaningful (declare a type_label variable in config). Layers where it doesn't
@@ -163,15 +156,12 @@
 						{#if !hasData}
 							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
 						{:else}
-							<span class="cd-val-data">{isStr ? val : fmtValue(displayVal * (v.scale ?? 1), v.unit) + (v.unit ? ` ${unitLabel(v.unit)}` : ' /100')}</span>
+							<span class="cd-val-data">{isStr ? val : fmtValue(displayVal * (v.scale ?? 1), v.unit) + (v.unit ? ` ${unitLabel(v.unit)}` : '')}</span>
 						{/if}
 					</div>
 				{/each}
 			</div>
 		{/each}
-		{#if isGoalpostLayer}
-			<div class="cd-note">{withRef(i18n.t('hex.goalpostNote'), hexStore.territoryId, i18n.locale)}</div>
-		{/if}
 	{/if}
 
 	<!-- Magnitude (buildings, est. population) + estimated % per variable -->
@@ -232,7 +222,6 @@
 	.cd-val { font-size: 11px; font-weight: 600; color: var(--c-ink-2); width: 24px; text-align: right; flex-shrink: 0; }
 	.cd-val-data { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; }
 	.cd-val-nodata { color: var(--c-ink-3); font-style: italic; font-weight: 500; }
-	.cd-note { font-size: 11px; color: rgba(var(--c-fg-rgb), 0.55); font-style: italic; line-height: 1.35; margin: 6px 0 2px; }
 	.hc-header {
 		display: flex;
 		justify-content: space-between;

@@ -4,7 +4,7 @@ sat_economic_activity.parquet at H3 res-9.
 
 - VIIRS: bilinear sampling of the annual composite raster at hex centroids
   (pixels ~500m >= 250m -> centroid interpolation per the raster-to-H3 rule,
-  same as process_activity_to_h3.py; polygon masking would imprint the grid).
+  polygon masking would imprint the grid).
 - Building density: GBA footprint centroids (PostGIS ndvi_misiones.
   gba_buildings_<territory>; plain gba_buildings for Misiones) bucketed to
   H3 res-9, count / cell area km².

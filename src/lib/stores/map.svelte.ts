@@ -26,7 +26,6 @@ export type HexData = {
 	jrc_recurrence?: number;
 	jrc_seasonality?: number;
 	flood_extent_pct?: number;
-	flood_risk_score?: number;
 };
 
 export type FloodParcelData = {
@@ -34,7 +33,6 @@ export type FloodParcelData = {
 	tipo: string;
 	area_m2: number;
 	color: string;
-	flood_risk_score: number;
 	jrc_occurrence: number;
 	jrc_recurrence: number;
 	jrc_seasonality: number;

@@ -72,13 +72,7 @@ TERRITORY_CONFIGS: dict[str, dict] = {
         'output_prefix': 'alto_parana_py/',          # R2: data/alto_parana_py/sat_*.parquet
         'export_scale': 100,
     },
-    # ── NEA argentino — pending v1.1 re-baseline (Gran Chaco biome) ────
-    # These territories are OUTSIDE the Paraná Atlantic-Forest reference universe
-    # frozen in goalposts.json v1. Adding them triggers a deliberate methodological
-    # revision (Opción B, decided 2026-05-23): re-baseline Tier 2 P2/P98 over pool
-    # of Mis+Cor+Ita+AP+Chaco+Formosa (+ ideally Paraná-BR Mata Atlântica). Until
-    # the bump executes, scoring these territories with v1 bounds will saturate
-    # (c_precipitation lo=1444 vs Chaco typical <1300; c_ndvi will clip too).
+    # ── NEA argentino (Gran Chaco biome) ────
     'chaco': {
         'id': 'chaco',
         'label': 'Chaco',

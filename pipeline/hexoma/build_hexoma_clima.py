@@ -357,7 +357,7 @@ def main() -> None:
                        valor float8, normal float8, anom float8, anom_pct float8, pct_ref float8)""")
         cur.execute("COMMENT ON TABLE clima.anomalia IS 'Campañas y heladas frente a la normal 1991–2020 de la "
                     "misma unidad. anom = valor − normal; anom_pct = % sobre la normal; pct_ref = % de los años de "
-                    "referencia con valor estrictamente menor. No es un goalpost: compara la celda con su propia historia'")
+                    "referencia con valor estrictamente menor. Compara la celda con su propia historia'")
         for sql in (anomalia_sql('chirps_campania', 'pixel_id', 'campania', vc, 1991, 2020),
                     anomalia_sql('era5_campania', 'pixel_id', 'campania', ve, 1991, 2020),
                     anomalia_sql('era5_helada', 'pixel_id', 'anio', vh, 1991, 2020),

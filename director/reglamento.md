@@ -48,7 +48,7 @@ La lista máquina está en `reglas.yaml → frases_prohibidas`.
 
 - El castellano va sin prefijo. Rutas `/en` `/pt` `/gn` sólo para páginas de texto. `/es/...` da 404. hreflang recíproco.
 - Guaraní: sólo etiquetas cortas. Los textos largos (metodología, servicios) se muestran en castellano vía `gnFallback.ts`, porque no hay quien verifique la traducción.
-- `method` existe sólo en es/en; pt muestra un aviso. `/demo/el-nino` y `/calibracion` son sólo en castellano.
+- `method` existe sólo en es/en; pt muestra un aviso. `/demo/el-nino` es sólo en castellano.
 - Una clave i18n visible en pantalla (`rank.flood.tab.pct`) es un error: falta la entrada en el diccionario.
 - Texto fijo en castellano dentro de la UI del mapa es un error de i18n, salvo en páginas declaradas sólo en castellano.
 

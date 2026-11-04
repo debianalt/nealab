@@ -482,7 +482,6 @@
 					jrc_recurrence: properties.jrc_recurrence,
 					jrc_seasonality: properties.jrc_seasonality,
 					flood_extent_pct: properties.flood_extent_pct,
-					flood_risk_score: properties.flood_risk_score,
 					...properties
 				});
 				mapComponent?.highlightHexagon(h3index);
@@ -498,7 +497,6 @@
 					h3index,
 					tipo: tipo ?? 'urbano',
 					area_m2: Number(area_m2) || 0,
-					flood_risk_score: floodData.flood_risk_score,
 					jrc_occurrence: floodData.jrc_occurrence,
 					jrc_recurrence: floodData.jrc_recurrence,
 					jrc_seasonality: floodData.jrc_seasonality,
@@ -1354,7 +1352,7 @@
 		if (!isReady()) return;
 		try {
 			const result = await query(
-				`SELECT h3index, jrc_occurrence, jrc_recurrence, jrc_seasonality, flood_extent_pct, flood_risk_score
+				`SELECT h3index, jrc_occurrence, jrc_recurrence, jrc_seasonality, flood_extent_pct
 				 FROM '${PARQUETS.hex_flood_risk}'
 				 WHERE h3index = '${h3index.replace(/'/g, "''")}'
 				 LIMIT 1`

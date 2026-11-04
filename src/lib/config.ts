@@ -976,7 +976,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	agri_potential: {
 		id: 'agri_potential',
 		// Empirical version (1-nov-2026, pipeline/hexoma/exportar_agri_web.py): physical units and
-		// crop suitability from the Hexoma, no goalposts. NEA AR only. The ranking tabs pick the
+		// crop suitability from the Hexoma, no scores. NEA AR only. The ranking tabs pick the
 		// crop the map paints (same mechanism as the flood tabs).
 		deptRank: {
 			field: 'soja_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0,
@@ -1433,11 +1433,11 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		},
 		parquet: 'sat_accessibility',
 		variables: [
-			{ col: 'travel_min_capital', rawCol: 'travel_min_capital_raw', unit: 'min', labelKey: 'radio.travelCapital', aggregation: 'mean' },
-			{ col: 'travel_min_cabecera', rawCol: 'travel_min_cabecera_raw', unit: 'min', labelKey: 'radio.travelCabecera', aggregation: 'mean' },
-			{ col: 'dist_nearest_hospital_km', rawCol: 'dist_nearest_hospital_km_raw', unit: 'km', labelKey: 'radio.distHospital', aggregation: 'mean' },
-			{ col: 'dist_nearest_secundaria_km', rawCol: 'dist_nearest_secundaria_km_raw', unit: 'km', labelKey: 'radio.distSecundaria', aggregation: 'mean' },
-			{ col: 'dist_primary_m', rawCol: 'dist_primary_m_raw', unit: 'km', labelKey: 'radio.distPrimaria', aggregation: 'mean' },
+			{ col: 'travel_min_capital_raw', unit: 'min', labelKey: 'radio.travelCapital', aggregation: 'mean' },
+			{ col: 'travel_min_cabecera_raw', unit: 'min', labelKey: 'radio.travelCabecera', aggregation: 'mean' },
+			{ col: 'dist_nearest_hospital_km_raw', unit: 'km', labelKey: 'radio.distHospital', aggregation: 'mean' },
+			{ col: 'dist_nearest_secundaria_km_raw', unit: 'km', labelKey: 'radio.distSecundaria', aggregation: 'mean' },
+			{ col: 'dist_primary_m_raw', unit: 'km', labelKey: 'radio.distPrimaria', aggregation: 'mean' },
 		],
 		primaryVariable: 'travel_min_capital_raw',
 		colorScale: 'flood',
@@ -1505,7 +1505,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_loss_rate', unit: '%/yr', labelKey: 'sat.deforest.lossRate', aggregation: 'mean' },
 			{ col: 'c_cumulative', unit: '%', labelKey: 'sat.deforest.cumulative', aggregation: 'mean' },
 		],
-		// No type chip: its k-means/goalpost classes ("Baja presión" up to 1.25 %/yr) contradicted
+		// No type chip: its old score-cut classes ("Baja presión" up to 1.25 %/yr) contradicted
 		// the legend's classes (3-nov-2026 audit).
 		primaryVariable: 'c_loss_rate',
 		legendLowKey: 'legend.deforestLoss.low',
@@ -1531,7 +1531,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
 			],
 		},
-		// Bands on RAW loss rate (%/yr, Hansen goalpost [0,5]): higher = worse,
+		// Bands on RAW loss rate (%/yr): higher = worse,
 		// so band colors and improved/worsened flow semantics are inverted.
 		flowBands: {
 			col: 'c_loss_rate',

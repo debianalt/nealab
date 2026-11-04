@@ -7,7 +7,6 @@ per H3 hexagon, producing hex_flood_risk.parquet.
 Metrics per hexagon:
   - flood_recurrence_mean: average recurrence fraction (0–1) across pixels
   - flood_extent_pct: % of hexagon area currently flooded
-  - flood_risk_score: composite score 0–100
 
 Usage:
   python pipeline/process_to_h3.py \
@@ -28,7 +27,6 @@ import pandas as pd
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-from scoring import geometric_mean_score, run_full_diagnostics, generate_report, score_with_goalposts
 
 try:
     import rasterio
@@ -150,39 +148,6 @@ def normalize_percentile(series: pd.Series) -> pd.Series:
     return result
 
 
-def compute_flood_risk_score(jrc_occurrence: pd.Series, jrc_recurrence: pd.Series,
-                             s1_extent: pd.Series,
-                             emit_diagnostics: bool = False,
-                             output_dir: str = None) -> pd.Series:
-    """
-    Composite flood risk score (0–100) via goalpost-normalized geometric mean.
-
-    Combines JRC Global Surface Water v1.4 (1984–2021) historical data with
-    Sentinel-1 SAR current flood extent.
-
-    Methodology: Tier 1 goalpost normalization (JRC occurrence/recurrence and
-    S1 extent are all 0–100% physical scales — no reference population needed).
-    Geometric mean with floor=1.0 (HDI-style, partially compensatory).
-    All three components retained: they measure distinct phenomena (historical
-    presence, inter-annual recurrence, current extent).
-    """
-    df = pd.DataFrame({
-        "c_occurrence": score_with_goalposts(jrc_occurrence, lo=0, hi=100),
-        "c_recurrence": score_with_goalposts(jrc_recurrence, lo=0, hi=100),
-        "c_extent":     score_with_goalposts(s1_extent,      lo=0, hi=100),
-    })
-
-    retained = ["c_occurrence", "c_recurrence", "c_extent"]
-    print(f"    Flood scoring: goalpost Tier 1 (physical 0–100%), all 3 components retained")
-
-    if emit_diagnostics and output_dir:
-        diagnostics = run_full_diagnostics(df, retained, corr_threshold=0.70)
-        generate_report("flood_risk", diagnostics, output_dir=output_dir)
-
-    score = geometric_mean_score(df, retained, floor=1.0)
-    return score.round(1)
-
-
 def generate_synthetic_data(gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     """
     Generate synthetic flood risk data for development/testing.
@@ -201,18 +166,11 @@ def generate_synthetic_data(gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     occurrence = (base_risk * 0.6 + np.random.beta(3, 5, n) * 0.4).clip(0, 1) * 100
     recurrence = (base_risk * 0.4 + np.random.beta(2, 5, n) * 0.3).clip(0, 1) * 100
     extent = (np.random.beta(1.5, 10, n) * base_risk).clip(0, 1)
-    score = compute_flood_risk_score(
-        pd.Series(occurrence, index=gdf.index),
-        pd.Series(recurrence, index=gdf.index),
-        pd.Series(extent, index=gdf.index),
-    )
-
     return pd.DataFrame({
         "h3index": gdf["h3index"],
         "jrc_occurrence": occurrence.round(2),
         "flood_recurrence_mean": recurrence.round(4),
         "flood_extent_pct": (extent * 100).round(2),
-        "flood_risk_score": score,
     })
 
 
@@ -251,27 +209,17 @@ def main():
         print("Computing zonal statistics for current extent...")
         extent = zonal_stats_rasterio(gdf, args.current)
 
-        score = compute_flood_risk_score(
-            occurrence.fillna(0), recurrence.fillna(0), (extent * 100).fillna(0)
-        )
-
         df = pd.DataFrame({
             "h3index": gdf["h3index"],
             "jrc_occurrence": occurrence.round(2),
             "jrc_recurrence": recurrence.round(2),
             "jrc_seasonality": pd.Series(0.0, index=gdf.index),
             "flood_extent_pct": (extent * 100).round(2),
-            "flood_risk_score": score,
         })
-
-    # Drop hexagons with no data
-    df = df.dropna(subset=["flood_risk_score"])
 
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
     df.to_parquet(args.output, index=False)
     print(f"\nSaved {len(df):,} hexagons to {args.output}")
-    print(f"  Score range: {df['flood_risk_score'].min():.1f} – {df['flood_risk_score'].max():.1f}")
-    print(f"  Mean score: {df['flood_risk_score'].mean():.1f}")
     print(f"  Hexagons with recurrence > 0.1: {(df['flood_recurrence_mean'] > 0.1).sum():,}")
 
 

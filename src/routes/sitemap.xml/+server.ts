@@ -6,8 +6,8 @@ export const prerender = true;
 const ORIGIN = 'https://spatia.ar';
 
 // The map. Not locale-prefixed (it carries locale in localStorage), so it has no
-// alternates. /terminos is noindex and /calibracion is an internal QA grid — neither
-// belongs here.
+// alternates. /terminos is noindex and does not
+// belong here.
 const MAP_PATH = '/';
 
 // One entry per path; each expands to its 4 locale variants below.

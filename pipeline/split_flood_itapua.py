@@ -23,7 +23,7 @@ FLOOD_PATH = os.path.join(SCRIPT_DIR, "output", "itapua_py", "hex_flood_risk.par
 CROSSWALK_PATH = os.path.join(SCRIPT_DIR, "output", "itapua_py", "h3_admin_crosswalk.parquet")
 
 FLOOD_COLS = ["h3index", "jrc_occurrence", "jrc_recurrence", "jrc_seasonality",
-              "flood_extent_pct", "flood_risk_score"]
+              "flood_extent_pct"]
 
 
 def h3_to_latlng(h3index: str) -> tuple[float, float]:
@@ -57,8 +57,8 @@ def main():
     print("Loading flood data...")
     flood = pd.read_parquet(FLOOD_PATH)
     flood = flood[[c for c in FLOOD_COLS if c in flood.columns]]
-    flood = flood[flood["flood_risk_score"].notna()]
-    print(f"  {len(flood)} hexes with flood_risk_score")
+    flood = flood[flood["jrc_occurrence"].notna()]
+    print(f"  {len(flood)} hexes with jrc_occurrence")
 
     print("Loading crosswalk...")
     crosswalk = pd.read_parquet(CROSSWALK_PATH, columns=["h3index", "distrito"])
@@ -71,7 +71,7 @@ def main():
     # Province-wide totals (all hexes)
     prov_total_hexes = len(flood)
     prov_high_risk = int((flood["jrc_occurrence"] > 10).sum())
-    prov_avg_score = round(float(flood["flood_risk_score"].mean()), 2)
+    prov_avg_score = round(float(flood["jrc_occurrence"].mean()), 2)
 
     flood_assigned = flood.dropna(subset=["distrito"])
     distritos = sorted(flood_assigned["distrito"].unique())
@@ -99,7 +99,7 @@ def main():
                 pass
         centroid = [round(sum(lngs) / len(lngs), 4), round(sum(lats) / len(lats), 4)] if lats else [0, 0]
 
-        avg_score = round(float(hex_data["flood_risk_score"].mean()), 2)
+        avg_score = round(float(hex_data["jrc_occurrence"].mean()), 2)
         high_risk = int((hex_data["jrc_occurrence"] > 10).sum())
 
         summary.append({

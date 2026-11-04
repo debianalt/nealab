@@ -1,21 +1,15 @@
 """
 Compute accessibility metrics for a territory → sat_accessibility.parquet.
 
-Comparable across territories: same sources (Oxford MAP + OSM) for both Misiones and Itapúa.
+Same sources (Oxford MAP + OSM) in every territory. Physical values only: no
+percentiles, fixed-scale normalisation, composite score or types (removed 4-nov-2026).
 
-Output columns:
-  travel_min_capital[_raw]         MCP travel time to capital city (Oxford MAP friction + MCP_Geometric)
-  travel_min_cabecera[_raw]        Oxford MAP accessibility_to_cities raster
-  dist_nearest_hospital_km[_raw]   OSM hospital/clinic KDTree
-  dist_nearest_secundaria_km[_raw] OSM school KDTree
-  dist_primary_m[_raw]             OSM road KDTree (motorway/trunk/primary/secondary), stored in km
-  score                            PCA geometric mean composite (0–100)
-  type                             K-means cluster (1=most accessible, 4=least)
-  type_label                       Spanish label
-  pca_1, pca_2                     PCA coordinates
-
-Non-_raw columns: percentile rank (inverted: less distance/time = higher rank = more accessible).
-_raw columns: physical measurements (minutes or km).
+Output columns (minutes or km):
+  travel_min_capital_raw           MCP travel time to capital city (Oxford MAP friction + MCP_Geometric)
+  travel_min_cabecera_raw          Oxford MAP accessibility_to_cities raster
+  dist_nearest_hospital_km_raw     OSM hospital/clinic KDTree
+  dist_nearest_secundaria_km_raw   OSM school KDTree
+  dist_primary_m_raw               OSM road KDTree (motorway/trunk/primary/secondary), stored in km
 
 Usage:
   python pipeline/compute_accessibility_h3.py --territory misiones
@@ -35,10 +29,8 @@ import pandas as pd
 import rasterio
 import requests
 from scipy.spatial import cKDTree
-from sklearn.cluster import KMeans
 
 from config import OUTPUT_DIR, GCS_BUCKET, get_territory
-from scoring import run_full_diagnostics, geometric_mean_score, load_goalposts, score_with_goalposts
 
 _GCLOUD = 'gcloud.cmd' if platform.system() == 'Windows' else 'gcloud'
 
@@ -77,25 +69,7 @@ CAPITAL_COORDS = {
     'alto_paraguay_py':      (-21.0385, -57.8748),  # Fuerte Olimpo
 }
 
-TYPE_LABELS = {
-    1: 'Bien conectado',
-    2: 'Moderadamente aislado',
-    3: 'Lejos de ruta primaria',
-    4: 'Extremadamente aislado',
-}
-
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
-
-def percentile_rank(series: pd.Series, invert: bool = False) -> pd.Series:
-    valid = series.notna() & np.isfinite(series)
-    result = pd.Series(np.nan, index=series.index)
-    if valid.sum() > 1:
-        result[valid] = series[valid].rank(pct=True) * 100.0
-    if invert:
-        result = 100.0 - result
-    return result.round(2)
-
 
 def is_valid_raster(path: str) -> bool:
     if not os.path.exists(path):
@@ -287,17 +261,7 @@ def kdtree_distances_km(query_lats: list, query_lngs: list,
 def main():
     parser = argparse.ArgumentParser(description="Compute accessibility H3 parquet")
     parser.add_argument("--territory", default="misiones")
-    parser.add_argument("--mode", choices=["comparable", "local"], default="local",
-                        help="comparable: fixed goalpost normalization; local: percentile rank (default)")
-    parser.add_argument("--diagnostics", action="store_true")
     args = parser.parse_args()
-
-    goalposts = load_goalposts() if args.mode == "comparable" else None
-    if goalposts:
-        print(f"  Mode: comparable (goalposts v{goalposts.get('version', '?')})")
-        gp_indicators = goalposts.get('indicators', {})
-    else:
-        gp_indicators = {}
 
     territory = get_territory(args.territory)
     bbox = territory['bbox']
@@ -395,165 +359,14 @@ def main():
     dist_road_raw = kdtree_distances_km(lats, lngs, road_pts)
     print(f"  mean={np.nanmean(dist_road_raw):.2f} km")
 
-    # ── Normalize raw values → 0-100 component scores ──────────────────────
-    df = pd.DataFrame({
+    # ── Assemble output: physical values only ─────────────────────────────────
+    out = pd.DataFrame({
         'h3index': h3ids,
-        'travel_capital_raw':   travel_capital_raw,
-        'travel_cabecera_raw':  travel_cabecera_raw,
-        'hospital_raw':         dist_hospital_raw,
-        'school_raw':           dist_school_raw,
-        'road_raw':             dist_road_raw,
-    })
-
-    RAW_TO_COMPONENT = {
-        'travel_capital_raw':  ('r_travel_capital',  'c_travel_capital'),
-        'travel_cabecera_raw': ('r_travel_cabecera', 'c_travel_cabecera'),
-        'hospital_raw':        ('r_hospital',        'c_dist_hospital'),
-        'school_raw':          ('r_school',          'c_dist_school'),
-        'road_raw':            ('r_road',            'c_dist_road'),
-    }
-
-    if args.mode == 'comparable':
-        print("\nNormalizing with goalposts (comparable mode)...")
-        for raw_col, (r_col, gp_key) in RAW_TO_COMPONENT.items():
-            gp = gp_indicators.get(gp_key)
-            if gp:
-                df[r_col] = score_with_goalposts(df[raw_col], gp['lo'], gp['hi'], invert=gp.get('invert', False))
-                print(f"  {r_col}: goalpost [{gp['lo']}, {gp['hi']}] invert={gp.get('invert')}  mean={df[r_col].mean():.1f}")
-            else:
-                df[r_col] = percentile_rank(df[raw_col], invert=False)
-                print(f"  {r_col}: no goalpost, fallback percentile  mean={df[r_col].mean():.1f}")
-    else:
-        print("\nComputing percentile ranks (local mode)...")
-        for raw_col, (r_col, _gp_key) in RAW_TO_COMPONENT.items():
-            df[r_col] = percentile_rank(df[raw_col], invert=False)
-            print(f"  {r_col}: mean={df[r_col].mean():.1f}")
-
-    rank_cols = [v[0] for v in RAW_TO_COMPONENT.values()]
-
-    # ── PCA diagnostics (OECD methodology) ───────────────────────────────────
-    print("\nRunning PCA diagnostics...")
-    valid_mask = df[rank_cols].notna().all(axis=1)
-    df_valid = df[valid_mask][rank_cols]
-    if len(df_valid) > 100:
-        diag = run_full_diagnostics(df_valid, rank_cols, corr_threshold=0.70)
-        if args.mode == 'comparable' and goalposts:
-            locked = goalposts.get('pca_variable_selection', {}).get('accessibility')
-            if locked:
-                retained = [c for c in locked if c in rank_cols]
-                if not retained:
-                    # goalpost lock uses the radio-aggregation naming
-                    # (travel_min_posadas / dist_nearest_*; aggregate_radio_to_h3.py).
-                    # This raster path uses r_* component names. When the schemes
-                    # don't intersect, keep ALL rank_cols: deterministic and
-                    # cross-territory comparable (same fixed set for Ita/Cor/AP),
-                    # which is the intent of comparable mode.
-                    retained = list(rank_cols)
-                    print("  [comparable] lock name-scheme mismatch "
-                          "(radio vs raster) -> using all rank_cols")
-                dropped = [c for c in rank_cols if c not in retained]
-                print(f"  [comparable] Locked selection ({len(retained)}): {retained}")
-                if dropped:
-                    print(f"  [comparable] Excluded: {dropped}")
-            else:
-                retained = diag['variable_selection']['retained']
-                dropped = diag['variable_selection']['dropped']
-                print(f"  [comparable] No lock found, using PCA selection: {retained}")
-        else:
-            retained = diag['variable_selection']['retained']
-            dropped = diag['variable_selection']['dropped']
-        print(f"  Retained: {retained}")
-        if dropped:
-            print(f"  Dropped (|r|>0.70): {dropped}")
-        if args.diagnostics:
-            diag_path = os.path.join(out_dir, 'accessibility_diagnostics.json')
-            with open(diag_path, 'w') as f:
-                json.dump(diag, f, indent=2, default=str)
-            from sklearn.decomposition import PCA
-            from sklearn.preprocessing import StandardScaler
-            scaler = StandardScaler()
-            X_scaled = scaler.fit_transform(df_valid)
-            pca = PCA(n_components=2)
-            coords = pca.fit_transform(X_scaled)
-            df.loc[valid_mask, 'pca_1'] = coords[:, 0].round(6)
-            df.loc[valid_mask, 'pca_2'] = coords[:, 1].round(6)
-    else:
-        retained = rank_cols
-    # Store PCA coords if not already done
-    if 'pca_1' not in df.columns:
-        from sklearn.decomposition import PCA
-        from sklearn.preprocessing import StandardScaler
-        scaler = StandardScaler()
-        col_means = df[rank_cols].mean()
-        col_means = col_means.fillna(50.0)  # neutral rank for entirely-NaN columns
-        X = df[rank_cols].fillna(col_means)
-        X_scaled = scaler.fit_transform(X)
-        pca = PCA(n_components=2)
-        coords = pca.fit_transform(X_scaled)
-        df['pca_1'] = coords[:, 0].round(6)
-        df['pca_2'] = coords[:, 1].round(6)
-
-    # ── Composite score ───────────────────────────────────────────────────────
-    print("\nComputing composite score...")
-    # Neutralize entirely-NaN retained indicators (e.g. an OSM-derived metric
-    # with no Overpass features in this territory) — same treatment as the PCA
-    # path above. Without this, geometric_mean_score returns all-NaN and the
-    # downstream KMeans gets 0 samples. Only triggers on 100%-NaN columns, so
-    # territories with full data are unaffected.
-    for _c in retained:
-        if df[_c].isna().all():
-            print(f"  WARN: indicator '{_c}' is entirely NaN — filling neutral 50.0")
-            df[_c] = 50.0
-    df['score'] = geometric_mean_score(df, retained, floor=1.0).round(1)
-    scored_mask = df['score'].notna()
-    print(f"  valid={scored_mask.sum():,}/{n:,}  "
-          f"mean={df['score'].mean():.1f}  std={df['score'].std():.1f}")
-
-    # ── K-means types (sort clusters by score: 1=best, 4=worst) ──────────────
-    print("\nK-means clustering (k=4)...")
-    scored = df[scored_mask].copy()
-    X_km = scored[retained].fillna(scored[retained].mean()).values
-    km = KMeans(n_clusters=4, random_state=42, n_init=10)
-    raw_labels = km.fit_predict(X_km)
-    # Map cluster IDs: 1 = shortest median time to the capital (Bien conectado),
-    # 4 = longest (Extremadamente aislado). It used to sort by score, but in local
-    # mode the score grows with distance (percentiles not inverted), so every
-    # label came out backwards: "Bien conectado" had a median of 439 min in
-    # Misiones (fixed 1-nov-2026). Physical time does not depend on the mode.
-    cap_raw = scored['travel_capital_raw'].values
-    cluster_means = {c: np.nanmedian(cap_raw[raw_labels == c]) for c in range(4)}
-    order = sorted(cluster_means, key=lambda c: cluster_means[c])
-    label_map = {c: rank + 1 for rank, c in enumerate(order)}
-    scored['type'] = np.array([label_map[l] for l in raw_labels], dtype=np.int32)
-    print(f"  Counts: {scored['type'].value_counts().sort_index().to_dict()}")
-    # Keep EVERY grid cell: a cell without a score (one indicator missing) still
-    # carries its physical readings. Writing only `scored` dropped the Posadas
-    # core (time to city = 0 read as missing → no score → no row at all).
-    df['type'] = pd.array([pd.NA] * len(df), dtype='Int32')
-    df.loc[scored.index, 'type'] = scored['type'].values
-    df['type_label'] = df['type'].map(TYPE_LABELS)
-    print(f"  Cells without score (kept, physical values only): {int((~scored_mask).sum()):,}")
-
-    # ── Assemble output ───────────────────────────────────────────────────────
-    out = df[[
-        'h3index', 'score', 'type', 'type_label', 'pca_1', 'pca_2',
-        'r_travel_capital', 'r_travel_cabecera',
-        'r_hospital', 'r_school', 'r_road',
-        'travel_capital_raw', 'travel_cabecera_raw',
-        'hospital_raw', 'school_raw', 'road_raw',
-    ]].copy()
-
-    out = out.rename(columns={
-        'r_travel_capital':  'travel_min_capital',
-        'r_travel_cabecera': 'travel_min_cabecera',
-        'r_hospital':        'dist_nearest_hospital_km',
-        'r_school':          'dist_nearest_secundaria_km',
-        'r_road':            'dist_primary_m',
-        'travel_capital_raw':  'travel_min_capital_raw',
-        'travel_cabecera_raw': 'travel_min_cabecera_raw',
-        'hospital_raw':        'dist_nearest_hospital_km_raw',
-        'school_raw':          'dist_nearest_secundaria_km_raw',
-        'road_raw':            'dist_primary_m_raw',
+        'travel_min_capital_raw':         travel_capital_raw,
+        'travel_min_cabecera_raw':        travel_cabecera_raw,
+        'dist_nearest_hospital_km_raw':   dist_hospital_raw,
+        'dist_nearest_secundaria_km_raw': dist_school_raw,
+        'dist_primary_m_raw':             dist_road_raw,
     })
 
     out_path = os.path.join(out_dir, 'sat_accessibility.parquet')
@@ -562,7 +375,6 @@ def main():
 
     print(f"\n{'='*60}")
     print(f"  Rows: {len(out):,}")
-    print(f"  Types: {out['type'].value_counts().sort_index().to_dict()}")
     print(f"  Saved: {out_path} ({size_mb:.1f} MB)")
     print(f"{'='*60}")
     return 0

@@ -4,7 +4,7 @@ Refresh the flood layer's current extent (Sentinel-1) for the NEA territories.
 Only `flood_extent_pct` changes between runs: JRC occurrence / recurrence /
 seasonality are a 1984–2021 archive and the department ranking is terrain and
 radar history. So this does not rebuild the layer — it takes the parquets the
-CDN serves, replaces that one column (and the composite score that uses it),
+CDN serves, replaces that one column (dropping the old composite score if present),
 and uploads them back under the same keys:
 
   data/<prefix>hex_flood_risk.parquet               (territory)
@@ -125,15 +125,14 @@ def read_served(url: str) -> pd.DataFrame:
 
 
 def refresh(df: pd.DataFrame, extent: pd.DataFrame) -> tuple[pd.DataFrame, float]:
-    """New flood_extent_pct where the radar saw the cell, previous value elsewhere; rescore."""
-    from process_to_h3 import compute_flood_risk_score
+    """New flood_extent_pct where the radar saw the cell, previous value elsewhere."""
     out = df.merge(extent, on='h3index', how='left')
     covered = float(out.extent.notna().mean())
     out['flood_extent_pct'] = out.extent.fillna(out.flood_extent_pct)
     out = out.drop(columns='extent')
-    out['flood_risk_score'] = compute_flood_risk_score(
-        out.jrc_occurrence.fillna(0), out.jrc_recurrence.fillna(0), out.flood_extent_pct.fillna(0)).values
-    return out[df.columns], covered
+    # The served file may still carry the old composite score: drop it (no score since 4-nov-2026).
+    cols = [c for c in df.columns if c != 'flood_risk_score']
+    return out[cols], covered
 
 
 def check(tid: str, old: pd.DataFrame, new: pd.DataFrame, covered: float) -> None:

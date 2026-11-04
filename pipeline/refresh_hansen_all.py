@@ -5,7 +5,7 @@ with a new Hansen release.
 Per territory (4 in parallel):
   1. satellite/<t>/hansen_lossyear.tif -> output/<t>/, then deleted from the bucket
      (gcs_staging.py; treecover2000 is the same baseline in every release and is reused)
-  2. process_hansen_to_h3.py --territory <t> --mode comparable
+  2. process_hansen_to_h3.py --territory <t>
   3. refresh_dept_parquets.py --layer deforestation_dynamics: each department keeps
      exactly its cells (no re-split; the INDEC partition of 2-nov-2026 stays),
      backup of what the CDN served, upload with size check.
@@ -47,7 +47,7 @@ def one(t: str, backup_dir: str, dry: bool) -> tuple[str, bool]:
             [sys.executable, '-c', "import rasterio,sys; r=rasterio.open(sys.argv[1]); "
              "m=int(r.read(1, out_shape=(max(1,r.height//4), max(1,r.width//4))).max()); "
              "print('lossyear max code', m); sys.exit(0 if m >= 25 else 1)", os.path.join(t_dir, 'hansen_lossyear.tif')],
-            [sys.executable, 'process_hansen_to_h3.py', '--territory', t, '--mode', 'comparable'],
+            [sys.executable, 'process_hansen_to_h3.py', '--territory', t],
             [sys.executable, 'refresh_dept_parquets.py', '--layer', 'deforestation_dynamics', '--territory', t,
              '--backup-dir', backup_dir, '--keep-missing'] + (['--dry-run'] if dry else []),
         ]

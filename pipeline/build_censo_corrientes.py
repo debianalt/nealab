@@ -5,7 +5,7 @@ Supports Corrientes (codprov=18), Chaco (codprov=22), Formosa (codprov=34)
 via --territory flag. codprov resolved from TERRITORY_CONFIGS.
 
 Output: pipeline/output/<territory>/censo2022_variables_<territory>.parquet
-Schema matches censo2022_variables (Misiones) for compute_satellite_scores.py.
+Schema matches censo2022_variables (Misiones) for compute_satellite_scores.py (deleted 4-nov-2026).
 
 Usage:
   python pipeline/build_censo_corrientes.py

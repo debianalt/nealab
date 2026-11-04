@@ -205,7 +205,7 @@ def resplit(s3, t: str, family: str, xw: pd.DataFrame, names: dict[str, str], wr
     moved = (df['_code'] != df['_old'].map(old_code)).sum()
     published = {d['parquetKey']: d.get('avg_score') for d in deps}
     # flood: split_flood_by_dpto.py's columns (the weekly radar refresh moved the means since)
-    metric = 'flood_risk_score' if family == 'flood_risk' else         metric_column(df.drop(columns=['_old', '_code']), df['_old'], published)
+    metric = 'jrc_occurrence' if family == 'flood_risk' else         metric_column(df.drop(columns=['_old', '_code']), df['_old'], published)
     log(f'  {t}/{family}: {len(files)} files, {len(df):,} cells (dup {dup}, not in crosswalk {int(nox.sum())}), '
         f'{moved:,} move; avg_score = {metric}')
 

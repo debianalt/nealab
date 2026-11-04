@@ -1,12 +1,11 @@
 """
-Process carbon_stock and pm25_drivers for all new PY territories.
+Process pm25_drivers for all new PY territories.
 Rasters for both already exist in GCS; downloads, processes, splits, uploads.
 
 Usage:
   python pipeline/process_py_current.py                   # all 15
   python pipeline/process_py_current.py --only concepcion_py
   python pipeline/process_py_current.py --skip-download   # if rasters already local
-  python pipeline/process_py_current.py --analyses carbon  # only carbon
 """
 import argparse
 import os
@@ -35,16 +34,6 @@ def run(desc: str, cmd: str) -> bool:
     if rc != 0:
         print(f"  FAILED (exit {rc})")
     return rc == 0
-
-
-def download_carbon(t_id: str, t_dir: str, skip: bool) -> bool:
-    """Download sat_carbon_stock_raster.tif from GCS."""
-    local = os.path.join(t_dir, "sat_carbon_stock_raster.tif")
-    if skip or os.path.exists(local):
-        print(f"  carbon raster: {'SKIP' if skip else 'EXISTS'}")
-        return True
-    gcs = f"{GCS_SAT_PREFIX}/{t_id}/sat_carbon_stock_raster.tif"
-    return run(f"download carbon", f"gcloud storage cp {gcs} {local}")
 
 
 def download_pm25(t_id: str, t_dir: str, skip: bool) -> bool:
@@ -87,26 +76,6 @@ def process_territory(t_id: str, skip_download: bool, analyses: list, upload: bo
 
     results = {}
 
-    # ── carbon_stock ──────────────────────────────────────────────────────────
-    if 'carbon' in analyses or 'all' in analyses:
-        print(f"\n  --- carbon_stock ---")
-        carbon_parquet = os.path.join(t_dir, 'sat_carbon_stock.parquet')
-
-        dl_ok = download_carbon(t_id, t_dir, skip_download)
-        if dl_ok and not os.path.exists(os.path.join(t_dir, 'sat_carbon_stock_raster.tif')):
-            print(f"  carbon raster missing locally, skipping")
-            dl_ok = False
-
-        if dl_ok:
-            ok = run("carbon H3", f"python process_carbon_to_h3.py --territory {t_id} --mode comparable")
-            if ok:
-                ok2 = run("carbon split", f"python split_by_admin.py --territory {t_id} --only carbon_stock")
-                results['carbon_stock'] = ok2
-                if upload and ok2:
-                    _upload_analysis(t_id, t_prefix, t_dir, 'carbon_stock')
-            else:
-                results['carbon_stock'] = False
-
     # ── pm25_drivers ─────────────────────────────────────────────────────────
     if 'pm25' in analyses or 'all' in analyses:
         print(f"\n  --- pm25_drivers ---")
@@ -121,7 +90,7 @@ def process_territory(t_id: str, skip_download: bool, analyses: list, upload: bo
                 ok = True
 
             if ok:
-                ok2 = run("pm25 drivers", f"python compute_pm25_drivers.py --territory {t_id} --mode comparable")
+                ok2 = run("pm25 drivers", f"python compute_pm25_drivers.py --territory {t_id}")
                 if ok2:
                     ok3 = run("pm25 split", f"python split_by_admin.py --territory {t_id} --only pm25_drivers")
                     results['pm25_drivers'] = ok3
@@ -158,7 +127,7 @@ def main():
     ap.add_argument("--only", default=None, help="Comma-separated territory IDs")
     ap.add_argument("--skip-download", action="store_true", help="Use local rasters (already downloaded)")
     ap.add_argument("--analyses", default="all",
-                    help="Analyses to run: all | carbon | pm25 | carbon,pm25")
+                    help="Analyses to run: all | pm25")
     ap.add_argument("--upload", action="store_true", help="Upload to R2 after processing")
     args = ap.parse_args()
 

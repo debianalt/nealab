@@ -163,12 +163,12 @@ Treinta y ocho indicadores con la misma definición en los años en que aparecen
 Verificado el 1-nov-2026: por provincia y año, la población y el NBI de las celdas son iguales a los de los radios (población ±12 por redondeo; NBI con dos decimales). Lo mismo con el NBI publicado por el INDEC en 2001 y 2010.
 
 ## Clima y suelo (esquemas `clima` y `suelo`, fase A1 del potencial agrícola)
-Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 con goalposts a **series empíricas en unidades físicas** por celda. A1 es la base: clima por campaña y suelo y relieve en unidades. Siguen A2 (MapBiomas Argentina Col. 3, uso por año), A3 (MODIS) y A4 (aptitud por cultivo con umbrales citados).
+Decidido el 1-nov-2026: el potencial agrícola pasa de un puntaje 0–100 a **series empíricas en unidades físicas** por celda. A1 es la base: clima por campaña y suelo y relieve en unidades. Siguen A2 (MapBiomas Argentina Col. 3, uso por año), A3 (MODIS) y A4 (aptitud por cultivo con umbrales citados).
 
 **Reglas:**
 - **Resolución de origen.** Cada serie se guarda por píxel de su fuente: CHIRPS 0,05° (~70 celdas), ERA5-Land 0,1° (~1.100 celdas). Una celda lee el píxel que contiene su centro: no hay interpolación, y las celdas de un mismo píxel repiten el valor porque eso es lo que la fuente mide. `clima.hex_pixel` lleva de la celda a sus píxeles.
 - **Tiempo.** Campaña agrícola julio–junio (`campania` = año de inicio), estación (DEF del año de diciembre) y **heladas por año calendario**, para no partir el invierno.
-- **Normal 1991–2020 del propio píxel** (`normal_1991_2020`) y anomalías contra ella (`anomalia`: valor − normal, % de la normal y `pct_ref`, el % de los 30 años con valor menor). No hay goalposts: cada celda se compara con su propia historia.
+- **Normal 1991–2020 del propio píxel** (`normal_1991_2020`) y anomalías contra ella (`anomalia`: valor − normal, % de la normal y `pct_ref`, el % de los 30 años con valor menor). Cada celda se compara con su propia historia.
 - **ET0** FAO-56 Penman-Monteith de referencia, diaria, con radiación neta calculada como en FAO-56 (pasto, albedo 0,23); prueba contra el ejemplo 18 de FAO-56 en `clima_a_pixel.py`.
 - **Suelo:** SoilGrids 2.0, 0–30 cm ponderado por espesor, píxel de 250 m que contiene el centro. Es un modelo, no una medición. **Relieve:** FABDEM (sin dosel ni edificios), media de los píxeles de 3" con centro en la celda (mediana: 12).
 
@@ -219,7 +219,7 @@ y en la ficha `aptitud_cultivo` de `meta.procesos`. Tras los ajustes de aplicaci
 soja (1,50, con el pH argentino 6–7); pasturas sin S1 (el óptimo no se alcanza en el NEA); para cítricos no hay prueba
 válida contra MapBiomas; las correlaciones por departamento con el MAGyP son débiles a moderadas.
 
-**En spatia.ar (desde el 1-nov-2026).** La capa «potencial agrícola» de la web sale de acá, sin goalposts y sólo
+**En spatia.ar (desde el 1-nov-2026).** La capa «potencial agrícola» de la web sale de acá, sin puntajes y sólo
 en el NEA argentino: `python pipeline/hexoma/exportar_agri_web.py` escribe `pipeline/output/hexoma/web/{prefijo}sat_agri_apt*.parquet`
 (valores físicos normales 1991–2020, `apt_<cultivo>_clase` y `apt_<cultivo>_pct`) y los cuatro resúmenes con el ranking por
 cultivo en `src/lib/data/`. Después: subir a R2 con las claves `data/…` (`upload_to_r2.upload_file`), `npm run purge-cdn` y,

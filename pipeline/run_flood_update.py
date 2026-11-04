@@ -27,7 +27,7 @@ import time
 
 from config import (
     PIPELINE_DIR, OUTPUT_DIR, GRID_PATH, PARQUET_PATH,
-    GCS_BUCKET, R2_BUCKET, MIN_HEXAGONS, SCORE_RANGE, get_territory,
+    GCS_BUCKET, R2_BUCKET, MIN_HEXAGONS, get_territory,
 )
 
 
@@ -139,7 +139,7 @@ def run(args):
         print("  Run `python pipeline/generate_h3_grid.py` first.")
         return 1
 
-    from process_to_h3 import load_hex_grid, zonal_stats_rasterio, compute_flood_risk_score
+    from process_to_h3 import load_hex_grid, zonal_stats_rasterio
     import pandas as pd
     import numpy as np
 
@@ -180,28 +180,21 @@ def run(args):
     else:
         s1_extent = pd.Series(0.0, index=gdf.index)
 
-    # Composite score
-    score = compute_flood_risk_score(
-        jrc_occurrence.fillna(0), jrc_recurrence.fillna(0), (s1_extent * 100).fillna(0)
-    )
-
+    # Physical values only (no composite score since 4-nov-2026).
     df = pd.DataFrame({
         "h3index": gdf["h3index"],
         "jrc_occurrence": jrc_occurrence.round(2),
         "jrc_recurrence": jrc_recurrence.round(2),
         "jrc_seasonality": jrc_seasonality.round(1),
         "flood_extent_pct": (s1_extent * 100).round(2),
-        "flood_risk_score": score,
     })
 
-    df = df.dropna(subset=["flood_risk_score"])
     # Relief columns painted from the ranking tabs are not raster outputs here.
     from build_flood_rank import join_hand_hex
     df = join_hand_hex(df, t_prefix)
     os.makedirs(t_dir, exist_ok=True)
     df.to_parquet(parquet_path, index=False)
     print(f"  Saved {len(df):,} hexagons to {parquet_path}")
-    print(f"  Score range: {df['flood_risk_score'].min():.1f} - {df['flood_risk_score'].max():.1f}")
 
     # ── Step 6: Validate parquet before upload ─────────────────────
     step(6, "Validate parquet output")
@@ -211,8 +204,8 @@ def run(args):
     is_valid = validate_parquet(
         parquet_path,
         min_rows=min_rows,
-        schema_cols=["h3index", "flood_risk_score"],
-        value_ranges={"flood_risk_score": SCORE_RANGE},
+        schema_cols=["h3index", "jrc_occurrence"],
+        value_ranges={"jrc_occurrence": (0, 100)},
     )
 
     if not is_valid:
@@ -287,7 +280,7 @@ def dry_run(args):
     print(f"  5. H3 zonal stats -> {PARQUET_PATH}")
     print(f"     Grid: {GRID_PATH}")
     print(f"     Grid exists: {os.path.exists(GRID_PATH)}")
-    print(f"  6. Validate parquet (min {MIN_HEXAGONS:,} rows, score {SCORE_RANGE})")
+    print(f"  6. Validate parquet (min {MIN_HEXAGONS:,} rows, jrc_occurrence 0–100)")
     print(f"  7. Upload parquet to R2 ({R2_BUCKET}/data/hex_flood_risk.parquet)")
     print("  8. Split by department + upload department parquets to R2")
     print("  9. Print summary\n")

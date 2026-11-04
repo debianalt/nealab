@@ -1,12 +1,11 @@
 """
 Compute district-level statistics for Itapua (Paraguay).
 
-1. Satellite scores: DuckDB join h3_admin_crosswalk + 3 analysis parquets → AVG by distrito
+1. Hexagon count per distrito from h3_admin_crosswalk (DuckDB)
 2. Census NBI: read itapua_nbi_2022.csv → merge NBI components by distrito
 
 Output: pipeline/output/itapua_py/district_stats_itapua.parquet
   Columns: distrito, n_hexes,
-            accessibility_score, flood_risk_score,
             pct_nbi, pct_vivienda, pct_sanitario, pct_educacion, pct_subsistencia
 
 R2 upload:
@@ -32,10 +31,9 @@ def _stem(tid: str) -> str:
     return tid
 
 
-ANALYSES = {
-    "accessibility_score":   ("sat_accessibility.parquet",      "score"),
-    "flood_risk_score":      ("hex_flood_risk.parquet",         "flood_risk_score"),
-}
+# No per-district score averages since 4-nov-2026 (no composite scores);
+# the web reads only n_hexes and the NBI columns.
+ANALYSES: dict = {}
 NBI_COLS = ["pct_nbi", "pct_vivienda", "pct_sanitario", "pct_educacion", "pct_subsistencia"]
 
 

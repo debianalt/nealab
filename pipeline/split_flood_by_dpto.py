@@ -39,7 +39,7 @@ RADIOS_PATH = os.path.join(SCRIPT_DIR, "output", "radios_misiones.parquet")
 RADIO_STATS_PATH = os.path.join(SCRIPT_DIR, "output", "radio_stats_master.parquet")
 
 FLOOD_COLS = ["h3index", "jrc_occurrence", "jrc_recurrence", "jrc_seasonality",
-              "flood_extent_pct", "flood_risk_score",
+              "flood_extent_pct",
               # relief, painted from the ranking tabs (build_flood_rank.py --hex)
               "low_bld_n", "low_land_pct", "low_bld_new_n"]
 
@@ -225,8 +225,8 @@ def main():
     from build_flood_rank import join_hand_hex
     flood = join_hand_hex(flood, t_prefix)
     flood = flood[[c for c in FLOOD_COLS if c in flood.columns]]
-    flood = flood[flood["flood_risk_score"].notna()]
-    print(f"  {len(flood):,} hexes with flood_risk_score")
+    flood = flood[flood["jrc_occurrence"].notna()]
+    print(f"  {len(flood):,} hexes with jrc_occurrence")
 
     if territory_id == 'misiones':
         dept_polys = build_dept_polygons()
@@ -240,7 +240,8 @@ def main():
 
     prov_total_hexes = len(flood)
     prov_high_risk = int((flood["jrc_occurrence"] > 10).sum())
-    prov_avg_score = round(float(flood["flood_risk_score"].mean()), 1)
+    # avg_score = mean JRC occurrence (%): physical, no composite score since 4-nov-2026
+    prov_avg_score = round(float(flood["jrc_occurrence"].mean()), 1)
 
     dptos = sorted(flood_assigned["dpto"].unique())
     print(f"\nSplitting into {len(dptos)} {territory['admin_level']}s...")
@@ -258,7 +259,7 @@ def main():
         size_kb = os.path.getsize(parquet_path) / 1024
 
         centroid = compute_centroid(hex_data)
-        avg_score = round(float(hex_data["flood_risk_score"].mean()), 1)
+        avg_score = round(float(hex_data["jrc_occurrence"].mean()), 1)
         if math.isnan(avg_score):
             avg_score = None
         high_risk = int((hex_data["jrc_occurrence"] > 10).sum())

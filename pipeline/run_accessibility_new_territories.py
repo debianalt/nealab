@@ -4,7 +4,7 @@ Run accessibility pipeline for the 5 territories that didn't have data:
 
 Steps per territory:
   1. GEE export (if lv_friction.tif / lv_cities_access.tif missing in GCS)
-  2. compute_accessibility_h3.py --territory <id> --mode comparable
+  2. compute_accessibility_h3.py --territory <id>
   3. split_by_admin.py --territory <id> --only accessibility  (also writes summary JSON)
   4. R2 upload (global + dept parquets)
   5. Update config.ts coverage flags (manual, printed as reminder)
@@ -112,7 +112,7 @@ def process_territory(territory: str, run_gee: bool) -> bool:
     # ── Step 2: compute accessibility ─────────────────────────────────────────
     global_parquet = os.path.join(t_dir, 'sat_accessibility.parquet')
     if not os.path.exists(global_parquet):
-        ok = run('compute_accessibility_h3.py', '--territory', territory, '--mode', 'comparable')
+        ok = run('compute_accessibility_h3.py', '--territory', territory)
         if not ok or not os.path.exists(global_parquet):
             print(f"  compute_accessibility_h3 failed for {territory}")
             return False

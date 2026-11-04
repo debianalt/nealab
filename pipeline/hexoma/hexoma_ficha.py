@@ -237,7 +237,7 @@ limitaciones, N no apto. El arroz no tiene dato de agua de riego. Validación co
 
 <h2>Últimas campañas frente a su normal</h2>
 <p class="nota">Anomalía = valor − normal 1991–2020 del mismo píxel. «% bajo» = de los 30 años de referencia, cuántos tuvieron un valor menor.
-No es un goalpost: la celda se compara con su propia historia.</p>
+La celda se compara con su propia historia.</p>
 <div class="tw"><table><thead><tr><th>Variable</th><th>Período</th><th class="n">Valor</th><th class="n">Normal</th>
 <th class="n">Anomalía</th><th class="n">% de la normal</th><th class="n">% bajo</th><th>Unidad</th></tr></thead><tbody>{filas_an}</tbody></table></div>
 <p class="nota">Fuentes: CHIRPS v3 (estimación satelital calibrada con pluviómetros, desde 1981/82); ERA5-Land (reanálisis, desde 1950/51; antes de 1979 asimila menos observaciones).

@@ -23,7 +23,7 @@
 	const comparableGroup = $derived(analyses.filter(a => a.comparable));
 	const localGroup = $derived(analyses.filter(a => !a.comparable));
 
-	// `comparable` = fixed goalposts, comparable across every territory it covers.
+	// `comparable` = same physical definition in every territory it covers.
 	// The census layers (INDEC) cover only the Argentine provinces, so the header
 	// must say so instead of promising Argentina, Paraguay and Brazil.
 	function countriesCovered(a: AnalysisConfig): Set<string> {

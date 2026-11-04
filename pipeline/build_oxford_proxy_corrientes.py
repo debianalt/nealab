@@ -2,7 +2,7 @@
 Build radio-level proxies for Corrientes census analyses.
 
 Aggregates H3-level sat_accessibility.parquet -> radio level via h3_radio_crosswalk_corrientes.
-Produces two tables used by compute_satellite_scores.py:
+Produces two tables once used by compute_satellite_scores.py (deleted 4-nov-2026):
   - oxford_accessibility_corrientes.parquet: accessibility_cities_min, accessibility_healthcare_min
   - road_access_corrientes.parquet: dist_primary_m (road_density_km_per_km2 defaults to 0)
 """

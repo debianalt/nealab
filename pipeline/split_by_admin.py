@@ -38,6 +38,8 @@ SRC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "src", "lib", "data")
 # exists (raw-data-first convention); ranking is unaffected (monotonic).
 SUMMARY_METRIC = {
     "pm25_drivers": "c_pm25_mean",
+    "deforestation_dynamics": "c_loss_rate",
+    "accessibility": "travel_min_capital_raw",
 }
 
 # Analyses that have GEE-based parquets (all territories)
@@ -293,7 +295,8 @@ def main():
             no_admin = df[admin_col].isna().sum()
             df_assigned = df.dropna(subset=[admin_col])
 
-        score_col = "score" if "score" in df.columns else "territorial_type"
+        # No score column since 4-nov-2026: layers may carry no score column at all.
+        score_col = next((c for c in ("score", "territorial_type") if c in df.columns), None)
         component_cols = [c for c in df.columns
                           if c not in ("h3index", "score", "territorial_type", admin_col)]
         # avg_score in summaries reports the raw physical variable where one
@@ -308,7 +311,7 @@ def main():
 
         for admin_name in admins:
             subset = df_assigned[df_assigned[admin_col] == admin_name]
-            out_cols = ["h3index", score_col] + component_cols
+            out_cols = ["h3index"] + ([score_col] if score_col else []) + component_cols
             hex_data = subset[[c for c in out_cols if c in subset.columns]].reset_index(drop=True)
 
             safe_name = safe_filename(admin_name)

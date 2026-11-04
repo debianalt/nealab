@@ -1,7 +1,7 @@
 """
 Split satellite score parquets into per-department parquets + summary JSON.
 
-Reuses spatial assignment from split_scores_by_dpto.py pattern: dissolves
+Spatial assignment: dissolves
 radio geometries into department polygons, assigns hex centroids via
 point-in-polygon, splits each of the 10 satellite analyses.
 
@@ -45,6 +45,8 @@ ALL_ANALYSES = [
 # exists (raw-data-first convention); ranking is unaffected (monotonic).
 SUMMARY_METRIC = {
     "pm25_drivers": "c_pm25_mean",
+    "deforestation_dynamics": "c_loss_rate",
+    "accessibility": "travel_min_capital_raw",
 }
 
 
@@ -138,7 +140,8 @@ def main():
         df_assigned = df.dropna(subset=["dpto"])
 
         # Province averages
-        score_col = "score" if "score" in df.columns else "territorial_type"
+        # No score column since 4-nov-2026: layers may carry no score column at all.
+        score_col = next((c for c in ("score", "territorial_type") if c in df.columns), None)
         component_cols = [c for c in df.columns if c not in ("h3index", "score", "territorial_type", "dpto")]
         metric_col = SUMMARY_METRIC.get(analysis_id, score_col)
         if metric_col not in df.columns:
@@ -150,7 +153,7 @@ def main():
 
         for dpto in dptos:
             subset = df_assigned[df_assigned["dpto"] == dpto]
-            out_cols = ["h3index", score_col] + component_cols
+            out_cols = ["h3index"] + ([score_col] if score_col else []) + component_cols
             hex_data = subset[out_cols].reset_index(drop=True)
 
             safe_name = safe_filename(dpto)

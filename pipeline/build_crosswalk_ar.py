@@ -26,7 +26,7 @@ Usage:
 Next:
   python pipeline/aggregate_radio_to_h3.py --territory <t>
   python pipeline/build_census_proxies_ar.py --territory <t>
-  python pipeline/compute_satellite_scores.py --territory <t>   (census layers)
+  python pipeline/build_census_rates.py   (census layers: real rates; no scores)
 """
 import argparse
 import os
@@ -205,7 +205,7 @@ def main() -> int:
     print("\nNext:")
     print(f"  python pipeline/aggregate_radio_to_h3.py --territory {t}")
     print(f"  python pipeline/build_census_proxies_ar.py --territory {t}")
-    print(f"  python pipeline/compute_satellite_scores.py --territory {t}")
+    print("  python pipeline/build_census_rates.py   (census layers)")
     return 0
 
 

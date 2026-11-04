@@ -26,7 +26,6 @@ import numpy as np
 import pandas as pd
 
 from config import OUTPUT_DIR, get_territory
-from scoring import load_goalposts, score_with_goalposts
 
 OUTPUT_PATH = os.path.join(OUTPUT_DIR, "sat_pm25_drivers.parquet")
 
@@ -64,23 +63,11 @@ WHO_LABELS = {
 }
 
 
-def percentile_rank(series):
-    valid = series.notna()
-    result = pd.Series(np.nan, index=series.index)
-    if valid.sum() > 1:
-        result[valid] = series[valid].rank(pct=True) * 100.0
-    return result.round(1)
-
-
 def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--territory", default="misiones", help="Territory ID (default: misiones)")
-    parser.add_argument("--mode", choices=['comparable', 'local'], default='local',
-                        help="comparable: goalpost normalization (cross-territory). local: percentile rank (default).")
     args = parser.parse_args()
-
-    goalposts = load_goalposts() if args.mode == 'comparable' else None
 
     territory = get_territory(args.territory)
     t_prefix = territory['output_prefix']
@@ -113,17 +100,8 @@ def main():
           f"mean={pm25.pm25_current.mean():.2f}")
     print(f"  Delta: mean={pm25.pm25_delta.mean():.2f}")
 
-    # Score: higher PM2.5 = higher score = worse exposure
-    if args.mode == 'comparable' and goalposts:
-        gp = goalposts['indicators'].get('c_pm25_mean', {'lo': 5, 'hi': 30})
-        pm25['score'] = score_with_goalposts(pm25['pm25_current'], gp['lo'], gp['hi']).round(1)
-        pm25['score_baseline'] = score_with_goalposts(pm25['pm25_baseline'], gp['lo'], gp['hi']).round(1)
-    else:
-        pm25['score'] = percentile_rank(pm25['pm25_current'])
-        pm25['score_baseline'] = percentile_rank(pm25['pm25_baseline'])
-    pm25['delta_score'] = (pm25['score'] - pm25['score_baseline']).round(1)
-
-    # Raw values for display
+    # Raw concentrations only (no score since 4-nov-2026): the map and the
+    # rankings read µg/m³ directly.
     pm25['c_pm25_mean'] = pm25['pm25_current'].round(2)
     pm25['c_pm25_mean_baseline'] = pm25['pm25_baseline'].round(2)
     pm25['c_pm25_mean_delta'] = pm25['pm25_delta'].round(2)
@@ -214,7 +192,7 @@ def main():
     result = pm25.merge(res9_shap, on='h3index', how='left' if not has_shap else 'inner')
 
     # Typology on RAW concentration against WHO interim targets (see WHO_BINS)
-    result = result.dropna(subset=['score'])
+    result = result.dropna(subset=['c_pm25_mean'])
     result['type'] = pd.cut(result['c_pm25_mean'], bins=WHO_BINS,
                             labels=[1, 2, 3, 4, 5],
                             include_lowest=True).astype(int)
@@ -222,7 +200,7 @@ def main():
 
     # Select final columns
     out_cols = [
-        'h3index', 'score', 'score_baseline', 'delta_score',
+        'h3index',
         'c_pm25_mean', 'c_pm25_mean_baseline', 'c_pm25_mean_delta',
         'c_fire', 'c_climate', 'c_terrain', 'c_vegetation',
         'type', 'type_label',
@@ -233,8 +211,6 @@ def main():
     elapsed = time.time() - t0
     print(f"\n{'=' * 60}")
     print(f"  Rows: {len(result):,}")
-    print(f"  Score: mean={result.score.mean():.1f}, "
-          f"std={result.score.std():.1f}")
     print(f"  PM2.5 current: mean={result.c_pm25_mean.mean():.2f}, "
           f"range={result.c_pm25_mean.min():.2f}-{result.c_pm25_mean.max():.2f}")
     print(f"  PM2.5 baseline: mean={result.c_pm25_mean_baseline.mean():.2f}")

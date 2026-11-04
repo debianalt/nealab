@@ -21,6 +21,5 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Disallow: /calibracion
 
 Sitemap: https://spatia.ar/sitemap.xml

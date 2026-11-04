@@ -3,7 +3,7 @@ Build accessibility and road_access proxy parquets at radio level for AR provinc
 
 Maps sat_accessibility.parquet (H3 level) → radio level via h3_radio_crosswalk.
 Produces oxford_accessibility_{t}.parquet and road_access_{t}.parquet expected
-by compute_satellite_scores.py.
+by compute_satellite_scores.py (deleted 4-nov-2026; build_oxford_radios.py took over).
 
 If sat_accessibility.parquet doesn't exist, produces empty parquets — compute_satellite_scores
 will COALESCE to defaults (300 min travel, 0 road_density), which is a valid

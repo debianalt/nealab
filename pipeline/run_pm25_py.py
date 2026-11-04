@@ -4,7 +4,7 @@ Full pm25_drivers pipeline for PY territories after GEE exports complete.
 Steps per territory:
 1. Download sat_pm25_*.tif from GCS (if not local)
 2. process_pm25_annual_to_h3.py -> pm25_annual_panel.parquet
-3. compute_pm25_drivers.py --mode comparable -> sat_pm25_drivers.parquet
+3. compute_pm25_drivers.py -> sat_pm25_drivers.parquet
 4. split_by_admin.py --only pm25_drivers
 5. Upload to R2
 
@@ -82,7 +82,7 @@ def process_one(t_id):
             return False
 
         log.write("\n--- compute_pm25_drivers.py ---\n")
-        rc = run(f"python compute_pm25_drivers.py --territory {t_id} --mode comparable", log=log)
+        rc = run(f"python compute_pm25_drivers.py --territory {t_id}", log=log)
         if rc != 0:
             log.write(f"FAIL: compute_pm25_drivers rc={rc}\n")
             print(f"  [{t_id}] FAIL drivers")
