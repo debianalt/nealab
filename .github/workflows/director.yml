@@ -99,7 +99,7 @@ jobs:
           - { nombre: extras-temporal, cmd: 'extras.py', args: '--solo temporal' }
           - { nombre: extras-oscuro, cmd: 'extras.py', args: '--solo oscuro' }
           - { nombre: extras-movil, cmd: 'extras.py', args: '--solo movil' }
-          - { nombre: extras-ficha, cmd: 'extras.py', args: '--solo ficha' }
+          # extras-ficha fuera: la ficha del hexágono está apagada en la vista pública (FICHA_PUBLICA, 2026-11-04).
           - { nombre: textos-paginas, cmd: 'textos.py', args: '--solo paginas' }
           - { nombre: textos-paneles, cmd: 'textos.py', args: '--solo paneles' }
           - { nombre: estatico, cmd: 'estatico.py', args: '' }

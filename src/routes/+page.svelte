@@ -14,7 +14,7 @@
 	import { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { initDuckDB, query, isReady, getInitError } from '$lib/stores/duckdb';
 	import { cellToLatLng, cellToBoundary, polygonToCells, isValidCell } from 'h3-js';
-	import { fichaStore } from '$lib/stores/ficha.svelte';
+	import { fichaStore, FICHA_PUBLICA } from '$lib/stores/ficha.svelte';
 	import { pointInPolygon } from '$lib/utils/geometry';
 	import { isInsideMisiones } from '$lib/utils/misiones-pip';
 	import { isInsideItapua } from '$lib/utils/itapua-pip';
@@ -305,8 +305,9 @@
 			// would have passed.
 			// ?h3=<cell>: open its fact sheet. NEA AR for now (the 4 provinces with
 			// dept polygons): locate the department by the cell centroid.
+			// Off while the ficha is out of the public view (FICHA_PUBLICA).
 			const h3p = params.get('h3');
-			if (h3p && isValidCell(h3p)) tick().then(() => openFichaFromLink(h3p));
+			if (FICHA_PUBLICA && h3p && isValidCell(h3p)) tick().then(() => openFichaFromLink(h3p));
 			const dept = params.get('dept');
 			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
 				tick().then(async () => {

@@ -7,7 +7,7 @@
 	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
-	import { fichaStore } from '$lib/stores/ficha.svelte';
+	import { fichaStore, FICHA_PUBLICA } from '$lib/stores/ficha.svelte';
 
 	// Full fact sheet (every layer) for the last hexagon tapped.
 	function openFicha() {
@@ -225,7 +225,9 @@
 	{/if}
 
 	{#if selected.length > 0}
-		<button class="hc-ficha-btn" onclick={openFicha}>{i18n.t('ficha.open')} →</button>
+		{#if FICHA_PUBLICA}
+			<button class="hc-ficha-btn" onclick={openFicha}>{i18n.t('ficha.open')} →</button>
+		{/if}
 		<div class="hc-download-row">
 			<button class="hc-dl-btn" onclick={downloadSelectedCsv}>↓ CSV</button>
 			<button class="hc-dl-btn" onclick={downloadSelectedGeoJson}>↓ GeoJSON</button>

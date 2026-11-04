@@ -1,5 +1,10 @@
 // Open hexagon fact sheet (ficha): which cell, and the department/territory it
 // belongs to (the per-department parquets are resolved from that context).
+
+// Apagada en la vista pública el 2026-11-04 (botón de la comparación y enlace ?h3=);
+// el código queda para reusarlo en el playground.
+export const FICHA_PUBLICA = false;
+
 export interface FichaContext {
 	territoryPrefix: string;
 	territoryId: string;
