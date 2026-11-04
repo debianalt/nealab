@@ -11,7 +11,7 @@
 	import PetalChart from '$lib/components/PetalChart.svelte';
 	import TemporalToggle from '$lib/components/TemporalToggle.svelte';
 	import CensoTemporalDeptList from '$lib/components/CensoTemporalDeptList.svelte';
-	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, getScoresDptoUrl, TERRITORY_REGISTRY, type AnalysisConfig, type TerritoryConfig, type CountryId } from '$lib/config';
+	import { HEX_LAYER_REGISTRY, DATA_FRESHNESS, getSatDptoUrl, getFloodDptoUrl, TERRITORY_REGISTRY, type AnalysisConfig, type TerritoryConfig, type CountryId } from '$lib/config';
 	import { loadDeptSummary } from '$lib/utils/deptSummaries';
 	import { withRef, territoryRef } from '$lib/utils/territoryRef';
 	import { query } from '$lib/stores/duckdb';
@@ -358,7 +358,6 @@
 	function urlForAnalysis(id: string, parquetKey: string): string {
 		const tp = hexStore.territoryPrefix;
 		if (id === 'flood_risk') return getFloodDptoUrl(parquetKey, tp);
-		if (id === 'territorial_scores') return getScoresDptoUrl(parquetKey, tp);
 		return getSatDptoUrl(id, parquetKey, tp);
 	}
 
@@ -441,7 +440,6 @@
 			try {
 				let url: string;
 				if (a.id === 'flood_risk') url = getFloodDptoUrl(dept.parquetKey);
-				else if (a.id === 'territorial_scores') url = getScoresDptoUrl(dept.parquetKey);
 				else url = getSatDptoUrl(a.id, dept.parquetKey);
 				const r = await query(`SELECT type_label, COUNT(*) as n FROM '${url}' GROUP BY type_label ORDER BY n DESC LIMIT 1`);
 				if (r.numRows > 0) {

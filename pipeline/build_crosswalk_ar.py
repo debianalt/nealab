@@ -25,7 +25,7 @@ Usage:
 
 Next:
   python pipeline/aggregate_radio_to_h3.py --territory <t>
-  python pipeline/build_census_proxies_ar.py --territory <t>
+  python pipeline/build_oxford_radios.py   (healthcare travel time per radio)
   python pipeline/build_census_rates.py   (census layers: real rates; no scores)
 """
 import argparse
@@ -204,7 +204,7 @@ def main() -> int:
     print(f"\nDone in {time.time() - t0:.0f}s")
     print("\nNext:")
     print(f"  python pipeline/aggregate_radio_to_h3.py --territory {t}")
-    print(f"  python pipeline/build_census_proxies_ar.py --territory {t}")
+    print("  python pipeline/build_oxford_radios.py   (healthcare travel time per radio)")
     print("  python pipeline/build_census_rates.py   (census layers)")
     return 0
 

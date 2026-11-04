@@ -555,8 +555,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'analysis.flood.source': { es: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', en: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', gn: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)', pt: 'MERIT Hydro (HAND) + Google Open Buildings Temporal 2016–2023 + JRC Global Surface Water (Landsat, 1984–2021) + Sentinel-1 SAR (Copernicus)' },
 	'data.source.censo': { es: 'Fuente: INDEC — Censo Nacional de Población 2022', en: 'Source: INDEC — National Population Census 2022', gn: "Moñe'ẽha: INDEC — Censo Nacional 2022", pt: 'Fonte: INDEC — Censo Nacional de Población 2022' },
 	'data.source.buildings': { es: 'Fuente: Detección por IA sobre imágenes satelitales', en: 'Source: AI detection on satellite imagery', gn: "Moñe'ẽha: IA ohechaukáva satélite ra'ãnga rupi", pt: 'Fonte: Detecção por IA em imagens de satélite' },
-	'data.source.catastro': { es: 'Fuente: Dirección General de Catastro, Misiones', en: 'Source: Dirección General de Catastro, Misiones', gn: "Moñe'ẽha: Catastro, Misiones", pt: 'Fonte: Dirección General de Catastro, Misiones' },
-	'data.source.overture': { es: 'Fuente: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', en: 'Source: Overture Maps Foundation via walkthru.earth (CC BY 4.0)', gn: "Moñe'ẽha: Overture Maps Foundation (CC BY 4.0)", pt: 'Fonte: Overture Maps Foundation via walkthru.earth (CC BY 4.0)' },
 	// Per-layer data source (shown after the «Fuente:» label, so no prefix here).
 	'layer.source.census2022': { es: 'INDEC — Censo Nacional 2022, repartido al hexágono según los edificios (método dasimétrico)', en: 'INDEC — 2022 National Census, apportioned to the hexagon by buildings (dasymetric method)', gn: 'INDEC — Censo Nacional 2022, repartido al hexágono según los edificios (método dasimétrico)', pt: 'INDEC — Censo Nacional 2022, distribuído ao hexágono segundo as edificações (método dasimétrico)' }, // gn: pendiente
 	'layer.source.health': { es: 'Oxford / Malaria Atlas Project 2019 (Weiss et al. 2020) + OpenStreetMap + INDEC — Censo Nacional 2022', en: 'Oxford / Malaria Atlas Project 2019 (Weiss et al. 2020) + OpenStreetMap + INDEC — 2022 National Census', gn: 'Oxford / Malaria Atlas Project 2019 (Weiss et al. 2020) + OpenStreetMap + INDEC — Censo Nacional 2022', pt: 'Oxford / Malaria Atlas Project 2019 (Weiss et al. 2020) + OpenStreetMap + INDEC — Censo Nacional 2022' }, // gn: pendiente
@@ -576,7 +574,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'eudr.forest2020': { es: 'Cobertura arbórea 2000 (%)', en: 'Tree cover 2000 (%)', gn: "Ka'aguy 2000 (%)", pt: 'Cobertura arbórea 2000 (%)' },
 	'eudr.forestCurrent': { es: 'Cobertura arbórea actual, aprox. (%)', en: 'Current tree cover, approx. (%)', gn: 'Cobertura arbórea actual, aprox. (%)', pt: 'Cobertura arbórea atual, aprox. (%)' },
 
-	// ── Migrated radio/catastro to H3 ──
+	// ── Migrated radio to H3 ──
 	'analysis.socio.type': { es: 'Tipo sociodemográfico', en: 'Sociodemographic type', gn: 'Tipo', pt: 'Tipo sociodemográfico' },
 	'analysis.socio.typeLabel': { es: 'Etiqueta', en: 'Label', gn: 'Label', pt: 'Rótulo' },
 	'radio.densidad': { es: 'Habitantes por km² (estimado en el hexágono)', en: 'Inhabitants per km² (estimated in the hexagon)', gn: 'Habitantes por km² (estimado en el hexágono)', pt: 'Habitantes por km² (estimado no hexágono)' },
@@ -871,10 +869,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'side.onboarding.step2': { es: 'Seleccioná un análisis del menú y explorá el mapa por departamento', en: 'Select an analysis from the menu and explore the map by department', gn: "Eiporavo peteĩ mba'ekuaa ha ehecha mapa", pt: 'Selecione uma análise do menu e explore o mapa por departamento' },
 	'side.onboarding.step3': { es: 'Hacé click en un hexágono para ver el detalle geoespacial completo', en: 'Click a hexagon to see the full geospatial profile', gn: "Ehesakutu hexágono ehecha hag̃ua", pt: 'Clique em um hexágono para ver o perfil geoespacial completo' },
 	'side.welcome.desc': {
-		es: 'Plataforma de análisis geoespacial que integra múltiples fuentes satelitales, censales y catastrales sobre el noreste argentino y sus regiones transfronterizas. Cada capa indica la fecha de sus datos.',
-		en: 'Geospatial analysis platform integrating multiple satellite, census and cadastral sources for northeast Argentina and its cross-border regions. Each layer states the date of its data.',
-		gn: "Yvy rekokatu plataforma NEA-pe ha ñemboyvate jápa regiones ndive, heta moñe'ẽha satélite, censo ha catastro ndive.",
-		pt: 'Plataforma de análise geoespacial que integra múltiplas fontes satelitais, censitárias e cadastrais sobre o nordeste argentino e suas regiões transfronteiriças. Cada camada indica a data dos seus dados.',
+		es: 'Plataforma de análisis geoespacial que integra múltiples fuentes satelitales y censales sobre el noreste argentino y sus regiones transfronterizas. Cada capa indica la fecha de sus datos.',
+		en: 'Geospatial analysis platform integrating multiple satellite and census sources for northeast Argentina and its cross-border regions. Each layer states the date of its data.',
+		gn: "Yvy rekokatu plataforma NEA-pe ha ñemboyvate jápa regiones ndive, heta moñe'ẽha satélite ha censo ndive.",
+		pt: 'Plataforma de análise geoespacial que integra múltiplas fontes satelitais e censitárias sobre o nordeste argentino e suas regiões transfronteiriças. Cada camada indica a data dos seus dados.',
 	},
 	'side.welcome.footer.author': { es: 'Raimundo Elías Gómez', en: 'Raimundo Elías Gómez', gn: 'Raimundo Elías Gómez', pt: 'Raimundo Elías Gómez' },
 	'side.welcome.footer.affiliation': { es: 'CONICET / FHyCS-UNaM · GEE Partner', en: 'CONICET / FHyCS-UNaM · GEE Partner', gn: 'CONICET / FHyCS-UNaM · GEE Partner', pt: 'CONICET / FHyCS-UNaM · GEE Partner' },

@@ -8,7 +8,7 @@ function getBase(): string {
 	return R2_PROD;
 }
 
-export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrientes_plantations' | 'chaco_plantations' | 'formosa_plantations' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'catastro' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
+export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrientes_plantations' | 'chaco_plantations' | 'formosa_plantations' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
 	if (name === 'terrain') {
 		// Mapterhorn (Copernicus GLO-30 in the region) cut to TERRAIN_DEM.bounds, z0-11,
 		// one object per tile so each is edge-cached (a single .pmtiles exceeds the 512 MB cache cap).
@@ -32,7 +32,6 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 		rio_grande_sul_br_buildings: 'data/tiles/rio_grande_sul_br_buildings-v8.pmtiles',
 		radios: 'data/tiles/radios-v5.pmtiles', // v5 (4-nov-2026): every radio in every tile it crosses, + dpto_key
 		hexagons: 'tiles/hexagons-v2.pmtiles',
-		catastro: 'tiles/catastro.pmtiles?v=3',
 		// Paraguay departments — v1 (buildings from Overture, districts from GAUL)
 		concepcion_py_buildings: 'data/tiles/concepcion_py_buildings.pmtiles',
 		concepcion_py_districts: 'data/tiles/concepcion_districts.pmtiles',
@@ -131,10 +130,6 @@ export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): strin
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
 }
 
-export function getScoresDptoUrl(parquetKey: string, territoryPrefix = ''): string {
-	return `${getBase()}/data/${territoryPrefix}scores_dpto/overture_scores_${parquetKey}.parquet?v=${DEPT_V}`;
-}
-
 // INDEC 2022 radios of an AR territory as a unit of their own (pipeline/build_census_radios.py):
 // rates, bases, queen neighbours and the cells that show each radio. Only AR has radios.
 export const CENSUS_RADIOS_V = 1;
@@ -224,12 +219,6 @@ export const PARQUETS = {
 	get hex_flood_risk() { return getParquetUrl('hex_flood_risk'); },
 	get h3_radio_crosswalk() { return getParquetUrl('h3_radio_crosswalk'); },
 	get h3_parent_crosswalk() { return getParquetUrl('h3_parent_crosswalk'); },
-	get catastro_by_radio() { return getParquetUrl('catastro_by_radio'); },
-	get catastro_changes() { return getParquetUrl('catastro_changes_summary'); },
-	get overture_buildings() { return getParquetUrl('overture_buildings'); },
-	get overture_transportation() { return getParquetUrl('overture_transportation'); },
-	get overture_places() { return getParquetUrl('overture_places'); },
-	get overture_base() { return getParquetUrl('overture_base'); },
 	// Satellite composite scores
 	get sat_agri_apt() { return getParquetUrl('sat_agri_apt'); },
 	get sat_forestry_aptitude() { return getParquetUrl('sat_forestry_aptitude'); },
@@ -533,7 +522,7 @@ export interface HexLayerConfig {
 	// rates are skewed (NBI 0–100 %, most hexagons under 30 %).
 	quantileDomain?: boolean;
 	// Discrete color classes on the primaryVariable, replacing the continuous ramp
-	// (map, legend and catastro parcels). Ignored in temporal delta mode.
+	// (map and legend). Ignored in temporal delta mode.
 	colorClasses?: ColorClasses;
 	// Classes for other variables the map can paint instead of the primary
 	// (hexStore.colorVariable, set from the active ranking tab).
@@ -1278,7 +1267,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		classSeries: true,
 		coverage: { misiones: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 	},
-	// ── Migrated from radio/catastro to H3 ──
+	// ── Migrated from radio to H3 ──
 	sociodemographic: {
 		id: 'sociodemographic',
 		// Department ranking — pipeline/build_layer_ranks.py.
@@ -1605,7 +1594,7 @@ export interface AnalysisConfig {
 	descKey: string;
 	icon: string;
 	status: 'available' | 'coming_soon';
-	spatialUnit?: 'radio' | 'hexagon' | 'catastro' | 'macizo';
+	spatialUnit?: 'radio' | 'hexagon' | 'macizo';
 	dashboard?: boolean;
 	coverage?: Record<string, 'available' | 'pending' | 'unavailable'>;
 	comparable?: true;
@@ -1849,35 +1838,10 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 		processedDate: '21/03/2026',
 		sourceKey: 'data.source.censo',
 	},
-	catastro_by_radio: {
-		dataDate: 'marzo 2026',
-		processedDate: '22/03/2026',
-		sourceKey: 'data.source.catastro',
-	},
 	buildings_stats: {
 		dataDate: '02/2025',
 		processedDate: '21/03/2026',
 		sourceKey: 'data.source.buildings',
-	},
-	overture_buildings: {
-		dataDate: 'Overture 2026-03-18',
-		processedDate: '24/03/2026',
-		sourceKey: 'data.source.overture',
-	},
-	overture_transportation: {
-		dataDate: 'Overture 2026-03-18',
-		processedDate: '24/03/2026',
-		sourceKey: 'data.source.overture',
-	},
-	overture_places: {
-		dataDate: 'Overture 2026-03-18',
-		processedDate: '24/03/2026',
-		sourceKey: 'data.source.overture',
-	},
-	overture_base: {
-		dataDate: 'Overture 2026-03-18',
-		processedDate: '24/03/2026',
-		sourceKey: 'data.source.overture',
 	},
 	// sourceKey = the layer's own datasets, from its published methodology (no
 	// generic «satellite» list). processedDate = last reprocess (git) or, where

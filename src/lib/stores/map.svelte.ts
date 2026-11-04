@@ -28,26 +28,6 @@ export type HexData = {
 	flood_extent_pct?: number;
 };
 
-export type FloodParcelData = {
-	h3index: string;
-	tipo: string;
-	area_m2: number;
-	color: string;
-	jrc_occurrence: number;
-	jrc_recurrence: number;
-	jrc_seasonality: number;
-	flood_extent_pct: number;
-};
-
-export type ScoresParcelData = {
-	h3index: string;
-	tipo: string;
-	area_m2: number;
-	color: string;
-	scores: Record<string, number>;
-	components: Record<string, number>;
-};
-
 export type DistrictData = {
 	color: string;
 	personas: number;
@@ -55,8 +35,6 @@ export type DistrictData = {
 	enriched: Record<string, any> | null;
 };
 
-const FLOOD_PARCEL_COLORS = ['#60a5fa', '#f97316', '#22c55e', '#a855f7', '#ef4444', '#eab308'];
-const SCORES_PARCEL_COLORS = ['#60a5fa', '#f97316', '#22c55e', '#a855f7', '#ef4444', '#eab308'];
 
 export class MapStore {
 	selectedRadios: Map<string, RadioData> = $state(new Map());
@@ -77,12 +55,6 @@ export class MapStore {
 	plantationsVisible: boolean = $state(false);
 	plantationsDept: string | null = $state(null);
 	selectedHex: HexData | null = $state(null);
-	selectedFloodParcels: FloodParcelData[] = $state([]);
-	floodH3Data: Map<string, Record<string, number>> = $state(new Map());
-	selectedScoresParcels: ScoresParcelData[] = $state([]);
-	scoresH3Data: Map<string, Record<string, number>> = $state(new Map());
-	private floodParcelColorIndex = 0;
-	private scoresParcelColorIndex = 0;
 	private colorIndex = 0;
 	private districtColorIndex = 0;
 
@@ -205,65 +177,5 @@ export class MapStore {
 	clearHexState() {
 		this.activeHexLayer = null;
 		this.selectedHex = null;
-	}
-
-	addFloodParcel(data: Omit<FloodParcelData, 'color'>) {
-		// Toggle: if already selected, remove it
-		const existing = this.selectedFloodParcels.findIndex(p => p.h3index === data.h3index);
-		if (existing >= 0) {
-			this.selectedFloodParcels = this.selectedFloodParcels.filter((_, i) => i !== existing);
-			if (this.selectedFloodParcels.length === 0) this.floodParcelColorIndex = 0;
-			return;
-		}
-		const color = FLOOD_PARCEL_COLORS[this.floodParcelColorIndex % FLOOD_PARCEL_COLORS.length];
-		this.floodParcelColorIndex++;
-		this.selectedFloodParcels = [...this.selectedFloodParcels, { ...data, color }];
-	}
-
-	removeFloodParcel(h3index: string) {
-		this.selectedFloodParcels = this.selectedFloodParcels.filter(p => p.h3index !== h3index);
-		if (this.selectedFloodParcels.length === 0) this.floodParcelColorIndex = 0;
-	}
-
-	clearFloodParcels() {
-		this.selectedFloodParcels = [];
-		this.floodParcelColorIndex = 0;
-	}
-
-	setFloodH3Data(data: Map<string, Record<string, number>>) {
-		this.floodH3Data = data;
-	}
-
-	clearFloodParcelState() {
-		this.selectedFloodParcels = [];
-		this.floodParcelColorIndex = 0;
-		this.floodH3Data = new Map();
-	}
-
-	addScoresParcel(data: Omit<ScoresParcelData, 'color'>) {
-		const existing = this.selectedScoresParcels.findIndex(p => p.h3index === data.h3index);
-		if (existing >= 0) {
-			this.selectedScoresParcels = this.selectedScoresParcels.filter((_, i) => i !== existing);
-			if (this.selectedScoresParcels.length === 0) this.scoresParcelColorIndex = 0;
-			return;
-		}
-		const color = SCORES_PARCEL_COLORS[this.scoresParcelColorIndex % SCORES_PARCEL_COLORS.length];
-		this.scoresParcelColorIndex++;
-		this.selectedScoresParcels = [...this.selectedScoresParcels, { ...data, color }];
-	}
-
-	clearScoresParcels() {
-		this.selectedScoresParcels = [];
-		this.scoresParcelColorIndex = 0;
-	}
-
-	setScoresH3Data(data: Map<string, Record<string, number>>) {
-		this.scoresH3Data = data;
-	}
-
-	clearScoresParcelState() {
-		this.selectedScoresParcels = [];
-		this.scoresParcelColorIndex = 0;
-		this.scoresH3Data = new Map();
 	}
 }

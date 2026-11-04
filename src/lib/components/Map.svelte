@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
-	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, ZERO_CLARO, NODATA_HEX, type MapTema } from '$lib/utils/sello';
+	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, NODATA_HEX, type MapTema } from '$lib/utils/sello';
 	import { themeStore } from '$lib/stores/theme.svelte';
 	import { makeHexClip, clipCell, type HexClip } from '$lib/utils/hexClip';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
@@ -60,7 +60,6 @@
 	let map: maplibregl.Map;
 	let firstSymbolId: string | undefined; // basemap's first label layer — hex fills sit below it
 	let lassoActive = false;
-	let catastroActive = false;
 	let activeTerritoryId = 'misiones';
 	// Gray backdrop under the hex layer ("no hexagon here = no data"), one outline
 	// per territory. It used to know only Mis/Ctes/Itapúa/Alto Paraná and fell back
@@ -1651,7 +1650,6 @@
 		map.on('click', 'buildings-3d', (e) => {
 			if (lassoActive) return;
 			if (mapStore.activeHexLayer) return;
-			if (catastroClickMode !== 'none') return; // catastro-fill handler handles it
 			const redcode = e.features![0].properties!.redcode;
 			if (!redcode) return;
 
@@ -1684,7 +1682,6 @@
 		map.on('click', 'corrientes-buildings-3d', (e) => {
 			if (lassoActive) return;
 			if (mapStore.activeHexLayer) return;
-			if (catastroClickMode !== 'none') return;
 			const redcode = e.features![0].properties!.redcode;
 			if (!redcode) return;
 
@@ -1717,7 +1714,6 @@
 			map.on('click', blayer, (e) => {
 				if (lassoActive) return;
 				if (mapStore.activeHexLayer) return;
-				if (catastroClickMode !== 'none') return;
 				const redcode = e.features![0].properties!.redcode;
 				if (!redcode) return;
 
@@ -2545,7 +2541,6 @@
 				appliedTema = t;
 				applyOwnLayersTheme(t);
 				applyDeptFill();
-				if (catastroActive) catastroReapply?.();
 				map.once('render', () => { if (sheet) sheet.transition = fade; });
 				map.triggerRepaint();
 			})
@@ -2915,383 +2910,7 @@
 		map?.flyTo({ ...MAP_PROVINCE, duration: 1200 });
 	}
 
-	// ── Catastro parcel layer (PMTiles) ─────────────────────────────────────
-
-	// CARTO basemap building layer IDs (dark-matter style)
-	const CARTO_BUILDING_LAYERS = ['building', 'building-top'];
-
-	// Parcel colors per theme. Dark: bright cyan/green parcels; claro: río and selva
-	// tints with darker rims, removed/new in tierra/oro (MAP_PALETTE claro family).
-	const CATASTRO_COLORS = {
-		oscuro: { urbano: '#22d3ee', rural: '#4ade80', urbanoRim: '#0e7490', ruralRim: '#15803d',
-			removed: '#dc2626', added: '#fbbf24', removedRim: '#7f1d1d', addedRim: '#b45309',
-			removedLine: '#fca5a5', addedLine: '#fde68a', line: 'rgba(0,0,0,0.7)', choroLine: '#ffffff' },
-		claro: { urbano: '#7da4c9', rural: '#75b286', urbanoRim: '#1f5ea2', ruralRim: '#1c7b4c',
-			removed: '#bb4f2e', added: '#d89e4a', removedRim: '#641608', addedRim: '#a33c11',
-			removedLine: '#952b12', addedLine: '#a33c11', line: 'rgba(28,28,28,0.55)', choroLine: '#565759' },
-	} as const;
-	const catastroTipo = (urbano: string, rural: string): any => ['match', ['get', 'tipo'], 'urbano', urbano, 'rural', rural, urbano];
-	// Re-applies the parcel coloring in force (base, flood classes, scores) after a theme switch.
-	let catastroReapply: (() => void) | null = null;
-
-	export function showCatastroLayer() {
-		if (!map) return;
-		// Retry if style not loaded yet
-		if (!map.isStyleLoaded()) {
-			map.once('idle', () => showCatastroLayer());
-			return;
-		}
-		catastroActive = true;
-
-		// Add catastro source
-		if (!map.getSource('catastro')) {
-			map.addSource('catastro', { type: 'vector', url: getTilesUrl('catastro'), maxzoom: 14 });
-		}
-
-		// Hide 3D buildings — add flat 2D fill BELOW catastro
-		for (const layer of ALL_BUILDINGS_LAYERS) {
-			if (map.getLayer(layer)) map.setLayoutProperty(layer, 'visibility', 'none');
-		}
-		if (!map.getLayer('buildings-flat') && map.getSource('buildings')) {
-			map.addLayer({
-				id: 'buildings-flat',
-				type: 'fill',
-				source: 'buildings',
-				'source-layer': 'buildings',
-				paint: {
-					'fill-color': mapStore.getColorExpr() as any,
-					'fill-opacity': 0.3
-				}
-			});
-			map.on('click', 'buildings-flat', (e) => {
-				if (lassoActive) return;
-				if (catastroClickMode !== 'none') return;
-				const redcode = e.features![0]?.properties?.redcode;
-				if (!redcode) return;
-				if (mapStore.hasRadio(redcode)) {
-					container.dispatchEvent(new CustomEvent('radio-deselect', { bubbles: true, detail: { redcode } }));
-				} else {
-					const selected = [e.features![0].properties!];
-					container.dispatchEvent(new CustomEvent('radio-select', {
-						bubbles: true, detail: { redcode, selected, census: e.features![0].properties! }
-					}));
-				}
-			});
-			map.on('mouseenter', 'buildings-flat', () => { map.getCanvas().style.cursor = 'pointer'; });
-			map.on('mouseleave', 'buildings-flat', () => { map.getCanvas().style.cursor = ''; });
-		}
-
-		// Fill layer — bright solid colors ON TOP of everything.
-		// Highlight recently added parcels in amber and recently removed
-		// parcels (ghost layer) in red against the urbano/rural base palette.
-		if (!map.getLayer('catastro-fill')) {
-			map.addLayer({
-				id: 'catastro-fill',
-				type: 'fill',
-				source: 'catastro',
-				'source-layer': 'catastro',
-				minzoom: 9,
-				paint: {
-					'fill-color': [
-						'case',
-						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removed,
-						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].added,
-						catastroTipo(CATASTRO_COLORS[appliedTema].urbano, CATASTRO_COLORS[appliedTema].rural)
-					],
-					'fill-opacity': [
-						'case',
-						['==', ['get', 'is_removed'], 1], 0.45,
-						0.75
-					],
-					'fill-outline-color': [
-						'case',
-						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removedRim,
-						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].addedRim,
-						catastroTipo(CATASTRO_COLORS[appliedTema].urbanoRim, CATASTRO_COLORS[appliedTema].ruralRim)
-					]
-				}
-			});
-		}
-
-		// Line layer at high zoom for definition — on top of fill.
-		// New parcels: darker amber outline. Removed parcels: thick dark red.
-		if (!map.getLayer('catastro-line')) {
-			map.addLayer({
-				id: 'catastro-line',
-				type: 'line',
-				source: 'catastro',
-				'source-layer': 'catastro',
-				minzoom: 12,
-				paint: {
-					'line-color': [
-						'case',
-						['==', ['get', 'is_removed'], 1], CATASTRO_COLORS[appliedTema].removedLine,
-						['==', ['get', 'is_new'], 1], CATASTRO_COLORS[appliedTema].addedLine,
-						CATASTRO_COLORS[appliedTema].line
-					],
-					'line-width': [
-						'interpolate', ['linear'], ['zoom'],
-						12, ['case', ['==', ['get', 'is_removed'], 1], 1.2, ['==', ['get', 'is_new'], 1], 1.0, 0.8],
-						14, ['case', ['==', ['get', 'is_removed'], 1], 2.0, ['==', ['get', 'is_new'], 1], 1.6, 1.2],
-						17, ['case', ['==', ['get', 'is_removed'], 1], 3.0, ['==', ['get', 'is_new'], 1], 2.5, 2.0]
-					],
-					'line-opacity': 1.0
-				}
-			});
-		}
-		for (const layerId of CARTO_BUILDING_LAYERS) {
-			if (map.getLayer(layerId)) {
-				map.setLayoutProperty(layerId, 'visibility', 'none');
-			}
-		}
-	}
-
-	export function hideCatastroLayer() {
-		if (!map || !map.isStyleLoaded() || !catastroActive) return;
-		catastroActive = false;
-		catastroClickMode = 'none';
-		catastroClickBound = false; // layer being removed, handlers gone
-		if (map.getLayer('catastro-fill')) map.removeLayer('catastro-fill');
-		if (map.getLayer('catastro-line')) map.removeLayer('catastro-line');
-		if (map.getLayer('buildings-flat')) map.removeLayer('buildings-flat');
-		showBuildingsForActiveTerritory();
-		for (const layerId of CARTO_BUILDING_LAYERS) {
-			if (map.getLayer(layerId)) {
-				map.setLayoutProperty(layerId, 'visibility', 'visible');
-			}
-		}
-	}
-
-	// ── Catastro flood choropleth (parcels colored by H3 flood risk) ────────
-
-	// ── Unified catastro parcel click system ────────────────────────────
-	// Single handler for ALL catastro-based analyses (flood, scores, radio)
-	let catastroClickMode: 'none' | 'flood' | 'scores' = 'none';
-	let catastroClickBound = false;
-
-	function catastroUnifiedClickHandler(e: any) {
-		if (lassoActive || catastroClickMode === 'none') return;
-		const feat = e.features?.[0];
-		if (!feat) return;
-		const props = feat.properties;
-		if (!props?.h3index) return;
-		const detail = { h3index: props.h3index, tipo: props.tipo ?? 'urbano', area_m2: Number(props.area_m2) || 0 };
-		const eventName = catastroClickMode === 'flood' ? 'catastro-flood-select' : 'catastro-scores-select';
-		container.dispatchEvent(new CustomEvent(eventName, { bubbles: true, detail }));
-	}
-
-	function catastroMouseEnter() {
-		if (catastroClickMode !== 'none' && !lassoActive) map.getCanvas().style.cursor = 'pointer';
-	}
-	function catastroMouseLeave() {
-		if (catastroClickMode !== 'none' && !lassoActive) map.getCanvas().style.cursor = '';
-	}
-
-	function bindCatastroClick() {
-		// Always clean up first, then bind once
-		try {
-			map.off('click', 'catastro-fill', catastroUnifiedClickHandler);
-			map.off('mouseenter', 'catastro-fill', catastroMouseEnter);
-			map.off('mouseleave', 'catastro-fill', catastroMouseLeave);
-		} catch (_) { /* ok if layer doesn't exist */ }
-		catastroClickBound = true;
-		map.on('click', 'catastro-fill', catastroUnifiedClickHandler);
-		map.on('mouseenter', 'catastro-fill', catastroMouseEnter);
-		map.on('mouseleave', 'catastro-fill', catastroMouseLeave);
-	}
-
-	function unbindCatastroClick() {
-		if (!catastroClickBound) return;
-		catastroClickBound = false;
-		try {
-			map.off('click', 'catastro-fill', catastroUnifiedClickHandler);
-			map.off('mouseenter', 'catastro-fill', catastroMouseEnter);
-			map.off('mouseleave', 'catastro-fill', catastroMouseLeave);
-		} catch (_) { /* layer may have been removed */ }
-	}
-
-	function applyCatastroChoropleth(colorExpr: any) {
-		if (map.getLayer('catastro-fill')) {
-			map.setPaintProperty('catastro-fill', 'fill-color', colorExpr);
-			map.setPaintProperty('catastro-fill', 'fill-opacity',
-				['interpolate', ['linear'], ['zoom'], 10, 0.25, 11, 0.35, 12, 0.55, 14, 0.7]);
-		}
-		if (map.getLayer('catastro-line')) {
-			map.setPaintProperty('catastro-line', 'line-color', CATASTRO_COLORS[appliedTema].choroLine);
-			map.setPaintProperty('catastro-line', 'line-opacity',
-				['interpolate', ['linear'], ['zoom'], 10, 0.1, 11, 0.15, 12, 0.3, 14, 0.5]);
-		}
-	}
-
-	function resetCatastroStyle() {
-		catastroReapply = resetCatastroStyle;
-		const C = CATASTRO_COLORS[appliedTema];
-		if (map.getLayer('catastro-fill')) {
-			map.setPaintProperty('catastro-fill', 'fill-color', catastroTipo(C.urbano, C.rural));
-			map.setPaintProperty('catastro-fill', 'fill-opacity', 0.95);
-			map.setPaintProperty('catastro-fill', 'fill-outline-color', catastroTipo(C.urbanoRim, C.ruralRim));
-		}
-		if (map.getLayer('catastro-line')) {
-			map.setPaintProperty('catastro-line', 'line-color', catastroTipo(C.urbanoRim, C.ruralRim));
-			map.setPaintProperty('catastro-line', 'line-opacity',
-				['interpolate', ['linear'], ['zoom'], 13, 0.6, 15, 0.9]);
-		}
-	}
-
-	export function filterCatastroDept(deptCode: string | null) {
-		if (!map) return;
-		if (deptCode) {
-			const filter = ['==', ['get', 'departamento'], deptCode];
-			if (map.getLayer('catastro-fill')) map.setFilter('catastro-fill', filter);
-			if (map.getLayer('catastro-line')) map.setFilter('catastro-line', filter);
-		} else {
-			if (map.getLayer('catastro-fill')) map.setFilter('catastro-fill', null);
-			if (map.getLayer('catastro-line')) map.setFilter('catastro-line', null);
-		}
-	}
-
-	export function setCatastroFloodChoropleth(h3ScoreMap: Map<string, number>, classes?: ColorClasses) {
-		if (!map) return;
-
-		function apply() {
-			if (!catastroActive) showCatastroLayer();
-			catastroClickMode = 'flood';
-			catastroReapply = apply;
-			const t = appliedTema, tierra = MAP_PALETTE[t].tierra;
-
-			const matchExpr: any = ['match', ['get', 'h3index']];
-			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
-			matchExpr.push(0);
-
-			// Same classes as the hex map, so a parcel and its hexagon read alike.
-			// Parcels with no matched hex fall to 0 → the zero class.
-			applyCatastroChoropleth(classes
-				? ['let', 'v', matchExpr,
-					['case', ['==', ['var', 'v'], 0], classColor(classes.zero?.color ?? classes.steps[0].color, t),
-						['step', ['var', 'v'], classColor(classes.steps[0].color, t),
-							...classes.steps.slice(1).flatMap((c) => [c.from, classColor(c.color, t)])]]]
-				: t === 'claro'
-					? ['interpolate', ['linear'], matchExpr, 0, MAP_PALETTE.claro.nodata, ...tierra.flatMap((c, i) => [1 + (99 * i) / (tierra.length - 1), c])]
-					: [
-						'interpolate', ['linear'], matchExpr,
-						0, '#0d1b2a', 10, '#1b3a5f', 25, '#2a6f97',
-						40, '#eab308', 60, '#f97316', 80, '#dc2626', 100, '#7f1d1d'
-					]);
-			bindCatastroClick();
-		}
-
-		if (map.isStyleLoaded() && !map.isMoving()) {
-			apply();
-		} else {
-			map.once('idle', apply);
-		}
-	}
-
-	export function clearCatastroFloodChoropleth() {
-		if (!map || !map.isStyleLoaded()) return;
-		catastroClickMode = 'none';
-		resetCatastroStyle();
-		unbindCatastroClick();
-	}
-
-	export function setFloodParcelHighlight(parcels: Array<{ h3index: string; color: string }>) {
-		if (!map || !map.isStyleLoaded() || !map.getSource('catastro')) return;
-
-		// Build filter: match any selected h3index
-		if (parcels.length === 0) {
-			if (map.getLayer('catastro-sel-fill')) map.removeLayer('catastro-sel-fill');
-			if (map.getLayer('catastro-sel-line')) map.removeLayer('catastro-sel-line');
-			return;
-		}
-
-		const h3Filter: any = ['in', ['get', 'h3index'], ['literal', parcels.map(p => p.h3index)]];
-
-		// Color match: h3index → parcel color
-		const colorMatch: any = ['match', ['get', 'h3index']];
-		for (const p of parcels) { colorMatch.push(p.h3index, p.color); }
-		colorMatch.push('#ffffff');
-
-		if (!map.getLayer('catastro-sel-fill')) {
-			map.addLayer({
-				id: 'catastro-sel-fill',
-				type: 'fill',
-				source: 'catastro',
-				'source-layer': 'catastro',
-				minzoom: 11,
-				paint: { 'fill-color': colorMatch, 'fill-opacity': 0.45 },
-				filter: h3Filter
-			});
-		} else {
-			map.setPaintProperty('catastro-sel-fill', 'fill-color', colorMatch);
-			map.setFilter('catastro-sel-fill', h3Filter);
-		}
-
-		if (!map.getLayer('catastro-sel-line')) {
-			map.addLayer({
-				id: 'catastro-sel-line',
-				type: 'line',
-				source: 'catastro',
-				'source-layer': 'catastro',
-				minzoom: 11,
-				paint: { 'line-color': colorMatch, 'line-width': 3, 'line-opacity': 0.9 },
-				filter: h3Filter
-			});
-		} else {
-			map.setPaintProperty('catastro-sel-line', 'line-color', colorMatch);
-			map.setFilter('catastro-sel-line', h3Filter);
-		}
-	}
-
-	export function clearFloodParcelHighlight() {
-		if (!map || !map.isStyleLoaded()) return;
-		if (map.getLayer('catastro-sel-fill')) map.removeLayer('catastro-sel-fill');
-		if (map.getLayer('catastro-sel-line')) map.removeLayer('catastro-sel-line');
-	}
-
-	// ── Scores/Radio choropleth (catastro-based, reuses unified click) ──
-
-	export function setCatastroScoresChoropleth(h3ScoreMap: Map<string, number>) {
-		if (!map) return;
-
-		function apply() {
-			if (!catastroActive) showCatastroLayer();
-			catastroClickMode = 'scores';
-			catastroReapply = apply;
-			const selva = MAP_PALETTE.claro.selva;
-
-			const matchExpr: any = ['match', ['get', 'h3index']];
-			for (const [h3index, score] of h3ScoreMap) { matchExpr.push(h3index, score); }
-			matchExpr.push(0);
-
-			applyCatastroChoropleth(appliedTema === 'claro'
-				? ['interpolate', ['linear'], matchExpr, 0, ZERO_CLARO, 15, selva[0], 30, selva[1], 50, selva[2], 70, selva[4], 100, selva[5]]
-				: [
-					'interpolate', ['linear'], matchExpr,
-					0, '#1e293b', 15, '#334155', 30, '#4a7c59',
-					50, '#22c55e', 70, '#86efac', 100, '#f0fdf4'
-				]);
-			bindCatastroClick();
-		}
-
-		if (map.isStyleLoaded() && !map.isMoving()) {
-			apply();
-		} else {
-			map.once('idle', apply);
-		}
-	}
-
-	export function clearCatastroScoresChoropleth() {
-		if (!map || !map.isStyleLoaded()) return;
-		catastroClickMode = 'none';
-		resetCatastroStyle();
-		unbindCatastroClick();
-	}
-
-	export function setScoresParcelHighlight(parcels: Array<{ h3index: string; color: string }>) {
-		setFloodParcelHighlight(parcels);
-	}
-
-	// ── Analysis choropleth layers (radio-based, for non-catastro analyses) ──
+	// ── Analysis choropleth layers (radio-based) ──
 
 	export function setAnalysisChoropleth(entries: { redcode: string; value: number }[], colorScale: 'price' | 'score' | 'diverging' | 'sequential' = 'price') {
 		if (!map || !map.isStyleLoaded()) return;
@@ -3334,7 +2953,7 @@
 			const t = (entry.value - minVal) / range;
 			let r: number, g: number, b: number;
 			if (colorScale === 'sequential') {
-				// Dark navy → bright cyan ramp for catastro density
+				// Dark navy → bright cyan ramp
 				r = Math.round(13 + t * (20 - 13));
 				g = Math.round(27 + t * (182 - 27));
 				b = Math.round(42 + t * (212 - 42));
@@ -3361,8 +2980,6 @@
 
 	export function clearAnalysisChoropleth() {
 		if (!map || !map.isStyleLoaded()) return;
-		// Remove catastro layers only if active
-		if (catastroActive) hideCatastroLayer();
 		// Clear radio analysis layers
 		if (map.getLayer('analysis-fill')) {
 			map.setFilter('analysis-fill', ['==', ['get', 'redcode'], '']);

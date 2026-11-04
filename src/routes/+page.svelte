@@ -334,7 +334,6 @@
 
 		mapContainer?.addEventListener('radio-select', ((e: CustomEvent) => {
 			if (lassoStore.active) return;
-			if (lensStore.activeAnalysis?.spatialUnit === 'catastro') return; // flood mode uses parcel clicks
 			const { redcode, selected, census } = e.detail;
 
 			// Add radio FIRST so selectedRadios.size > 0 when the territory-change
@@ -487,42 +486,6 @@
 				mapComponent?.highlightHexagon(h3index);
 				fetchHexData(h3index);
 			}
-		}) as EventListener);
-
-		mapContainer?.addEventListener('catastro-flood-select', ((e: CustomEvent) => {
-			const { h3index, tipo, area_m2 } = e.detail;
-			const floodData = mapStore.floodH3Data.get(h3index);
-			if (floodData) {
-				mapStore.addFloodParcel({
-					h3index,
-					tipo: tipo ?? 'urbano',
-					area_m2: Number(area_m2) || 0,
-					jrc_occurrence: floodData.jrc_occurrence,
-					jrc_recurrence: floodData.jrc_recurrence,
-					jrc_seasonality: floodData.jrc_seasonality,
-					flood_extent_pct: floodData.flood_extent_pct,
-				});
-			}
-		}) as EventListener);
-
-		mapContainer?.addEventListener('catastro-scores-select', ((e: CustomEvent) => {
-			const { h3index, tipo, area_m2 } = e.detail;
-			const allData = mapStore.scoresH3Data.get(h3index);
-			const scores: Record<string, number> = {};
-			const components: Record<string, number> = {};
-			if (allData) {
-				for (const [key, val] of Object.entries(allData)) {
-					scores[key] = Number(val) || 0;
-				}
-			}
-			// Always add parcel (even without data — shows "sin datos" in UI)
-			mapStore.addScoresParcel({
-				h3index,
-				tipo: tipo ?? 'urbano',
-				area_m2: Number(area_m2) || 0,
-				scores,
-				components,
-			});
 		}) as EventListener);
 
 		document.addEventListener('keydown', (e) => {
@@ -687,24 +650,6 @@
 		const id = analysis?.id ?? null;
 
 		if (id === prevAnalysisId) return;
-		// Clean up previous analysis
-		if (prevAnalysisId === 'catastro') {
-			mapComponent?.hideCatastroLayer();
-		}
-		if (prevAnalysisId === 'flood_risk') {
-			mapComponent?.clearCatastroFloodChoropleth();
-			mapComponent?.clearFloodParcelHighlight();
-			mapComponent?.hideCatastroLayer();
-			mapStore.clearFloodParcelState();
-		}
-		if (['territorial_scores', 'investment_value', 'natural_risks',
-			'accessibility', 'change_dynamics',
-			'sociodemographic', 'forest_potential', 'economic_activity'].includes(prevAnalysisId ?? '')) {
-			mapComponent?.clearCatastroScoresChoropleth();
-			mapComponent?.clearFloodParcelHighlight();
-			mapComponent?.hideCatastroLayer();
-			mapStore.clearScoresParcelState();
-		}
 		prevAnalysisId = id;
 
 		if (!id || !analysis) {
@@ -721,17 +666,6 @@
 		// exit the mode too instead of leaving a dangling "Salir de comparación".
 		if (!analysis.comparable && untrack(() => territoryStore.compareModeActive)) {
 			territoryStore.exitCompareMode();
-		}
-
-		// Catastro-based analyses
-		if (analysis.spatialUnit === 'catastro') {
-			analysisDataLoaded = false;
-			mapComponent?.clearAnalysisChoropleth();
-			mapComponent?.clearHexChoropleth();
-			mapStore.clearHexState();
-			hexStore.clearAll();
-			mapComponent?.showCatastroLayer();
-			return;
 		}
 
 		// Hex-based analyses use HexStore multi-resolution system
@@ -761,7 +695,7 @@
 			return;
 		}
 
-		// Radio-based analyses: load choropleth + catastro overlay
+		// Radio-based analyses: load choropleth
 		if (analysis.choropleth && analysis.spatialUnit === 'radio') {
 			analysisDataLoaded = false;
 			mapComponent?.clearHexChoropleth();
@@ -778,22 +712,6 @@
 		const primary = allHexes.filter(h => hexStore.visibleData.has(h.h3index));
 		const compare = allHexes.filter(h => hexStore.compareVisibleData.has(h.h3index));
 		mapComponent?.highlightHexagons(primary, compare);
-	});
-
-	// ── Flood parcel selection highlights on catastro layer ───────────────
-	$effect(() => {
-		const parcels = mapStore.selectedFloodParcels;
-		mapComponent?.setFloodParcelHighlight(
-			parcels.map(p => ({ h3index: p.h3index, color: p.color }))
-		);
-	});
-
-	// ── Scores parcel selection highlights on catastro layer ─────────────
-	$effect(() => {
-		const parcels = mapStore.selectedScoresParcels;
-		mapComponent?.setScoresParcelHighlight(
-			parcels.map(p => ({ h3index: p.h3index, color: p.color }))
-		);
 	});
 
 	// ── HexStore reactivity: re-render choropleth when data changes ──────
@@ -1107,11 +1025,11 @@
 
 	// Phase 2: the department-picker polygons are the selection surface — shown
 	// when an analysis is active and no department is selected yet; hidden once
-	// a department's hexes are loaded (or for catastro/parcel analyses).
+	// a department's hexes are loaded.
 	$effect(() => {
 		const a = lensStore.activeAnalysis;
 		const dpto = hexStore.selectedDpto;
-		const show = !!a && a.spatialUnit !== 'catastro' && !dpto;
+		const show = !!a && !dpto;
 		mapComponent?.setDeptPickerVisible(show);
 		// Lazy-fill the AR dept polygons (deferred out of the initial bundle) once the
 		// picker is shown for an AR territory — PY/BR use their own district layers.
@@ -1721,17 +1639,12 @@
 		mapStore.clearDistricts();
 		mapStore.clearHexState();
 		mapComponent?.setHexLayerInfo('', false);
-		mapStore.clearFloodParcelState();
-		mapStore.clearScoresParcelState();
 		hexStore.clearAll();
 		mapComponent?.clearRadioHighlight();
 		mapComponent?.setDistrictHighlight([]);
 		mapComponent?.clearAnalysisChoropleth();
 		mapComponent?.clearHexChoropleth();
 		mapComponent?.clearHexZoneHighlight();
-		mapComponent?.clearCatastroFloodChoropleth();
-		mapComponent?.clearCatastroScoresChoropleth();
-		mapComponent?.clearFloodParcelHighlight();
 		lensStore.clearSelection();
 		lensStore.clearDpto();
 		lensStore.clearAnalysis();

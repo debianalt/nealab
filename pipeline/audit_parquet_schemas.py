@@ -89,10 +89,7 @@ def parse_hex_layer_registry(ts_source: str) -> list[Layer]:
         if not parquet_match:
             continue
         parquet_name = parquet_match.group(1)
-        if not parquet_name.startswith("sat_") and parquet_name not in {"overture_scores"}:
-            continue
-        # Skip overture_scores — not a sat analysis
-        if parquet_name == "overture_scores":
+        if not parquet_name.startswith("sat_"):
             continue
         vars_block = re.search(r"variables:\s*\[(.*?)\]", obj_src, re.S)
         if not vars_block:

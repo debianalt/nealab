@@ -1,5 +1,5 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
 import { NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
@@ -512,8 +512,7 @@ export class HexStore {
 	/** Per-department parquet URL for a layer (mirrors the dispatch in loadDepartment). */
 	private deptUrlFor(layer: HexLayerConfig, parquetKey: string, territoryPrefix = this.territoryPrefix): string {
 		if (layer.id === 'flood_risk') return getFloodDptoUrl(parquetKey, territoryPrefix);
-		if (layer.parquet?.startsWith('sat_')) return getSatDptoUrl(layer.id, parquetKey, territoryPrefix);
-		return getScoresDptoUrl(parquetKey, territoryPrefix);
+		return getSatDptoUrl(layer.id, parquetKey, territoryPrefix);
 	}
 
 	/** Columns the dept UI actually consumes — used to project instead of SELECT *. */
@@ -1020,10 +1019,8 @@ export class HexStore {
 		let url: string;
 		if (layer.id === 'flood_risk') {
 			url = getFloodDptoUrl(parquetKey, comparePrefix);
-		} else if (layer.parquet?.startsWith('sat_')) {
-			url = getSatDptoUrl(layer.id, parquetKey, comparePrefix);
 		} else {
-			url = getScoresDptoUrl(parquetKey, comparePrefix);
+			url = getSatDptoUrl(layer.id, parquetKey, comparePrefix);
 		}
 
 		// Fast path: reuse cached geometry.
@@ -1280,8 +1277,7 @@ export class HexStore {
 
 		let url: string;
 		if (layer.id === 'flood_risk') url = getFloodDptoUrl(key, prefix);
-		else if (layer.parquet?.startsWith('sat_')) url = getSatDptoUrl(layer.id, key, prefix);
-		else url = getScoresDptoUrl(key, prefix);
+		else url = getSatDptoUrl(layer.id, key, prefix);
 
 		query(`SELECT * FROM '${url}'`).then(result => {
 			if (this._prefetchToken !== token) return;

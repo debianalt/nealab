@@ -4,7 +4,8 @@ Travel time to healthcare per census tract (radio) for the 4 AR provinces, from 
 health_access used proxies outside Misiones until 29-oct-2026: Corrientes had
 distance-to-hospital × 12 min/km (build_oxford_proxy_corrientes.py, with 300 min
 where missing — 356 of 445 Capital tracts), and Chaco and Formosa copied
-time-to-cities as time-to-healthcare (build_census_proxies_ar.py).
+time-to-cities as time-to-healthcare (build_census_proxies_ar.py). Both proxy
+scripts were deleted on 4-nov-2026.
 
 Per tract, from one ~1 km export per territory (mean of the pixels inside the tract;
 tracts smaller than a pixel take the centroid pixel):

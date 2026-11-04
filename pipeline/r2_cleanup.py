@@ -124,7 +124,7 @@ def reason(key: str, blob: str):
 SITE_DIR = "src"
 
 # Per-department URL shapes, straight from config.ts:116/120/124.
-DEPT_DIRS = {"flood_dpto": "hex_flood_", "scores_dpto": "overture_scores_", "sat_dpto": "sat_"}
+DEPT_DIRS = {"flood_dpto": "hex_flood_", "sat_dpto": "sat_"}
 
 
 def site_blob() -> str:

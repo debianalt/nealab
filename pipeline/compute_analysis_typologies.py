@@ -58,9 +58,7 @@ def auto_label(cluster_means, global_means, var_names, analysis_id, used_labels=
     return label
 
 
-PARQUET_NAMES = {
-    'territorial_scores': 'overture_scores',
-}
+PARQUET_NAMES: dict = {}
 
 def process_analysis(analysis_id, fixed_k=None, k_range=(3, 5)):
     """Run PCA + k-means on a single analysis."""
