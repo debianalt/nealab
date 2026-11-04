@@ -606,7 +606,7 @@ export interface ColorClasses {
 	// bands; default → to the class above (value >= from).
 	upperInclusive?: boolean;
 	// Unit printed next to the legend title when the class labels use a different
-	// one than the variable (travel time: variable in min, classes in hours).
+	// one than the variable (avoid it: legend, tooltip and panel share one unit).
 	unit?: string;
 }
 
@@ -771,14 +771,14 @@ export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 	upperInclusive: true,
 };
 
-// Travel time to the capital (Oxford MAP, minutes), doubling cuts in hours, the
-// same in every territory. Medians run from 73 min (Central PY) to 403 (Alto
+// Travel time to the capital (Oxford MAP, minutes), doubling cuts (1/2/4/8 h), the
+// same in every territory. Labels in minutes, like the tooltip and the panel: the
+// legend takes the variable's unit (min). Medians run from 73 min (Central PY) to 403 (Alto
 // Paraguay); Misiones 6 / 21 / 36 / 35 / 3 %. Since the 1-nov-2026 rebuild a 0 is
 // a real reading (the capital's own cells, ~9 per territory): split_by_admin keeps
 // *_raw columns NULL where there is no reading ("Sin cobertura"). Before, it wrote
 // them as 0 (1,008 cells in Capital, 2,033 in Villeta).
 export const ACCESS_TIME_CLASSES: ColorClasses = {
-	unit: 'h',
 	steps: [
 		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.access.c1' },
 		{ from: 60, color: MAP_ACCESS_5[1], labelKey: 'legend.access.c2' },
