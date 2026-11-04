@@ -87,6 +87,7 @@ UI exposes both groups in `src/lib/components/AnalysisMenu.svelte:39-83`:
 
 ## Director de Spatia (`director/`, desde 3-nov-2026)
 - Mantenimiento automático quincenal (`.github/workflows/director.yml`, domingos de semanas ISO pares 03:00 ART): sondas Playwright sobre www.spatia.ar → juez (Claude, suscripción del autor vía secret `CLAUDE_CODE_OAUTH_TOKEN`) → arreglos en `src/`/`static/` → `director/guardia.py` + re-sondeo del build → push a `main` + deploy + re-sondeo de producción (revierte solo si empeora) → informe en un issue con label `director` (preguntas al autor incluidas; se contestan con un comentario).
+- Revisor de coherencia: 3 capas por corrida (las que cambiaron primero, después las de revisión más vieja; estado en `director/coherencia.yaml`), texto es/en/pt contra config y contra los parquets (`director/consulta.py`, sólo lectura).
 - Reglas: `director/reglamento.md` + `director/reglas.yaml` (no los edita el director; cambiarlos es decisión del autor). Respuestas del autor: `director/decisiones.md`. Falsos positivos: `director/ignorar.yaml`. Modelo y esfuerzo: `director/config.yaml`.
 - Correr a mano: `gh workflow run director.yml -f modo=diagnostico` (sólo informa) o `-f modo=completo`. Sondas locales: `python director/sondas/mapa.py https://www.spatia.ar out --territorios misiones --capas flood_risk`.
 - Gancho de sondas: con `localStorage.spatia_sonda=1` la página expone `window.__spatia` (`+page.svelte`, listener `map-ready`). No quitarlo.

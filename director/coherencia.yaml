@@ -1,0 +1,17 @@
+# Última revisión de coherencia texto↔config↔datos por capa (la mantiene el revisor).
+# fecha: AAAA-MM-DD de la última revisión; commit: HEAD revisado.
+eudr: {fecha: null, commit: null}
+flood_risk: {fecha: null, commit: null}
+deforestation_dynamics: {fecha: null, commit: null}
+pm25_drivers: {fecha: null, commit: null}
+agri_potential: {fecha: null, commit: null}
+forestry_aptitude: {fecha: null, commit: null}
+land_use: {fecha: null, commit: null}
+accessibility: {fecha: null, commit: null}
+censo_temporal: {fecha: null, commit: null}
+sociodemographic: {fecha: null, commit: null}
+service_deprivation: {fecha: null, commit: null}
+health_access: {fecha: null, commit: null}
+education_capital: {fecha: null, commit: null}
+education_flow: {fecha: null, commit: null}
+economic_activity: {fecha: null, commit: null}

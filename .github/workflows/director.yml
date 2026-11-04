@@ -141,6 +141,27 @@ jobs:
             gh issue view "$n" --json comments,url -q '.url as $u | .comments[] | select(.author.login == "debianalt") | "- \(.createdAt) \($u)#issuecomment-\(.url | split("-") | last): \(.body)"' > director/run/respuestas.md || true
           fi
 
+      - name: Revisor de coherencia (3 capas por corrida)
+        id: revisor
+        run: |
+          claude -p "$(cat director/prompts/revisor.md)" --model "$MODELO" --effort "$ESFUERZO" \
+            --allowedTools "Read" "Grep" "Glob" "Write(director/run/**)" "Edit(director/coherencia.yaml)" "Write(director/coherencia.yaml)" \
+              "Bash(python director/consulta.py:*)" "Bash(git log:*)" "Bash(git diff:*)" "Bash(git show:*)" "Bash(git rev-parse:*)" \
+            --output-format json > director/run/revisor_salida.json || echo "fallo=si" >> $GITHUB_OUTPUT
+          python -c "import json;d=json.load(open('director/run/revisor_salida.json'));print('costo equivalente USD:',d.get('total_cost_usd'),'turnos:',d.get('num_turns'));print(d.get('result','')[:2000])" || true
+          # Sus hallazgos entran al mismo circuito que los de las sondas
+          python - <<'EOF'
+          import json, yaml
+          from pathlib import Path
+          p = Path('director/run/coherencia.json')
+          if p.exists():
+              ign = {x['huella'] for x in (yaml.safe_load(open('director/ignorar.yaml')) or []) if isinstance(x, dict)}
+              H = json.load(open('director/run/hallazgos.json'))
+              nuevos = [h for h in json.loads(p.read_text()) if h.get('huella') not in ign]
+              json.dump(H + nuevos, open('director/run/hallazgos.json', 'w'), ensure_ascii=False, indent=1)
+              print(f'{len(nuevos)} hallazgos de coherencia')
+          EOF
+
       - name: Juez
         id: juez
         run: |
@@ -153,7 +174,7 @@ jobs:
       - name: Registrar decisiones y falsos positivos
         if: steps.juez.outputs.fallo != 'si'
         run: |
-          git add director/ignorar.yaml director/decisiones.md
+          git add director/ignorar.yaml director/decisiones.md director/coherencia.yaml
           if ! git diff --cached --quiet; then
             git commit -m "Director: decisiones del autor y falsos positivos ($(date -u +%F))"
             git pull --rebase origin main && git push origin HEAD:main || echo "no se pudo publicar decisiones.md (se reintenta en la próxima corrida)"

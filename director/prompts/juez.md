@@ -20,7 +20,7 @@ Agrupá los hallazgos por **causa** (un bug de código produce hallazgos en much
 
 Para cada grupo `arreglar` indicá el diagnóstico (archivo y línea probables), y qué vistas re-sondear para verificarlo (`territorios`, `capas`), lo mínimo que cubra la causa.
 
-Si te queda margen después de clasificar, elegí **una** capa (rotá: la que tenga menos hallazgos recientes) y revisá que su «Cómo leer», «Implicancias» y «Metodología» digan lo que el mapa pinta (variables, unidades, años, fuentes contra `src/lib/config.ts`). Lo que encuentres entra como hallazgo propio (`"huella": "juez-<capa>-<n>"`).
+Los hallazgos con `"sonda": "revisor"` vienen del revisor de coherencia, que comparó textos contra config y datos. Tratalos igual que los demás: si el texto miente sobre los datos, se arregla el texto. Si lo que está mal es el dato, es «datos». Si hay que elegir qué es lo correcto, es «decidir».
 
 ## Qué escribir
 
