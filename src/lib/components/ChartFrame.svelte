@@ -21,7 +21,7 @@
 		collapsible?: boolean;
 		defaultCollapsed?: boolean;
 		expanded?: boolean;
-		// The body is HTML (fact sheet, ranking list), not one SVG chart: PNG renders
+		// The body is HTML (ranking list), not one SVG chart: PNG renders
 		// the whole body (html-to-image) and SVG is not offered.
 		htmlExport?: boolean;
 	} = $props();

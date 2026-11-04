@@ -30,7 +30,7 @@ base no tiene backup propio porque se regenera.
 | `… --skip-distribuciones` | Omite el cálculo de distribuciones y rangos | |
 | `… --reset` | Borra sólo las tablas del Hexoma y vuelve a cargar | |
 | `python pipeline/build_hexoma_distribuciones.py [--layers …]` | Recalcula sólo `distribuciones`, `rango_*` y `v_hexoma_rangos` | 745 s con todas las capas |
-| `python pipeline/build_ficha_link_index.py` | Regenera `src/lib/data/ficha_link_index.json`, que usan la web y el Hexoma. Correrlo cuando cambia una partición por departamento | |
+| `python pipeline/build_ficha_link_index.py` | Regenera `pipeline/output/hexoma/ficha_link_index.json` (archivo de departamento de cada celda de borde), que usa el Hexoma. Correrlo cuando cambia una partición por departamento | |
 | `python pipeline/build_hexoma_censo.py [--anio A] [--refresh]` | Rearma los esquemas `censo_<año>` (ver abajo). Es independiente de lo anterior, y `--reset` no lo toca. 1991 necesita antes `python pipeline/hexoma/redatam_a_radio.py --anio 1991 --csv pipeline/output/hexoma/redatam1991/csv` (los CSV de `ARG1991.zip`) | 40–110 s por año |
 | `python pipeline/hexoma/build_hexoma_externos.py` | Rearma el esquema `externos` | 5 s |
 | `python pipeline/gee_export_ghsl_epochs.py` y `gcloud storage cp "gs://spatia-satellite/satellite/nea_ar/ghsl_built_*.tif" pipeline/output/hexoma/ghsl/` | Exporta GHSL 1990, 2000, 2010 y 2020 del NEA (una vez; el cruce los baja solo si faltan) | ~10 min en GEE |

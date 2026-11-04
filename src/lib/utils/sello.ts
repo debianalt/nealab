@@ -26,7 +26,7 @@ export const INK_2 = 'var(--s-ink-2)';
 export const INK_3 = 'var(--s-ink-3)';
 export const GRID = 'var(--s-grid)';
 export const AXIS = 'var(--s-axis)';
-// What the reader picked (chart brush, the hexagon in the ficha): tierra in the
+// What the reader picked (chart brush): tierra in the
 // chart and a tierra tint on the map.
 export const SELECT = TIERRA;
 // Outline of anything selected on the map (click, lasso, chart, compare, census

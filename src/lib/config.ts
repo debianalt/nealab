@@ -496,7 +496,7 @@ export interface HexVariable {
 	baseCol?: string; // column with the households/people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
 	hideIfZero?: boolean;
 	// Loaded with the layer (the map can paint it) but not listed in the hex panel,
-	// zone comparison or ficha: agri suitability classes 1–4 (S1…N).
+	// zone comparison: agri suitability classes 1–4 (S1…N).
 	hidden?: boolean;
 	// Listed in the panel table but left out of the hex panel's flower (agri: the 9
 	// «% campañas aptas» would turn it into 19 unreadable petals).

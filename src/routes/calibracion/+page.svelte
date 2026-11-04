@@ -155,7 +155,7 @@
 		<div>
 			<h1 class="page-title">Calibración de capas comparables</h1>
 			<p class="page-sub">
-				Mediana (P50) por capa × territorio. Verde = bien calibrado (P50 ≈ 50). Rojo = revisar goalposts.
+				Mediana (P50) por capa × territorio. Verde = bien calibrado (P50 ≈ 50). Rojo = revisar la escala.
 				{#if total > 0}
 					<span class="counter">{loaded}/{total} celdas</span>
 				{/if}
@@ -222,7 +222,7 @@
 	<div class="legend">
 		<span class="leg-item leg-green">■ P50 40–60 (bien calibrado)</span>
 		<span class="leg-item leg-yellow">■ P50 32–68 (aceptable)</span>
-		<span class="leg-item leg-red">■ P50 &lt;32 o &gt;68 (revisar goalposts)</span>
+		<span class="leg-item leg-red">■ P50 &lt;32 o &gt;68 (revisar la escala)</span>
 		<span class="leg-item leg-dash">— sin datos en este territorio</span>
 	</div>
 </div>

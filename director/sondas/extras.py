@@ -1,14 +1,12 @@
 """Sondas de los rincones que la matriz principal no recorre.
 
-Uso: python director/sondas/extras.py BASE OUT --solo temporal|oscuro|movil|ficha [--capas x,y]
+Uso: python director/sondas/extras.py BASE OUT --solo temporal|oscuro|movil [--capas x,y]
 
   temporal: capas temporales en línea de base y en cambio (tm=baseline|delta) y la escala
             regional de PM2.5 (escala=regional): leyenda, dominio de color, rampa, tooltip.
   oscuro:   cada capa en tema oscuro (Misiones, departamento): leyenda contra pintura y tooltip.
   movil:    cada capa en 390×844 táctil (Misiones, provincia): desborde horizontal, leyenda
             dentro de pantalla y sin tapar el mapa, panel alcanzable, textos.
-  ficha:    ?h3=<celda> para celdas de varias capas: tarjetas sin errores ni NaN y el valor de
-            la capa de origen igual al del hexágono.
 """
 import argparse, asyncio, json, sys, time
 from pathlib import Path
@@ -154,55 +152,10 @@ async def movil(br, base, reg, H, capas_f, errores):
     await cx.close()
 
 
-async def ficha(br, base, reg, H, capas_f, errores):
-    """Toma una celda de varias capas (Misiones y Corrientes) y abre su ficha."""
-    cx = await contexto_spatia(br, base)
-    capas = [c for c in matriz(reg, ['misiones', 'corrientes'], None, capas_f)]
-    elegidas = [capas[i] for i in range(0, len(capas), max(1, len(capas) // 5))][:5]
-    for (t, lente, capa) in elegidas:
-        page = await nueva_pagina(cx, errores)
-        ctx = {'territorio': t, 'capa': capa, 'vista': 'ficha'}
-        try:
-            e, url, dept = await vista_depto(page, base, t, lente, capa)
-            muestra = [s for s in (e or {}).get('enPantalla') or [] if str(s.get('h3') or '').startswith('89') and s.get('value') is not None and s.get('nodata') not in (True, 'true')]
-            if not muestra: continue
-            cel = muestra[0]; v = e.get('variable') or {}
-            url = f"{base}/?h3={cel['h3']}"; ctx['url'] = url
-            await page.goto(url, wait_until='domcontentloaded', timeout=120000)
-            try:
-                await page.wait_for_selector('.fi-card', timeout=120000)
-                await page.wait_for_function("!document.querySelector('.fi-state')", timeout=120000)
-            except Exception:
-                H.add('ficha_no_carga', 'alta', ctx, f"La ficha de {cel['h3']} no terminó de cargar."); await H.captura(page, ctx); continue
-            await page.wait_for_timeout(1500)
-            f = await page.evaluate("""() => ({ errores: [...document.querySelectorAll('.fi-error, .fi-card .fi-muted')].filter(el => /error al cargar|error loading|erro ao carregar/i.test(el.innerText)).length,
-                conError: [...document.querySelectorAll('.fi-card')].filter(c => /error al cargar|error loading|erro ao carregar/i.test(c.innerText)).map(c => c.querySelector('.fi-layer-title')?.innerText.trim()),
-                tarjetas: [...document.querySelectorAll('.fi-card')].map(c => ({ titulo: c.querySelector('.fi-layer-title')?.innerText.trim(), texto: c.innerText })) })""")
-            if f['errores']:
-                H.add('ficha_error', 'alta', ctx, f"La ficha de {cel['h3']} muestra «error al cargar datos» en {f['errores']} tarjetas: {', '.join(x for x in f['conError'] if x)}.")
-            for c in f['tarjetas']:
-                H.revisar(revisar_texto(c['texto']), {**ctx, 'grafico': c['titulo']}, 'ficha')
-            # La tarjeta de la capa de origen tiene que mostrar el valor del hexágono
-            esperado = float(cel['value']) * (v.get('scale') or 1)
-            titulo = (e.get('leyenda') or {}).get('titulo', '').split('·')[0].strip().lower()
-            tarjeta = next((c for c in f['tarjetas'] if c['titulo'] and c['titulo'].lower()[:25] in titulo), None)
-            if tarjeta and not (e.get('clases') or {}).get('nominal') and not (e.get('clases') or {}).get('ordinal'):
-                ns = numeros(tarjeta['texto'])
-                if ns and min(abs(n - esperado) for n in ns) > 0.051 + abs(esperado) * 0.01:
-                    H.add('ficha_valor', 'alta', ctx, f"Ficha de {cel['h3']}: el mapa pinta {esperado:.2f} ({v.get('col')}) y la tarjeta «{tarjeta['titulo']}» no muestra ese valor: «{tarjeta['texto'][:160]}».")
-            H.consola(errores, ctx); await H.captura_si(page, ctx)
-        except Exception as ex:
-            H.add('sonda_fallo', 'media', ctx, f'{type(ex).__name__}: {str(ex)[:300]}')
-        finally:
-            await page.close()
-        H.guardar(); print(f'ficha {capa}: {H.total()} hallazgos', flush=True)
-    await cx.close()
-
-
 async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('base'); ap.add_argument('out')
-    ap.add_argument('--solo', required=True, choices=['temporal', 'oscuro', 'movil', 'ficha'])
+    ap.add_argument('--solo', required=True, choices=['temporal', 'oscuro', 'movil'])
     ap.add_argument('--capas')
     args = ap.parse_args()
     base = args.base.rstrip('/'); out = Path(args.out)
@@ -214,7 +167,7 @@ async def main():
         br = await abrir_navegador(p)
         reg = await registros(br, base)
         reg['ANALYSIS_REGISTRY'] = [a for a in reg['ANALYSIS_REGISTRY'] if (a.get('spatialUnit') or 'hexagon') == 'hexagon' or args.solo == 'movil']
-        await {'temporal': temporal, 'oscuro': oscuro, 'movil': movil, 'ficha': ficha}[args.solo](br, base, reg, H, capas_f, errores)
+        await {'temporal': temporal, 'oscuro': oscuro, 'movil': movil}[args.solo](br, base, reg, H, capas_f, errores)
         await br.close()
     H.guardar()
 

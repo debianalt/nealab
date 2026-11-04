@@ -1,5 +1,5 @@
 // «Pedir un diagnóstico a medida»: the one contact call of the site (layer panel,
-// zones, hexagon fact sheet, welcome). Spec and rationale:
+// zones, welcome). Spec and rationale:
 // OneDrive/conicet(1)/07_spatia_vitrina_y_oficio/06_diagnostico_a_medida.md.
 // Kept out of i18n.svelte.ts on purpose: a self-contained block, like servicios.ts.
 import type { Locale } from '$lib/stores/i18n.svelte';

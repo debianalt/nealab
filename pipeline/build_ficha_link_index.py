@@ -1,17 +1,17 @@
-"""Index for the fact-sheet link (?h3=<cell>): the department file each layer
-really keeps the cell in, for the cells where the link's own rule gets it wrong.
+"""Per-cell department index for the Hexoma: the department file each layer really
+keeps the cell in, for the cells where the centre rule gets it wrong.
 
-The link (openFichaFromLink in src/routes/+page.svelte) picks the department whose
-polygon in ar_dept_boundaries.json contains the cell centre (exterior rings, first
-feature in file order) and derives each layer's parquetKey from that name. The
-per-department parquets, however, assign cells by areal majority over census radios
-(split_satellite_by_dpto.py / split_by_admin.py), which is what the panel, the
-rankings and the summaries use. Measured 31-oct-2026: ~3.5 % of Misiones cells (and
-thousands of census cells in Chaco/Corrientes) are not in the file the link opened,
-so the sheet showed "sin dato" although the value exists; cells whose centre falls
-outside every polygon did not open at all.
+The centre rule picks the department whose polygon in ar_dept_boundaries.json
+contains the cell centre (exterior rings, first feature in file order) and derives
+each layer's parquetKey from that name. The per-department parquets, however, assign
+cells by areal majority over census radios (split_satellite_by_dpto.py /
+split_by_admin.py), which is what the panel, the rankings and the summaries use.
+Measured 31-oct-2026: ~3.5 % of Misiones cells (and thousands of census cells in
+Chaco/Corrientes) are not in the file the centre rule names; cells whose centre falls
+outside every polygon have no department at all. (Born for the web fact sheet's ?h3=
+link, deleted 4-nov-2026; the Hexoma loads it into ficha_enlace.)
 
-Output src/lib/data/ficha_link_index.json, lazy-loaded only by the ?h3= link:
+Output pipeline/output/hexoma/ficha_link_index.json:
     {"v": 1, "generated": "...", "cells": {"<h3>": {"t": territory (only when it
      differs from the polygon's), "n": department name, "k": parquetKey for every
      per-department layer, "o": {layer: parquetKey} where a layer differs}}}
@@ -36,9 +36,9 @@ from shapely.geometry import Polygon
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / 'pipeline' / 'output' / 'hexoma' / 'registry.json'
-OUT = ROOT / 'src' / 'lib' / 'data' / 'ficha_link_index.json'
+OUT = ROOT / 'pipeline' / 'output' / 'hexoma' / 'ficha_link_index.json'
 AR = ['misiones', 'corrientes', 'chaco', 'formosa']          # order = tie-break for cells in two territories
-AR_CODPROV = {'54': 'misiones', '18': 'corrientes', '22': 'chaco', '34': 'formosa'}  # as +page.svelte
+AR_CODPROV = {'54': 'misiones', '18': 'corrientes', '22': 'chaco', '34': 'formosa'}
 
 
 def log(*a):

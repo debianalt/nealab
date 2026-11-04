@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS ficha_enlace (
     k             text NOT NULL,
     o             jsonb
 );
-COMMENT ON TABLE ficha_enlace IS 'src/lib/data/ficha_link_index.json (pipeline/build_ficha_link_index.py): celdas cuyo archivo de departamento no es el del polígono que contiene su centro. Clave por capa = o->>capa, si no k. Es lo que usa el enlace ?h3= de la ficha.';
+COMMENT ON TABLE ficha_enlace IS 'pipeline/output/hexoma/ficha_link_index.json (pipeline/build_ficha_link_index.py): celdas cuyo archivo de departamento no es el del polígono que contiene su centro. Clave por capa = o->>capa, si no k.';
 CREATE TABLE IF NOT EXISTS hexagonos (
     h3            h3index  NOT NULL,
     territorio_id smallint NOT NULL REFERENCES territorios,
@@ -400,8 +400,8 @@ def load_limites(conn, reg: dict, terr_ids: dict[str, int]) -> None:
 
 
 def load_ficha_enlace(conn) -> None:
-    """The fact-sheet link index; its territory resolved after hexagonos exist (see main)."""
-    path = ROOT / 'src' / 'lib' / 'data' / 'ficha_link_index.json'
+    """The per-cell department index (build_ficha_link_index.py); its territory resolved after hexagonos exist (see main)."""
+    path = ROOT / 'pipeline' / 'output' / 'hexoma' / 'ficha_link_index.json'
     with conn.cursor() as cur:
         cur.execute('TRUNCATE ficha_enlace')
         if path.exists():
@@ -429,7 +429,7 @@ def rebuild_hexagonos(conn, terr_id: int, layer_ids: list[str]) -> int:
         union = sql.SQL(' UNION ').join(
             sql.SQL('SELECT h3 FROM {} WHERE territorio_id = %(t)s').format(sql.Identifier(f'capa_{l}')) for l in existing)
         cur.execute('DELETE FROM hexagonos WHERE territorio_id = %(t)s', {'t': terr_id})
-        # department of the cell centre, as openFichaFromLink does (polygon containing it; overlaps, if any, by redcode);
+        # department of the cell centre, as build_ficha_link_index.py does (polygon containing it; overlaps, if any, by redcode);
         # computed in the INSERT itself: a later UPDATE would double the table with dead rows
         cur.execute(sql.SQL("""INSERT INTO hexagonos (h3, territorio_id, redcode)
             SELECT u.h3, %(t)s, (SELECT l.redcode FROM limites_sub l

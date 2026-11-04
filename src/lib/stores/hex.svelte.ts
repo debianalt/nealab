@@ -175,7 +175,7 @@ export class HexStore {
 	}
 	// Territory-wide layers (censo_temporal) narrowed to one department picked in
 	// their own list: charts and map read only these cells, like the per-department
-	// layers. Cells assigned by centre-in-polygon, the rule of ?h3= and the Hexoma.
+	// layers. Cells assigned by centre-in-polygon, the rule of the Hexoma.
 	deptFilter: Set<string> | null = $state.raw(null);
 	deptFilterName: string | null = $state(null);
 	private _deptChart: { src: Map<string, Record<string, any>>; filter: Set<string>; out: Map<string, Record<string, any>> } | null = null;
