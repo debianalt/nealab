@@ -14,7 +14,7 @@
       ],
       "rank": {
         "noschool_pct": 29.7,
-        "univ_pct": 3.6
+        "univ25_pct": 4.3
       }
     },
     {
@@ -27,7 +27,7 @@
       ],
       "rank": {
         "noschool_pct": 27.5,
-        "univ_pct": 4.8
+        "univ25_pct": 5.5
       }
     },
     {
@@ -40,7 +40,7 @@
       ],
       "rank": {
         "noschool_pct": 30.2,
-        "univ_pct": 3.3
+        "univ25_pct": 3.6
       }
     },
     {
@@ -53,7 +53,7 @@
       ],
       "rank": {
         "noschool_pct": 26.0,
-        "univ_pct": 4.1
+        "univ25_pct": 4.8
       }
     },
     {
@@ -66,7 +66,7 @@
       ],
       "rank": {
         "noschool_pct": 23.0,
-        "univ_pct": 4.6
+        "univ25_pct": 5.3
       }
     },
     {
@@ -79,7 +79,7 @@
       ],
       "rank": {
         "noschool_pct": 19.4,
-        "univ_pct": 3.7
+        "univ25_pct": 4.3
       }
     },
     {
@@ -92,7 +92,7 @@
       ],
       "rank": {
         "noschool_pct": 14.7,
-        "univ_pct": 6.5
+        "univ25_pct": 7.5
       }
     },
     {
@@ -105,7 +105,7 @@
       ],
       "rank": {
         "noschool_pct": 15.5,
-        "univ_pct": 8.0
+        "univ25_pct": 9.4
       }
     },
     {
@@ -118,7 +118,7 @@
       ],
       "rank": {
         "noschool_pct": 16.9,
-        "univ_pct": 6.1
+        "univ25_pct": 7.1
       }
     },
     {
@@ -131,7 +131,7 @@
       ],
       "rank": {
         "noschool_pct": 15.5,
-        "univ_pct": 6.9
+        "univ25_pct": 7.9
       }
     },
     {
@@ -144,7 +144,7 @@
       ],
       "rank": {
         "noschool_pct": 16.1,
-        "univ_pct": 5.2
+        "univ25_pct": 6.0
       }
     },
     {
@@ -157,7 +157,7 @@
       ],
       "rank": {
         "noschool_pct": 14.8,
-        "univ_pct": 7.6
+        "univ25_pct": 8.7
       }
     },
     {
@@ -170,7 +170,7 @@
       ],
       "rank": {
         "noschool_pct": 18.6,
-        "univ_pct": 4.3
+        "univ25_pct": 5.0
       }
     },
     {
@@ -183,7 +183,7 @@
       ],
       "rank": {
         "noschool_pct": 16.3,
-        "univ_pct": 6.5
+        "univ25_pct": 7.5
       }
     },
     {
@@ -196,7 +196,7 @@
       ],
       "rank": {
         "noschool_pct": 15.1,
-        "univ_pct": 4.8
+        "univ25_pct": 5.5
       }
     },
     {
@@ -209,7 +209,7 @@
       ],
       "rank": {
         "noschool_pct": 13.6,
-        "univ_pct": 6.1
+        "univ25_pct": 7.1
       }
     },
     {
@@ -222,7 +222,7 @@
       ],
       "rank": {
         "noschool_pct": 7.4,
-        "univ_pct": 11.8
+        "univ25_pct": 13.8
       }
     }
   ]

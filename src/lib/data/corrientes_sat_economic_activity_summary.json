@@ -16,7 +16,7 @@
       "rank": {
         "viirs": 10.22,
         "empleo_pct": 53.4,
-        "univ_pct": 11.7
+        "univ25_pct": 13.8
       }
     },
     {
@@ -30,7 +30,7 @@
       "rank": {
         "viirs": 0.7,
         "empleo_pct": 53.1,
-        "univ_pct": 5.6
+        "univ25_pct": 6.3
       }
     },
     {
@@ -44,7 +44,7 @@
       "rank": {
         "viirs": 0.42,
         "empleo_pct": 53.6,
-        "univ_pct": 6.7
+        "univ25_pct": 7.7
       }
     },
     {
@@ -58,7 +58,7 @@
       "rank": {
         "viirs": 0.4,
         "empleo_pct": 49.1,
-        "univ_pct": 4.6
+        "univ25_pct": 5.2
       }
     },
     {
@@ -72,7 +72,7 @@
       "rank": {
         "viirs": 1.29,
         "empleo_pct": 53.4,
-        "univ_pct": 9.3
+        "univ25_pct": 10.7
       }
     },
     {
@@ -86,7 +86,7 @@
       "rank": {
         "viirs": 0.66,
         "empleo_pct": 50.9,
-        "univ_pct": 5.3
+        "univ25_pct": 6.0
       }
     },
     {
@@ -100,7 +100,7 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 48.4,
-        "univ_pct": 7.6
+        "univ25_pct": 8.7
       }
     },
     {
@@ -114,7 +114,7 @@
       "rank": {
         "viirs": 0.42,
         "empleo_pct": 46.8,
-        "univ_pct": 4.4
+        "univ25_pct": 5.0
       }
     },
     {
@@ -128,7 +128,7 @@
       "rank": {
         "viirs": 0.41,
         "empleo_pct": 52.2,
-        "univ_pct": 6.5
+        "univ25_pct": 7.6
       }
     },
     {
@@ -142,7 +142,7 @@
       "rank": {
         "viirs": 0.38,
         "empleo_pct": 49.1,
-        "univ_pct": 5.2
+        "univ25_pct": 5.8
       }
     },
     {
@@ -156,7 +156,7 @@
       "rank": {
         "viirs": 0.48,
         "empleo_pct": 51.3,
-        "univ_pct": 6.3
+        "univ25_pct": 7.5
       }
     },
     {
@@ -170,7 +170,7 @@
       "rank": {
         "viirs": 0.58,
         "empleo_pct": 50.3,
-        "univ_pct": 7.0
+        "univ25_pct": 8.2
       }
     },
     {
@@ -184,7 +184,7 @@
       "rank": {
         "viirs": 0.55,
         "empleo_pct": 47.9,
-        "univ_pct": 4.8
+        "univ25_pct": 5.5
       }
     },
     {
@@ -198,7 +198,7 @@
       "rank": {
         "viirs": 0.38,
         "empleo_pct": 47.9,
-        "univ_pct": 5.5
+        "univ25_pct": 6.2
       }
     },
     {
@@ -212,7 +212,7 @@
       "rank": {
         "viirs": 0.57,
         "empleo_pct": 52.1,
-        "univ_pct": 5.7
+        "univ25_pct": 6.6
       }
     },
     {
@@ -226,7 +226,7 @@
       "rank": {
         "viirs": 0.61,
         "empleo_pct": 47.8,
-        "univ_pct": 6.8
+        "univ25_pct": 7.8
       }
     },
     {
@@ -240,7 +240,7 @@
       "rank": {
         "viirs": 0.41,
         "empleo_pct": 47.6,
-        "univ_pct": 5.1
+        "univ25_pct": 5.7
       }
     },
     {
@@ -254,7 +254,7 @@
       "rank": {
         "viirs": 0.38,
         "empleo_pct": 47.7,
-        "univ_pct": 3.8
+        "univ25_pct": 4.6
       }
     },
     {
@@ -268,7 +268,7 @@
       "rank": {
         "viirs": 0.48,
         "empleo_pct": 46.0,
-        "univ_pct": 4.2
+        "univ25_pct": 4.7
       }
     },
     {
@@ -282,7 +282,7 @@
       "rank": {
         "viirs": 0.36,
         "empleo_pct": 43.7,
-        "univ_pct": 3.3
+        "univ25_pct": 3.8
       }
     },
     {
@@ -296,7 +296,7 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 47.9,
-        "univ_pct": 6.1
+        "univ25_pct": 7.0
       }
     },
     {
@@ -310,7 +310,7 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 45.1,
-        "univ_pct": 4.1
+        "univ25_pct": 4.5
       }
     },
     {
@@ -324,7 +324,7 @@
       "rank": {
         "viirs": 0.51,
         "empleo_pct": 42.5,
-        "univ_pct": 5.3
+        "univ25_pct": 6.2
       }
     },
     {
@@ -338,7 +338,7 @@
       "rank": {
         "viirs": 0.48,
         "empleo_pct": 44.5,
-        "univ_pct": 5.5
+        "univ25_pct": 6.1
       }
     },
     {
@@ -352,7 +352,7 @@
       "rank": {
         "viirs": 0.45,
         "empleo_pct": 42.2,
-        "univ_pct": 4.0
+        "univ25_pct": 4.8
       }
     }
   ]

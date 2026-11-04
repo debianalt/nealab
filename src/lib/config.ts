@@ -1139,7 +1139,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.educap.title', noteKey: 'rank.educap.note',
 			metrics: [
 				{ tabKey: 'rank.educap.tab.noschool' },
-				{ tabKey: 'rank.educap.tab.univ', field: 'univ_pct', hexVariable: 'c_university' },
+				{ tabKey: 'rank.educap.tab.univ', field: 'univ25_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'c_university' },   // 25+: pipeline/build_univ25_rank.py
 			],
 		},
 		parquet: 'sat_education_capital',
@@ -1328,7 +1328,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note',
 			metrics: [
 				{ tabKey: 'rank.econ.tab.empleo' },
-				{ tabKey: 'rank.econ.tab.univ', field: 'univ_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
+				{ tabKey: 'rank.econ.tab.univ', field: 'univ25_pct', noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
 				{ tabKey: 'rank.econ.tab.viirs', field: 'viirs', unit: 'nW/cm²/sr', decimals: 2, noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
 			],
 		},

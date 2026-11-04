@@ -78,7 +78,7 @@ SPECS = {
     },
     'education_capital': {
         'noschool_pct': (rate('c_no_schooling', 'pob_18_mas'), 1),
-        'univ_pct': (rate('c_university', 'pob_18_mas'), 1),
+        # universitario completo: univ25_pct (25+), pipeline/build_univ25_rank.py; no acá, o se pierde
     },
     # Teen motherhood is not shown per hexagon (girls 14–17: median 19 per radio);
     # summed per department it is a readable rate.
@@ -91,7 +91,7 @@ SPECS = {
     },
     'economic_activity': {
         'empleo_pct': (rate('tasa_empleo', 'pob_14_mas'), 1),
-        'univ_pct': (rate('pct_universitario', 'pob_18_mas'), 1),
+        # universitario completo: univ25_pct (25+), pipeline/build_univ25_rank.py
         'viirs': ('AVG(viirs_mean_radiance)', 2),
     },
 }
