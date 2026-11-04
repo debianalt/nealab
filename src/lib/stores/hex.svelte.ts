@@ -1302,17 +1302,26 @@ export class HexStore {
 		this.regionalDataVersion++;
 	}
 
-	private regionalChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	/** Value of a raw parquet cell for the choropleth: NULL/NaN → null (painted «Sin dato»),
+	 *  never 0, so a missing cell is not confused with a real 0 (reglamento §6). */
+	private static entryValue(raw: unknown): number | null {
+		if (raw === undefined || raw === null) return null;
+		const v = Number(raw);
+		return Number.isFinite(v) ? v : null;
+	}
+
+	private regionalChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.effectivePrimary;
-		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
+		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
 		for (const [h3index, data] of this.regionalVisibleData) {
-			entries.push({ h3index, value: (data[pv] ?? 0) as number, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index) });
+			const value = HexStore.entryValue(data[pv]);
+			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index), nodata: value === null });
 		}
 		return entries;
 	}
 
-	get regionalChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	get regionalChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
 		if (this.regionalDataVersion === this._regionalEntriesVersion) return this._regionalEntriesCache;
 		const result = this.regionalChoroplethEntries_compute();
 		this._regionalEntriesVersion = this.regionalDataVersion;
@@ -1370,18 +1379,18 @@ export class HexStore {
 		this.compareDataVersion++;
 	}
 
-	private compareChoroplethEntries_compute(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	private compareChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.effectivePrimary;
-		const entries: { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] = [];
+		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
 		for (const [h3index, data] of this.compareVisibleData) {
-			const value = (data[pv] ?? 0) as number;
-			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.compareBoundaryCache.get(h3index) });
+			const value = HexStore.entryValue(data[pv]);
+			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.compareBoundaryCache.get(h3index), nodata: value === null });
 		}
 		return entries;
 	}
 
-	get compareChoroplethEntries(): { h3index: string; value: number; properties: Record<string, number>; boundary?: number[][] }[] {
+	get compareChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
 		if (this.compareDataVersion === this._compareEntriesVersion) return this._compareEntriesCache;
 		const result = this.compareChoroplethEntries_compute();
 		this._compareEntriesVersion = this.compareDataVersion;

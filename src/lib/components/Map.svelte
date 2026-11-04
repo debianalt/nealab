@@ -3279,10 +3279,8 @@
 	function computeHexColor(value: number, colorScale: string, minVal: number, maxVal: number, range: number, t: MapTema): string {
 		const P = MAP_PALETTE[t];
 		if (typeof value !== 'number' || !Number.isFinite(value)) return P.nodata;
-		// Legacy: value=0 era usado como proxy de nodata. Tras la refactorización,
-		// setHexChoropleth maneja nodata explícitamente antes de llamar a esta función.
-		// Este branch permanece como red de seguridad para callsites legacy.
-		if (value === 0 && colorScale !== 'diverging' && colorScale !== 'categorical' && colorScale !== 'lisa' && colorScale !== 'bivariate') return P.nodata;
+		// Un 0 es una lectura real (0 % de pérdida, 0 egresados): toma el extremo bajo de la
+		// rampa. El nodata (NULL/NaN/flag) lo separan los llamadores antes de llegar acá.
 		if (colorScale === 'bivariate') return P.bivar[Math.round(value) - 1] ?? P.nodata;
 		if (colorScale === 'lisa') return P.lisa[Math.round(value)] ?? P.nodata;
 		if (colorScale === 'categorical') {
