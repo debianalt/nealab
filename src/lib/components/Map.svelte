@@ -96,7 +96,8 @@
 	// forestry_harvest paints the same macizo tiles by class (+page sets it): the tile property, its classes and the
 	// open department (dpto_key = parquetKey of the INDEC partition). Null → the forestry overlay paint.
 	// focus (deptRank.macizoFocus): the stands the tab is about keep their class color, the rest go gray and faint.
-	type MacizoPaint = { prop: string; classes: ColorClasses; deptKey: string | null; focus?: MacizoFocus | null };
+	// pick: a chart column is selected → the stands in focus take one highlight color (the legend's first step).
+	type MacizoPaint = { prop: string; classes: ColorClasses; deptKey: string | null; focus?: MacizoFocus | null; pick?: boolean };
 	let macizoPaint: MacizoPaint | null = null;
 	const PLANT_FILL_DEFAULT: any = ['match', ['get', 'grupo_espe'],
 		'Pinos', '#22c55e', 'Eucaliptos', '#38bdf8', 'Nativas', '#f59e0b', 'Sauces y Álamos', '#a78bfa', '#9ca3af'];
@@ -105,14 +106,22 @@
 		updatePlantationsVisibility();
 	}
 	function macizoFocusCond(f: MacizoFocus): any {
-		const sit = ['in', ['to-number', ['get', 'situacion'], 0], ['literal', f.sit]];
-		return f.genero ? ['all', ['==', ['get', 'genero'], f.genero], sit] : sit;
+		const num = (k: string) => ['to-number', ['get', k], 0];
+		const within = (v: any, r: [number, number]) => ['all', ['>=', v, r[0]], ['<=', v, r[1]]];
+		const c: any[] = [];
+		if (f.genero === 'otras') c.push(['!', ['in', ['coalesce', ['get', 'genero'], ''], ['literal', ['Pinus', 'Eucalyptus']]]]);
+		else if (f.genero) c.push(['==', ['get', 'genero'], f.genero]);
+		if (f.sit) c.push(['in', num('situacion'), ['literal', f.sit]]);
+		if (f.anioPlant) c.push(within(num('anio_plant'), f.anioPlant));
+		if (f.anioTurno) c.push(within(['+', num('anio_plant'), num('turno')], f.anioTurno));
+		if (f.anioPerdida) c.push(within(num('anio_perdida'), f.anioPerdida));
+		return c.length === 1 ? c[0] : ['all', ...c];
 	}
 	function macizoColorExpr(p: MacizoPaint, t: MapTema): any {
 		const c = p.classes;
 		const pairs = c.steps.flatMap((s) => [s.from, classColor(s.color, t)]);
 		const fallback = classColor(c.zero?.color ?? c.steps[c.steps.length - 1].color, t);
-		const byClass = ['match', ['to-number', ['get', p.prop], 0], ...pairs, fallback];
+		const byClass = p.pick ? classColor(c.steps[0].color, t) : ['match', ['to-number', ['get', p.prop], 0], ...pairs, fallback];
 		return p.focus ? ['case', macizoFocusCond(p.focus), byClass, classColor(NODATA_HEX, t)] : byClass;
 	}
 	function macizoOpacityExpr(p: MacizoPaint, t: MapTema): any {

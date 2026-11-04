@@ -541,6 +541,8 @@
 					mapComponent?.clearLassoDraw();
 				} else if (lassoStore.active) {
 					handleToggleLasso();
+				} else if (hexStore.macizoChartFocus) {
+					hexStore.setMacizoChartFocus(null);   // a macizo chart pick goes first, the department stays
 				} else {
 					clearAll();
 				}
@@ -1171,7 +1173,7 @@
 
 	// Province view: paint the departments with the ranking reading the panel shows.
 	$effect(() => {
-		const f = hexStore.deptFill;
+		const f = hexStore.mapDeptFill;
 		mapComponent?.setDeptFill(f);
 	});
 
@@ -1182,8 +1184,9 @@
 		const prop = hexStore.effectivePrimary;
 		const classes = hexStore.effectiveColorClasses;
 		const deptKey = hexStore.selectedParquetKey;
-		const focus = hexStore.macizoFocus;
-		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey, focus } : null);
+		const focus = hexStore.macizoPaintFocus;
+		const pick = !!hexStore.macizoChartFocus;
+		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey, focus, pick } : null);
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────

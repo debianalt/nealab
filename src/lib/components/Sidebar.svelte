@@ -33,6 +33,7 @@
 	import RadioCensusPanel from './RadioCensusPanel.svelte';
 	import CensoTemporalPanel from './CensoTemporalPanel.svelte';
 	import UsoSerie from './UsoSerie.svelte';
+	import CosechaGraficos from './CosechaGraficos.svelte';
 
 	let {
 		mapStore,
@@ -266,6 +267,15 @@
 			{/if}
 			{#if hexStore.activeLayer?.classSeries}
 				<UsoSerie {hexStore} />
+			{/if}
+			<!-- Macizo layer (forestry_harvest): no per-hex data, its own charts from the summaries; a column paints stands. -->
+			{#if hexStore.activeLayer?.macizos}
+				<button class="charts-divider charts-toggle" onclick={() => chartsOpen = !chartsOpen}>
+					Gráficos {chartsOpen ? '▾' : '▸'}
+				</button>
+				{#if chartsOpen}
+					<CosechaGraficos {hexStore} />
+				{/if}
 			{/if}
 			<!-- Value charts (histogram, Moran, bivariate) read numbers: not over nominal class codes (land use
 			     «Uso 2025», «1985», «Qué cambió»); the % tabs of the same layer keep them. -->

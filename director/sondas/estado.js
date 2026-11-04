@@ -105,8 +105,8 @@
 			zeroBelow: h.effectiveColorClasses.zeroBelow ?? null, upperInclusive: !!h.effectiveColorClasses.upperInclusive,
 			zero: h.effectiveColorClasses.zero ? S.i18n.t(h.effectiveColorClasses.zero.labelKey) : null,
 			steps: h.effectiveColorClasses.steps.map(s => ({ from: s.from, label: S.i18n.t(s.labelKey) })) } : null,
-		deptSel: h.selectedDpto, deptFill: h.deptFill ? { titulo: h.deptFill.title, unidad: h.deptFill.unit, max: h.deptFill.max,
-			decimales: h.deptFill.decimals, valores: h.deptFill.values.slice(0, 80) } : null,
+		deptSel: h.selectedDpto, deptFill: (h.mapDeptFill ?? h.deptFill) ? (() => { const f = h.mapDeptFill ?? h.deptFill; return { titulo: f.title, unidad: f.unit, max: f.max,
+			decimales: f.decimals, valores: f.values.slice(0, 80) }; })() : null,
 		pestanas: txt('.rank-tab'), pestanaActiva: txt('.rank-tab.active')[0] ?? null,
 		ranking: [...document.querySelectorAll('.rank-row')].slice(0, 80).map(r => ({
 			nombre: r.querySelector('.rank-name')?.innerText.trim(), valor: r.querySelector('.rank-value')?.innerText.trim() })),

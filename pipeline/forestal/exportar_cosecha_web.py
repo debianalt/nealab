@@ -119,6 +119,35 @@ def main() -> None:
             'macizos': int(len(d)),
         }
 
+    ap_all = pd.to_numeric(df.anio_plant, errors='coerce')
+    df['ap'] = np.where(ap_all > 1900, ap_all, np.nan)
+    df['anio_turno'] = df.ap + df.turno
+    df['gen3'] = np.select([df.genero == 'Pinus', df.genero == 'Eucalyptus'], ['pino', 'euca'], 'otras')
+
+    def columnas(d: pd.DataFrame, cortes: list[tuple[str, pd.Series]]) -> dict:
+        # {rotulos, ha: {pino, euca, otras}}: hectáreas por columna (máscara booleana) y género
+        ha = {k: [round(float(d.loc[m & (d.gen3 == k), 'ha'].sum())) for _, m in cortes] for k in ('pino', 'euca', 'otras')}
+        return {'rotulos': [r for r, _ in cortes], 'ha': ha}
+
+    def series(d: pd.DataFrame) -> dict:
+        # Gráficos del panel (CosechaGraficos.svelte); cada columna = el filtro de teselas que pinta al tocarla.
+        vivo = d.situacion.isin([1, 2])
+        cal = [('hoy', d.situacion.isin([3, 4]))]
+        cal += [(str(a), vivo & (d.anio_turno == a)) for a in range(ANIO + 1, ANIO + 16)]
+        cal += [(f'{ANIO + 16}+', vivo & (d.anio_turno >= ANIO + 16))]
+        pl = [('<1990', d.ap < 1990)] + [(str(a), d.ap == a) for a in range(1990, ANIO)]
+        t5 = d.situacion == 5
+        ap5 = pd.to_numeric(d.anio_perdida, errors='coerce')
+        tal = [(str(a), t5 & (ap5 == a)) for a in range(2001, ANIO)]
+        return {'calendario': columnas(d, cal), 'plantacion': columnas(d, pl), 'talado': columnas(d, tal)}
+
+    def chequear(r: dict, s: dict, donde: str) -> None:
+        hoy_pino = s['calendario']['ha']['pino'][0]
+        assert abs(hoy_pino - r['pino_listo_ha']) <= 1, f'{donde}: calendario hoy pino {hoy_pino} ≠ pino_listo {r["pino_listo_ha"]}'
+        tal = sum(sum(v) for v in s['talado']['ha'].values())
+        celdas = sum(1 for v in s['talado']['ha'].values() for x in v if x)   # cada celda redondeada ±0,5 ha
+        assert abs(tal - r['perdida_ha']) <= 1 + 0.5 * celdas, f'{donde}: talado {tal} ≠ perdida {r["perdida_ha"]}'
+
     for terr, g in df.groupby('territorio'):
         base = json.loads((DATA / BASE[terr]).read_text(encoding='utf-8'))
         deps = []
@@ -126,10 +155,11 @@ def main() -> None:
             d = g[g.dpto_key == dep['parquetKey']]
             if d.empty:
                 continue
-            r = rank(d)
+            r = rank(d); se = series(d); chequear(r, se, f"{terr}/{dep['parquetKey']}")
             deps.append({'dpto': dep['dpto'], 'parquetKey': dep['parquetKey'], 'centroid': dep.get('centroid'),
-                         'avg_score': r['pino_listo_ha'], 'hex_count': 0, 'rank': r})
-        resumen = {'province': {'total_hexes': 0, 'avg_score': None, 'unassigned': int(g.dpto_key.isna().sum()), 'rank': rank(g)},
+                         'avg_score': r['pino_listo_ha'], 'hex_count': 0, 'rank': r, **se})
+        rp, sp = rank(g), series(g); chequear(rp, sp, terr)
+        resumen = {'province': {'total_hexes': 0, 'avg_score': None, 'unassigned': int(g.dpto_key.isna().sum()), 'rank': rp, **sp},
                    'departments': deps,
                    'source': 'pipeline/forestal/exportar_cosecha_web.py (DNDFI 23-04-2026, Hansen v1.13, turnos validados 3-nov-2026)'}
         (DATA / RESUMEN[terr]).write_text(json.dumps(resumen, ensure_ascii=False, indent=1), encoding='utf-8')

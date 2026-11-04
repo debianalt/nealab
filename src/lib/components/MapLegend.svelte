@@ -15,7 +15,7 @@
 	const layer = $derived(hexStore.activeLayer);
 
 	// Province view: the departments painted with the ranking reading (deptFill).
-	const fill = $derived(hexStore.deptFill);
+	const fill = $derived(hexStore.mapDeptFill);
 	const fillBy = $derived(fill ? i18n.t(fill.territory.endsWith('_br') ? 'legend.deptFill.byMun' : fill.territory.endsWith('_py') ? 'legend.deptFill.byDist' : 'legend.deptFill.byDept') : '');
 	const fillRows = $derived.by(() => {
 		if (!fill) return [];

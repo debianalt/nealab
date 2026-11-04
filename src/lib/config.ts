@@ -586,7 +586,13 @@ export interface DeptRank {
 	macizoFocus?: MacizoFocus | null;
 }
 
-export interface MacizoFocus { genero?: string; sit: number[] }
+// genero 'otras' = neither Pinus nor Eucalyptus. Year ranges are inclusive [from, to] over tile properties
+// (anio_plant, anio_plant + turno, anio_perdida). label: a chart pick names itself in the legend.
+export interface MacizoFocus {
+	genero?: string; sit?: number[];
+	anioPlant?: [number, number]; anioTurno?: [number, number]; anioPerdida?: [number, number];
+	label?: string;
+}
 
 export interface ColorClass {
 	from: number;      // class applies to value >= from (ascending; first class is the floor)

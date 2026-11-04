@@ -1,6 +1,6 @@
 import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
-import { NODATA_HEX } from '$lib/utils/sello';
+import { NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -288,7 +288,9 @@ export class HexStore {
 		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
 		this.colorVariable = null;   // the new layer's panel sets its own
 		this.macizoFocus = null;
+		this.macizoChartFocus = null;
 		this.deptFill = null;
+		this.deptFillPick = null;
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -365,11 +367,19 @@ export class HexStore {
 	colorVariable: string | null = $state(null);
 	// Macizo layers: the stands the active reading is about (deptRank.macizoFocus); the rest paint gray.
 	macizoFocus: MacizoFocus | null = $state(null);
+	// A column picked in the macizo charts (CosechaGraficos): replaces the tab's focus until cleared
+	// (tab, department or layer change, Esc, or the same column again).
+	macizoChartFocus: MacizoFocus | null = $state(null);
+	get macizoPaintFocus(): MacizoFocus | null { return this.macizoChartFocus ?? this.macizoFocus; }
 	loadedCols: Set<string> = $state(new Set());
 
 	// Province view: the departments painted with the active ranking reading
 	// (same values and linear scale as the bars). Set by the panel, null otherwise.
 	deptFill: DeptFill | null = $state(null);
+	// Province view of the macizo layer: a chart column picked → departments painted with that column's hectares.
+	deptFillPick: DeptFill | null = $state(null);
+	get mapDeptFill(): DeptFill | null { return this.deptFillPick ?? this.deptFill; }
+	setDeptFillPick(f: DeptFill | null) { this.deptFillPick = f; }
 
 	setDeptFill(f: DeptFill | null) {
 		this.deptFill = f;
@@ -392,6 +402,12 @@ export class HexStore {
 	setMacizoFocus(f: MacizoFocus | null) {
 		if (JSON.stringify(f) === JSON.stringify(this.macizoFocus)) return;
 		this.macizoFocus = f;
+		this.macizoChartFocus = null;
+	}
+
+	setMacizoChartFocus(f: MacizoFocus | null) {
+		if (JSON.stringify(f) === JSON.stringify(this.macizoChartFocus)) return;
+		this.macizoChartFocus = f;
 	}
 
 	setColorVariable(v: string | null) {
@@ -416,10 +432,16 @@ export class HexStore {
 		if (!layer) return undefined;
 		const c = layer.variableClasses?.[this.effectivePrimary] ?? layer.colorClasses;
 		// A focused macizo reading lists only its own classes, plus the gray of the other stands.
-		const f = layer.macizos ? this.macizoFocus : null;
-		if (!c || !f) return c;
+		if (!c || !layer.macizos) return c;
+		const pick = this.macizoChartFocus;
+		if (pick) return { ...c, nominal: true, ordinal: false, zero: undefined, steps: [
+			{ from: -2, color: HARVEST_HEX[3], labelKey: pick.label ?? '' },
+			{ from: -1, color: NODATA_HEX, labelKey: 'harvest.otras' },
+		] };
+		const f = this.macizoFocus;
+		if (!f) return c;
 		return { ...c, zero: undefined, steps: [
-			...c.steps.filter((s) => f.sit.includes(s.from)),
+			...c.steps.filter((s) => !f.sit || f.sit.includes(s.from)),
 			{ from: -1, color: NODATA_HEX, labelKey: 'harvest.otras' },
 		] };
 	}
