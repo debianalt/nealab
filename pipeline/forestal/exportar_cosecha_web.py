@@ -48,7 +48,7 @@ NORTE_MISIONES = {'eldorado', 'san_pedro', 'g_m_belgrano', 'iguazu', 'montecarlo
 TURNO = {'Pinus': (16, 23), 'Araucaria': (25, 31), 'Grevillea': (25, None), 'Paulownia': (12, None),
          'Prosopis': (25, None)}
 EDADES = [-1, 5, 10, 15, 20, 25, 999]
-BANDAS_PAV = [-0.001, 1, 3, 5, 10, np.inf]   # km
+BANDAS_RED = [-0.001, 2, 5, 10, 20, 40, np.inf]   # km por la red; 6 bandas sobre la distribución del 4-nov-2026
 
 
 def turno(genero: str, territorio: str, dpto: str) -> tuple[float, float]:
@@ -87,17 +87,21 @@ def main() -> None:
     c = pd.read_parquet(COSECHA)[['id', 'perdida_post', 'anio_perdida', 'pct_perdida']]
     df = df.merge(c, on='id', how='left')
     df['perdida_post'] = df.perdida_post.fillna(False).astype(bool)
-    # Distancia en línea recta desde el borde del macizo a la ruta pavimentada más cercana (vial.macizos,
-    # pipeline/vial/distancia_macizos.py). Bandas: 1 hasta 1 km · 2 1–3 · 3 3–5 · 4 5–10 · 5 más de 10 · 0 sin dato.
+    # Km POR LA RED DE CAMINOS desde el borde del macizo hasta la ruta pavimentada más cercana (vial.macizos,
+    # pipeline/vial/red_vial.py): todo ese recorrido es camino sin pavimentar. acceso_km = el primer tramo en línea
+    # recta hasta un camino conectado (grande = falta mapeo). Bandas: BANDAS_RED; 0 = sin dato.
     conn = connect(DB)
-    dist = pd.read_sql('SELECT id::text AS id_txt, dist_pav_m FROM vial.macizos', conn)
+    cur = conn.cursor()
+    cur.execute('SELECT id::text, km_red_pav, acceso_m FROM vial.macizos')
+    dist = pd.DataFrame(cur.fetchall(), columns=['id_txt', 'km_red_pav', 'acceso_m'])
     conn.close()
     df['id_txt'] = df.id.astype(str)
     df = df.merge(dist.drop_duplicates('id_txt'), on='id_txt', how='left')
-    km = df.dist_pav_m / 1000
-    df['dist_pav_km'] = km.round(1)
-    df['banda_pav'] = pd.cut(km, BANDAS_PAV, labels=False).add(1).fillna(0).astype('int8')
-    log(f'distancia a pavimento: {int(df.dist_pav_m.notna().sum()):,} de {len(df):,} macizos; '
+    km = df.km_red_pav.astype(float)
+    df['km_red'] = km.round(1)
+    df['acceso_km'] = (df.acceso_m.astype(float) / 1000).round(1)
+    df['banda_red'] = pd.cut(km, BANDAS_RED, labels=False).add(1).fillna(0).astype('int8')
+    log(f'km por la red hasta el pavimento: {int(km.notna().sum()):,} de {len(df):,} macizos; '
         f'mediana {km.median():.1f} km')
     s = np.full(len(df), 6, np.int8)
     e, t, pz = df.edad.to_numpy(), df.turno.to_numpy(), df.pasado.to_numpy()
@@ -110,7 +114,7 @@ def main() -> None:
     df['situacion'] = s
     OUT.mkdir(parents=True, exist_ok=True)
     cols = ['id', 'territorio', 'dpto_key', 'edad', 'clase_edad', 'turno', 'pasado', 'situacion', 'anio_perdida', 'pct_perdida',
-            'banda_pav', 'dist_pav_km']
+            'banda_red', 'km_red', 'acceso_km']
     out = df[cols].copy()
     out['turno'] = out.turno.astype('float32'); out['pasado'] = out.pasado.replace(np.inf, np.nan).astype('float32')
     out.to_parquet(OUT / 'macizos_atributos.parquet', index=False)
@@ -154,9 +158,12 @@ def main() -> None:
         ap5 = pd.to_numeric(d.anio_perdida, errors='coerce')
         tal = [(str(a), t5 & (ap5 == a)) for a in range(2001, ANIO)]
         listo = d.situacion.isin([3, 4])
-        dis = [(str(b), listo & (d.banda_pav == b)) for b in range(1, len(BANDAS_PAV))]
+        dis = [(str(b), listo & (d.banda_red == b)) for b in range(1, len(BANDAS_RED))]
+        distancia = columnas(d, dis)
+        # hectáreas en turno cuyo primer camino conectado está a más de 1 km en línea recta (falta mapeo)
+        distancia['ha_sin_camino'] = round(float(d.loc[listo & (d.acceso_km > 1), 'ha'].sum()))
         return {'calendario': columnas(d, cal), 'plantacion': columnas(d, pl), 'talado': columnas(d, tal),
-                'distancia': columnas(d, dis)}
+                'distancia': distancia}
 
     def chequear(r: dict, s: dict, donde: str) -> None:
         hoy_pino = s['calendario']['ha']['pino'][0]

@@ -63,9 +63,10 @@ TERRITORY_PROV = {
 PROP_COLS = ["id", "especie", "genero", "grupo_espe", "anio_plant", "superficie", "depto", "uso_forest"]
 # --attrs (pipeline/forestal/exportar_cosecha_web.py): per-macizo harvest attributes joined by id → *_<version>.pmtiles
 # v2 (3-nov-2026): age, rotation situation, Hansen loss. v3 (4-nov-2026): + distance to paved road
-# (pipeline/vial/distancia_macizos.py): banda_pav 1 <1 km · 2 1–3 · 3 3–5 · 4 5–10 · 5 >10 · 0 sin dato; dist_pav_km.
-ATTR_COLS = ["dpto_key", "edad", "clase_edad", "situacion", "turno", "anio_perdida", "banda_pav", "dist_pav_km"]
-FLOAT_ATTRS = {"dist_pav_km"}
+# (straight line, retired). v4 (4-nov-2026): km BY ROAD NETWORK to the nearest paved road (pipeline/vial/red_vial.py):
+# banda_red 1 ≤2 km · 2 2–5 · 3 5–10 · 4 10–20 · 5 20–40 · 6 >40 · 0 sin dato; km_red; acceso_km (first straight hop).
+ATTR_COLS = ["dpto_key", "edad", "clase_edad", "situacion", "turno", "anio_perdida", "banda_red", "km_red", "acceso_km"]
+FLOAT_ATTRS = {"km_red", "acceso_km"}
 
 
 def _polygonal(geom):
@@ -174,7 +175,7 @@ def main():
     ap.add_argument("--territory", required=True, help="misiones|corrientes|chaco|formosa|all")
     ap.add_argument("--geojson", default=DEFAULT_GEOJSON)
     ap.add_argument("--attrs", default=None, help="parquet id → harvest attributes; writes <t>_plantations_<version>.pmtiles")
-    ap.add_argument("--version", default="v3", help="suffix for the --attrs build (v3 = + distance to paved road)")
+    ap.add_argument("--version", default="v4", help="suffix for the --attrs build (v4 = + km by road network to pavement)")
     args = ap.parse_args()
 
     if not os.path.exists(args.geojson):

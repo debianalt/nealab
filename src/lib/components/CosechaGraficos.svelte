@@ -85,7 +85,7 @@
 			return { genero, sit: [1, 2], anioTurno: r.endsWith('+') ? [y, 9999] : [y, y], label };
 		}
 		if (chart === 'plantacion') return { genero, anioPlant: r.startsWith('<') ? [1901, y - 1] : [y, y], label };
-		if (chart === 'distancia') return { genero, sit: [3, 4], bandaPav: [y], label };
+		if (chart === 'distancia') return { genero, sit: [3, 4], bandaRed: [y], label };
 		return { genero, sit: [5], anioPerdida: [y, y], label };
 	}
 
@@ -148,8 +148,10 @@
 		const tot = dis.rotulos.map((_, i) => sumCol(dis, i, i + 1));
 		const all = tot.reduce((a, v) => a + v, 0);
 		if (!all) return '';
-		const lejos = tot.slice(2).reduce((a, v) => a + v, 0);   // more than 3 km
-		return i18n.t('harvest.chart.dis.sum').replace('{p}', fmt(100 * lejos / all)).replace('{h}', fmt(lejos));
+		const lejos = tot.slice(3).reduce((a, v) => a + v, 0);   // more than 10 km by road (bands 4–6)
+		const sin = (dis as any).ha_sin_camino ?? 0;
+		return i18n.t('harvest.chart.dis.sum').replace('{p}', fmt(100 * lejos / all)).replace('{h}', fmt(lejos))
+			+ (sin > 0 ? ' ' + i18n.t('harvest.chart.dis.sinCamino').replace('{s}', fmt(sin)) : '');
 	});
 </script>
 
