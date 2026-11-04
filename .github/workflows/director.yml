@@ -70,11 +70,11 @@ jobs:
           MODELO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml'))['modelo'])")
           ESFUERZO=$(python -c "import yaml;print(yaml.safe_load(open('director/config.yaml')).get('esfuerzo','high'))")
           mkdir -p director/run
-          claude -p "Corré python director/consulta.py \"SELECT count(*) AS n FROM p('hex_flood_risk')\" y escribí el número en director/run/prueba.txt. Respondé sólo con el número." \
+          claude -p "Corré python director/consulta.py \"SELECT count(*) AS n FROM p('hex_flood_risk')\" y escribí el número en director/run/prueba.txt. Usá la herramienta Write para el archivo. Respondé sólo con el número." \
             --model "$MODELO" --effort "$ESFUERZO" \
             --allowedTools "Read" "Write(director/run/**)" "Bash(python director/consulta.py:*)" \
             --output-format json > salida.json; echo "exit=$?"
-          python -c "import json;d=json.load(open('salida.json'));print('resultado:',d.get('result'));print('modelo:',list((d.get('modelUsage') or {}).keys()));print('turnos:',d.get('num_turns'),'error:',d.get('is_error'))"
+          python -c "import json;d=json.load(open('salida.json'));print('resultado:',d.get('result'));print('modelo:',list((d.get('modelUsage') or {}).keys()));print('turnos:',d.get('num_turns'),'error:',d.get('is_error'));print('negados:',d.get('permission_denials'))"
           echo "archivo: $(cat director/run/prueba.txt 2>/dev/null || echo NO ESCRITO)"
           test -s director/run/prueba.txt
 
