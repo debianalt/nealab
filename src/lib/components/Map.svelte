@@ -93,7 +93,8 @@
 	// Forestry plantations overlay (DNDFI). Visibility is driven from the right panel
 	// (mapStore.plantationsVisible), only when forestry_aptitude is active with a dept
 	// selected. Per-territory tiles, gated by minzoom 9 so they load per-department.
-	const PLANTATION_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa'];
+	// Empty since 4-nov-2026: inventory stands are not published.
+	const PLANTATION_TERRITORIES: string[] = [];
 	// forestry_harvest paints the same macizo tiles by class (+page sets it): the tile property, its classes and the
 	// open department (dpto_key = parquetKey of the INDEC partition). Null → the forestry overlay paint.
 	// focus (deptRank.macizoFocus): the stands the tab is about keep their class color, the rest go gray and faint.
@@ -518,7 +519,7 @@
 			// source per AR territory, hidden until forestry_aptitude is active AND the
 			// user toggles it on (updatePlantationsVisibility). It is the same inventory
 			// the SDM uses as presence, so the score and the overlay are one object.
-			for (const t of ['misiones', 'corrientes', 'chaco', 'formosa'] as const) {
+			for (const t of PLANTATION_TERRITORIES) {
 				map.addSource(`${t}-plantations`, { type: 'vector', url: getTilesUrl(`${t}_plantations` as any) });
 				// No minzoom: the overlay is filtered to the selected department (setFilter
 				// on `depto` in updatePlantationsVisibility), so only that dept's polygons
