@@ -248,6 +248,17 @@ definición y sus fuentes; `meta.v_ficha` pone al lado la validación y las limi
 ```sql
 SELECT columna, definicion, fuente, tipo_dato, limitaciones FROM meta.v_ficha WHERE objeto = 'era5_helada_corr';
 ```
+**Soporte** (`meta.variables.soporte`, desde el 4-nov-2026): para cada columna de las capas de la web (`capa_*` y
+`v_hexoma`), el área sobre la que el dato se midió de verdad. Todas se guardan en res-9 (~0,105 km²), pero una tasa
+censal es del radio, gdd es del píxel ERA5-Land de 0,1° y la pérdida de Hansen es del píxel de 30 m. Sale de
+`metodologia.SOPORTES` (patrones por columna) y la carga falla si una columna de `capa_*` queda sin soporte.
+Diagnóstico que lo motivó (% de celdas iguales a todas sus hermanas res-8): tasas censales 73–79 % (98 % constantes
+dentro del radio), gdd 87 %, precipitación 77 %; Hansen, JRC, VIIRS y SoilGrids < 1 %. Antes de un Moran, un
+histograma o un ranking sobre celdas, mirá el soporte: si es el radio o un píxel grueso, el n efectivo es el de esas
+unidades, no el de las celdas.
+```sql
+SELECT columna, soporte FROM meta.variables WHERE objeto = 'capa_service_deprivation' AND soporte IS NOT NULL;
+```
 La fuente de verdad es `pipeline/hexoma/metodologia.py`: al agregar una fuente o un proceso se edita ahí y se corre
 `build_hexoma_meta.py`. El relevamiento de las capas de la web (1-nov-2026) encontró inconsistencias entre código y
 textos de spatia.ar, anotadas en sus fichas: el CI de deforestación corre en percentil local aunque la capa
@@ -322,7 +333,8 @@ Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
    Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por `censo_2022.cruce` (o por el cruce único, cuando esté).
 2. **Capas institucionales:** OTBN, áreas protegidas, comunidades indígenas (RENACI) y catastro o tamaño de parcela.
 3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100 (potencial agrícola: A1 hecha el 1-nov-2026, esquemas `clima` y `suelo`).
-4. **Vecindad con SQL** (`h3_grid_disk`) y una tabla con la resolución de origen de cada variable.
+4. **Vecindad con SQL** (`h3_grid_disk`). ~~Una tabla con la resolución de origen de cada variable~~: hecho el
+   4-nov-2026 (`meta.variables.soporte`).
 5. ~~Un extracto congelado por paper~~: hecho el 1-nov-2026 (`extracto.py`).
 
 Descartado: pasar a res-10 o res-11, porque da precisión falsa en las censales y en las capas de 250 m a 5 km.

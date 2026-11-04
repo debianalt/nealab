@@ -248,10 +248,30 @@ def main() -> None:
                              WHERE comentario IS NOT NULL ORDER BY esquema, columna, objeto) b
                        WHERE v.definicion IS NULL AND b.esquema = v.esquema AND b.columna = v.columna""")
         cur.execute('UPDATE meta.variables SET sin_comentario = definicion IS NULL')
+        # soporte de las columnas de las capas de la web (metodologia.SOPORTES), en capa_* y en v_hexoma (capa__columna)
+        cur.execute('ALTER TABLE meta.variables ADD COLUMN soporte text')
+        cur.execute("""SELECT objeto, columna FROM meta.variables WHERE esquema = 'public'
+                         AND (objeto LIKE 'capa\\_%%' OR objeto = 'v_hexoma')
+                         AND columna NOT IN ('h3', 'territorio_id', 'depto_id', 'principal')""")
+        for obj, col in cur.fetchall():
+            if obj == 'v_hexoma':
+                if '__' not in col:
+                    continue
+                capa, c = col.split('__', 1)
+            else:
+                capa, c = obj[5:], col
+            if capa in m.SOPORTES:
+                cur.execute("UPDATE meta.variables SET soporte = %s WHERE esquema = 'public' AND objeto = %s AND columna = %s",
+                            (m.soporte(capa, c), obj, col))
+        cur.execute("""SELECT objeto || '.' || columna FROM meta.variables WHERE esquema = 'public' AND objeto LIKE 'capa\\_%%'
+                         AND columna NOT IN ('h3', 'territorio_id', 'depto_id', 'principal') AND soporte IS NULL ORDER BY 1""")
+        sin = [r[0] for r in cur.fetchall()]
+        assert not sin, f'columnas de capa_* sin soporte en metodologia.SOPORTES: {sin}'
         cur.execute("COMMENT ON TABLE meta.variables IS 'Una fila por columna del Hexoma: tipo, COMMENT, fuentes y "
-                    "procesos. sin_comentario y sin_fuente marcan lo que falta documentar'")
+                    "procesos. sin_comentario y sin_fuente marcan lo que falta documentar; soporte = área sobre la que se "
+                    "midió el dato en las capas de la web (no la celda donde se guarda)'")
         cur.execute("""CREATE VIEW meta.v_ficha AS
-            SELECT v.esquema, v.objeto, v.columna, v.definicion, v.origen_definicion, f.id AS fuente, f.tipo_dato, f.res_espacial,
+            SELECT v.esquema, v.objeto, v.columna, v.definicion, v.origen_definicion, v.soporte, f.id AS fuente, f.tipo_dato, f.res_espacial,
                    f.res_temporal, f.validacion, f.limitaciones
             FROM meta.variables v LEFT JOIN LATERAL unnest(v.fuentes) u(fid) ON true
             LEFT JOIN meta.fuentes f ON f.id = u.fid""")

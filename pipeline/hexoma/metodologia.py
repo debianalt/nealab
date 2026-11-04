@@ -312,7 +312,7 @@ CAPAS = {
                    'jrc_occurrence, jrc_recurrence (%), jrc_seasonality (meses), flood_extent_pct, low_bld_n, low_land_pct, low_bld_new_n', True,
                    'Landsat no ve crecidas cortas bajo nubes; S1 sobreestima agua en la llanura chaqueña; mide lo construido en zona baja, no la frecuencia de inundación.',
                    'gee_flood_detection.py; process_to_h3.py; update_flood_current.py; build_flood_rank.py; flood-update.yml'),
-    'forestry_aptitude': ('Aptitud forestal', 'Presencia: Inventario Nacional de Plantaciones DNDFI 2026; covariables ERA5, CHIRPS, TerraClimate, SoilGrids, HWSD, SRTM, NDVI, tiempo a ciudad',
+    'forestry_aptitude': ('Aptitud forestal', 'Presencia: Inventario Nacional de Plantaciones DNDFI 2026; covariables ERA5-Land mensual (0,1°), CHIRPS v2 (0,05°), TerraClimate (~4 km), SoilGrids (250 m), HWSD, SRTM (30 m, exportado a 90 m), NDVI, tiempo a ciudad; el clima se lee en el píxel que contiene el centro de la celda',
                           'Random Forest (400 árboles, hoja mínima 20, clases balanceadas), presencia = fracción plantada ≥ 0,10, fondo 1:3, GroupKFold 5; score = predict_proba × 100; k-means k=4 sobre score ≥ 40. El texto describe dos nichos (comercial AUC 0,90; nativo 0,78) pero el script _ardndfi entrena uno.',
                           'score (0–100), type_label, gdd (°C·d), precip_total (mm), water_deficit (mm), slope_mean (°), clay (%), soc (g/kg)', True,
                           'Fuera de Misiones y Corrientes es extrapolación; no se ve paso de calibración aunque el texto lo dice.',
@@ -341,6 +341,73 @@ COMUN_CENSAL = ('Base común de las capas censales (build_census_rates.py): cont
                 'estimador de razón por celda Σw·num / Σw·den con pesos del cruce dasimétrico por edificios; radios con '
                 'base < 30 descartados; corte si el total de celdas difiere > 0,5 pts del provincial; sin score compuesto.')
 
+# Soporte de cada columna de las capas de la web: el área sobre la que el dato se midió de verdad, no la celda donde se
+# guarda (todas viven en res-9, ~0,105 km²). Diagnóstico del 4-nov-2026 (celdas iguales a todas sus hermanas res-8):
+# tasas censales 73–79 %, gdd 87 %, precipitación 77 %; Hansen, JRC, VIIRS y SoilGrids < 1 %.
+# Por capa, (patrón fnmatch de columna, soporte); gana el primero que calza. build_hexoma_meta.py lo carga en
+# meta.variables.soporte y falla si una columna de capa_* queda sin soporte.
+RADIO = 'radio censal 2022 (la celda de un solo radio lleva su tasa; la de borde, la mezcla ponderada por edificios)'
+REPARTO = 'radio censal 2022 repartido en las celdas por edificios (dasimétrico: la variación dentro del radio es del modelo)'
+EDIFICIO = 'huella de edificio (Global Building Atlas y Open Buildings), sumada en la celda'
+DERIVADO = 'celda res-9, derivado de las otras columnas de la capa (su soporte es el más grueso de sus insumos)'
+SOPORTES = {
+    'accessibility': [('travel_min_capital*', 'píxel de fricción Oxford/MAP 2019 (30″, ~1 km), costo mínimo hasta el centro de la celda'),
+                      ('travel_min_cabecera*', 'píxel Oxford/MAP accessibility_to_cities_2015 (30″, ~1 km) en el centro de la celda'),
+                      ('dist_*', 'centro de la celda (distancia a puntos y líneas de OSM)'),
+                      ('*', DERIVADO)],
+    'agri_potential': [('p_normal_mm', 'píxel CHIRPS v3 0,05° (~5,5 km) que contiene el centro'),
+                       ('balance_normal_mm', 'píxeles CHIRPS v3 0,05° y ERA5-Land 0,1° (~11 km) que contienen el centro'),
+                       ('gdd_normal', 'píxel ERA5-Land 0,1° (~11 km) corregido con estaciones'),
+                       ('heladas*', 'píxel ERA5-Land 0,1° (~11 km) corregido con estaciones'),
+                       ('calor35_normal', 'píxel ERA5-Land 0,1° (~11 km) corregido con estaciones'),
+                       ('ph', 'píxel SoilGrids 2.0 (250 m)'), ('arcilla_pct', 'píxel SoilGrids 2.0 (250 m)'),
+                       ('pendiente_pct', 'píxel FABDEM a 3″ (~90 m)'), ('elev_m', 'píxel FABDEM a 3″ (~90 m)'),
+                       ('apt_*', 'el más grueso de sus insumos: clima ERA5-Land 0,1° y CHIRPS 0,05°, suelo SoilGrids 250 m')],
+    'censo_temporal': [('*', 'radio censal de cada año (1991, 2001, 2010, 2022), repartido por área en las celdas pobladas')],
+    'deforestation_dynamics': [('c_*', 'píxel Hansen GFC 30 m (la celda resume ~115)'), ('*', DERIVADO)],
+    'economic_activity': [('tasa_*', RADIO), ('pct_universitario', RADIO),
+                          ('viirs_mean_radiance', 'píxel VIIRS DNB 500 m (bilineal en el centro de la celda)'),
+                          ('building_density_per_km2', EDIFICIO), ('n_edificios', EDIFICIO),
+                          ('hogares_estimados', REPARTO), ('pob_*', REPARTO), ('*', DERIVADO)],
+    'education_capital': [('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
+    'education_flow': [('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
+    'eudr': [('fire_*', 'píxel MODIS MCD64A1 500 m (fuego sobre nativa con máscara MapBiomas 30 m)'),
+             ('*', 'píxel de 100 m (Hansen GFC 30 m agregado), ~9 por celda')],
+    'flood_risk': [('jrc_*', 'píxel JRC Global Surface Water 30 m (la celda resume ~115)'),
+                   ('flood_extent_pct', 'píxel Sentinel-1 a 90 m, centros de píxel en la celda'),
+                   ('low_land_pct', 'píxel HAND MERIT Hydro (3″, ~90 m)'),
+                   ('low_bld*', 'huella de edificio (Open Buildings) sobre HAND MERIT Hydro (~90 m)'), ('*', DERIVADO)],
+    'forestry_aptitude': [('gdd', 'píxel ERA5-Land mensual 0,1° (~11 km) que contiene el centro'),
+                          ('precip_total', 'píxel CHIRPS v2 0,05° (~5,5 km) que contiene el centro'),
+                          ('water_deficit', 'píxel TerraClimate (~4 km) que contiene el centro'),
+                          ('slope_mean', 'SRTM 30 m exportado a 90 m, p90 dentro de la celda'),
+                          ('clay', 'píxel SoilGrids 250 m'), ('soc', 'píxel SoilGrids 250 m'),
+                          ('*', DERIVADO + '; el clima entra a 0,05–0,1°')],
+    'health_access': [('c_healthcare_time', 'radio censal 2022 (media de los píxeles Oxford/MAP de ~1 km dentro del radio)'),
+                      ('c_pop_density', REPARTO + ', sobre el área de la celda'),
+                      ('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
+    'land_use': [('frac_*', 'vacía desde el pase a MapBiomas (3-nov-2026); era Dynamic World 10 m'),
+                 ('score', 'vacía desde el pase a MapBiomas (3-nov-2026)'),
+                 ('pct_*', 'píxel MapBiomas Argentina Col. 3, 30 m (la celda resume ~115)'), ('*', DERIVADO)],
+    'pm25_drivers': [('c_pm25_mean*', 'píxel ACAG V6.GL.02 0,01° (~1 km) en el centro de la celda'),
+                     ('c_*', 'modelo de conductores SHAP a res-7 (~5 km²)'), ('*', DERIVADO)],
+    'service_deprivation': [('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
+    'sociodemographic': [('pct_*', RADIO), ('tamano_medio_hogar', RADIO),
+                         ('densidad_hab_km2', REPARTO + ', sobre el área de la celda'), ('hog_total', REPARTO), ('*', DERIVADO)],
+}
+assert set(SOPORTES) == set(CAPAS), set(SOPORTES) ^ set(CAPAS)
+
+
+def soporte(capa: str, col: str) -> str | None:
+    import fnmatch
+    return next((s for pat, s in SOPORTES[capa] if fnmatch.fnmatchcase(col, pat)), None)
+
+
+def _res_capa(cid: str) -> str:
+    vistos = list(dict.fromkeys(s for _, s in SOPORTES[cid] if s != DERIVADO and not s.startswith(DERIVADO)))
+    return 'Por columna (meta.variables.soporte): ' + '; '.join(vistos) + '. Guardado en celda H3 res-9.'
+
+
 for cid, (nombre, fuentes, proc, vars_, comp, lim, scripts) in CAPAS.items():
     censal = 'build_census_rates' in scripts
     FUENTES.append(dict(
@@ -348,7 +415,7 @@ for cid, (nombre, fuentes, proc, vars_, comp, lim, scripts) in CAPAS.items():
         producto=f'Capa {cid} de spatia.ar, foto cargada por build_hexoma.py', version='la publicada en cdn.spatia.ar al cargar (ver public.cargas)',
         acceso='Parquets por departamento de cdn.spatia.ar (los mismos que lee la ficha de la web)',
         licencia='AGPL-3.0 (código); los datos heredan las licencias de sus fuentes', cita='Gómez, R. E. Spatia — análisis geoespacial del NEA. https://www.spatia.ar',
-        doi='Zenodo concept DOI 10.5281/zenodo.19483040', tipo_dato='capa de la web (derivada)', res_espacial='celda H3 res-9',
+        doi='Zenodo concept DOI 10.5281/zenodo.19483040', tipo_dato='capa de la web (derivada)', res_espacial=_res_capa(cid),
         res_temporal='según fuente', periodo='según fuente', cobertura='24 territorios en la web; NEA argentino en el Hexoma',
         variables=vars_, procesamiento=f'Fuentes: {fuentes}. Proceso: {proc}' + (f' {COMUN_CENSAL}' if censal else ''),
         asignacion_celda='La de la capa (ver procesamiento); en el Hexoma se guarda tal cual, por archivo de departamento (capa_*.depto_id, principal).',
