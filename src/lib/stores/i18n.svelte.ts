@@ -756,6 +756,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'harvest.sit.4': { es: 'Pasada de turno', en: 'Past rotation age', gn: 'Pasada de turno', pt: 'Passada do turno' },
 	'harvest.sit.5': { es: 'Talada después de plantar (cosecha o incendio, satélite)', en: 'Felled after planting (harvest or fire, satellite)', gn: 'Talada después de plantar (cosecha o incendio, satélite)', pt: 'Cortada depois de plantar (colheita ou incêndio, satélite)' },
 	'harvest.sit.6': { es: 'Sin año de plantación o sin turno citado', en: 'No planting year or no cited rotation', gn: 'Sin año de plantación o sin turno citado', pt: 'Sem ano de plantio ou sem turno citado' },
+	'harvest.otras': { es: 'Otras plantaciones (fuera de esta pregunta)', en: 'Other plantations (outside this question)', gn: 'Otras plantaciones (fuera de esta pregunta)', pt: 'Outras plantações (fora desta pergunta)' },
 	'harvest.edad.sin': { es: 'Sin año de plantación', en: 'No planting year', gn: 'Sin año de plantación', pt: 'Sem ano de plantio' },
 	'harvest.edad.1': { es: '0–5 años', en: '0–5 years', gn: '0–5 años', pt: '0–5 anos' },
 	'harvest.edad.2': { es: '6–10 años', en: '6–10 years', gn: '6–10 años', pt: '6–10 anos' },

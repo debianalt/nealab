@@ -1,5 +1,6 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getScoresDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
+import { NODATA_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
@@ -286,6 +287,7 @@ export class HexStore {
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
 		this.primaryOverride = null; // re-resolved against the new layer's parquet schema
 		this.colorVariable = null;   // the new layer's panel sets its own
+		this.macizoFocus = null;
 		this.deptFill = null;
 		if (!layerId) {
 			this.activeLayer = null;
@@ -361,6 +363,8 @@ export class HexStore {
 	// active ranking tab's per-hex relief variable). Used only when the loaded
 	// parquet has the column, so a territory not yet published keeps the primary.
 	colorVariable: string | null = $state(null);
+	// Macizo layers: the stands the active reading is about (deptRank.macizoFocus); the rest paint gray.
+	macizoFocus: MacizoFocus | null = $state(null);
 	loadedCols: Set<string> = $state(new Set());
 
 	// Province view: the departments painted with the active ranking reading
@@ -385,6 +389,11 @@ export class HexStore {
 		this.deptPick = null;
 	}
 
+	setMacizoFocus(f: MacizoFocus | null) {
+		if (JSON.stringify(f) === JSON.stringify(this.macizoFocus)) return;
+		this.macizoFocus = f;
+	}
+
 	setColorVariable(v: string | null) {
 		if (v === this.colorVariable) return;
 		this.colorVariable = v;
@@ -405,7 +414,14 @@ export class HexStore {
 	get effectiveColorClasses(): ColorClasses | undefined {
 		const layer = this.activeLayer;
 		if (!layer) return undefined;
-		return layer.variableClasses?.[this.effectivePrimary] ?? layer.colorClasses;
+		const c = layer.variableClasses?.[this.effectivePrimary] ?? layer.colorClasses;
+		// A focused macizo reading lists only its own classes, plus the gray of the other stands.
+		const f = layer.macizos ? this.macizoFocus : null;
+		if (!c || !f) return c;
+		return { ...c, zero: undefined, steps: [
+			...c.steps.filter((s) => f.sit.includes(s.from)),
+			{ from: -1, color: NODATA_HEX, labelKey: 'harvest.otras' },
+		] };
 	}
 
 	private static PRIMARY_SKIP = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'territorial_type']);

@@ -580,7 +580,13 @@ export interface DeptRank {
 	// The reading exists only by department (no per-hex column): the panel says so and
 	// names what the hexagons show instead.
 	hexNone?: boolean;
+	// Macizo layers (forestry_harvest): the stands this reading is about (genus and situation codes, as in the
+	// ranking). The map paints them in their class color and the rest gray and faint; the legend lists only them.
+	// null in a tab = no focus (overrides the base).
+	macizoFocus?: MacizoFocus | null;
 }
+
+export interface MacizoFocus { genero?: string; sit: number[] }
 
 export interface ColorClass {
 	from: number;      // class applies to value >= from (ascending; first class is the floor)
@@ -1030,16 +1036,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			field: 'pino_listo_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexVariable: 'situacion',
 			titleKey: 'rank.harvest.title.pino', noteKey: 'rank.harvest.note.pino',
 			extraField: 'pino_listo_pct', extraUnitKey: 'rank.harvest.unit.pctPino', extraDecimals: 1,
+			macizoFocus: { genero: 'Pinus', sit: [3, 4] },
 			metrics: [
 				{ tabKey: 'rank.harvest.tab.pino' },
 				{ tabKey: 'rank.harvest.tab.entra', field: 'pino_entra_ha', extraField: undefined,
-				  titleKey: 'rank.harvest.title.entra', noteKey: 'rank.harvest.note.entra' },
+				  titleKey: 'rank.harvest.title.entra', noteKey: 'rank.harvest.note.entra', macizoFocus: { genero: 'Pinus', sit: [2] } },
 				{ tabKey: 'rank.harvest.tab.euca', field: 'euca_listo_ha', extraField: 'euca_listo_pct', extraUnitKey: 'rank.harvest.unit.pctEuca',
-				  titleKey: 'rank.harvest.title.euca', noteKey: 'rank.harvest.note.euca' },
+				  titleKey: 'rank.harvest.title.euca', noteKey: 'rank.harvest.note.euca', macizoFocus: { genero: 'Eucalyptus', sit: [3, 4] } },
 				{ tabKey: 'rank.harvest.tab.edad', field: 'plant_ha', extraField: 'edad_media', extraUnitKey: 'rank.harvest.unit.edadMedia',
-				  titleKey: 'rank.harvest.title.edad', noteKey: 'rank.harvest.note.edad', hexVariable: 'clase_edad' },
+				  titleKey: 'rank.harvest.title.edad', noteKey: 'rank.harvest.note.edad', hexVariable: 'clase_edad', macizoFocus: null },
 				{ tabKey: 'rank.harvest.tab.perdida', field: 'perdida_ha', extraField: 'perdida_pct', extraUnitKey: 'rank.unit.pctArea',
-				  titleKey: 'rank.harvest.title.perdida', noteKey: 'rank.harvest.note.perdida' },
+				  titleKey: 'rank.harvest.title.perdida', noteKey: 'rank.harvest.note.perdida', macizoFocus: { sit: [5] } },
 			],
 		},
 		parquet: 'sat_forestry_harvest',   // no file: macizos come from the plantation tiles

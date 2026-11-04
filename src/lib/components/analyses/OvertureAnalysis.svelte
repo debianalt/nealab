@@ -198,7 +198,8 @@
 	// an open department reads like its bar. No ranking (saturated plain) → primary.
 	$effect(() => {
 		const v = hasRank ? (rankCfg?.hexVariable ?? null) : null;
-		untrack(() => hexStore.setColorVariable(v));
+		const f = hasRank ? (rankCfg?.macizoFocus ?? null) : null;
+		untrack(() => { hexStore.setColorVariable(v); hexStore.setMacizoFocus(f); });
 	});
 
 	const deptList = $derived.by(() => {

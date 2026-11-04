@@ -1182,7 +1182,8 @@
 		const prop = hexStore.effectivePrimary;
 		const classes = hexStore.effectiveColorClasses;
 		const deptKey = hexStore.selectedParquetKey;
-		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey } : null);
+		const focus = hexStore.macizoFocus;
+		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey, focus } : null);
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────

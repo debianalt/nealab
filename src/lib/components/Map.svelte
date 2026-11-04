@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as maplibregl from '$lib/maplibre';
-	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, ZERO_CLARO, type MapTema } from '$lib/utils/sello';
+	import { SELLO_HEX, rampColor, SELECT_OUTLINE, MAP_THEME, MAP_PALETTE, classColor, ZERO_CLARO, NODATA_HEX, type MapTema } from '$lib/utils/sello';
 	import { themeStore } from '$lib/stores/theme.svelte';
 	import { makeHexClip, clipCell, type HexClip } from '$lib/utils/hexClip';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
 	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses } from '$lib/config';
+	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses, type MacizoFocus } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -95,18 +95,29 @@
 	const PLANTATION_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa'];
 	// forestry_harvest paints the same macizo tiles by class (+page sets it): the tile property, its classes and the
 	// open department (dpto_key = parquetKey of the INDEC partition). Null → the forestry overlay paint.
-	let macizoPaint: { prop: string; classes: ColorClasses; deptKey: string | null } | null = null;
+	// focus (deptRank.macizoFocus): the stands the tab is about keep their class color, the rest go gray and faint.
+	type MacizoPaint = { prop: string; classes: ColorClasses; deptKey: string | null; focus?: MacizoFocus | null };
+	let macizoPaint: MacizoPaint | null = null;
 	const PLANT_FILL_DEFAULT: any = ['match', ['get', 'grupo_espe'],
 		'Pinos', '#22c55e', 'Eucaliptos', '#38bdf8', 'Nativas', '#f59e0b', 'Sauces y Álamos', '#a78bfa', '#9ca3af'];
-	export function setMacizoPaint(p: { prop: string; classes: ColorClasses; deptKey: string | null } | null) {
+	export function setMacizoPaint(p: MacizoPaint | null) {
 		macizoPaint = p;
 		updatePlantationsVisibility();
 	}
-	function macizoColorExpr(p: { prop: string; classes: ColorClasses }, t: MapTema): any {
+	function macizoFocusCond(f: MacizoFocus): any {
+		const sit = ['in', ['to-number', ['get', 'situacion'], 0], ['literal', f.sit]];
+		return f.genero ? ['all', ['==', ['get', 'genero'], f.genero], sit] : sit;
+	}
+	function macizoColorExpr(p: MacizoPaint, t: MapTema): any {
 		const c = p.classes;
 		const pairs = c.steps.flatMap((s) => [s.from, classColor(s.color, t)]);
 		const fallback = classColor(c.zero?.color ?? c.steps[c.steps.length - 1].color, t);
-		return ['match', ['to-number', ['get', p.prop], 0], ...pairs, fallback];
+		const byClass = ['match', ['to-number', ['get', p.prop], 0], ...pairs, fallback];
+		return p.focus ? ['case', macizoFocusCond(p.focus), byClass, classColor(NODATA_HEX, t)] : byClass;
+	}
+	function macizoOpacityExpr(p: MacizoPaint, t: MapTema): any {
+		const on = t === 'claro' ? 0.9 : 0.85;
+		return p.focus ? ['case', macizoFocusCond(p.focus), on, 0.25] : on;
 	}
 
 	onMount(() => {
@@ -2020,7 +2031,7 @@
 					map.setFilter(id, macizoPaint.deptKey ? ['==', ['get', 'dpto_key'], macizoPaint.deptKey] : null);
 					if (suffix === 'fill') {
 						map.setPaintProperty(id, 'fill-color', macizoColorExpr(macizoPaint, t));
-						map.setPaintProperty(id, 'fill-opacity', t === 'claro' ? 0.9 : 0.85);
+						map.setPaintProperty(id, 'fill-opacity', macizoOpacityExpr(macizoPaint, t));
 					} else {
 						map.setPaintProperty(id, 'line-color', t === 'claro' ? '#fbfaf7' : '#111827');
 						map.setPaintProperty(id, 'line-width', 0.3);
