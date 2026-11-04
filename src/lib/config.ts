@@ -1041,43 +1041,6 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		variableClasses: { apt_soja_clase: AGRI_APT_CLASSES, apt_maiz_clase: AGRI_APT_CLASSES, apt_algodon_clase: AGRI_APT_CLASSES, apt_girasol_clase: AGRI_APT_CLASSES, apt_arroz_clase: AGRI_APT_CLASSES, apt_yerba_clase: AGRI_APT_CLASSES, apt_te_clase: AGRI_APT_CLASSES, apt_citricos_clase: AGRI_APT_CLASSES, apt_pasturas_clase: AGRI_APT_CLASSES },
 		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 	},
-	forestry_harvest: {
-		id: 'forestry_harvest',
-		// DNDFI plantation polygons (no hexagons): age and situation against the rotation (turnos validated by the
-		// author, pipeline/forestal/turnos_forestales.md) and Hansen loss after planting. Rankings from the summaries.
-		macizos: true,
-		deptRank: {
-			field: 'pino_listo_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexVariable: 'situacion',
-			titleKey: 'rank.harvest.title.pino', noteKey: 'rank.harvest.note.pino',
-			extraField: 'pino_listo_pct', extraUnitKey: 'rank.harvest.unit.pctPino', extraDecimals: 1,
-			macizoFocus: { genero: 'Pinus', sit: [3, 4] },
-			metrics: [
-				{ tabKey: 'rank.harvest.tab.pino' },
-				{ tabKey: 'rank.harvest.tab.entra', field: 'pino_entra_ha', extraField: undefined,
-				  titleKey: 'rank.harvest.title.entra', noteKey: 'rank.harvest.note.entra', macizoFocus: { genero: 'Pinus', sit: [2] } },
-				{ tabKey: 'rank.harvest.tab.euca', field: 'euca_listo_ha', extraField: 'euca_listo_pct', extraUnitKey: 'rank.harvest.unit.pctEuca',
-				  titleKey: 'rank.harvest.title.euca', noteKey: 'rank.harvest.note.euca', macizoFocus: { genero: 'Eucalyptus', sit: [3, 4] } },
-				{ tabKey: 'rank.harvest.tab.edad', field: 'plant_ha', extraField: 'edad_media', extraUnitKey: 'rank.harvest.unit.edadMedia',
-				  titleKey: 'rank.harvest.title.edad', noteKey: 'rank.harvest.note.edad', hexVariable: 'clase_edad', macizoFocus: null },
-				{ tabKey: 'rank.harvest.tab.perdida', field: 'perdida_ha', extraField: 'perdida_pct', extraUnitKey: 'rank.unit.pctArea',
-				  titleKey: 'rank.harvest.title.perdida', noteKey: 'rank.harvest.note.perdida', macizoFocus: { sit: [5] } },
-			],
-		},
-		parquet: 'sat_forestry_harvest',   // no file: macizos come from the plantation tiles
-		variables: [
-			{ col: 'situacion', labelKey: 'harvest.var.situacion', aggregation: 'mean', unit: 'clase', hidden: true },
-			{ col: 'clase_edad', labelKey: 'harvest.var.edad', aggregation: 'mean', unit: 'clase', hidden: true },
-		],
-		primaryVariable: 'situacion',
-		colorScale: 'warm',
-		aggregation: 'mean',
-		fixedColorDomain: [1, 6],
-		titleKey: 'harvest.title',
-		perDepartment: true,
-		colorClasses: MACIZO_SITUACION_CLASSES,
-		variableClasses: { situacion: MACIZO_SITUACION_CLASSES, clase_edad: MACIZO_EDAD_CLASSES },
-		coverage: { misiones: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
-	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
 		// Department ranking — pipeline/build_layer_ranks.py.
@@ -1104,7 +1067,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.forestry.low',
 		legendHighKey: 'legend.forestry.high',
-		coverage: { misiones: 'unavailable', alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 	service_deprivation: {
 		id: 'service_deprivation',
@@ -1643,22 +1606,11 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		spatialUnit: 'hexagon',
 	},
 	{
-		id: 'forestry_harvest',
-		lensId: 'produccion',
-		titleKey: 'harvest.title',
-		descKey: 'harvest.desc',
-		coverage: { misiones: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
-		comparable: true,
-		rigorBadge: 'physical',
-		status: 'available',
-		spatialUnit: 'macizo',
-	},
-	{
 		id: 'forestry_aptitude',
 		lensId: 'produccion',
 		titleKey: 'sat.forestry.title',
 		descKey: 'sat.forestry.desc',
-		coverage: { misiones: 'unavailable', alto_parana_py: 'unavailable', itapua_py: 'unavailable', corrientes: 'unavailable', chaco: 'unavailable', formosa: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
+		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 		comparable: true,
 		rigorBadge: 'modeled',
 		status: 'available',
