@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MAP_TIERRA, MAP_SELVA, MAP_DIV, rampGradient, TIERRA as RANK_TOWARD, RIO as RANK_AWAY } from '$lib/utils/sello';
+	import { MAP_TIERRA, MAP_SELVA, MAP_DIV, rampGradient, RIO as RANK_AWAY } from '$lib/utils/sello';
 	import { untrack, onDestroy } from 'svelte';
 	import type { HexStore } from '$lib/stores/hex.svelte';
 	import type { TerritoryStore } from '$lib/stores/territory.svelte';
@@ -669,7 +669,7 @@
 							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
 							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 							<div class="dept-bar-wrap rank-bar-wrap">
-								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed ? ((v ?? 0) < 0 ? RANK_AWAY : RANK_TOWARD) : 'var(--s-rank)'}></div>
+								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? RANK_AWAY : 'var(--s-rank)'}></div>
 							</div>
 							<div class="rank-value">{fmtRank(v, rankCfg.decimals, rankCfg.signed)} {v == null ? '' : rankUnit}</div>
 							{#if rankCfg.extraField}
@@ -981,7 +981,7 @@
 	.rank-territory { font-weight: 400; color: var(--c-ink-3); }
 	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
 	.rank-tab { font-size: 12px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: var(--c-ink-3); cursor: pointer; }
-	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: var(--c-t-fecaca); }
+	.rank-tab.active { background: var(--c-tab-on-bg); border-color: var(--c-tab-on-line); color: var(--c-tab-on-ink); }
 	.rank-saturated { padding: 10px; border: 1px solid rgba(148,163,184,0.25); border-radius: 6px; background: rgba(148,163,184,0.06); }
 	.rank-saturated-head { font-size: 12.5px; font-weight: 600; color: var(--c-t-fbbf24); margin-bottom: 4px; }
 	.rank-saturated .rank-note { font-size: 12px; color: var(--c-ink-2); margin: 0; }

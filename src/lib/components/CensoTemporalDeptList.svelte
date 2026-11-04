@@ -244,12 +244,12 @@
 	.cd-msg { font-size: 12px; color: var(--c-ink-3); padding: 10px 0; text-align: center; }
 	.cd-list { display: flex; flex-direction: column; gap: 1px; max-height: 340px; overflow-y: auto; }
 
-	/* Same look as the deptRank ranking in OvertureAnalysis (rank-*). Growth tierra,
-	   decline río: the colors of the department fill (utils/deptFill.ts) and of the
+	/* Same look as the deptRank ranking in OvertureAnalysis (rank-*). Growth --s-rank
+	   (tierra dark, gray claro), decline río: the colors of the department fill (utils/deptFill.ts) and of the
 	   hexagons' change mode (sello div ramp, positive = tierra). */
 	.rank-tabs { display: flex; gap: 4px; margin: 0 0 8px; flex-wrap: wrap; }
 	.rank-tab { font-size: 12px; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(148,163,184,0.3); background: none; color: var(--c-ink-3); cursor: pointer; font-family: inherit; }
-	.rank-tab.active { background: rgba(220,38,38,0.15); border-color: #dc2626; color: var(--c-t-fecaca); }
+	.rank-tab.active { background: var(--c-tab-on-bg); border-color: var(--c-tab-on-line); color: var(--c-tab-on-ink); }
 	.rank-selected { font-size: 12.5px; color: var(--c-ink-2); margin: -4px 0 8px; }
 	.rank-selected-pos { font-weight: 700; color: var(--s-ink-1); }
 	.rank-row { display: flex; align-items: center; gap: 5px; width: 100%; padding: 3px 2px; margin-bottom: 1px; background: none; border: none; border-radius: 4px; cursor: pointer; font-family: inherit; text-align: left; transition: background 0.15s; }
@@ -258,7 +258,7 @@
 	.rank-pos { font-size: 11.5px; color: var(--c-ink-4); width: 14px; text-align: right; flex-shrink: 0; }
 	.rank-name { font-size: 11.5px; color: var(--c-ink-1n); width: 100px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.rank-bar-wrap { flex: 1; height: 6px; background: rgba(100,116,139,0.15); border-radius: 2px; overflow: hidden; }
-	.rank-bar { display: block; height: 100%; border-radius: 2px; background: var(--s-cat-1); transition: width 0.3s; }   /* growth: tierra, as the map */
+	.rank-bar { display: block; height: 100%; border-radius: 2px; background: var(--s-rank); transition: width 0.3s; }   /* growth: as the map (tierra dark, gray claro) */
 	.rank-bar.down { background: var(--s-cat-2); }   /* loss: río */
 	.rank-value { font-size: 12px; font-weight: 600; color: var(--c-ink-1); min-width: 40px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 	.rank-extra { font-size: 11.5px; color: var(--c-ink-4); min-width: 48px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }

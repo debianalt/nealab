@@ -46,7 +46,10 @@
 	--s-grid: rgba(255, 255, 255, 0.1);
 	--s-axis: rgba(255, 255, 255, 0.28);
 	--s-surface: #0b0d14;
-	--s-rank: var(--s-cat-1);   /* ranking bars (unsigned): the map fill, deptFill.ts */
+	--s-rank: var(--s-cat-1);   /* ranking bars (unsigned, and growth on signed): the map fill, deptFill.ts */
+	/* Active tab (ranking/pestañas) and the one call to action (RequestDiagnostic). */
+	--c-tab-on-bg: rgba(220,38,38,0.15); --c-tab-on-line: #dc2626; --c-tab-on-ink: var(--c-t-fecaca);
+	--c-cta-line: var(--s-cat-1); --c-cta-bg: rgba(196, 87, 47, 0.14); --c-cta-bg-hover: rgba(196, 87, 47, 0.26);
 }
 
 /* Chrome (panels, text, lines) per theme. Oscuro = the literal values the
@@ -97,6 +100,8 @@
 	--s-axis: rgba(0, 0, 0, 0.35);
 	--s-surface: #fcfcfb;
 	--s-rank: #6a6c6d;   /* RANK_GRAY_CLARO class 4 as drawn */
+	--c-tab-on-bg: rgba(var(--c-fg-rgb), 0.07); --c-tab-on-line: var(--c-ink-2); --c-tab-on-ink: var(--c-ink-1);
+	--c-cta-line: var(--c-accent); --c-cta-bg: rgba(var(--c-accent-rgb), 0.10); --c-cta-bg-hover: rgba(var(--c-accent-rgb), 0.18);
 }
 
 /* Light text colors of the dark panels (status, accents): exact value on the dark

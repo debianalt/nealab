@@ -49,9 +49,9 @@
 	.rd-row { display: flex; gap: 6px; align-items: center; }
 	.rd-btn {
 		flex: 1; text-align: center; padding: 6px 10px; border-radius: 4px; font-size: 12px; text-decoration: none;
-		color: var(--s-ink-1); border: 1px solid var(--s-cat-1); background: rgba(196, 87, 47, 0.14);
+		color: var(--s-ink-1); border: 1px solid var(--c-cta-line); background: var(--c-cta-bg);
 	}
-	.rd-btn:hover { background: rgba(196, 87, 47, 0.26); }
+	.rd-btn:hover { background: var(--c-cta-bg-hover); }
 	.rd-copy {
 		font: inherit; font-size: 11.5px; padding: 6px 8px; border-radius: 4px; cursor: pointer; white-space: nowrap;
 		color: var(--s-ink-2); background: none; border: 1px solid rgba(var(--c-fg-rgb), 0.12);
