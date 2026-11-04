@@ -89,7 +89,7 @@
 			const ctr = ring.slice(0, -1).reduce((a, b, _, A) => [a[0] + b[0] / A.length, a[1] + b[1] / A.length], [0, 0]);
 			const pt = m.project(ctr);
 			if (pt.x < 20 || pt.y < 20 || pt.x > r.width - 20 || pt.y > r.height - 20) continue;
-			enPantalla.push({ x: pt.x + r.left, y: pt.y + r.top, value: f.properties.value, nodata: f.properties.nodata, type_label: f.properties.type_label });
+			enPantalla.push({ x: pt.x + r.left, y: pt.y + r.top, h3: f.properties.h3index, value: f.properties.value, nodata: f.properties.nodata, type_label: f.properties.type_label });
 		}
 	}
 

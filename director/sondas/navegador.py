@@ -6,7 +6,8 @@ TERMINOS = "spatia_terms_v2"
 INIT = (f"localStorage.setItem('{TERMINOS}','true');"
         "localStorage.setItem('spatia_welcomed_v1','true');"
         "localStorage.setItem('spatia_sonda','1');")
-VIEWPORT = {'width': 1440, 'height': 900}
+VIEWPORT = {'width': 1280, 'height': 800}
+VIEWPORT_MOVIL = {'width': 390, 'height': 844}
 # Sin 'HeadlessChrome': la verificación de navegador de Cloudflare desafía ese user-agent.
 UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
 
@@ -39,11 +40,19 @@ async def _a_r2dev(route):
     await route.continue_(url=R2_DEV + url[url.index('cdn.spatia.ar') + len('cdn.spatia.ar'):])
 
 
-async def contexto_spatia(br, base, locale=None):
-    """Contexto con modales salteados, gancho de sonda y, en localhost, proxy CORS a R2
-    (localhost:4173 no está en cors-rules.json)."""
-    ctx = await br.new_context(viewport=VIEWPORT, user_agent=UA, locale='es-AR')
+UA_MOVIL = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36'
+
+
+async def contexto_spatia(br, base, locale=None, fondo=None, movil=False):
+    """Contexto con modales salteados y gancho de sonda; en localhost, datos desde r2.dev.
+    fondo: 'claro' | 'oscuro' | 'satelite' (localStorage spatia_fondo). movil: 390×844 táctil."""
+    if movil:
+        ctx = await br.new_context(viewport=VIEWPORT_MOVIL, user_agent=UA_MOVIL, locale='es-AR', is_mobile=True, has_touch=True, device_scale_factor=2)
+    else:
+        ctx = await br.new_context(viewport=VIEWPORT, user_agent=UA, locale='es-AR')
     init = INIT + (f"localStorage.setItem('nealab-locale','{locale}');" if locale else '')
+    if fondo:
+        init += f"localStorage.setItem('spatia_fondo','{fondo}');"
     await ctx.add_init_script(init)
     # Proxy CORS sólo a pedido (SONDA_PROXY=1): en el runner, Cloudflare desafía las descargas
     # del proxy. El build local se sirve en localhost:5173, que ya está en cors-rules.json.

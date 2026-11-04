@@ -69,16 +69,23 @@ jobs:
     needs: cadencia
     if: needs.cadencia.outputs.correr == 'si' && needs.cadencia.outputs.modo != 'humo'
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
         sonda:
-          - { nombre: mapa-misiones, cmd: 'mapa.py', args: '--territorios misiones' }
-          - { nombre: mapa-corrientes, cmd: 'mapa.py', args: '--territorios corrientes' }
-          - { nombre: mapa-chaco, cmd: 'mapa.py', args: '--territorios chaco' }
+          - { nombre: mapa-misiones-1, cmd: 'mapa.py', args: '--territorios misiones --parte 1/2' }
+          - { nombre: mapa-misiones-2, cmd: 'mapa.py', args: '--territorios misiones --parte 2/2' }
+          - { nombre: mapa-corrientes-1, cmd: 'mapa.py', args: '--territorios corrientes --parte 1/2' }
+          - { nombre: mapa-corrientes-2, cmd: 'mapa.py', args: '--territorios corrientes --parte 2/2' }
+          - { nombre: mapa-chaco-1, cmd: 'mapa.py', args: '--territorios chaco --parte 1/2' }
+          - { nombre: mapa-chaco-2, cmd: 'mapa.py', args: '--territorios chaco --parte 2/2' }
           - { nombre: mapa-formosa, cmd: 'mapa.py', args: '--territorios formosa' }
           - { nombre: mapa-py, cmd: 'mapa.py', args: '--territorios itapua_py,alto_parana_py' }
+          - { nombre: extras-temporal, cmd: 'extras.py', args: '--solo temporal' }
+          - { nombre: extras-oscuro, cmd: 'extras.py', args: '--solo oscuro' }
+          - { nombre: extras-movil, cmd: 'extras.py', args: '--solo movil' }
+          - { nombre: extras-ficha, cmd: 'extras.py', args: '--solo ficha' }
           - { nombre: textos-paginas, cmd: 'textos.py', args: '--solo paginas' }
           - { nombre: textos-paneles, cmd: 'textos.py', args: '--solo paneles' }
           - { nombre: estatico, cmd: 'estatico.py', args: '' }

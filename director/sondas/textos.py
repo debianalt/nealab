@@ -85,7 +85,7 @@ async def pagina(br, base, ruta, idioma, H, links_vistos):
             H.add('pagina_rota', 'alta', ctx, f'{url} responde {r.status if r else "sin respuesta"}'); return
         await abrir_desplegables(page)
         texto = await page.evaluate('() => document.body.innerText')
-        H.revisar(revisar_texto(texto), ctx, 'pagina')
+        H.revisar(revisar_texto(texto, interfaz=False), ctx, 'pagina')
         if idioma in ('en', 'pt') and ruta not in ('/terminos',):
             sob = castellano_sobrante(texto)
             if len(sob) > 3:

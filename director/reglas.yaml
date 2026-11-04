@@ -27,7 +27,7 @@ frases_prohibidas:
 # Patrones de basura visible en la UI.
 basura_visible:
   - {re: '\b(NaN|undefined|Infinity|null)\b', motivo: 'valor no calculado'}
-  - {re: '\b[a-z]+(\.[a-z][A-Za-z0-9]+){2,}\b', motivo: 'clave i18n sin traducir', excepto_re: '(spatia\.ar|pages\.dev|github\.com|r2\.dev|\.parquet|\.json|\.pmtiles|www\.)'}
+  - {re: '\b[a-z]+(\.[a-z][A-Za-z0-9]+){2,}\b', motivo: 'clave i18n sin traducir', excepto_re: '(spatia\.ar|pages\.dev|github\.com|r2\.dev|\.parquet|\.json|\.pmtiles|www\.|\.(org|com|net|gov|gob|edu|ar|br|py|io)\b)'}
   - {re: '\b[a-z]{2,}_[a-z0-9_]{2,}\b', motivo: 'nombre de columna visible', excepto_re: '(h3index|@|\.)'}
 
 # Guardia: qué puede cambiar el arreglador.

@@ -32,7 +32,7 @@ def _reglas():
     return _R
 
 
-def revisar_texto(texto, contexto_extra=''):
+def revisar_texto(texto, contexto_extra='', interfaz=True):
     """Frases prohibidas y basura visible en un texto. Devuelve [(tipo, severidad, detalle)]."""
     R = _reglas(); out = []
     if not texto: return out
@@ -42,6 +42,8 @@ def revisar_texto(texto, contexto_extra=''):
             if fr.get('excepto_re') and re.search(fr['excepto_re'], frag): continue
             out.append(('frase_prohibida', 'media', f"«{m.group(0)}» ({fr['motivo']}): …{frag}…"))
     for b in R.get('basura_visible', []):
+        # La metodología lista columnas a propósito (reproducibilidad): ahí sólo cuentan NaN/undefined.
+        if not interfaz and b['motivo'] != 'valor no calculado': continue
         for m in re.finditer(b['re'], texto):
             frag = texto[max(0, m.start() - 40): m.end() + 40].replace('\n', ' ')
             if b.get('excepto_re') and re.search(b['excepto_re'], m.group(0) if b['motivo'] != 'clave i18n sin traducir' else frag): continue

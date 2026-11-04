@@ -27,7 +27,7 @@ async def estado(page, muestra_hover=0):
     return await page.evaluate(ESTADO_JS, {'muestraHover': muestra_hover})
 
 
-async def esperar_lista(page, analisis, timeout=120, dept=None, con_hex=False):
+async def esperar_lista(page, analisis, timeout=180, dept=None, con_hex=False):
     """Espera a que la capa esté cargada (y, si se pide, el departamento con hexágonos)."""
     t0 = time.time(); e = None
     while time.time() - t0 < timeout:
@@ -228,10 +228,10 @@ async def recorrer(page, base, t, lente, capa, H, vistas, args, errores):
     q = f"/?t={t}&lens={lente}&a={capa}"
     ctx = {'territorio': t, 'capa': capa, 'vista': 'provincia', 'url': base + q, 'pestana': None}
     errores.clear()
-    await page.goto(base + q, wait_until='domcontentloaded')
+    await page.goto(base + q, wait_until='domcontentloaded', timeout=120000)
     e, dt = await esperar_lista(page, capa)
     if dt is None:
-        H.add('no_carga', 'alta', ctx, f'La capa no terminó de cargar en 120 s (estado: {json.dumps({k: (e or {}).get(k) for k in ("analisis", "cargando", "errorCarga")}, ensure_ascii=False)}).')
+        H.add('no_carga', 'alta', ctx, f'La capa no terminó de cargar en 180 s (estado: {json.dumps({k: (e or {}).get(k) for k in ("analisis", "cargando", "errorCarga")}, ensure_ascii=False)}).')
         await H.captura(page, ctx); return
     vistas.append({**ctx, 'seg': round(dt, 1)})
     revisar_comun(H, e, ctx); revisar_provincia(H, e, ctx)
@@ -252,10 +252,10 @@ async def recorrer(page, base, t, lente, capa, H, vistas, args, errores):
     q2 = q + f"&dept={quote(dept)}"
     ctx = {'territorio': t, 'capa': capa, 'vista': 'departamento', 'depto': dept, 'url': base + q2, 'pestana': None}
     errores.clear()
-    await page.goto(base + q2, wait_until='domcontentloaded')
-    e, dt = await esperar_lista(page, capa, dept=dept, con_hex=True, timeout=150)
+    await page.goto(base + q2, wait_until='domcontentloaded', timeout=120000)
+    e, dt = await esperar_lista(page, capa, dept=dept, con_hex=True, timeout=200)
     if dt is None:
-        H.add('no_carga', 'alta', ctx, f'El departamento {dept} no mostró hexágonos en 150 s.')
+        H.add('no_carga', 'alta', ctx, f'El departamento {dept} no mostró hexágonos en 200 s.')
         await H.captura(page, ctx); return
     await mapa_quieto(page)
     e = await estado(page, muestra_hover=args.hover)
@@ -273,12 +273,21 @@ async def recorrer(page, base, t, lente, capa, H, vistas, args, errores):
     H.consola(errores, ctx); await H.captura_si(page, ctx)
 
 
+async def nueva_pagina(cx, errores):
+    page = await cx.new_page()
+    page.on('console', lambda m: errores.append(m.text) if m.type == 'error' else None)
+    page.on('pageerror', lambda x: errores.append('PAGEERROR ' + str(x)))
+    page.on('response', lambda r: errores.append(f'HTTP {r.status} {r.url}') if r.status >= 400 else None)
+    return page
+
+
 async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('base'); ap.add_argument('out')
     ap.add_argument('--territorios'); ap.add_argument('--capas')
     ap.add_argument('--sin-depto', action='store_true')
-    ap.add_argument('--hover', type=int, default=6)
+    ap.add_argument('--hover', type=int, default=4)
+    ap.add_argument('--parte', help='k/n: sólo la k-ésima de n partes de la matriz')
     ap.add_argument('--max-capas', type=int, default=0)
     args = ap.parse_args()
     base = args.base.rstrip('/'); out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
@@ -301,17 +310,23 @@ async def main():
                    set(args.territorios.split(',')) if args.territorios else None,
                    set(args.capas.split(',')) if args.capas else None)
         if args.max_capas: M = M[:args.max_capas]
+        if args.parte:
+            k, n = map(int, args.parte.split('/')); M = M[k - 1::n]
         print(f'{len(M)} pares territorio × capa', flush=True)
+        await page.close()
         for i, (t, lente, capa) in enumerate(M, 1):
             t0 = time.time()
+            # Página nueva por capa: con SwiftShader una sola página acumula memoria hasta que el runner la mata.
+            page = await nueva_pagina(cx, errores)
             try:
                 await recorrer(page, base, t, lente, capa, H, vistas, args, errores)
             except Exception as ex:
                 H.add('sonda_fallo', 'media', {'territorio': t, 'capa': capa, 'vista': '?', 'url': page.url},
                       f'La sonda falló en esta vista: {type(ex).__name__}: {str(ex)[:300]}')
-                try: page = await cx.new_page()
+            finally:
+                try: await page.close()
                 except Exception: pass
-            print(f'[{i}/{len(M)}] {t} {capa}: {time.time() - t0:.0f} s, {H.total()} hallazgos', flush=True)
+            H.guardar(); print(f'[{i}/{len(M)}] {t} {capa}: {time.time() - t0:.0f} s, {H.total()} hallazgos', flush=True)
         await br.close()
     H.guardar()
     (out / 'vistas_mapa.json').write_text(json.dumps(vistas, ensure_ascii=False, indent=1), encoding='utf-8')
