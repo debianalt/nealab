@@ -125,13 +125,24 @@ def revisar_hex(H, e, ctx):
                   f"{sum(c['n'] for c in raros)} hexágonos pintados con colores que la leyenda no muestra: "
                   + ', '.join(f"rgb({c['c']}) n={c['n']} valores {c['min']:.2f}–{c['max']:.2f}" for c in raros[:4]))
         # Cada color de la leyenda cubre el rango de su clase
-        steps = e['clases']['steps']; off = 1 if e['clases'].get('zero') else 0
+        cl = e['clases']; steps = cl['steps']; off = 1 if cl.get('zero') else 0
+        por_codigo = cl.get('ordinal') or cl.get('nominal')
         for c in hx['colores']:
             if c['c'] not in colores_ley: continue
             k = colores_ley.index(c['c']) - off
             if k < 0 or k >= len(steps): continue
+            if por_codigo:
+                # clases por código: un color, un código (la vista agregada usa la moda)
+                if abs(c['min'] - steps[k]['from']) > 1e-6 or abs(c['max'] - steps[k]['from']) > 1e-6:
+                    H.add('clase_incoherente', 'alta', ctx,
+                          f"Color de «{lg['items'][k + off]['label']}» (código {steps[k]['from']}) pinta códigos {c['min']:g}–{c['max']:g}.")
+                continue
             lo = steps[k]['from']; hi = steps[k + 1]['from'] if k + 1 < len(steps) else float('inf')
-            if c['min'] < lo - 1e-6 or c['max'] >= hi + 1e-6:
+            if cl.get('upperInclusive'):
+                fuera = (k > 0 and c['min'] <= lo + 1e-9) or c['max'] > hi + 1e-6  # clase k = (lo, hi]
+            else:
+                fuera = c['min'] < lo - 1e-6 or c['max'] >= hi + 1e-6
+            if fuera:
                 H.add('clase_incoherente', 'alta', ctx,
                       f"Color de «{lg['items'][k + off]['label']}» (desde {lo}) pinta valores {c['min']:.2f}–{c['max']:.2f}.")
     sp = hx.get('spearman')
@@ -146,6 +157,9 @@ def revisar_hex(H, e, ctx):
 
 async def revisar_tooltip(H, page, e, ctx):
     v = e.get('variable') or {}
+    cl = e.get('clases') or {}
+    etiquetas = {st['from']: st['label'] for st in cl.get('steps', [])} if (cl.get('ordinal') or cl.get('nominal')) else None
+    malos_clase = []
     escala = v.get('scale') or 1
     unidad = v.get('unit')
     malos_valor, malos_unidad, punto = [], [], 0
@@ -156,6 +170,10 @@ async def revisar_tooltip(H, page, e, ctx):
         H.revisar(revisar_texto(tt), ctx, 'tooltip')
         if s.get('nodata') in (True, 'true') or s.get('type_label'): continue
         if s['value'] is None: continue
+        if etiquetas is not None:
+            lab = etiquetas.get(float(s['value'])) or etiquetas.get(int(float(s['value'])))
+            if lab and lab not in tt: malos_clase.append(f"código {s['value']} = «{lab}», tooltip «{tt.strip()}»")
+            continue
         esperado = float(s['value']) * escala
         if re.search(r'\d\.\d', tt): punto += 1
         ns = numeros(tt)
@@ -168,6 +186,8 @@ async def revisar_tooltip(H, page, e, ctx):
         if unidad and unidad not in ('/100',) and unidad not in tt:
             malos_unidad.append(f'«{tt.strip()}» sin «{unidad}»')
     await page.mouse.move(5, 5)
+    if malos_clase:
+        H.add('tooltip_clase', 'alta', ctx, 'El tooltip no muestra el nombre de la clase pintada: ' + '; '.join(malos_clase[:3]))
     if malos_valor:
         H.add('tooltip_valor', 'alta', ctx, f'El tooltip no muestra el valor pintado ({e.get("colorVar") or e.get("primaria")}): ' + '; '.join(malos_valor[:3]))
     if malos_unidad:
@@ -226,6 +246,8 @@ async def recorrer(page, base, t, lente, capa, H, vistas, args, errores):
     dept = None
     if e.get('ranking'): dept = e['ranking'][0]['nombre']
     elif e.get('deptFill') and e['deptFill']['valores']: dept = e['deptFill']['valores'][0]['name']
+    if e.get('unidadEspacial', 'hexagon') != 'hexagon':
+        vistas.append({**ctx, 'nota': f"unidad espacial {e['unidadEspacial']}: sin sonda de hexágonos"}); return
     if args.sin_depto or not dept: return
     q2 = q + f"&dept={quote(dept)}"
     ctx = {'territorio': t, 'capa': capa, 'vista': 'departamento', 'depto': dept, 'url': base + q2, 'pestana': None}

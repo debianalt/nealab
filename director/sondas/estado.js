@@ -95,11 +95,14 @@
 
 	const panel = document.querySelector('.dept-panel, aside, .sidebar');
 	return {
+		unidadEspacial: S.registros.ANALYSIS_REGISTRY.find(a => a.id === l.activeAnalysis?.id)?.spatialUnit ?? 'hexagon',
 		capa: layer?.id ?? null, analisis: l.activeAnalysis?.id ?? null, lente: l.activeLens ?? null,
 		territorio: h.territoryId, cargando: h.loading, errorCarga: h.loadError,
 		primaria: pv, colorVar: h.colorVariable, escalaColor: layer?.colorScale, modoTemporal: h.temporalMode,
 		variable: v ? { col: v.col, unit: v.unit ?? null, rawUnit: v.rawUnit ?? null, scale: v.scale ?? null, label: S.i18n.t(v.labelKey) } : null,
 		dominio: h.colorDomain, clases: h.effectiveColorClasses ? {
+			ordinal: !!h.effectiveColorClasses.ordinal, nominal: !!h.effectiveColorClasses.nominal,
+			zeroBelow: h.effectiveColorClasses.zeroBelow ?? null, upperInclusive: !!h.effectiveColorClasses.upperInclusive,
 			zero: h.effectiveColorClasses.zero ? S.i18n.t(h.effectiveColorClasses.zero.labelKey) : null,
 			steps: h.effectiveColorClasses.steps.map(s => ({ from: s.from, label: S.i18n.t(s.labelKey) })) } : null,
 		deptSel: h.selectedDpto, deptFill: h.deptFill ? { titulo: h.deptFill.title, unidad: h.deptFill.unit, max: h.deptFill.max,
