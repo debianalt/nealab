@@ -218,11 +218,14 @@
 				</div>
 			{/each}
 		</div>
-		<div class="nodata-row">
-			<span class="nodata-swatch" style:background={P.nodata}></span>
-			<span class="nodata-label">{i18n.t('legend.noData')}</span>
-		</div>
-		{@render boundsNote()}
+		<!-- Macizo layers paint DNDFI polygons: every polygon has a class, and the hexagon clipping note does not apply. -->
+		{#if !layer.macizos}
+			<div class="nodata-row">
+				<span class="nodata-swatch" style:background={P.nodata}></span>
+				<span class="nodata-label">{i18n.t('legend.noData')}</span>
+			</div>
+			{@render boundsNote()}
+		{/if}
 	</div>
 {:else if layer && hasScales}
 	<div class="legend">

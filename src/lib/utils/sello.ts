@@ -242,6 +242,11 @@ export const AGRI_APT_CLARO = ['#257848', '#94c79e', '#cc841c', '#731402'] as co
 // The 1985 → 2025 trajectory reuses these colors (its classes are named by where the cell ended).
 export const USO_HEX = ['#006747', '#4c0354', '#bb5ab1', '#d7cf04', '#a88849', '#2dc3d4', '#1d49b6', '#bc1400', '#eaeaea'] as const;
 export const USO_CLARO = ['#095a39', '#48245f', '#e571dc', '#fec306', '#9e6a2f', '#00988a', '#2561bb', '#b00002', '#b8b5b4'] as const;
+// Harvest situation (forestry_harvest), 4 steps toward the rotation + loss + no data. Index 3 = «more» in both
+// themes. Validated as drawn (fill 0.85 over the dark basemap, 0.9 over paper) with the USO_HEX blue and the nodata
+// gray, --pairs all (3-nov-2026): dark normal ΔE 15.6, CVD 10.7; claro 15.0 / 12.7. MAP_CLASS_4 gave 14.4 on dark.
+export const HARVEST_HEX = ['#7a2e1b', '#cc5a26', '#f2a63f', '#fde9b8'] as const;
+export const HARVEST_CLARO = ['#e4d197', '#df8021', '#b63f03', '#6e1a0a'] as const;
 // A measured 0 (zero class) and no reading: quiet grays, zero the lighter one.
 export const ZERO_HEX = '#1e293b';
 // Claro: the measured 0 stays a light warm gray, ΔE2000 4 from the territory
@@ -249,6 +254,8 @@ export const ZERO_HEX = '#1e293b';
 // melted into it (ΔE 0.2–1.9: «no water» read as «no hexagon»), so the
 // separation from «no data» comes from a darker nodata (2-nov-2026).
 export const ZERO_CLARO = '#d6d3ce';
+// «Sin dato» as a fixed class (macizos without planting year or cited rotation): the map palette's nodata gray.
+export const NODATA_HEX = '#6b7280';
 
 export interface MapPalette {
 	tierra: readonly string[]; selva: readonly string[]; div: readonly string[];
@@ -289,7 +296,7 @@ const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
 	[MAP_CLASS_3, MAP_CLASS_3_CLARO], [MAP_CLASS_4, MAP_CLASS_4_CLARO], [MAP_CLASS_5, MAP_CLASS_5_CLARO],
 	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
 	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], [ZERO_CLARO]],
-	[USO_HEX, USO_CLARO], [MAP_SELVA, MAP_SELVA_CLARO],
+	[USO_HEX, USO_CLARO], [MAP_SELVA, MAP_SELVA_CLARO], [[NODATA_HEX], ['#8c8d90']], [HARVEST_HEX, HARVEST_CLARO],
 ];
 const CLARO_OF = new Map<string, string>();
 for (const [dark, light] of CLASS_PAIRS) dark.forEach((c, i) => {

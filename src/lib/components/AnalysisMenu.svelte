@@ -52,7 +52,7 @@
 		pm25_drivers: 'menu.sub.airQuality',
 		// Producción y suelo
 		agri_potential: 'menu.sub.soils', forestry_aptitude: 'menu.sub.soils',
-		land_use: 'menu.sub.landUse',
+		land_use: 'menu.sub.landUse', forestry_harvest: 'menu.sub.landUse',
 		// Población y servicios
 		accessibility: 'menu.sub.accessibility',
 		sociodemographic: 'menu.sub.population', censo_temporal: 'menu.sub.population',

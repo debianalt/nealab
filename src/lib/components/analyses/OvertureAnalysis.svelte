@@ -522,7 +522,8 @@
 			</div>
 		{/if}
 
-		{#if dataUrl}
+		<!-- Macizo layers have no per-hex parquet: nothing to export as hexagons. -->
+		{#if dataUrl && !layerCfg?.macizos}
 			<div class="download-row">
 				<button
 					class="download-btn"
@@ -556,7 +557,7 @@
 		{#if loading}
 			<div class="loading">{i18n.t('analysis.loading')}</div>
 		{:else}
-			<div class="hint">{i18n.t('analysis.hex.clickHint')}</div>
+			<div class="hint">{i18n.t(layerCfg?.macizos ? 'harvest.hint' : 'analysis.hex.clickHint')}</div>
 		{/if}
 
 		{#if typeDistribution.length > 0}
@@ -706,8 +707,13 @@
 		{#if activeSummaryData}
 			<div class="summary-cards">
 				<div class="summary-card">
-					<div class="card-value">{activeSummaryData.province.total_hexes?.toLocaleString()}</div>
-					<div class="card-label">{i18n.t('section.zonesAnalyzed')}</div>
+					{#if layerCfg?.macizos}
+						<div class="card-value">{activeSummaryData.province.rank?.macizos?.toLocaleString()}</div>
+						<div class="card-label">{i18n.t('harvest.card.macizos')}</div>
+					{:else}
+						<div class="card-value">{activeSummaryData.province.total_hexes?.toLocaleString()}</div>
+						<div class="card-label">{i18n.t('section.zonesAnalyzed')}</div>
+					{/if}
 				</div>
 			</div>
 		{/if}

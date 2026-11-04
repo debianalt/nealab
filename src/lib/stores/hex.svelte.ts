@@ -396,7 +396,8 @@ export class HexStore {
 	}
 
 	get effectivePrimary(): string {
-		if (this.colorVariable && this.loadedCols.has(this.colorVariable)) return this.colorVariable;
+		// Macizo layers have no parquet (loadedCols stays empty): the tab's variable is a tile property.
+		if (this.colorVariable && (this.loadedCols.has(this.colorVariable) || this.activeLayer?.macizos)) return this.colorVariable;
 		return this.primaryOverride ?? this.activeLayer?.primaryVariable ?? 'score';
 	}
 
@@ -519,6 +520,15 @@ export class HexStore {
 		this.chartSelection = null;
 		this.clearCompareDept();
 		this.clearRegionalData();
+		// Layers drawn as DNDFI plantation polygons (forestry_harvest): no per-hex parquet. The department only
+		// frames the map and filters the macizos; the panel reads the summary.
+		if (layer.macizos) {
+			const f = findDeptFeature(dpto, this.territoryPrefix);
+			this.deptBbox = f ? HexStore.bboxOfGeometry(f.geometry) : null;
+			this.loading = false;
+			this.dataVersion++;
+			return;
+		}
 		// Note: dataVersion is NOT incremented here — we only increment after data is ready.
 		// This prevents a blank-map flash that would occur if $effects fire on the empty visibleData.
 
@@ -1325,6 +1335,18 @@ export class HexStore {
 	}
 
 	// Use centroids (not vertices) to avoid border hexagon vertex overreach across international boundaries
+	private static bboxOfGeometry(g: any): [number, number, number, number] | null {
+		let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;
+		const walk = (c: any) => {
+			if (typeof c[0] === 'number') {
+				if (c[0] < minLng) minLng = c[0]; if (c[0] > maxLng) maxLng = c[0];
+				if (c[1] < minLat) minLat = c[1]; if (c[1] > maxLat) maxLat = c[1];
+			} else for (const x of c) walk(x);
+		};
+		if (g?.coordinates) walk(g.coordinates);
+		return Number.isFinite(minLng) ? [minLng, minLat, maxLng, maxLat] : null;
+	}
+
 	private static bboxFromCentroids(centroids: Map<string, [number, number]>): [number, number, number, number] | null {
 		if (centroids.size === 0) return null;
 		let minLng = Infinity, minLat = Infinity, maxLng = -Infinity, maxLat = -Infinity;

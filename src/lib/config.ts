@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX, NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -16,10 +16,10 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 	}
 	const files: Record<string, string> = {
 		buildings: 'tiles/buildings-v5.pmtiles',
-		misiones_plantations: 'data/tiles/misiones_plantations.pmtiles',
-		corrientes_plantations: 'data/tiles/corrientes_plantations.pmtiles',
-		chaco_plantations: 'data/tiles/chaco_plantations.pmtiles',
-		formosa_plantations: 'data/tiles/formosa_plantations.pmtiles',
+		misiones_plantations: 'data/tiles/misiones_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
+		corrientes_plantations: 'data/tiles/corrientes_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
+		chaco_plantations: 'data/tiles/chaco_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
+		formosa_plantations: 'data/tiles/formosa_plantations_v2.pmtiles',   // v2: + edad, situación de turno, dpto_key (forestry_harvest)
 		itapua_buildings: 'tiles/itapua_buildings-v4.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
 		corrientes_buildings: 'data/tiles/corrientes_buildings-v4.pmtiles',
@@ -534,6 +534,9 @@ export interface HexLayerConfig {
 	// The summaries carry a per-department and province series (serie: {anios, ha: {clase: number[]}}),
 	// drawn by UsoSerie.svelte as «Evolución» (land use, 1985–2025).
 	classSeries?: boolean;
+	// Drawn as DNDFI plantation polygons (data/tiles/<t>_plantations_v2.pmtiles), not hexagons: no per-hex parquet;
+	// the active tab's hexVariable names the tile property painted with that variable's classes (forestry_harvest).
+	macizos?: boolean;
 	// Legend end labels for those other variables (i18n keys), when the layer's
 	// legendLowKey/HighKey describe only the primary.
 	variableLegend?: Record<string, { low: string; high: string }>;
@@ -667,6 +670,34 @@ export const USO_PCT_CLASSES: ColorClasses = {
 		{ from: 25, color: MAP_SELVA[3], labelKey: 'legend.uso.25_50' },
 		{ from: 50, color: MAP_SELVA[4], labelKey: 'legend.uso.50_75' },
 		{ from: 75, color: MAP_SELVA[5], labelKey: 'legend.uso.ge75' },
+	],
+};
+
+// Forest plantations to harvest (pipeline/forestal/exportar_cosecha_web.py): age class of each DNDFI macizo
+// (ordinal, selva ramp) and its situation against the rotation validated by the author on 3-nov-2026.
+export const MACIZO_EDAD_CLASSES: ColorClasses = {
+	ordinal: true,
+	zero: { color: ZERO_HEX, labelKey: 'harvest.edad.sin' },
+	steps: [
+		{ from: 1, color: MAP_SELVA[0], labelKey: 'harvest.edad.1' },
+		{ from: 2, color: MAP_SELVA[1], labelKey: 'harvest.edad.2' },
+		{ from: 3, color: MAP_SELVA[2], labelKey: 'harvest.edad.3' },
+		{ from: 4, color: MAP_SELVA[3], labelKey: 'harvest.edad.4' },
+		{ from: 5, color: MAP_SELVA[4], labelKey: 'harvest.edad.5' },
+		{ from: 6, color: MAP_SELVA[5], labelKey: 'harvest.edad.6' },
+	],
+};
+// 1–4 run toward harvest (HARVEST_HEX: index 3 = «more» in both themes, bright on dark and dark on paper); 5 = Hansen
+// loss after planting (a different hue); 6 = no planting year or no cited rotation (the map's «sin dato» gray).
+export const MACIZO_SITUACION_CLASSES: ColorClasses = {
+	nominal: true,
+	steps: [
+		{ from: 1, color: HARVEST_HEX[0], labelKey: 'harvest.sit.1' },
+		{ from: 2, color: HARVEST_HEX[1], labelKey: 'harvest.sit.2' },
+		{ from: 3, color: HARVEST_HEX[2], labelKey: 'harvest.sit.3' },
+		{ from: 4, color: HARVEST_HEX[3], labelKey: 'harvest.sit.4' },
+		{ from: 5, color: USO_HEX[6], labelKey: 'harvest.sit.5' },
+		{ from: 6, color: NODATA_HEX, labelKey: 'harvest.sit.6' },
 	],
 };
 
@@ -989,6 +1020,42 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		colorClasses: AGRI_APT_CLASSES,
 		variableClasses: { apt_soja_clase: AGRI_APT_CLASSES, apt_maiz_clase: AGRI_APT_CLASSES, apt_algodon_clase: AGRI_APT_CLASSES, apt_girasol_clase: AGRI_APT_CLASSES, apt_arroz_clase: AGRI_APT_CLASSES, apt_yerba_clase: AGRI_APT_CLASSES, apt_te_clase: AGRI_APT_CLASSES, apt_citricos_clase: AGRI_APT_CLASSES, apt_pasturas_clase: AGRI_APT_CLASSES },
 		coverage: { corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
+	},
+	forestry_harvest: {
+		id: 'forestry_harvest',
+		// DNDFI plantation polygons (no hexagons): age and situation against the rotation (turnos validated by the
+		// author, pipeline/forestal/turnos_forestales.md) and Hansen loss after planting. Rankings from the summaries.
+		macizos: true,
+		deptRank: {
+			field: 'pino_listo_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexVariable: 'situacion',
+			titleKey: 'rank.harvest.title.pino', noteKey: 'rank.harvest.note.pino',
+			extraField: 'pino_listo_pct', extraUnitKey: 'rank.harvest.unit.pctPino', extraDecimals: 1,
+			metrics: [
+				{ tabKey: 'rank.harvest.tab.pino' },
+				{ tabKey: 'rank.harvest.tab.entra', field: 'pino_entra_ha', extraField: undefined,
+				  titleKey: 'rank.harvest.title.entra', noteKey: 'rank.harvest.note.entra' },
+				{ tabKey: 'rank.harvest.tab.euca', field: 'euca_listo_ha', extraField: 'euca_listo_pct', extraUnitKey: 'rank.harvest.unit.pctEuca',
+				  titleKey: 'rank.harvest.title.euca', noteKey: 'rank.harvest.note.euca' },
+				{ tabKey: 'rank.harvest.tab.edad', field: 'plant_ha', extraField: 'edad_media', extraUnitKey: 'rank.harvest.unit.edadMedia',
+				  titleKey: 'rank.harvest.title.edad', noteKey: 'rank.harvest.note.edad', hexVariable: 'clase_edad' },
+				{ tabKey: 'rank.harvest.tab.perdida', field: 'perdida_ha', extraField: 'perdida_pct', extraUnitKey: 'rank.unit.pctArea',
+				  titleKey: 'rank.harvest.title.perdida', noteKey: 'rank.harvest.note.perdida' },
+			],
+		},
+		parquet: 'sat_forestry_harvest',   // no file: macizos come from the plantation tiles
+		variables: [
+			{ col: 'situacion', labelKey: 'harvest.var.situacion', aggregation: 'mean', unit: 'clase', hidden: true },
+			{ col: 'clase_edad', labelKey: 'harvest.var.edad', aggregation: 'mean', unit: 'clase', hidden: true },
+		],
+		primaryVariable: 'situacion',
+		colorScale: 'warm',
+		aggregation: 'mean',
+		fixedColorDomain: [1, 6],
+		titleKey: 'harvest.title',
+		perDepartment: true,
+		colorClasses: MACIZO_SITUACION_CLASSES,
+		variableClasses: { situacion: MACIZO_SITUACION_CLASSES, clase_edad: MACIZO_EDAD_CLASSES },
+		coverage: { misiones: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
 	},
 	forestry_aptitude: {
 		id: 'forestry_aptitude',
@@ -1490,7 +1557,7 @@ export interface AnalysisConfig {
 	descKey: string;
 	icon: string;
 	status: 'available' | 'coming_soon';
-	spatialUnit?: 'radio' | 'hexagon' | 'catastro';
+	spatialUnit?: 'radio' | 'hexagon' | 'catastro' | 'macizo';
 	dashboard?: boolean;
 	coverage?: Record<string, 'available' | 'pending' | 'unavailable'>;
 	comparable?: true;
@@ -1553,6 +1620,17 @@ export const ANALYSIS_REGISTRY: AnalysisConfig[] = [
 		rigorBadge: 'modeled',
 		status: 'available',
 		spatialUnit: 'hexagon',
+	},
+	{
+		id: 'forestry_harvest',
+		lensId: 'produccion',
+		titleKey: 'harvest.title',
+		descKey: 'harvest.desc',
+		coverage: { misiones: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', alto_parana_py: 'unavailable', itapua_py: 'unavailable', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', cordillera_py: 'unavailable', san_pedro_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable' },
+		comparable: true,
+		rigorBadge: 'physical',
+		status: 'available',
+		spatialUnit: 'macizo',
 	},
 	{
 		id: 'forestry_aptitude',

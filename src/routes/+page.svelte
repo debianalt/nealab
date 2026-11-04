@@ -740,7 +740,7 @@
 		}
 
 		// Hex-based analyses use HexStore multi-resolution system
-		if (analysis.spatialUnit === 'hexagon' && (analysis.choropleth || HEX_LAYER_REGISTRY[analysis.id])) {
+		if ((analysis.spatialUnit === 'hexagon' || analysis.spatialUnit === 'macizo') && (analysis.choropleth || HEX_LAYER_REGISTRY[analysis.id])) {
 			analysisDataLoaded = false;
 			mapComponent?.clearAnalysisChoropleth();
 			const layerCfg = HEX_LAYER_REGISTRY[analysis.id];
@@ -1173,6 +1173,16 @@
 	$effect(() => {
 		const f = hexStore.deptFill;
 		mapComponent?.setDeptFill(f);
+	});
+
+	// Macizo layers (forestry_harvest): the plantation tiles carry the data; paint the tab's property with its
+	// classes, all the territory's macizos or only the open department's.
+	$effect(() => {
+		const layer = hexStore.activeLayer;
+		const prop = hexStore.effectivePrimary;
+		const classes = hexStore.effectiveColorClasses;
+		const deptKey = hexStore.selectedParquetKey;
+		mapComponent?.setMacizoPaint(layer?.macizos && classes ? { prop, classes, deptKey } : null);
 	});
 
 	// ── Dept bbox outlines + auto-fly when both depts are loaded ────────────
@@ -1729,6 +1739,9 @@
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 				analysisDataLoaded = true;
 				if (hexStore.deptBbox) mapComponent?.fitBoundsDept(hexStore.deptBbox);
+			} else if (hexStore.activeLayer?.macizos && hexStore.deptBbox) {
+				mapComponent?.clearHexChoropleth();
+				mapComponent?.fitBoundsDept(hexStore.deptBbox);
 			} else {
 				mapComponent?.clearHexChoropleth();
 				mapComponent?.flyToCoords(centroid[1], centroid[0], 10);

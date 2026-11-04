@@ -8,7 +8,7 @@
 	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, type ColorClasses } from '$lib/config';
+	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -93,6 +93,21 @@
 	// (mapStore.plantationsVisible), only when forestry_aptitude is active with a dept
 	// selected. Per-territory tiles, gated by minzoom 9 so they load per-department.
 	const PLANTATION_TERRITORIES = ['misiones', 'corrientes', 'chaco', 'formosa'];
+	// forestry_harvest paints the same macizo tiles by class (+page sets it): the tile property, its classes and the
+	// open department (dpto_key = parquetKey of the INDEC partition). Null → the forestry overlay paint.
+	let macizoPaint: { prop: string; classes: ColorClasses; deptKey: string | null } | null = null;
+	const PLANT_FILL_DEFAULT: any = ['match', ['get', 'grupo_espe'],
+		'Pinos', '#22c55e', 'Eucaliptos', '#38bdf8', 'Nativas', '#f59e0b', 'Sauces y Álamos', '#a78bfa', '#9ca3af'];
+	export function setMacizoPaint(p: { prop: string; classes: ColorClasses; deptKey: string | null } | null) {
+		macizoPaint = p;
+		updatePlantationsVisibility();
+	}
+	function macizoColorExpr(p: { prop: string; classes: ColorClasses }, t: MapTema): any {
+		const c = p.classes;
+		const pairs = c.steps.flatMap((s) => [s.from, classColor(s.color, t)]);
+		const fallback = classColor(c.zero?.color ?? c.steps[c.steps.length - 1].color, t);
+		return ['match', ['to-number', ['get', p.prop], 0], ...pairs, fallback];
+	}
 
 	onMount(() => {
 		const protocol = new Protocol();
@@ -1382,6 +1397,35 @@
 			}, 80);
 		});
 
+		// Macizo tooltip (forestry_harvest): species, planting year, age, area and situation against the rotation.
+		for (const ter of PLANTATION_TERRITORIES) {
+			const lyr = `${ter}-plantations-fill`;
+			map.on('mousemove', lyr, (e) => {
+				if (lassoActive || !macizoPaint) return;
+				if (leaveTimeout) { clearTimeout(leaveTimeout); leaveTimeout = null; }
+				map.getCanvas().style.cursor = 'pointer';
+				const p = e.features![0].properties!;
+				const sit = MACIZO_SITUACION_CLASSES.steps.find((s) => s.from === Number(p.situacion));
+				const fmtN = (v: number) => v.toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { maximumFractionDigits: 1 });
+				let html = `<b style="color:var(--c-accent)">${p.especie || p.genero || i18n.t('harvest.tip.sinEspecie')}</b><br>`;
+				html += p.anio_plant ? `${i18n.t('harvest.tip.plantado')} ${p.anio_plant} · ${p.edad} ${i18n.t('harvest.tip.anios')}<br>` : `${i18n.t('harvest.tip.sinAnio')}<br>`;
+				if (p.superficie != null) html += `${fmtN(Number(p.superficie))} ha`;
+				if (p.turno) html += ` · ${i18n.t('harvest.tip.turno')} ${p.turno} ${i18n.t('harvest.tip.anios')}`;
+				if (sit) html += `<br><b>${i18n.t(sit.labelKey)}</b>`;
+				if (Number(p.situacion) === 5 && p.anio_perdida) html += ` (${p.anio_perdida})`;
+				tooltip.innerHTML = html;
+				tooltip.style.display = 'block';
+				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
+				tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
+			});
+			map.on('mouseleave', lyr, () => {
+				leaveTimeout = setTimeout(() => {
+					if (!lassoActive) map.getCanvas().style.cursor = '';
+					tooltip.style.display = 'none';
+				}, 80);
+			});
+		}
+
 		// Corrientes buildings tooltip (same census data as Misiones)
 		map.on('mousemove', 'corrientes-buildings-3d', (e) => {
 			if (lassoActive) return;
@@ -1811,7 +1855,8 @@
 			'buildings-3d', 'corrientes-buildings-3d', 'itapua-buildings-3d', 'alto_parana-buildings-3d',
 			'chaco-buildings-3d', 'formosa-buildings-3d',
 			'parana_br-buildings-3d', 'santa_catarina_br-buildings-3d', 'rio_grande_sul_br-buildings-3d',
-			'buildings-flat', 'province-fill', 'itapua-district-fill', 'alto_parana-district-fill'];
+			'buildings-flat', 'province-fill', 'itapua-district-fill', 'alto_parana-district-fill',
+			...PLANTATION_TERRITORIES.map((t) => `${t}-plantations-fill`)];
 		const pickLabel = document.createElement('div');
 		pickLabel.style.cssText = `
 			position: fixed; display: none; pointer-events: none; z-index: 9999;
@@ -1951,8 +1996,49 @@
 
 	// Show the plantations overlay only for the active AR territory, and only when the
 	// forestry_aptitude layer is active and the user toggled it on. All others hidden.
+	let plantRetry = false;
 	function updatePlantationsVisibility() {
-		if (!map || !map.isStyleLoaded()) return;
+		if (!map) return;
+		if (!map.isStyleLoaded()) {
+			// Tiles still loading: try again once the map settles (the harvest layer is set from +page effects
+			// that can fire before the style is ready, and nothing else would re-run this).
+			if (!plantRetry) { plantRetry = true; map.once('idle', () => { plantRetry = false; updatePlantationsVisibility(); }); }
+			return;
+		}
+		if (macizoPaint) {
+			// Every macizo of the active territory, or only the open department's, painted by the tab's class.
+			const t = themeStore.tema;
+			for (const ter of PLANTATION_TERRITORIES) {
+				const vis = activeTerritoryId === ter;
+				for (const suffix of ['fill', 'line']) {
+					const id = `${ter}-plantations-${suffix}`;
+					if (!map.getLayer(id)) continue;
+					if (!vis) { map.setLayoutProperty(id, 'visibility', 'none'); continue; }
+					map.setFilter(id, macizoPaint.deptKey ? ['==', ['get', 'dpto_key'], macizoPaint.deptKey] : null);
+					if (suffix === 'fill') {
+						map.setPaintProperty(id, 'fill-color', macizoColorExpr(macizoPaint, t));
+						map.setPaintProperty(id, 'fill-opacity', t === 'claro' ? 0.9 : 0.85);
+					} else {
+						map.setPaintProperty(id, 'line-color', t === 'claro' ? '#fbfaf7' : '#111827');
+						map.setPaintProperty(id, 'line-width', 0.3);
+						map.setPaintProperty(id, 'line-opacity', 0.6);
+					}
+					map.setLayoutProperty(id, 'visibility', 'visible');
+					map.moveLayer(id, firstSymbolId);
+				}
+			}
+			return;
+		}
+		// Back to the forestry overlay paint (grupo_espe) if the harvest layer repainted it.
+		for (const ter of PLANTATION_TERRITORIES) {
+			if (map.getLayer(`${ter}-plantations-fill`)) {
+				map.setPaintProperty(`${ter}-plantations-fill`, 'fill-color', PLANT_FILL_DEFAULT);
+				map.setPaintProperty(`${ter}-plantations-fill`, 'fill-opacity', 0.5);
+				map.setPaintProperty(`${ter}-plantations-line`, 'line-color', '#b45309');
+				map.setPaintProperty(`${ter}-plantations-line`, 'line-width', 0.8);
+				map.setPaintProperty(`${ter}-plantations-line`, 'line-opacity', 0.9);
+			}
+		}
 		const forestryActive = mapStore.activeHexLayer === 'forestry_aptitude';
 		// DNDFI `depto` is upper-case; the app's selected dept name matches once upcased.
 		const dept = (mapStore.plantationsDept || '').toUpperCase();
@@ -1980,6 +2066,7 @@
 		mapStore.activeHexLayer;
 		mapStore.plantationsVisible;
 		mapStore.plantationsDept;
+		themeStore.tema;
 		updatePlantationsVisibility();
 	});
 
