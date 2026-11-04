@@ -5,7 +5,7 @@
 // mounted layers and swaps the sprite: Spatia's ~40 own layers, their data, filters
 // and selection survive untouched.
 //
-// Claro is the atlas sheet of the El Soberbio demo (demo/el-nino atlasStyle): paper,
+// Claro is an atlas sheet: paper,
 // no land-cover blotches, POIs, house numbers or aeroways.
 import type * as maplibregl from '$lib/maplibre';
 import { BASEMAP_STYLE } from '$lib/config';

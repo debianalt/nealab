@@ -36,7 +36,7 @@ export const SURFACE = 'var(--s-surface)';
 
 // ── Map colors that depend on the basemap, per theme ───────────────────────────
 // Oscuro = the values the map has always had (vitrina, and Satélite). Claro = the
-// atlas sheet of the El Soberbio demo (demo/el-nino: atlasStyle, TH): paper, gray
+// atlas sheet: paper, gray
 // shaded relief under the roads, administrative limits as a dashed gray line,
 // selection in ink. Map.svelte applyMapTheme() sets these on the mounted layers.
 export type MapTema = 'claro' | 'oscuro';
