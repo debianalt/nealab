@@ -71,6 +71,11 @@
 		return all.flatMap((p, i) => keep.has(keys[i]) ? [{ ...p, color: colorOf.get(keys[i]) ?? p.color }] : []);
 	});
 
+	// Census layers select radios: the petals and the blocks are the radios', so the title says
+	// so; cells outside any radio are named too. Satellite layers keep «Comparación de hexágonos».
+	const titleKey = $derived(radios.length === 0 ? 'hex.comparison'
+		: cellEntries.length === 0 ? 'hex.comparison.radios' : 'hex.comparison.mixed');
+
 	/** Chip/column label of a cell: the index digits that change (every res-9 cell here reads 89a9…ffff). */
 	function hexLabel(h3: string): string {
 		return h3.slice(4, 11);
@@ -196,7 +201,7 @@
 
 <div class="hex-comparison">
 	<div class="hc-header">
-		<span class="hc-title">{i18n.t('hex.comparison')}</span>
+		<span class="hc-title">{i18n.t(titleKey)}</span>
 		<button class="hc-clear" onclick={() => hexStore.clearSelection()}>
 			&#10005; {i18n.t('ctrl.clear')}
 		</button>

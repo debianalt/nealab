@@ -866,6 +866,8 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// ── Hex comparison / hex zones ──────────────────────────────────────
 	'hex.comparison': { es: 'Comparación de hexágonos', en: 'Hexagon comparison', gn: 'Hexágono jojaha', pt: 'Comparação de hexágonos' },
+	'hex.comparison.radios': { es: 'Radios censales seleccionados', en: 'Selected census tracts', gn: 'Radios censales seleccionados', pt: 'Setores censitários selecionados' },
+	'hex.comparison.mixed': { es: 'Radios y hexágonos seleccionados', en: 'Selected census tracts and hexagons', gn: 'Radios y hexágonos seleccionados', pt: 'Setores censitários e hexágonos selecionados' },
 	'hexZone.title': { es: 'Zonas hexagonales', en: 'Hex zones', gn: 'Hexágono zona', pt: 'Zonas hexagonais' },
 	'hex.petalRelative': { es: 'Flor (lectura relativa):', en: 'Flower (relative reading):', gn: 'Yvoty:', pt: 'Flor (leitura relativa):' },
 	'hex.avgOf': { es: 'promedio {ofRef}', en: 'average {ofRef}', gn: 'promedio {ofRef}', pt: 'média {ofRef}' },
