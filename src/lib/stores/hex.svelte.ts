@@ -1353,18 +1353,29 @@ export class HexStore {
 		return Number.isFinite(v) ? v : null;
 	}
 
-	private regionalChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	/** Is the painted column a census rate (a variable with a baseCol)? See choroplethEntries_compute. */
+	isCensusRate(pv: string): boolean {
+		return !!this.activeLayer?.variables?.some((v: any) => (v.col === pv || v.rawCol === pv) && v.baseCol);
+	}
+	/** A census cell with no rate: off the census (no buildings) → not drawn; else a radio below MIN_BASE. */
+	private static offCensus(data: Record<string, unknown>): boolean {
+		return data.n_edificios != null && Number(data.n_edificios) === 0;
+	}
+
+	private regionalChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.effectivePrimary;
-		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
+		const census = this.isCensusRate(pv);
+		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] = [];
 		for (const [h3index, data] of this.regionalVisibleData) {
 			const value = HexStore.entryValue(data[pv]);
-			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index), nodata: value === null });
+			if (census && value === null && HexStore.offCensus(data)) continue;
+			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.regionalBoundaryCache.get(h3index), nodata: value === null, smallBase: census && value === null });
 		}
 		return entries;
 	}
 
-	get regionalChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	get regionalChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] {
 		if (this.regionalDataVersion === this._regionalEntriesVersion) return this._regionalEntriesCache;
 		const result = this.regionalChoroplethEntries_compute();
 		this._regionalEntriesVersion = this.regionalDataVersion;
@@ -1422,18 +1433,20 @@ export class HexStore {
 		this.compareDataVersion++;
 	}
 
-	private compareChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	private compareChoroplethEntries_compute(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] {
 		if (!this.activeLayer) return [];
 		const pv = this.effectivePrimary;
-		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
+		const census = this.isCensusRate(pv);
+		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] = [];
 		for (const [h3index, data] of this.compareVisibleData) {
 			const value = HexStore.entryValue(data[pv]);
-			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.compareBoundaryCache.get(h3index), nodata: value === null });
+			if (census && value === null && HexStore.offCensus(data)) continue;
+			entries.push({ h3index, value, properties: data as Record<string, number>, boundary: this.compareBoundaryCache.get(h3index), nodata: value === null, smallBase: census && value === null });
 		}
 		return entries;
 	}
 
-	get compareChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	get compareChoroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] {
 		if (this.compareDataVersion === this._compareEntriesVersion) return this._compareEntriesCache;
 		const result = this.compareChoroplethEntries_compute();
 		this._compareEntriesVersion = this.compareDataVersion;
@@ -1621,13 +1634,21 @@ export class HexStore {
 		// worse/better legend labels stay correct. Layers where higher = better/neutral
 		// (carbon, censo density: sequential) keep the raw sign.
 		const invertDelta = isDelta && this.activeLayer.colorScale === 'flood';
-		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] = [];
+		const entries: { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] = [];
 		const deptOnly = this.deptFilter;
+		// A census rate (variable with a baseCol) has no value in two cases (5-nov-2026):
+		// the cell has no buildings, so it is not in the census at all (economic_activity
+		// ships the full night-lights grid: 80 % of Capital was painted «sin cobertura»),
+		// and is not drawn; or its radio has fewer than MIN_BASE (30) in the base, so no
+		// rate is published: smallBase, hatched on the map with its own legend row.
+		const pv = this.effectivePrimary;
+		const censusRate = !isDelta && this.isCensusRate(pv);
 		for (const [h3index, data] of this.visibleData) {
 			if (deptOnly && !deptOnly.has(h3index)) continue;
 			const raw = data[effectivePrimary];
 			const hasData = raw !== undefined && raw !== null &&
 				(typeof raw !== 'number' || Number.isFinite(raw));
+			if (censusRate && !hasData && HexStore.offCensus(data)) continue;
 			let value: number | null = hasData ? Number(raw) : null;
 			if (invertDelta && value !== null) value = -value;
 			if (isDelta && hasData && value === 0) continue;
@@ -1636,13 +1657,14 @@ export class HexStore {
 				value,
 				properties: data,
 				boundary: this.boundaryCache.get(h3index),
-				nodata: !hasData
+				nodata: !hasData,
+				smallBase: censusRate && !hasData
 			});
 		}
 		return entries;
 	}
 
-	get choroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean }[] {
+	get choroplethEntries(): { h3index: string; value: number | null; properties: Record<string, number>; boundary?: number[][]; nodata?: boolean; smallBase?: boolean }[] {
 		if (this.dataVersion === this._entriesVersion) return this._entriesCache;
 		const result = this.choroplethEntries_compute();
 		this._entriesVersion = this.dataVersion;

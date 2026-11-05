@@ -34,6 +34,7 @@
 		layer?.temporal && hexStore.temporalMode === 'delta' ? 'diverging' : layer?.colorScale
 	);
 	const isCategorical = $derived(effectiveScale === 'categorical');
+	const smallBase = $derived(!!layer && effectiveScale !== 'diverging' && hexStore.isCensusRate(hexStore.effectivePrimary));
 	const isSequential = $derived(effectiveScale === 'sequential');
 	const isFlood = $derived(effectiveScale === 'flood');
 	const isGreen = $derived(effectiveScale === 'green');
@@ -160,6 +161,17 @@
 	);
 </script>
 
+<!-- Census rates: a cell without a value is a radio below MIN_BASE (30), hatched on the
+     map (Map.hexHatch); every other layer keeps the flat no-data gray. -->
+{#snippet nodataSwatch()}
+	{#if smallBase}
+		<span class="nodata-swatch hatched" style:background={`repeating-linear-gradient(135deg, ${P.nodata} 0 1.5px, transparent 1.5px 4px)`}></span>
+		<span class="nodata-label">{i18n.t('legend.smallBase')}</span>
+	{:else}
+		<span class="nodata-swatch" style:background={P.nodata}></span>
+		<span class="nodata-label">{i18n.t('legend.noData')}</span>
+	{/if}
+{/snippet}
 <!-- The department edge on the map is its cells, not the official limit (methodology). -->
 {#snippet boundsNote()}
 	{#if hexStore.selectedDpto}
@@ -198,8 +210,7 @@
 			{/each}
 		</div>
 		<div class="nodata-row">
-			<span class="nodata-swatch" style:background={P.nodata}></span>
-			<span class="nodata-label">{i18n.t('legend.noData')}</span>
+			{@render nodataSwatch()}
 		</div>
 		{@render boundsNote()}
 	</div>
@@ -223,8 +234,7 @@
 		<!-- Macizo layers paint DNDFI polygons: every polygon has a class, and the hexagon clipping note does not apply. -->
 		{#if !layer.macizos}
 			<div class="nodata-row">
-				<span class="nodata-swatch" style:background={P.nodata}></span>
-				<span class="nodata-label">{i18n.t('legend.noData')}</span>
+				{@render nodataSwatch()}
 			</div>
 			{@render boundsNote()}
 		{/if}
@@ -243,8 +253,7 @@
 		</div>
 		<div class="scale-note">{scaleNote}</div>
 		<div class="nodata-row">
-			<span class="nodata-swatch" style:background={P.nodata}></span>
-			<span class="nodata-label">{i18n.t('legend.noData')}</span>
+			{@render nodataSwatch()}
 		</div>
 		{@render boundsNote()}
 	</div>
@@ -263,8 +272,7 @@
 			</div>
 		{/if}
 		<div class="nodata-row">
-			<span class="nodata-swatch" style:background={P.nodata}></span>
-			<span class="nodata-label">{i18n.t('legend.noData')}</span>
+			{@render nodataSwatch()}
 		</div>
 		{@render boundsNote()}
 	</div>
@@ -328,7 +336,7 @@
 		border-radius: 2px;
 		flex-shrink: 0;
 	}
-	.legend-swatch.hatched { box-shadow: inset 0 0 0 1px var(--c-line-3); }
+	.legend-swatch.hatched, .nodata-swatch.hatched { box-shadow: inset 0 0 0 1px var(--c-line-3); }
 	.scale-toggle {
 		display: flex;
 		gap: 2px;
