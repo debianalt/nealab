@@ -10,7 +10,7 @@
 	import { LensStore } from '$lib/stores/lens.svelte';
 	import { LassoStore } from '$lib/stores/lasso.svelte';
 	import { HexStore } from '$lib/stores/hex.svelte';
-	import { radioUnit, isRadioSupport, codprovOf } from '$lib/stores/radioUnit.svelte';
+	import { radioUnit, isRadioSupport, codprovOf, radioSelectionOn } from '$lib/stores/radioUnit.svelte';
 	import { TerritoryStore } from '$lib/stores/territory.svelte';
 	import { initDuckDB, query, isReady, getInitError } from '$lib/stores/duckdb';
 	import { cellToLatLng, polygonToCells } from 'h3-js';
@@ -706,12 +706,22 @@
 
 	// ── HexStore reactivity: sync hex selection highlights with map ───────
 	$effect(() => {
+		// Census layers: a click picks the cell's radio. Cells of one radio share its colour and the
+		// radio is outlined (the panel shows its rates once; radioUnit.groupSelection).
+		const tp = hexStore.territoryPrefix;
+		const byRadio = radioSelectionOn(hexStore.activeLayer?.id, tp, hexStore.analysisResLevel != null)
+			&& hexStore.compareVisibleData.size === 0;   // same gate as HexComparison
+		if (byRadio) radioUnit.ensure(tp);
+		const groups = byRadio ? radioUnit.groupSelection(tp, hexStore.selectedHexes) : null;
+		const radioColor = new Map<string, string>();
+		for (const r of groups?.radios ?? []) for (const h of r.hexes) radioColor.set(h, r.color);
 		const allHexes = [...hexStore.selectedHexes.entries()].map(([h3index, d]) => ({
-			h3index, color: d.color
+			h3index, color: radioColor.get(h3index) ?? d.color
 		}));
 		const primary = allHexes.filter(h => hexStore.visibleData.has(h.h3index));
 		const compare = allHexes.filter(h => hexStore.compareVisibleData.has(h.h3index));
 		mapComponent?.highlightHexagons(primary, compare);
+		mapComponent?.setRadioSelected((groups?.radios ?? []).map(r => ({ redcode: r.redcode, color: r.color })));
 	});
 
 	// ── HexStore reactivity: re-render choropleth when data changes ──────

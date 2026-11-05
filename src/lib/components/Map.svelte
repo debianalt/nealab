@@ -48,7 +48,7 @@
 	import { territoryAt } from '$lib/utils/territoryAt';
 	import { territoryRef } from '$lib/utils/territoryRef';
 	import regionOutline from '$lib/data/region_outline.json';
-	import { radioUnit } from '$lib/stores/radioUnit.svelte';
+	import { radioUnit, fmtRedcode } from '$lib/stores/radioUnit.svelte';
 
 	let { mapStore }: { mapStore: MapStore } = $props();
 
@@ -120,6 +120,22 @@
 		map.setFilter('radio-unit-line', c.deptKey
 			? ['all', ['==', ['get', 'codprov'], c.codprov], ['==', ['get', 'dpto_key'], c.deptKey]]
 			: ['==', ['get', 'codprov'], c.codprov]);
+	}
+	// Radios of the click selection (census layers): outlined in the colour of their panel block.
+	let radioSelected: { redcode: string; color: string }[] = [];
+	export function setRadioSelected(list: { redcode: string; color: string }[]) {
+		radioSelected = list;
+		applyRadioSelected();
+	}
+	function applyRadioSelected() {
+		if (!map?.getLayer('radio-unit-selected')) return;
+		const ids = radioSelected.map(r => r.redcode);
+		map.setFilter('radio-unit-selected', ['in', ['get', 'redcode'], ['literal', ids]]);
+		if (ids.length === 0) return;
+		const color: any = ['match', ['get', 'redcode']];
+		for (const r of radioSelected) color.push(r.redcode, r.color);
+		color.push(SELECT_OUTLINE);
+		map.setPaintProperty('radio-unit-selected', 'line-color', color);
 	}
 	function setRadioHover(redcode: string | null) {
 		if (redcode === radioHover || !map?.getLayer('radio-unit-hover')) return;
@@ -1229,7 +1245,16 @@
 				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2.2, 'line-opacity': 0.95 },
 				filter: ['==', ['get', 'redcode'], '']
 			}, firstSymbolId);
+			map.addLayer({
+				id: 'radio-unit-selected',
+				type: 'line',
+				source: 'radios',
+				'source-layer': 'radios',
+				paint: { 'line-color': SELECT_OUTLINE, 'line-width': 2.6, 'line-opacity': 0.95 },
+				filter: ['in', ['get', 'redcode'], ['literal', []]]
+			}, firstSymbolId);
 			applyRadioUnit();
+			applyRadioSelected();
 			// Selected hexagons: white outline (SELECT_OUTLINE) plus a faint tint of each
 			// hexagon's panel colour, so several picks stay tellable apart on the map.
 			map.addLayer({
@@ -1910,7 +1935,7 @@
 			if (radioUnitCtx) {
 				const r = radioUnit.radioOf(radioUnitCtx.prefix, String(p.h3index));
 				setRadioHover(r ? String(r.redcode) : null);
-				if (r) radioLine = `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-top:2px">${i18n.t(Number(r.n_celdas) === 1 ? 'map.radioTip1' : 'map.radioTip').replace('{code}', String(r.redcode)).replace('{n}', Number(r.n_celdas).toLocaleString(i18n.locale))}</div>`;
+				if (r) radioLine = `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-top:2px">${i18n.t(Number(r.n_celdas) === 1 ? 'map.radioTip1' : 'map.radioTip').replace('{code}', fmtRedcode(String(r.redcode))).replace('{n}', Number(r.n_celdas).toLocaleString(i18n.locale))}</div>`;
 			}
 
 			tooltip.innerHTML = `${titleLine}${valueLine}${radioLine}`;

@@ -30,6 +30,26 @@ export function hasRadios(territoryPrefix: string): boolean {
 	return territoryPrefix in RADIO_TERRITORIES;
 }
 
+/** Click selection by radio: census layers in a territory with radios, cell view (not aggregated). */
+export function radioSelectionOn(layerId: string | null | undefined, territoryPrefix: string, aggregated: boolean): boolean {
+	return !!layerId && layerId in RADIO_SUPPORT && hasRadios(territoryPrefix) && !aggregated;
+}
+
+/** INDEC redcode as read on the census cartography: 540070303 → 54-007-03-03. */
+export function fmtRedcode(id: string): string {
+	return /^\d{9}$/.test(id) ? `${id.slice(0, 2)}-${id.slice(2, 5)}-${id.slice(5, 7)}-${id.slice(7)}` : id;
+}
+
+export interface SelectedRadio {
+	redcode: string;
+	/** The radio's row of census_radios_2022 (rates and bases of the whole radio). */
+	row: Record<string, any>;
+	/** Selected cells inside the radio, in selection order. */
+	hexes: string[];
+	/** Colour of the radio's first selected cell; every cell of the radio takes it. */
+	color: string;
+}
+
 export function codprovOf(territoryPrefix: string): string | null {
 	return RADIO_TERRITORIES[territoryPrefix] ?? null;
 }
@@ -102,6 +122,27 @@ class RadioUnitStore {
 		const t = this.loaded.get(territoryPrefix);
 		const id = t?.cellToRadio.get(h3);
 		return id ? t!.rows.get(id) ?? null : null;
+	}
+
+	/**
+	 * The click selection grouped by radio, in selection order: a second cell of a radio
+	 * already picked joins it instead of repeating its rates. Cells with no radio stay in
+	 * `loose`. Null when the territory's radios are not loaded (callers fall back to cells).
+	 */
+	groupSelection(territoryPrefix: string, selected: Map<string, { color: string }>): { radios: SelectedRadio[]; loose: string[] } | null {
+		const t = this.loaded.get(territoryPrefix);
+		if (!t || selected.size === 0) return null;
+		const by = new Map<string, SelectedRadio>();
+		const loose: string[] = [];
+		for (const [h, s] of selected) {
+			const id = t.cellToRadio.get(h);
+			const row = id ? t.rows.get(id) : undefined;
+			if (!id || !row) { loose.push(h); continue; }
+			let g = by.get(id);
+			if (!g) by.set(id, g = { redcode: id, row, hexes: [], color: s.color });
+			g.hexes.push(h);
+		}
+		return { radios: [...by.values()], loose };
 	}
 
 	/**

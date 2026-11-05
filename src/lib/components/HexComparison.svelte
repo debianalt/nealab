@@ -6,6 +6,8 @@
 	import { withRef } from '$lib/utils/territoryRef';
 	import { unitLabel } from '$lib/utils/units';
 	import { downloadCsvFromRows, downloadGeoJsonFromHexList } from '$lib/utils/data-export';
+	import { radioUnit, radioSelectionOn, isRadioSupport, fmtRedcode } from '$lib/stores/radioUnit.svelte';
+	import type { HexVariable } from '$lib/config';
 
 	let {
 		hexStore,
@@ -28,8 +30,82 @@
 		// "Sin cobertura" (legend.noData) on unscored hexes (e.g. forestry on water).
 		variables.filter(v => !v.hidden && !['score', 'type', 'type_label', 'pca_1', 'pca_2'].includes(v.col))
 	);
-	const petalLayers = $derived(hexStore.selectionPetalLayers);
 	const petalLabels = $derived(hexStore.petalLabels);
+
+	// Census layers: the rates belong to the INDEC radio, so a click picks the cell's radio and
+	// the panel shows each radio once (radioUnit.groupSelection). A second cell of the same radio
+	// only adds its buildings. Satellite layers, Paraguay, the aggregated view and the
+	// territory comparison keep one block per cell. Same gate as the map effect in +page.svelte.
+	const byRadio = $derived(
+		radioSelectionOn(layer?.id, hexStore.territoryPrefix, hexStore.analysisResLevel != null)
+		&& hexStore.compareVisibleData.size === 0
+	);
+	$effect(() => { if (byRadio) radioUnit.ensure(hexStore.territoryPrefix); });
+	const groups = $derived(byRadio ? radioUnit.groupSelection(hexStore.territoryPrefix, hexStore.selectedHexes) : null);
+	const radios = $derived(groups?.radios ?? []);
+	const looseSet = $derived(new Set(groups?.loose ?? []));
+	/** Cells shown as cells: every one without radios, only those outside any radio with them. */
+	const cellEntries = $derived(groups ? selected.filter(([h]) => looseSet.has(h)) : selected);
+	const radioVars = $derived(groups ? componentVars.filter(v => isRadioSupport(layer?.id, v.col)) : []);
+	/** Variables measured on the cell (population density, night lights): per cell even by radio. */
+	const cellVars = $derived(groups ? componentVars.filter(v => !isRadioSupport(layer?.id, v.col)) : componentVars);
+
+	// One petal per radio (its first cell) plus the loose cells; selectionPetalLayers follows
+	// the selection order.
+	const petalLayers = $derived.by(() => {
+		const all = hexStore.selectionPetalLayers;
+		if (!groups) return all;
+		const keys = [...hexStore.selectedHexes.keys()];
+		const colorOf = new Map(radios.map(r => [r.hexes[0], r.color]));
+		const keep = new Set([...colorOf.keys(), ...looseSet]);
+		return all.flatMap((p, i) => keep.has(keys[i]) ? [{ ...p, color: colorOf.get(keys[i]) ?? p.color }] : []);
+	});
+
+	/** Chip/column label of a cell: the index digits that change (every res-9 cell here reads 89a9…ffff). */
+	function hexLabel(h3: string): string {
+		return h3.slice(4, 11);
+	}
+
+	function isNum(v: unknown): v is number {
+		return typeof v === 'number' && Number.isFinite(v);
+	}
+
+	function fmtVar(v: HexVariable, val: number): string {
+		return fmtValue(val * (v.scale ?? 1), v.unit) + (v.unit ? ` ${unitLabel(v.unit)}` : '');
+	}
+
+	/** Sum of a cell column over the selected cells (buildings, estimated households). */
+	function sumCells(hexes: string[], col: string): number | null {
+		let s = 0, any = false;
+		for (const h of hexes) {
+			const x = hexStore.selectedHexes.get(h)?.data?.[col];
+			if (isNum(x)) { s += x; any = true; }
+		}
+		return any ? s : null;
+	}
+
+	/** Rate of the selected radios together: each radio weighs by its base (households or people);
+	 *  a variable without base (travel minutes) weighs by the radio's population. */
+	function pooled(v: HexVariable): number | null {
+		let num = 0, den = 0;
+		for (const r of radios) {
+			const x = r.row[v.col];
+			const w = r.row[v.baseCol ?? 'pob_total'];
+			if (!isNum(x) || !isNum(w) || w <= 0) continue;
+			num += x * w; den += w;
+		}
+		return den > 0 ? num / den : null;
+	}
+
+	function sumRadios(col: string): number | null {
+		let s = 0, any = false;
+		for (const r of radios) { const x = r.row[col]; if (isNum(x)) { s += x; any = true; } }
+		return any ? s : null;
+	}
+
+	function deselectRadio(hexes: string[]) {
+		for (const h of hexes) hexStore.deselectHex(h);
+	}
 
 	/**
 	 * Adaptive number formatter — picks precision based on magnitude so that
@@ -70,7 +146,7 @@
 	// Show the magnitude table when the layer carries dasymetric magnitude
 	// (n_edificios) or the bases its rates are over (sociodemographic has no
 	// building count, only hog_total).
-	const hasBuildings = $derived(selected.some(([, d]) => d.data?.n_edificios != null));
+	const hasBuildings = $derived(cellEntries.some(([, d]) => d.data?.n_edificios != null));
 	// Households/people each % is computed over (census layers: hog_total,
 	// pob_18_mas, …), one table row per distinct base column.
 	const baseCols = $derived(
@@ -82,8 +158,25 @@
 	// (e.g. "Sin cobertura censal") is not surfaced.
 	const hasClassification = $derived(variables.some(v => v.col === 'type_label'));
 
+	function downloadRadiosCsv() {
+		const rows = radios.map(r => ({
+			redcode: r.redcode,
+			hexagonos_marcados: r.hexes.length,
+			edificios_marcados: sumCells(r.hexes, 'n_edificios'),
+			...r.row,
+		}));
+		if (rows.length === 0) return;
+		const allCols = new Set<string>();
+		for (const row of rows) for (const k of Object.keys(row)) allCols.add(k);
+		downloadCsvFromRows(rows, [...allCols], `spatia_${layer?.id ?? 'layer'}_radios_seleccionados.csv`);
+	}
+
 	function downloadSelectedCsv() {
-		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({ h3index: h3, ...sel.data }));
+		const radioOf = new Map<string, string>();
+		for (const r of radios) for (const h of r.hexes) radioOf.set(h, r.redcode);
+		const rows = [...hexStore.selectedHexes.entries()].map(([h3, sel]) => ({
+			h3index: h3, ...(groups ? { redcode: radioOf.get(h3) ?? '' } : {}), ...sel.data,
+		}));
 		if (rows.length === 0) return;
 		const allCols = new Set<string>(['h3index']);
 		for (const row of rows) for (const k of Object.keys(row)) allCols.add(k);
@@ -109,10 +202,17 @@
 
 	<!-- Hex chips -->
 	<div class="hc-chips">
-		{#each selected as [h3index, data]}
+		{#each radios as r (r.redcode)}
+			<span class="hc-chip">
+				<span class="hc-dot" style:background={r.color}></span>
+				<span class="hc-label">{fmtRedcode(r.redcode)}</span>
+				<button class="hc-remove" onclick={() => deselectRadio(r.hexes)}>&#10005;</button>
+			</span>
+		{/each}
+		{#each cellEntries as [h3index, data]}
 			<span class="hc-chip">
 				<span class="hc-dot" style:background={data.color}></span>
-				<span class="hc-label">{h3index.slice(0, 4)}...{h3index.slice(-4)}</span>
+				<span class="hc-label">{hexLabel(h3index)}</span>
 				<button class="hc-remove" onclick={() => hexStore.deselectHex(h3index)}>&#10005;</button>
 			</span>
 		{/each}
@@ -126,13 +226,93 @@
 		</div>
 	{/if}
 
-	<!-- Data rows for ALL selected hexagons (always shown) -->
+	<!-- Census layers: one block per selected radio (its rates once), then the radios together -->
+	{#if groups && radios.length > 0}
+		{#each radios as r (r.redcode)}
+			<div class="cd-hex-block">
+				<div class="cd-hex-id">
+					<span class="hc-dot" style:background={r.color}></span>
+					{i18n.t('hex.radio')} {fmtRedcode(r.redcode)}
+					<span class="cd-cells">· {r.hexes.length} {i18n.t(r.hexes.length === 1 ? 'hex.cellMarked' : 'hex.cellsMarked')}</span>
+				</div>
+				{#each radioVars as v}
+					{@const val = r.row[v.col]}
+					<div class="cd-row">
+						<span class="cd-label">{i18n.t(v.labelKey)}</span>
+						{#if isNum(val)}
+							<span class="cd-val-data">{fmtVar(v, val)}</span>
+						{:else}
+							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
+						{/if}
+					</div>
+				{/each}
+				{#each cellVars as v}
+					<div class="cd-row">
+						<span class="cd-label">{i18n.t(v.labelKey)}</span>
+						<span class="cd-val-data">{r.hexes.map(h => { const x = hexStore.selectedHexes.get(h)?.data?.[v.col]; return isNum(x) ? fmtVar(v, x) : '—'; }).join(' · ')}</span>
+					</div>
+				{/each}
+				{#each baseCols as col}
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t(`hex.radioBase.${col}`)}</span>
+						<span class="cd-val-data">{fmtInt(r.row[col])}</span>
+					</div>
+				{/each}
+				{#if sumCells(r.hexes, 'n_edificios') != null}
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t('hex.buildingsMarked')}</span>
+						<span class="cd-val-data">{fmtInt(sumCells(r.hexes, 'n_edificios'))}</span>
+					</div>
+				{/if}
+				{#each baseCols as col}
+					{#if sumCells(r.hexes, col) != null}
+						<div class="cd-row cd-row-mag">
+							<span class="cd-label">{i18n.t(`hex.base.${col}`)} · {i18n.t('hex.inMarked')}</span>
+							<span class="cd-val-data">{fmtBase(sumCells(r.hexes, col))}</span>
+						</div>
+					{/if}
+				{/each}
+			</div>
+		{/each}
+		{#if radios.length >= 2}
+			{@const allHexes = radios.flatMap(r => r.hexes)}
+			<div class="cd-hex-block cd-total">
+				<div class="cd-hex-id">{i18n.t('hex.selectionTotal')} · {radios.length} {i18n.t('hex.radiosN')}</div>
+				{#each radioVars as v}
+					{@const p = pooled(v)}
+					<div class="cd-row">
+						<span class="cd-label">{i18n.t(v.labelKey)}</span>
+						{#if p != null}
+							<span class="cd-val-data">{fmtVar(v, p)}</span>
+						{:else}
+							<span class="cd-val-data cd-val-nodata">{i18n.t('legend.noData')}</span>
+						{/if}
+					</div>
+				{/each}
+				{#each baseCols as col}
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t(`hex.radiosBase.${col}`)}</span>
+						<span class="cd-val-data">{fmtInt(sumRadios(col))}</span>
+					</div>
+				{/each}
+				{#if sumCells(allHexes, 'n_edificios') != null}
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t('hex.buildingsMarked')}</span>
+						<span class="cd-val-data">{fmtInt(sumCells(allHexes, 'n_edificios'))}</span>
+					</div>
+				{/if}
+			</div>
+		{/if}
+		<div class="mag-note">{i18n.t('hex.radioNote')}</div>
+	{/if}
+
+	<!-- Data rows per cell: every selected cell, or (census layers) the ones outside the radios -->
 	{#if componentVars.length > 0}
-		{#each selected as [h3index, hexData]}
+		{#each cellEntries as [h3index, hexData]}
 			<div class="cd-hex-block">
 				<div class="cd-hex-id">
 					<span class="hc-dot" style:background={hexData.color}></span>
-					{h3index.slice(0, 4)}...{h3index.slice(-4)}
+					{hexLabel(h3index)}
 					{#if hasClassification && displayTypeLabel(hexData.data?.type_label, i18n.locale)}
 						<span class="cd-type">{displayTypeLabel(hexData.data?.type_label, i18n.locale)}</span>
 					{/if}
@@ -165,16 +345,16 @@
 	{/if}
 
 	<!-- Magnitude (buildings, est. population) + estimated % per variable -->
-	{#if hasBuildings || baseCols.length > 0}
+	{#if cellEntries.length > 0 && (hasBuildings || baseCols.length > 0)}
 		<div class="mag-section">
 			<div class="mag-title">{i18n.t('hex.magTable')}</div>
 			<table class="mag-table">
 				<thead>
 					<tr>
 						<th></th>
-						{#each selected as [h3index, d]}
+						{#each cellEntries as [h3index, d]}
 							<th>
-								<span class="hc-dot" style:background={d.color}></span>{h3index.slice(0, 4)}…
+								<span class="hc-dot" style:background={d.color}></span>{hexLabel(h3index)}
 							</th>
 						{/each}
 					</tr>
@@ -183,13 +363,13 @@
 					{#if hasBuildings}
 						<tr>
 							<td>{i18n.t('hex.buildings')}</td>
-							{#each selected as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
+							{#each cellEntries as [, d]}<td>{fmtInt(d.data?.n_edificios)}</td>{/each}
 						</tr>
 					{/if}
 					{#each baseCols as col}
 						<tr>
 							<td>{i18n.t(`hex.base.${col}`)}</td>
-							{#each selected as [, d]}<td>{fmtBase(d.data?.[col])}</td>{/each}
+							{#each cellEntries as [, d]}<td>{fmtBase(d.data?.[col])}</td>{/each}
 						</tr>
 					{/each}
 				</tbody>
@@ -203,6 +383,9 @@
 
 	{#if selected.length > 0}
 		<div class="hc-download-row">
+			{#if radios.length > 0}
+				<button class="hc-dl-btn" onclick={downloadRadiosCsv}>↓ {i18n.t('hex.csvRadios')}</button>
+			{/if}
 			<button class="hc-dl-btn" onclick={downloadSelectedCsv}>↓ CSV</button>
 			<button class="hc-dl-btn" onclick={downloadSelectedGeoJson}>↓ GeoJSON</button>
 		</div>
@@ -222,6 +405,9 @@
 	.cd-val { font-size: 11px; font-weight: 600; color: var(--c-ink-2); width: 24px; text-align: right; flex-shrink: 0; }
 	.cd-val-data { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; }
 	.cd-val-nodata { color: var(--c-ink-3); font-style: italic; font-weight: 500; }
+	.cd-cells { font-family: sans-serif; font-size: 11.5px; color: var(--c-ink-2); }
+	.cd-row-mag .cd-label, .cd-row-mag .cd-val-data { color: var(--c-ink-2); font-weight: 500; }
+	.cd-total { border-top: 1px solid rgba(var(--c-fg-rgb), 0.18); }
 	.hc-header {
 		display: flex;
 		justify-content: space-between;
