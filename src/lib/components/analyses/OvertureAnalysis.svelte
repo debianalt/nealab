@@ -200,6 +200,17 @@
 		const hide = hasRank && rankBars && !!rankCfg?.hexNone && !!selectedDpto;
 		untrack(() => { hexStore.setColorVariable(v); hexStore.setMacizoFocus(f); hexStore.setHexHidden(hide); });
 	});
+	// A reading that is the layer's own temporal change (deforestation, Aceleración) drives the
+	// temporal mode while it is active, and the Actual / Línea base / Cambio toggle hides: its
+	// «Cambio» would repeat the tab. Leaving the tab goes back to «Actual».
+	let tabSetMode = false;
+	$effect(() => {
+		const m = hasRank ? (rankCfg?.temporalMode ?? null) : null;
+		untrack(() => {
+			if (m) { if (hexStore.temporalMode !== m) hexStore.setTemporalMode(m); tabSetMode = true; }
+			else if (tabSetMode) { tabSetMode = false; if (hexStore.temporalMode !== 'current') hexStore.setTemporalMode('current'); }
+		});
+	});
 
 	const deptList = $derived.by(() => {
 		const summary = allSummaries.size > 0 ? allSummaries.get(activeTab) : deptSummary;
@@ -459,6 +470,8 @@
 
 	// ── Temporal toggle support ──
 	const isTemporal = $derived(layerCfg?.temporal === true);
+	// Hidden while a ranking tab drives the temporal mode (deptRank.temporalMode).
+	const showTemporalToggle = $derived(isTemporal && !(hasRank && rankCfg?.temporalMode));
 	const tMode = $derived(hexStore.temporalMode);
 
 
@@ -549,7 +562,7 @@
 			</a>
 		{/if}
 
-		{#if isTemporal}
+		{#if showTemporalToggle}
 			<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
 		{/if}
 
@@ -717,7 +730,7 @@
 			</div>
 		{/if}
 
-		{#if isTemporal}
+		{#if showTemporalToggle}
 			<TemporalToggle {hexStore} layerId={layerCfg?.id ?? ''} />
 		{/if}
 

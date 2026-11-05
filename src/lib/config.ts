@@ -113,7 +113,7 @@ export function getParquetUrl(name: string): string {
 		sat_economic_activity: '?v=37',   // 37: restaurado v35 (grilla completa, relleno de Corrientes, transiciones) + las 2 columnas; la 36 salió de una copia del 2-nov (5-nov-2026); 36: ocupados_est y tasa_desocupacion por celda (add_econ_hex_derived.py, 5-nov-2026); 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=32',   // 5-nov-2026: todo en minutos por camino (hospital, salud, secundaria, ruta)
 		sat_pm25_drivers: '?v=20',   // 4-nov-2026: sin score*
-		sat_deforestation_dynamics: '?v=19',   // 4-nov-2026: sin score* ni tipos; 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
+		sat_deforestation_dynamics: '?v=20',   // 20: c_loss_pct_forest(_baseline/_delta) por celda (5-nov-2026); 4-nov-2026: sin score* ni tipos; 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
 		sat_uso_suelo: '?v=1',  // 3-nov-2026: MapBiomas AR Col. 3 (reemplaza Dynamic World)
 		sat_censo_temporal: '?v=1',
 		sat_eudr: '?v=1',
@@ -124,7 +124,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 42;   // 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 43;   // 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -586,6 +586,9 @@ export interface DeptRank {
 	// The reading exists only by department (no per-hex column): the panel says so and
 	// names what the hexagons show instead.
 	hexNone?: boolean;
+	// The reading is the layer's own temporal change (deforestation, Aceleración): while the tab
+	// is active the map runs in this temporal mode and the Actual / Línea base / Cambio toggle hides.
+	temporalMode?: TemporalMode;
 	// Macizo layers (forestry_harvest): the stands this reading is about (genus and situation codes, as in the
 	// ranking). The map paints them in their class color and the rest gray and faint; the legend lists only them.
 	// null in a tab = no focus (overrides the base).
@@ -1542,6 +1545,9 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		variables: [
 			{ col: 'c_loss_rate', unit: '%/yr', labelKey: 'sat.deforest.lossRate', aggregation: 'mean' },
 			{ col: 'c_cumulative', unit: '%', labelKey: 'sat.deforest.cumulative', aggregation: 'mean' },
+			// % of the 2000 tree cover lost per year, per cell (pipeline/add_deforest_hex_derived.py, 5-nov-2026):
+			// the «% del bosque» tab's map. Empty where the cell had < 10 % tree cover in 2000.
+			{ col: 'c_loss_pct_forest', unit: '%/yr', labelKey: 'sat.deforest.lossPctForest', aggregation: 'mean', hidden: true },
 		],
 		// No type chip: its old score-cut classes ("Baja presión" up to 1.25 %/yr) contradicted
 		// the legend's classes (3-nov-2026 audit).
@@ -1556,15 +1562,17 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		temporalPeriods: { current: '2016–2025', baseline: '2001–2010', source: 'Hansen GFC v1.13' },
 		// Three readings of the same Hansen loss (pipeline/build_deforest_rank.py):
 		// where the most is lost, where it is most intense, where it sped up or slowed.
+		// Open department: Hectáreas paints c_loss_rate (equal-area cells: the same reading as ha/yr),
+		// % del bosque its own column, Aceleración the temporal change of c_loss_rate (temporalMode).
 		deptRank: {
 			field: 'loss_ha_yr', unit: 'ha/año', unitKey: 'rank.unit.haYr', decimals: 0,
-			titleKey: 'rank.deforest.title.ha', noteKey: 'rank.deforest.note.ha',
+			titleKey: 'rank.deforest.title.ha', noteKey: 'rank.deforest.note.ha', hexVariable: 'c_loss_rate',
 			metrics: [
 				{ tabKey: 'rank.deforest.tab.ha' },
-				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2, hexNone: true,
+				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%/año', unitKey: 'rank.unit.pctYr', decimals: 2, hexVariable: 'c_loss_pct_forest',
 				  titleKey: 'rank.deforest.title.pct', noteKey: 'rank.deforest.note.pct',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
-				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 0, signed: true, hexNone: true,
+				{ tabKey: 'rank.deforest.tab.change', field: 'loss_change_pct', unit: '%', unitKey: 'rank.unit.pct', decimals: 0, signed: true, temporalMode: 'delta',
 				  titleKey: 'rank.deforest.title.change', noteKey: 'rank.deforest.note.change',
 				  extraField: 'loss_ha_yr', extraUnitKey: 'rank.unit.haYr', extraDecimals: 0 },
 			],
@@ -1582,6 +1590,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			note: 'flow.deforest.note',
 		},
 		colorClasses: DEFOREST_LOSS_CLASSES,
+		variableClasses: { c_loss_pct_forest: DEFOREST_LOSS_CLASSES },
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', amambay_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable'},
 	},
 	// ── EUDR: pérdida arbórea posterior a 2020 (H3 res-9, por departamento) ──

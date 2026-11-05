@@ -5,7 +5,8 @@
 //   - hexNone      → the departments (deptFill), no cells: always distinct;
 //   - hexVariable  → that column, which must be one of the layer's variables (else
 //                    it is never loaded and the map silently falls back to the primary);
-//   - neither      → the layer's primaryVariable.
+//   - neither      → the layer's primaryVariable;
+//   - temporalMode → that column in the tab's temporal mode (its _baseline/_delta).
 // Two tabs of one layer resolving to the same column (and the same macizo focus) fail.
 //
 //   node scripts/check_rank_tabs.mjs        (npm run check:tabs)
@@ -37,7 +38,8 @@ for (const [id, layer] of Object.entries(HEX_LAYER_REGISTRY)) {
 		if (c.hexVariable && !layer.macizos && !cols.has(c.hexVariable)) {
 			errors.push(`${id} · ${m.tabKey}: hexVariable '${c.hexVariable}' no está en variables (no se carga; el mapa pinta la primaria)`);
 		}
-		const paints = (c.hexVariable ?? layer.primaryVariable) + ' ' + JSON.stringify(c.macizoFocus ?? null);
+		// temporalMode (deforestation, Aceleración): same column, painted as its change.
+		const paints = (c.hexVariable ?? layer.primaryVariable) + ' ' + JSON.stringify(c.macizoFocus ?? null) + ' ' + (c.temporalMode ?? 'current');
 		if (seen.has(paints)) {
 			errors.push(`${id}: ${seen.get(paints)} y ${m.tabKey} pintan lo mismo por hexágono (${paints.split(' ')[0]}); marcar hexNone o darle su hexVariable`);
 		} else seen.set(paints, m.tabKey);
