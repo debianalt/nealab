@@ -1910,16 +1910,28 @@ export class HexStore {
 	// ── Selection petal data (individual hex clicks) ─────────────────────
 
 	get selectionPetalLayers(): Array<{ values: number[]; color: string }> {
-		if (!this.activeLayer || this.selectedHexes.size === 0 || !this.provincialAvg) return [];
-		const provAvg = this.provincialAvg;
+		return this.petalRose([...this.selectedHexes.values()]).layers;
+	}
+
+	/**
+	 * The flower for arbitrary rows (a cell's data, a census radio's row), each normalized
+	 * against the provincial average; `keep` narrows the petals (radio mode keeps only the
+	 * radio's variables). Empty until the provincial average is loaded.
+	 */
+	petalRose(
+		rows: Array<{ data: Record<string, any>; color: string }>,
+		keep: (v: HexVariable) => boolean = () => true,
+	): { labels: string[]; layers: Array<{ values: number[]; color: string }> } {
 		const vars = this.numericVariables;
-		const result: Array<{ values: number[]; color: string }> = [];
-		for (const [, sel] of this.selectedHexes) {
-			const rawValues = vars.map(v => sel.data[v.col] ?? 0);
-			const normalizedValues = this.normalize(rawValues, provAvg);
-			result.push({ values: this.petalIdx.map(i => normalizedValues[i]), color: sel.color });
-		}
-		return result;
+		const idx = this.petalIdx.filter(i => keep(vars[i]));
+		const labels = idx.map(i => i18n.t(vars[i].labelKey));
+		if (!this.activeLayer || rows.length === 0 || !this.provincialAvg) return { labels, layers: [] };
+		const provAvg = this.provincialAvg;
+		const layers = rows.map(r => {
+			const normalizedValues = this.normalize(vars.map(v => r.data[v.col] ?? 0), provAvg);
+			return { values: idx.map(i => normalizedValues[i]), color: r.color };
+		});
+		return { labels, layers };
 	}
 
 	async ensureProvincialAvgLoaded(): Promise<void> {

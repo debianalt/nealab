@@ -30,7 +30,6 @@
 		// "Sin cobertura" (legend.noData) on unscored hexes (e.g. forestry on water).
 		variables.filter(v => !v.hidden && !['score', 'type', 'type_label', 'pca_1', 'pca_2'].includes(v.col))
 	);
-	const petalLabels = $derived(hexStore.petalLabels);
 
 	// Census layers: the rates belong to the INDEC radio, so a click picks the cell's radio and
 	// the panel shows each radio once (radioUnit.groupSelection). A second cell of the same radio
@@ -60,16 +59,16 @@
 	/** Variables measured on the cell (population density, night lights): per cell even by radio. */
 	const cellVars = $derived(groups ? componentVars.filter(v => !isRadioSupport(layer?.id, v.col)) : componentVars);
 
-	// One petal per radio (its first cell) plus the loose cells; selectionPetalLayers follows
-	// the selection order.
-	const petalLayers = $derived.by(() => {
-		const all = hexStore.selectionPetalLayers;
-		if (!groups) return all;
-		const keys = [...hexStore.selectedHexes.keys()];
-		const colorOf = new Map(radios.map(r => [r.hexes[0], r.color]));
-		const keep = new Set([...colorOf.keys(), ...looseSet]);
-		return all.flatMap((p, i) => keep.has(keys[i]) ? [{ ...p, color: colorOf.get(keys[i]) ?? p.color }] : []);
-	});
+	// By radio, one petal layer per radio from its census row (the numbers of its block below,
+	// whichever of its cells was clicked), then the loose cells with their own values; only the
+	// radio's variables, so a cell measure (density) never mixes into a radio's flower.
+	const rose = $derived(groups
+		? hexStore.petalRose(
+			[...radios.map(r => ({ data: r.row, color: r.color })), ...cellEntries.map(([, s]) => s)],
+			v => isRadioSupport(layer?.id, v.col))
+		: null);
+	const petalLayers = $derived(rose ? rose.layers : hexStore.selectionPetalLayers);
+	const petalLabels = $derived(rose ? rose.labels : hexStore.petalLabels);
 
 	// Census layers select radios: the petals and the blocks are the radios', so the title says
 	// so; cells outside any radio are named too. Satellite layers keep «Comparación de hexágonos».
