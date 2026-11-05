@@ -2,14 +2,12 @@
   "territory": "itapua_py",
   "province": {
     "total_hexes": 173048,
-    "avg_score": 46.3,
     "unassigned": 0
   },
   "departments": [
     {
       "distrito": "Mayor Otano",
       "parquetKey": "mayor_otano",
-      "avg_score": 88.0,
       "hex_count": 3257,
       "centroid": [
         -54.7762,
@@ -17,14 +15,12 @@
       ],
       "rank": {
         "min_cabecera": 128,
-        "min_capital": 221,
-        "km_hospital": 56.1
+        "min_capital": 206
       }
     },
     {
       "distrito": "Carlos A Lopez",
       "parquetKey": "carlos_a_lopez",
-      "avg_score": 84.6,
       "hex_count": 8756,
       "centroid": [
         -54.9021,
@@ -32,14 +28,12 @@
       ],
       "rank": {
         "min_cabecera": 128,
-        "min_capital": 203,
-        "km_hospital": 40.3
+        "min_capital": 187
       }
     },
     {
       "distrito": "Isla",
       "parquetKey": "isla",
-      "avg_score": 68.0,
       "hex_count": 2429,
       "centroid": [
         -56.4098,
@@ -47,14 +41,12 @@
       ],
       "rank": {
         "min_cabecera": 281,
-        "min_capital": 390,
-        "km_hospital": 25.7
+        "min_capital": 329
       }
     },
     {
       "distrito": "San Pedro Del Parana",
       "parquetKey": "san_pedro_del_parana",
-      "avg_score": 64.9,
       "hex_count": 15050,
       "centroid": [
         -56.0239,
@@ -62,14 +54,12 @@
       ],
       "rank": {
         "min_cabecera": 135,
-        "min_capital": 113,
-        "km_hospital": 26.0
+        "min_capital": 109
       }
     },
     {
       "distrito": "San Rafael Del Parana",
       "parquetKey": "san_rafael_del_parana",
-      "avg_score": 62.4,
       "hex_count": 16122,
       "centroid": [
         -55.1388,
@@ -77,14 +67,12 @@
       ],
       "rank": {
         "min_cabecera": 113,
-        "min_capital": 172,
-        "km_hospital": 25.7
+        "min_capital": 161
       }
     },
     {
       "distrito": "Alto Vera",
       "parquetKey": "alto_vera",
-      "avg_score": 62.2,
       "hex_count": 13092,
       "centroid": [
         -55.7222,
@@ -92,14 +80,12 @@
       ],
       "rank": {
         "min_cabecera": 186,
-        "min_capital": 131,
-        "km_hospital": 21.3
+        "min_capital": 125
       }
     },
     {
       "distrito": "Gral Artigas",
       "parquetKey": "gral_artigas",
-      "avg_score": 61.1,
       "hex_count": 15510,
       "centroid": [
         -56.3772,
@@ -107,14 +93,12 @@
       ],
       "rank": {
         "min_cabecera": 122,
-        "min_capital": 120,
-        "km_hospital": 28.4
+        "min_capital": 112
       }
     },
     {
       "distrito": "Isla Yacyreta",
       "parquetKey": "isla_yacyreta",
-      "avg_score": 57.5,
       "hex_count": 8785,
       "centroid": [
         -56.5119,
@@ -122,14 +106,12 @@
       ],
       "rank": {
         "min_cabecera": 240,
-        "min_capital": 282,
-        "km_hospital": 19.2
+        "min_capital": 256
       }
     },
     {
       "distrito": "San Cosme Y Damian",
       "parquetKey": "san_cosme_y_damian",
-      "avg_score": 48.3,
       "hex_count": 7180,
       "centroid": [
         -56.4868,
@@ -137,14 +119,12 @@
       ],
       "rank": {
         "min_cabecera": 103,
-        "min_capital": 114,
-        "km_hospital": 24.4
+        "min_capital": 104
       }
     },
     {
       "distrito": "Leandro Oviedo",
       "parquetKey": "leandro_oviedo",
-      "avg_score": 47.6,
       "hex_count": 1381,
       "centroid": [
         -56.2346,
@@ -152,14 +132,12 @@
       ],
       "rank": {
         "min_cabecera": 65,
-        "min_capital": 99,
-        "km_hospital": 42.8
+        "min_capital": 96
       }
     },
     {
       "distrito": "Gral. Delgado",
       "parquetKey": "gral_delgado",
-      "avg_score": 41.8,
       "hex_count": 4846,
       "centroid": [
         -56.5565,
@@ -167,14 +145,12 @@
       ],
       "rank": {
         "min_cabecera": 77,
-        "min_capital": 108,
-        "km_hospital": 27.0
+        "min_capital": 97
       }
     },
     {
       "distrito": "Yatytay",
       "parquetKey": "yatytay",
-      "avg_score": 39.1,
       "hex_count": 3122,
       "centroid": [
         -55.0816,
@@ -182,14 +158,12 @@
       ],
       "rank": {
         "min_cabecera": 104,
-        "min_capital": 138,
-        "km_hospital": 11.4
+        "min_capital": 131
       }
     },
     {
       "distrito": "Edelira",
       "parquetKey": "edelira",
-      "avg_score": 32.6,
       "hex_count": 7388,
       "centroid": [
         -55.4008,
@@ -197,14 +171,12 @@
       ],
       "rank": {
         "min_cabecera": 99,
-        "min_capital": 126,
-        "km_hospital": 14.9
+        "min_capital": 119
       }
     },
     {
       "distrito": "Capitan Meza",
       "parquetKey": "capitan_meza",
-      "avg_score": 30.6,
       "hex_count": 8347,
       "centroid": [
         -55.3725,
@@ -212,14 +184,12 @@
       ],
       "rank": {
         "min_cabecera": 83,
-        "min_capital": 109,
-        "km_hospital": 9.7
+        "min_capital": 101
       }
     },
     {
       "distrito": "Natalio",
       "parquetKey": "natalio",
-      "avg_score": 29.2,
       "hex_count": 3554,
       "centroid": [
         -55.1481,
@@ -227,14 +197,12 @@
       ],
       "rank": {
         "min_cabecera": 99,
-        "min_capital": 130,
-        "km_hospital": 6.1
+        "min_capital": 120
       }
     },
     {
       "distrito": "Pirapo",
       "parquetKey": "pirapo",
-      "avg_score": 29.2,
       "hex_count": 7336,
       "centroid": [
         -55.5412,
@@ -242,14 +210,12 @@
       ],
       "rank": {
         "min_cabecera": 63,
-        "min_capital": 87,
-        "km_hospital": 8.2
+        "min_capital": 80
       }
     },
     {
       "distrito": "Jesus",
       "parquetKey": "jesus",
-      "avg_score": 28.8,
       "hex_count": 1387,
       "centroid": [
         -55.7803,
@@ -257,14 +223,12 @@
       ],
       "rank": {
         "min_cabecera": 46,
-        "min_capital": 44,
-        "km_hospital": 9.6
+        "min_capital": 41
       }
     },
     {
       "distrito": "Tomas Romero P.",
       "parquetKey": "tomas_romero_p",
-      "avg_score": 28.1,
       "hex_count": 6723,
       "centroid": [
         -55.2933,
@@ -272,14 +236,12 @@
       ],
       "rank": {
         "min_cabecera": 95,
-        "min_capital": 145,
-        "km_hospital": 12.8
+        "min_capital": 136
       }
     },
     {
       "distrito": "Obligado",
       "parquetKey": "obligado",
-      "avg_score": 26.1,
       "hex_count": 4236,
       "centroid": [
         -55.7125,
@@ -287,14 +249,12 @@
       ],
       "rank": {
         "min_cabecera": 60,
-        "min_capital": 67,
-        "km_hospital": 10.1
+        "min_capital": 63
       }
     },
     {
       "distrito": "Hohenau",
       "parquetKey": "hohenau",
-      "avg_score": 24.3,
       "hex_count": 2994,
       "centroid": [
         -55.7418,
@@ -302,14 +262,12 @@
       ],
       "rank": {
         "min_cabecera": 55,
-        "min_capital": 56,
-        "km_hospital": 8.3
+        "min_capital": 52
       }
     },
     {
       "distrito": "La Paz",
       "parquetKey": "la_paz",
-      "avg_score": 22.6,
       "hex_count": 2509,
       "centroid": [
         -55.9091,
@@ -317,14 +275,12 @@
       ],
       "rank": {
         "min_cabecera": 71,
-        "min_capital": 54,
-        "km_hospital": 5.9
+        "min_capital": 52
       }
     },
     {
       "distrito": "Coronel Bogado",
       "parquetKey": "coronel_bogado",
-      "avg_score": 22.4,
       "hex_count": 6066,
       "centroid": [
         -56.306,
@@ -332,14 +288,12 @@
       ],
       "rank": {
         "min_cabecera": 45,
-        "min_capital": 72,
-        "km_hospital": 11.5
+        "min_capital": 66
       }
     },
     {
       "distrito": "Bella Vista",
       "parquetKey": "bella_vista",
-      "avg_score": 21.1,
       "hex_count": 3149,
       "centroid": [
         -55.5355,
@@ -347,14 +301,12 @@
       ],
       "rank": {
         "min_cabecera": 42,
-        "min_capital": 67,
-        "km_hospital": 6.3
+        "min_capital": 60
       }
     },
     {
       "distrito": "Trinidad",
       "parquetKey": "trinidad",
-      "avg_score": 20.8,
       "hex_count": 2375,
       "centroid": [
         -55.735,
@@ -362,14 +314,12 @@
       ],
       "rank": {
         "min_cabecera": 32,
-        "min_capital": 36,
-        "km_hospital": 11.1
+        "min_capital": 33
       }
     },
     {
       "distrito": "Fram",
       "parquetKey": "fram",
-      "avg_score": 20.6,
       "hex_count": 3545,
       "centroid": [
         -56.0203,
@@ -377,14 +327,12 @@
       ],
       "rank": {
         "min_cabecera": 48,
-        "min_capital": 44,
-        "km_hospital": 7.2
+        "min_capital": 42
       }
     },
     {
       "distrito": "Nueva Alborada",
       "parquetKey": "nueva_alborada",
-      "avg_score": 20.4,
       "hex_count": 2534,
       "centroid": [
         -55.665,
@@ -392,14 +340,12 @@
       ],
       "rank": {
         "min_cabecera": 49,
-        "min_capital": 33,
-        "km_hospital": 5.1
+        "min_capital": 29
       }
     },
     {
       "distrito": "Capitan Miranda",
       "parquetKey": "capitan_miranda",
-      "avg_score": 19.7,
       "hex_count": 1969,
       "centroid": [
         -55.8331,
@@ -407,14 +353,12 @@
       ],
       "rank": {
         "min_cabecera": 31,
-        "min_capital": 25,
-        "km_hospital": 9.9
+        "min_capital": 23
       }
     },
     {
       "distrito": "Carmen Del Parana",
       "parquetKey": "carmen_del_parana",
-      "avg_score": 18.5,
       "hex_count": 3013,
       "centroid": [
         -56.1055,
@@ -422,14 +366,12 @@
       ],
       "rank": {
         "min_cabecera": 39,
-        "min_capital": 51,
-        "km_hospital": 6.7
+        "min_capital": 45
       }
     },
     {
       "distrito": "San Juan",
       "parquetKey": "san_juan",
-      "avg_score": 13.2,
       "hex_count": 901,
       "centroid": [
         -55.9922,
@@ -437,14 +379,12 @@
       ],
       "rank": {
         "min_cabecera": 22,
-        "min_capital": 27,
-        "km_hospital": 6.9
+        "min_capital": 26
       }
     },
     {
       "distrito": "Encarnacion",
       "parquetKey": "encarnacion",
-      "avg_score": 11.4,
       "hex_count": 3415,
       "centroid": [
         -55.8985,
@@ -452,14 +392,12 @@
       ],
       "rank": {
         "min_cabecera": 18,
-        "min_capital": 17,
-        "km_hospital": 6.7
+        "min_capital": 16
       }
     },
     {
       "distrito": "Cambyreta",
       "parquetKey": "cambyreta",
-      "avg_score": 11.0,
       "hex_count": 2077,
       "centroid": [
         -55.7699,
@@ -467,8 +405,7 @@
       ],
       "rank": {
         "min_cabecera": 24,
-        "min_capital": 17,
-        "km_hospital": 3.5
+        "min_capital": 15
       }
     }
   ]

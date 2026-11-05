@@ -2,14 +2,12 @@
   "territory": "formosa",
   "province": {
     "total_hexes": 825760,
-    "avg_score": 44.6,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "avg_score": 65.1,
       "hex_count": 42788,
       "centroid": [
         -62.1248,
@@ -17,14 +15,13 @@
       ],
       "rank": {
         "min_cabecera": 314,
-        "min_capital": 822,
-        "km_hospital": 24.7
+        "min_capital": 669,
+        "min_hospital": 77
       }
     },
     {
       "dpto": "Bermejo",
       "parquetKey": "bermejo",
-      "avg_score": 57.9,
       "hex_count": 141295,
       "centroid": [
         -61.2683,
@@ -32,14 +29,13 @@
       ],
       "rank": {
         "min_cabecera": 284,
-        "min_capital": 640,
-        "km_hospital": 31.5
+        "min_capital": 525,
+        "min_hospital": 121
       }
     },
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "avg_score": 55.6,
       "hex_count": 47176,
       "centroid": [
         -62.0564,
@@ -47,14 +43,13 @@
       ],
       "rank": {
         "min_cabecera": 250,
-        "min_capital": 712,
-        "km_hospital": 23.4
+        "min_capital": 575,
+        "min_hospital": 95
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "avg_score": 46.4,
       "hex_count": 287722,
       "centroid": [
         -59.9786,
@@ -62,14 +57,13 @@
       ],
       "rank": {
         "min_cabecera": 183,
-        "min_capital": 426,
-        "km_hospital": 27.3
+        "min_capital": 344,
+        "min_hospital": 85
       }
     },
     {
       "dpto": "Pilagás",
       "parquetKey": "pilagas",
-      "avg_score": 39.9,
       "hex_count": 39144,
       "centroid": [
         -58.6647,
@@ -77,14 +71,13 @@
       ],
       "rank": {
         "min_cabecera": 117,
-        "min_capital": 233,
-        "km_hospital": 29.7
+        "min_capital": 217,
+        "min_hospital": 61
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "avg_score": 33.2,
       "hex_count": 98242,
       "centroid": [
         -59.1699,
@@ -92,14 +85,13 @@
       ],
       "rank": {
         "min_cabecera": 105,
-        "min_capital": 230,
-        "km_hospital": 20.6
+        "min_capital": 178,
+        "min_hospital": 58
       }
     },
     {
       "dpto": "Formosa",
       "parquetKey": "formosa",
-      "avg_score": 32.8,
       "hex_count": 70695,
       "centroid": [
         -58.3746,
@@ -107,14 +99,13 @@
       ],
       "rank": {
         "min_cabecera": 75,
-        "min_capital": 100,
-        "km_hospital": 20.6
+        "min_capital": 88,
+        "min_hospital": 62
       }
     },
     {
       "dpto": "Pilcomayo",
       "parquetKey": "pilcomayo",
-      "avg_score": 29.4,
       "hex_count": 58208,
       "centroid": [
         -58.0591,
@@ -122,14 +113,13 @@
       ],
       "rank": {
         "min_cabecera": 72,
-        "min_capital": 152,
-        "km_hospital": 17.3
+        "min_capital": 140,
+        "min_hospital": 57
       }
     },
     {
       "dpto": "Laishi",
       "parquetKey": "laishi",
-      "avg_score": 25.7,
       "hex_count": 40490,
       "centroid": [
         -58.5622,
@@ -137,8 +127,8 @@
       ],
       "rank": {
         "min_cabecera": 82,
-        "min_capital": 110,
-        "km_hospital": 13.0
+        "min_capital": 96,
+        "min_hospital": 57
       }
     }
   ],

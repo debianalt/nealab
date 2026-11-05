@@ -2,14 +2,12 @@
   "territory": "misiones",
   "province": {
     "total_hexes": 319870,
-    "avg_score": 45.6,
     "unassigned": 0
   },
   "departments": [
     {
       "dpto": "San Pedro",
       "parquetKey": "san_pedro",
-      "avg_score": 65.6,
       "hex_count": 42165,
       "centroid": [
         -53.9658,
@@ -17,14 +15,13 @@
       ],
       "rank": {
         "min_cabecera": 150,
-        "min_capital": 321,
-        "km_hospital": 10.9
+        "min_capital": 288,
+        "min_hospital": 95
       }
     },
     {
       "dpto": "G. M. Belgrano",
       "parquetKey": "g_m_belgrano",
-      "avg_score": 63.0,
       "hex_count": 32321,
       "centroid": [
         -53.9584,
@@ -32,14 +29,13 @@
       ],
       "rank": {
         "min_cabecera": 114,
-        "min_capital": 355,
-        "km_hospital": 8.8
+        "min_capital": 324,
+        "min_hospital": 77
       }
     },
     {
       "dpto": "Iguazú",
       "parquetKey": "iguazu",
-      "avg_score": 60.1,
       "hex_count": 28650,
       "centroid": [
         -54.4076,
@@ -47,14 +43,13 @@
       ],
       "rank": {
         "min_cabecera": 91,
-        "min_capital": 307,
-        "km_hospital": 8.0
+        "min_capital": 286,
+        "min_hospital": 71
       }
     },
     {
       "dpto": "Montecarlo",
       "parquetKey": "montecarlo",
-      "avg_score": 57.9,
       "hex_count": 18480,
       "centroid": [
         -54.5675,
@@ -62,14 +57,13 @@
       ],
       "rank": {
         "min_cabecera": 72,
-        "min_capital": 219,
-        "km_hospital": 10.5
+        "min_capital": 196,
+        "min_hospital": 53
       }
     },
     {
       "dpto": "Guaraní",
       "parquetKey": "guarani",
-      "avg_score": 52.5,
       "hex_count": 35078,
       "centroid": [
         -54.2688,
@@ -77,14 +71,13 @@
       ],
       "rank": {
         "min_cabecera": 96,
-        "min_capital": 230,
-        "km_hospital": 7.7
+        "min_capital": 204,
+        "min_hospital": 40
       }
     },
     {
       "dpto": "Eldorado",
       "parquetKey": "eldorado",
-      "avg_score": 47.5,
       "hex_count": 18128,
       "centroid": [
         -54.4402,
@@ -92,14 +85,13 @@
       ],
       "rank": {
         "min_cabecera": 59,
-        "min_capital": 242,
-        "km_hospital": 6.1
+        "min_capital": 220,
+        "min_hospital": 47
       }
     },
     {
       "dpto": "25 de Mayo",
       "parquetKey": "25_de_mayo",
-      "avg_score": 39.3,
       "hex_count": 17856,
       "centroid": [
         -54.6382,
@@ -107,14 +99,13 @@
       ],
       "rank": {
         "min_cabecera": 71,
-        "min_capital": 182,
-        "km_hospital": 4.7
+        "min_capital": 162,
+        "min_hospital": 28
       }
     },
     {
       "dpto": "L.G. San Martín",
       "parquetKey": "lg_san_martin",
-      "avg_score": 38.6,
       "hex_count": 15687,
       "centroid": [
         -54.9218,
@@ -122,14 +113,13 @@
       ],
       "rank": {
         "min_cabecera": 67,
-        "min_capital": 149,
-        "km_hospital": 5.7
+        "min_capital": 135,
+        "min_hospital": 30
       }
     },
     {
       "dpto": "Concepción",
       "parquetKey": "concepcion",
-      "avg_score": 36.9,
       "hex_count": 8517,
       "centroid": [
         -55.4678,
@@ -137,14 +127,13 @@
       ],
       "rank": {
         "min_cabecera": 64,
-        "min_capital": 111,
-        "km_hospital": 3.8
+        "min_capital": 96,
+        "min_hospital": 25
       }
     },
     {
       "dpto": "Cainguás",
       "parquetKey": "cainguas",
-      "avg_score": 34.5,
       "hex_count": 16682,
       "centroid": [
         -54.8072,
@@ -152,14 +141,13 @@
       ],
       "rank": {
         "min_cabecera": 60,
-        "min_capital": 154,
-        "km_hospital": 4.1
+        "min_capital": 140,
+        "min_hospital": 22
       }
     },
     {
       "dpto": "San Ignacio",
       "parquetKey": "san_ignacio",
-      "avg_score": 30.9,
       "hex_count": 18120,
       "centroid": [
         -55.3377,
@@ -167,14 +155,13 @@
       ],
       "rank": {
         "min_cabecera": 57,
-        "min_capital": 90,
-        "km_hospital": 3.8
+        "min_capital": 81,
+        "min_hospital": 22
       }
     },
     {
       "dpto": "Apóstoles",
       "parquetKey": "apostoles",
-      "avg_score": 30.0,
       "hex_count": 11398,
       "centroid": [
         -55.682,
@@ -182,14 +169,13 @@
       ],
       "rank": {
         "min_cabecera": 51,
-        "min_capital": 79,
-        "km_hospital": 5.1
+        "min_capital": 67,
+        "min_hospital": 16
       }
     },
     {
       "dpto": "San Javier",
       "parquetKey": "san_javier",
-      "avg_score": 26.2,
       "hex_count": 7286,
       "centroid": [
         -55.1659,
@@ -197,14 +183,13 @@
       ],
       "rank": {
         "min_cabecera": 42,
-        "min_capital": 114,
-        "km_hospital": 3.6
+        "min_capital": 106,
+        "min_hospital": 23
       }
     },
     {
       "dpto": "Oberá",
       "parquetKey": "obera",
-      "avg_score": 21.2,
       "hex_count": 17136,
       "centroid": [
         -55.0808,
@@ -212,14 +197,13 @@
       ],
       "rank": {
         "min_cabecera": 21,
-        "min_capital": 111,
-        "km_hospital": 3.8
+        "min_capital": 100,
+        "min_hospital": 19
       }
     },
     {
       "dpto": "L. N. Alem",
       "parquetKey": "l_n_alem",
-      "avg_score": 19.8,
       "hex_count": 11668,
       "centroid": [
         -55.3895,
@@ -227,14 +211,13 @@
       ],
       "rank": {
         "min_cabecera": 30,
-        "min_capital": 76,
-        "km_hospital": 3.5
+        "min_capital": 70,
+        "min_hospital": 12
       }
     },
     {
       "dpto": "Candelaria",
       "parquetKey": "candelaria",
-      "avg_score": 19.3,
       "hex_count": 10077,
       "centroid": [
         -55.5827,
@@ -242,14 +225,13 @@
       ],
       "rank": {
         "min_cabecera": 32,
-        "min_capital": 49,
-        "km_hospital": 4.0
+        "min_capital": 45,
+        "min_hospital": 17
       }
     },
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "avg_score": 18.8,
       "hex_count": 10621,
       "centroid": [
         -55.8579,
@@ -257,8 +239,8 @@
       ],
       "rank": {
         "min_cabecera": 26,
-        "min_capital": 36,
-        "km_hospital": 5.2
+        "min_capital": 32,
+        "min_hospital": 19
       }
     }
   ]
