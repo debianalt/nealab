@@ -137,6 +137,13 @@ export function getCensusRadiosUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}census_radios_2022.parquet?v=${CENSUS_RADIOS_V}`;
 }
 
+// People estimated per cell from its buildings; per radio they add up to the census population
+// (pipeline/build_cell_population.py). Read by the click selection by radio.
+export const CELL_POPULATION_V = 1;
+export function getCellPopulationUrl(territoryPrefix = ''): string {
+	return `${getBase()}/data/${territoryPrefix}cell_population_2022.parquet?v=${CELL_POPULATION_V}`;
+}
+
 export function getSatDptoUrl(analysisId: string, parquetKey: string, territoryPrefix = ''): string {
 	// File stem = the layer's parquet name: sat_<id> for every layer except agri_potential,
 	// whose empirical version (physical units + crop suitability) ships as sat_agri_apt.

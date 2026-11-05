@@ -7,7 +7,7 @@
 // variables listed in RADIO_SUPPORT; everything else (satellite layers, densities, VIIRS) keeps
 // the cell. Data: pipeline/build_census_radios.py → {prefix}census_radios_2022.parquet.
 import { query } from '$lib/stores/duckdb';
-import { getCensusRadiosUrl } from '$lib/config';
+import { getCensusRadiosUrl, getCellPopulationUrl } from '$lib/config';
 
 // Layer → columns whose support is the radio (same rule as metodologia.SOPORTES in the Hexoma).
 export const RADIO_SUPPORT: Record<string, ReadonlySet<string>> = {
@@ -116,6 +116,47 @@ class RadioUnitStore {
 			this.error = e instanceof Error ? e.message : String(e);
 			console.warn('[radioUnit] no se pudieron cargar los radios', prefix, e);
 		}
+	}
+
+	// People per cell from its buildings (build_cell_population.py): per radio they add up to the
+	// census population; cells of radios without buildings in the source get it by area (porArea).
+	cellPop: Map<string, Map<string, { edificios: number; personas: number; porArea: boolean }>> = $state.raw(new Map());
+	private popPending = new Map<string, Promise<void>>();
+
+	ensureCellPop(territoryPrefix: string): Promise<void> {
+		if (!hasRadios(territoryPrefix) || this.cellPop.has(territoryPrefix)) return Promise.resolve();
+		const p = this.popPending.get(territoryPrefix);
+		if (p) return p;
+		const job = (async () => {
+			try {
+				const res = await query(`SELECT h3index, n_edificios, personas, por_area FROM '${getCellPopulationUrl(territoryPrefix)}'`);
+				const m = new Map<string, { edificios: number; personas: number; porArea: boolean }>();
+				const h = res.getChild('h3index'), e = res.getChild('n_edificios'), pe = res.getChild('personas'), a = res.getChild('por_area');
+				for (let i = 0; i < res.numRows; i++) {
+					m.set(String(h?.get(i)), { edificios: Number(e?.get(i) ?? 0), personas: Number(pe?.get(i) ?? 0), porArea: !!a?.get(i) });
+				}
+				const next = new Map(this.cellPop);
+				next.set(territoryPrefix, m);
+				this.cellPop = next;
+			} catch (err) {
+				console.warn('[radioUnit] no se pudo cargar la población por celda', territoryPrefix, err);
+			}
+		})().finally(() => this.popPending.delete(territoryPrefix));
+		this.popPending.set(territoryPrefix, job);
+		return job;
+	}
+
+	/** Buildings and estimated people of a set of cells; null until the territory's file is loaded. */
+	cellPeople(territoryPrefix: string, h3s: string[]): { edificios: number; personas: number; porArea: boolean } | null {
+		const m = this.cellPop.get(territoryPrefix);
+		if (!m) return null;
+		let edificios = 0, personas = 0, porArea = false;
+		for (const h of h3s) {
+			const c = m.get(h);
+			if (!c) continue;
+			edificios += c.edificios; personas += c.personas; porArea ||= c.porArea;
+		}
+		return { edificios, personas, porArea };
 	}
 
 	radioOf(territoryPrefix: string, h3: string): Record<string, any> | null {

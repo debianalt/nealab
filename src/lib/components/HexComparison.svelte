@@ -40,7 +40,17 @@
 		radioSelectionOn(layer?.id, hexStore.territoryPrefix, hexStore.analysisResLevel != null)
 		&& hexStore.compareVisibleData.size === 0
 	);
-	$effect(() => { if (byRadio) radioUnit.ensure(hexStore.territoryPrefix); });
+	$effect(() => {
+		if (!byRadio) return;
+		radioUnit.ensure(hexStore.territoryPrefix);
+		radioUnit.ensureCellPop(hexStore.territoryPrefix);
+	});
+
+	/** Estimated people: one decimal under 10, "<1" under one, never "0" next to buildings. */
+	function fmtPeople(v: number): string {
+		if (v > 0 && v < 1) return '<1';
+		return v < 10 && !Number.isInteger(v) ? v.toFixed(1) : fmtInt(v);
+	}
 	const groups = $derived(byRadio ? radioUnit.groupSelection(hexStore.territoryPrefix, hexStore.selectedHexes) : null);
 	const radios = $derived(groups?.radios ?? []);
 	const looseSet = $derived(new Set(groups?.loose ?? []));
@@ -72,16 +82,6 @@
 
 	function fmtVar(v: HexVariable, val: number): string {
 		return fmtValue(val * (v.scale ?? 1), v.unit) + (v.unit ? ` ${unitLabel(v.unit)}` : '');
-	}
-
-	/** Sum of a cell column over the selected cells (buildings, estimated households). */
-	function sumCells(hexes: string[], col: string): number | null {
-		let s = 0, any = false;
-		for (const h of hexes) {
-			const x = hexStore.selectedHexes.get(h)?.data?.[col];
-			if (isNum(x)) { s += x; any = true; }
-		}
-		return any ? s : null;
 	}
 
 	/** Rate of the selected radios together: each radio weighs by its base (households or people);
@@ -162,7 +162,9 @@
 		const rows = radios.map(r => ({
 			redcode: r.redcode,
 			hexagonos_marcados: r.hexes.length,
-			edificios_marcados: sumCells(r.hexes, 'n_edificios'),
+			edificios_marcados: radioUnit.cellPeople(hexStore.territoryPrefix, r.hexes)?.edificios ?? null,
+			personas_estimadas_marcadas: radioUnit.cellPeople(hexStore.territoryPrefix, r.hexes)?.personas ?? null,
+			personas_por_area: radioUnit.cellPeople(hexStore.territoryPrefix, r.hexes)?.porArea ?? null,
 			...r.row,
 		}));
 		if (rows.length === 0) return;
@@ -258,20 +260,20 @@
 						<span class="cd-val-data">{fmtInt(r.row[col])}</span>
 					</div>
 				{/each}
-				{#if sumCells(r.hexes, 'n_edificios') != null}
+				{#if radioUnit.cellPeople(hexStore.territoryPrefix, r.hexes)}
+					{@const pop = radioUnit.cellPeople(hexStore.territoryPrefix, r.hexes)!}
 					<div class="cd-row cd-row-mag">
 						<span class="cd-label">{i18n.t('hex.buildingsMarked')}</span>
-						<span class="cd-val-data">{fmtInt(sumCells(r.hexes, 'n_edificios'))}</span>
+						<span class="cd-val-data">{fmtInt(pop.edificios)}</span>
 					</div>
-				{/if}
-				{#each baseCols as col}
-					{#if sumCells(r.hexes, col) != null}
-						<div class="cd-row cd-row-mag">
-							<span class="cd-label">{i18n.t(`hex.base.${col}`)} · {i18n.t('hex.inMarked')}</span>
-							<span class="cd-val-data">{fmtBase(sumCells(r.hexes, col))}</span>
-						</div>
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t('hex.peopleMarked')}</span>
+						<span class="cd-val-data">{fmtPeople(pop.personas)}</span>
+					</div>
+					{#if pop.porArea}
+						<div class="cd-area-note">{i18n.t('hex.byAreaNote')}</div>
 					{/if}
-				{/each}
+				{/if}
 			</div>
 		{/each}
 		{#if radios.length >= 2}
@@ -295,10 +297,15 @@
 						<span class="cd-val-data">{fmtInt(sumRadios(col))}</span>
 					</div>
 				{/each}
-				{#if sumCells(allHexes, 'n_edificios') != null}
+				{#if radioUnit.cellPeople(hexStore.territoryPrefix, allHexes)}
+					{@const pop = radioUnit.cellPeople(hexStore.territoryPrefix, allHexes)!}
 					<div class="cd-row cd-row-mag">
 						<span class="cd-label">{i18n.t('hex.buildingsMarked')}</span>
-						<span class="cd-val-data">{fmtInt(sumCells(allHexes, 'n_edificios'))}</span>
+						<span class="cd-val-data">{fmtInt(pop.edificios)}</span>
+					</div>
+					<div class="cd-row cd-row-mag">
+						<span class="cd-label">{i18n.t('hex.peopleMarked')}</span>
+						<span class="cd-val-data">{fmtPeople(pop.personas)}</span>
 					</div>
 				{/if}
 			</div>
@@ -408,6 +415,7 @@
 	.cd-cells { font-family: sans-serif; font-size: 11.5px; color: var(--c-ink-2); }
 	.cd-row-mag .cd-label, .cd-row-mag .cd-val-data { color: var(--c-ink-2); font-weight: 500; }
 	.cd-total { border-top: 1px solid rgba(var(--c-fg-rgb), 0.18); }
+	.cd-area-note { font-size: 11px; color: var(--c-ink-2); font-style: italic; margin-top: 2px; }
 	.hc-header {
 		display: flex;
 		justify-content: space-between;
