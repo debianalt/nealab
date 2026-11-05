@@ -16,7 +16,7 @@ export const RADIO_SUPPORT: Record<string, ReadonlySet<string>> = {
 	education_capital: new Set(['c_no_schooling', 'c_secondary_plus', 'c_higher_edu', 'c_university']),
 	education_flow: new Set(['c_dropout_primary', 'c_dropout_secondary']),
 	sociodemographic: new Set(['pct_nbi', 'pct_hacinamiento', 'pct_propietario', 'pct_computadora', 'tamano_medio_hogar']),
-	economic_activity: new Set(['tasa_empleo', 'tasa_actividad', 'pct_universitario']),
+	economic_activity: new Set(['tasa_empleo', 'tasa_actividad', 'tasa_desocupacion', 'pct_universitario']),
 };
 
 // Territories with INDEC radios: parquet prefix → INDEC province code (codprov of the radio tiles).

@@ -110,7 +110,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_capital: '?v=30',
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=27',   // 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
-		sat_economic_activity: '?v=35',   // 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
+		sat_economic_activity: '?v=36',   // 36: ocupados_est y tasa_desocupacion por celda (add_econ_hex_derived.py, 5-nov-2026); 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=32',   // 5-nov-2026: todo en minutos por camino (hospital, salud, secundaria, ruta)
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
@@ -124,7 +124,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 40;   // 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 41;   // 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -811,6 +811,32 @@ export const ACCESS_TIME_CLASSES: ColorClasses = {
 // secondary school, trunk road), minutes. Since 5-nov-2026 every accessibility
 // column is minutes by road (no straight-line km); these destinations are much
 // closer than the capital, so they get their own cuts (15 / 30 / 60 / 120 min).
+// economic_activity, tab Desocupación: desocupados / activos of the cell's radio
+// (pipeline/add_econ_hex_derived.py). 0 = a radio with no unemployed, a measured value.
+// Cuts over the NEA spread (P50 2–6 %, P90 6–13 %, P98 10–19 % by territory).
+export const DESOCUP_CLASSES: ColorClasses = {
+	zero: { color: ZERO_HEX, labelKey: 'legend.desocup.zero' },
+	zeroBelow: 0.05,
+	steps: [
+		{ from: 0.05, color: MAP_CLASS_5[0], labelKey: 'legend.desocup.c1' },
+		{ from: 3, color: MAP_CLASS_5[1], labelKey: 'legend.desocup.c2' },
+		{ from: 6, color: MAP_CLASS_5[2], labelKey: 'legend.desocup.c3' },
+		{ from: 10, color: MAP_CLASS_5[3], labelKey: 'legend.desocup.c4' },
+		{ from: 15, color: MAP_CLASS_5[4], labelKey: 'legend.desocup.c5' },
+	],
+};
+// economic_activity, tab Ocupados: the radio's employed spread over the cell's estimated
+// people 14+ (fractional: half the populated cells hold less than one). P98 98–142, max ~900.
+export const OCUP_HEX_CLASSES: ColorClasses = {
+	steps: [
+		{ from: 0, color: MAP_CLASS_5[0], labelKey: 'legend.ocupHex.c1' },
+		{ from: 1, color: MAP_CLASS_5[1], labelKey: 'legend.ocupHex.c2' },
+		{ from: 5, color: MAP_CLASS_5[2], labelKey: 'legend.ocupHex.c3' },
+		{ from: 20, color: MAP_CLASS_5[3], labelKey: 'legend.ocupHex.c4' },
+		{ from: 100, color: MAP_CLASS_5[4], labelKey: 'legend.ocupHex.c5' },
+	],
+};
+
 export const ACCESS_NEAR_CLASSES: ColorClasses = {
 	steps: [
 		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.accessNear.c1' },
@@ -1349,23 +1375,24 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		id: 'economic_activity',
 		// Department ranking — pipeline/build_layer_ranks.py: Σ rate·base / Σ base over
 		// the department's hexagons (same INDEC definition in the 4 provinces).
-		// Ocupados (cantidad + % de la provincia) y desocupación: pipeline/build_empleo_rank.py, conteos por radio
-		// (por hexágono no hay conteo: hexNone, el mapa sigue con la tasa de empleo). Universitarios 25+:
-		// pipeline/build_univ25_rank.py.
+		// Ocupados (cantidad + % de la provincia) y desocupación: pipeline/build_empleo_rank.py, conteos por radio.
+		// Por hexágono (pipeline/add_econ_hex_derived.py, 5-nov-2026): ocupados_est = los ocupados del radio
+		// repartidos por la población 14+ estimada de la celda; tasa_desocupacion = desocupados / activos del
+		// radio. Universitarios 25+: pipeline/build_univ25_rank.py.
 		deptRank: {
-			field: 'ocupados_n', unit: 'personas', unitKey: 'rank.unit.people', decimals: 0, hexVariable: 'tasa_empleo', hexNone: true,
+			field: 'ocupados_n', unit: 'personas', unitKey: 'rank.unit.people', decimals: 0, hexVariable: 'ocupados_est',
 			extraField: 'ocupados_prov_pct', extraUnitKey: 'rank.econ.unit.pctProv', extraDecimals: 1,
 			titleKey: 'rank.econ.title', noteKey: 'rank.econ.note.ocupados',
 			metrics: [
 				{ tabKey: 'rank.econ.tab.ocupados' },
-				{ tabKey: 'rank.econ.tab.empleo', titleKey: 'rank.econ.title.empleo', field: 'empleo_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: false,
-				  extraField: undefined, noteKey: 'rank.econ.note' },
-				{ tabKey: 'rank.econ.tab.desocup', titleKey: 'rank.econ.title.desocup', field: 'desocup_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: true,
+				{ tabKey: 'rank.econ.tab.empleo', titleKey: 'rank.econ.title.empleo', field: 'empleo_pct', unit: '%', unitKey: undefined, decimals: 1,
+				  extraField: undefined, noteKey: 'rank.econ.note', hexVariable: 'tasa_empleo' },
+				{ tabKey: 'rank.econ.tab.desocup', titleKey: 'rank.econ.title.desocup', field: 'desocup_pct', unit: '%', unitKey: undefined, decimals: 1, hexVariable: 'tasa_desocupacion',
 				  extraField: undefined, noteKey: 'rank.econ.note.desocup' },
-				{ tabKey: 'rank.econ.tab.univ', titleKey: 'rank.econ.title.univ', field: 'univ25_pct', unit: '%', unitKey: undefined, decimals: 1, hexNone: false,
+				{ tabKey: 'rank.econ.tab.univ', titleKey: 'rank.econ.title.univ', field: 'univ25_pct', unit: '%', unitKey: undefined, decimals: 1,
 				  extraField: 'univ_cambio_pts', extraUnitKey: 'rank.econ.unit.univCambio', extraDecimals: 1,
 				  noteKey: 'rank.econ.note.univ', hexVariable: 'pct_universitario' },
-				{ tabKey: 'rank.econ.tab.viirs', titleKey: 'rank.econ.title.viirs', field: 'viirs', unit: 'nW/cm²/sr', unitKey: undefined, decimals: 2, hexNone: false,
+				{ tabKey: 'rank.econ.tab.viirs', titleKey: 'rank.econ.title.viirs', field: 'viirs', unit: 'nW/cm²/sr', unitKey: undefined, decimals: 2,
 				  extraField: 'viirs_cambio_pct', extraUnitKey: 'rank.econ.unit.viirsCambio', extraDecimals: 0,
 				  noteKey: 'rank.econ.note.viirs', hexVariable: 'viirs_mean_radiance' },
 			],
@@ -1379,6 +1406,9 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'pct_universitario', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%', baseCol: 'pob_18_mas' },
 			{ col: 'viirs_mean_radiance', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr' },
 			{ col: 'building_density_per_km2', labelKey: 'radio.buildingDensity', aggregation: 'mean', unit: 'edif/km²' },
+			// Ranking tabs Ocupados and Desocupación, per cell (pipeline/add_econ_hex_derived.py); not in the tables.
+			{ col: 'ocupados_est', labelKey: 'radio.ocupadosEst', aggregation: 'sum', unit: 'personas', baseCol: 'pob_14_mas', hidden: true },
+			{ col: 'tasa_desocupacion', labelKey: 'radio.desocupacion', aggregation: 'mean', unit: '%', baseCol: 'pob_14_mas', hidden: true },
 			// Year-base values for the transition charts (pipeline/build_econ_trayectorias.py), not shown in tables.
 			{ col: 'pct_universitario_2010', labelKey: 'radio.universitario', aggregation: 'mean', unit: '%', hidden: true },
 			{ col: 'viirs_2014_neto', labelKey: 'radio.viirs', aggregation: 'mean', unit: 'nW/cm²/sr', hidden: true },
@@ -1411,6 +1441,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		perDepartment: true,
 		legendLowKey: 'legend.economic.low',
 		legendHighKey: 'legend.economic.high',
+		variableClasses: { ocupados_est: OCUP_HEX_CLASSES, tasa_desocupacion: DESOCUP_CLASSES },
 		variableLegend: {
 			tasa_empleo: { low: 'legend.empleo.low', high: 'legend.empleo.high' },
 			pct_universitario: { low: 'legend.univ.low', high: 'legend.univ.high' },
