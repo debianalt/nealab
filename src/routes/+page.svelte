@@ -1039,7 +1039,8 @@
 	$effect(() => {
 		const a = lensStore.activeAnalysis;
 		const dpto = hexStore.selectedDpto;
-		const show = !!a && !dpto;
+		// A by-department reading (hexHidden) keeps the departments on the map with one open.
+		const show = !!a && (!dpto || hexStore.hexHidden);
 		mapComponent?.setDeptPickerVisible(show);
 		// Lazy-fill the AR dept polygons (deferred out of the initial bundle) once the
 		// picker is shown for an AR territory — PY/BR use their own district layers.
@@ -1052,6 +1053,11 @@
 	$effect(() => {
 		const f = hexStore.mapDeptFill;
 		mapComponent?.setDeptFill(f);
+	});
+	// By-department reading with a department open: its hexagons are hidden (no clicks either).
+	$effect(() => {
+		const h = hexStore.hexHidden;
+		mapComponent?.setHexHidden(h);
 	});
 
 	// Macizo layers (forestry_harvest): the plantation tiles carry the data; paint the tab's property with its
@@ -1072,7 +1078,7 @@
 		const tp = hexStore.territoryPrefix;
 		const key = hexStore.selectedParquetKey;
 		const codprov = codprovOf(tp);
-		const on = !!key && !!codprov && !territoryStore.compareModeActive
+		const on = !!key && !!codprov && !territoryStore.compareModeActive && !hexStore.hexHidden
 			&& isRadioSupport(hexStore.activeLayer?.id, hexStore.effectivePrimary);
 		if (on) radioUnit.ensure(tp);
 		mapComponent?.setRadioUnit(on ? { prefix: tp, deptKey: key, codprov: codprov! } : null);
@@ -1121,7 +1127,8 @@
 		// Census layers are the exception: they are dasymetric (hexes only where people
 		// live), so below the LOD gate a rural dept is scattered dots with no visible edge.
 		const sparseLayer = lensStore.activeAnalysis?.rigorBadge === 'census';
-		mapComponent?.setDeptOutline(territoryStore.compareModeActive || sparseLayer ? feat : null);
+		// A by-department reading (hexHidden) paints the departments: the outline marks the open one.
+		mapComponent?.setDeptOutline(territoryStore.compareModeActive || sparseLayer || hexStore.hexHidden ? feat : null);
 		// Every layer: hexagons cut at the official limit (the line, drawn or not).
 		mapComponent?.setHexClip(feat);
 

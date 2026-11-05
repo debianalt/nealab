@@ -1593,7 +1593,8 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 				{ tabKey: 'rank.deforest.tab.pct', field: 'loss_pct_forest', unit: '%', unitKey: 'rank.unit.pct', decimals: 1, hexNone: true,
 				  titleKey: 'rank.eudr.title.pct', noteKey: 'rank.eudr.note.pct',
 				  extraField: 'loss_ha', extraUnitKey: 'rank.unit.ha', extraDecimals: 0 },
-				{ tabKey: 'rank.eudr.tab.fire', field: 'fire_native_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexNone: true,
+				// Per hex: % of the cell burned on native woody vegetation (the hectares of the bar, cell by cell).
+				{ tabKey: 'rank.eudr.tab.fire', field: 'fire_native_ha', unit: 'ha', unitKey: 'rank.unit.ha', decimals: 0, hexVariable: 'fire_native_post_2020_pct',
 				  titleKey: 'rank.eudr.title.fire', noteKey: 'rank.eudr.note.fire' },
 			],
 		},

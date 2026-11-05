@@ -172,13 +172,8 @@
 	// «Cómo leer» opens with the department view on every ranked layer; flood explains
 	// it in its own text (tab by tab).
 	const showDeptView = $derived(!!layerCfg?.deptRank && layerCfg.id !== 'flood_risk');
-	// A reading that exists only by department: say what the hexagons show instead.
-	const hexNoneNote = $derived.by(() => {
-		if (!rankCfg?.hexNone || !layerCfg) return '';
-		const pv = hexStore.effectivePrimary;
-		const v = layerCfg.variables?.find((x: any) => x.col === pv || x.rawCol === pv);
-		return v ? i18n.t('rank.hexNone').replace('{v}', i18n.t(v.labelKey)) : '';
-	});
+	// A reading that exists only by department: say that the map paints the departments.
+	const hexNoneNote = $derived(rankCfg?.hexNone && hexStore.hexHidden ? i18n.t('rank.hexNone') : '');
 	// rankBars: departments with a value for the active reading. rankProvince: the
 	// territory-wide block (deptRank.province), shown above the bars or instead of them.
 	const rankBars = $derived(!!rankCfg && !!rankSummary?.departments?.some((d: any) => d.rank?.[rankCfg.field] != null));
@@ -196,10 +191,14 @@
 	const rankSaturated = $derived(!!rankCfg?.saturatedKey && rankSaturatedRaw);
 	// The map paints the active reading's per-hex variable (deptRank.hexVariable), so
 	// an open department reads like its bar. No ranking (saturated plain) → primary.
+	// A reading that exists only by department (hexNone) has no cells to paint: with a
+	// department open the map keeps the departments painted with it (below) and hides
+	// the hexagons, so no tab shows another reading's map.
 	$effect(() => {
 		const v = hasRank ? (rankCfg?.hexVariable ?? null) : null;
 		const f = hasRank ? (rankCfg?.macizoFocus ?? null) : null;
-		untrack(() => { hexStore.setColorVariable(v); hexStore.setMacizoFocus(f); });
+		const hide = hasRank && rankBars && !!rankCfg?.hexNone && !!selectedDpto;
+		untrack(() => { hexStore.setColorVariable(v); hexStore.setMacizoFocus(f); hexStore.setHexHidden(hide); });
 	});
 
 	const deptList = $derived.by(() => {
@@ -224,9 +223,10 @@
 	});
 
 	// Province view: the map paints the departments with the bars' values and scale.
-	// Only while the bars are shown; an open department shows its hexagons instead.
+	// Only while the bars are shown; an open department shows its hexagons instead,
+	// unless the reading exists only by department (hexNone).
 	$effect(() => {
-		const show = hasRank && rankBars && !!rankCfg && !selectedDpto && !!activeTab;
+		const show = hasRank && rankBars && !!rankCfg && (!selectedDpto || !!rankCfg.hexNone) && !!activeTab;
 		const f = show ? {
 			territory: activeTab,
 			values: deptList.map((d: any) => ({ name: d.dpto ?? d.distrito ?? d.municipio, value: d.rank?.[rankCfg!.field] ?? null })),
@@ -238,7 +238,7 @@
 		} : null;
 		untrack(() => hexStore.setDeptFill(f));
 	});
-	onDestroy(() => hexStore.setDeptFill(null));
+	onDestroy(() => { hexStore.setDeptFill(null); hexStore.setHexHidden(false); });
 
 	// Dept filter — BR states list 300-500 municipalities; without a filter the
 	// list buries every chart below it. Reset on territory tab switch.

@@ -1224,6 +1224,7 @@
 				source: 'hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
 			}, firstSymbolId);
+			applyHexHidden();   // a by-department reading may have been set before the map loaded
 			// Census radios of the open department (setRadioUnit): the unit a census rate is measured on.
 			map.addLayer({
 				id: 'radio-unit-line',
@@ -2732,6 +2733,23 @@
 	export function setDeptFill(f: DeptFill | null) {
 		deptFill = f;
 		applyDeptFill();
+	}
+
+	// A ranking reading that exists only by department, with a department open: the
+	// departments carry the reading (deptFill) and the open department's hexagons are
+	// hidden. Visibility, not opacity: hidden cells must not answer clicks or hovers.
+	let hexHidden = false;
+	export function setHexHidden(h: boolean) {
+		hexHidden = h;
+		applyHexHidden();
+	}
+	function applyHexHidden() {
+		if (!map?.getStyle()) return;
+		const vis = hexHidden ? 'none' : 'visible';
+		// The gray backdrop under the cells too: it would cover the department fill.
+		for (const id of ['hex-fill', 'hex-fill-hatch', 'hex-line', 'territory-bg-fill']) {
+			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis);
+		}
 	}
 
 	function pyFillLayer(tid: string): string {

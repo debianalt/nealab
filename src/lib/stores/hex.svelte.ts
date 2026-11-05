@@ -291,6 +291,7 @@ export class HexStore {
 		this.macizoChartFocus = null;
 		this.deptFill = null;
 		this.deptFillPick = null;
+		this.hexHidden = false;
 		if (!layerId) {
 			this.activeLayer = null;
 			this.visibleData = new Map();
@@ -384,6 +385,12 @@ export class HexStore {
 	setDeptFill(f: DeptFill | null) {
 		this.deptFill = f;
 	}
+
+	// An open department whose active ranking reading exists only by department
+	// (deptRank.hexNone): the map paints the departments with it and hides the
+	// hexagons, instead of painting another reading's cells under its tab.
+	hexHidden = $state(false);
+	setHexHidden(v: boolean) { this.hexHidden = v; }
 
 	// A department clicked on the map for a layer whose ranking is not the
 	// perDepartment one (censo_temporal): the list owns the selection, the map only
