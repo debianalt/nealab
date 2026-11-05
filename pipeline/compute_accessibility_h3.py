@@ -1,19 +1,36 @@
 """
-Compute accessibility metrics for a territory → sat_accessibility.parquet.
+Compute accessibility for a territory -> sat_accessibility.parquet.
 
-Same sources (Oxford MAP + OSM) in every territory. Physical values only: no
-percentiles, fixed-scale normalisation, composite score or types (removed 4-nov-2026).
+Every column is a travel time by road, in minutes (decided with the author,
+5-nov-2026: straight-line km confused users and missed rivers, relief and dirt roads).
+Physical values only: no percentiles, normalisation, composite score or types.
 
-Output columns (minutes or km):
-  travel_min_capital_raw           MCP travel time to capital city (Oxford MAP friction + MCP_Geometric)
-  travel_min_cabecera_raw          Oxford MAP accessibility_to_cities raster
-  dist_nearest_hospital_km_raw     OSM hospital/clinic KDTree
-  dist_nearest_secundaria_km_raw   OSM school KDTree
-  dist_primary_m_raw               OSM road KDTree (motorway/trunk/primary/secondary), stored in km
+Output columns (minutes):
+  travel_min_capital_raw     to the provincial / departmental capital
+  travel_min_cabecera_raw    to the nearest city of 50,000+ (Oxford MAP
+                             accessibility_to_cities_2015 raster, sampled at the centre)
+  travel_min_hospital_raw    to the nearest public hospital (IGN/SISA)             AR only
+  travel_min_salud_raw       to the nearest public health establishment (IGN/SISA) AR only
+  travel_min_secundaria_raw  to the nearest school with common or technical
+                             secondary (Mapa Educativo Nacional, DIEE)             AR only
+  travel_min_ruta_raw        to the nearest trunk road (OSM motorway/trunk/primary/secondary)
+
+Method (all but cabecera): least-cost travel time over the Oxford/MAP motorised
+friction surface 2019 v5.1 (min/m, 30" ~ 0.93 km), one raster for the whole NEA
+(+0.5 deg, `gee_export_location_value.py --territory nea`) so destinations across a
+provincial boundary count. The friction is reprojected (nearest) to a Lambert
+azimuthal equal-area grid of 500 m centred on the NEA, so steps are metric in both
+axes (the old single-source code took 1 deg = 111 km east-west too, ~12 % long at 27 S),
+and MCP_Geometric runs from all destinations at once. Each cell reads the pixel of its
+centre. Paraguayan territories: hospital, salud and secundaria = NaN (AR registries).
+
+Inputs: pipeline/output/nea/lv_friction_nea.tif, pipeline/output/access_sources/
+(`fetch_access_facilities.py`), pipeline/output/nea/lv_road_coords_nea.json (Overpass),
+and per territory lv_cities_access.tif + hexagons(-lite).geojson.
 
 Usage:
   python pipeline/compute_accessibility_h3.py --territory misiones
-  python pipeline/compute_accessibility_h3.py --territory itapua_py
+  python pipeline/compute_accessibility_h3.py --territory itapua_py --output-dir <dir>
 """
 
 import argparse
@@ -28,15 +45,23 @@ import numpy as np
 import pandas as pd
 import rasterio
 import requests
-from scipy.spatial import cKDTree
+from pyproj import Transformer
+from rasterio.warp import Resampling, calculate_default_transform, reproject
 
 from config import OUTPUT_DIR, GCS_BUCKET, get_territory
+from fetch_access_facilities import NEA_BOX
 
 _GCLOUD = 'gcloud.cmd' if platform.system() == 'Windows' else 'gcloud'
 
-# overpass-api.de answers 406 to the default python-requests User-Agent (3-nov-2026):
-# with no cache the hospital/road distances came out all-NaN and were scored as neutral.
+# overpass-api.de answers 406 to the default python-requests User-Agent (3-nov-2026).
 OVERPASS_HEADERS = {'User-Agent': 'spatia-pipeline/1.0 (+https://www.spatia.ar)'}
+
+# Metric grid for the cost surface: Lambert azimuthal equal-area centred on the NEA box.
+LAEA = ('+proj=laea +lat_0={:.2f} +lon_0={:.2f} +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'
+        .format((NEA_BOX[1] + NEA_BOX[3]) / 2, (NEA_BOX[0] + NEA_BOX[2]) / 2))
+GRID_M = 500           # finer than the 0.93 km source, so nearest keeps every road pixel
+BARRIER = 1e8          # min/m for nodata pixels: impassable
+DESTINATIONS_AR = ('hospital', 'salud', 'secundaria')
 
 CAPITAL_COORDS = {
     'misiones':              (-27.367,  -55.896),   # Posadas
@@ -69,7 +94,7 @@ CAPITAL_COORDS = {
     'alto_paraguay_py':      (-21.0385, -57.8748),  # Fuerte Olimpo
 }
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# -- Helpers ------------------------------------------------------------------
 
 def is_valid_raster(path: str) -> bool:
     if not os.path.exists(path):
@@ -120,88 +145,36 @@ def sample_raster_at_centroids(raster_path: str, lngs: list, lats: list,
     return vals
 
 
-def compute_mcp_travel_time(friction_path: str, source_lat: float, source_lng: float,
-                             lats: list, lngs: list) -> np.ndarray:
-    """MCP least-cost travel time from a single source point (capital city)."""
-    try:
-        from skimage.graph import MCP_Geometric
-    except ImportError:
-        raise ImportError("scikit-image required: pip install scikit-image")
-
-    with rasterio.open(friction_path) as src:
-        friction = src.read(1).astype(np.float64)
-        transform = src.transform
-        nd = src.nodata
-
-        pixel_w_m = abs(transform.a) * 111_000
-        pixel_h_m = abs(transform.e) * 111_000
-        pixel_size_m = (pixel_w_m + pixel_h_m) / 2
-
-        if nd is not None:
-            friction[friction == nd] = 1e8
-        friction[~np.isfinite(friction) | (friction < 0)] = 1e8
-
-        cost_surface = friction * pixel_size_m
-
-        col_f, row_f = ~transform * (source_lng, source_lat)
-        r0, c0 = int(row_f), int(col_f)
-        if not (0 <= r0 < cost_surface.shape[0] and 0 <= c0 < cost_surface.shape[1]):
-            print(f"  WARNING: capital coords ({source_lat},{source_lng}) outside raster extent")
-            return np.full(len(lats), np.nan)
-
-        print(f"  MCP from capital pixel ({r0},{c0})")
-        mcp = MCP_Geometric(cost_surface)
-        cumulative, _ = mcp.find_costs([(r0, c0)])
-
-        result = np.full(len(lats), np.nan)
-        for i, (lat, lng) in enumerate(zip(lats, lngs)):
-            col_f, row_f = ~transform * (lng, lat)
-            r, c = int(row_f), int(col_f)
-            if 0 <= r < cumulative.shape[0] and 0 <= c < cumulative.shape[1]:
-                val = cumulative[r, c]
-                if val < 1e7:
-                    result[i] = round(float(val), 2)
-        return result
+def _overpass_roads(box) -> list:
+    west, south, east, north = box
+    query = f"""[out:json][timeout:180][bbox:{south},{west},{north},{east}];
+(
+  way[highway=motorway];
+  way[highway=trunk];
+  way[highway=primary];
+  way[highway=secondary];
+);
+out geom;"""
+    for attempt in range(3):
+        for srv in ['https://overpass-api.de/api/interpreter',
+                    'https://overpass.kumi.systems/api/interpreter']:
+            try:
+                r = requests.post(srv, data=query, timeout=240, headers=OVERPASS_HEADERS)
+                r.raise_for_status()
+                return [[nd['lon'], nd['lat']] for el in r.json().get('elements', [])
+                        if el['type'] == 'way' and 'geometry' in el for nd in el['geometry']]
+            except Exception as e:
+                print(f"    Overpass {srv} (try {attempt + 1}): {e}")
+        time.sleep(20)
+    sys.exit(f"Overpass failed for box {box}")
 
 
-def fetch_osm_points(bbox: list, amenity_query: str, cache_path: str) -> list:
-    """Fetch OSM node/way centroids for a query, return [[lon,lat],...] and cache."""
-    if os.path.exists(cache_path):
-        with open(cache_path) as f:
-            pts = json.load(f)
-        print(f"  Loaded {len(pts):,} points from cache: {os.path.basename(cache_path)}")
-        return pts
+def fetch_osm_road_coords(bbox: list, cache_path: str, tile_deg: float = 2.5) -> list:
+    """Trunk-road vertices (motorway/trunk/primary/secondary) in bbox, cached.
 
-    west, south, east, north = bbox
-    q_bbox = f"{south},{west},{north},{east}"
-    query = f"[out:json][timeout:120][bbox:{q_bbox}];\n{amenity_query};\nout center;"
-
-    pts = []
-    for srv in ['https://overpass.kumi.systems/api/interpreter',
-                'https://overpass-api.de/api/interpreter']:
-        try:
-            r = requests.post(srv, data=query, timeout=150, headers=OVERPASS_HEADERS)
-            r.raise_for_status()
-            for el in r.json().get('elements', []):
-                if el['type'] == 'node':
-                    pts.append([el['lon'], el['lat']])
-                elif el['type'] == 'way' and 'center' in el:
-                    pts.append([el['center']['lon'], el['center']['lat']])
-            print(f"  Fetched {len(pts):,} points from Overpass")
-            break
-        except Exception as e:
-            print(f"  Overpass {srv}: {e}")
-
-    if not pts:
-        # An empty list scores every cell as NaN → neutral; stop instead.
-        sys.exit(f"No OSM points for {os.path.basename(cache_path)} (Overpass failed or empty)")
-    with open(cache_path, 'w') as f:
-        json.dump(pts, f)
-    return pts
-
-
-def fetch_osm_road_coords(bbox: list, cache_path: str) -> list:
-    """Fetch road geometry coords from Overpass, return [[lon,lat],...] and cache."""
+    The box is queried in tiles of `tile_deg`: the whole NEA in one request times out
+    (5-nov-2026). A tile with no trunk roads returns an empty list, which is fine.
+    """
     if os.path.exists(cache_path):
         with open(cache_path) as f:
             data = json.load(f)
@@ -210,173 +183,164 @@ def fetch_osm_road_coords(bbox: list, cache_path: str) -> list:
         return pts
 
     west, south, east, north = bbox
-    q_bbox = f"{south},{west},{north},{east}"
-    query = f"""[out:json][timeout:120][bbox:{q_bbox}];
-(
-  way[highway=motorway];
-  way[highway=trunk];
-  way[highway=primary];
-  way[highway=secondary];
-);
-out geom;"""
-
-    pts = []
-    for srv in ['https://overpass.kumi.systems/api/interpreter',
-                'https://overpass-api.de/api/interpreter']:
-        try:
-            r = requests.post(srv, data=query, timeout=150, headers=OVERPASS_HEADERS)
-            r.raise_for_status()
-            for el in r.json().get('elements', []):
-                if el['type'] == 'way' and 'geometry' in el:
-                    pts.extend([[nd['lon'], nd['lat']] for nd in el['geometry']])
-            print(f"  Fetched {len(pts):,} road points from Overpass")
-            break
-        except Exception as e:
-            print(f"  Overpass {srv}: {e}")
-
+    xs = list(np.arange(west, east, tile_deg)) + [east]
+    ys = list(np.arange(south, north, tile_deg)) + [north]
+    seen, pts = set(), []
+    for x0, x1 in zip(xs[:-1], xs[1:]):
+        for y0, y1 in zip(ys[:-1], ys[1:]):
+            tile = _overpass_roads((x0, y0, x1, y1))
+            for lon, lat in tile:
+                key = (round(lon, 6), round(lat, 6))
+                if key not in seen:
+                    seen.add(key)
+                    pts.append([lon, lat])
+            print(f"    tile {x0:.2f},{y0:.2f}: {len(tile):,} vertices")
+            time.sleep(2)
     if not pts:
-        sys.exit(f"No OSM road points for {os.path.basename(cache_path)} (Overpass failed or empty)")
+        sys.exit(f"No OSM road points for {os.path.basename(cache_path)}")
+    os.makedirs(os.path.dirname(cache_path), exist_ok=True)
     with open(cache_path, 'w') as f:
-        json.dump({'road_points': pts}, f)
+        json.dump({'road_points': pts, 'bbox': list(bbox)}, f)
+    print(f"  Fetched {len(pts):,} road points from Overpass")
     return pts
 
+# -- Least-cost travel time ---------------------------------------------------
 
-def kdtree_distances_km(query_lats: list, query_lngs: list,
-                         point_coords: list) -> np.ndarray:
-    """Compute distances to nearest point in km using scaled Cartesian KDTree."""
-    if not point_coords:
-        return np.full(len(query_lats), np.nan)
-    mean_lat = float(np.mean(query_lats))
-    cos_lat = np.cos(np.radians(mean_lat))
-    pts = np.array(point_coords)
-    pts_xy = np.column_stack([pts[:, 0] * cos_lat, pts[:, 1]])
-    q_xy = np.column_stack([np.array(query_lngs) * cos_lat, np.array(query_lats)])
-    tree = cKDTree(pts_xy)
-    dists_deg, _ = tree.query(q_xy)
-    return (dists_deg * 111_000.0 / 1000.0).astype(np.float64)
+class CostSurface:
+    """Friction (min/m) on a metric LAEA grid, with MCP from any set of points."""
+
+    def __init__(self, friction_path: str):
+        with rasterio.open(friction_path) as src:
+            transform, width, height = calculate_default_transform(
+                src.crs, LAEA, src.width, src.height, *src.bounds, resolution=GRID_M)
+            dst = np.full((height, width), np.nan, dtype=np.float64)
+            reproject(source=rasterio.band(src, 1), destination=dst,
+                      src_transform=src.transform, src_crs=src.crs,
+                      dst_transform=transform, dst_crs=LAEA,
+                      resampling=Resampling.nearest, dst_nodata=np.nan)
+        bad = ~np.isfinite(dst) | (dst <= 0)
+        dst[bad] = BARRIER
+        self.cost = dst
+        self.transform = transform
+        self.to_xy = Transformer.from_crs('EPSG:4326', LAEA, always_xy=True)
+        print(f"  Cost grid {width}x{height} @ {GRID_M} m, {bad.mean():.1%} barrier")
+
+    def pixels(self, lngs, lats):
+        x, y = self.to_xy.transform(np.asarray(lngs, float), np.asarray(lats, float))
+        col, row = ~self.transform * (np.asarray(x), np.asarray(y))
+        r, c = np.floor(row).astype(int), np.floor(col).astype(int)
+        ok = (r >= 0) & (r < self.cost.shape[0]) & (c >= 0) & (c < self.cost.shape[1])
+        return r, c, ok
+
+    def travel_minutes(self, src_lngs, src_lats, lngs, lats) -> np.ndarray:
+        """Minutes from each (lng, lat) to the nearest source, by least cost."""
+        from skimage.graph import MCP_Geometric
+        sr, sc, sok = self.pixels(src_lngs, src_lats)
+        starts = sorted({(int(a), int(b)) for a, b, k in zip(sr, sc, sok)
+                         if k and self.cost[a, b] < BARRIER})
+        if not starts:
+            return np.full(len(lats), np.nan)
+        mcp = MCP_Geometric(self.cost, sampling=(GRID_M, GRID_M))
+        cumulative, _ = mcp.find_costs(starts)
+        r, c, ok = self.pixels(lngs, lats)
+        out = np.full(len(lats), np.nan)
+        vals = cumulative[r[ok], c[ok]]
+        vals[vals >= 1e7] = np.nan
+        out[ok] = np.round(vals, 1)
+        return out
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+def load_points(path: str):
+    with open(path, encoding='utf-8') as f:
+        feats = json.load(f)['features']
+    pts = np.array([ft['geometry']['coordinates'][:2] for ft in feats], dtype=float)
+    return pts[:, 0], pts[:, 1]
+
+
+# -- Main ---------------------------------------------------------------------
 
 def main():
-    parser = argparse.ArgumentParser(description="Compute accessibility H3 parquet")
+    parser = argparse.ArgumentParser(description="Compute accessibility H3 parquet (minutes by road)")
     parser.add_argument("--territory", default="misiones")
+    parser.add_argument("--output-dir", default=OUTPUT_DIR,
+                        help="pipeline output root (default: this checkout's pipeline/output)")
     args = parser.parse_args()
 
     territory = get_territory(args.territory)
-    bbox = territory['bbox']
     out_prefix = territory['output_prefix'].rstrip('/')
-    out_dir = os.path.join(OUTPUT_DIR, out_prefix) if out_prefix else OUTPUT_DIR
+    root = args.output_dir
+    out_dir = os.path.join(root, out_prefix) if out_prefix else root
     gcs_subdir = '' if args.territory == 'misiones' else f"{args.territory}/"
-
-    os.makedirs(out_dir, exist_ok=True)
+    is_py = args.territory.endswith('_py')
     print(f"Territory: {args.territory}  |  Output: {out_dir}")
 
-    # ── Rasters ──────────────────────────────────────────────────────────────
-    friction_path = os.path.join(out_dir, 'lv_friction.tif')
-    cities_path = os.path.join(out_dir, 'lv_cities_access.tif')
-
-    for fname, path in [('lv_friction.tif', friction_path),
-                         ('lv_cities_access.tif', cities_path)]:
-        if not is_valid_raster(path):
-            print(f"  Downloading {fname} from GCS...")
-            download_from_gcs(GCS_BUCKET, f'satellite/{gcs_subdir}{fname}', path)
-
+    friction_path = os.path.join(root, 'nea', 'lv_friction_nea.tif')
     if not is_valid_raster(friction_path):
-        print("ERROR: lv_friction.tif not available. Run gee_export_location_value.py first.")
+        download_from_gcs(GCS_BUCKET, 'satellite/nea/lv_friction_nea.tif', friction_path)
+    if not is_valid_raster(friction_path):
+        print("ERROR: lv_friction_nea.tif missing. Run gee_export_location_value.py --territory nea.")
         return 1
+    cities_path = os.path.join(out_dir, 'lv_cities_access.tif')
+    if not is_valid_raster(cities_path):
+        download_from_gcs(GCS_BUCKET, f'satellite/{gcs_subdir}lv_cities_access.tif', cities_path)
     if not is_valid_raster(cities_path):
         print("ERROR: lv_cities_access.tif not available. Run gee_export_location_value.py first.")
         return 1
+    sources_dir = os.path.join(root, 'access_sources')
+    if not is_py and not os.path.exists(os.path.join(sources_dir, 'manifest.json')):
+        print("ERROR: access_sources missing. Run fetch_access_facilities.py first.")
+        return 1
 
-    # ── H3 grid ───────────────────────────────────────────────────────────────
+    # -- H3 grid --
     hex_path = os.path.join(out_dir, 'hexagons-lite.geojson')
     if not os.path.exists(hex_path):
         hex_path = os.path.join(out_dir, 'hexagons.geojson')
-    print(f"Loading grid: {hex_path}")
     with open(hex_path) as f:
         features = json.load(f)['features']
-    n = len(features)
-    print(f"  {n:,} hexagons")
+    h3ids = [ft['properties']['h3index'] for ft in features]
+    latlng = np.array([h3_centroid(h) for h in h3ids])
+    lats, lngs = latlng[:, 0], latlng[:, 1]
+    n = len(h3ids)
+    print(f"  {n:,} hexagons ({hex_path})")
 
-    h3ids, lats, lngs = [], [], []
-    for feat in features:
-        h3id = feat['properties']['h3index']
-        lat, lng = h3_centroid(h3id)
-        h3ids.append(h3id)
-        lats.append(lat)
-        lngs.append(lng)
+    surface = CostSurface(friction_path)
+    cols = {}
 
-    # ── Travel time to capital (MCP) ─────────────────────────────────────────
+    def run(name, src_lngs, src_lats):
+        t0 = time.time()
+        v = surface.travel_minutes(src_lngs, src_lats, lngs, lats)
+        print(f"  {name}: {len(src_lngs):,} destinations, valid {np.isfinite(v).sum():,}/{n:,}, "
+              f"median {np.nanmedian(v):.0f} min ({time.time() - t0:.0f} s)")
+        return v
+
     cap_lat, cap_lng = CAPITAL_COORDS[args.territory]
-    print(f"\nComputing MCP travel time to capital ({cap_lat:.3f},{cap_lng:.3f})...")
-    t0 = time.time()
-    travel_capital_raw = compute_mcp_travel_time(friction_path, cap_lat, cap_lng, lats, lngs)
-    valid = np.sum(np.isfinite(travel_capital_raw))
-    print(f"  valid={valid:,}/{n:,}  mean={np.nanmean(travel_capital_raw):.1f} min  "
-          f"({time.time()-t0:.0f}s)")
+    cols['travel_min_capital_raw'] = run('capital', [cap_lng], [cap_lat])
 
-    # ── Travel time to nearest city (cities_access raster) ───────────────────
-    print("\nSampling cities_access raster...")
-    travel_cabecera_raw = sample_raster_at_centroids(cities_path, lngs, lats)
-    # 0 = inside a city of 50k+ (Oxford); cells without a reading come as NaN.
-    # `<= 0` used to drop the city cores themselves (Posadas, Gran Asunción).
-    travel_cabecera_raw[travel_cabecera_raw < 0] = np.nan
-    valid = np.sum(np.isfinite(travel_cabecera_raw))
-    print(f"  valid={valid:,}/{n:,}  mean={np.nanmean(travel_cabecera_raw):.1f} min")
+    cab = sample_raster_at_centroids(cities_path, lngs, lats)
+    cab[cab < 0] = np.nan       # 0 = inside a city of 50k+ (Oxford): a real value
+    cols['travel_min_cabecera_raw'] = cab
 
-    # ── Hospital distances (OSM KDTree) ───────────────────────────────────────
-    print("\nFetching hospital coords...")
-    hosp_cache = os.path.join(out_dir, 'lv_healthcare_facilities.json')
-    hosp_query = """(
-  node[amenity=hospital];
-  node[amenity=clinic];
-  node[amenity=doctors];
-  way[amenity=hospital];
-  way[amenity=clinic];
-)"""
-    hosp_pts = fetch_osm_points(bbox, hosp_query, hosp_cache)
-    dist_hospital_raw = kdtree_distances_km(lats, lngs, hosp_pts)
-    print(f"  mean={np.nanmean(dist_hospital_raw):.2f} km")
+    for dest in DESTINATIONS_AR:
+        col = f'travel_min_{dest}_raw'
+        if is_py:
+            cols[col] = np.full(n, np.nan)
+            continue
+        s_lng, s_lat = load_points(os.path.join(sources_dir, f'{dest}.geojson'))
+        cols[col] = run(dest, s_lng, s_lat)
 
-    # ── School distances (OSM KDTree) ─────────────────────────────────────────
-    print("\nFetching school coords...")
-    school_cache = os.path.join(out_dir, 'access_school_coords.json')
-    school_query = """(
-  node[amenity=school];
-  node[amenity=college];
-  way[amenity=school];
-  way[amenity=college];
-)"""
-    school_pts = fetch_osm_points(bbox, school_query, school_cache)
-    dist_school_raw = kdtree_distances_km(lats, lngs, school_pts)
-    print(f"  mean={np.nanmean(dist_school_raw):.2f} km")
+    road = np.array(fetch_osm_road_coords(list(NEA_BOX),
+                                          os.path.join(root, 'nea', 'lv_road_coords_nea.json')))
+    cols['travel_min_ruta_raw'] = run('ruta', road[:, 0], road[:, 1])
 
-    # ── Road distances (OSM KDTree) ───────────────────────────────────────────
-    print("\nFetching road coords...")
-    road_cache = os.path.join(out_dir, 'lv_road_coords.json')
-    road_pts = fetch_osm_road_coords(bbox, road_cache)
-    dist_road_raw = kdtree_distances_km(lats, lngs, road_pts)
-    print(f"  mean={np.nanmean(dist_road_raw):.2f} km")
+    if not is_py:
+        bad = int(np.sum(cols['travel_min_hospital_raw'] < cols['travel_min_salud_raw']))
+        if bad:
+            sys.exit(f"hospital < salud in {bad} cells: hospitals are a subset of salud")
 
-    # ── Assemble output: physical values only ─────────────────────────────────
-    out = pd.DataFrame({
-        'h3index': h3ids,
-        'travel_min_capital_raw':         travel_capital_raw,
-        'travel_min_cabecera_raw':        travel_cabecera_raw,
-        'dist_nearest_hospital_km_raw':   dist_hospital_raw,
-        'dist_nearest_secundaria_km_raw': dist_school_raw,
-        'dist_primary_m_raw':             dist_road_raw,
-    })
-
+    out = pd.DataFrame({'h3index': h3ids, **cols})
     out_path = os.path.join(out_dir, 'sat_accessibility.parquet')
     out.to_parquet(out_path, index=False)
-    size_mb = os.path.getsize(out_path) / 1024 / 1024
-
-    print(f"\n{'='*60}")
-    print(f"  Rows: {len(out):,}")
-    print(f"  Saved: {out_path} ({size_mb:.1f} MB)")
-    print(f"{'='*60}")
+    print(f"  Saved {out_path} ({len(out):,} rows, {os.path.getsize(out_path) / 1e6:.1f} MB)")
     return 0
 
 

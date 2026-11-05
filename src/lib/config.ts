@@ -111,7 +111,7 @@ export function getParquetUrl(name: string): string {
 		sat_education_flow: '?v=29',
 		sat_sociodemographic: '?v=27',   // 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
 		sat_economic_activity: '?v=35',   // 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
-		sat_accessibility: '?v=30',
+		sat_accessibility: '?v=32',   // 5-nov-2026: todo en minutos por camino (hospital, salud, secundaria, ruta)
 		sat_pm25_drivers: '?v=19',
 		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
 		sat_uso_suelo: '?v=1',  // 3-nov-2026: MapBiomas AR Col. 3 (reemplaza Dynamic World)
@@ -124,7 +124,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 38;   // 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 40;   // 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -807,15 +807,17 @@ export const ACCESS_TIME_CLASSES: ColorClasses = {
 	],
 };
 
-// Distance to the nearest hospital (accessibility, Hospital tab), km.
-export const ACCESS_KM_CLASSES: ColorClasses = {
-	unit: 'km',
+// Travel time by road to nearby destinations (hospital, health establishment,
+// secondary school, trunk road), minutes. Since 5-nov-2026 every accessibility
+// column is minutes by road (no straight-line km); these destinations are much
+// closer than the capital, so they get their own cuts (15 / 30 / 60 / 120 min).
+export const ACCESS_NEAR_CLASSES: ColorClasses = {
 	steps: [
-		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.accessKm.c1' },
-		{ from: 5, color: MAP_ACCESS_5[1], labelKey: 'legend.accessKm.c2' },
-		{ from: 10, color: MAP_ACCESS_5[2], labelKey: 'legend.accessKm.c3' },
-		{ from: 20, color: MAP_ACCESS_5[3], labelKey: 'legend.accessKm.c4' },
-		{ from: 40, color: MAP_ACCESS_5[4], labelKey: 'legend.accessKm.c5' },
+		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.accessNear.c1' },
+		{ from: 15, color: MAP_ACCESS_5[1], labelKey: 'legend.accessNear.c2' },
+		{ from: 30, color: MAP_ACCESS_5[2], labelKey: 'legend.accessNear.c3' },
+		{ from: 60, color: MAP_ACCESS_5[3], labelKey: 'legend.accessNear.c4' },
+		{ from: 120, color: MAP_ACCESS_5[4], labelKey: 'legend.accessNear.c5' },
 	],
 };
 
@@ -1424,21 +1426,30 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			metrics: [
 				{ tabKey: 'rank.access.tab.cabecera' },
 				{ tabKey: 'rank.access.tab.capital', field: 'min_capital', hexVariable: 'travel_min_capital_raw' },
-				{ tabKey: 'rank.access.tab.hospital', field: 'km_hospital', unit: 'km', decimals: 1, noteKey: 'rank.access.note.hospital', hexVariable: 'dist_nearest_hospital_km_raw' },
+				{ tabKey: 'rank.access.tab.hospital', field: 'min_hospital', noteKey: 'rank.access.note.hospital', hexVariable: 'travel_min_hospital_raw' },
 			],
 		},
 		parquet: 'sat_accessibility',
+		// Every column: minutes by road (Oxford/MAP motorised friction 2019, least cost;
+		// cabecera = Oxford accessibility_to_cities 2015). Hospital, salud and secundaria
+		// exist only in Argentina (IGN/SISA, Mapa Educativo Nacional): NULL in Paraguay.
 		variables: [
 			{ col: 'travel_min_capital_raw', unit: 'min', labelKey: 'radio.travelCapital', aggregation: 'mean' },
 			{ col: 'travel_min_cabecera_raw', unit: 'min', labelKey: 'radio.travelCabecera', aggregation: 'mean' },
-			{ col: 'dist_nearest_hospital_km_raw', unit: 'km', labelKey: 'radio.distHospital', aggregation: 'mean' },
-			{ col: 'dist_nearest_secundaria_km_raw', unit: 'km', labelKey: 'radio.distSecundaria', aggregation: 'mean' },
-			{ col: 'dist_primary_m_raw', unit: 'km', labelKey: 'radio.distPrimaria', aggregation: 'mean' },
+			{ col: 'travel_min_hospital_raw', unit: 'min', labelKey: 'radio.travelHospital', aggregation: 'mean' },
+			{ col: 'travel_min_salud_raw', unit: 'min', labelKey: 'radio.travelSalud', aggregation: 'mean' },
+			{ col: 'travel_min_secundaria_raw', unit: 'min', labelKey: 'radio.travelSecundaria', aggregation: 'mean' },
+			{ col: 'travel_min_ruta_raw', unit: 'min', labelKey: 'radio.travelRuta', aggregation: 'mean' },
 		],
 		primaryVariable: 'travel_min_capital_raw',
 		colorScale: 'flood',
 		colorClasses: ACCESS_TIME_CLASSES,
-		variableClasses: { dist_nearest_hospital_km_raw: ACCESS_KM_CLASSES },
+		variableClasses: {
+			travel_min_hospital_raw: ACCESS_NEAR_CLASSES,
+			travel_min_salud_raw: ACCESS_NEAR_CLASSES,
+			travel_min_secundaria_raw: ACCESS_NEAR_CLASSES,
+			travel_min_ruta_raw: ACCESS_NEAR_CLASSES,
+		},
 		aggregation: 'mean',
 		titleKey: 'analysis.accessibility.title',
 		perDepartment: true,
@@ -1447,7 +1458,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		// Each ranking tab paints its own column: the capital's labels misread the others.
 		variableLegend: {
 			travel_min_cabecera_raw: { low: 'legend.accessCity.low', high: 'legend.accessCity.high' },
-			dist_nearest_hospital_km_raw: { low: 'legend.accessHosp.low', high: 'legend.accessHosp.high' },
+			travel_min_hospital_raw: { low: 'legend.accessHosp.low', high: 'legend.accessHosp.high' },
 		},
 		coverage: { alto_parana_py: 'available', itapua_py: 'available', corrientes: 'available', chaco: 'available', formosa: 'available', parana_br: 'unavailable', santa_catarina_br: 'unavailable', rio_grande_sul_br: 'unavailable', concepcion_py: 'unavailable', san_pedro_py: 'unavailable', cordillera_py: 'unavailable', guaira_py: 'unavailable', caaguazu_py: 'unavailable', caazapa_py: 'unavailable', central_py: 'unavailable', neembucu_py: 'unavailable', canindeyu_py: 'unavailable', presidente_hayes_py: 'unavailable', boqueron_py: 'unavailable', alto_paraguay_py: 'unavailable', misiones_py: 'unavailable', paraguari_py: 'unavailable', amambay_py: 'unavailable'},
 	},
@@ -1862,7 +1873,7 @@ export const DATA_FRESHNESS: Record<string, { dataDate: string; processedDate: s
 	sat_sociodemographic: { dataDate: 'Censo Nacional 2022 (INDEC)', processedDate: '30/10/2026', sourceKey: 'layer.source.census2022' },
 	sat_censo_temporal: { dataDate: 'Censos INDEC 1991 · 2001 · 2010 · 2022', processedDate: '10/06/2026', sourceKey: 'layer.source.censoTemporal' },
 	sat_economic_activity: { dataDate: 'Censo 2022 + VIIRS 2025 + GBA 2025', processedDate: '02/11/2026', sourceKey: 'layer.source.economic' },
-	sat_accessibility: { dataDate: 'Oxford MAP 2019 / OSM', processedDate: '01/11/2026', sourceKey: 'layer.source.accessibility' },
+	sat_accessibility: { dataDate: 'Oxford MAP 2019 / IGN-SISA / Mapa Educativo / OSM', processedDate: '05/11/2026', sourceKey: 'layer.source.accessibility' },
 	sat_uso_suelo: { dataDate: 'MapBiomas Argentina Colección 3, 1985–2025', processedDate: '03/11/2026', sourceKey: 'layer.source.landUse' },
 	sat_pm25_drivers: { dataDate: 'ACAG V6.GL.02 1998-2022', processedDate: '01/07/2026', sourceKey: 'layer.source.pm25' },
 	sat_deforestation_dynamics: { dataDate: 'Hansen GFC v1.13 2001-2025', processedDate: '02/11/2026', sourceKey: 'layer.source.deforestation' },

@@ -329,8 +329,7 @@
 					{@const rawVal = v.rawCol ? hexData.data?.[v.rawCol] : null}
 					{@const rawLoaded = !!v.rawCol && !!hexData.data && v.rawCol in hexData.data}
 					<!-- When the layer has a raw column and it was loaded, it alone decides: a NULL raw
-					     with a filled normalized value is a placeholder (Chaco and Formosa carry
-					     dist_primary_m = 50 in every cell and no road distance). -->
+					     with a filled normalized value is a placeholder. -->
 					{@const hasData = rawLoaded
 						? (typeof rawVal === 'number' && Number.isFinite(rawVal))
 						: ((typeof val === 'string' && val.length > 0)

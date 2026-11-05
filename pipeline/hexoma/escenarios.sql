@@ -24,12 +24,12 @@
 WITH p75 AS (
     SELECT ambito_id::smallint AS depto_id, p75
     FROM distribuciones
-    WHERE capa = 'accessibility' AND variable = 'travel_min_capital' AND ambito = 'departamento'
+    WHERE capa = 'accessibility' AND variable = 'travel_min_capital_raw' AND ambito = 'departamento'
 ),
 celdas AS (
     SELECT v.h3, v.territorio, v.departamento,
            v.deforestation_dynamics__c_loss_rate AS perdida,
-           v.accessibility__travel_min_capital   AS minutos,
+           v.accessibility__travel_min_capital_raw AS minutos,
            ap.soja_s12_pct                        AS soja_campanias_aptas
     FROM v_hexoma v
     JOIN v_hexoma_rangos r USING (h3, territorio)
@@ -38,7 +38,7 @@ celdas AS (
     JOIN p75 ON p75.depto_id = a.depto_id
     LEFT JOIN aptitud.resumen ap ON ap.h3 = v.h3
     WHERE r.deforestation_dynamics__c_loss_rate__pr_reg >= 90
-      AND v.accessibility__travel_min_capital > p75.p75
+      AND v.accessibility__travel_min_capital_raw > p75.p75
 )
 SELECT territorio, departamento,
        count(*)                                          AS hexagonos,

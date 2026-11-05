@@ -27,6 +27,7 @@ Note on sources vs Misiones:
   - Slope: Copernicus DEM GLO-30 (FABDEM input; equivalent for slope in low-vegetation areas)
 
 Output: gs://spatia-satellite/satellite/{territory}/lv_{name}.tif
+        (--territory nea: satellite/nea/lv_friction_nea.tif, friction only, native grid)
 """
 
 import argparse
@@ -73,8 +74,19 @@ def main():
     is_ci = authenticate()
     use_gcs = args.gcs or is_ci
 
-    territory = get_territory(args.territory)
-    bbox = territory['bbox']
+    if args.territory == 'nea':
+        # One friction raster for the whole published NEA (+0.5°), used by the
+        # multi-source travel times of compute_accessibility_h3.py: a single box
+        # keeps destinations across provincial boundaries reachable.
+        from fetch_access_facilities import NEA_BOX
+        bbox = list(NEA_BOX)
+        only_set_nea = set((args.only or 'friction').split(','))
+        if only_set_nea != {'friction'}:
+            sys.exit("--territory nea exports only the friction band")
+        args.only = 'friction'
+    else:
+        territory = get_territory(args.territory)
+        bbox = territory['bbox']
     gcs_subdir = '' if args.territory == 'misiones' else f"{args.territory}/"
     ee_bbox = ee.Geometry.Rectangle(bbox)
 
@@ -125,8 +137,27 @@ def main():
     exports = [(n, img, sc) for n, img, sc in all_exports
                if only_set is None or n.replace('lv_', '') in only_set or n in only_set]
 
+    # The NEA friction keeps the asset's native 30" grid (no resampling).
+    native = None
+    if args.territory == 'nea':
+        native = friction_img.projection().getInfo()
+
     tasks = []
     for name, image, scale in exports:
+        if native is not None:
+            task = ee.batch.Export.image.toCloudStorage(
+                image=image.toFloat(),
+                description=f"{name}_nea",
+                bucket=GCS_BUCKET,
+                fileNamePrefix=f'satellite/nea/{name}_nea',
+                region=ee_bbox,
+                crs=native['crs'],
+                crsTransform=native['transform'],
+                maxPixels=1e10)
+            task.start()
+            tasks.append((name, task))
+            print(f"  Started: {name} (native grid {native['transform']})")
+            continue
         desc = f"{name}_{args.territory}" if args.territory != 'misiones' else name
         if use_gcs:
             task = ee.batch.Export.image.toCloudStorage(

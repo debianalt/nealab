@@ -30,17 +30,19 @@
 		onBrushSelect?: (h3s: string[], origin?: string) => void;
 	} = $props();
 
-	// Physical distance/time columns of the accessibility layer. dist_primary_m_raw
-	// is in km despite its name (measured: median 5.2 in Guaraní).
+	// Travel-time columns of the accessibility layer: since 5-nov-2026 all of them
+	// are minutes by road (no straight-line km). Nearest destinations first.
+	// Hospital, salud and secundaria are NULL in Paraguay (Argentine registries).
 	const DISTANCES = [
-		{ col: 'dist_primary_m_raw', key: 'radio.distPrimaria', unit: 'km' },
-		{ col: 'dist_nearest_hospital_km_raw', key: 'radio.distHospital', unit: 'km' },
-		{ col: 'dist_nearest_secundaria_km_raw', key: 'radio.distSecundaria', unit: 'km' },
+		{ col: 'travel_min_ruta_raw', key: 'radio.travelRuta', unit: 'min' },
+		{ col: 'travel_min_salud_raw', key: 'radio.travelSalud', unit: 'min' },
+		{ col: 'travel_min_secundaria_raw', key: 'radio.travelSecundaria', unit: 'min' },
+		{ col: 'travel_min_hospital_raw', key: 'radio.travelHospital', unit: 'min' },
 		{ col: 'travel_min_cabecera_raw', key: 'radio.travelCabecera', unit: 'min' },
 		{ col: 'travel_min_capital_raw', key: 'radio.travelCapital', unit: 'min' },
 	] as const;
-	// Fixed, readable band edges per unit (upper bounds; last band is open).
-	const BREAKS: Record<string, number[]> = { km: [1, 2, 5, 10, 20], min: [15, 30, 60, 120, 180] };
+	// Fixed, readable band edges (upper bounds, minutes; last band is open).
+	const BREAKS: Record<string, number[]> = { min: [15, 30, 60, 120, 180] };
 
 	let distIdx = $state(0);
 	const dist = $derived(DISTANCES[distIdx]);
@@ -80,8 +82,9 @@
 			}
 			const m = new Map<string, number>();
 			for (const [h3, s] of sum) m.set(h3, s / cnt.get(h3)!);
-			// Territories without this target computed store 0 everywhere.
-			return { m, mostlyZero: n > 0 && zeros / n > 0.8 };
+			// Not computed here: all NULL (Paraguay: hospital, salud, secundaria) or, in
+			// old files, 0 everywhere.
+			return { m, mostlyZero: n === 0 || zeros / n > 0.8 };
 		})()
 			.then(({ m, mostlyZero: z }) => {
 				if (DISTANCES[distIdx].col !== col) return; // superseded

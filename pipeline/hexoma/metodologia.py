@@ -272,11 +272,11 @@ FUENTES = [
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
 # Fuente: relevamiento del código (config.ts, content/methodology.ts, scripts de pipeline/), 1-nov-2026.
 CAPAS = {
-    'accessibility': ('Accesibilidad', 'Oxford/MAP fricción motorizada 2019 v5.1 y accessibility_to_cities_2015; OSM (Overpass) para hospitales, escuelas y rutas',
-                      'Tiempo a la capital por costo mínimo (MCP_Geometric) sobre la fricción, local; tiempo a ciudad en el centroide; distancias KDTree desde el centroide. Sólo valores físicos (min, km): sin normalización, puntaje compuesto ni tipos desde 4-nov-2026.',
-                      'travel_min_capital_raw, travel_min_cabecera_raw (min), dist_nearest_hospital_km_raw, dist_nearest_secundaria_km_raw, dist_primary_m_raw (km; el nombre dice m pero está en km)',
-                      True, '«Cabecera» es la ciudad de ≥ 50.000 hab.; falta tiempo a ciudad en Chaco y Formosa; el ranking describe superficie, no población.',
-                      'gee_export_location_value.py; compute_accessibility_h3.py; run_accessibility_new_territories.py'),
+    'accessibility': ('Accesibilidad', 'Oxford/MAP fricción motorizada 2019 v5.1 y accessibility_to_cities_2015; IGN capa salud_020801 (IGN/SISA, establecimientos públicos); Mapa Educativo Nacional publico:establecimiento_educativo (DIEE); OSM (Overpass) para rutas troncales',
+                      'Todo en minutos por camino (5-nov-2026). Costo mínimo multiorigen (MCP_Geometric) sobre la fricción de un solo ráster NEA + 0,5°, reproyectada (vecino) a LAEA de 500 m; la celda lee el píxel de su centro. Destinos: capital; hospital (gna «Hospital…») y salud (todos) del IGN/SISA; escuela con secundaria común o técnica (nen); vértices de ruta motorway/trunk/primary/secondary. Ciudad ≥ 50k: ráster Oxford 2015 en el centroide. Sin normalización, puntaje ni tipos.',
+                      'travel_min_capital_raw, travel_min_cabecera_raw, travel_min_hospital_raw, travel_min_salud_raw, travel_min_secundaria_raw, travel_min_ruta_raw (min)',
+                      True, '«Cabecera» es la ciudad de ≥ 50.000 hab. (superficie 2015); velocidad de ruta libre, sin tránsito, estado del camino ni colectivo; red 2019; píxel de ~1 km; salud sólo pública; hospital, salud y secundaria sólo en Argentina (NULL en Paraguay); el ranking describe superficie, no población.',
+                      'fetch_access_facilities.py; gee_export_location_value.py --territory nea; compute_accessibility_h3.py'),
     'agri_potential': ('Potencial agrícola (web, unidades físicas y aptitud por cultivo)',
                        'Hexoma: CHIRPS v3 (lluvia), ERA5-Land corregido con 48 estaciones GHCN-Daily e INTA SIGA (temperatura, heladas), SoilGrids 2.0 0–30 cm, FABDEM; aptitud A4 con umbrales validados (meta.umbrales_cultivo)',
                        'Exportado del Hexoma por pipeline/hexoma/exportar_agri_web.py (1-nov-2026): por celda, normales 1991–2020 del píxel que contiene el centro y, por cultivo, clase mediana S1–N y % de campañas S1+S2 1991/92–2024/25 (FAO, factor más limitante). Sin puntajes. Reemplaza a la versión 0–100 (retirada y borrada el 1-nov-2026; respaldo fuera del repo).',
@@ -351,9 +351,8 @@ REPARTO = 'radio censal 2022 repartido en las celdas por edificios (dasimétrico
 EDIFICIO = 'huella de edificio (Global Building Atlas y Open Buildings), sumada en la celda'
 DERIVADO = 'celda res-9, derivado de las otras columnas de la capa (su soporte es el más grueso de sus insumos)'
 SOPORTES = {
-    'accessibility': [('travel_min_capital*', 'píxel de fricción Oxford/MAP 2019 (30″, ~1 km), costo mínimo hasta el centro de la celda'),
-                      ('travel_min_cabecera*', 'píxel Oxford/MAP accessibility_to_cities_2015 (30″, ~1 km) en el centro de la celda'),
-                      ('dist_*', 'centro de la celda (distancia a puntos y líneas de OSM)'),
+    'accessibility': [('travel_min_cabecera*', 'píxel Oxford/MAP accessibility_to_cities_2015 (30″, ~1 km) en el centro de la celda'),
+                      ('travel_min_*', 'píxel de fricción Oxford/MAP 2019 (30″, ~1 km, llevado a 500 m), costo mínimo multiorigen hasta el centro de la celda'),
                       ('*', DERIVADO)],
     'agri_potential': [('p_normal_mm', 'píxel CHIRPS v3 0,05° (~5,5 km) que contiene el centro'),
                        ('balance_normal_mm', 'píxeles CHIRPS v3 0,05° y ERA5-Land 0,1° (~11 km) que contienen el centro'),

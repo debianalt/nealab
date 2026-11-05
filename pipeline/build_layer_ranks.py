@@ -56,7 +56,7 @@ SPECS = {
     'accessibility': {
         'min_cabecera': ('AVG(travel_min_cabecera_raw)', 0),
         'min_capital': ('AVG(travel_min_capital_raw)', 0),
-        'km_hospital': ('AVG(dist_nearest_hospital_km_raw)', 1),
+        'min_hospital': ('AVG(travel_min_hospital_raw)', 0),   # 5-nov-2026: minutes by road (was km, straight line)
     },
     # land_use: its ranking (monte, plantación, perennes, cultivo y pastura, saldo de monte) and the 1985–2025
     # series are written by pipeline/hexoma/exportar_uso_web.py since 3-nov-2026; not here, or they would be lost.
@@ -104,8 +104,9 @@ SPECS = {
 # a missing input averaged as 0 — almost no hospital distances in Brazil.
 # min_cabecera left the list on 1-nov-2026: 0 is now a real reading (inside a city
 # of 50k+, e.g. the Asunción district) and missing cells come as NULL.
+# min_hospital (5-nov-2026) is not listed: 0 = the cell is in the hospital's pixel.
 ZERO_IS_MISSING = {
-    'accessibility': ['min_capital', 'km_hospital'],
+    'accessibility': ['min_capital'],
     'health_access': ['health_min'],
     'pm25_drivers': ['pm25_ug'],
 }
