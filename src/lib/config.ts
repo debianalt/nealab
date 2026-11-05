@@ -497,6 +497,9 @@ export interface HexVariable {
 	// Listed in the panel table but left out of the hex panel's flower (agri: the 9
 	// «% campañas aptas» would turn it into 19 unreadable petals).
 	noPetal?: boolean;
+	// A ratio over another of the cell's values (deforestation, % of the 2000 forest): its unit
+	// would call it additive, but summing it across cells means nothing (no concentration curve).
+	notAdditive?: boolean;
 }
 
 export type TemporalMode = 'current' | 'baseline' | 'delta';
@@ -916,7 +919,7 @@ export function isAdditiveVar(layer: HexLayerConfig | null | undefined, col?: st
 	if (!layer) return false;
 	const pv = col ?? layer.primaryVariable;
 	const v = layer.variables?.find((x) => x.col === pv || x.rawCol === pv);
-	if (!v) return false;
+	if (!v || v.notAdditive) return false;
 	if (v.aggregation === 'sum') return true;
 	const unit = v.rawCol === pv ? (v.rawUnit ?? v.unit) : v.unit;
 	return !!unit && ADDITIVE_UNITS.has(unit);
@@ -1547,7 +1550,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'c_cumulative', unit: '%', labelKey: 'sat.deforest.cumulative', aggregation: 'mean' },
 			// % of the 2000 tree cover lost per year, per cell (pipeline/add_deforest_hex_derived.py, 5-nov-2026):
 			// the «% del bosque» tab's map. Empty where the cell had < 10 % tree cover in 2000.
-			{ col: 'c_loss_pct_forest', unit: '%/yr', labelKey: 'sat.deforest.lossPctForest', aggregation: 'mean', hidden: true },
+			{ col: 'c_loss_pct_forest', unit: '%/yr', labelKey: 'sat.deforest.lossPctForest', aggregation: 'mean', hidden: true, notAdditive: true },
 		],
 		// No type chip: its old score-cut classes ("Baja presión" up to 1.25 %/yr) contradicted
 		// the legend's classes (3-nov-2026 audit).
