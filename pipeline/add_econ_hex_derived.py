@@ -62,6 +62,8 @@ def derive(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> None:
+    # The report prints Σ and accents: a Windows console defaults to cp1252.
+    sys.stdout.reconfigure(encoding='utf-8')
     ap = argparse.ArgumentParser()
     ap.add_argument('--backup-dir', required=True)
     ap.add_argument('--territory', choices=TERRITORIES, action='append')
