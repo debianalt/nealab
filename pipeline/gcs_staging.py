@@ -6,7 +6,7 @@ after the pipeline has its local copy only fills the bucket (Always Free = 5 GB
 Standard in us-central1). Decided with the author on 3-nov-2026.
 
 Never deleted: persistent inputs that CI reads without exporting them first.
-  static/  radio_stats_master, catastro, overture… (catastro/land-use/overture/pm25 CI)
+  static/  radio_stats_master… (land-use/pm25 CI)
   eudr/    eudr_deforestation_br.tif (EUDR CI)
 
 SPATIA_KEEP_GCS=1 in the environment keeps everything (e.g. to re-run a step).

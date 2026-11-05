@@ -25,8 +25,6 @@ UPLOAD_MAP = {
     "h3_radio_crosswalk.parquet": "data/h3_radio_crosswalk.parquet",
     "h3_parent_crosswalk.parquet": "data/h3_parent_crosswalk.parquet",
     "hexagons-v2.pmtiles": "tiles/hexagons-v2.pmtiles",
-    "catastro_by_radio.parquet": "data/catastro_by_radio.parquet",
-    "catastro_changes_summary.parquet": "data/catastro_changes_summary.parquet",
 }
 
 

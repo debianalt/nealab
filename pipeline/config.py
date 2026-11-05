@@ -408,6 +408,4 @@ PIPELINE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(PIPELINE_DIR, "output")
 GRID_PATH = os.path.join(OUTPUT_DIR, "hexagons.geojson")
 PARQUET_PATH = os.path.join(OUTPUT_DIR, "hex_flood_risk.parquet")
-CATASTRO_PARQUET_PATH = os.path.join(OUTPUT_DIR, "catastro_by_radio.parquet")
-CATASTRO_CHANGES_PATH = os.path.join(OUTPUT_DIR, "catastro_changes_summary.parquet")
 

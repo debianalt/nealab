@@ -373,7 +373,7 @@
 	// Component variables (skip score, type, type_label, pca)
 	const componentVars = $derived(
 		layerCfg?.variables.filter(v => !v.hidden &&
-			!['score', 'flood_risk_score', 'risk_score', 'type', 'type_label', 'territorial_type', 'pca_1', 'pca_2'].includes(v.col)
+			!['score', 'risk_score', 'type', 'type_label', 'territorial_type', 'pca_1', 'pca_2'].includes(v.col)
 		) ?? []
 	);
 

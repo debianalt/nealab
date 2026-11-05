@@ -41,7 +41,7 @@ La lista máquina está en `reglas.yaml → frases_prohibidas`.
 
 - Afiliación: «CONICET / FHyCS-UNaM · GEE Partner».
 - Términos v2 (`spatia_terms_v2`).
-- Encuadre: «noreste argentino y sus regiones transfronterizas», no «centrada en Misiones». Catastro, términos (jurisdicción Posadas), UNaM y el SDM forestal sí son de Misiones.
+- Encuadre: «noreste argentino y sus regiones transfronterizas», no «centrada en Misiones». Términos (jurisdicción Posadas), UNaM y el SDM forestal sí son de Misiones.
 - Lente «Economía y comercio» (no hay capa de infraestructura).
 
 ## 5. Idiomas

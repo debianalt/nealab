@@ -142,7 +142,7 @@ export interface ChartSelection {
 	origin: string;
 }
 
-const NON_NUMERIC_COLS = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'score', 'flood_risk_score', 'risk_score', 'territorial_type']);
+const NON_NUMERIC_COLS = new Set(['type', 'type_label', 'pca_1', 'pca_2', 'pca_3', 'score', 'risk_score', 'territorial_type']);
 
 export interface DeptFill {
 	territory: string;                                    // territory id

@@ -102,7 +102,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=40',
+		hex_flood_risk: '?v=41',   // 4-nov-2026: sin flood_risk_score
 		sat_agri_apt: '?v=1',
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=32',
@@ -112,8 +112,8 @@ export function getParquetUrl(name: string): string {
 		sat_sociodemographic: '?v=27',   // 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
 		sat_economic_activity: '?v=37',   // 37: restaurado v35 (grilla completa, relleno de Corrientes, transiciones) + las 2 columnas; la 36 salió de una copia del 2-nov (5-nov-2026); 36: ocupados_est y tasa_desocupacion por celda (add_econ_hex_derived.py, 5-nov-2026); 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=32',   // 5-nov-2026: todo en minutos por camino (hospital, salud, secundaria, ruta)
-		sat_pm25_drivers: '?v=19',
-		sat_deforestation_dynamics: '?v=18',   // 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
+		sat_pm25_drivers: '?v=20',   // 4-nov-2026: sin score*
+		sat_deforestation_dynamics: '?v=19',   // 4-nov-2026: sin score* ni tipos; 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
 		sat_uso_suelo: '?v=1',  // 3-nov-2026: MapBiomas AR Col. 3 (reemplaza Dynamic World)
 		sat_censo_temporal: '?v=1',
 		sat_eudr: '?v=1',
