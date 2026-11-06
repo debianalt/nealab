@@ -649,9 +649,9 @@ export class HexStore {
 				// (NON_NUMERIC_COLS lists 'score', which would otherwise drop it → blank cells).
 				const LOD_CATEGORICAL = new Set(['type', 'type_label', 'territorial_type']);
 				const numericCols = resultCols.filter((c: string) => !LOD_CATEGORICAL.has(c));
-				// Nominal class codes (land use): the coarse cell takes the most frequent class, never the mean code
-				// (the mean of «monte» 1 and «agro» 4 would paint «perenne» 3).
-				const nominalIdx = numericCols.map((c: string, k: number) => (HexStore.isNominalCol(layer, c) ? k : -1)).filter((k: number) => k >= 0);
+				// Class codes (land use, agri suitability): the coarse cell takes the most frequent class, never the mean
+				// code (the mean of «monte» 1 and «agro» 4 would paint «perenne» 3).
+				const nominalIdx = numericCols.map((c: string, k: number) => (HexStore.isClassCodeCol(layer, c) ? k : -1)).filter((k: number) => k >= 0);
 				const modes = new Map<string, Map<number, number>[]>();
 				const labelVec = resultCols.includes('type_label') ? result.getChild('type_label') : null;
 				// Res-9 values for the charts (no geometry), unless the district is too big.
@@ -852,11 +852,12 @@ export class HexStore {
 	}
 
 	// One parquet row → plain values (numbers stay numbers, labels stay strings).
-	/** Column painted with nominal classes (land use): aggregated by mode, not mean. */
-	static isNominalCol(layer: HexLayerConfig | null | undefined, col: string): boolean {
+	/** Column of class codes, nominal (land use) or ordinal (agri suitability S1…N): aggregated by mode, not
+	 *  mean — the mean of S1 and S2 cells (1,98) is no class, yet it painted and labelled «S1». */
+	static isClassCodeCol(layer: HexLayerConfig | null | undefined, col: string): boolean {
 		if (!layer) return false;
 		const cls = layer.variableClasses?.[col] ?? (col === layer.primaryVariable ? layer.colorClasses : undefined);
-		return !!cls?.nominal;
+		return !!(cls?.nominal || cls?.ordinal);
 	}
 
 	private static rowValues(cols: string[], vecs: Record<string, any>, i: number): Record<string, any> {
