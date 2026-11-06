@@ -198,6 +198,8 @@ export const MAP_CLASS_5 = ['#7a3120', '#b84e2b', '#e2793b', '#eeac52', '#fbe6ae
 export const MAP_ACCESS_5 = ['#5a4234', '#c0502b', '#f97408', '#f0b64f', '#f5e8ba'] as const;
 // Density bands match the map's viridis ramp (Map.computeHexColor default branch).
 export const MAP_VIRIDIS_3 = ['#5b21b6', '#21918c', '#fde725'] as const;
+// Four density classes (censo_temporal, 6-nov-2026): the same ramp at 0, ⅓, ⅔, 1.
+export const MAP_VIRIDIS_4 = ['#5b21b6', '#346c9a', '#6aae6a', '#fde725'] as const;
 
 // ── Data colors on the Claro map (atlas sheet) ─────────────────────────────────
 // Designed for paper, not the dark set inverted: "more" is darker (print convention,
@@ -299,6 +301,8 @@ export const MAP_PALETTE: Record<MapTema, MapPalette> = {
 const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
 	[MAP_CLASS_3, MAP_CLASS_3_CLARO], [MAP_CLASS_4, MAP_CLASS_4_CLARO], [MAP_CLASS_5, MAP_CLASS_5_CLARO],
 	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
+	// río at 0, ⅓, ⅔, 1 of its five stops (the light end recedes: < 50 hab/km² is most cells)
+	[MAP_VIRIDIS_4, [MAP_RIO_CLARO[0], '#6c98c4', '#2e6aaa', MAP_RIO_CLARO[4]]],
 	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], [ZERO_CLARO]],
 	[USO_HEX, USO_CLARO], [MAP_SELVA, MAP_SELVA_CLARO], [[NODATA_HEX], ['#8c8d90']], [HARVEST_HEX, HARVEST_CLARO],
 ];

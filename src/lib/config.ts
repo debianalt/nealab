@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX, NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_VIRIDIS_4, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX, NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -803,6 +803,30 @@ export const DEFOREST_LOSS_CLASSES: ColorClasses = {
 // a real reading (the capital's own cells, ~9 per territory): split_by_admin keeps
 // *_raw columns NULL where there is no reading ("Sin cobertura"). Before, it wrote
 // them as 0 (1,008 cells in Capital, 2,033 in Villeta).
+// censo_temporal density, fixed classes (decided by the author, 6-nov-2026): the same in
+// the four provinces and in 2010 and 2022. Before, a linear ramp from each province's
+// min to max (19,565 hab/km² in Corrientes) left every rural department in one shade.
+// Cuts = density thresholds of the Degree of Urbanisation (Eurostat/UN): 50 (very low
+// density rural), 300 (urban cluster), 1,500 (urban centre), on res-9 cells without its
+// contiguity rules. Dwellings have no thresholds of their own: 20 / 100 / 500 viv/km²
+// ≈ the same cuts at the 2.8 people per dwelling of 2022 (NEA). «Cambio» stays continuous.
+export const DENSITY_POB_CLASSES: ColorClasses = {
+	steps: [
+		{ from: 0, color: MAP_VIRIDIS_4[0], labelKey: 'legend.dens.pob.c1' },
+		{ from: 50, color: MAP_VIRIDIS_4[1], labelKey: 'legend.dens.pob.c2' },
+		{ from: 300, color: MAP_VIRIDIS_4[2], labelKey: 'legend.dens.pob.c3' },
+		{ from: 1500, color: MAP_VIRIDIS_4[3], labelKey: 'legend.dens.pob.c4' },
+	],
+};
+export const DENSITY_VIV_CLASSES: ColorClasses = {
+	steps: [
+		{ from: 0, color: MAP_VIRIDIS_4[0], labelKey: 'legend.dens.viv.c1' },
+		{ from: 20, color: MAP_VIRIDIS_4[1], labelKey: 'legend.dens.viv.c2' },
+		{ from: 100, color: MAP_VIRIDIS_4[2], labelKey: 'legend.dens.viv.c3' },
+		{ from: 500, color: MAP_VIRIDIS_4[3], labelKey: 'legend.dens.viv.c4' },
+	],
+};
+
 export const ACCESS_TIME_CLASSES: ColorClasses = {
 	steps: [
 		{ from: 0, color: MAP_ACCESS_5[0], labelKey: 'legend.access.c1' },
@@ -1354,6 +1378,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		],
 		primaryVariable: 'pob_dens',
 		colorScale: 'sequential',
+		variableClasses: { pob_dens: DENSITY_POB_CLASSES, viv_dens: DENSITY_VIV_CLASSES },
 		aggregation: 'mean',
 		titleKey: 'analysis.censo.title',
 		perDepartment: false,
