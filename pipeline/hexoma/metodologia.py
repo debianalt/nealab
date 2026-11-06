@@ -16,7 +16,7 @@ tipo_dato: medición in situ · estimación satelital · reanálisis · modelo �
 · derivado del Hexoma · capa de la web (derivada).
 """
 
-V = '2026-11-01'
+V = '2026-11-06'
 GEE = ' Acceso por Google Earth Engine con el proyecto amiable-reducer-398015 (nivel Partner, no comercial).'
 
 FUENTES = [
@@ -267,6 +267,103 @@ FUENTES = [
         limitaciones='En el campo cuenta galpones y secaderos como viviendas; GBA tiene un hueco en el este de Misiones (por eso la unión con vida_buildings).',
         uso_recomendado='Peso urbano del cruce.', uso_no_recomendado='Repartir población de 1991.',
         scripts='pipeline/build_dasymetric_crosswalk.py; pipeline/build_crosswalk_ar.py', objetos=['censo_2022.cruce'], verificado=V),
+    # ------------------------------------------------------------------ series anuales e institucionales (6-nov-2026)
+    dict(
+        id='hansen_gfc_v113', nombre='Hansen Global Forest Change v1.13, pérdida anual 2001–2025',
+        proveedor='University of Maryland (GLAD) / Google', producto='Global Forest Change 2000–2025',
+        version='v1.13 (UMD/hansen/global_forest_change_2025_v1_13), la misma de la capa web de deforestación y de EUDR',
+        acceso='GEE, bandas treecover2000 y lossyear en la grilla nativa con ee.data.computePixels (bloques de 4096²)' + GEE,
+        licencia='CC BY 4.0', cita='Hansen, M. C. et al. 2013. High-resolution global maps of 21st-century forest cover change. Science 342: 850–853',
+        doi='10.1126/science.1244693', tipo_dato='estimación satelital',
+        res_espacial='1″ (~30 m; ~129 píxeles por celda res-9)', res_temporal='anual', periodo='2000 (dosel) y 2001–2025 (pérdida)',
+        cobertura='NEA argentino (las 3.298.621 celdas de hexagonos)',
+        variables='treecover2000 (% de dosel), lossyear (año de pérdida de reemplazo de dosel)',
+        procesamiento=('build_hexoma_hansen.py: cada píxel va a la celda que contiene su centro (DuckDB h3); por celda se cuentan '
+                       'píxeles, píxeles con dosel ≥ 10 y ≥ 30 %, suma del dosel y píxeles perdidos por año (todos, y dentro de '
+                       'dosel ≥ 10 y ≥ 30 %). ha = píxeles × área de la celda / píxeles de la celda.'),
+        asignacion_celda='Centro del píxel en la celda; sin interpolación.',
+        validacion='Totales 2001–2025 por provincia a ±0,4 % de un reduceRegion de GEE sobre la provincia (FAO GAUL 2015; por año, ±2,4 % como máximo, Formosa); contra c_loss_rate de la capa web r = 0,9985 (2016–2025) y 0,9983 (2001–2010) en 3,29 millones de celdas. pipeline/hexoma/validacion_hansen.md.',
+        limitaciones=('«Pérdida» es reemplazo de dosel: incluye cosecha de plantaciones y no distingue causa; esta versión no trae '
+                      'ganancia por año; los cambios de algoritmo a lo largo de la serie (los autores lo advierten) la hacen no del '
+                      'todo homogénea.'),
+        uso_recomendado='Series de pérdida por celda, departamento o zona; fronteras de pérdida con vec.frontera; EUDR (después de 2020).',
+        uso_no_recomendado='Separar nativo de plantación sin otra fuente (cruzar con uso.h3_anio de MapBiomas).',
+        scripts='pipeline/hexoma/build_hexoma_hansen.py', objetos=['series.hansen_*', 'series.v_hansen_*'], verificado=V),
+    dict(
+        id='otbn_imibio_2017', nombre='OTBN de Misiones, actualización 2017',
+        proveedor='Gobierno de Misiones, Ministerio de Ecología y RNR / IMIBIO',
+        producto='Ordenamiento Territorial de Bosques Nativos (Ley 26.331; Ley XVI Nº 105)',
+        version='Actualización aprobada por Res. 265/2017 del MEyRNR, acreditada por la Res. RESOL-2021-2-APN-SPARN#MAD',
+        acceso='Shapefile otbn_misiones_full.shp (OneDrive/gee/misiones/otbn; ver su README_otbn.md), copiado a %HEXOMA_FUENTES%/institucional',
+        licencia='Dato público provincial; citar a la autoridad de aplicación',
+        cita='Provincia de Misiones (2017). Actualización del OTBN, Res. 265/2017 MEyRNR', doi='—', tipo_dato='registro administrativo',
+        res_espacial='vector (109.378 polígonos derivados de ráster)', res_temporal='estático (2017)', periodo='2017',
+        cobertura='Misiones', variables='cat_cons: I (rojo), II (amarillo), III (verde)',
+        procesamiento='Join espacial de los polígonos (ST_Subdivide) con el polígono de cada celda; % de la celda = área geodésica de la intersección / área de la celda.',
+        asignacion_celda='% de la superficie de la celda en cada categoría (institucional.otbn_h3).',
+        validacion='Polígonos por categoría iguales a la superficie acreditada por la Res. 2/2021 (I 233.076 contra 233.083 ha; II 901.532 contra 901.617; III 477.755 contra 477.858); suma en celdas a ±0,1 % de los polígonos. pipeline/hexoma/validacion_institucional.md.',
+        limitaciones='La compilación nacional de la SAyDS trae para Misiones el OTBN de 2010, ya reemplazado: no usarla en Misiones.',
+        uso_recomendado='Restricción legal al desmonte por celda; cruce con pérdida Hansen o MapBiomas posterior a 2017.',
+        uso_no_recomendado='Como mapa de bosque actual (es zonificación, no cobertura).',
+        scripts='pipeline/hexoma/build_hexoma_institucional.py', objetos=['institucional.otbn*', 'institucional.v_h3'], verificado=V),
+    dict(
+        id='otbn_sayds_2017', nombre='OTBN, compilación nacional SAyDS (nov-2017)',
+        proveedor='Secretaría de Ambiente y Desarrollo Sustentable de la Nación, Dirección de Bosques',
+        producto='OTBN_SIG250nov2017 (coberturas de los OTBN provinciales compiladas a escala 1:250.000)',
+        version='nov-2017', acceso='WFS https://geo2.ambiente.gob.ar/geoserver/ows, capa ordenamiento:OTBN_SIG250nov2017',
+        licencia='Dato público nacional; citar a la SAyDS', cita='SAyDS (2017). OTBN_SIG250nov2017', doi='—',
+        tipo_dato='registro administrativo', res_espacial='vector 1:250.000', res_temporal='estático', periodo='OTBN vigentes a nov-2017',
+        cobertura='Corrientes, Chaco y Formosa (en el Hexoma)', variables='cat_cons I/II/III, periodo, provincia',
+        procesamiento='Igual que otbn_imibio_2017.', asignacion_celda='% de la celda en cada categoría (institucional.otbn_h3).',
+        validacion='Suma en celdas contra los polígonos: Corrientes ±0,6 %, Chaco −0,2 a +3,8 % (cat. I), Formosa −5,8 % (cat. I) a +1,1 %; las diferencias de la cat. I salen de polígonos de borde entre provincias y con el Paraguay. No hay superficie acreditada a mano para contrastar. pipeline/hexoma/validacion_institucional.md.',
+        limitaciones=('La SAyDS avisa post-procesamiento por falencias técnicas: no reproduce exactamente el OTBN aprobado por cada '
+                      'provincia. No incluye actualizaciones posteriores a 2017.'),
+        uso_recomendado='Ídem otbn_imibio_2017, con la advertencia de versión.', uso_no_recomendado='Como fuente legal de una parcela.',
+        scripts='pipeline/hexoma/build_hexoma_institucional.py', objetos=['institucional.otbn*'], verificado=V),
+    dict(
+        id='areas_protegidas_sayds', nombre='Áreas protegidas nacionales, provinciales y sitios Ramsar',
+        proveedor='SAyDS (SIFAP) y Administración de Parques Nacionales', producto='apn_sifal2016, app_polig_2016b, sitios_ramsar',
+        version='2016 (nacionales y provinciales); Ramsar sin fecha de versión en el servicio',
+        acceso='WFS https://geo2.ambiente.gob.ar/geoserver/ows', licencia='Dato público nacional; citar a la SAyDS/SIFAP',
+        cita='SIFAP (2016). Sistema Federal de Áreas Protegidas', doi='—', tipo_dato='registro administrativo',
+        res_espacial='vector', res_temporal='estático', periodo='2016', cobertura='las que tocan el NEA argentino',
+        variables='nombre, categoría, UICN, provincia, creación, instrumento, superficie declarada',
+        procesamiento='Igual que el OTBN; un registro por celda y área (las áreas pueden superponerse).',
+        asignacion_celda='% de la celda dentro de cada área (institucional.ap_h3).', validacion='Polígono contra superficie declarada: la mayoría dentro de ±10 %; discrepancias de la fuente en Pampa del Indio (declara 8.633 ha, el polígono 22.286), Laguna Brava (9.031 contra 80) y Zanjón de Loreto (2 contra 1.214); en celdas quedan recortadas las que salen del NEA (Jaaukanigas, Santa Fe) o caen en el río (Apipé Grande: 114 de 4.707 ha). pipeline/hexoma/validacion_institucional.md.',
+        limitaciones='Versión 2016: faltan áreas creadas después; algunos nombres llegan con caracteres perdidos («?») en el servicio.',
+        uso_recomendado='Exclusión o contraste dentro/fuera de áreas protegidas.', uso_no_recomendado='Como límite legal exacto.',
+        scripts='pipeline/hexoma/build_hexoma_institucional.py', objetos=['institucional.areas_protegidas', 'institucional.ap_h3'], verificado=V),
+    dict(
+        id='inai_comunidades', nombre='Comunidades indígenas con relevamiento y/o personería (INAI)',
+        proveedor='Instituto Nacional de Asuntos Indígenas (datos.mininterior.gob.ar)',
+        producto='Listado de comunidades indígenas con relevamiento con resolución y/o personería jurídica registrada',
+        version='2025-10 (archivo del 12-nov-2025)', acceso='CSV de datos.mininterior.gob.ar (ver institucional.fuentes)',
+        licencia='Datos abiertos del Estado nacional', cita='INAI (2025). Listado de comunidades indígenas', doi='—',
+        tipo_dato='registro administrativo', res_espacial='punto aproximado (cuando lo trae)', res_temporal='estático',
+        periodo='oct-2025', cobertura='Misiones, Corrientes, Chaco, Formosa',
+        variables='comunidad, pueblo, departamento, localidad, zona, coordenadas, personería, estado y resolución del relevamiento (Ley 26.160)',
+        procesamiento='Filtro por provincia; punto → celda que lo contiene; control de que la celda sea de su provincia.',
+        asignacion_celda='Celda del punto (institucional.comunidades.h3).', validacion='De 388 comunidades del NEA, 132 traen coordenadas (Misiones 91 de 123, Chaco 40 de 111, Formosa 1 de 150, Corrientes 0 de 4) y las 132 caen en una celda de su provincia. pipeline/hexoma/validacion_institucional.md.',
+        limitaciones='Coordenadas incompletas y aproximadas; un punto no es el territorio de la comunidad (los polígonos del relevamiento no son públicos).',
+        uso_recomendado='Presencia y conteo por zona; distancia aproximada.', uso_no_recomendado='Delimitar territorios indígenas.',
+        scripts='pipeline/hexoma/build_hexoma_institucional.py', objetos=['institucional.comunidades'], verificado=V),
+    dict(
+        id='red_vial', nombre='Red vial del NEA argentino (OSM + Microsoft ML Road Detections; IGN de referencia)',
+        proveedor='OpenStreetMap (Geofabrik); Microsoft (source.coop); Instituto Geográfico Nacional',
+        producto='Extracto Argentina de OSM; ML Road Detections; vial_nacional/provincial/terciaria del IGN',
+        version='Bajados el 4-nov-2026', acceso='pipeline/vial/importar_vial.py (PBF de Geofabrik, GeoParquet de source.coop, WFS IGN)',
+        licencia='ODbL (OSM y Microsoft); IGN uso libre con cita',
+        cita='OpenStreetMap contributors; Microsoft (2022) Global ML Road Detections; IGN Red vial', doi='—',
+        tipo_dato='registro colaborativo y estimación por imagen', res_espacial='vector', res_temporal='estático (nov-2026)',
+        periodo='2026', cobertura='Misiones, Corrientes, Chaco, Formosa',
+        variables='clase y superficie normalizadas (pavimento, ripio/consolidado, tierra, desconocida), departamento INDEC',
+        procesamiento=('OSM es la base; de Microsoft sólo entra lo que queda a más de ~25 m de OSM; IGN queda como tabla de '
+                       'referencia. red_vial.py arma el grafo (densificado a 50 m, empalmes ≤ 60 m) y km por la red al pavimento.'),
+        asignacion_celda='No hay asignación a celda: vial es una red; se cruza por geometría.',
+        validacion='Zonas de prueba (commit 35c2947): Eldorado–San Pedro OSM 8.087 km + Microsoft 81; Corrientes NE Microsoft 1.209 km (OSM 991).',
+        limitaciones='Superficie inferida donde OSM no la trae (troncal sin etiqueta = pavimento, huella = tierra); Microsoft sin clase.',
+        uso_recomendado='Distancias por la red, densidad de caminos, acceso a pavimento.', uso_no_recomendado='Estado real del camino.',
+        scripts='pipeline/vial/importar_vial.py; pipeline/vial/red_vial.py; pipeline/vial/distancia_macizos.py', objetos=['vial.*'], verificado=V),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
@@ -287,29 +384,29 @@ CAPAS = {
                        'Reparto areal sobre el universo H3 poblado, pesos renormalizados por radio; control contra totales INDEC; densidad = conteo / área; actual 2022, base 2010.',
                        'pob_dens, viv_dens (hab/km², viv/km²) con _baseline, _delta y columnas por año', False,
                        'Densidad 2022 distinta de la capa dasimétrica; sólo NEA argentino.', 'build_censo_temporal.py'),
-    'deforestation_dynamics': ('Dinámica de deforestación', 'Hansen GFC v1.12 (2001–2024), 30 m',
-                               'Zonal por polígono: píxeles de pérdida por año; tasa = perdidos / píxeles / años × 100 (base 2001–2010, actual 2015–2024); filtro treecover2000 > 5 %. Sin puntaje ni tipos desde 4-nov-2026.',
-                               'c_loss_rate (%/año), c_cumulative (%), c_loss_rate_baseline, c_loss_rate_delta, c_treecover', True,
-                               'Hansen cuenta plantaciones como bosque (parte de la pérdida es cosecha de pino y eucalipto).',
-                               'gee_export_hansen_loss.py; process_hansen_to_h3.py; deforestation-update.yml (abril y octubre)'),
+    'deforestation_dynamics': ('Dinámica de deforestación', 'Hansen GFC v1.13 (2001–2025), 30 m',
+                               'Zonal por polígono: píxeles de pérdida por año; tasa = perdidos / píxeles / años × 100 (base 2001–2010, actual 2016–2025); filtro treecover2000 > 5 %. Pérdida como % del bosque (5-nov-2026, add_deforest_hex_derived.py) = 100 · c_loss_rate / c_treecover, sólo donde c_treecover ≥ 10 %. Sin puntaje ni tipos desde 4-nov-2026.',
+                               'c_loss_rate (%/año), c_cumulative (%), c_loss_rate_baseline, c_loss_rate_delta, c_treecover, c_loss_pct_forest (+ _baseline, _delta; %/año del bosque 2000)', True,
+                               'Hansen cuenta plantaciones como bosque (parte de la pérdida es cosecha de pino y eucalipto); c_loss_pct_forest puede pasar de 100 donde se plantó después de 2000. La serie anual por celda está en series.hansen_h3_anio.',
+                               'gee_export_hansen_loss.py; process_hansen_to_h3.py; add_deforest_hex_derived.py; deforestation-update.yml (abril y octubre)'),
     'economic_activity': ('Actividad económica', 'Censo 2022 (actividad, nivel educativo); VIIRS DNB VCMSLCFG avg_rad 500 m (año no determinado: 2024 en el script, 2025 en el texto); Global Building Atlas (+ vida_buildings en Misiones)',
-                          'Tasas censales Σw·num / Σw·den con base mínima 30; VIIRS bilineal en el centroide; densidad edilicia = edificios / área.',
-                          'tasa_empleo, tasa_actividad, pct_universitario (%), viirs_mean_radiance (nW/cm²/sr), building_density_per_km2', False,
-                          'Radios con < 30 en la base quedan sin cobertura.', 'gee_export_viirs.py; compute_viirs_buildings_h3.py; build_census_rates.py'),
-    'education_capital': ('Capital educativo', 'Censo 2022 censo_niveducativo_2022', 'Tasas censales sobre 18+, base común (build_census_rates.py).',
-                          'c_no_schooling, c_secondary_plus, c_higher_edu, c_university (% sobre pob_18_mas)', True,
+                          'Tasas censales Σw·num / Σw·den con base mínima 30; VIIRS bilineal en el centroide; densidad edilicia = edificios / área. Por celda (5-nov-2026, add_econ_hex_derived.py): tasa_desocupacion = 100 · (actividad − empleo) / actividad y ocupados_est = tasa_empleo · pob_14_mas. Transiciones (4-nov-2026, build_census_trayectorias.py): pct_universitario_2010 = Censo 2010 repartido con los edificios 2022 (celda partida entre radios 2010 por área); viirs_2014, viirs_2014_neto y viirs_2025_neto de VCMSLCFG, neto = radiancia − percentil 10 de la provincia en cada año.',
+                          'tasa_empleo, tasa_actividad, tasa_desocupacion, pct_universitario, pct_universitario_2010 (%), ocupados_est (personas), viirs_mean_radiance, viirs_2014, viirs_2014_neto, viirs_2025_neto (nW/cm²/sr), building_density_per_km2', False,
+                          'Radios con < 30 en la base quedan sin cobertura; ocupado = 1 h la semana anterior (incluye ayuda familiar sin pago); el fondo de VIIRS pasó de 0,06 a 0,34 nW/cm²/sr entre 2014 y 2025.', 'gee_export_viirs.py; compute_viirs_buildings_h3.py; build_census_rates.py; build_census_trayectorias.py; add_econ_hex_derived.py'),
+    'education_capital': ('Capital educativo', 'Censo 2022 censo_niveducativo_2022; Censo 2010 poblacion_2010 (mismas categorías)', 'Tasas censales sobre 18+, base común (build_census_rates.py). Transiciones (4-nov-2026, build_census_trayectorias.py --layer education_capital): las cuatro tasas en 2010, repartidas con los edificios 2022 (celda partida entre radios 2010 por área; radios 2010 sin edificios, por área).',
+                          'c_no_schooling, c_secondary_plus, c_higher_edu, c_university (% sobre pob_18_mas) y las mismas con _2010', True,
                           'Comparable sólo entre provincias argentinas (INDEC); hasta oct-2026 se duplicaban universitarios en Corrientes, Chaco y Formosa.', 'build_census_rates.py'),
     'education_flow': ('Trayectoria educativa', 'Censo 2022 (no asistencia, fecundidad)', 'Tasas censales, base común; c_teen_pregnancy con base mínima 1 sólo para el ranking.',
                        'c_dropout_primary (% de 6–12), c_dropout_secondary (% de 13–18), c_teen_pregnancy', True,
                        'Base de mujeres de 14–17 muy chica por radio (mediana 19).', 'build_census_rates.py'),
     'eudr': ('Señales EUDR', 'Hansen GFC v1.13; MODIS MCD64A1 500 m; MapBiomas Argentina Col. 2; corte 31-dic-2020',
-             'Pérdida post-2020 (lossyear > 20) a 100 m; píxel de 100 m a la celda de su centro (~9 por celda); fuego sobre nativa leñosa (clases MapBiomas 3–6) en paso manual; risk_score = 0,70 pérdida + 0,20 fuego + 0,10 (100 − cobertura) (no es la variable principal).',
+             'Pérdida post-2020 (lossyear > 20) a 100 m; píxel de 100 m a la celda de su centro (~9 por celda); fuego sobre nativa leñosa (clases MapBiomas 3–6) en paso manual; sin risk_score desde 4-nov-2026.',
              'loss_post_2020_pct, fire_native_post_2020_pct, fire_post_2020_pct, forest_cover_2020, forest_cover_current (%)', False,
              'Señales indicativas, no veredictos; la pérdida no distingue causa; la cobertura actual no cuenta regeneración.',
              'gee_deforestation_eudr.py; aggregate_eudr_hires.py; apply_fire_native_to_risk.py; eudr-update.yml (manual)'),
     'flood_risk': ('Inundación', 'JRC Global Surface Water v1.4 (Landsat 1984–2021); Sentinel-1 GRD (VV < −15 dB); MERIT Hydro HAND; Google Open Buildings Temporal 2016–2023',
                    'JRC por polígono (zonal_stats_rasterio); extensión actual = mediana de 12 días de S1 descendente, 30 → 90 m, centros de píxel → celda; sin puntaje compuesto desde 4-nov-2026; ranking con HAND < 5 m.',
-                   'jrc_occurrence, jrc_recurrence (%), jrc_seasonality (meses), flood_extent_pct, low_bld_n, low_land_pct, low_bld_new_n', True,
+                   'jrc_occurrence, jrc_recurrence (%), jrc_seasonality (meses), flood_extent_pct, low_bld_pct (% de edificios con HAND < 5 m), low_bld_n, low_land_pct, low_bld_new_n', True,
                    'Landsat no ve crecidas cortas bajo nubes; S1 sobreestima agua en la llanura chaqueña; mide lo construido en zona baja, no la frecuencia de inundación.',
                    'gee_flood_detection.py; process_to_h3.py; update_flood_current.py; build_flood_rank.py; flood-update.yml'),
     'forestry_aptitude': ('Aptitud forestal', 'Presencia: Inventario Nacional de Plantaciones DNDFI 2026; covariables ERA5-Land mensual (0,1°), CHIRPS v2 (0,05°), TerraClimate (~4 km), SoilGrids (250 m), HWSD, SRTM (30 m, exportado a 90 m), NDVI, tiempo a ciudad; el clima se lee en el píxel que contiene el centro de la celda',
@@ -348,6 +445,8 @@ COMUN_CENSAL = ('Base común de las capas censales (build_census_rates.py): cont
 # meta.variables.soporte y falla si una columna de capa_* queda sin soporte.
 RADIO = 'radio censal 2022 (la celda de un solo radio lleva su tasa; la de borde, la mezcla ponderada por edificios)'
 REPARTO = 'radio censal 2022 repartido en las celdas por edificios (dasimétrico: la variación dentro del radio es del modelo)'
+RADIO_2010 = ('radio censal 2010 repartido en las celdas con los edificios 2022 (celda partida entre radios 2010 por '
+              'área; build_census_trayectorias.py)')
 EDIFICIO = 'huella de edificio (Global Building Atlas y Open Buildings), sumada en la celda'
 DERIVADO = 'celda res-9, derivado de las otras columnas de la capa (su soporte es el más grueso de sus insumos)'
 SOPORTES = {
@@ -364,11 +463,12 @@ SOPORTES = {
                        ('apt_*', 'el más grueso de sus insumos: clima ERA5-Land 0,1° y CHIRPS 0,05°, suelo SoilGrids 250 m')],
     'censo_temporal': [('*', 'radio censal de cada año (1991, 2001, 2010, 2022), repartido por área en las celdas pobladas')],
     'deforestation_dynamics': [('c_*', 'píxel Hansen GFC 30 m (la celda resume ~115)'), ('*', DERIVADO)],
-    'economic_activity': [('tasa_*', RADIO), ('pct_universitario', RADIO),
-                          ('viirs_mean_radiance', 'píxel VIIRS DNB 500 m (bilineal en el centro de la celda)'),
+    'economic_activity': [('tasa_*', RADIO), ('pct_universitario', RADIO), ('pct_universitario_2010', RADIO_2010),
+                          ('ocupados_est', REPARTO),
+                          ('viirs_*', 'píxel VIIRS DNB 500 m (bilineal en el centro de la celda)'),
                           ('building_density_per_km2', EDIFICIO), ('n_edificios', EDIFICIO),
                           ('hogares_estimados', REPARTO), ('pob_*', REPARTO), ('*', DERIVADO)],
-    'education_capital': [('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
+    'education_capital': [('c_*_2010', RADIO_2010), ('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
     'education_flow': [('c_*', RADIO), ('n_edificios', EDIFICIO), ('*', REPARTO)],
     'eudr': [('fire_*', 'píxel MODIS MCD64A1 500 m (fuego sobre nativa con máscara MapBiomas 30 m)'),
              ('*', 'píxel de 100 m (Hansen GFC 30 m agregado), ~9 por celda')],
@@ -505,7 +605,7 @@ PROCESOS = [
                  'GHSL de la época, o edificios donde GHSL marcaba construcción), elegido por año y tamaño de radio.'),
          parametros='radios urbanos < 1 km², intermedios 1–10, rurales > 10',
          validacion=('Repartir la población de cada fracción entre sus radios y medir WAPE: área 71–82 %; en urbanos ganan los edificios '
-                     '(26–31 %), en rurales GHSL de la época (2022: 57 contra 68 %). pipeline/hexoma/validacion_cruce.md, cruce.validacion.'),
+                     '(25–30 %), en rurales GHSL de la época (2022: 57 contra 63 %; medido el 6-nov-2026). pipeline/hexoma/validacion_cruce.md, cruce.validacion.'),
          regla='Regla fijada antes de ver los resultados; el método ganador por año y tamaño queda en cruce.radio_h3.metodo.',
          limitaciones='En radios rurales grandes la ubicación dentro del radio es gruesa (cruce.celda_confianza).',
          scripts='pipeline/hexoma/build_hexoma_cruce.py', objetos=['cruce.*'], fuentes=['ghsl_r2023a', 'edificios_web', 'censo_1991', 'censo_2001', 'censo_2010', 'censo_2022'], verificado=V),
@@ -517,7 +617,7 @@ PROCESOS = [
     dict(id='carga_web', nombre='Carga de la foto de la web en el Hexoma',
          metodo=('build_hexoma.py exporta el registro de capas de config.ts, baja los parquets por departamento de cdn.spatia.ar con '
                  'DuckDB y los carga tal cual; arma hexagonos, limites, departamentos, territorios, ficha_claves, ficha_enlace y v_hexoma.'),
-         parametros='—', validacion='75/75 contra la ficha publicada.', regla='v_hexoma queda como foto fiel de la web.',
+         parametros='—', validacion='75/75 contra la ficha publicada (31-oct-2026); desde el 6-nov-2026, vigencia.py --muestra contra los parquets servidos.', regla='v_hexoma queda como foto fiel de la web.',
          limitaciones='Es una foto: hay que recargar cuando la web cambia (public.cargas guarda la procedencia).',
          scripts='pipeline/build_hexoma.py', objetos=['public.hexagonos', 'public.limites*', 'public.departamentos', 'public.territorios',
                                                      'public.ficha_*', 'public.cargas'], fuentes=[], verificado=V),
@@ -526,4 +626,22 @@ PROCESOS = [
          parametros='región: físicas = todos; censales comparables = censo_ar', validacion='Mismos valores que muestra la web.', regla='—',
          limitaciones='Las tablas rango_*_new son restos de una recarga.', scripts='pipeline/build_hexoma_distribuciones.py',
          objetos=['public.distribuciones', 'public.rango_*'], fuentes=[], verificado=V),
+    dict(id='serie_hansen', nombre='Serie anual de pérdida Hansen por celda',
+         metodo='Ver hansen_gfc_v113: conteo de píxeles por celda y año, en ha con el área de la celda.',
+         parametros='dosel 2000 ≥ 10 % (FAO) y ≥ 30 % (Global Forest Watch); también sin umbral',
+         validacion='Totales 2001–2025 por provincia a ±0,4 % de un reduceRegion de GEE sobre la provincia (FAO GAUL 2015; por año, ±2,4 % como máximo, Formosa); contra c_loss_rate de la capa web r = 0,9985 (2016–2025) y 0,9983 (2001–2010) en 3,29 millones de celdas. pipeline/hexoma/validacion_hansen.md.', regla='—', limitaciones='Ver hansen_gfc_v113.',
+         scripts='pipeline/hexoma/build_hexoma_hansen.py', objetos=['series.*'], fuentes=['hansen_gfc_v113'], verificado=V),
+    dict(id='cruce_institucional', nombre='Polígonos y puntos institucionales → celda',
+         metodo=('Polígonos partidos con ST_Subdivide (256 vértices) y join espacial con el polígono de cada celda (GiST); % = área '
+                 'geodésica de la intersección / área de la celda (celda entera dentro = su área). Puntos: celda que los contiene.'),
+         parametros='tope 100 % por celda (superposiciones dentro de una misma fuente)',
+         validacion='validacion_institucional.md: superficie de los polígonos contra la suma en celdas, por provincia y categoría.',
+         regla='h3-pg 4.1 no tiene polygon_to_cells en modo overlapping: por centro se perdían los polígonos chicos del OTBN.',
+         limitaciones='Las celdas en dos provincias cuentan en las dos.', scripts='pipeline/hexoma/build_hexoma_institucional.py',
+         objetos=['institucional.*'], fuentes=['otbn_imibio_2017', 'otbn_sayds_2017', 'areas_protegidas_sayds', 'inai_comunidades'], verificado=V),
+    dict(id='vecindad', nombre='Funciones de vecindad (esquema vec)',
+         metodo='h3_grid_disk: vec.anillo, vec.vecinas, vec.media_vecinos, vec.suavizar (celda contra entorno) y vec.frontera.',
+         parametros='k = distancia en celdas (k = 1: 6 vecinas, ~350 m entre centros)', validacion='Escenario 8 de escenarios.sql.',
+         regla='Las celdas sin fila o con NULL no cuentan; n_vecinos lo dice.', limitaciones='En el borde del NEA cargado hay menos vecinas.',
+         scripts='pipeline/hexoma/vecindad.sql (lo aplica build_hexoma_meta.py)', objetos=[], fuentes=[], verificado=V),
 ]

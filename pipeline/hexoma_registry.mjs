@@ -1,6 +1,6 @@
 // Hexoma — export of what the web app reads, so the local `hexoma` database loads
-// exactly the files and columns the hexagon fact sheet (src/lib/utils/ficha.ts) and
-// the layer panels read. Runs the real TypeScript through Vite SSR (config.ts,
+// exactly the files and columns the layer panels read (and the hexagon fact sheet,
+// src/lib/utils/ficha.ts, until it left the web on 2026-11-04). Runs the real TypeScript through Vite SSR (config.ts,
 // deptSummaries.ts, units.ts, i18n), so URLs carry the same ?v cache-busters and
 // per-department parquetKeys as production; nothing is re-typed by hand.
 //

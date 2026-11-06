@@ -234,3 +234,39 @@ JOIN clima.normal_1991_2020 n ON n.tabla = 'era5_helada' AND n.unidad_id = h.era
                              AND n.variable = 'dias_tmin_le3' AND n.estacion IS NULL
 WHERE t.territorio = 'misiones'
 GROUP BY 1 ORDER BY 1;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- 8. Frente de pérdida contra bosque intacto, y su OTBN (esquemas series, institucional y vec)
+-- Celdas con ≥ 1 ha perdida en 2021–2025 (dosel ≥ 30 %, Hansen) que lindan (k = 1) con
+-- al menos una celda de bosque intacto (≥ 80 % de la celda con dosel ≥ 30 % en 2000 y
+-- sin pérdida desde 2016), por departamento, con la parte que cae en OTBN rojo o amarillo
+-- (I + II ≥ 50 % de la celda: donde la ley no permite desmontar).
+-- OJO: Hansen cuenta la cosecha de plantaciones como pérdida (Misiones y NE de Corrientes):
+-- cruzar con uso.h3_anio (plantación) antes de leerlo como desmonte.
+-- Medido el 6-nov-2026: 4 s. Encabezan Almirante Brown (Chaco: 20.614 ha, 44 % de las celdas del frente en
+-- OTBN rojo o amarillo), Patiño (Formosa: 20.541 ha, 5 %, casi todo en verde) y General Güemes (Chaco: 12.826 ha, 80 %).
+-- Una celda suelta: SELECT * FROM vec.media_vecinos('series.v_hansen_tasas', 'tasa_2016_2025', '89b2618d8a3ffff', 2);
+-- ─────────────────────────────────────────────────────────────────────────────
+WITH perd AS (
+    SELECT h3, sum(perdida30_ha) AS ha FROM series.hansen_h3_anio
+    WHERE anio BETWEEN 2021 AND 2025 GROUP BY h3 HAVING sum(perdida30_ha) >= 1
+), intacto AS (
+    SELECT s.h3 FROM series.hansen_h3 s
+    WHERE s.bosque30_ha >= 0.8 * s.ha
+      AND NOT EXISTS (SELECT 1 FROM series.hansen_h3_anio a WHERE a.h3 = s.h3 AND a.anio >= 2016)
+), frente AS (
+    SELECT p.h3, p.ha FROM perd p
+    WHERE EXISTS (SELECT 1 FROM vec.vecinas(p.h3, 1) v(h) JOIN intacto i ON i.h3 = v.h)
+)
+SELECT l.nombre AS departamento, t.etiqueta AS provincia, count(*) AS celdas_frente,
+       round(sum(f.ha)::numeric) AS ha_perdidas_2021_2025,
+       round(100.0 * avg((coalesce(o.cat_i_pct + o.cat_ii_pct, 0) >= 50)::int)::numeric, 0) AS pct_celdas_otbn_rojo_amarillo
+FROM frente f
+JOIN (SELECT DISTINCT ON (h3) h3, territorio_id, redcode FROM hexagonos ORDER BY h3, territorio_id) x USING (h3)
+JOIN territorios t USING (territorio_id)
+JOIN limites l ON l.redcode = x.redcode
+LEFT JOIN institucional.otbn_h3 o USING (h3)
+GROUP BY 1, 2
+ORDER BY ha_perdidas_2021_2025 DESC
+LIMIT 15;

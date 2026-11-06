@@ -4,7 +4,7 @@ the end of a full load); nothing is read from R2 here.
 
 Scopes:
   departamento  rows of the department file (depto_id), border cells included, exactly
-                the set the fact sheet ranks against (src/lib/utils/ficha.ts)
+                the set the fact sheet ranked against (src/lib/utils/ficha.ts, removed 2026-11-04)
   provincia     the territory (AR: province; PY: departamento; BR: estado), principal rows
   region        only layers with comparable: true. Physical/modelled layers pool every
                 loaded territory; census layers pool only their own country (INDEC,
@@ -15,7 +15,7 @@ Scopes:
 
 Values in fact-sheet units: (rawCol ?? col) × scale, NULL excluded. Quantiles with
 percentile_cont = quantile() in src/lib/utils/chartType.ts (linear on (n-1)·q).
-Position = rankOf() in ficha.ts: lt = % of cells strictly lower, eq = % equal, both over
+Position = rankOf() of the former ficha.ts: lt = % of cells strictly lower, eq = % equal, both over
 n (not n-1), stored as smallint hundredths of a point (0-10000).
 
 Usage (from neahub/):

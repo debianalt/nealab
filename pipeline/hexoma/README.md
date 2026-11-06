@@ -9,8 +9,9 @@ los guarda para todo el NEA argentino (Misiones, Corrientes, Chaco y Formosa:
 
 Es **privado**: sirve para armar escenarios de investigación con SQL. No se publica, no
 se vende y no se sube nada a R2. Es una **foto** de los parquets publicados en
-`cdn.spatia.ar`: los mismos archivos y columnas que lee la ficha del hexágono de
-spatia.ar, de modo que un valor del Hexoma coincide con el de la ficha y el panel. La
+`cdn.spatia.ar`: los mismos archivos y columnas que leen los paneles de spatia.ar (y leía la
+ficha del hexágono, borrada de la web el 4-nov-2026), de modo que un valor del Hexoma coincide
+con el de la web. `python pipeline/hexoma/vigencia.py` dice si la foto está al día. La
 base no tiene backup propio porque se regenera.
 
 ## Conexión
@@ -48,6 +49,10 @@ base no tiene backup propio porque se regenera.
 | `python pipeline/hexoma/validar_clima.py` | Estaciones GHCN-Daily contra el píxel que las contiene: `clima.validacion` y `validacion_clima.md` | 1 min |
 | `python pipeline/hexoma/hexoma_ficha.py <h3> […]` | Ficha HTML local de una celda con sus series: `pipeline/output/hexoma/fichas/<h3>.html` | segundos |
 | `python pipeline/hexoma/extracto.py --nombre X --sql q.sql --destino carpeta` | Extracto congelado de una consulta: parquet + manifiesto de procedencia (ver abajo) | segundos |
+| `python pipeline/hexoma/vigencia.py [--muestra N]` | ¿Está al día? Archivos, ETag y columnas de cada capa contra lo servido hoy; crosswalks contra `cruce`; `metodologia.py` contra `meta`. Con `--muestra`, N celdas por capa y territorio comparadas con el parquet. Sale con 1 si algo está viejo | ~1 min |
+| `python pipeline/hexoma/build_hexoma_hansen.py` | Rearma el esquema `series` (pérdida Hansen por celda y año) y `validacion_hansen.md`; reanudable | ~10 min |
+| `python pipeline/hexoma/build_hexoma_institucional.py [--rebajar]` | Rearma el esquema `institucional` (OTBN, áreas protegidas, comunidades INAI) y `validacion_institucional.md` | |
+| `python pipeline/vial/importar_vial.py` y `red_vial.py` | Rearman el esquema `vial` (ver abajo) | ~2 min + grafo |
 
 Una recarga deja filas muertas. El script reescribe (VACUUM FULL) las tablas donde pasan
 del 20 %. Si un VACUUM FULL no avanza, mirá `pg_stat_activity`: una consulta huérfana lo
@@ -67,7 +72,7 @@ bloqueó una vez durante una hora.
 | `rango_<capa>` | Posición de cada celda: `<var>__<dep\|prov\|reg>_lt` y `_eq` |
 | `v_hexoma_rangos` | `<capa>__<variable>__pr_<dep\|prov\|reg>` = % por debajo, unible a `v_hexoma` por (h3, territorio) |
 
-Tamaño medido el 31-oct-2026: **11 GB** en total. El esquema `public` ocupa 10,2 GB (capas, rangos y distribuciones) y el esquema `censo` (hoy `censo_2022`) 0,75 GB. El 1-nov-2026 se sumaron `censo_1991` (0,18 GB), `censo_2001` (0,22 GB) y `censo_2010` (0,49 GB).
+Tamaño medido el 6-nov-2026: **25 GB** en total (`public` 9,5 GB, `vial` 4,1, `uso` 3,2, `clima` 2,6, `aptitud` 1,7, censos 1,6, `series` 0,8, `cruce` 0,7, `institucional` 0,5, `panel` 0,4, `estaciones` 0,4, `suelo` 0,4). El 31-oct-2026 eran 11 GB. El esquema `public` ocupa 10,2 GB (capas, rangos y distribuciones) y el esquema `censo` (hoy `censo_2022`) 0,75 GB. El 1-nov-2026 se sumaron `censo_1991` (0,18 GB), `censo_2001` (0,22 GB) y `censo_2010` (0,49 GB).
 
 ## Censos 1991, 2001, 2010 y 2022 por radio (esquemas `censo_<año>`)
 Cada censo se guarda completo en su unidad de origen, el radio censal de ese año, en su propio esquema. `censo_2022` es el antiguo esquema `censo` (renombrado el 1-nov-2026); es el único que hoy se une a las celdas (`cruce`, `v_h3`), por el mismo cruce que usan las capas censales de la web. Los cuatro años llegan a las celdas por el cruce único (esquema `cruce`) y el panel (esquema `panel`), más abajo. Nada de esto reemplaza a las capas de la web: `v_hexoma` sigue siendo la foto de la web.
@@ -127,14 +132,14 @@ Un cruce por año censal, para que cada censo llegue a las celdas con un peso de
 
 **Validación:** se reparte la población de cada fracción censal entre sus radios y se compara con la real (WAPE = Σ|est − real| / Σ real).
 - El área es mala siempre: 71–82 % de error total y hasta 207 % en radios rurales.
-- En radios urbanos (< 1 km²) ganan los edificios: 26–31 %, contra 29–33 % de GHSL.
-- En radios intermedios y rurales gana GHSL de la época: en los rurales de 2022, 57 contra 68 % de los edificios; en 1991, 39 contra 52 %. Una hipótesis: en el campo, Open Buildings cuenta galpones, secaderos y gallineros como si fueran viviendas.
+- En radios urbanos (< 1 km²) ganan los edificios: 25–30 %, contra 29–33 % de GHSL.
+- En radios intermedios y rurales gana GHSL de la época: en los rurales de 2022, 57 contra 63 % de los edificios; en 1991, 39 contra 49 % (medido el 6-nov-2026, tras completar los edificios de Corrientes; antes 68 y 52 %). Una hipótesis: en el campo, Open Buildings cuenta galpones, secaderos y gallineros como si fueran viviendas.
 
-**Elegido:**
+**Elegido** (6-nov-2026; con los edificios de Corrientes completos cambió el urbano de 1991, antes ghsl, y de 2001, antes edificios_ghsl):
 | Año | Urbano (< 1 km²) | Intermedio (1–10 km²) | Rural (> 10 km²) |
 |---|---|---|---|
-| 1991 | ghsl | ghsl | ghsl |
-| 2001 | edificios_ghsl | ghsl | ghsl |
+| 1991 | edificios_ghsl | ghsl | ghsl |
+| 2001 | edificios | ghsl | ghsl |
 | 2010 | edificios | ghsl | ghsl |
 | 2022 | edificios por punto (el cruce de la web) | edificios por punto | **ghsl** |
 
@@ -239,6 +244,58 @@ heladas 11,9 → 7,4 días/año de error, días > 35 °C 28,9 → 16,5, helada a
 heladas en abrigo Chaco 4,9, Corrientes 2,6, Formosa 2,4, Misiones 1,5 por año. Para heladas y calor se usan las
 `_corr`; las crudas quedan para comparar.
 
+## Serie anual de pérdida Hansen (esquema `series`, desde el 6-nov-2026)
+Hansen GFC v1.13 (la misma versión de la capa web de deforestación y de EUDR), píxel de 1″ (~30 m) a la celda que
+contiene su centro, con el método de `uso` (bloques de 4096² con `computePixels`, DuckDB h3). Unos 129 píxeles por
+celda; ha = píxeles × área de la celda / píxeles de la celda.
+
+| Objeto | Contenido |
+|---|---|
+| `series.hansen_h3` | Por celda: ha, bosque 2000 con dosel ≥ 10 % (FAO) y ≥ 30 % (Global Forest Watch), dosel medio |
+| `series.hansen_h3_anio` | Por celda y año 2001–2025 con pérdida (sin fila = 0): ha perdidas sin umbral, en dosel ≥ 10 % y ≥ 30 % |
+| `series.v_hansen_tasas` | Materializada, por celda: % de la celda perdido por año en 2001–2010 y 2016–2025 (la definición de `c_loss_rate` de la web) y % del bosque 2000 (≥ 30 %) perdido hasta 2025 |
+
+**Validación** (`validacion_hansen.md`): los totales 2001–2025 por provincia quedan a ±0,4 % de un `reduceRegion`
+de GEE sobre la provincia (FAO GAUL 2015; por año, ±2,4 % como máximo, en Formosa); contra la capa web, r = 0,9985
+(2016–2025) y 0,9983 (2001–2010) en 3,29 millones de celdas. **Hansen cuenta la cosecha de plantaciones como pérdida**:
+en Misiones y el NE de Corrientes, cruzar con `uso.h3_anio` antes de leerlo como desmonte.
+`python pipeline/hexoma/build_hexoma_hansen.py` (~10 min; `--solo-carga`, `--validar`; el resultado de GEE queda en
+`%HEXOMA_FUENTES%/hansen/gee_provincias.parquet`, borrarlo para recalcularlo, ~20 min).
+
+## Capas institucionales (esquema `institucional`, desde el 6-nov-2026)
+| Objeto | Contenido |
+|---|---|
+| `institucional.otbn` | Polígonos del OTBN (Ley 26.331). **Misiones:** IMIBIO, actualización 2017 (acreditada por la Res. 2/2021). **Corrientes, Chaco y Formosa:** compilación nacional de la SAyDS (`OTBN_SIG250nov2017`, WFS `geo2.ambiente.gob.ar`), que trae Chaco 2009 y Corrientes y Formosa 2010; la SAyDS avisa post-procesamiento y no incluye actualizaciones posteriores. Para Misiones la compilación nacional trae la versión 2010, ya reemplazada: no se usa |
+| `institucional.otbn_h3` | % de cada celda en las categorías I (rojo), II (amarillo) y III (verde); celda ausente = sin bosque zonificado |
+| `institucional.areas_protegidas`, `ap_h3` | Nacionales (SIFAP 2016), provinciales (2016) y sitios Ramsar que tocan el NEA argentino; celda × área con el % de la celda (se superponen: un Ramsar contiene parques) |
+| `institucional.comunidades` | Listado del INAI (relevamiento Ley 26.160 con resolución y/o personería, oct-2025), con la celda del punto cuando trae coordenadas |
+| `institucional.v_h3` | Por celda: OTBN, categoría mayor, áreas protegidas y comunidades con punto en la celda |
+| `institucional.fuentes` | URL, fecha y sha256 de cada archivo bajado |
+
+**Validación** (`validacion_institucional.md`): en Misiones los polígonos coinciden con la superficie acreditada (I 233.076 contra 233.083 ha; II 901.532 contra 901.617; III 477.755 contra 477.858) y la suma en celdas queda a ±0,1 %; en las otras tres provincias la suma en celdas queda a ±1 % de los polígonos salvo la cat. I de Chaco (+3,8 %) y de Formosa (−5,8 %), por polígonos de borde. Áreas protegidas: el polígono de la fuente difiere de la superficie declarada en algunas (Pampa del Indio, Laguna Brava, Zanjón de Loreto); las que salen del NEA quedan recortadas. **INAI: sólo 132 de 388 comunidades traen coordenadas** (Misiones 91 de 123, Chaco 40 de 111, Formosa 1 de 150, Corrientes 0 de 4): en Formosa y Corrientes el punto no sirve; el listado completo está en la tabla con departamento y localidad.
+`python pipeline/hexoma/build_hexoma_institucional.py` (`--rebajar` vuelve a bajar del WFS y del INAI).
+Trampa resuelta: h3-pg 4.1 no trae `polygon_to_cells` en modo *overlapping*; por centro de celda se perdían los
+polígonos chicos del OTBN (vienen de rásters, muchos de menos de 1 ha), así que el cruce es un join espacial contra el
+polígono de cada celda. Y `least()` de Postgres ignora los NULL (`least(100, NULL)` = 100): el `coalesce` va adentro.
+
+## Red vial (esquema `vial`, desde el 4-nov-2026)
+OSM (Geofabrik) como base, más los caminos de Microsoft ML Road Detections a más de ~25 m de OSM; IGN como tabla de
+referencia. `vial.caminos` (red unificada con clase y superficie en castellano y departamento INDEC, ~199 mil km),
+`vial.osm`, `vial.ms`, `vial.ign`, `vial.fuentes`; el grafo `vial.nodos`/`vial.aristas` (pgRouting, km por la red al
+pavimento) y `vial.macizos` (uso interno). Scripts: `pipeline/vial/importar_vial.py`, `red_vial.py`,
+`distancia_macizos.py`. Ocupa 4 GB.
+
+## Vecindad (esquema `vec`, desde el 6-nov-2026)
+`vecindad.sql`, que `build_hexoma_meta.py` reinstala al final de cada recarga. Toman cualquier tabla o vista con una
+columna de celda (`h3` por defecto); las celdas sin fila o con NULL no cuentan y `n_vecinos` lo dice.
+```sql
+SELECT * FROM vec.anillo('89a9514e263ffff', 2);                 -- las 12 celdas a distancia exacta 2
+SELECT * FROM vec.media_vecinos('series.v_hansen_tasas', 'tasa_2016_2025', '89a9514e263ffff', 2);  -- 10 ms
+SELECT * FROM vec.suavizar('series.v_hansen_tasas', 'tasa_2016_2025', 1, 'tasa_2016_2025 > 3');    -- celda contra entorno
+SELECT * FROM vec.frontera('series.hansen_h3', 'dosel_medio', 60, 1);                             -- borde del bosque
+```
+Sobre una vista que agrega todo el NEA (no materializada) cada llamada recalcula la vista entera: materializarla.
+
 ## Catálogo metodológico (esquema `meta`)
 `meta.fuentes` (29: clima, suelo, estaciones, censos, GHSL, edificios y las 15 capas de la web) y `meta.procesos` (13)
 tienen la ficha pormenorizada: proveedor, versión, acceso, licencia, cita y DOI, **tipo de dato** (medición,
@@ -275,7 +332,7 @@ Una capa de Spatia o una exportación para terceros son este mismo extracto más
 
 ## Convenciones (no obvias)
 - **Sin dato = NULL, nunca cero.** `avg()` y `percentile_cont()` los saltean; `count(*)` no.
-- **Valor = `(rawCol ?? col) × scale`**, como `src/lib/utils/ficha.ts` (`displaySpec`). Las
+- **Valor = `(rawCol ?? col) × scale`**, como la ficha de la web (`displaySpec`, borrada el 4-nov-2026). Las
   tablas `capa_*` guardan las columnas crudas; `v_hexoma` ya aplica la escala.
 - **Departamento = archivo, no polígono.** Los parquets por departamento asignan cada
   celda por mayoría de área de los radios censales, no por el polígono que contiene su
@@ -301,19 +358,18 @@ Una capa de Spatia o una exportación para terceros son este mismo extracto más
   provincia cuentan en ambos. En la región cuentan una sola vez, en el territorio que abre
   el enlace `?h3=`; su otra fila tiene rango regional NULL.
 
-## Verificar contra la ficha publicada
+## Verificar contra la web
 ```bash
-PYTHONIOENCODING=utf-8 python scripts/verify_ficha.py https://www.spatia.ar 89a946191b3ffff 89a95099b8fffff 89b261968a7ffff > ficha.txt
-PYTHONIOENCODING=utf-8 python pipeline/hexoma/verificar_ficha.py ficha.txt     # «N OK, 0 DIFF»
+PYTHONIOENCODING=utf-8 python pipeline/hexoma/vigencia.py --muestra 20     # «al día»
 ```
-El 31-oct-2026 dio 75/75 (5 celdas × 15 capas). Esa comparación destapó tres errores de la
-web, ya corregidos:
+Hasta el 4-nov-2026 se comparaba con la ficha publicada (`scripts/verify_ficha.py` + `verificar_ficha.py`,
+75/75 el 31-oct-2026); se fue con la ficha. Esa comparación destapó tres errores de la web, ya corregidos:
 - archivos viejos en 3 departamentos de Misiones (`c656fdb`);
 - el enlace `?h3=` que abría un departamento sin la celda (`00199e7`);
 - la ficha, que contaba los «sin dato» como 0 en la distribución (`9bcad6c`).
 
 ## Escenarios
-`escenarios.sql` trae cinco consultas comentadas, con tiempo y un resultado de muestra:
+`escenarios.sql` trae ocho consultas comentadas, con tiempo y un resultado de muestra:
 1. frontera de deforestación aislada;
 2. inundación y carencias;
 3. uso actual del suelo donde hubo pérdida EUDR después de 2020;
@@ -321,19 +377,21 @@ web, ya corregidos:
 5. hogares que cocinan con leña o carbón donde el PM2.5 es alto (esquema `censo_2022`);
 6. la campaña 2022/23 frente a su normal, por departamento (esquema `clima`);
 7. heladas agrometeorológicas y altitud en Misiones (esquemas `clima` y `suelo`; muestra el sesgo de ERA5-Land).
+8. frente de pérdida 2021–2025 contra bosque intacto, y cuánto cae en OTBN rojo o amarillo (esquemas `series`, `institucional` y `vec`).
 
-## Pendiente (hoja de ruta del 31-oct-2026)
+## Pendiente (hoja de ruta del 31-oct-2026, al día el 6-nov-2026)
 Lo nuevo va en esquemas propios, y `v_hexoma` queda como la foto fiel de la web.
-1. **Series anuales por celda:**
-   - pérdida de Hansen v1.13, 2001–2025;
-   - VIIRS, fuego y VCF (CHIRPS y ERA5-Land: hecho el 1-nov-2026, esquema `clima`);
-   - MapBiomas resumido (falta confirmar la cobertura de Corrientes);
-   - pérdida oficial de la UMSEF.
+1. **Series anuales por celda:** ~~pérdida de Hansen v1.13, 2001–2025~~ (hecho el 6-nov-2026, esquema `series`);
+   ~~CHIRPS y ERA5-Land~~ (1-nov-2026, `clima`); ~~MapBiomas~~ (3-nov-2026, `uso`, Corrientes incluida). Faltan VIIRS,
+   fuego y VCF anuales, y la pérdida oficial de la UMSEF.
 
-   Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por `censo_2022.cruce` (o por el cruce único, cuando esté).
-2. **Capas institucionales:** OTBN, áreas protegidas, comunidades indígenas (RENACI) y catastro o tamaño de parcela.
-3. **Arreglos de capas:** plantaciones contra selva en Misiones, y componentes en unidades físicas en lugar de 0–100 (potencial agrícola: A1 hecha el 1-nov-2026, esquemas `clima` y `suelo`).
-4. **Vecindad con SQL** (`h3_grid_disk`). ~~Una tabla con la resolución de origen de cada variable~~: hecho el
+   Las series por radio de Misiones ya bajadas (`pipeline/output/radio_data/*_annual.parquet`) pueden entrar por el cruce único.
+2. **Capas institucionales:** ~~OTBN, áreas protegidas y comunidades indígenas~~ (6-nov-2026, `institucional`). Faltan
+   los OTBN provinciales vigentes de Corrientes, Chaco y Formosa (la compilación nacional es de 2017) y las áreas
+   protegidas posteriores a 2016. Catastro o tamaño de parcela: fuera (sólo Misiones, y salió de la web el 4-nov-2026).
+3. **Arreglos de capas:** ~~plantaciones contra selva en Misiones~~ (MapBiomas Col. 3 las separa: `uso`, clase 9);
+   ~~componentes en unidades físicas~~ (potencial agrícola desde el Hexoma, 1-nov-2026).
+4. ~~**Vecindad con SQL**~~ (6-nov-2026, `vec`). ~~Una tabla con la resolución de origen de cada variable~~: hecho el
    4-nov-2026 (`meta.variables.soporte`).
 5. ~~Un extracto congelado por paper~~: hecho el 1-nov-2026 (`extracto.py`).
 

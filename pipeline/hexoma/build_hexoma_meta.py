@@ -278,7 +278,10 @@ def main() -> None:
         cur.execute("COMMENT ON VIEW meta.v_ficha IS 'Columna × fuente con tipo de dato, resolución, validación y "
                     "limitaciones al lado. Ej.: SELECT * FROM meta.v_ficha WHERE objeto = ''era5_helada_corr'''")
     verificar(conn)
-    log(f'listo en {time.time() - t0:.0f} s')
+    # funciones de vecindad (esquema vec): se reinstalan en cada recarga para que existan siempre
+    with conn, conn.cursor() as cur:
+        cur.execute((Path(__file__).with_name('vecindad.sql')).read_text(encoding='utf-8'))
+    log(f'vecindad.sql aplicado; listo en {time.time() - t0:.0f} s')
 
 
 def verificar(conn) -> None:

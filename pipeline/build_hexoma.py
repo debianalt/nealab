@@ -2,8 +2,8 @@
 database `hexoma` (private research base; never published, nothing goes to R2).
 
 The Hexoma of a cell is its full vector: every layer, every scale, every time slice.
-This script reads the SAME parquets the hexagon fact sheet reads
-(src/lib/utils/ficha.ts: per-department files via the dept summaries' parquetKey,
+This script reads the SAME parquets the web panels read (and the hexagon fact sheet,
+src/lib/utils/ficha.ts, read until it was removed from the web on 2026-11-04: per-department files via the dept summaries' parquetKey,
 territory-wide only for non-perDepartment layers such as censo_temporal), so a value
 in `v_hexoma` matches the fact sheet and the layer panel: shown value = (rawCol ?? col)
 × scale. The list of files, columns, units and labels comes from the web app itself
