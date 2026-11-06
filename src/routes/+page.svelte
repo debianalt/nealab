@@ -84,7 +84,9 @@
 		if (territoryStore.activeTerritory.id !== 'misiones') params.set('t', territoryStore.activeTerritory.id);
 		if (lensStore.activeLens) params.set('lens', lensStore.activeLens);
 		if (lensStore.activeAnalysis) params.set('a', lensStore.activeAnalysis.id);
-		if (hexStore.selectedDpto) params.set('dept', hexStore.selectedDpto);
+		// censo_temporal opens its department through its list (deptFilterName), not selectedDpto.
+		const dept = hexStore.selectedDpto ?? (hexStore.activeLayer?.perDepartment ? null : hexStore.deptFilterName);
+		if (dept) params.set('dept', dept);
 		if (hexStore.temporalMode !== 'current') params.set('tm', hexStore.temporalMode);
 		if (hexStore.scaleMode !== 'provincial') params.set('escala', hexStore.scaleMode);
 		if (territoryStore.countryFilter && territoryStore.countryFilter !== 'ar') params.set('cf', territoryStore.countryFilter);
@@ -98,6 +100,7 @@
 		const _lens = lensStore.activeLens;
 		const _analysis = lensStore.activeAnalysis;
 		const _dept = hexStore.selectedDpto;
+		const _deptF = hexStore.deptFilterName;
 		const _tm = hexStore.temporalMode;
 		const _escala = hexStore.scaleMode;
 		if (typeof window !== 'undefined') updateUrlState();
@@ -312,6 +315,17 @@
 					if (d?.parquetKey && d?.centroid) {
 						handleSelectFloodDpto(nameOf(d), d.parquetKey, d.centroid as [number, number]);
 					}
+				});
+			} else if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]) {
+				// censo_temporal (no per-department files): its list opens the department,
+				// as on a map click. handleCensoDeptSelect picks the cells from centroidCache,
+				// so wait until the layer's hexagons are in (60 s at most).
+				tick().then(async () => {
+					const t0 = Date.now();
+					while ((hexStore.loading || hexStore.centroidCache.size === 0) && Date.now() - t0 < 60000) {
+						await new Promise((r) => setTimeout(r, 300));
+					}
+					if (lensStore.activeAnalysis?.id === analysisId) hexStore.requestDeptPick(dept, hexStore.territoryPrefix);
 				});
 			}
 		});
