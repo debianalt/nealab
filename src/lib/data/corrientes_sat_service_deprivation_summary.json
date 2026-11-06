@@ -25,7 +25,7 @@
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "hex_count": 1613,
+      "hex_count": 1652,
       "centroid": [
         -58.6938,
         -28.1886
@@ -144,7 +144,7 @@
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "hex_count": 5259,
+      "hex_count": 5369,
       "centroid": [
         -59.2645,
         -29.3931
@@ -161,18 +161,18 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "hex_count": 21648,
+      "hex_count": 2787,
       "centroid": [
         -59.2346,
         -29.7806
       ],
       "rank": {
-        "nbi_pct": 15.3,
-        "nbi_n": 1752,
-        "cloacas_pct": 53.6,
-        "cloacas_n": 6129,
-        "hacin_pct": 14.1,
-        "hacin_n": 1610
+        "nbi_pct": 15.2,
+        "nbi_n": 1765,
+        "cloacas_pct": 52.4,
+        "cloacas_n": 6098,
+        "hacin_pct": 14.0,
+        "hacin_n": 1633
       }
     },
     {
@@ -212,18 +212,18 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "hex_count": 14481,
+      "hex_count": 3426,
       "centroid": [
         -58.3444,
         -29.4371
       ],
       "rank": {
-        "nbi_pct": 8.9,
-        "nbi_n": 1449,
-        "cloacas_pct": 22.8,
-        "cloacas_n": 3696,
+        "nbi_pct": 9.0,
+        "nbi_n": 1470,
+        "cloacas_pct": 23.2,
+        "cloacas_n": 3786,
         "hacin_pct": 10.3,
-        "hacin_n": 1661
+        "hacin_n": 1680
       }
     },
     {
@@ -246,7 +246,7 @@
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "hex_count": 365,
+      "hex_count": 405,
       "centroid": [
         -57.5828,
         -27.4836
@@ -263,7 +263,7 @@
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "hex_count": 598,
+      "hex_count": 617,
       "centroid": [
         -58.1494,
         -27.3243
@@ -280,41 +280,41 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "hex_count": 13179,
+      "hex_count": 878,
       "centroid": [
         -58.6302,
         -30.0717
       ],
       "rank": {
         "nbi_pct": 9.6,
-        "nbi_n": 289,
-        "cloacas_pct": 39.6,
-        "cloacas_n": 1194,
-        "hacin_pct": 12.0,
-        "hacin_n": 362
+        "nbi_n": 297,
+        "cloacas_pct": 40.9,
+        "cloacas_n": 1261,
+        "hacin_pct": 11.9,
+        "hacin_n": 366
       }
     },
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "hex_count": 5648,
+      "hex_count": 3001,
       "centroid": [
         -56.874,
         -27.7591
       ],
       "rank": {
-        "nbi_pct": 12.0,
-        "nbi_n": 1448,
-        "cloacas_pct": 69.2,
-        "cloacas_n": 8326,
+        "nbi_pct": 12.1,
+        "nbi_n": 1453,
+        "cloacas_pct": 69.3,
+        "cloacas_n": 8357,
         "hacin_pct": 10.8,
-        "hacin_n": 1304
+        "hacin_n": 1308
       }
     },
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "hex_count": 1320,
+      "hex_count": 1331,
       "centroid": [
         -58.5155,
         -27.357
@@ -331,7 +331,7 @@
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "hex_count": 1307,
+      "hex_count": 2742,
       "centroid": [
         -56.9849,
         -28.8545
@@ -348,18 +348,18 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "hex_count": 13273,
+      "hex_count": 2820,
       "centroid": [
         -56.0137,
         -27.9746
       ],
       "rank": {
         "nbi_pct": 9.2,
-        "nbi_n": 2124,
-        "cloacas_pct": 30.9,
-        "cloacas_n": 7123,
+        "nbi_n": 2129,
+        "cloacas_pct": 31.1,
+        "cloacas_n": 7185,
         "hacin_pct": 9.7,
-        "hacin_n": 2240
+        "hacin_n": 2244
       }
     },
     {
@@ -399,24 +399,24 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "hex_count": 27392,
+      "hex_count": 2782,
       "centroid": [
         -57.9972,
         -30.0419
       ],
       "rank": {
-        "nbi_pct": 11.3,
-        "nbi_n": 1611,
+        "nbi_pct": 11.4,
+        "nbi_n": 1617,
         "cloacas_pct": 14.0,
-        "cloacas_n": 1991,
-        "hacin_pct": 11.9,
-        "hacin_n": 1689
+        "cloacas_n": 1996,
+        "hacin_pct": 11.8,
+        "hacin_n": 1686
       }
     },
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "hex_count": 3855,
+      "hex_count": 2047,
       "centroid": [
         -57.5418,
         -30.0344

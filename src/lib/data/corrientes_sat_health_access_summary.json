@@ -21,7 +21,7 @@
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "hex_count": 1613,
+      "hex_count": 1652,
       "centroid": [
         -58.6938,
         -28.1886
@@ -47,20 +47,20 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "hex_count": 21648,
+      "hex_count": 2787,
       "centroid": [
         -59.2346,
         -29.7806
       ],
       "rank": {
-        "health_min": 14,
-        "health_cov_pct": 40.8
+        "health_min": 15,
+        "health_cov_pct": 40.7
       }
     },
     {
       "dpto": "Goya",
       "parquetKey": "goya",
-      "hex_count": 5259,
+      "hex_count": 5369,
       "centroid": [
         -59.2645,
         -29.3931
@@ -164,7 +164,7 @@
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "hex_count": 598,
+      "hex_count": 617,
       "centroid": [
         -58.1494,
         -27.3243
@@ -177,33 +177,33 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "hex_count": 14481,
+      "hex_count": 3426,
       "centroid": [
         -58.3444,
         -29.4371
       ],
       "rank": {
         "health_min": 14,
-        "health_cov_pct": 47.9
+        "health_cov_pct": 48.0
       }
     },
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "hex_count": 13273,
+      "hex_count": 2820,
       "centroid": [
         -56.0137,
         -27.9746
       ],
       "rank": {
-        "health_min": 5,
+        "health_min": 6,
         "health_cov_pct": 53.5
       }
     },
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "hex_count": 365,
+      "hex_count": 405,
       "centroid": [
         -57.5828,
         -27.4836
@@ -216,20 +216,20 @@
     {
       "dpto": "Sauce",
       "parquetKey": "sauce",
-      "hex_count": 13179,
+      "hex_count": 878,
       "centroid": [
         -58.6302,
         -30.0717
       ],
       "rank": {
         "health_min": 6,
-        "health_cov_pct": 40.4
+        "health_cov_pct": 40.5
       }
     },
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "hex_count": 1320,
+      "hex_count": 1331,
       "centroid": [
         -58.5155,
         -27.357
@@ -242,7 +242,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "hex_count": 5648,
+      "hex_count": 3001,
       "centroid": [
         -56.874,
         -27.7591
@@ -268,20 +268,20 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "hex_count": 27392,
+      "hex_count": 2782,
       "centroid": [
         -57.9972,
         -30.0419
       ],
       "rank": {
         "health_min": 43,
-        "health_cov_pct": 51.3
+        "health_cov_pct": 51.4
       }
     },
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "hex_count": 1307,
+      "hex_count": 2742,
       "centroid": [
         -56.9849,
         -28.8545
@@ -320,7 +320,7 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "hex_count": 3855,
+      "hex_count": 2047,
       "centroid": [
         -57.5418,
         -30.0344

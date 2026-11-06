@@ -8,13 +8,13 @@
     {
       "dpto": "Capital",
       "parquetKey": "capital",
-      "hex_count": 6335,
+      "hex_count": 6336,
       "centroid": [
         -58.756,
         -27.5128
       ],
       "rank": {
-        "viirs": 10.22,
+        "viirs": 10.21,
         "empleo_pct": 53.4,
         "univ25_pct": 13.8,
         "ocupados_n": 185782,
@@ -27,14 +27,14 @@
     {
       "dpto": "Monte Caseros",
       "parquetKey": "monte_caseros",
-      "hex_count": 32742,
+      "hex_count": 32744,
       "centroid": [
         -57.8087,
         -30.1335
       ],
       "rank": {
         "viirs": 0.7,
-        "empleo_pct": 53.1,
+        "empleo_pct": 53.2,
         "univ25_pct": 6.3,
         "ocupados_n": 18747,
         "ocupados_prov_pct": 3.9,
@@ -46,7 +46,7 @@
     {
       "dpto": "Mercedes",
       "parquetKey": "mercedes",
-      "hex_count": 113870,
+      "hex_count": 113871,
       "centroid": [
         -58.1652,
         -29.1433
@@ -65,7 +65,7 @@
     {
       "dpto": "General Alvear",
       "parquetKey": "general_alvear",
-      "hex_count": 22109,
+      "hex_count": 22112,
       "centroid": [
         -56.5109,
         -28.8762
@@ -84,7 +84,7 @@
     {
       "dpto": "San Cosme",
       "parquetKey": "san_cosme",
-      "hex_count": 6970,
+      "hex_count": 6973,
       "centroid": [
         -58.5243,
         -27.3536
@@ -103,7 +103,7 @@
     {
       "dpto": "Lavalle",
       "parquetKey": "lavalle",
-      "hex_count": 17638,
+      "hex_count": 17641,
       "centroid": [
         -59.0779,
         -28.9307
@@ -122,14 +122,14 @@
     {
       "dpto": "Curuzú Cuatiá",
       "parquetKey": "curuzu_cuatia",
-      "hex_count": 99522,
+      "hex_count": 99523,
       "centroid": [
         -58.3625,
         -29.4281
       ],
       "rank": {
         "viirs": 0.45,
-        "empleo_pct": 48.4,
+        "empleo_pct": 48.5,
         "univ25_pct": 8.7,
         "ocupados_n": 19234,
         "ocupados_prov_pct": 4.0,
@@ -141,7 +141,7 @@
     {
       "dpto": "Berón de Astrada",
       "parquetKey": "beron_de_astrada",
-      "hex_count": 9235,
+      "hex_count": 9240,
       "centroid": [
         -57.5785,
         -27.485
@@ -160,7 +160,7 @@
     {
       "dpto": "Ituzaingó",
       "parquetKey": "ituzaingo",
-      "hex_count": 106157,
+      "hex_count": 106169,
       "centroid": [
         -56.8685,
         -27.7336
@@ -179,7 +179,7 @@
     {
       "dpto": "San Martín",
       "parquetKey": "san_martin",
-      "hex_count": 76159,
+      "hex_count": 76160,
       "centroid": [
         -56.9713,
         -28.8726
@@ -198,7 +198,7 @@
     {
       "dpto": "Santo Tomé",
       "parquetKey": "santo_tome",
-      "hex_count": 79069,
+      "hex_count": 79073,
       "centroid": [
         -55.9812,
         -27.9777
@@ -217,7 +217,7 @@
     {
       "dpto": "Paso de los Libres",
       "parquetKey": "paso_de_los_libres",
-      "hex_count": 57479,
+      "hex_count": 57480,
       "centroid": [
         -57.2015,
         -29.6765
@@ -236,7 +236,7 @@
     {
       "dpto": "Itatí",
       "parquetKey": "itati",
-      "hex_count": 9854,
+      "hex_count": 9857,
       "centroid": [
         -58.147,
         -27.3409
@@ -312,7 +312,7 @@
     {
       "dpto": "General Paz",
       "parquetKey": "general_paz",
-      "hex_count": 29618,
+      "hex_count": 29617,
       "centroid": [
         -57.4659,
         -27.6047
@@ -350,7 +350,7 @@
     {
       "dpto": "Empedrado",
       "parquetKey": "empedrado",
-      "hex_count": 23396,
+      "hex_count": 23398,
       "centroid": [
         -58.5528,
         -27.8349
@@ -369,7 +369,7 @@
     {
       "dpto": "San Miguel",
       "parquetKey": "san_miguel",
-      "hex_count": 34848,
+      "hex_count": 34849,
       "centroid": [
         -57.2898,
         -27.7296
@@ -388,14 +388,14 @@
     {
       "dpto": "Esquina",
       "parquetKey": "esquina",
-      "hex_count": 47934,
+      "hex_count": 47938,
       "centroid": [
         -59.2055,
         -29.7808
       ],
       "rank": {
         "viirs": 0.45,
-        "empleo_pct": 47.9,
+        "empleo_pct": 48.0,
         "univ25_pct": 7.0,
         "ocupados_n": 14407,
         "ocupados_prov_pct": 3.0,
@@ -407,7 +407,7 @@
     {
       "dpto": "San Roque",
       "parquetKey": "san_roque",
-      "hex_count": 28514,
+      "hex_count": 28513,
       "centroid": [
         -58.5728,
         -28.6497
@@ -426,7 +426,7 @@
     {
       "dpto": "Saladas",
       "parquetKey": "saladas",
-      "hex_count": 22255,
+      "hex_count": 22256,
       "centroid": [
         -58.6838,
         -28.1953
@@ -445,7 +445,7 @@
     {
       "dpto": "San Luis del Palmar",
       "parquetKey": "san_luis_del_palmar",
-      "hex_count": 29330,
+      "hex_count": 29329,
       "centroid": [
         -58.2652,
         -27.5547
@@ -464,7 +464,7 @@
     {
       "dpto": "Mburucuyá",
       "parquetKey": "mburucuya",
-      "hex_count": 11426,
+      "hex_count": 11425,
       "centroid": [
         -58.2378,
         -28.0433
