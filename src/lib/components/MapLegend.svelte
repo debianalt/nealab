@@ -59,7 +59,8 @@
 
 	// Discrete classes replace the gradient (flood: JRC occurrence %). Not in delta
 	// mode: the change ramp is diverging, not a level.
-	const classes = $derived(!isDiverging ? hexStore.effectiveColorClasses : undefined);
+	// (censo_temporal has classes of its own for the change: effectiveColorClasses gives only those in delta).
+	const classes = $derived(!isDiverging || (layer?.temporal && hexStore.temporalMode === 'delta') ? hexStore.effectiveColorClasses : undefined);
 
 	// Two-scale layers (PM2.5): provincial P2–P98 ↔ fixed regional range. The ends
 	// show the real values of the active domain so the colors carry their numbers.

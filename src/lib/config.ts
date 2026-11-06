@@ -1,5 +1,5 @@
 import { unitLabel } from '$lib/utils/units';
-import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_VIRIDIS_4, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX, NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
+import { MAP_CLASS_3, MAP_CLASS_4, MAP_CLASS_5, MAP_VIRIDIS_3, MAP_VIRIDIS_4, MAP_DIV, MAP_ACCESS_5, AGRI_APT_HEX, USO_HEX, MAP_SELVA, ZERO_HEX, NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { i18n } from '$lib/stores/i18n.svelte';
 import pm25Scale from '$lib/content/pm25_scale.json';
 const R2_PROD = 'https://cdn.spatia.ar';
@@ -537,6 +537,9 @@ export interface HexLayerConfig {
 	// Classes for other variables the map can paint instead of the primary
 	// (hexStore.colorVariable, set from the active ranking tab).
 	variableClasses?: Record<string, ColorClasses>;
+	// Classes of the temporal «Cambio» (delta) mode, per variable; without them the delta
+	// map keeps the continuous diverging ramp (deforestation).
+	deltaClasses?: Record<string, ColorClasses>;
 	// The summaries carry a per-department and province series (serie: {anios, ha: {clase: number[]}}),
 	// drawn by UsoSerie.svelte as «Evolución» (land use, 1985–2025).
 	classSeries?: boolean;
@@ -824,6 +827,34 @@ export const DENSITY_VIV_CLASSES: ColorClasses = {
 		{ from: 20, color: MAP_VIRIDIS_4[1], labelKey: 'legend.dens.viv.c2' },
 		{ from: 100, color: MAP_VIRIDIS_4[2], labelKey: 'legend.dens.viv.c3' },
 		{ from: 500, color: MAP_VIRIDIS_4[3], labelKey: 'legend.dens.viv.c4' },
+	],
+};
+
+// censo_temporal, «Cambio» (density 2022 − 2010), fixed classes (author, 6-nov-2026): the
+// diverging ramp spanned ± the visible cells' largest change (thousands of hab/km² in a
+// city), so rural change read gray and the scale moved with each department. −2 to +2
+// reads as no change; ±50 = the first density cut. Dwellings ±1 / ±5 / ±20 viv/km².
+// First «from» is −1e6, not −Infinity: the probes serialize the classes to JSON.
+export const DELTA_POB_CLASSES: ColorClasses = {
+	steps: [
+		{ from: -1e6, color: MAP_DIV[0], labelKey: 'legend.dchg.pob.c1' },
+		{ from: -50, color: MAP_DIV[1], labelKey: 'legend.dchg.pob.c2' },
+		{ from: -10, color: MAP_DIV[2], labelKey: 'legend.dchg.pob.c3' },
+		{ from: -2, color: MAP_DIV[3], labelKey: 'legend.dchg.pob.c4' },
+		{ from: 2, color: MAP_DIV[4], labelKey: 'legend.dchg.pob.c5' },
+		{ from: 10, color: MAP_DIV[5], labelKey: 'legend.dchg.pob.c6' },
+		{ from: 50, color: MAP_DIV[6], labelKey: 'legend.dchg.pob.c7' },
+	],
+};
+export const DELTA_VIV_CLASSES: ColorClasses = {
+	steps: [
+		{ from: -1e6, color: MAP_DIV[0], labelKey: 'legend.dchg.viv.c1' },
+		{ from: -20, color: MAP_DIV[1], labelKey: 'legend.dchg.viv.c2' },
+		{ from: -5, color: MAP_DIV[2], labelKey: 'legend.dchg.viv.c3' },
+		{ from: -1, color: MAP_DIV[3], labelKey: 'legend.dchg.viv.c4' },
+		{ from: 1, color: MAP_DIV[4], labelKey: 'legend.dchg.viv.c5' },
+		{ from: 5, color: MAP_DIV[5], labelKey: 'legend.dchg.viv.c6' },
+		{ from: 20, color: MAP_DIV[6], labelKey: 'legend.dchg.viv.c7' },
 	],
 };
 
@@ -1379,6 +1410,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 		primaryVariable: 'pob_dens',
 		colorScale: 'sequential',
 		variableClasses: { pob_dens: DENSITY_POB_CLASSES, viv_dens: DENSITY_VIV_CLASSES },
+		deltaClasses: { pob_dens: DELTA_POB_CLASSES, viv_dens: DELTA_VIV_CLASSES },
 		aggregation: 'mean',
 		titleKey: 'analysis.censo.title',
 		perDepartment: false,

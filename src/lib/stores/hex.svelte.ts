@@ -446,6 +446,8 @@ export class HexStore {
 	get effectiveColorClasses(): ColorClasses | undefined {
 		const layer = this.activeLayer;
 		if (!layer) return undefined;
+		// «Cambio» paints a signed change: only its own classes apply (censo_temporal), never the level's.
+		if (layer.temporal && this.temporalMode === 'delta') return layer.deltaClasses?.[this.effectivePrimary];
 		const c = layer.variableClasses?.[this.effectivePrimary] ?? layer.colorClasses;
 		// A focused macizo reading lists only its own classes, plus the gray of the other stands.
 		if (!c || !layer.macizos) return c;

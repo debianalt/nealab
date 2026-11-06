@@ -303,6 +303,7 @@ const CLASS_PAIRS: Array<[readonly string[], readonly string[]]> = [
 	[MAP_ACCESS_5, MAP_ACCESS_5_CLARO], [MAP_VIRIDIS_3, [MAP_RIO_CLARO[0], MAP_RIO_CLARO[2], MAP_RIO_CLARO[4]]],
 	// río at 0, ⅓, ⅔, 1 of its five stops (the light end recedes: < 50 hab/km² is most cells)
 	[MAP_VIRIDIS_4, [MAP_RIO_CLARO[0], '#6c98c4', '#2e6aaa', MAP_RIO_CLARO[4]]],
+	[MAP_DIV, MAP_DIV_CLARO],   // censo_temporal «Cambio» classes
 	[AGRI_APT_HEX, AGRI_APT_CLARO], [[ZERO_HEX], [ZERO_CLARO]],
 	[USO_HEX, USO_CLARO], [MAP_SELVA, MAP_SELVA_CLARO], [[NODATA_HEX], ['#8c8d90']], [HARVEST_HEX, HARVEST_CLARO],
 ];

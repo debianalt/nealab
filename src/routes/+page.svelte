@@ -1602,7 +1602,9 @@
 	// renders a signed change, so the level classes don't apply there.
 	function colorClassesFor(colorScale: string) {
 		const layer = hexStore.activeLayer;
-		return layer && colorScale === layer.colorScale ? hexStore.effectiveColorClasses : undefined;
+		// Delta mode paints 'diverging'; effectiveColorClasses then holds only the layer's deltaClasses.
+		const delta = !!layer?.temporal && hexStore.temporalMode === 'delta' && colorScale === 'diverging';
+		return layer && (colorScale === layer.colorScale || delta) ? hexStore.effectiveColorClasses : undefined;
 	}
 
 	function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
