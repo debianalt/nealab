@@ -22,7 +22,7 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 		formosa_plantations: 'data/tiles/formosa_plantations_v4.pmtiles',   // v4: + km por la red hasta el asfalto (red_vial.py); v2: edad, situación de turno, dpto_key
 		itapua_buildings: 'tiles/itapua_buildings-v4.pmtiles',
 		itapua_districts: 'data/tiles/itapua_districts.pmtiles',
-		corrientes_buildings: 'data/tiles/corrientes_buildings-v4.pmtiles',
+		corrientes_buildings: 'data/tiles/corrientes_buildings-v5.pmtiles',   // v5 (6-nov-2026): GBA recargado con el recuadro corregido (sur de −30° y este de −56°)
 		alto_parana_buildings: 'data/tiles/alto_parana_buildings-v4.pmtiles',
 		alto_parana_districts: 'data/tiles/alto_parana_districts.pmtiles',
 		chaco_buildings: 'data/tiles/chaco_buildings-v4.pmtiles',
@@ -132,14 +132,14 @@ export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): strin
 
 // INDEC 2022 radios of an AR territory as a unit of their own (pipeline/build_census_radios.py):
 // rates, bases, queen neighbours and the cells that show each radio. Only AR has radios.
-export const CENSUS_RADIOS_V = 1;
+export const CENSUS_RADIOS_V = 2;   // 2: Corrientes con el crosswalk de GBA completo (6-nov-2026)
 export function getCensusRadiosUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}census_radios_2022.parquet?v=${CENSUS_RADIOS_V}`;
 }
 
 // People estimated per cell from its buildings; per radio they add up to the census population
 // (pipeline/build_cell_population.py). Read by the click selection by radio.
-export const CELL_POPULATION_V = 1;
+export const CELL_POPULATION_V = 2;   // 2: Corrientes sin radios repartidos por área salvo 2 (6-nov-2026)
 export function getCellPopulationUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}cell_population_2022.parquet?v=${CELL_POPULATION_V}`;
 }
