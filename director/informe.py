@@ -63,12 +63,24 @@ def armar(run):
             h = porH.get(f['huella'], {})
             L.append(f"- `{f['huella']}` {h.get('tipo', '')} {h.get('capa', '')}: {f.get('motivo', '')}")
         L.append('\n</details>\n')
+    # GitHub rechaza cuerpos de más de 65.536 caracteres (le pasó al informe del 4-nov-2026):
+    # la lista de hallazgos entra hasta donde quepa y el resto queda en el artefacto.
     L.append(f"<details><summary>Todos los hallazgos ({len(H)})</summary>\n")
-    for h in H[:300]:
+    usado = len('\n'.join(L))
+    puestos = 0
+    for h in H:
         donde = ' · '.join(str(h[k]) for k in ('territorio', 'capa', 'vista', 'pestana', 'pagina', 'idioma') if h.get(k))
-        L.append(f"- [{h['severidad']}] `{h['tipo']}` {donde}: {h['detalle'][:220]}")
+        linea = f"- [{h['severidad']}] `{h['tipo']}` {donde}: {h['detalle'][:220]}"
+        if usado + len(linea) + 1 > TOPE_CUERPO: break
+        L.append(linea); usado += len(linea) + 1; puestos += 1
+    if puestos < len(H):
+        L.append(f"- … y {len(H) - puestos} más: la lista completa está en `hallazgos.json` del artefacto `director-run` de la corrida.")
     L.append('\n</details>')
     return '\n'.join(L)
+
+
+# Margen bajo el tope de GitHub (65.536) para el cierre de la lista y lo que agregue gh.
+TOPE_CUERPO = 60000
 
 
 def gh(*a, entrada=None):
@@ -88,6 +100,10 @@ def main():
     r = gh('issue', 'create', '--title', a.titulo, '--label', 'director', '--body-file', '-', entrada=cuerpo)
     print(r.stdout, r.stderr, file=sys.stderr)
     nuevo = r.stdout.strip()
+    # Sin issue nuevo no se cierra el anterior: sus respuestas y preguntas siguen a la vista.
+    if r.returncode != 0 or '/issues/' not in nuevo:
+        print(f'No se pudo publicar el informe (código {r.returncode}); el issue anterior queda abierto.', file=sys.stderr)
+        sys.exit(1)
     for p in previos:
         gh('issue', 'close', str(p['number']), '--comment', f'Reemplazado por {nuevo}. Las respuestas de este issue quedaron en `director/decisiones.md`.')
 
