@@ -1603,8 +1603,10 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 	// en Boquerón Gral. Eugenio A. Garay (5 % de sus hexágonos) queda sin barra.
 	// Variable principal = la fracción física (tier 1), no risk_score, que es un
 	// promedio ponderado 70/20/10 (lo sigue usando sólo /eudr/check).
-	// Dominio de color fijo 0-40 %: P98 en res-9 = 40 % (mediana y P90 = 0); con
-	// MIN/MAX (0-100) casi todo el mapa quedaría en el primer color.
+	// Dominio de color fijo 0-40 % (decisión del autor, 6-nov-2026): con Hansen v1.13 la grilla
+	// regional res-9 da mediana y P90 = 0, P95 = 16,7 %, P98 = 50 %, y el 2,3 % de los hexágonos
+	// supera el 40 % (se pinta con el tono máximo); con MIN/MAX (0-100) casi todo el mapa
+	// quedaría en el primer color.
 	eudr: {
 		id: 'eudr',
 		parquet: 'sat_eudr',

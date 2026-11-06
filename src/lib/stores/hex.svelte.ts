@@ -277,7 +277,16 @@ export class HexStore {
 	}
 
 	setTemporalMode(mode: TemporalMode) {
+		// Two-scale layers (PM2.5): the baseline is drawn on the fixed regional range, since its values run
+		// above the current period's provincial P2–P98 and the map saturated (Corrientes: base 13,5–16,9
+		// over 8,4–13,5 µg/m³). Re-resolved here so the domain is set before the repaint (that branch of
+		// ensureColorDomain returns without awaiting). Decided by the author on 6-nov-2026.
+		const wasBase = this.temporalMode === 'baseline';
 		this.temporalMode = mode;
+		if (this.activeLayer?.regionalColorDomain && wasBase !== (mode === 'baseline')) {
+			this.colorDomain = null;
+			void this.ensureColorDomain();
+		}
 		this.dataVersion++;
 	}
 
@@ -1769,7 +1778,7 @@ export class HexStore {
 		// Two-scale layers: frozen per-territory P2–P98 (provincial) or the fixed
 		// regional range. No stats for this territory → fall through to MIN/MAX.
 		if (layer.regionalColorDomain) {
-			if (this.scaleMode === 'regional') {
+			if (this.scaleMode === 'regional' || this.temporalMode === 'baseline') {
 				this.colorDomain = layer.regionalColorDomain;
 				return this.colorDomain;
 			}

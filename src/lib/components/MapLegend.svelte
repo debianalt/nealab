@@ -66,7 +66,10 @@
 	const hasScales = $derived(!!layer?.regionalColorDomain && !isDiverging);
 	const scaleStats = $derived(layer?.scaleStats?.territories[hexStore.territoryId]);
 	const fmt = (v: number) => v.toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+	// The baseline is always on the regional range (setTemporalMode): no toggle there, its own note.
+	const baseOnRegional = $derived(hexStore.temporalMode === 'baseline');
 	const scaleNote = $derived.by(() => {
+		if (baseOnRegional) return i18n.t('legend.scale.baselineNote');
 		if (hexStore.scaleMode === 'regional') return i18n.t('legend.scale.regionalNote');
 		const name = scaleStats?.label ?? '';
 		return i18n.t(scaleStats ? 'legend.scale.provincialNote' : 'legend.scale.minmaxNote').replace('{t}', name);
@@ -242,10 +245,12 @@
 {:else if layer && hasScales}
 	<div class="legend">
 		<div class="legend-title">{title} {#if scaleUnit}<span class="legend-range">{scaleUnit}</span>{/if}</div>
+		{#if !baseOnRegional}
 		<div class="scale-toggle" role="group">
 			<button class:active={hexStore.scaleMode === 'provincial'} onclick={() => hexStore.setScaleMode('provincial')}>{i18n.t('legend.scale.provincial')}</button>
 			<button class:active={hexStore.scaleMode === 'regional'} onclick={() => hexStore.setScaleMode('regional')}>{i18n.t('legend.scale.regional')}</button>
 		</div>
+		{/if}
 		<div class="gradient-bar" style:background={gradient}></div>
 		<div class="gradient-labels">
 			<span>{hexStore.colorDomain ? fmt(hexStore.colorDomain[0]) : ''}</span>
