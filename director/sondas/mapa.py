@@ -197,10 +197,13 @@ async def revisar_tooltip(H, page, e, ctx):
 
 
 async def abrir_graficos(page):
+    # ChartFrame always shows «▸» and marks an open frame by rotating it
+    # (.chart-frame-chevron-open): reading the text clicked every frame shut.
     for hdr in await page.query_selector_all('.chart-frame-header'):
         try:
-            t = (await hdr.inner_text()).strip()
-            if t.startswith('▸'): await hdr.click(); await page.wait_for_timeout(600)
+            chev = await hdr.query_selector('.chart-frame-chevron')
+            if chev and 'chart-frame-chevron-open' not in (await chev.get_attribute('class') or ''):
+                await hdr.click(); await page.wait_for_timeout(600)
         except Exception: pass
 
 

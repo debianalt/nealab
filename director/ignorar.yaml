@@ -1,7 +1,5 @@
 # Huellas de hallazgos confirmados como falsos positivos (el juez agrega con motivo).
 # - {huella: '...', motivo: '...', fecha: 'AAAA-MM-DD'}
-- {huella: '50a903739459', motivo: 'Curva de concentración dibujada con <polyline>; la sonda sólo cuenta rect/path/circle (estado.js:116).', fecha: '2026-11-04'}
-- {huella: 'a8e501e62584', motivo: 'Curva de concentración dibujada con <polyline>; la sonda sólo cuenta rect/path/circle (estado.js:116).', fecha: '2026-11-04'}
 - {huella: 'd3390cd50789', motivo: 'method sólo es/en; pt muestra castellano con aviso (reglamento §5).', fecha: '2026-11-04'}
 - {huella: '49c494bd9861', motivo: 'method sólo es/en; pt muestra castellano con aviso (reglamento §5).', fecha: '2026-11-04'}
 - {huella: 'e2b0f035a1f0', motivo: 'method sólo es/en; pt muestra castellano con aviso (reglamento §5).', fecha: '2026-11-04'}
@@ -15,12 +13,3 @@
 - {huella: 'dc7b55f7744b', motivo: '/en/terminos es noindex; sin hreflang a propósito (Seo.svelte).', fecha: '2026-11-04'}
 - {huella: '825394a7faac', motivo: '/pt/terminos es noindex; sin hreflang a propósito (Seo.svelte).', fecha: '2026-11-04'}
 - {huella: 'b732e99e03fe', motivo: '/gn/terminos es noindex; sin hreflang a propósito (Seo.svelte).', fecha: '2026-11-04'}
-- {huella: '5949325381a5', motivo: 'censo_temporal es perDepartment:false: no tiene vista de hexágonos por departamento y ?dept= se ignora.', fecha: '2026-11-04'}
-- {huella: '6cd3dcf12ac6', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: '1244decfbd54', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: 'd743f06d1675', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: 'dc19b4459b11', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: '44cb8a2588f9', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: '38d1045bb4e5', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: '356ac26a05b4', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}
-- {huella: 'e511738d7918', motivo: 'censo_temporal sin vista por departamento (perDepartment:false).', fecha: '2026-11-04'}

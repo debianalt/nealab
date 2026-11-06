@@ -113,7 +113,7 @@
 		notaRanking: txt('.rank-note').join(' '),
 		graficos: [...document.querySelectorAll('.chart-frame')].map(f => ({
 			titulo: f.querySelector('.chart-frame-title')?.innerText.replace('▸', '').replace('▾', '').trim(),
-			abierto: !!f.querySelector('svg, canvas'), marcas: f.querySelectorAll('svg rect, svg path, svg circle').length,
+			abierto: !!f.querySelector('svg, canvas'), marcas: f.querySelectorAll('svg rect, svg path, svg circle, svg polyline:not([points=""])').length,
 			texto: f.innerText.slice(0, 1500) })),
 		leyenda, hex, enPantalla,
 		toasts: txt('[class*=toast], [role=alert]'),
