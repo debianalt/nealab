@@ -318,6 +318,16 @@ estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración
 | `python pipeline/infra/lluvia_imerg.py --bajar` / `--cargar` | IMERG V07 1998– por día local: mm, máx. 30 min, máx. 3 h, horas de lluvia → `infra.imerg_diaria` (8,2 M filas) | ~10 min + 2 min |
 | `python pipeline/infra/validar_datos_f5.py` | `pipeline/infra/validacion_datos_f5.md` | ~2 min |
 
+**Consultar el Hexoma en QGIS (esta compu).** Doble clic en `C:\Users\ant\OneDrive\nealab\hexoma.qgz`: 40 capas en
+grupos (ríos y puentes, arroyos, caminos, acceso al hospital por escenario, salud y seguridad, agua potable,
+electricidad y telecomunicaciones, límites, fondo), conectadas a la base `hexoma` sin contraseña. Para regenerarlo
+después de recargar tablas: `psql -U postgres -d hexoma -f pipeline/infra/vistas_qgis.sql` y
+`"C:\Program Files\QGIS 3.40.13\bin\python-qgis-ltr.bat" pipeline/infra/proyecto_qgis.py` (verifica cada capa e
+imprime imágenes de control). Las tablas `infra.mv_*` son derivadas para QGIS (tablas, no vistas materializadas:
+PostgreSQL 18 las arma con search_path restringido y las funciones de h3 fallan). `infra.arroyos.en_agua_ancha` marca
+los tramos que el D8 traza sobre ríos anchos y embalses (QGIS no los dibuja). Consultas SQL: pgAdmin 4 (viene con
+PostgreSQL 18).
+
 **Datos de la fase 4 (sólo ingesta).** 40 capas del visor de emergencias (bomberos, policía, ambulancias,
 perforaciones, tanques, hidrantes, mojones de rutas, aserraderos, estaciones de servicio…). Luces: la serie diaria de
 los píxeles iluminados vive en Parquet (`blackmarble/parquet/vnp46a2_AAAA.parquet`, columnas pixel_id, fecha, rad_x10,
