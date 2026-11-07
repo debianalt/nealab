@@ -312,6 +312,12 @@ estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración
 | `python pipeline/infra/luz.py --mensual` y `--procesar` | VIIRS mensual y anual; píxeles iluminados, serie diaria a Parquet, agregado por asentamiento, celda → píxel | ~2 + ~10 min |
 | `python pipeline/infra/validar_datos_f4.py` | `pipeline/infra/validacion_datos_f4.md` (integridad, sin análisis) | ~1 min |
 
+| `python pipeline/infra/hidro_ign.py` | Hidrografía del IGN (cursos perennes e intermitentes, espejos, embalses, saltos) → `infra.ign_*` | ~1 min |
+| `python pipeline/infra/red_arroyos.py` | Red de arroyos vectorial (381 mil tramos, 150 mil km, orden de Strahler, área, pendiente, nombre) → `infra.arroyos`; `infra.cruces.arroyo_id` | ~3 min (~5 GB de RAM) |
+| `python pipeline/infra/hand.py` | HAND a 30 m (`hand_misiones.tif`, `dist_cauce_misiones.tif`) y resumen por celda → `infra.hand_h3` | ~7 min (~10 GB de RAM) |
+| `python pipeline/infra/lluvia_imerg.py --bajar` / `--cargar` | IMERG V07 1998– por día local: mm, máx. 30 min, máx. 3 h, horas de lluvia → `infra.imerg_diaria` (8,2 M filas) | ~10 min + 2 min |
+| `python pipeline/infra/validar_datos_f5.py` | `pipeline/infra/validacion_datos_f5.md` | ~2 min |
+
 **Datos de la fase 4 (sólo ingesta).** 40 capas del visor de emergencias (bomberos, policía, ambulancias,
 perforaciones, tanques, hidrantes, mojones de rutas, aserraderos, estaciones de servicio…). Luces: la serie diaria de
 los píxeles iluminados vive en Parquet (`blackmarble/parquet/vnp46a2_AAAA.parquet`, columnas pixel_id, fecha, rad_x10,

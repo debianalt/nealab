@@ -470,6 +470,30 @@ FUENTES = [
         uso_no_recomendado='Capacidad o estado edilicio.', scripts='pipeline/infra/servicios.py',
         objetos=['infra.escuelas', 'infra.salud_ign', 'infra.asentamientos', 'infra.osm_electrica', 'infra.osm_telecom'],
         verificado='2026-11-07'),
+    dict(
+        id='ign_hidrografia', nombre='Hidrografía del IGN (cursos, espejos, embalses, saltos)', proveedor='Instituto Geográfico Nacional',
+        producto='WFS ign:lineas_de_aguas_continentales_perenne/intermitentes, areas_…, puntos_…', version='Bajada el 7-nov-2026',
+        acceso='pipeline/infra/hidro_ign.py (WFS 1.0.0)', licencia='—', cita='IGN. Capas SIG – Aguas continentales', doi='—',
+        tipo_dato='cartografía oficial', res_espacial='vector (escala 1:250.000 aprox.)', res_temporal='estático',
+        periodo='—', cobertura='Misiones + ~5 km', variables='nombre (fna), tipo (gna), régimen perenne/intermitente',
+        procesamiento='Una tabla por capa.', asignacion_celda='Por geometría.',
+        validacion='Cobertura de la red derivada sobre los cursos perennes (validacion_datos_f5.md).',
+        limitaciones='Escala gruesa: faltan los arroyos chicos; sin canales ni embalses rurales en Misiones.',
+        uso_recomendado='Nombre y régimen de los arroyos.', uso_no_recomendado='Red completa.',
+        scripts='pipeline/infra/hidro_ign.py', objetos=['infra.ign_*'], verificado='2026-11-07'),
+    dict(
+        id='imerg_v07', nombre='Lluvia GPM IMERG V07 (media hora → día local)', proveedor='NASA GPM, vía Google Earth Engine',
+        producto='NASA/GPM_L3/IMERG_V07', version='Final, 1998 →', acceso='pipeline/infra/lluvia_imerg.py (computePixels por mes)' + GEE,
+        licencia='—', cita='Huffman, G. J. et al. 2023. GPM IMERG Final Precipitation L3 Half Hourly 0.1° V07. NASA GES DISC',
+        doi='10.5067/GPM/IMERG/3B-HH/07', tipo_dato='estimación satelital calibrada con pluviómetros (GPCC, mensual)',
+        res_espacial='0,1°', res_temporal='30 min → día local', periodo='1998-01-01 → nov-2026', cobertura='Misiones + margen',
+        variables='mm del día, tasa máxima de 30 min, lluvia máxima en 3 h, horas con lluvia',
+        procesamiento='Reducción del lado de GEE por día local (03–03 UTC).', asignacion_celda='infra.imerg_h3_pixel (centro de la celda).',
+        validacion='Contra estaciones INTA y GHCN en su píxel (validacion_datos_f5.md).',
+        limitaciones='Subestima aguaceros locales cortos (El Soberbio 21-jul-2026: 75,6 mm contra 190 del municipio).',
+        uso_recomendado='Frecuencia e intensidad relativa de lluvias fuertes.', uso_no_recomendado='Lluvia exacta de un punto.',
+        scripts='pipeline/infra/lluvia_imerg.py', objetos=['infra.imerg_diaria', 'infra.imerg_pixel', 'infra.imerg_h3_pixel'],
+        verificado='2026-11-07'),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
@@ -830,4 +854,17 @@ PROCESOS = [
                   'infra.rio_eventos', 'infra.rio_evento_celda'],
          fuentes=['ina_escalas_prefectura', 'visor_emergencias_misiones', 'fabdem', 'osm_cauces', 'red_vial',
                   'censo_2022'], verificado='2026-11-07'),
+    dict(id='red_arroyos', nombre='Red de arroyos de Misiones (tramos con orden, área y pendiente)',
+         metodo=('pysheds extract_river_network y stream_order (Strahler) sobre el D8 de FABDEM 30 m, red ≥ 0,1 km²; '
+                 'atributos por tramo desde acc y FABDEM; nombre y régimen del IGN (si no, OSM) a ≤ 100 m del punto medio.'),
+         parametros='umbral 0,1 km²', validacion='Cobertura sobre IGN y OSM y control en puentes RP2 (validacion_datos_f5.md).',
+         regla='—', limitaciones='Cauce de FABDEM corrido ~100 m del real; ríos de frontera con área truncada.',
+         scripts='pipeline/infra/red_arroyos.py', objetos=['infra.arroyos', 'infra.cruces'],
+         fuentes=['fabdem', 'ign_hidrografia', 'osm_cauces'], verificado='2026-11-07'),
+    dict(id='hand_misiones', nombre='Altura sobre el cauce (HAND) de Misiones y resumen por celda',
+         metodo=('FABDEM rellenado, D8, red ≥ 0,1 km²; pysheds compute_hand (índice de la celda de red de destino); '
+                 'HAND = cota − cota del destino; resumen por celda h3 rasterizando los hexágonos a 30 m.'),
+         parametros='red ≥ 0,1 km²', validacion='Cobertura por celda y negativos antes de recortar (validacion_datos_f5.md).',
+         regla='—', limitaciones='FABDEM no ve terraplenes ni desagües; en llanura (fuera de Misiones) funciona peor.',
+         scripts='pipeline/infra/hand.py', objetos=['infra.hand_h3'], fuentes=['fabdem'], verificado='2026-11-07'),
 ]
