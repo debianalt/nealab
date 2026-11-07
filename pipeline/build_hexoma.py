@@ -628,10 +628,11 @@ def main() -> None:
     with conn.cursor() as cur:
         # Reloads (DELETE + COPY) leave a dead copy of every row: a full reload doubled the base
         # (5 → 10 GB). Rewrite the tables where dead rows pass 20 %, then refresh statistics.
-        cur.execute("""SELECT relname FROM pg_stat_user_tables
+        # Schema-qualified: tables outside the search path (e.g. «arroyos») broke the bare name.
+        cur.execute("""SELECT schemaname, relname FROM pg_stat_user_tables
                        WHERE n_dead_tup > 0.2 * greatest(n_live_tup, 1)""")
-        for (rel,) in cur.fetchall():
-            cur.execute(sql.SQL('VACUUM FULL {}').format(sql.Identifier(rel)))
+        for (sch, rel) in cur.fetchall():
+            cur.execute(sql.SQL('VACUUM FULL {}').format(sql.Identifier(sch, rel)))
         cur.execute('VACUUM (ANALYZE)')
     log(f'v_hexoma: {ncols} columnas')
     if not args.skip_distribuciones:
