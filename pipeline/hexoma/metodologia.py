@@ -398,6 +398,21 @@ FUENTES = [
         uso_recomendado='Nombre del cauce, evidencia de estructura, ubicación precisa de cruces.',
         uso_no_recomendado='Red hidrográfica completa.',
         scripts='pipeline/infra/cauces_osm.py', objetos=['infra.osm_cauces', 'infra.osm_estructuras'], verificado='2026-11-07'),
+    dict(
+        id='ina_escalas_prefectura', nombre='Alturas diarias del río Uruguay (escalas de Prefectura, INA)',
+        proveedor='Instituto Nacional del Agua (red «escalas Prefectura Nacional»)',
+        producto='API a5: /obs/puntual/observaciones?series_id=60,61,63,64,65,66,67',
+        version='Bajadas el 7-nov-2026', acceso='pipeline/infra/rio_uruguay.py (API pública, sin clave)',
+        licencia='—', cita='INA (2026). Sistema de información y alerta hidrológico', doi='—',
+        tipo_dato='medición (lectura manual diaria de escala)', res_espacial='punto (hidrómetro)', res_temporal='diaria',
+        periodo='1950–2026 según la estación', cobertura='río Uruguay, Pepirí Miní – Garruchos',
+        variables='altura hidrométrica (m sobre el cero de la escala)',
+        procesamiento='Máximo del día; QC que marca sin borrar (fuera de rango, pico de un día > 10 m en el mismo sentido).',
+        asignacion_celda='No hay asignación a celda.',
+        validacion='Ver rio_uruguay_puentes.',
+        limitaciones='Sin cero de escala en msnm en la API; una lectura por día (subestima el pico); huecos en Pepirí Miní, Panambí y Puerto Concepción.',
+        uso_recomendado='Frecuencia de crecidas, eventos históricos.', uso_no_recomendado='Hora del pico.',
+        scripts='pipeline/infra/rio_uruguay.py', objetos=['infra.rio_lecturas', 'infra.rio_estaciones'], verificado='2026-11-07'),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
@@ -738,4 +753,24 @@ PROCESOS = [
          regla='—', limitaciones='Hereda los supuestos de velocidad y del umbral de pendiente.',
          scripts='pipeline/infra/desvios.py', objetos=['infra.cruces'],
          fuentes=['red_vial', 'fabdem', 'censo_2022', 'visor_emergencias_misiones'], verificado='2026-11-07'),
+    dict(id='rio_uruguay_puentes', nombre='Río Uruguay contra los puentes de la RP2 (niveles medidos)',
+         metodo=('Lecturas diarias de 7 escalas de Prefectura (API INA a5, 1950–2026); cero de escala en msnm del Monitor '
+                 'provincial o implícito en FABDEM (superficie del río − mediana 2011–2015); nivel en cada puente por '
+                 'interpolación lineal por kilómetro de río (eje OSM encadenado) entre las estaciones con lectura ese '
+                 'día; corte = nivel ≥ cota de seguridad del visor. Probabilidad anual empírica, Gumbel y GEV sobre '
+                 'máximos anuales; eventos = 8 máximos anuales más altos de El Soberbio sobre la red (seco).'),
+         parametros=('ceros: perfil isotónico de FABDEM (elegido por menor error de interpolación, control El Soberbio '
+                     '118,9 vs 118); tramo máx. 250 km; respaldo hidrómetro ≤ 5 km; año válido ≥ 9 meses con ≥ 8 días'),
+         validacion=('Prensa: 14 de 19 cortes por crecida del Uruguay (74 %; regla ≥ 2/3). 28-jun-2014: «2 m sobre el '
+                     'puente» del Arroyo Soberbio pone el tablero a +0,5 m de la cota. Error de interpolación en crecida: '
+                     '1–2 m El Soberbio–Alba Posse, 4–7 m Panambí–San Javier. pipeline/infra/validacion_rio.md.'),
+         regla='Reglas fijadas antes de mirar (7-nov-2026): ceros y ≥ 2/3 de cortes de prensa.',
+         limitaciones=('La cota de seguridad es el nivel del tablero: el cierre preventivo ocurre 3–4 m antes (El Soberbio '
+                       '2023) y el modelo no lo representa. Ceros aguas abajo de El Soberbio inciertos en metros. Lectura '
+                       'diaria manual: subestima el pico. No modela la crecida propia de los arroyos.'),
+         scripts='pipeline/infra/rio_uruguay.py; pipeline/infra/cortes_rio.py; pipeline/infra/validar_rio.py',
+         objetos=['infra.rio_estaciones', 'infra.rio_lecturas', 'infra.rio_puente_diario', 'infra.rio_puente_resumen',
+                  'infra.rio_eventos', 'infra.rio_evento_celda'],
+         fuentes=['ina_escalas_prefectura', 'visor_emergencias_misiones', 'fabdem', 'osm_cauces', 'red_vial',
+                  'censo_2022'], verificado='2026-11-07'),
 ]

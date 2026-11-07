@@ -301,6 +301,17 @@ estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración
 | `python pipeline/infra/desvios.py` | En `infra.cruces`: dependientes, desvío seco y con lluvia, impacto, aislamiento y salud aislada con lluvia fuerte | ~2,5 min |
 | `python pipeline/infra/validar_lluvia.py` | `pipeline/infra/validacion_lluvia.md` y mapa `lluvia_el_soberbio.html` | ~1 min |
 
+| `python pipeline/infra/rio_uruguay.py [--rebajar]` | Series diarias INA de 7 escalas del Uruguay (1950–2026) → `infra.rio_lecturas`; ceros en msnm → `infra.rio_estaciones`; nivel diario en cada puente RP2 con cota → `infra.rio_puente_diario`; frecuencias y períodos de retorno → `infra.rio_puente_resumen` | ~3 min |
+| `python pipeline/infra/cortes_rio.py` | Las 8 crecidas más altas de El Soberbio sobre la red → `infra.rio_eventos`, `infra.rio_evento_celda` | ~30 s |
+| `python pipeline/infra/validar_rio.py` | `pipeline/infra/validacion_rio.md` (ceros, error de interpolación, cortes de prensa de `cortes_rp2_prensa.csv`) | ~1 min |
+
+**Río Uruguay contra la RP2.** Casi todo medido: lecturas diarias de Prefectura (INA) y cotas del visor. El cero de
+cada escala sale del perfil del agua en FABDEM (El Soberbio 118,9; el Monitor provincial dice 118 y la prensa de 2014
+lo confirma). La **cota de seguridad es el nivel del tablero**; el cierre preventivo llega 2–4 m antes y no está
+modelado. Frecuencias firmes de El Soberbio a Alba Posse (±1–2 m); indicativas de Panambí a Garruchos (±4–7 m: el
+río no sube parejo en crecida). La lectura es una por día: subestima el pico (columnas +1 m / +2 m). El paso
+provisorio del Pindaytí (desde abr-2021) no tiene cota y queda fuera.
+
 **Día de lluvia.** Velocidades supuestas (tabla en `red_lluvia.py`), por eso cada tiempo va con los km de tierra del
 camino, que no dependen de ellas. Tierra con pendiente ≥ 10 % = intransitable con lluvia fuerte: **la cantidad de
 gente sin ruta depende del umbral** (26–201 mil entre 15 % y 8 %) y se informa como rango; el orden de los
