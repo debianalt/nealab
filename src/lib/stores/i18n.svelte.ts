@@ -29,7 +29,6 @@ const dict: Record<string, Record<Locale, string>> = {
 	'tip.building': { es: 'Edificación:', en: 'Building:', gn: 'Óga:', pt: 'Edificação:' },
 	'tip.height': { es: 'Altura', en: 'Height', gn: 'Yvate', pt: 'Altura' },
 	'tip.area': { es: 'Área', en: 'Area', gn: 'Yvy', pt: 'Área' },
-	'tip.estPersons': { es: 'Personas est.:', en: 'Est. persons:', gn: "Yvypóra:", pt: 'Pessoas est.:' },
 	'tip.radio': { es: 'Radio', en: 'Tract', gn: 'Radio', pt: 'Setor' },
 	'tip.pop': { es: 'Pob.:', en: 'Pop:', gn: "Yvypóra:", pt: 'Pop.:' },
 	'tip.density': { es: 'Densidad:', en: 'Density:', gn: "Yvypóra/km\u00B2:", pt: 'Densidade:' },

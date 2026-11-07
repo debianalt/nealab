@@ -1470,7 +1470,6 @@
 			map.getCanvas().style.cursor = 'pointer';
 			const p = e.features![0].properties!;
 
-			const pers = Math.round(parseFloat(p.est_personas)) || 0;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const redcode = p.redcode || null;
@@ -1480,8 +1479,7 @@
 			const radioHog = parseInt(p.radio_hogares) || 0;
 			const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2<br>` +
-				`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
+			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m\u00B2`;
 			if (redcode) {
 				html += `<br><span style="color:var(--c-ink-2n)">\u2500\u2500\u2500</span><br>` +
 					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
@@ -1538,7 +1536,6 @@
 			map.getCanvas().style.cursor = 'pointer';
 			const p = e.features![0].properties!;
 
-			const pers = Math.round(parseFloat(p.est_personas)) || 0;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const redcode = p.redcode || null;
@@ -1548,8 +1545,7 @@
 			const radioHog = parseInt(p.radio_hogares) || 0;
 			const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
-				`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
+			let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²`;
 			if (redcode) {
 				html += `<br><span style="color:var(--c-ink-2n)">───</span><br>` +
 					`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
@@ -1581,7 +1577,6 @@
 				map.getCanvas().style.cursor = 'pointer';
 				const p = e.features![0].properties!;
 
-				const pers = Math.round(parseFloat(p.est_personas)) || 0;
 				const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 				const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 				const redcode = p.redcode || null;
@@ -1591,8 +1586,7 @@
 				const radioHog = parseInt(p.radio_hogares) || 0;
 				const radioAreaKm2 = p.radio_area_km2 != null ? parseFloat(p.radio_area_km2).toFixed(1) : '?';
 
-				let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²<br>` +
-					`<b style="color:var(--c-accent)">${i18n.t('tip.estPersons')}</b> <span style="color:var(--c-accent);font-weight:600">${pers}</span>`;
+				let html = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${i18n.t('tip.height')} ${h} m | ${i18n.t('tip.area')} ${a} m²`;
 				if (redcode) {
 					html += `<br><span style="color:var(--c-ink-2n)">───</span><br>` +
 						`<b style="color:var(--c-ink-1n)">${i18n.t('tip.radio')}</b> <span style="color:var(--c-ink-1n)">${redcode}</span><br>` +
@@ -1622,8 +1616,7 @@
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
 			const dist = p.distrito || '';
-			const est = p.est_personas > 0 ? ` | ~${p.est_personas} pers.` : '';
-			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m\u00B2 | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
+			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m\u00B2 | ${res}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1645,8 +1638,7 @@
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
 			const dist = p.distrito || '';
-			const est = p.est_personas > 0 ? ` | ~${p.est_personas} pers.` : '';
-			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m² | ${res}${est}${dist ? ` | ${formatDept(dist)}` : ''}`;
+			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m² | ${res}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
