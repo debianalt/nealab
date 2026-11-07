@@ -592,6 +592,13 @@ export interface DeptRank {
 	// The reading exists only by department (no per-hex column): the panel says so and
 	// names what the hexagons show instead.
 	hexNone?: boolean;
+	// Part of `field` (same unit) the bar draws in a lighter tone: agri_potential, suitable hectares inside strict
+	// protected areas or OTBN I–II. The note names both parts.
+	splitField?: string;
+	// Lines under the open department's position: one value per entry, in the reading's unit.
+	details?: Array<{ field: string; labelKey: string }>;
+	// Key of a factor code in dept.rank (label: `agri.factor.<code>`) and, at `<limitField>_pct`, its share.
+	limitField?: string;
 	// The reading is the layer's own temporal change (deforestation, Aceleración): while the tab
 	// is active the map runs in this temporal mode and the Actual / Línea base / Cambio toggle hides.
 	temporalMode?: TemporalMode;
@@ -1069,15 +1076,15 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			extraField: 'soja_pct', extraUnitKey: 'rank.unit.pctArea', extraDecimals: 1,
 			hexVariable: 'apt_soja_clase',
 			metrics: [
-				{ tabKey: 'rank.agri.tab.soja' },
-				{ tabKey: 'rank.agri.tab.maiz', field: 'maiz_ha', extraField: 'maiz_pct', hexVariable: 'apt_maiz_clase' },
-				{ tabKey: 'rank.agri.tab.algodon', field: 'algodon_ha', extraField: 'algodon_pct', hexVariable: 'apt_algodon_clase' },
-				{ tabKey: 'rank.agri.tab.girasol', field: 'girasol_ha', extraField: 'girasol_pct', hexVariable: 'apt_girasol_clase' },
-				{ tabKey: 'rank.agri.tab.arroz', field: 'arroz_ha', extraField: 'arroz_pct', hexVariable: 'apt_arroz_clase' },
-				{ tabKey: 'rank.agri.tab.yerba', field: 'yerba_ha', extraField: 'yerba_pct', hexVariable: 'apt_yerba_clase' },
-				{ tabKey: 'rank.agri.tab.te', field: 'te_ha', extraField: 'te_pct', hexVariable: 'apt_te_clase' },
-				{ tabKey: 'rank.agri.tab.citricos', field: 'citricos_ha', extraField: 'citricos_pct', hexVariable: 'apt_citricos_clase' },
-				{ tabKey: 'rank.agri.tab.pasturas', field: 'pasturas_ha', extraField: 'pasturas_pct', hexVariable: 'apt_pasturas_clase' },
+				{ tabKey: 'rank.agri.tab.soja', splitField: 'soja_ha_bloq', limitField: 'soja_lim', details: [{ field: 'soja_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'soja_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'soja_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.maiz', field: 'maiz_ha', extraField: 'maiz_pct', hexVariable: 'apt_maiz_clase', splitField: 'maiz_ha_bloq', limitField: 'maiz_lim', details: [{ field: 'maiz_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'maiz_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'maiz_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.algodon', field: 'algodon_ha', extraField: 'algodon_pct', hexVariable: 'apt_algodon_clase', splitField: 'algodon_ha_bloq', limitField: 'algodon_lim', details: [{ field: 'algodon_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'algodon_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'algodon_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.girasol', field: 'girasol_ha', extraField: 'girasol_pct', hexVariable: 'apt_girasol_clase', splitField: 'girasol_ha_bloq', limitField: 'girasol_lim', details: [{ field: 'girasol_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'girasol_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'girasol_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.arroz', field: 'arroz_ha', extraField: 'arroz_pct', hexVariable: 'apt_arroz_clase', splitField: 'arroz_ha_bloq', limitField: 'arroz_lim', details: [{ field: 'arroz_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'arroz_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'arroz_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.yerba', field: 'yerba_ha', extraField: 'yerba_pct', hexVariable: 'apt_yerba_clase', splitField: 'yerba_ha_bloq', limitField: 'yerba_lim', details: [{ field: 'yerba_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'yerba_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'yerba_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.te', field: 'te_ha', extraField: 'te_pct', hexVariable: 'apt_te_clase', splitField: 'te_ha_bloq', limitField: 'te_lim', details: [{ field: 'te_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'te_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'te_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.citricos', field: 'citricos_ha', extraField: 'citricos_pct', hexVariable: 'apt_citricos_clase', splitField: 'citricos_ha_bloq', limitField: 'citricos_lim', details: [{ field: 'citricos_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'citricos_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'citricos_ha_resto', labelKey: 'rank.agri.resto' }] },
+				{ tabKey: 'rank.agri.tab.pasturas', field: 'pasturas_ha', extraField: 'pasturas_pct', hexVariable: 'apt_pasturas_clase', splitField: 'pasturas_ha_bloq', limitField: 'pasturas_lim', details: [{ field: 'pasturas_ha_bloq', labelKey: 'rank.agri.bloq' }, { field: 'pasturas_ha_monte', labelKey: 'rank.agri.monte' }, { field: 'pasturas_ha_resto', labelKey: 'rank.agri.resto' }] },
 			],
 		},
 		parquet: 'sat_agri_apt',

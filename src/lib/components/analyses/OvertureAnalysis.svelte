@@ -530,6 +530,22 @@
 				<span class="rank-selected-pos">{selectedRankPos.pos}.º {i18n.t('rank.of')} {selectedRankPos.total}</span>
 				· {fmtRank(selectedRankPos.dept.rank?.[rankCfg.field], rankCfg.decimals, rankCfg.signed)} {rankUnit}
 				{#if rankCfg.extraField}({fmtRank(selectedRankPos.dept.rank?.[rankCfg.extraField], rankCfg.extraDecimals ?? 0)} {i18n.t(rankCfg.extraUnitKey ?? '')}){/if}
+				{#if rankCfg.details}
+					{@const tot = selectedRankPos.dept.rank?.[rankCfg.field]}
+					<ul class="rank-details">
+						{#each rankCfg.details as dd}
+							{@const dv = selectedRankPos.dept.rank?.[dd.field]}
+							<li>{i18n.t(dd.labelKey)}: {fmtRank(dv, rankCfg.decimals)} {rankUnit}{#if dv != null && tot}&nbsp;({fmtRank(100 * dv / tot, 0)} %){/if}</li>
+						{/each}
+					</ul>
+				{/if}
+				{#if rankCfg.limitField}
+					{@const lim = selectedRankPos.dept.rank?.[rankCfg.limitField]}
+					{@const limPct = selectedRankPos.dept.rank?.[`${rankCfg.limitField}_pct`]}
+					{#if lim && lim !== 'ninguno' && limPct != null}
+						<div class="rank-limit">{i18n.t('rank.agri.lim').replace('{factor}', i18n.t(`agri.factor.${lim}`)).replace('{pct}', fmtRank(limPct, 0))}</div>
+					{/if}
+				{/if}
 				<div class="rank-selected-q">{i18n.t(rankCfg.titleKey)}</div>
 			</div>
 		{/if}
@@ -680,7 +696,15 @@
 							<div class="rank-pos">{deptList.indexOf(dept) + 1}</div>
 							<div class="dept-name rank-name">{formatDept(dept.dpto ?? dept.distrito ?? dept.municipio)}</div>
 							<div class="dept-bar-wrap rank-bar-wrap">
-								<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? RANK_AWAY : 'var(--s-rank)'}></div>
+								{#if rankCfg.splitField && v}
+									{@const part = Math.min(Math.max(dept.rank?.[rankCfg.splitField] ?? 0, 0), v)}
+									<div class="dept-bar rank-bar-split" style:width="{100 * v / rankMax}%">
+										<div style:width="{100 * (v - part) / v}%" style:background="var(--s-rank)"></div>
+										<div class="rank-bar-light" style:width="{100 * part / v}%" style:background="var(--s-rank)"></div>
+									</div>
+								{:else}
+									<div class="dept-bar" style:width="{100 * Math.abs(v ?? 0) / rankMax}%" style:background={rankCfg.signed && (v ?? 0) < 0 ? RANK_AWAY : 'var(--s-rank)'}></div>
+								{/if}
 							</div>
 							<div class="rank-value">{fmtRank(v, rankCfg.decimals, rankCfg.signed)} {v == null ? '' : rankUnit}</div>
 							{#if rankCfg.extraField}
@@ -999,6 +1023,11 @@
 	.rank-selected { font-size: 12.5px; color: var(--c-ink-2); margin: -4px 0 10px; }
 	.rank-selected-pos { font-weight: 700; color: var(--c-t-f87171); }
 	.rank-selected-q { font-size: 11.5px; color: var(--c-ink-4); margin-top: 2px; }
+	.rank-details { list-style: none; margin: 4px 0 0; padding: 0; font-size: 11.5px; color: var(--c-ink-3); }
+	.rank-limit { font-size: 11.5px; color: var(--c-ink-2); margin-top: 3px; }
+	.rank-bar-split { display: flex; }
+	.rank-bar-split > div { height: 100%; }
+	.rank-bar-light { opacity: 0.35; }
 
 	/* ── Navigation ── */
 	.back-btn { background: none; border: none; color: var(--c-accent); font-size: 12px; cursor: pointer; padding: 0; margin-bottom: 8px; }
