@@ -107,6 +107,15 @@
 	});
 
 	const REGIONAL_NEA_BBOX: [number, number, number, number] = [-59.8, -30.8, -53.6, -25.4];
+	// Start view and Home button: the 4 NEA provinces, the strong outline (7-nov-2026). The
+	// regional box above (Misiones + Corrientes + the Paraná border) still frames a layer
+	// opened in regional mode, so the viewport loads stay as they were.
+	const HOME_NEA_IDS = ['misiones', 'corrientes', 'chaco', 'formosa'];
+	const HOME_BBOX: [number, number, number, number] = (() => {
+		const bb = HOME_NEA_IDS.map(id => TERRITORY_REGISTRY[id].bbox);
+		return [Math.min(...bb.map(b => b[0])), Math.min(...bb.map(b => b[1])),
+			Math.max(...bb.map(b => b[2])), Math.max(...bb.map(b => b[3]))];
+	})();
 
 	function getRegionalOtherPrefixes(countryFilter: CountryId | null, activePrefix: string): string[] {
 		// Only neighbours where the open layer exists (3-nov-2026: analysis layers only in
@@ -217,6 +226,7 @@
 				// Same rule as the territory effect: a per-department layer stays on the province.
 				const bbox = untrack(() => hexStore.activeLayer?.perDepartment)
 					? untrack(() => territoryStore.activeTerritory.bbox)
+					: !countryFilter && !untrack(() => hexStore.activeLayer) ? HOME_BBOX
 					: getRegionalBbox(countryFilter);
 				setTimeout(() => mapComponent?.flyToBbox(bbox), 100);
 			}
@@ -1702,7 +1712,7 @@
 		territoryStore.enterRegionalMode(null);
 		territoryStore.homeView = true;
 		// After the territory/regional effects (which may queue their own flyToBbox at 100–150 ms).
-		setTimeout(() => mapComponent?.flyToBbox(getRegionalBbox(null)), 300);
+		setTimeout(() => mapComponent?.flyToBbox(HOME_BBOX), 300);
 	}
 
 </script>

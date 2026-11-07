@@ -498,13 +498,28 @@
 				});
 			}
 
-			// Outline of the whole area (NEA + Paraguay + southern Brazil), shown on the
-			// start view — pipeline/build_region_outline.py.
+			// Start-view outlines (pipeline/build_region_outline.py), two tiers (7-nov-2026):
+			// 'nea' = the 4 NEA provinces, where the data are, strong; 'tf' = Paraguay and
+			// southern Brazil, the cross-border area not yet integrated, soft and dashed.
 			map.addSource('region-outline', { type: 'geojson', data: regionOutline as any });
+			map.addLayer({
+				id: 'region-outline-tf',
+				type: 'line',
+				source: 'region-outline',
+				filter: ['==', ['get', 'tier'], 'tf'],
+				layout: { 'line-join': 'round', 'line-cap': 'butt', visibility: homeView ? 'visible' : 'none' },
+				paint: {
+					'line-color': '#f472b6',
+					'line-width': ['interpolate', ['linear'], ['zoom'], 5, 1.1, 8, 0.9, 12, 0.6],
+					'line-opacity': 0.55,
+					'line-dasharray': [3, 2],
+				},
+			});
 			map.addLayer({
 				id: 'region-outline',
 				type: 'line',
 				source: 'region-outline',
+				filter: ['==', ['get', 'tier'], 'nea'],
 				layout: { 'line-join': 'round', 'line-cap': 'round', visibility: homeView ? 'visible' : 'none' },
 				paint: {
 					'line-color': '#f472b6',
@@ -2518,21 +2533,27 @@
 		const borderOf = (id: string | null) => (id ? BORDER_LAYER[id] ?? `${id}-border` : null);
 		const active = homeView ? null : borderOf(activeTerritoryId);
 		const hover = borderOf(hoverTerritoryId);
+		// Start view: the inner borders of Paraguay and southern Brazil stay hidden (shown on
+		// hover), so the soft cross-border outline reads as one area next to the NEA.
+		const neaBorders = new Set(['misiones', 'corrientes', 'chaco', 'formosa'].map(borderOf));
 		for (const l of style.layers ?? []) {
 			if (l.type !== 'line' || !l.id.endsWith('-border')) continue;
 			const on = l.id === active;
 			const hovered = !on && l.id === hover;
+			const quiet = homeView && !hovered && !neaBorders.has(l.id) ? 0 : 0.22;
 			// Instant: a 300 ms fade lags the hover a whole step behind on an idle map.
 			map.setPaintProperty(l.id, 'line-opacity-transition', { duration: 0, delay: 0 });
 			map.setPaintProperty(l.id, 'line-width-transition', { duration: 0, delay: 0 });
 			map.setPaintProperty(l.id, 'line-opacity', on
 				? ['interpolate', ['linear'], ['zoom'], 6, 0.8, 12, 0.55, 16, 0.3]
-				: hovered ? 0.75 : 0.22);
+				: hovered ? 0.75 : quiet);
 			map.setPaintProperty(l.id, 'line-width', on
 				? ['interpolate', ['linear'], ['zoom'], 6, 1.4, 9, 1.1, 12, 0.9, 16, 0.6]
 				: hovered ? 1.4 : 0.6);
 		}
-		if (map.getLayer('region-outline')) map.setLayoutProperty('region-outline', 'visibility', homeView ? 'visible' : 'none');
+		for (const id of ['region-outline', 'region-outline-tf']) {
+			if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', homeView ? 'visible' : 'none');
+		}
 		if (map.getLayer('ar-dept-line')) {
 			const cp = homeView ? '' : AR_CODPROV[activeTerritoryId] ?? '';
 			map.setPaintProperty('ar-dept-line', 'line-opacity',
@@ -2596,7 +2617,7 @@
 		}
 		set('territory-bg-fill', 'fill-color', T.territoryBg);
 		set('territory-bg-fill', 'fill-opacity', T.territoryBgOpacity);
-		set('region-outline', 'line-color', T.regionOutline);
+		for (const id of ['region-outline', 'region-outline-tf']) set(id, 'line-color', T.regionOutline);
 		set('province-line', 'line-color', T.province);
 		set('province-fill', 'fill-color', T.accent);
 		for (const id of ['ar-dept-line', 'br-dept-line']) set(id, 'line-color', T.deptLine);

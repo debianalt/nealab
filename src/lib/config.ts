@@ -260,8 +260,8 @@ export const BASEMAP_STYLE = {
 } as const;
 
 export const MAP_INIT = {
-	center: [-56.7, -28.1] as [number, number],  // NEA regional view
-	zoom: 6.0,
+	center: [-58.5, -26.9] as [number, number],  // the 4 NEA provinces (+page HOME_BBOX)
+	zoom: 5.6,
 	pitch: 50,
 	bearing: -15,
 	minZoom: 5,

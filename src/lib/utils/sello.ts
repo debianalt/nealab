@@ -49,7 +49,7 @@ export interface MapThemeColors {
 	mask: string; maskOpacity: number;           // outside the active territory
 	territoryBg: string; territoryBgOpacity: number; // under the hexagons (no-parquet cells)
 	border: string; borderDash: number[] | null; // the 24 territory limits
-	regionOutline: string;          // start view: outline of the whole area
+	regionOutline: string;          // start view: NEA outline (strong) and cross-border outline (soft)
 	province: string;               // census radio borders (province context)
 	deptLine: string;               // department limits (pickers)
 	accent: string;                 // selected department, picker tint
