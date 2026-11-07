@@ -30,16 +30,20 @@
 
 	// Three readings, 2010→2022 (the pair the map's change mode shows). The
 	// default answers the layer's question: where population changed the most.
+	// mapWith: what the map paints with a department open (decided by the author, 6-nov-2026), so
+	// no tab repeats another's map: Cambio % → the cells' density change (the default tab, so a
+	// department opens on its cells), Personas → the departments with the people gained or lost
+	// (a count, by nature departmental; cells hidden), Población → the cells' 2022 density.
 	type Reading = { tabKey: string; titleKey: string; noteKey: string; unitKey: string; decimals: number; signed: boolean;
-		value: (r: Row) => number | null; extra?: (r: Row) => number | null };
+		value: (r: Row) => number | null; extra?: (r: Row) => number | null; mapWith: 'delta' | 'depts' | 'current' };
 	const delta = (r: Row) => (r.pob[2] != null && r.pob[3] != null ? r.pob[3] - r.pob[2] : null);
 	const READINGS: Reading[] = [
 		{ tabKey: 'rank.censo.tab.pct', titleKey: 'rank.censo.title.pct', noteKey: 'rank.censo.note.pct', unitKey: 'rank.unit.pct', decimals: 1, signed: true,
-		  value: (r) => { const d = delta(r); return d != null && r.pob[2]! > 0 ? (d / r.pob[2]!) * 100 : null; }, extra: (r) => r.pob[3] },
+		  value: (r) => { const d = delta(r); return d != null && r.pob[2]! > 0 ? (d / r.pob[2]!) * 100 : null; }, extra: (r) => r.pob[3], mapWith: 'delta' },
 		{ tabKey: 'rank.censo.tab.people', titleKey: 'rank.censo.title.people', noteKey: 'rank.censo.note.people', unitKey: 'rank.unit.people', decimals: 0, signed: true,
-		  value: delta },
+		  value: delta, mapWith: 'depts' },
 		{ tabKey: 'rank.censo.tab.total', titleKey: 'rank.censo.title.total', noteKey: 'rank.censo.note.total', unitKey: 'rank.unit.people', decimals: 0, signed: false,
-		  value: (r) => r.pob[3], extra: (r) => r.viv[3] },
+		  value: (r) => r.pob[3], extra: (r) => r.viv[3], mapWith: 'current' },
 	];
 	const EXTRA_UNIT = ['rank.unit.people', '', 'rank.unit.dwellings'];
 	let readingIdx = $state(0);
@@ -108,14 +112,14 @@
 	// The scope line above the charts can drop the department filter on its own:
 	// unmark the row so list and map agree.
 	$effect(() => {
-		if (!hexStore.deptFilter && expandedCode) expandedCode = null;
+		if (!hexStore.deptFilter && expandedCode) { expandedCode = null; untrack(releaseMode); }
 	});
 
 	// Province view: departments painted with the active reading, on the bars' scale.
 	// An open department shows its hexagons instead.
 	const territoryId = $derived(Object.values(TERRITORY_REGISTRY).find((t) => t.parquetPrefix === hexStore.territoryPrefix)?.id ?? '');
 	$effect(() => {
-		const show = !!sorted && !expandedCode && !!territoryId;
+		const show = !!sorted && (!expandedCode || reading.mapWith === 'depts') && !!territoryId;
 		const f = show ? {
 			territory: territoryId,
 			values: sorted!.map((r) => ({ name: r.name, value: reading.value(r) })),
@@ -127,15 +131,39 @@
 		} : null;
 		untrack(() => hexStore.setDeptFill(f));
 	});
-	onDestroy(() => hexStore.setDeptFill(null));
+	// A by-department reading with a department open hides the cells (as the hexNone tabs).
+	$effect(() => {
+		const hide = !!expandedCode && reading.mapWith === 'depts';
+		untrack(() => hexStore.setHexHidden(hide));
+	});
+	// The open department's map follows the tab: its temporal mode and the population density.
+	// Closing the department goes back to «Actual» if the tab had moved it (as deforestation's
+	// Aceleración). keepMode: a link that carried ?tm= keeps its mode.
+	let tabSetMode = false;
+	function applyReading() {
+		const m = reading.mapWith;
+		if (m === 'depts') return;
+		if (hexStore.colorVariable) hexStore.setColorVariable(null);
+		if (hexStore.temporalMode !== m) { hexStore.setTemporalMode(m); tabSetMode = m !== 'current'; }
+	}
+	function releaseMode() {
+		if (tabSetMode && hexStore.temporalMode !== 'current') hexStore.setTemporalMode('current');
+		tabSetMode = false;
+	}
+	function pickReading(i: number) {
+		readingIdx = i;
+		if (expandedCode) applyReading();
+	}
+	onDestroy(() => { hexStore.setDeptFill(null); hexStore.setHexHidden(false); releaseMode(); });
 
 	function toggleRow(r: Row) {
-		if (expandedCode === r.code) { expandedCode = null; onSelectDept?.(null); return; }
+		if (expandedCode === r.code) { expandedCode = null; onSelectDept?.(null); releaseMode(); return; }
 		openRow(r);
 	}
-	function openRow(r: Row) {
+	function openRow(r: Row, keepMode = false) {
 		expandedCode = r.code;
 		onSelectDept?.(deptFeature(r.name));
+		if (!keepMode) applyReading();
 	}
 
 	// A department clicked on the map: open it as a row click would (never closes).
@@ -151,7 +179,7 @@
 		untrack(() => hexStore.clearDeptPick());
 		const r = rs.find((x) => x.name === req.name) ?? rs.find((x) => norm(x.name) === norm(req.name));
 		if (!r || r.code === untrack(() => expandedCode)) return;
-		untrack(() => openRow(r));
+		untrack(() => openRow(r, !!req.keepMode));
 		// Scroll the list only (scrollIntoView would also move the side panel).
 		requestAnimationFrame(() => {
 			const row = listEl?.querySelector('.rank-row.active');
@@ -190,7 +218,7 @@
 		{:else}
 			<div class="rank-tabs">
 				{#each READINGS as m, i}
-					<button class="rank-tab" class:active={readingIdx === i} onclick={() => (readingIdx = i)}>{i18n.t(m.tabKey)}</button>
+					<button class="rank-tab" class:active={readingIdx === i} onclick={() => pickReading(i)}>{i18n.t(m.tabKey)}</button>
 				{/each}
 			</div>
 

@@ -405,10 +405,11 @@ export class HexStore {
 	// perDepartment one (censo_temporal): the list owns the selection, the map only
 	// asks it to pick. The list consumes it (clearDeptPick); `at` drops a request a
 	// list never got to (another province's rows still loading when the layer closed).
-	deptPick: { name: string; prefix: string; at: number } | null = $state(null);
+	// keepMode: the request comes from a link that carried ?tm= (the list keeps that mode).
+	deptPick: { name: string; prefix: string; at: number; keepMode?: boolean } | null = $state(null);
 
-	requestDeptPick(name: string, prefix: string) {
-		this.deptPick = { name, prefix, at: Date.now() };
+	requestDeptPick(name: string, prefix: string, keepMode = false) {
+		this.deptPick = { name, prefix, at: Date.now(), keepMode };
 	}
 
 	clearDeptPick() {

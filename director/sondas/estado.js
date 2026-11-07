@@ -36,7 +36,10 @@
 	const src = m?.getSource('hexagons');
 	const data = src?.serialize?.().data;
 	const feats = data?.features ?? [];
-	if (feats.length) {
+	// Cells hidden (setHexHidden: a by-department tab with a department open paints the
+	// departments): the source keeps them, but nothing is drawn, so nothing to check.
+	const ocultas = m?.getLayer('hex-fill') && m.getLayoutProperty('hex-fill', 'visibility') === 'none';
+	if (feats.length && !ocultas) {
 		const claro = document.documentElement.dataset.theme !== 'oscuro';
 		const key = claro ? 'color_c' : 'color';
 		const vals = [], porColor = new Map();

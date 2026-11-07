@@ -325,7 +325,7 @@
 					while ((hexStore.loading || hexStore.centroidCache.size === 0) && Date.now() - t0 < 60000) {
 						await new Promise((r) => setTimeout(r, 300));
 					}
-					if (lensStore.activeAnalysis?.id === analysisId) hexStore.requestDeptPick(dept, hexStore.territoryPrefix);
+					if (lensStore.activeAnalysis?.id === analysisId) hexStore.requestDeptPick(dept, hexStore.territoryPrefix, !!params.get('tm'));
 				});
 			}
 		});
