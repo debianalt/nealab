@@ -138,6 +138,16 @@ def construir():
                 n.setItemVisibilityChecked(False)
         return g
 
+    # Prensa (fase 6): menciones de cortes con lugar del nomenclador; varias menciones en el mismo lugar se superponen
+    pre = categorias(pg('Menciones en prensa (cortes y crecidas)', 'noticias', 'menciones', 'mencion_id', W.Point,
+                        'geom IS NOT NULL'), 'tipo', [
+        ('corte_puente', punto('#1f6feb', 2.6, 'square'), 'Corte de puente'),
+        ('corte_ruta_camino', punto('#bf8700', 2.4, 'square'), 'Corte de ruta o camino'),
+        ('corte_luz', punto('#f1c40f', 2.4, 'star'), 'Corte de luz'),
+        ('crecida', punto('#00b4d8', 2.0), 'Crecida'),
+        ('evacuados_aislados', punto('#cf222e', 2.0, 'triangle'), 'Evacuados o aislados')])
+    grupo('Prensa', [pre], apagadas=(pre.name(),))
+
     # Ríos y puentes
     rp2 = simple(pg('Puentes RP2 (cota de seguridad)', 'infra', 'visor_puentes_rp2', 'gid', W.Point),
                  punto('#1f6feb', 3.2, 'diamond'))

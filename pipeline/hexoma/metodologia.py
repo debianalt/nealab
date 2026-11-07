@@ -494,6 +494,24 @@ FUENTES = [
         uso_recomendado='Frecuencia e intensidad relativa de lluvias fuertes.', uso_no_recomendado='Lluvia exacta de un punto.',
         scripts='pipeline/infra/lluvia_imerg.py', objetos=['infra.imerg_diaria', 'infra.imerg_pixel', 'infra.imerg_h3_pixel'],
         verificado='2026-11-07'),
+    dict(
+        id='prensa_misiones', nombre='Notas de prensa de Misiones sobre cortes (6 medios, API WordPress)',
+        proveedor='Misiones Online, Primera Edición, Canal 12, Noticias del 6, Economis, Misiones Opina',
+        producto='/wp-json/wp/v2/posts?search=… (texto completo)', version='Bajadas el 7-nov-2026',
+        acceso='pipeline/noticias/bajar_notas.py (18 consultas fijas, pausa de 1 s por medio)', licencia='—',
+        cita='Cada nota con su medio y URL', doi='—', tipo_dato='texto periodístico', res_espacial='lugar mencionado',
+        res_temporal='fecha de la nota', periodo='según el archivo de cada medio', cobertura='Misiones',
+        variables='título, texto completo, fecha, URL; menciones por oración (tipo de evento, lugar, ruta, km, altura del río)',
+        procesamiento='Reglas transparentes (extraer.py) y nomenclador del Hexoma (municipios, BAHRA, arroyos, hidrómetros).',
+        asignacion_celda='Punto del lugar mencionado (no la ubicación exacta del corte).',
+        validacion=('37.161 notas; 19 de 23 notas del agente de la fase 3 en el corpus; precisión del tipo 87 % y del lugar '
+                    '85 % en muestra nueva de 60 (patrones v2; la v1 dio 52 %). pipeline/noticias/validacion_noticias.md.'),
+        limitaciones=('Sin El Territorio, MisionesCuatro ni La Voz de Cataratas; el buscador de Misiones Online recorta por '
+                      'relevancia (falta listar su archivo completo); la prensa cubre lo que cubre (sesgo urbano y de eventos '
+                      'grandes); el lugar es el nombrado, no el punto del corte.'),
+        uso_recomendado='Verdad observada para validar escenarios de cortes.', uso_no_recomendado='Conteo exhaustivo de eventos.',
+        scripts='pipeline/noticias/bajar_notas.py; pipeline/noticias/extraer.py',
+        objetos=['noticias.notas', 'noticias.oraciones', 'noticias.menciones', 'noticias.fuentes'], verificado='2026-11-07'),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
@@ -867,4 +885,12 @@ PROCESOS = [
          parametros='red ≥ 0,1 km²', validacion='Cobertura por celda y negativos antes de recortar (validacion_datos_f5.md).',
          regla='—', limitaciones='FABDEM no ve terraplenes ni desagües; en llanura (fuera de Misiones) funciona peor.',
          scripts='pipeline/infra/hand.py', objetos=['infra.hand_h3'], fuentes=['fabdem'], verificado='2026-11-07'),
+    dict(id='proyecto_qgis', nombre='Tablas derivadas para consultar el Hexoma en QGIS',
+         metodo=('Copias con geometría de tablas que no la tienen (HAND y acceso al hospital por hexágono, último trimestre '
+                 'de Ookla como tesela, píxeles iluminados como cuadrado de 15", caminos de Misiones); proyecto hexoma.qgz.'),
+         parametros='—', validacion='proyecto_qgis.py verifica cada capa (válida y con elementos) e imprime imágenes de control.',
+         regla='Son derivadas: se rearman con vistas_qgis.sql después de recargar el origen.', limitaciones='—',
+         scripts='pipeline/infra/vistas_qgis.sql; pipeline/infra/proyecto_qgis.py', objetos=['infra.mv_*'],
+         fuentes=['fabdem', 'red_vial', 'ookla_open_data', 'black_marble_vnp46a2', 'viirs_vcmslcfg', 'censo_2022'],
+         verificado='2026-11-07'),
 ]
