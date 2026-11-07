@@ -8,13 +8,13 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "hex_count": 4527,
+      "hex_count": 898,
       "centroid": [
         -62.2609,
         -22.9514
       ],
       "rank": {
-        "noschool_pct": 20.9,
+        "noschool_pct": 21.0,
         "univ25_pct": 8.2,
         "noschool_cambio_pts": -16.8,
         "univ_cambio_pts": 5.1
@@ -29,7 +29,7 @@
         -24.2184
       ],
       "rank": {
-        "noschool_pct": 24.6,
+        "noschool_pct": 24.7,
         "univ25_pct": 3.9,
         "noschool_cambio_pts": -16.0,
         "univ_cambio_pts": 2.6
@@ -38,7 +38,7 @@
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "hex_count": 8728,
+      "hex_count": 8729,
       "centroid": [
         -59.0809,
         -24.9268
@@ -53,7 +53,7 @@
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "hex_count": 5802,
+      "hex_count": 5864,
       "centroid": [
         -59.0324,
         -25.6655
@@ -68,7 +68,7 @@
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "hex_count": 1032,
+      "hex_count": 1243,
       "centroid": [
         -61.9734,
         -23.902

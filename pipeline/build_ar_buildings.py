@@ -151,10 +151,13 @@ def load_buildings(radio_stats: dict, table: str) -> list:
         with conn.cursor(name="ar_bldg_cursor") as cur:
             cur.itersize = 50000
             cur.execute(f"""
-                SELECT ST_AsBinary(geom), redcode, best_height_m, area_m2,
-                       COALESCE(est_personas, 0) AS est_personas
-                FROM {table}
-                WHERE redcode IS NOT NULL AND geom IS NOT NULL
+                SELECT ST_AsBinary(b.geom), b.redcode, b.best_height_m, b.area_m2,
+                       COALESCE(p.est_personas, b.est_personas, 0) AS est_personas
+                FROM {table} b
+                -- allocate_population.py (7-nov-2026): the province's chosen method; not shown on
+                -- the map (e7c31aa), kept so no layer carries the older allocation.
+                LEFT JOIN poblacion_edificios_2022 p ON p.src = '{table}' AND p.bid = b.gid
+                WHERE b.redcode IS NOT NULL AND b.geom IS NOT NULL
             """)
             count = 0
             for row in cur:
@@ -169,7 +172,7 @@ def load_buildings(radio_stats: dict, table: str) -> list:
                 features.append({
                     "geometry": geom,
                     "properties": {
-                        "est_personas":    int(est_pers),
+                        "est_personas":    round(float(est_pers), 1),
                         "best_height_m":   round(float(height), 1) if height else 5.0,
                         "area_m2":         round(float(area), 0) if area else 0,
                         "redcode":         redcode,

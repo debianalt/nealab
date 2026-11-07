@@ -8,18 +8,18 @@
     {
       "dpto": "Ramón Lista",
       "parquetKey": "ramon_lista",
-      "hex_count": 4527,
+      "hex_count": 898,
       "centroid": [
         -62.2609,
         -22.9514
       ],
       "rank": {
-        "nbi_pct": 39.7,
-        "nbi_n": 1865,
+        "nbi_pct": 39.8,
+        "nbi_n": 1885,
         "cloacas_pct": 80.4,
-        "cloacas_n": 3780,
-        "hacin_pct": 42.4,
-        "hacin_n": 1994
+        "cloacas_n": 3810,
+        "hacin_pct": 42.5,
+        "hacin_n": 2014
       }
     },
     {
@@ -32,34 +32,34 @@
       ],
       "rank": {
         "nbi_pct": 24.7,
-        "nbi_n": 1215,
-        "cloacas_pct": 87.1,
-        "cloacas_n": 4282,
+        "nbi_n": 1211,
+        "cloacas_pct": 87.2,
+        "cloacas_n": 4272,
         "hacin_pct": 24.6,
-        "hacin_n": 1208
+        "hacin_n": 1205
       }
     },
     {
       "dpto": "Patiño",
       "parquetKey": "patino",
-      "hex_count": 8728,
+      "hex_count": 8729,
       "centroid": [
         -59.0809,
         -24.9268
       ],
       "rank": {
         "nbi_pct": 13.2,
-        "nbi_n": 3642,
+        "nbi_n": 3644,
         "cloacas_pct": 94.6,
-        "cloacas_n": 26007,
+        "cloacas_n": 26024,
         "hacin_pct": 14.1,
-        "hacin_n": 3879
+        "hacin_n": 3882
       }
     },
     {
       "dpto": "Pirané",
       "parquetKey": "pirane",
-      "hex_count": 5802,
+      "hex_count": 5864,
       "centroid": [
         -59.0324,
         -25.6655
@@ -68,7 +68,7 @@
         "nbi_pct": 9.9,
         "nbi_n": 2368,
         "cloacas_pct": 85.1,
-        "cloacas_n": 20412,
+        "cloacas_n": 20413,
         "hacin_pct": 12.5,
         "hacin_n": 2988
       }
@@ -76,16 +76,16 @@
     {
       "dpto": "Matacos",
       "parquetKey": "matacos",
-      "hex_count": 1032,
+      "hex_count": 1243,
       "centroid": [
         -61.9734,
         -23.902
       ],
       "rank": {
-        "nbi_pct": 20.0,
-        "nbi_n": 1029,
-        "cloacas_pct": 91.0,
-        "cloacas_n": 4692,
+        "nbi_pct": 19.9,
+        "nbi_n": 1030,
+        "cloacas_pct": 91.1,
+        "cloacas_n": 4706,
         "hacin_pct": 20.1,
         "hacin_n": 1037
       }
@@ -100,11 +100,11 @@
       ],
       "rank": {
         "nbi_pct": 9.2,
-        "nbi_n": 566,
+        "nbi_n": 565,
         "cloacas_pct": 96.0,
-        "cloacas_n": 5884,
+        "cloacas_n": 5882,
         "hacin_pct": 12.0,
-        "hacin_n": 736
+        "hacin_n": 737
       }
     },
     {
@@ -119,7 +119,7 @@
         "nbi_pct": 10.8,
         "nbi_n": 675,
         "cloacas_pct": 88.5,
-        "cloacas_n": 5512,
+        "cloacas_n": 5517,
         "hacin_pct": 13.8,
         "hacin_n": 860
       }
@@ -134,11 +134,11 @@
       ],
       "rank": {
         "nbi_pct": 9.6,
-        "nbi_n": 2886,
+        "nbi_n": 2887,
         "cloacas_pct": 57.6,
-        "cloacas_n": 17345,
+        "cloacas_n": 17354,
         "hacin_pct": 12.2,
-        "hacin_n": 3666
+        "hacin_n": 3671
       }
     },
     {
@@ -153,9 +153,9 @@
         "nbi_pct": 9.9,
         "nbi_n": 8697,
         "cloacas_pct": 26.5,
-        "cloacas_n": 23338,
+        "cloacas_n": 23327,
         "hacin_pct": 11.1,
-        "hacin_n": 9759
+        "hacin_n": 9758
       }
     }
   ]

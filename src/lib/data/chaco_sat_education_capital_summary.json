@@ -23,7 +23,7 @@
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "hex_count": 743,
+      "hex_count": 887,
       "centroid": [
         -61.0058,
         -26.9294
@@ -53,7 +53,7 @@
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "hex_count": 1344,
+      "hex_count": 1345,
       "centroid": [
         -61.1354,
         -27.8402
@@ -68,7 +68,7 @@
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "hex_count": 1018,
+      "hex_count": 1019,
       "centroid": [
         -61.281,
         -27.6091
@@ -83,7 +83,7 @@
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "hex_count": 1202,
+      "hex_count": 1206,
       "centroid": [
         -60.105,
         -27.5908
@@ -98,7 +98,7 @@
     {
       "dpto": "12 de Octubre",
       "parquetKey": "12_de_octubre",
-      "hex_count": 1955,
+      "hex_count": 2034,
       "centroid": [
         -61.2476,
         -27.3058
@@ -113,13 +113,13 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "hex_count": 27122,
+      "hex_count": 9223,
       "centroid": [
         -60.6287,
         -26.0385
       ],
       "rank": {
-        "noschool_pct": 19.2,
+        "noschool_pct": 19.3,
         "univ25_pct": 6.3,
         "noschool_cambio_pts": -15.0,
         "univ_cambio_pts": 3.9
@@ -173,7 +173,7 @@
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "hex_count": 2748,
+      "hex_count": 2749,
       "centroid": [
         -60.718,
         -27.6372
@@ -314,7 +314,7 @@
         -26.9131
       ],
       "rank": {
-        "noschool_pct": 11.5,
+        "noschool_pct": 11.6,
         "univ25_pct": 5.5,
         "noschool_cambio_pts": -10.7,
         "univ_cambio_pts": 3.3
@@ -353,7 +353,7 @@
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "hex_count": 3391,
+      "hex_count": 3555,
       "centroid": [
         -58.9957,
         -27.5283

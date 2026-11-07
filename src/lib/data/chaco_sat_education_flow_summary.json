@@ -8,14 +8,14 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "hex_count": 27122,
+      "hex_count": 9223,
       "centroid": [
         -60.6287,
         -26.0385
       ],
       "rank": {
-        "dropout_sec_pct": 16.1,
-        "teen_preg_pct": 9.5
+        "dropout_sec_pct": 16.3,
+        "teen_preg_pct": 9.6
       }
     },
     {
@@ -28,7 +28,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 17.0,
-        "teen_preg_pct": 8.6
+        "teen_preg_pct": 8.5
       }
     },
     {
@@ -41,13 +41,13 @@
       ],
       "rank": {
         "dropout_sec_pct": 15.6,
-        "teen_preg_pct": 9.5
+        "teen_preg_pct": 9.4
       }
     },
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "hex_count": 2748,
+      "hex_count": 2749,
       "centroid": [
         -60.718,
         -27.6372
@@ -80,7 +80,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 13.2,
-        "teen_preg_pct": 6.7
+        "teen_preg_pct": 6.8
       }
     },
     {
@@ -93,7 +93,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 13.8,
-        "teen_preg_pct": 8.2
+        "teen_preg_pct": 7.9
       }
     },
     {
@@ -106,7 +106,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 14.3,
-        "teen_preg_pct": 8.3
+        "teen_preg_pct": 8.4
       }
     },
     {
@@ -118,7 +118,7 @@
         -26.5636
       ],
       "rank": {
-        "dropout_sec_pct": 13.3,
+        "dropout_sec_pct": 13.2,
         "teen_preg_pct": 6.9
       }
     },
@@ -145,7 +145,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 9.1,
-        "teen_preg_pct": 7.4
+        "teen_preg_pct": 7.3
       }
     },
     {
@@ -158,7 +158,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 24.9,
-        "teen_preg_pct": 10.1
+        "teen_preg_pct": 10.2
       }
     },
     {
@@ -170,7 +170,7 @@
         -27.304
       ],
       "rank": {
-        "dropout_sec_pct": 9.7,
+        "dropout_sec_pct": 9.6,
         "teen_preg_pct": 4.3
       }
     },
@@ -190,20 +190,20 @@
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "hex_count": 1202,
+      "hex_count": 1206,
       "centroid": [
         -60.105,
         -27.5908
       ],
       "rank": {
         "dropout_sec_pct": 12.8,
-        "teen_preg_pct": 4.2
+        "teen_preg_pct": 4.1
       }
     },
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "hex_count": 3391,
+      "hex_count": 3555,
       "centroid": [
         -58.9957,
         -27.5283
@@ -223,7 +223,7 @@
       ],
       "rank": {
         "dropout_sec_pct": 7.6,
-        "teen_preg_pct": 3.2
+        "teen_preg_pct": 3.3
       }
     },
     {
@@ -242,13 +242,13 @@
     {
       "dpto": "Fray Justo Santa María de Oro",
       "parquetKey": "fray_justo_santa_maria_de_oro",
-      "hex_count": 1344,
+      "hex_count": 1345,
       "centroid": [
         -61.1354,
         -27.8402
       ],
       "rank": {
-        "dropout_sec_pct": 11.0,
+        "dropout_sec_pct": 11.1,
         "teen_preg_pct": 7.3
       }
     },
@@ -268,7 +268,7 @@
     {
       "dpto": "2 de Abril",
       "parquetKey": "2_de_abril",
-      "hex_count": 1018,
+      "hex_count": 1019,
       "centroid": [
         -61.281,
         -27.6091
@@ -281,7 +281,7 @@
     {
       "dpto": "General Belgrano",
       "parquetKey": "general_belgrano",
-      "hex_count": 743,
+      "hex_count": 887,
       "centroid": [
         -61.0058,
         -26.9294
@@ -301,13 +301,13 @@
       ],
       "rank": {
         "dropout_sec_pct": 9.4,
-        "teen_preg_pct": 4.6
+        "teen_preg_pct": 4.5
       }
     },
     {
       "dpto": "12 de Octubre",
       "parquetKey": "12_de_octubre",
-      "hex_count": 1955,
+      "hex_count": 2034,
       "centroid": [
         -61.2476,
         -27.3058

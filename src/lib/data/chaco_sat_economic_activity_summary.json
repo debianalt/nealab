@@ -8,7 +8,7 @@
     {
       "dpto": "San Fernando",
       "parquetKey": "san_fernando",
-      "hex_count": 40346,
+      "hex_count": 40348,
       "centroid": [
         -58.9957,
         -27.5283
@@ -84,7 +84,7 @@
     {
       "dpto": "Mayor Luis J. Fontana",
       "parquetKey": "mayor_luis_j_fontana",
-      "hex_count": 42498,
+      "hex_count": 42499,
       "centroid": [
         -60.718,
         -27.6372
@@ -122,14 +122,14 @@
     {
       "dpto": "General Güemes",
       "parquetKey": "general_guemes",
-      "hex_count": 281683,
+      "hex_count": 281745,
       "centroid": [
         -60.6287,
         -26.0385
       ],
       "rank": {
         "viirs": 0.37,
-        "empleo_pct": 51.7,
+        "empleo_pct": 51.8,
         "univ25_pct": 6.3,
         "ocupados_n": 26315,
         "ocupados_prov_pct": 5.4,
@@ -141,7 +141,7 @@
     {
       "dpto": "Tapenagá",
       "parquetKey": "tapenaga",
-      "hex_count": 69388,
+      "hex_count": 69392,
       "centroid": [
         -60.105,
         -27.5908
