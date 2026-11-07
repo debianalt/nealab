@@ -364,6 +364,40 @@ FUENTES = [
         limitaciones='Superficie inferida donde OSM no la trae (troncal sin etiqueta = pavimento, huella = tierra); Microsoft sin clase.',
         uso_recomendado='Distancias por la red, densidad de caminos, acceso a pavimento.', uso_no_recomendado='Estado real del camino.',
         scripts='pipeline/vial/importar_vial.py; pipeline/vial/red_vial.py; pipeline/vial/distancia_macizos.py', objetos=['vial.*'], verificado=V),
+    dict(
+        id='visor_emergencias_misiones', nombre='Visor de emergencias de Misiones (capas de infraestructura)',
+        proveedor='Gobierno de Misiones, Dir. de Modernización de la Gestión',
+        producto='GeoJSON estáticos de sig.misiones.gob.ar/mapas/emergencia/datos/ (código: gitlab.com/Modernizacion.Misiones/mapa-emergencia)',
+        version='Bajados el 7-nov-2026', acceso='pipeline/infra/importar_visor.py (HTTP directo, sin clave)',
+        licencia='—', cita='Gobierno de Misiones (2026). Mapa de emergencias', doi='—',
+        tipo_dato='registro administrativo y colaborativo (casi todo derivado de OSM)', res_espacial='vector',
+        res_temporal='estático (los hidrómetros traen la última semana)', periodo='2026', cobertura='Misiones',
+        variables=('puentes (OSM, con Mapillary); 29 puentes de la RP2 con cota de seguridad en msnm (propios); '
+                   'alcantarillas; cauces; líneas eléctricas 13,2–500 kV; 73 transformadoras; antenas; hospitales y CAPS '
+                   'con códigos SISA/CUIE; 78 municipios con zona de gestión del riesgo; 35 hidrómetros con niveles de '
+                   'alerta y evacuación y series_id del INA'),
+        procesamiento='Una tabla infra.visor_<capa> por archivo (props jsonb + columnas tipadas donde se usan); geometría a 2D.',
+        asignacion_celda='No hay asignación a celda: se cruza por geometría.',
+        validacion='Conteos iguales a los GeoJSON (infra.fuentes). Puntos RP2 sobre el camino (mediana 0 m, máx. 6 m).',
+        limitaciones='Sin fecha de relevamiento por objeto; la mayoría de las capas copia OSM; alturas de río sin cero de escala en msnm.',
+        uso_recomendado='Evidencia de estructuras en cruces, cotas de corte de la RP2, red eléctrica troncal, salud.',
+        uso_no_recomendado='Inventario completo de puentes o alcantarillas (cubre una parte).',
+        scripts='pipeline/infra/importar_visor.py', objetos=['infra.visor_*', 'infra.fuentes'], verificado='2026-11-07'),
+    dict(
+        id='osm_cauces', nombre='Cauces, alcantarillas y vados de OpenStreetMap (Misiones)',
+        proveedor='OpenStreetMap (Geofabrik)', producto='Extracto Argentina (argentina-latest.osm.pbf)',
+        version='pbf del 6/7-nov-2026', acceso='pipeline/infra/cauces_osm.py (ogr2ogr de QGIS sobre el pbf; Overpass dio 502/504)',
+        licencia='—', cita='OpenStreetMap contributors', doi='—',
+        tipo_dato='registro colaborativo', res_espacial='vector', res_temporal='estático (nov-2026)', periodo='2026',
+        cobertura='Misiones + ~5 km (recorte de drenaje.py)',
+        variables='waterway (river, stream, canal, drain, ditch), nombre, intermitente, alcantarilla (tunnel=culvert); vados (ford=yes, nodos y vías)',
+        procesamiento='Líneas con waterway y nodos con ford=yes del pbf; vados que son vías, desde vial.osm.',
+        asignacion_celda='No hay asignación a celda.',
+        validacion='7.136 tramos de arroyo (10.692 km) en el recorte; 2.032 alcantarillas y 835 vados.',
+        limitaciones='Cobertura despareja: la red de terreno (FABDEM, ≥ 0,1 km²) tiene muchos más cauces que OSM.',
+        uso_recomendado='Nombre del cauce, evidencia de estructura, ubicación precisa de cruces.',
+        uso_no_recomendado='Red hidrográfica completa.',
+        scripts='pipeline/infra/cauces_osm.py', objetos=['infra.osm_cauces', 'infra.osm_estructuras'], verificado='2026-11-07'),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)
@@ -644,4 +678,38 @@ PROCESOS = [
          parametros='k = distancia en celdas (k = 1: 6 vecinas, ~350 m entre centros)', validacion='Escenario 8 de escenarios.sql.',
          regla='Las celdas sin fila o con NULL no cuentan; n_vecinos lo dice.', limitaciones='En el borde del NEA cargado hay menos vecinas.',
          scripts='pipeline/hexoma/vecindad.sql (lo aplica build_hexoma_meta.py)', objetos=[], fuentes=[], verificado=V),
+    dict(id='drenaje_misiones', nombre='Área drenada de Misiones a 30 m',
+         metodo=('FABDEM 1" de Misiones + ~5 km (computePixels, int16 en dm); pysheds D8: fill_pits, fill_depressions, '
+                 'resolve_flats, flowdir, accumulation pesada por el área real de cada celda (km²). Mismo método que los '
+                 'arroyos de la demo El Soberbio.'),
+         parametros='red = área drenada ≥ 0,1 km²', validacion='Puentes RP2: Arroyo Soberbio 1.074 km², Acaraguá 775 km².',
+         regla='—', limitaciones=('Ríos que entran desde fuera del recorte (Paraná, Uruguay, Iguazú, Pepirí Guazú, San Antonio) '
+                                  'con área truncada; el cauce queda corrido ~100 m del que OSM dibuja sobre imagen.'),
+         scripts='pipeline/infra/drenaje.py', objetos=[], fuentes=['fabdem'], verificado='2026-11-07'),
+    dict(id='cruces_camino_cauce', nombre='Cruces camino × cauce de Misiones',
+         metodo=('Picos de área drenada a lo largo de cada camino (cada 15 m, máximo en ±30 m, prominencia ×2, ≥ 0,1 km²), '
+                 'intersecciones con cauces OSM y estructuras (puentes, alcantarillas, vados) de OSM y del visor, unidos a '
+                 '≤ 60 m y anclados a ≤ 150 m en el mismo camino o en uno que lo toca. Ubicación: la estructura, si no la '
+                 'intersección OSM, si no el pico. Evidencia: puente > vado > alcantarilla > sin dato.'),
+         parametros='PASO_M 15; A_MIN 0,1 km²; UNION_M 60; SNAP_M 150; paralelo = racha > 300 m',
+         validacion=('Terreno solo (picos crudos) a ≤ 60 m: 87,0 % de 1.026 puentes OSM vehiculares sobre cauce mapeado y '
+                     '89,7 % de 29 puentes RP2 (regla fijada ≥ 80 %: pasa); a ≤ 150 m, 97,0 % y 96,6 %. '
+                     'pipeline/infra/validacion_cruces.md.'),
+         regla='Regla de sensibilidad fijada antes de mirar (7-nov-2026); la primera corrida midió mal (ver el informe).',
+         limitaciones=('Precisión no validada: no hay inventario de alcantarillas; 92 % de los cruces sin dato de estructura; '
+                       'caminos de fondo de valle pueden dar picos de más (marcados paralelo).'),
+         scripts='pipeline/infra/cruces.py; pipeline/infra/validar_cruces.py',
+         objetos=['infra.cruces', 'infra.cruces_terreno'],
+         fuentes=['fabdem', 'red_vial', 'osm_cauces', 'visor_emergencias_misiones'], verificado='2026-11-07'),
+    dict(id='aristas_corte', nombre='Aislamiento por corte de cruces (aristas de corte del grafo vial)',
+         metodo=('Aristas de corte de vial.aristas en el recorte de Misiones (Tarjan iterativo; aristas paralelas cuentan); '
+                 'bloques = componentes sin ellas, en un bosque con raíz en Posadas; población 2022 por celda '
+                 '(censo_2022.cruce) y hospitales + CAPS del visor al nodo más cercano; suma por subárbol del lado lejano.'),
+         parametros='raíz: nodo más cercano a la plaza 9 de Julio de Posadas',
+         validacion='Población asignada 1.273.347 (la de Misiones 2022). Cruce → arista de su camino: distancia p99 0 m.',
+         regla='Exacto sobre la red: no modela transitabilidad.',
+         limitaciones=('Huellas y caminos de Microsoft cuentan como alternativas aunque se corten con lluvia: el aislamiento '
+                       'es un piso. Personas = las de las celdas cuyo nodo más cercano está del lado aislado.'),
+         scripts='pipeline/infra/aislamiento.py', objetos=['infra.aristas_corte', 'infra.cruces'],
+         fuentes=['red_vial', 'censo_2022', 'visor_emergencias_misiones'], verificado='2026-11-07'),
 ]

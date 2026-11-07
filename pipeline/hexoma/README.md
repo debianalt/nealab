@@ -285,6 +285,30 @@ referencia. `vial.caminos` (red unificada con clase y superficie en castellano y
 pavimento) y `vial.macizos` (uso interno). Scripts: `pipeline/vial/importar_vial.py`, `red_vial.py`,
 `distancia_macizos.py`. Ocupa 4 GB.
 
+## Infraestructura: cruces camino × cauce (esquema `infra`, desde el 7-nov-2026)
+Base de los escenarios de redes (sólo Misiones por ahora): dónde un camino pasa sobre un arroyo o un río, qué
+estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración (desde `neahub/`; tiempos medidos):
+
+| Comando | Qué hace | Tiempo |
+|---|---|---|
+| `python pipeline/infra/importar_visor.py [--rebajar]` | 12 capas del visor de emergencias de Misiones → `infra.visor_*` (puentes, 29 puentes RP2 con cota de seguridad, alcantarillas, cauces, líneas eléctricas, transformadoras, antenas, hospitales, CAPS, municipios con zona GIR, hidrómetros con niveles y `series_id` del INA) | segundos |
+| `python pipeline/infra/cauces_osm.py [--rebajar]` | Cauces, alcantarillas y vados de OSM del pbf de Geofabrik (435 MB, `pipeline/output/vial/`) → `infra.osm_cauces`, `infra.osm_estructuras` | ~1 min con el pbf |
+| `python pipeline/infra/drenaje.py` | FABDEM 1" de Misiones (16 bloques, `%HEXOMA_FUENTES%/infra/fabdem/`) y área drenada D8 (pysheds) → `acc_km2_misiones.tif`, `fdir_misiones.tif` | ~6 min (~10 GB de RAM) |
+| `python pipeline/infra/cruces.py` | `infra.cruces` (41.671) y `infra.cruces_terreno` (picos crudos) | 30 s |
+| `python pipeline/infra/aislamiento.py` | Aristas de corte del grafo vial, población 2022 y salud del lado aislado → `infra.aristas_corte` y columnas de `infra.cruces` | 30 s |
+| `python pipeline/infra/validar_cruces.py` | `pipeline/infra/validacion_cruces.md` y mapas HTML en `pipeline/output/infra/` | ~1 min |
+
+- `infra.cruces.estructura`: puente (1.037) / alcantarilla (1.674) / vado (679) / sin_dato (38.281). El sin dato
+  es la norma: casi ningún cruce de huella o camino vecinal está mapeado.
+- `aisla` = el cruce está sobre una arista de corte; `personas_aisladas` = población 2022 del lado lejano a
+  Posadas; `hospitales_aislados`/`caps_aislados` = si ese lado tiene salud propia. Es exacto sobre la red, pero la
+  red cuenta huellas y caminos de Microsoft como alternativas: el aislamiento es un **piso**.
+- `cota_seguridad_msnm` (sólo puentes RP2): nivel del río al que el puente queda cortado.
+- Trampas: (1) el instalador de PostGIS deja `PROJ_LIB` apuntando a un `proj.db` viejo y rasterio falla al
+  escribir; `drenaje.py` lo saca del entorno. (2) En OSM el puente es su propio tramo de vía (otro `camino_id`):
+  el anclaje terreno ↔ estructura acepta caminos que se tocan. (3) Overpass dio 502/504 para Misiones entera
+  aun en 9 bloques: se usa el pbf.
+
 ## Vecindad (esquema `vec`, desde el 6-nov-2026)
 `vecindad.sql`, que `build_hexoma_meta.py` reinstala al final de cada recarga. Toman cualquier tabla o vista con una
 columna de celda (`h3` por defecto); las celdas sin fila o con NULL no cuentan y `n_vecinos` lo dice.
