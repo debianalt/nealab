@@ -69,6 +69,13 @@ TERRITORIES = {
     "corrientes": {"prov": 18, "sources": [
         {"table": "gba_buildings_corrientes", "id": "gid", "area": "area_m2", "emb": "corrientes", "gba_h": "best_height_m"},
     ]},
+    # Chaco y Formosa: GBA recargado el 7-nov-2026 (ingest_gba → join_gba; best_height_m = altura GBA cruda).
+    "chaco": {"prov": 22, "sources": [
+        {"table": "gba_buildings_chaco", "id": "gid", "area": "area_m2", "emb": "chaco", "gba_h": "best_height_m"},
+    ]},
+    "formosa": {"prov": 34, "sources": [
+        {"table": "gba_buildings_formosa", "id": "gid", "area": "area_m2", "emb": "formosa", "gba_h": "best_height_m"},
+    ]},
 }
 
 # V01 (variable 72): 1 casa, 2 rancho, 3 casilla, 4 departamento, 5 pieza, 6 local, 7 móvil
@@ -115,6 +122,9 @@ def load_buildings(territory: str) -> pd.DataFrame:
         log(f"  leyendo {s['table']} …")
         df = pd.read_sql(sql, eng)
         df.insert(0, "src", s["table"])
+        # A column that is NULL for the whole table (no GHSL in Ctes/Chaco/Fsa) comes back as object.
+        for c in ("area", "gba_h", "ghsl_h", "osm_levels", "old_is_res", "old_personas", "old_viviendas"):
+            df[c] = pd.to_numeric(df[c], errors="coerce").astype(float)
         for a in ALPHA:
             df[a] = df[a].astype(np.float32)
         frames.append(df)
@@ -347,6 +357,76 @@ def allocate_baseline(b: pd.DataFrame, cu: pd.DataFrame, weight: np.ndarray) -> 
     return pd.DataFrame({"redcode": b.redcode, "est_personas": P * w / wsum, "est_viviendas": V * w / wsum})
 
 
+def allocate_count(b: pd.DataFrame, cu: pd.DataFrame, base: pd.DataFrame) -> pd.DataFrame:
+    """Conteo de edificios elegibles (≥ 15 m²): cada edificio de la unidad recibe la misma parte de
+    personas, hogares y viviendas (por área donde la unidad no tiene elegibles). Misma forma que
+    allocate() para escribir la tabla; pisos y puntaje quedan como dato, no como peso."""
+    w = pd.Series((b.area >= MIN_AREA).astype(float).values, index=b.index)
+    wsum = w.groupby(b.unit).transform("sum")
+    za = wsum <= 0
+    w[za] = b.area[za]
+    sh = (w / w.groupby(b.unit).transform("sum")).fillna(0).values
+    u = b.unit
+    out = base[["src", "bid", "redcode", "unit", "pisos_est", "pisos_fuente", "p_vivienda"]].copy()
+    out["viv_dep"] = u.map(cu.dep).fillna(0).values * sh
+    out["viv_otras"] = u.map(cu.otras).fillna(0).values * sh
+    out["est_viviendas"] = out.viv_dep + out.viv_otras
+    out["est_personas"] = u.map(cu.personas).fillna(0).values * sh
+    out["est_hogares"] = u.map(cu.hogares).fillna(0).values * sh
+    out["tipo_viv"] = None
+    log(f"  reparto por conteo de edificios elegibles ({int(za.groupby(u).any().sum())} unidades por área)")
+    return out
+
+
+IMPLEMENTADOS = {"nuevo": "nuevo", "conteo": "conteo de edificios"}
+
+
+def metodo_auto(out_dir: str) -> str:
+    """El método implementado con menor error relativo ponderado en personas en la validación
+    fracción → radio de esta provincia (informe_fraccion.json). Si un método no implementado
+    gana, se corta: hay que implementarlo antes de escribir."""
+    path = os.path.join(out_dir, "informe_fraccion.json")
+    if not os.path.exists(path):
+        sys.exit(f"--metodo auto necesita la validación: corré antes --level fraccion ({path})")
+    comp = json.load(open(path, encoding="utf-8"))["comparacion"]
+    err = {k: v["personas"]["error_rel_ponderado"] for k, v in comp.items()}
+    best = min(err, key=err.get)
+    impl = {m: err[k] for m, k in IMPLEMENTADOS.items()}
+    elegido = min(impl, key=impl.get)
+    # Empate (regla fijada el 7-nov-2026, igual en las 4 provincias): si el IC 95 % del bootstrap
+    # por fracción de nuevo − conteo incluye el 0, la diferencia no se distingue del ruido y se
+    # toma el método más simple, el conteo de edificios (sin modelo).
+    bs = json.load(open(path, encoding="utf-8")).get("bootstrap_nuevo_menos_conteo")
+    if bs and bs["ic95"][0] <= 0 <= bs["ic95"][1]:
+        log(f"  nuevo − conteo {bs['diferencia']:+.4f}, IC 95 % {bs['ic95']}: empate → conteo")
+        elegido = "conteo"
+        if best == IMPLEMENTADOS["nuevo"]:
+            best = IMPLEMENTADOS["conteo"]
+    log("  validación fracción → radio (error rel. ponderado, personas): "
+        + ", ".join(f"{k} {v:.3f}" for k, v in sorted(err.items(), key=lambda x: x[1])))
+    if best not in IMPLEMENTADOS.values():
+        sys.exit(f"gana «{best}» ({err[best]:.3f}), que no está implementado para escribir")
+    log(f"  método elegido: {elegido}")
+    return elegido
+
+
+def bootstrap_diff(est_a: pd.DataFrame, est_b: pd.DataFrame, census: pd.DataFrame,
+                   multi_radio_units: set, n: int = 2000) -> dict:
+    """Diferencia de error relativo ponderado en personas (a − b) con remuestreo de fracciones
+    (la unidad que se valida), IC 95 % percentil."""
+    t = census.loc[census.index.str[:7].isin(multi_radio_units), "personas"]
+    ea = (est_a.groupby("redcode").est_personas.sum().reindex(t.index).fillna(0) - t).abs()
+    eb = (est_b.groupby("redcode").est_personas.sum().reindex(t.index).fillna(0) - t).abs()
+    f = pd.DataFrame({"fr": t.index.str[:7], "y": t.values, "a": ea.values, "b": eb.values}).groupby("fr").sum()
+    rng = np.random.default_rng(SEED)
+    idx = rng.integers(0, len(f), size=(n, len(f)))
+    y, a, b_ = f.y.values[idx].sum(1), f.a.values[idx].sum(1), f.b.values[idx].sum(1)
+    d = a / y - b_ / y
+    obs = f.a.sum() / f.y.sum() - f.b.sum() / f.y.sum()
+    return {"diferencia": round(float(obs), 4), "ic95": [round(float(x), 4) for x in np.percentile(d, [2.5, 97.5])],
+            "p_nuevo_mejor": round(float((d < 0).mean()), 3), "n_fracciones": int(len(f))}
+
+
 def metrics(est: pd.DataFrame, census: pd.DataFrame, multi_radio_units: set) -> dict:
     r = est.groupby("redcode")[["est_personas", "est_viviendas"]].sum()
     t = census[["personas"]].copy()
@@ -385,7 +465,7 @@ def write_db(out: pd.DataFrame, territory: str) -> None:
         PRIMARY KEY (src, bid))""")
     srcs = [s["table"] for s in TERRITORIES[territory]["sources"]]
     cur.execute(f"DELETE FROM {OUT_TABLE} WHERE src = ANY(%s)", (srcs,))  # filas propias de una corrida anterior
-    stamp = time.strftime("%Y-%m-%d %H:%M")
+    stamp = time.strftime("%Y-%m-%d %H:%M") + f" {out.attrs.get('metodo', 'nuevo')}"
     rows = list(zip(out.src, out.bid.astype(int), out.redcode, out.pisos_est.astype(float), out.pisos_fuente,
                     out.tipo_viv, out.p_vivienda.astype(float), out.viv_dep.astype(float),
                     out.viv_otras.astype(float), out.est_viviendas.astype(float),
@@ -441,6 +521,8 @@ def main() -> None:
     ap.add_argument("--territory", required=True, choices=list(TERRITORIES))
     ap.add_argument("--level", default="radio", choices=["radio", "fraccion"])
     ap.add_argument("--write", action="store_true", help="escribe poblacion_edificios_2022 (sólo nivel radio)")
+    ap.add_argument("--metodo", default="nuevo", choices=["nuevo", "conteo", "auto"],
+                    help="auto = el de menor error en la validación fracción → radio de la provincia")
     a = ap.parse_args()
     if a.write and a.level != "radio":
         sys.exit("--write sólo con --level radio")
@@ -457,6 +539,10 @@ def main() -> None:
     model_floors(b, rep)
     score_residential(b, rep)
     out = allocate(b, cu)
+    metodo = metodo_auto(out_dir) if a.metodo == "auto" else a.metodo
+    if a.level == "radio" and metodo == "conteo":
+        out = allocate_count(b, cu, out)
+    rep["metodo"] = metodo
 
     # Invariantes en la unidad del nivel
     g = out.groupby("unit")[["est_personas", "est_hogares", "viv_dep", "viv_otras"]].sum()
@@ -499,8 +585,19 @@ def main() -> None:
                 census, multi),
             "conteo de edificios": metrics(allocate_baseline(b, cu, (b.area >= MIN_AREA).astype(float).values),
                                            census, multi),
+            # Lo que hoy sirve la web: densidad y bases de las tasas = conteo de TODOS los edificios
+            # (peso del cruce); personas de la selección = est_personas de la tabla de edificios.
+            "servido: conteo de todos los edificios": metrics(allocate_baseline(
+                b, cu, np.ones(len(b))), census, multi),
+            # (No se compara est_personas de la tabla: ya está cuadrado al radio y filtraría el dato
+            # que se valida — da error 0. El reparto de marzo de Misiones es «actual»; el de
+            # join_gba en Ctes/Chaco/Fsa es volumen = «área × altura GBA».)
         }
         rep["comparacion"] = comp
+        rep["bootstrap_nuevo_menos_conteo"] = bootstrap_diff(
+            out, allocate_baseline(b, cu, (b.area >= MIN_AREA).astype(float).values), census, multi)
+        log(f"    nuevo − conteo (error rel. pond. personas), bootstrap por fracción: "
+            f"{json.dumps(rep['bootstrap_nuevo_menos_conteo'], ensure_ascii=False)}")
         for k, v in comp.items():
             log(f"    {k:<36} personas: rel.pond {v['personas']['error_rel_ponderado']:.3f} "
                 f"±25% {v['personas']['pct_radios_dentro_25']:.1%} R² {v['personas']['r2']:.3f} | "
@@ -512,6 +609,7 @@ def main() -> None:
     report_md(rep, os.path.join(out_dir, f"informe_{a.level}.md"))
     log(f"  salida en {out_dir}")
     if a.write:
+        out.attrs["metodo"] = metodo
         write_db(out, a.territory)
 
 

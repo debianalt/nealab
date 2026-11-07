@@ -1,12 +1,14 @@
 """
-Corrientes, tramo B (6-nov-2026): the census layers on the cells of the new crosswalk.
+Census layers on the cells and weights of a province's current crosswalk (any AR province).
 
-The 6-nov reload of GBA in Corrientes (corrected bbox) rebuilt the dasymetric crosswalk
-(133,856 → 52,227 cells: the south and east had no buildings, so their radios were spread
-over every cell by area). The census layers still served the old grid: each rural radio
-painted all its cells, and the radio selection (cells of the new crosswalk) did not match
-what the layer painted. build_census_rates.py and refresh_dept_parquets.py keep the served
-rows and fill_census_rows.py only adds them, so taking cells out needs this script.
+Born as regrid_census_corrientes.py (tramo B of the 6-nov-2026 Corrientes GBA reload); generalised
+on 7-nov-2026 with --territory, for two reasons:
+  - Chaco and Formosa: GBA reloaded (7-nov-2026), so their crosswalk cell universe changed;
+  - all four provinces: the crosswalk weight became the hexagon's share of the radio's estimated
+    persons (allocate_population.py, the method with the least measured error in each province),
+    so that density, the rate bases and the selection all carry one estimate of people per hexagon.
+build_census_rates.py and refresh_dept_parquets.py keep the served rows and fill_census_rows.py
+only adds them, so changing cells or weights needs this script.
 
 Target, as in Chaco and Formosa:
   service_deprivation, health_access, education_capital, education_flow, sociodemographic
@@ -35,12 +37,12 @@ Source and backup (the 5-nov-2026 regression came from deriving from a stale bac
 served files are downloaded twice in this run, from cdn.spatia.ar (with a buster) into
 <backup-dir>/backup and from the R2 origin into <backup-dir>/source; both copies must be
 identical, and everything derives from source/. <backup-dir> must not exist. Nothing reads or
-writes pipeline/output/corrientes/sat_*.parquet.
+writes pipeline/output/<t>/sat_*.parquet.
 
-    python pipeline/regrid_census_corrientes.py download --backup-dir C:/Users/ant/r2-census-regrid-backup-2026-11-06-HHMM
-    python pipeline/regrid_census_corrientes.py build    --backup-dir <same>
-    python pipeline/regrid_census_corrientes.py upload   --backup-dir <same>     (after the checks)
-Staging: pipeline/output/regrid_corrientes_20261106/<R2 key without data/>.
+    python pipeline/regrid_census.py download --territory chaco --backup-dir C:/Users/ant/r2-census-regrid-backup-<t>-YYYY-MM-DD-HHMM
+    python pipeline/regrid_census.py build    --territory chaco --backup-dir <same>
+    python pipeline/regrid_census.py upload   --territory chaco --backup-dir <same>     (after the checks)
+Staging: pipeline/output/regrid_<t>_<YYYYMMDD>/<R2 key without data/>.
 """
 import argparse
 import json
@@ -62,21 +64,28 @@ from fill_census_rows import computed, dominant_radio, radios_unit  # noqa: E402
 from refresh_dept_parquets import CDN, SRC_DATA_DIR  # noqa: E402
 from upload_to_r2 import R2_PUBLIC_BASE  # noqa: E402
 
-T = 'corrientes'
-PREFIX = 'corrientes/'
-CODPROV = TERRITORIES[T]
+T = PREFIX = CODPROV = STAGE = None   # set by set_territory() from --territory
+KEEP = False   # --keep-cells: same rows, departments and typology as served; only census columns
 LAYERS = ['economic_activity', 'service_deprivation', 'health_access', 'education_capital',
           'education_flow', 'sociodemographic']
 TEMPORAL = 'censo_temporal'
-STAGE = os.path.join(OUTPUT_DIR, 'regrid_corrientes_20261106')
 TRAY = {   # build_census_trayectorias.LAYERS[...]['rates'], imported lazily (geopandas, PostGIS)
     'economic_activity': 'economic_activity',
     'education_capital': 'education_capital',
 }
 
 
+def set_territory(t: str) -> None:
+    global T, PREFIX, CODPROV, STAGE
+    from config import get_territory
+    T, PREFIX, CODPROV = t, get_territory(t)['output_prefix'], TERRITORIES[t]
+    STAGE = os.path.join(OUTPUT_DIR, f'regrid_{t}_{time.strftime("%Y%m%d")}')
+
+
 def summary_path(layer: str) -> str:
-    return os.path.join(SRC_DATA_DIR, f'{T}_sat_{layer}_summary.json')
+    # Same naming as refresh_dept_parquets.py: Misiones has its own (older) convention.
+    return os.path.join(SRC_DATA_DIR, f'sat_{layer}_dept_summary.json' if T == 'misiones'
+                        else f'{T}_sat_{layer}_summary.json')
 
 
 def load_summary(layer: str) -> dict:
@@ -85,7 +94,7 @@ def load_summary(layer: str) -> dict:
 
 
 def keys(layer: str) -> list[str]:
-    """R2 keys (without data/) the layer serves in Corrientes."""
+    """R2 keys (without data/) the layer serves in the territory."""
     out = [f'{PREFIX}sat_{layer}.parquet']
     if layer != TEMPORAL:
         out += [f'{PREFIX}sat_dpto/sat_{layer}_{d["parquetKey"]}.parquet' for d in load_summary(layer)['departments']]
@@ -206,7 +215,7 @@ def viirs_new(served: pd.DataFrame, cells: list) -> pd.DataFrame | None:
     """VIIRS of new cells, as compute_viirs_buildings_h3.py / build_census_trayectorias.add_viirs
     sampled them, only if the same sampling gives back the served cells."""
     from compute_viirs_buildings_h3 import sample_raster_bilinear
-    tdir = os.path.join(OUTPUT_DIR, T)
+    tdir = os.path.join(OUTPUT_DIR, PREFIX.rstrip('/')) if PREFIX else OUTPUT_DIR
     tifs = {'viirs_mean_radiance': os.path.join(tdir, f'viirs_{T}_2025.tif'),
             'viirs_2014': os.path.join(tdir, f'viirs_{T}_2014.tif')}
     probe = served[served.viirs_mean_radiance.notna()].sample(5000, random_state=1)
@@ -251,7 +260,10 @@ def build_layer(bdir: str, layer: str, xw: pd.DataFrame, counts: pd.DataFrame, d
     xs = xw.groupby('h3index')[['n_buildings', 'est_hogares']].sum()
     econ = layer == 'economic_activity'
     s = terr.set_index('h3index')
-    if econ:
+    if KEEP:
+        new_cells = []
+        rows = list(terr.h3index)
+    elif econ:
         new_cells = sorted(X - set(s.index))
         rows = list(terr.h3index) + new_cells
     else:
@@ -286,8 +298,10 @@ def build_layer(bdir: str, layer: str, xw: pd.DataFrame, counts: pd.DataFrame, d
 
     # Typology.
     src_x = terr[terr.h3index.isin(X)]
-    if 'type' in cols:
-        off = ~df.index.isin(list(X))
+    if 'type' in cols and KEEP:
+        handled |= {'type', 'type_label'}          # served typology, untouched
+    elif 'type' in cols:
+        off =~df.index.isin(list(X))
         df.loc[off, ['type', 'type_label']] = np.nan
         f = type_modes(src_x, dmap)
         tally = {}
@@ -323,6 +337,9 @@ def build_layer(bdir: str, layer: str, xw: pd.DataFrame, counts: pd.DataFrame, d
 
     # Departments.
     o = out.set_index('h3index')
+    if KEEP:   # served department files, same rows in the same order
+        files = {k: cast_like(o.loc[d.h3index].reset_index(), d, f'{layer}/{k}') for k, d in depts.items()}
+        return finish(layer, terr, out, new_cells, files, {k: len(d) for k, d in depts.items()})
     # New department of every row: crosswalk cells → the common map; economic_activity's cells
     # off the crosswalk → the department that served them (none if no department file had them).
     new_k = pd.Series({h: dmap[h] for h in X}) if not econ else \
@@ -336,6 +353,10 @@ def build_layer(bdir: str, layer: str, xw: pd.DataFrame, counts: pd.DataFrame, d
         hs = stay + sorted(h for h in mine if h not in sset)
         files[k] = cast_like(o.loc[hs].reset_index(), d, f'{layer}/{k}')
         hex_count[k] = len(hs)
+    return finish(layer, terr, out, new_cells, files, hex_count)
+
+
+def finish(layer: str, terr: pd.DataFrame, out: pd.DataFrame, new_cells: list, files: dict, hex_count: dict) -> dict:
     in_depts = sum(len(v) for v in files.values())
     print(f'  {layer}: {len(terr):,} → {len(out):,} filas (Σ deptos {in_depts:,}); celdas nuevas {len(new_cells):,}')
 
@@ -396,7 +417,13 @@ def build(bdir: str, only: list | None) -> None:
     xw = pd.read_parquet(crosswalk_path(T))
     X = set(xw.h3index)
     print(f'crosswalk nuevo: {len(X):,} celdas')
-    dmap, econ_dmap = dept_map(bdir, X)
+    if KEEP:
+        served = set(read_source(bdir, 'service_deprivation')[0].h3index)
+        print(f'  --keep-cells: filas, departamentos y tipología servidos; crosswalk sin servir '
+              f'{len(X - served):,} celdas, servidas fuera del crosswalk {len(served - X):,}')
+        dmap, econ_dmap = {}, {}
+    else:
+        dmap, econ_dmap = dept_map(bdir, X)
     counts = radio_counts()
     for layer in only or LAYERS:
         if layer == TEMPORAL:
@@ -433,9 +460,15 @@ def upload(bdir: str) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument('step', choices=['download', 'build', 'upload'])
+    ap.add_argument('--territory', required=True, choices=list(TERRITORIES))
     ap.add_argument('--backup-dir', required=True)
     ap.add_argument('--layer', action='append', choices=LAYERS + [TEMPORAL])
+    ap.add_argument('--keep-cells', action='store_true',
+                    help='crosswalk cells unchanged (only the weights): keep rows, departments, typology')
     a = ap.parse_args()
+    set_territory(a.territory)
+    global KEEP
+    KEEP = a.keep_cells
     if a.step == 'download':
         download(a.backup_dir)
     elif a.step == 'build':

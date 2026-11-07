@@ -15,9 +15,9 @@
       ],
       "rank": {
         "nbi_pct": 22.1,
-        "nbi_n": 2545,
+        "nbi_n": 2546,
         "cloacas_pct": 62.9,
-        "cloacas_n": 7250,
+        "cloacas_n": 7249,
         "hacin_pct": 18.6,
         "hacin_n": 2141
       }
@@ -32,9 +32,9 @@
       ],
       "rank": {
         "nbi_pct": 20.5,
-        "nbi_n": 1722,
+        "nbi_n": 1723,
         "cloacas_pct": 59.1,
-        "cloacas_n": 4967,
+        "cloacas_n": 4965,
         "hacin_pct": 15.7,
         "hacin_n": 1318
       }
@@ -51,7 +51,7 @@
         "nbi_pct": 12.3,
         "nbi_n": 461,
         "cloacas_pct": 64.5,
-        "cloacas_n": 2412,
+        "cloacas_n": 2414,
         "hacin_pct": 12.7,
         "hacin_n": 475
       }
@@ -68,7 +68,7 @@
         "nbi_pct": 28.3,
         "nbi_n": 2112,
         "cloacas_pct": 91.7,
-        "cloacas_n": 6850,
+        "cloacas_n": 6852,
         "hacin_pct": 17.7,
         "hacin_n": 1323
       }
@@ -83,11 +83,11 @@
       ],
       "rank": {
         "nbi_pct": 12.2,
-        "nbi_n": 724,
+        "nbi_n": 723,
         "cloacas_pct": 58.9,
-        "cloacas_n": 3510,
+        "cloacas_n": 3504,
         "hacin_pct": 14.3,
-        "hacin_n": 852
+        "hacin_n": 851
       }
     },
     {
@@ -102,9 +102,9 @@
         "nbi_pct": 16.6,
         "nbi_n": 617,
         "cloacas_pct": 93.8,
-        "cloacas_n": 3477,
+        "cloacas_n": 3479,
         "hacin_pct": 15.4,
-        "hacin_n": 570
+        "hacin_n": 571
       }
     },
     {
@@ -117,11 +117,11 @@
       ],
       "rank": {
         "nbi_pct": 12.6,
-        "nbi_n": 856,
-        "cloacas_pct": 67.0,
-        "cloacas_n": 4561,
+        "nbi_n": 854,
+        "cloacas_pct": 66.9,
+        "cloacas_n": 4547,
         "hacin_pct": 13.5,
-        "hacin_n": 919
+        "hacin_n": 917
       }
     },
     {
@@ -136,7 +136,7 @@
         "nbi_pct": 12.9,
         "nbi_n": 1740,
         "cloacas_pct": 44.0,
-        "cloacas_n": 5942,
+        "cloacas_n": 5940,
         "hacin_pct": 14.6,
         "hacin_n": 1975
       }
@@ -153,9 +153,9 @@
         "nbi_pct": 12.0,
         "nbi_n": 3981,
         "cloacas_pct": 34.4,
-        "cloacas_n": 11381,
+        "cloacas_n": 11388,
         "hacin_pct": 12.7,
-        "hacin_n": 4211
+        "hacin_n": 4212
       }
     },
     {
@@ -169,7 +169,7 @@
       "rank": {
         "nbi_pct": 15.2,
         "nbi_n": 1765,
-        "cloacas_pct": 52.4,
+        "cloacas_pct": 52.5,
         "cloacas_n": 6098,
         "hacin_pct": 14.0,
         "hacin_n": 1633
@@ -185,11 +185,11 @@
       ],
       "rank": {
         "nbi_pct": 11.8,
-        "nbi_n": 638,
-        "cloacas_pct": 58.1,
-        "cloacas_n": 3140,
+        "nbi_n": 637,
+        "cloacas_pct": 58.0,
+        "cloacas_n": 3131,
         "hacin_pct": 11.4,
-        "hacin_n": 618
+        "hacin_n": 617
       }
     },
     {
@@ -202,11 +202,11 @@
       ],
       "rank": {
         "nbi_pct": 10.3,
-        "nbi_n": 564,
+        "nbi_n": 565,
         "cloacas_pct": 87.3,
-        "cloacas_n": 4763,
+        "cloacas_n": 4770,
         "hacin_pct": 11.0,
-        "hacin_n": 602
+        "hacin_n": 603
       }
     },
     {
@@ -219,9 +219,9 @@
       ],
       "rank": {
         "nbi_pct": 9.0,
-        "nbi_n": 1470,
+        "nbi_n": 1471,
         "cloacas_pct": 23.2,
-        "cloacas_n": 3786,
+        "cloacas_n": 3785,
         "hacin_pct": 10.3,
         "hacin_n": 1680
       }
@@ -238,7 +238,7 @@
         "nbi_pct": 9.7,
         "nbi_n": 285,
         "cloacas_pct": 73.0,
-        "cloacas_n": 2144,
+        "cloacas_n": 2143,
         "hacin_pct": 9.0,
         "hacin_n": 265
       }
@@ -255,7 +255,7 @@
         "nbi_pct": 10.6,
         "nbi_n": 97,
         "cloacas_pct": 89.3,
-        "cloacas_n": 815,
+        "cloacas_n": 814,
         "hacin_pct": 11.5,
         "hacin_n": 105
       }
@@ -270,9 +270,9 @@
       ],
       "rank": {
         "nbi_pct": 8.5,
-        "nbi_n": 301,
-        "cloacas_pct": 69.5,
-        "cloacas_n": 2477,
+        "nbi_n": 302,
+        "cloacas_pct": 69.6,
+        "cloacas_n": 2480,
         "hacin_pct": 10.6,
         "hacin_n": 376
       }
@@ -288,8 +288,8 @@
       "rank": {
         "nbi_pct": 9.6,
         "nbi_n": 297,
-        "cloacas_pct": 40.9,
-        "cloacas_n": 1261,
+        "cloacas_pct": 41.0,
+        "cloacas_n": 1264,
         "hacin_pct": 11.9,
         "hacin_n": 366
       }
@@ -304,9 +304,9 @@
       ],
       "rank": {
         "nbi_pct": 12.1,
-        "nbi_n": 1453,
+        "nbi_n": 1455,
         "cloacas_pct": 69.3,
-        "cloacas_n": 8357,
+        "cloacas_n": 8365,
         "hacin_pct": 10.8,
         "hacin_n": 1308
       }
@@ -323,7 +323,7 @@
         "nbi_pct": 8.0,
         "nbi_n": 516,
         "cloacas_pct": 93.9,
-        "cloacas_n": 6067,
+        "cloacas_n": 6066,
         "hacin_pct": 10.0,
         "hacin_n": 643
       }
@@ -340,7 +340,7 @@
         "nbi_pct": 10.1,
         "nbi_n": 477,
         "cloacas_pct": 53.1,
-        "cloacas_n": 2519,
+        "cloacas_n": 2514,
         "hacin_pct": 11.1,
         "hacin_n": 528
       }
@@ -355,9 +355,9 @@
       ],
       "rank": {
         "nbi_pct": 9.2,
-        "nbi_n": 2129,
+        "nbi_n": 2128,
         "cloacas_pct": 31.1,
-        "cloacas_n": 7185,
+        "cloacas_n": 7182,
         "hacin_pct": 9.7,
         "hacin_n": 2244
       }
@@ -372,9 +372,9 @@
       ],
       "rank": {
         "nbi_pct": 8.8,
-        "nbi_n": 1327,
+        "nbi_n": 1326,
         "cloacas_pct": 30.8,
-        "cloacas_n": 4628,
+        "cloacas_n": 4624,
         "hacin_pct": 9.8,
         "hacin_n": 1472
       }
@@ -389,11 +389,11 @@
       ],
       "rank": {
         "nbi_pct": 10.6,
-        "nbi_n": 14615,
+        "nbi_n": 14616,
         "cloacas_pct": 20.7,
-        "cloacas_n": 28423,
+        "cloacas_n": 28429,
         "hacin_pct": 11.1,
-        "hacin_n": 15305
+        "hacin_n": 15307
       }
     },
     {
@@ -408,7 +408,7 @@
         "nbi_pct": 11.4,
         "nbi_n": 1617,
         "cloacas_pct": 14.0,
-        "cloacas_n": 1996,
+        "cloacas_n": 1990,
         "hacin_pct": 11.8,
         "hacin_n": 1686
       }
@@ -422,10 +422,10 @@
         -30.0344
       ],
       "rank": {
-        "nbi_pct": 10.2,
+        "nbi_pct": 10.1,
         "nbi_n": 1791,
         "cloacas_pct": 29.9,
-        "cloacas_n": 5270,
+        "cloacas_n": 5269,
         "hacin_pct": 11.2,
         "hacin_n": 1969
       }

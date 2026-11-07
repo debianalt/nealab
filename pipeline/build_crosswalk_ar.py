@@ -50,17 +50,33 @@ UTM_CRS = "EPSG:32720"  # UTM 20S — covers Chaco/Formosa/Corrientes
 
 
 def fetch_building_centroids(table: str) -> pd.DataFrame:
+    """Centroids + persons/households per building. Since 7-nov-2026 these come from
+    allocate_population.py (table poblacion_edificios_2022, joined by src/gid) when that table
+    has rows for this building table; otherwise from the table's own columns (older reparto).
+    Weights do not depend on them: weight = building count (only the magnitudes change)."""
     print(f"  Querying {table}...")
-    sql = f"""
-        SELECT redcode,
-               ST_Y(ST_Centroid(geom)) AS lat,
-               ST_X(ST_Centroid(geom)) AS lng,
-               COALESCE(est_personas, 0) AS est_personas,
-               COALESCE(est_hogares, 0) AS est_hogares
-        FROM {table}
-        WHERE redcode IS NOT NULL
-    """
     with psycopg2.connect(PG_BUILDINGS) as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT to_regclass('poblacion_edificios_2022') IS NOT NULL")
+        n_new = 0
+        if cur.fetchone()[0]:
+            cur.execute("SELECT count(*) FROM poblacion_edificios_2022 WHERE src = %s", (table,))
+            n_new = cur.fetchone()[0]
+        if n_new:
+            pop = ("COALESCE(p.est_personas, 0) AS est_personas, COALESCE(p.est_hogares, 0) AS est_hogares",
+                   f"LEFT JOIN poblacion_edificios_2022 p ON p.src = '{table}' AND p.bid = b.gid")
+            print(f"    persons: poblacion_edificios_2022 ({n_new:,} rows)")
+        else:
+            pop = ("COALESCE(b.est_personas, 0) AS est_personas, COALESCE(b.est_hogares, 0) AS est_hogares", "")
+            print(f"    persons: {table}.est_personas (no rows in poblacion_edificios_2022)")
+        sql = f"""
+            SELECT b.redcode,
+                   ST_Y(ST_Centroid(b.geom)) AS lat,
+                   ST_X(ST_Centroid(b.geom)) AS lng,
+                   {pop[0]}
+            FROM {table} b {pop[1]}
+            WHERE b.redcode IS NOT NULL
+        """
         df = pd.read_sql(sql, conn)
     print(f"    -> {len(df):,} buildings, {df['redcode'].nunique():,} radios")
     return df
@@ -83,9 +99,17 @@ def build_dasymetric_weights(df: pd.DataFrame) -> pd.DataFrame:
              est_hogares=("est_hogares", "sum"))
         .reset_index()
     )
+    # Weight (7-nov-2026, author's decision: one estimate of people per hexagon everywhere):
+    # the hexagon's share of the radio's estimated persons (allocate_population.py, the method with
+    # the least measured error in the province). Persons and households of a building come from the
+    # same share, so this one weight serves person and household denominators alike. A radio with
+    # no estimated persons keeps the building-count share, which stays as weight_edificios.
     radio_totals = counts.groupby("redcode")["n_buildings"].transform("sum")
-    counts["weight"] = counts["n_buildings"] / radio_totals
-    return counts[["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares"]].reset_index(drop=True)
+    counts["weight_edificios"] = counts["n_buildings"] / radio_totals
+    pr = counts.groupby("redcode")["est_personas"].transform("sum")
+    counts["weight"] = (counts["est_personas"] / pr.where(pr > 0, 1.0)).where(pr > 0, counts["weight_edificios"])
+    return counts[["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares",
+                   "weight_edificios"]].reset_index(drop=True)
 
 
 def cell_polygon(hid: str) -> Polygon:
@@ -193,6 +217,7 @@ def main() -> int:
     dasy["h3index"] = dasy["h3index"].astype(str)
     dasy["redcode"] = dasy["redcode"].astype(str)
     dasy["weight"] = dasy["weight"].astype("float64")
+    dasy["weight_edificios"] = dasy["weight_edificios"].fillna(dasy["weight"]).astype("float64")  # areal fallback rows
     dasy["n_buildings"] = dasy["n_buildings"].fillna(0).astype("int64")
     dasy["est_personas"] = dasy["est_personas"].fillna(0).astype("float64")
     dasy["est_hogares"] = dasy["est_hogares"].fillna(0).astype("float64")

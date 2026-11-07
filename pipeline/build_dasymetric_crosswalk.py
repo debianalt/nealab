@@ -96,10 +96,18 @@ def build_dasymetric_weights(df: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
     )
 
+    # Weight (7-nov-2026, author's decision: one estimate of people per hexagon everywhere):
+    # the hexagon's share of the radio's estimated persons (allocate_population.py, the method with
+    # the least measured error in the province). Persons and households of a building come from the
+    # same share, so this one weight serves person and household denominators alike. A radio with
+    # no estimated persons keeps the building-count share, which stays as weight_edificios.
     radio_totals = counts.groupby("redcode")["n_buildings"].transform("sum")
-    counts["weight"] = counts["n_buildings"] / radio_totals
+    counts["weight_edificios"] = counts["n_buildings"] / radio_totals
+    pr = counts.groupby("redcode")["est_personas"].transform("sum")
+    counts["weight"] = (counts["est_personas"] / pr.where(pr > 0, 1.0)).where(pr > 0, counts["weight_edificios"])
 
-    result = counts[["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares"]].reset_index(drop=True)
+    result = counts[["h3index", "redcode", "weight", "n_buildings", "est_personas", "est_hogares",
+                     "weight_edificios"]].reset_index(drop=True)
     return result
 
 
@@ -238,6 +246,7 @@ def main():
     dasy["h3index"] = dasy["h3index"].astype(str)
     dasy["redcode"] = dasy["redcode"].astype(str)
     dasy["weight"] = dasy["weight"].astype("float64")
+    dasy["weight_edificios"] = dasy["weight_edificios"].fillna(dasy["weight"]).astype("float64")  # areal fallback rows
     dasy["n_buildings"] = dasy["n_buildings"].fillna(0).astype("int64")
     dasy["est_personas"] = dasy["est_personas"].fillna(0).astype("float64")
     dasy["est_hogares"] = dasy["est_hogares"].fillna(0).astype("float64")

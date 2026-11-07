@@ -14,6 +14,7 @@ Usage:
 import argparse
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import numpy as np
 import ee
@@ -28,6 +29,7 @@ YEAR = 2025
 REDUCE_SCALE = 10
 TILE_PX = 192
 BUFFER_M = 100
+WORKERS = 16
 N_BANDS = 64
 BAND_NAMES = [f"A{i:02d}" for i in range(N_BANDS)]
 ALPHA_COLS = [f"a{i:02d}" for i in range(N_BANDS)]
@@ -62,7 +64,9 @@ def main():
         PRIMARY KEY (source, building_id))""")
     conn.commit()
 
-    ee.Initialize(project=GEE_PROJECT)
+    # High-volume endpoint: computePixels in parallel (WORKERS requests at a time, 7-nov-2026;
+    # sequential was ~3 s per tile, many hours for Chaco/Formosa).
+    ee.Initialize(project=GEE_PROJECT, opt_url="https://earthengine-highvolume.googleapis.com")
     img = ee.ImageCollection(ALPHA_COLLECTION).filterDate(f"{YEAR}-01-01", f"{YEAR}-12-31").mosaic()
     print(f"GEE ready (year={YEAR}); territory={t}, table={table}, UTM={crs_utm}")
 
@@ -120,8 +124,8 @@ def main():
             tile_b.setdefault((tx, ty), []).append((bid, ux, uy))
         print(f"  {len(tile_b)} tiles with buildings")
 
-        d_ins = 0
-        for ti, ((tx, ty), bl) in enumerate(tile_b.items()):
+        def fetch(key):
+            tx, ty = key
             txmin = bx0 + tx*tile_size_m; tymax = by1 - ty*tile_size_m
             tw = max(1, min(TILE_PX, width_px - tx*TILE_PX)); th = max(1, min(TILE_PX, height_px - ty*TILE_PX))
             params = {"expression": img, "fileFormat": "NUMPY_NDARRAY", "grid": {
@@ -129,35 +133,42 @@ def main():
                 "affineTransform": {"scaleX": REDUCE_SCALE, "shearX": 0, "translateX": txmin,
                                     "shearY": 0, "scaleY": -REDUCE_SCALE, "translateY": tymax},
                 "crsCode": crs_utm}}
-            res = None
-            for att in range(3):
+            for att in range(4):
                 try:
-                    res = ee.data.computePixels(params); break
+                    return key, (txmin, tymax, tw, th), ee.data.computePixels(params)
                 except Exception as e:
-                    if att < 2: time.sleep(15*(att+1))
+                    if att < 3: time.sleep(15*(att+1))
                     else: print(f"    tile ({tx},{ty}) FAILED: {str(e)[:80]}")
-            if res is None:
-                continue
-            batch = []
-            for bid, ux, uy in bl:
-                ci = max(0, min(int((ux-txmin)/REDUCE_SCALE), tw-1))
-                ri = max(0, min(int((tymax-uy)/REDUCE_SCALE), th-1))
-                vals = []; allnan = True
-                for band in BAND_NAMES:
-                    if band in res.dtype.names:
-                        v = float(res[band][ri, ci])
-                        if np.isnan(v): vals.append(None)
-                        else: vals.append(v); allnan = False
-                    else: vals.append(None)
-                if not allnan:
-                    batch.append([source, bid] + vals)
-            if batch:
-                psycopg2.extras.execute_batch(cur,
-                    f"INSERT INTO building_embeddings (source, building_id, {cols_sql}) VALUES ({ph}) "
-                    f"ON CONFLICT (source, building_id) DO UPDATE SET {upd}", batch, page_size=1000)
-                conn.commit(); d_ins += len(batch)
-            if (ti+1) % 20 == 0:
-                print(f"\r  tiles {ti+1}/{len(tile_b)}, {d_ins:,} bldgs, {time.time()-td:.0f}s", end="", flush=True)
+            return key, None, None
+
+        d_ins = 0
+        with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            futs = [ex.submit(fetch, k) for k in tile_b]
+            for ti, fut in enumerate(as_completed(futs)):
+                key, geo, res = fut.result()
+                if res is None:
+                    continue
+                txmin, tymax, tw, th = geo
+                batch = []
+                for bid, ux, uy in tile_b[key]:
+                    ci = max(0, min(int((ux-txmin)/REDUCE_SCALE), tw-1))
+                    ri = max(0, min(int((tymax-uy)/REDUCE_SCALE), th-1))
+                    vals = []; allnan = True
+                    for band in BAND_NAMES:
+                        if band in res.dtype.names:
+                            v = float(res[band][ri, ci])
+                            if np.isnan(v): vals.append(None)
+                            else: vals.append(v); allnan = False
+                        else: vals.append(None)
+                    if not allnan:
+                        batch.append([source, bid] + vals)
+                if batch:
+                    psycopg2.extras.execute_batch(cur,
+                        f"INSERT INTO building_embeddings (source, building_id, {cols_sql}) VALUES ({ph}) "
+                        f"ON CONFLICT (source, building_id) DO UPDATE SET {upd}", batch, page_size=1000)
+                    conn.commit(); d_ins += len(batch)
+                if (ti+1) % 100 == 0:
+                    print(f"  tiles {ti+1}/{len(tile_b)}, {d_ins:,} bldgs, {time.time()-td:.0f}s", flush=True)
         total_inserted += d_ins
         print(f"\n  dpto {dpto}: {d_ins:,} bldgs ({time.time()-td:.0f}s)")
 

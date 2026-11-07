@@ -105,12 +105,12 @@ export function getParquetUrl(name: string): string {
 		hex_flood_risk: '?v=41',   // 4-nov-2026: sin flood_risk_score
 		sat_agri_apt: '?v=1',
 		sat_forestry_aptitude: '?v=40',
-		sat_service_deprivation: '?v=33',   // 33: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
-		sat_health_access: '?v=31',   // 31: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
-		sat_education_capital: '?v=31',   // 31: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
-		sat_education_flow: '?v=30',   // 30: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
-		sat_sociodemographic: '?v=28',   // 28: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
-		sat_economic_activity: '?v=38',   // 38: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 37: restaurado v35 (grilla completa, relleno de Corrientes, transiciones) + las 2 columnas; la 36 salió de una copia del 2-nov (5-nov-2026); 36: ocupados_est y tasa_desocupacion por celda (add_econ_hex_derived.py, 5-nov-2026); 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
+		sat_service_deprivation: '?v=34',   // 34: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 33: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
+		sat_health_access: '?v=32',   // 32: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 31: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
+		sat_education_capital: '?v=32',   // 32: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 31: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
+		sat_education_flow: '?v=31',   // 31: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 30: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
+		sat_sociodemographic: '?v=29',   // 29: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 28: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 4-nov-2026: Corrientes + 28.361 celdas censales que faltaban (fill_census_rows.py)
+		sat_economic_activity: '?v=39',   // 39: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 38: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 37: restaurado v35 (grilla completa, relleno de Corrientes, transiciones) + las 2 columnas; la 36 salió de una copia del 2-nov (5-nov-2026); 36: ocupados_est y tasa_desocupacion por celda (add_econ_hex_derived.py, 5-nov-2026); 35: universitarios 2010 con respaldo areal; 34 (4-nov-2026, noche): pct_universitario_2010, viirs_2014[_neto], viirs_2025_neto (build_econ_trayectorias.py); 4-nov: Corrientes, tasas en 49.425 celdas vacías (fill_census_rows.py); 2-nov: VIIRS 2025, grilla completa
 		sat_accessibility: '?v=32',   // 5-nov-2026: todo en minutos por camino (hospital, salud, secundaria, ruta)
 		sat_pm25_drivers: '?v=20',   // 4-nov-2026: sin score*
 		sat_deforestation_dynamics: '?v=20',   // 20: c_loss_pct_forest(_baseline/_delta) por celda (5-nov-2026); 4-nov-2026: sin score* ni tipos; 3-nov-2026: Hansen v1.13, 2016–2025 (+ Rio Grande do Sul)
@@ -124,7 +124,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 44;   // 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 45;   // 45: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -132,14 +132,14 @@ export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): strin
 
 // INDEC 2022 radios of an AR territory as a unit of their own (pipeline/build_census_radios.py):
 // rates, bases, queen neighbours and the cells that show each radio. Only AR has radios.
-export const CENSUS_RADIOS_V = 2;   // 2: Corrientes con el crosswalk de GBA completo (6-nov-2026)
+export const CENSUS_RADIOS_V = 3;   // 3: Misiones (desempate por personas) y Corrientes con el crosswalk de peso = personas (7-nov-2026); 2: Corrientes con el crosswalk de GBA completo (6-nov-2026)
 export function getCensusRadiosUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}census_radios_2022.parquet?v=${CENSUS_RADIOS_V}`;
 }
 
 // People estimated per cell from its buildings; per radio they add up to the census population
 // (pipeline/build_cell_population.py). Read by the click selection by radio.
-export const CELL_POPULATION_V = 3;   // 3: Misiones por tipo de vivienda (allocate_population.py); 2: Corrientes sin radios repartidos por área salvo 2 (6-nov-2026)
+export const CELL_POPULATION_V = 4;   // 4: Corrientes por conteo de edificios (empate con el tipo de vivienda, 7-nov-2026); 3: Misiones por tipo de vivienda (allocate_population.py); 2: Corrientes sin radios repartidos por área salvo 2 (6-nov-2026)
 export function getCellPopulationUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}cell_population_2022.parquet?v=${CELL_POPULATION_V}`;
 }
