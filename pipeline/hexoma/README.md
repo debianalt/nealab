@@ -305,6 +305,18 @@ estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración
 | `python pipeline/infra/cortes_rio.py` | Las 8 crecidas más altas de El Soberbio sobre la red → `infra.rio_eventos`, `infra.rio_evento_celda` | ~30 s |
 | `python pipeline/infra/validar_rio.py` | `pipeline/infra/validacion_rio.md` (ceros, error de interpolación, cortes de prensa de `cortes_rp2_prensa.csv`) | ~1 min |
 
+| `python pipeline/infra/servicios.py` | Escuelas (Mapa Educativo), salud (IGN), asentamientos BAHRA, red eléctrica y telecom de OSM | ~1 min |
+| `python pipeline/infra/rios_parana_iguazu.py` | 12 hidrómetros del Paraná e Iguazú (INA, 1950–) → `infra.rio_lecturas_otras` | ~1 min |
+| `python pipeline/infra/conectividad.py` | Ookla móvil y fija por trimestre desde 2019 → `infra.ookla` | ~10 min (reanudable) |
+| `python pipeline/infra/luz.py --bajar` | Black Marble diario 2012– (5.347 días, ~1 GB en `%HEXOMA_FUENTES%/infra/blackmarble/`) | ~30 min (reanudable, por tandas) |
+| `python pipeline/infra/luz.py --mensual` y `--procesar` | VIIRS mensual y anual; píxeles iluminados, serie diaria a Parquet, agregado por asentamiento, celda → píxel | ~2 + ~10 min |
+| `python pipeline/infra/validar_datos_f4.py` | `pipeline/infra/validacion_datos_f4.md` (integridad, sin análisis) | ~1 min |
+
+**Datos de la fase 4 (sólo ingesta).** 40 capas del visor de emergencias (bomberos, policía, ambulancias,
+perforaciones, tanques, hidrantes, mojones de rutas, aserraderos, estaciones de servicio…). Luces: la serie diaria de
+los píxeles iluminados vive en Parquet (`blackmarble/parquet/vnp46a2_AAAA.parquet`, columnas pixel_id, fecha, rad_x10,
+qf, nubes; válido = qf ≤ 1 y bits 6–7 de nubes ≤ 01), no en Postgres. ENACOM sin descarga directa (nov-2026).
+
 **Río Uruguay contra la RP2.** Casi todo medido: lecturas diarias de Prefectura (INA) y cotas del visor. El cero de
 cada escala sale del perfil del agua en FABDEM (El Soberbio 118,9; el Monitor provincial dice 118 y la prensa de 2014
 lo confirma). La **cota de seguridad es el nivel del tablero**; el cierre preventivo llega 2–4 m antes y no está

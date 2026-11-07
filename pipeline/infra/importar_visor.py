@@ -33,6 +33,7 @@ sys.path.insert(0, str(ROOT / 'pipeline'))
 from build_hexoma import DB, connect, log  # noqa: E402
 
 BASE = 'https://sig.misiones.gob.ar/mapas/emergencia/datos/'
+PAGINA = 'https://sig.misiones.gob.ar/mapas/emergencia/'   # las capas piden 'datos/x' o '../datos/x' desde acá
 CRUDOS = Path(os.environ.get('HEXOMA_FUENTES', r'C:\Users\ant\hexoma-fuentes')) / 'infra' / 'visor'
 UA = {'User-Agent': 'Mozilla/5.0 (spatia-pipeline; +https://spatia.ar)'}
 
@@ -50,6 +51,33 @@ CAPAS = {
     'municipios': ('zonas_GIR.geojson', 'name', 'Municipios con zona de gestión integral del riesgo'),
     'zonas_inundables': ('zonas-inundables.min.N.geojson', 'Name', 'Zonas inundables (Posadas, 1983/2014)'),
     'hidrometros': ('altura-rios.json', 'nombre', 'Hidrómetros con niveles de alerta/evacuación (INA)'),
+    # fase 4 (7-nov-2026): el resto de las capas del visor; las que empiezan con ../ están en /mapas/datos/
+    'combustible': ('../datos/combustible.min.geojson', 'name', 'Estaciones de servicio'),
+    'aserraderos': ('aserraderos.min.geojson', 'name', 'Aserraderos'),
+    'bomberos_policia': ('bomberos-policia.geojson', 'name', 'Cuarteles de bomberos de la Policía'),
+    'bomberos_voluntarios': ('bomberos-voluntarios.geojson', 'name', 'Cuarteles de bomberos voluntarios'),
+    'policia': ('../datos/policia.min.geojson', 'name', 'Comisarías y destacamentos policiales'),
+    'jurisdicciones_policia': ('../datos/jurisdicciones.geojson', 'name', 'Jurisdicciones policiales'),
+    'ambulancias': ('ambulancias.geojson', 'name', 'Bases de ambulancias'),
+    'ecologia': ('destacamentos_ecologia.geojson', 'name', 'Destacamentos del Ministerio de Ecología'),
+    'combate_incendios': ('CombateIncendiosParques.geojson', 'name', 'Recursos de combate de incendios en reservas'),
+    'municipalidades': ('municipalidades.min.geojson', 'name', 'Edificios municipales'),
+    'vialidad': ('delegaciones-vialidad.geojson', 'name', 'Delegaciones de la Dirección Provincial de Vialidad'),
+    'pistas': ('pistas.geojson', 'name', 'Pistas de aterrizaje'),
+    'telefonos_sos': ('telefonos-sos.geojson', 'name', 'Teléfonos SOS en ruta'),
+    'progresivas': ('progresivas.geojson', 'name', 'Progresivas (mojones de km) de rutas'),
+    'progresivas_parana': ('progresivas-parana.geojson', 'name', 'Progresivas del río Paraná'),
+    'perforaciones': ('perforaciones.geojson', 'name', 'Perforaciones de agua'),
+    'tanques': ('tanques.min.geojson', 'name', 'Tanques elevados de agua'),
+    'cisternas': ('cisternas.geojson', 'name', 'Cisternas'),
+    'hidrantes': ('hidrantes.geojson', 'name', 'Hidrantes'),
+    'estanques': ('estanques10m2.min.geojson', 'name', 'Estanques (≥ 10 m²)'),
+    'parque_solar': ('parque_solar.min.geojson', 'name', 'Plantas solares fotovoltaicas'),
+    'aborigenes': ('aborigenes.min.geojson', 'name', 'Comunidades aborígenes (visor)'),
+    'reservas': ('../datos/reservas.min.geojson', 'name', 'Reservas naturales'),
+    'barrera_ambiental': ('buffer.min.geojson', 'name', 'Barrera ambiental de rutas nacionales'),
+    'zonas_urbanas': ('zonas-urbanas.min.geojson', 'name', 'Zonas urbanizadas'),
+    'municipios_limites': ('municipios.min.geojson', 'name', 'Límites municipales (visor)'),
 }
 
 TIPADAS = {
@@ -71,11 +99,16 @@ TIPADAS = {
 }
 
 
+def url_de(archivo: str) -> str:
+    from urllib.parse import urljoin
+    return urljoin(PAGINA, archivo if archivo.startswith('../') else 'datos/' + archivo)
+
+
 def bajar(archivo: str, rebajar: bool) -> tuple[Path, str]:
-    dest = CRUDOS / archivo
+    dest = CRUDOS / Path(archivo).name
     if dest.exists() and not rebajar:
         return dest, dt.datetime.fromtimestamp(dest.stat().st_mtime).strftime('%Y-%m-%d')
-    r = requests.get(BASE + archivo, headers=UA, timeout=180)
+    r = requests.get(url_de(archivo), headers=UA, timeout=300)
     r.raise_for_status()
     json.loads(r.content.decode('utf-8'))  # valida antes de guardar
     dest.write_bytes(r.content)
@@ -98,8 +131,12 @@ def main() -> int:
         fc = json.loads(path.read_text(encoding='utf-8'))
         feats = [f for f in fc.get('features', []) if f.get('geometry')]
         t = f'infra.visor_{capa}'
-        cur.execute(f'DROP TABLE IF EXISTS {t}')
-        cur.execute(f'CREATE TABLE {t} (gid serial PRIMARY KEY, nombre text, props jsonb, geom geometry(Geometry, 4326))')
+        cur.execute('SELECT to_regclass(%s)', (t,))
+        existe = cur.fetchone()[0] is not None
+        if existe:   # vaciar sin borrar: hay vistas que dependen (p. ej. infra.v_acceso_municipio)
+            cur.execute(f'TRUNCATE {t} RESTART IDENTITY')
+        else:
+            cur.execute(f'CREATE TABLE {t} (gid serial PRIMARY KEY, nombre text, props jsonb, geom geometry(Geometry, 4326))')
         filas = []
         for f in feats:
             p = f.get('properties') or {}
@@ -107,14 +144,15 @@ def main() -> int:
             filas.append((str(nombre).strip() if nombre not in (None, '') else None, Json(p), json.dumps(f['geometry'])))
         execute_values(cur, f'INSERT INTO {t} (nombre, props, geom) VALUES %s', filas,
                        template='(%s, %s, ST_Force2D(ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326)))', page_size=2000)
-        if capa in TIPADAS:
+        if capa in TIPADAS and not existe:
             cur.execute(TIPADAS[capa])
-        cur.execute(f'CREATE INDEX ON {t} USING gist (geom)')
-        cur.execute(f"COMMENT ON TABLE {t} IS %s", (f'{desc}. Fuente: visor de emergencias de Misiones, {BASE}{archivo}',))
+        if not existe:
+            cur.execute(f'CREATE INDEX ON {t} USING gist (geom)')
+        cur.execute(f"COMMENT ON TABLE {t} IS %s", (f'{desc}. Fuente: visor de emergencias de Misiones, {url_de(archivo)}',))
         cur.execute("""INSERT INTO infra.fuentes VALUES (%s, %s, %s, %s, now(), %s, %s)
                        ON CONFLICT (tabla) DO UPDATE SET fuente=EXCLUDED.fuente, url=EXCLUDED.url,
                        fecha_fuente=EXCLUDED.fecha_fuente, cargado=now(), n=EXCLUDED.n, nota=EXCLUDED.nota""",
-                    (t, 'Visor de emergencias de Misiones (Dir. de Modernización)', BASE + archivo, fecha, len(filas), desc))
+                    (t, 'Visor de emergencias de Misiones (Dir. de Modernización)', url_de(archivo), fecha, len(filas), desc))
         log(f'  {t}: {len(filas):,} (de {len(fc.get("features", [])):,})')
     conn.commit()
     conn.close()
