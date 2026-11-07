@@ -297,6 +297,15 @@ estructura hay ahí y a cuánta gente aísla si se corta. Orden de regeneración
 | `python pipeline/infra/cruces.py` | `infra.cruces` (41.671) y `infra.cruces_terreno` (picos crudos) | 30 s |
 | `python pipeline/infra/aislamiento.py` | Aristas de corte del grafo vial, población 2022 y salud del lado aislado → `infra.aristas_corte` y columnas de `infra.cruces` | 30 s |
 | `python pipeline/infra/validar_cruces.py` | `pipeline/infra/validacion_cruces.md` y mapas HTML en `pipeline/output/infra/` | ~1 min |
+| `python pipeline/infra/red_lluvia.py` | Superficie (2 cotas) y pendiente por arista → `infra.aristas_atributos`; minutos a hospital y CAPS por celda en seco / lluvia / lluvia_fuerte / todo_tiempo → `infra.acceso_lluvia`, `infra.v_acceso_municipio`; sensibilidad al umbral de pendiente | ~1,5 min |
+| `python pipeline/infra/desvios.py` | En `infra.cruces`: dependientes, desvío seco y con lluvia, impacto, aislamiento y salud aislada con lluvia fuerte | ~2,5 min |
+| `python pipeline/infra/validar_lluvia.py` | `pipeline/infra/validacion_lluvia.md` y mapa `lluvia_el_soberbio.html` | ~1 min |
+
+**Día de lluvia.** Velocidades supuestas (tabla en `red_lluvia.py`), por eso cada tiempo va con los km de tierra del
+camino, que no dependen de ellas. Tierra con pendiente ≥ 10 % = intransitable con lluvia fuerte: **la cantidad de
+gente sin ruta depende del umbral** (26–201 mil entre 15 % y 8 %) y se informa como rango; el orden de los
+municipios sí es estable. `todo_tiempo` exige pavimento hasta la puerta y sobrecuenta. «Aislado» en
+`personas_aisladas_lluvia_fuerte` es separado de Posadas: mirar `salud_aislada_lluvia_fuerte` (0 = sin hospital ni CAPS).
 
 - `infra.cruces.estructura`: puente (1.037) / alcantarilla (1.674) / vado (679) / sin_dato (38.281). El sin dato
   es la norma: casi ningún cruce de huella o camino vecinal está mapeado.

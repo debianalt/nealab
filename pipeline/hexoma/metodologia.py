@@ -712,4 +712,30 @@ PROCESOS = [
                        'es un piso. Personas = las de las celdas cuyo nodo más cercano está del lado aislado.'),
          scripts='pipeline/infra/aislamiento.py', objetos=['infra.aristas_corte', 'infra.cruces'],
          fuentes=['red_vial', 'censo_2022', 'visor_emergencias_misiones'], verificado='2026-11-07'),
+    dict(id='dia_de_lluvia', nombre='Día de lluvia: superficie, pendiente y acceso a salud por escenario',
+         metodo=('Superficie de cada arista en dos cotas (desconocida = pavimento/ripio o = tierra); pendiente de FABDEM '
+                 'sobre 150 m de camino; velocidades supuestas por clase × superficie, seco y lluvia. Escenarios seco, '
+                 'lluvia, lluvia_fuerte (sin tierra con pendiente ≥ 10 %) y todo_tiempo (sólo pavimento y ripio). '
+                 'Dijkstra multi-origen desde hospitales y desde hospitales + CAPS; km de tierra por el árbol de caminos.'),
+         parametros='velocidades: tabla en red_lluvia.py; umbral de pendiente 10 % (sensibilidad 6–20 %)',
+         validacion=('Seco contra la capa de accesibilidad (Oxford/MAP): Spearman 0,90 en 46.208 celdas (regla ≥ 0,7). '
+                     'Superficie OSM contra IGN: 94,0 % de acuerdo pavimento/no pavimento. Monotonía: 0 violaciones. '
+                     'Personas sin ruta con lluvia fuerte: 26–201 mil según el umbral (8–15 %); el orden de los municipios '
+                     'se mantiene (Spearman ≈ 0,9). pipeline/infra/validacion_lluvia.md.'),
+         regla='Reglas fijadas antes de mirar (7-nov-2026). La cantidad sin ruta NO es robusta al umbral: se informa como rango.',
+         limitaciones=('Velocidades supuestas, sin calibrar; tierra por regla en las huellas (sólo 42 % etiquetada); '
+                       'pendiente de FABDEM puede sobrestimar en quebradas; todo_tiempo sobrecuenta (exige pavimento hasta la puerta).'),
+         scripts='pipeline/infra/red_lluvia.py; pipeline/infra/validar_lluvia.py',
+         objetos=['infra.aristas_atributos', 'infra.acceso_lluvia', 'infra.v_acceso_municipio',
+                  'infra.sensibilidad_pendiente', 'infra.sensibilidad_sin_ruta'],
+         fuentes=['red_vial', 'fabdem', 'censo_2022', 'visor_emergencias_misiones'], verificado='2026-11-07'),
+    dict(id='desvios_cruces', nombre='Peso de cada cruce: dependientes, desvío y aislamiento con lluvia fuerte',
+         metodo=('Dependientes = población cuyo camino más corto al hospital en seco pasa por la arista del cruce. Desvío '
+                 '= camino u→v sin esa arista (Dijkstra local en numba, corte 180 min) menos su tiempo, en seco y con '
+                 'lluvia. Impacto = dependientes × desvío con lluvia. Aristas de corte del grafo de lluvia_fuerte, con '
+                 'población y salud del lado aislado.'),
+         parametros='cota pesimista; corte 180 min', validacion='Ver dia_de_lluvia.',
+         regla='—', limitaciones='Hereda los supuestos de velocidad y del umbral de pendiente.',
+         scripts='pipeline/infra/desvios.py', objetos=['infra.cruces'],
+         fuentes=['red_vial', 'fabdem', 'censo_2022', 'visor_emergencias_misiones'], verificado='2026-11-07'),
 ]
