@@ -1802,6 +1802,12 @@
 							oninput={() => mapComponent?.applyHexOpacity()}
 							class="w-24 accent-sky-400 cursor-pointer" />
 					</label>
+					{#if ['misiones', 'corrientes', 'chaco', 'formosa'].includes(territoryStore.activeTerritory?.id ?? '')}
+						<label class="flex items-center gap-2 cursor-pointer">
+							<input type="checkbox" bind:checked={mapStore.apVisible} class="accent-sky-400 cursor-pointer" />
+							<span class="opacity-70">{i18n.t('map.ap.toggle')}</span>
+						</label>
+					{/if}
 				{/if}
 			</div>
 

@@ -17,15 +17,9 @@ Columnas por celda (h3index):
     ph, arcilla_pct, pendiente_pct, elev_m   SoilGrids 0–30 cm y FABDEM
     apt_<c>_clase                    clase mediana 1–4 (S1, S2, S3, N) de 1991/92–2024/25 (aptitud.resumen)
     apt_<c>_pct                      % de campañas S1+S2
-Resumen por departamento: rank.<c>_ha (ha con clase S1–S2) y rank.<c>_pct (% de la superficie), y qué hay en esas
-hectáreas, en tres partes que suman <c>_ha (la aptitud es física: el ranking no las descuenta):
-    <c>_ha_bloq    celdas con ≥ 50 % en área protegida estricta (UICN I–II según SIFAP 2016: parques nacionales y
-                   provinciales, reservas estrictas) o en OTBN I–II (Ley 26.331). Ramsar, reservas de uso múltiple
-                   (UICN V–VI, p. ej. la Reserva Provincial Iberá) y reservas de manejo (IV) no cuentan: hay campos
-                   productivos adentro.
-    <c>_ha_monte   del resto, celdas con ≥ 50 % de bosque en 2025 (MapBiomas Argentina Col. 3)
-    <c>_ha_resto   lo demás (agricultura, pastura, plantación, pastizal, urbano…)
-y el factor que fija la clase: <c>_lim = el limitante más frecuente entre las celdas no S1 del departamento
+Resumen por departamento: rank.<c>_ha (ha con clase S1–S2) y rank.<c>_pct (% de la superficie). Es aptitud física:
+no descuenta áreas protegidas, Ramsar, OTBN ni monte (las áreas protegidas se ven en el mapa: exportar_ap_web.py).
+Y el factor que fija la clase: <c>_lim = el limitante más frecuente entre las celdas no S1 del departamento
 (aptitud.resumen; en empate entre suelo y clima se nombra el suelo) y <c>_lim_pct = su % sobre esas celdas.
 
 Uso (desde neahub/):
@@ -66,19 +60,12 @@ def main() -> None:
            n_h.media::real AS heladas_normal, n_hs.media::real AS heladas5_normal, n_c.media::real AS calor35_normal,
            s.ph_h2o::real AS ph, s.arcilla_pct::real AS arcilla_pct,
            (100 * tan(radians(s.pendiente_media_grados)))::real AS pendiente_pct, s.elev_media_m::real AS elev_m,
-           {apt}, {lim},
-           (coalesce(ap.pct, 0) >= 50 OR coalesce(o.cat_i_pct, 0) + coalesce(o.cat_ii_pct, 0) >= 50) AS bloq,
-           coalesce(u.bosque_2025, 0) >= 50 AS bosque
+           {apt}, {lim}
     FROM capa_agri_potential a   -- la capa web ya es esta misma: sólo se usa su partición (depto_id, principal)
     JOIN departamentos d USING (depto_id) JOIN territorios t ON t.territorio_id = a.territorio_id
     JOIN clima.hex_pixel h ON h.h3 = a.h3
     LEFT JOIN suelo.h3 s ON s.h3 = a.h3
     LEFT JOIN aptitud.resumen r ON r.h3 = a.h3
-    LEFT JOIN institucional.otbn_h3 o ON o.h3 = a.h3
-    LEFT JOIN (SELECT x.h3, least(100, sum(x.pct)) AS pct FROM institucional.ap_h3 x
-               JOIN institucional.areas_protegidas p USING (ap_id) WHERE p.uicn IN ('I', 'II') GROUP BY x.h3) ap
-           ON ap.h3 = a.h3
-    LEFT JOIN uso.h3_trayectoria u ON u.h3 = a.h3
     LEFT JOIN clima.normal_1991_2020 n_p ON n_p.tabla = 'chirps_campania' AND n_p.variable = 'p_mm' AND n_p.unidad_id = h.chirps_pixel AND n_p.estacion IS NULL
     LEFT JOIN clima.normal_1991_2020 n_b ON n_b.tabla = 'balance_campania' AND n_b.variable = 'p_menos_et0' AND n_b.unidad_id = h.par_id AND n_b.estacion IS NULL
     LEFT JOIN clima.normal_1991_2020 n_g ON n_g.tabla = 'era5_campania_corr' AND n_g.variable = 'gdd10' AND n_g.unidad_id = h.era5_pixel AND n_g.estacion IS NULL
@@ -91,8 +78,7 @@ def main() -> None:
     for c in CULTIVOS:
         df[f'apt_{c}_clase'] = df[f'apt_{c}_clase'].astype('Int8')
         df[f'apt_{c}_pct'] = df[f'apt_{c}_pct'].astype('Int16')
-    df['monte'] = df.bosque & ~df.bloq
-    solo_resumen = {'territorio', 'parquet_key', 'ha', 'bloq', 'bosque', 'monte'} | {f'lim_{c}' for c in CULTIVOS}
+    solo_resumen = {'territorio', 'parquet_key', 'ha'} | {f'lim_{c}' for c in CULTIVOS}
     cols = [c for c in df.columns if c not in solo_resumen]
     for terr, g in df.groupby('territorio'):
         pre = PREFIJO[terr]
@@ -116,11 +102,6 @@ def main() -> None:
                 apto = ok & (d[f'apt_{c}_clase'] <= 2)
                 rank[f'{c}_ha'] = round(float(d.loc[apto, 'ha'].sum()))
                 rank[f'{c}_pct'] = round(100 * float(apto.sum()) / max(int(ok.sum()), 1), 1)
-                ha_bloq = round(float(d.loc[apto & d.bloq, 'ha'].sum()))
-                ha_monte = round(float(d.loc[apto & d.monte, 'ha'].sum()))
-                rank[f'{c}_ha_bloq'] = ha_bloq
-                rank[f'{c}_ha_monte'] = ha_monte
-                rank[f'{c}_ha_resto'] = rank[f'{c}_ha'] - ha_bloq - ha_monte
                 lim = d.loc[ok & (d[f'apt_{c}_clase'] > 1), f'lim_{c}'].dropna()
                 if len(lim):
                     vc = lim.value_counts()

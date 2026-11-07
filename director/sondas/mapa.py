@@ -175,7 +175,8 @@ async def revisar_tooltip(H, page, e, ctx):
             if lab and lab not in tt: malos_clase.append(f"código {s['value']} = «{lab}», tooltip «{tt.strip()}»")
             continue
         esperado = float(s['value']) * escala
-        if re.search(r'\d\.\d', tt): punto += 1
+        # Punto decimal, no separador de miles («1.324.500 ha» de las áreas protegidas): 1–2 cifras tras el punto.
+        if re.search(r'\d\.\d{1,2}(?!\d)', tt): punto += 1
         ns = numeros(tt)
         if not ns:
             if float(s['value']) == 0 and re.search(r'sin (dato|cobertura)', tt, re.I):

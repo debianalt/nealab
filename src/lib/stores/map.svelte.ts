@@ -53,6 +53,8 @@ export class MapStore {
 	// plantationsDept = the selected department name, used to filter the overlay to
 	// that department (loads per-dept, not by zoom).
 	plantationsVisible: boolean = $state(false);
+	// Protected-area and Ramsar borders over any AR layer (toggle in the bottom-left map box).
+	apVisible: boolean = $state(true);
 	plantationsDept: string | null = $state(null);
 	selectedHex: HexData | null = $state(null);
 	private colorIndex = 0;

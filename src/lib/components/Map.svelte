@@ -8,7 +8,7 @@
 	import { cellsToMultiPolygon } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
-	import { getTilesUrl, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses, type MacizoFocus } from '$lib/config';
+	import { getTilesUrl, AP_OVERLAY_URL, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses, type MacizoFocus } from '$lib/config';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { formatDept } from '$lib/utils/format';
@@ -1239,6 +1239,22 @@
 				source: 'hexagons',
 				paint: { 'line-color': '#1e293b', 'line-width': 0.5, 'line-opacity': 0 }
 			}, firstSymbolId);
+			// Protected areas and Ramsar sites: border only (the hexagons' class stays readable) and a transparent
+			// fill for the hover. Data loads the first time the overlay shows (updateApVisibility).
+			map.addSource('areas-protegidas', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+			const apW = ['interpolate', ['linear'], ['zoom'], 6, 1, 10, 1.8, 13, 2.6];
+			const apCasing = ['interpolate', ['linear'], ['zoom'], 6, 2.6, 10, 3.6, 13, 4.6];
+			const apT = MAP_THEME[appliedTema];
+			map.addLayer({ id: 'ap-hit', type: 'fill', source: 'areas-protegidas', layout: { visibility: 'none' },
+				paint: { 'fill-color': '#000000', 'fill-opacity': 0 } }, firstSymbolId);
+			map.addLayer({ id: 'ap-casing', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
+				paint: { 'line-color': apT.halo, 'line-width': apCasing as any, 'line-opacity': 0.8 } }, firstSymbolId);
+			map.addLayer({ id: 'ap-line', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
+				filter: ['!=', ['get', 'tipo'], 'ramsar'],
+				paint: { 'line-color': apT.protegida, 'line-width': apW as any } }, firstSymbolId);
+			map.addLayer({ id: 'ap-line-ramsar', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
+				filter: ['==', ['get', 'tipo'], 'ramsar'],
+				paint: { 'line-color': apT.protegida, 'line-width': apW as any, 'line-dasharray': [3, 2] } }, firstSymbolId);
 			applyHexHidden();   // a by-department reading may have been set before the map loaded
 			// Census radios of the open department (setRadioUnit): the unit a census rate is measured on.
 			map.addLayer({
@@ -1387,6 +1403,7 @@
 			if (regionalModeActive) setRegionalMapMode(true);
 			applyDeptFill();   // the panel can set it before the style loads (deep link)
 			applyOwnLayersTheme(appliedTema);
+			updateApVisibility();
 			if (themeStore.fondo === 'satelite') setSatellite(true);
 			themeReady = true;
 			// The reader may have switched theme while the map was loading.
@@ -1471,7 +1488,7 @@
 				}
 				const v = hit.value == null ? '—'
 					: (deptFill.signed && hit.value > 0 ? '+' : '') + hit.value.toLocaleString(i18n.locale, { minimumFractionDigits: deptFill.decimals, maximumFractionDigits: deptFill.decimals }) + ' ' + deptFill.unit;
-				tooltip.innerHTML = `<b style="color:var(--c-ink-1)">${formatDept(hit.name)}</b><br>${v} · ${hit.pos}.º ${i18n.t('rank.of')} ${deptFill.values.length}`;
+				tooltip.innerHTML = `<b style="color:var(--c-ink-1)">${formatDept(hit.name)}</b><br>${v} · ${hit.pos}.º ${i18n.t('rank.of')} ${deptFill.values.length}${apLines(e.point)}`;
 				tooltip.style.display = 'block';
 				tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 				tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1949,7 +1966,7 @@
 				if (r) radioLine = `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-top:2px">${i18n.t(Number(r.n_celdas) === 1 ? 'map.radioTip1' : 'map.radioTip').replace('{code}', fmtRedcode(String(r.redcode))).replace('{n}', Number(r.n_celdas).toLocaleString(i18n.locale))}</div>`;
 			}
 
-			tooltip.innerHTML = `${titleLine}${valueLine}${radioLine}`;
+			tooltip.innerHTML = `${titleLine}${valueLine}${radioLine}${apLines(e.point)}`;
 			tooltip.style.display = 'block';
 			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
 			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
@@ -1959,6 +1976,25 @@
 			if (!lassoActive) map.getCanvas().style.cursor = '';
 			tooltip.style.display = 'none';
 			setRadioHover(null);
+		});
+
+		// Protected areas where nothing else answers the hover (no hexagon and no painted department under the
+		// pointer, e.g. the Chaco plain with flood and no ranking): the area lines alone.
+		let apOwnTip = false;
+		map.on('mousemove', 'ap-hit', (e) => {
+			if (lassoActive) return;
+			const others = ['hex-fill', ...(deptFill ? fillLayers : [])].filter((l) => map.getLayer(l));
+			if (others.length && map.queryRenderedFeatures(e.point, { layers: others }).length) { apOwnTip = false; return; }
+			const html = apLines(e.point);
+			if (!html) return;
+			apOwnTip = true;
+			tooltip.innerHTML = html.replace('border-top:1px solid rgba(var(--c-fg-rgb),0.15);margin-top:5px;padding-top:1px', '');
+			tooltip.style.display = 'block';
+			tooltip.style.left = (e.originalEvent.clientX + 14) + 'px';
+			tooltip.style.top = (e.originalEvent.clientY + 14) + 'px';
+		});
+		map.on('mouseleave', 'ap-hit', () => {
+			if (apOwnTip) { tooltip.style.display = 'none'; apOwnTip = false; }
 		});
 
 		map.on('mousemove', 'compare-hex-fill', () => {
@@ -2189,6 +2225,49 @@
 		themeStore.tema;
 		updatePlantationsVisibility();
 	});
+
+	// Protected areas: shown over any layer of an Argentine territory while the toggle is on.
+	const AP_LAYERS = ['ap-hit', 'ap-casing', 'ap-line', 'ap-line-ramsar'];
+	let apLoaded = false;
+	function updateApVisibility() {
+		if (!map || !map.getLayer('ap-line')) return;
+		const on = mapStore.apVisible && !!mapStore.activeHexLayer && !homeView && !!AR_CODPROV[activeTerritoryId];
+		if (on && !apLoaded) {
+			apLoaded = true;
+			(map.getSource('areas-protegidas') as maplibregl.GeoJSONSource).setData(AP_OVERLAY_URL);
+		}
+		for (const id of AP_LAYERS) map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none');
+	}
+	$effect(() => {
+		mapStore.apVisible;
+		mapStore.activeHexLayer;
+		updateApVisibility();
+	});
+
+	// Hover lines for the protected areas under the pointer: name, category as published, area, act and year.
+	// Nothing about what is allowed inside: each area has its own rules.
+	function apLines(point: maplibregl.PointLike): string {
+		if (!map?.getLayer('ap-hit') || map.getLayoutProperty('ap-hit', 'visibility') !== 'visible') return '';
+		const seen = new Set<number>();
+		const rows: string[] = [];
+		let ramsar = false, sifap = false;
+		for (const f of map.queryRenderedFeatures(point, { layers: ['ap-hit'] })) {
+			const p = f.properties as any;
+			if (seen.has(p.id)) continue;
+			seen.add(p.id);
+			if (p.tipo === 'ramsar') ramsar = true; else sifap = true;
+			const cat = p.tipo === 'ramsar' ? i18n.t('map.ap.ramsar') : (p.categoria || i18n.t(`map.ap.${p.tipo}`));
+			const ha = Number(p.ha).toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { maximumFractionDigits: 0 });
+			const haLbl = p.ha_declarada === true || p.ha_declarada === 'true' ? i18n.t('map.ap.haDeclared') : i18n.t('map.ap.haPolygon');
+			const acto = [p.instrumento, p.creacion].filter(Boolean).join(' ');
+			rows.push(`<div style="margin-top:4px"><b style="color:var(--c-ink-1)">${p.nombre}</b><br>`
+				+ `<span style="color:var(--c-ink-2)">${cat} · ${ha} ${haLbl}${acto ? ` · ${acto}` : ''}</span></div>`);
+		}
+		if (!rows.length) return '';
+		const src = [sifap ? i18n.t('map.ap.srcSifap') : '', ramsar ? i18n.t('map.ap.srcRamsar') : ''].filter(Boolean).join(' · ');
+		return `<div style="border-top:1px solid rgba(var(--c-fg-rgb),0.15);margin-top:5px;padding-top:1px">${rows.join('')}`
+			+ `<div style="color:rgba(var(--c-fg-rgb),0.5);font-size:9px;margin-top:3px">${src}</div></div>`;
+	}
 
 	export function updateColorExpr() {
 		const colorExpr = mapStore.getColorExpr() as any;
@@ -2497,6 +2576,7 @@
 		if (homeView === on) return;
 		homeView = on;
 		styleActiveTerritory();
+		updateApVisibility();
 	}
 
 	// Territories the open layer does not cover: a click there is ignored
@@ -2510,6 +2590,7 @@
 		activeTerritoryId = territoryId;
 		applyTerritoryVisibility();
 		styleActiveTerritory();
+		updateApVisibility();
 		if (!map) return;
 		// The picker can be switched on before the territory (deep link): re-apply it.
 		setDeptPickerVisible(pickerVisible);
@@ -2619,6 +2700,8 @@
 		set('territory-bg-fill', 'fill-opacity', T.territoryBgOpacity);
 		for (const id of ['region-outline', 'region-outline-tf']) set(id, 'line-color', T.regionOutline);
 		set('province-line', 'line-color', T.province);
+		for (const id of ['ap-line', 'ap-line-ramsar']) set(id, 'line-color', T.protegida);
+		set('ap-casing', 'line-color', T.halo);
 		set('province-fill', 'fill-color', T.accent);
 		for (const id of ['ar-dept-line', 'br-dept-line']) set(id, 'line-color', T.deptLine);
 		set('dept-outline-line', 'line-color', T.accent);

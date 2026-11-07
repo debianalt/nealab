@@ -55,6 +55,7 @@ export interface MapThemeColors {
 	accent: string;                 // selected department, picker tint
 	compare: string;                // compared department
 	select: string;                 // outline of anything selected
+	protegida: string;              // protected-area and Ramsar borders (overlay, every AR layer)
 	hillshade: { shadow: string; highlight: string; accent: string | undefined; exaggeration: number };
 	light: { color: string; intensity: number };
 }
@@ -71,6 +72,7 @@ export const MAP_THEME: Record<MapTema, MapThemeColors> = {
 		accent: '#60a5fa',
 		compare: '#fbbf24',
 		select: SELECT_OUTLINE,
+		protegida: '#d8b4fe',
 		hillshade: { shadow: '#0a0a1a', highlight: '#8899bb', accent: undefined, exaggeration: 0.7 },
 		light: { color: '#e0f0ff', intensity: 0.55 },
 	},
@@ -87,6 +89,7 @@ export const MAP_THEME: Record<MapTema, MapThemeColors> = {
 		accent: '#2f6f9f',
 		compare: '#b7791f',
 		select: '#1c1c1c',
+		protegida: '#6b21a8',
 		hillshade: { shadow: '#858688', highlight: '#ffffff', accent: '#b3b4b6', exaggeration: 0.35 },
 		light: { color: '#f7f9fb', intensity: 0.7 },
 	},
