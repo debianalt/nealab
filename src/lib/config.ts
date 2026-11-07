@@ -15,7 +15,7 @@ export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrie
 		return `${getBase()}/data/terrain/mapterhorn-v1/{z}/{x}/{y}.webp`;
 	}
 	const files: Record<string, string> = {
-		buildings: 'tiles/buildings-v5.pmtiles',
+		buildings: 'data/tiles/buildings-v6.pmtiles',   // v6 (6-nov-2026): personas por tipo de vivienda (allocate_population.py), altura por pisos en torres
 		misiones_plantations: 'data/tiles/misiones_plantations_v4.pmtiles',   // v4: + km por la red hasta el asfalto (red_vial.py); v2: edad, situación de turno, dpto_key
 		corrientes_plantations: 'data/tiles/corrientes_plantations_v4.pmtiles',   // v4: + km por la red hasta el asfalto (red_vial.py); v2: edad, situación de turno, dpto_key
 		chaco_plantations: 'data/tiles/chaco_plantations_v4.pmtiles',   // v4: + km por la red hasta el asfalto (red_vial.py); v2: edad, situación de turno, dpto_key
@@ -139,7 +139,7 @@ export function getCensusRadiosUrl(territoryPrefix = ''): string {
 
 // People estimated per cell from its buildings; per radio they add up to the census population
 // (pipeline/build_cell_population.py). Read by the click selection by radio.
-export const CELL_POPULATION_V = 2;   // 2: Corrientes sin radios repartidos por área salvo 2 (6-nov-2026)
+export const CELL_POPULATION_V = 3;   // 3: Misiones por tipo de vivienda (allocate_population.py); 2: Corrientes sin radios repartidos por área salvo 2 (6-nov-2026)
 export function getCellPopulationUrl(territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}cell_population_2022.parquet?v=${CELL_POPULATION_V}`;
 }

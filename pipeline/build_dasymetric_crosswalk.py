@@ -42,15 +42,19 @@ RADIOS_PATH = os.path.join(OUTPUT_DIR, "radios_misiones.parquet")
 
 H3_RESOLUTION = 9
 
+# Personas y hogares por edificio: allocate_population.py → poblacion_edificios_2022 (6-nov-2026).
+# El peso del cruce sigue siendo la cantidad de edificios; sólo cambian est_personas/est_hogares.
 BUILDING_QUERY = """
-    SELECT redcode,
-           ST_Y(ST_Centroid(geom)) AS lat,
-           ST_X(ST_Centroid(geom)) AS lng,
-           COALESCE(est_personas, 0) AS est_personas,
-           COALESCE(est_hogares, 0) AS est_hogares
-    FROM {table}
-    WHERE redcode IS NOT NULL
+    SELECT b.redcode,
+           ST_Y(ST_Centroid(b.geom)) AS lat,
+           ST_X(ST_Centroid(b.geom)) AS lng,
+           COALESCE(p.est_personas, 0) AS est_personas,
+           COALESCE(p.est_hogares, 0) AS est_hogares
+    FROM {table} b
+    LEFT JOIN poblacion_edificios_2022 p ON p.src = '{table}' AND p.bid = b.{id_col}
+    WHERE b.redcode IS NOT NULL
 """
+ID_COL = {"vida_buildings": "fid", "gba_buildings": "gba_id"}
 
 
 def fetch_building_centroids(conn) -> pd.DataFrame:
@@ -58,7 +62,7 @@ def fetch_building_centroids(conn) -> pd.DataFrame:
     frames = []
     for table in ("vida_buildings", "gba_buildings"):
         print(f"  Querying {table}...")
-        df = pd.read_sql(BUILDING_QUERY.format(table=table), conn)
+        df = pd.read_sql(BUILDING_QUERY.format(table=table, id_col=ID_COL[table]), conn)
         print(f"    -> {len(df):,} rows, {df['redcode'].nunique():,} radios")
         frames.append(df)
 

@@ -14,7 +14,12 @@ Databases required:
   - posadas (PostgreSQL): censo_2022.radios_geom
 
 Output:
-  pipeline/output/buildings-v5.pmtiles
+  pipeline/output/buildings-v6.pmtiles
+
+v6 (6-nov-2026): est_personas sale de allocate_population.py (tabla poblacion_edificios_2022;
+reparto por tipo de vivienda, con decimales); la altura a la vista es máx(altura, pisos_est × 3 m) en los edificios de 3
+pisos o más (la altura GBA se satura en las torres); radio_viviendas = viviendas del censo
+(Hexoma), no hogares.
   pipeline/output/radio_stats_master.parquet (patched)
 """
 
@@ -40,7 +45,7 @@ from shapely import wkb
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output")
-PMTILES_OUTPUT = os.path.join(OUTPUT_DIR, "buildings-v5.pmtiles")
+PMTILES_OUTPUT = os.path.join(OUTPUT_DIR, "buildings-v6.pmtiles")
 PARQUET_PATH = os.path.join(OUTPUT_DIR, "radio_stats_master.parquet")
 
 # PMTiles config
@@ -52,6 +57,14 @@ BBOX = {"west": -56.1, "south": -28.2, "east": -53.55, "north": -25.44}
 
 PG_BUILDINGS = "dbname=ndvi_misiones user=postgres"
 PG_CENSUS = "dbname=posadas user=postgres"
+PG_HEXOMA = "dbname=hexoma user=postgres"
+
+
+def display_height(height, pisos):
+    h = float(height) if height else 5.0
+    if pisos is not None and float(pisos) >= 3:
+        h = max(h, float(pisos) * 3.0)
+    return round(h, 1)
 
 
 # ── Tile math (from geojson_to_pmtiles.py) ───────────────────────────────
@@ -135,6 +148,13 @@ def load_radio_stats():
             bldg_counts = {row[0]: int(row[1]) for row in cur}
     print(f"  Building counts: {len(bldg_counts)} radios")
 
+    with psycopg2.connect(PG_HEXOMA) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""SELECT redcode::text, viviendas_oficial FROM censo_2022.radios
+                           WHERE redcode / 10000000 = 54""")
+            viviendas = {row[0]: int(row[1] or 0) for row in cur}
+    print(f"  Viviendas (Hexoma): {len(viviendas)} radios")
+
     # Merge: radio-level attributes for tooltip (est_personas comes from DB per building)
     radio_stats = {}
     for redcode, c in census.items():
@@ -144,7 +164,7 @@ def load_radio_stats():
         radio_stats[redcode] = {
             "radio_personas": personas,
             "radio_hogares": c["hogares"],
-            "radio_viviendas": c["hogares"],  # censo 2022 doesn't distinguish at radio level
+            "radio_viviendas": viviendas.get(redcode, 0),
             "radio_area_km2": round(area, 3),
             "densidad_hab_km2": round(personas / area, 1) if area > 0 else 0,
             "n_buildings": n,
@@ -166,14 +186,15 @@ def load_buildings(radio_stats):
         with conn.cursor(name="gba_cursor") as cur:
             cur.itersize = 50000
             cur.execute("""
-                SELECT ST_AsBinary(geom), redcode, best_height_m, area_m2,
-                       COALESCE(est_personas, 0) as est_personas
-                FROM gba_buildings
-                WHERE redcode IS NOT NULL AND geom IS NOT NULL
+                SELECT ST_AsBinary(b.geom), b.redcode, b.best_height_m, b.area_m2,
+                       COALESCE(p.est_personas, 0) as est_personas, p.pisos_est
+                FROM gba_buildings b
+                LEFT JOIN poblacion_edificios_2022 p ON p.src = 'gba_buildings' AND p.bid = b.gba_id
+                WHERE b.redcode IS NOT NULL AND b.geom IS NOT NULL
             """)
             count = 0
             for row in cur:
-                geom_wkb, redcode, height, area, est_pers = row
+                geom_wkb, redcode, height, area, est_pers, pisos = row
                 stats = radio_stats.get(redcode)
                 if not stats:
                     continue
@@ -184,8 +205,8 @@ def load_buildings(radio_stats):
                 features.append({
                     "geometry": geom,
                     "properties": {
-                        "est_personas": int(est_pers),
-                        "best_height_m": round(float(height), 1) if height else 5.0,
+                        "est_personas": round(float(est_pers), 1),
+                        "best_height_m": display_height(height, pisos),
                         "area_m2": round(float(area), 0) if area else 0,
                         "redcode": redcode,
                         "radio_personas": stats["radio_personas"],
@@ -203,14 +224,15 @@ def load_buildings(radio_stats):
         with conn.cursor(name="vida_cursor") as cur:
             cur.itersize = 50000
             cur.execute("""
-                SELECT ST_AsBinary(ST_GeometryN(geom, 1)), redcode, best_height_m, area_in_meters,
-                       COALESCE(est_personas, 0) as est_personas
-                FROM vida_buildings
-                WHERE redcode IS NOT NULL AND geom IS NOT NULL
+                SELECT ST_AsBinary(ST_GeometryN(b.geom, 1)), b.redcode, b.best_height_m, b.area_in_meters,
+                       COALESCE(p.est_personas, 0) as est_personas, p.pisos_est
+                FROM vida_buildings b
+                LEFT JOIN poblacion_edificios_2022 p ON p.src = 'vida_buildings' AND p.bid = b.fid
+                WHERE b.redcode IS NOT NULL AND b.geom IS NOT NULL
             """)
             count_vida = 0
             for row in cur:
-                geom_wkb, redcode, height, area, est_pers = row
+                geom_wkb, redcode, height, area, est_pers, pisos = row
                 stats = radio_stats.get(redcode)
                 if not stats:
                     continue
@@ -221,8 +243,8 @@ def load_buildings(radio_stats):
                 features.append({
                     "geometry": geom,
                     "properties": {
-                        "est_personas": int(est_pers),
-                        "best_height_m": round(float(height), 1) if height else 5.0,
+                        "est_personas": round(float(est_pers), 1),
+                        "best_height_m": display_height(height, pisos),
                         "area_m2": round(float(area), 0) if area else 0,
                         "redcode": redcode,
                         "radio_personas": stats["radio_personas"],

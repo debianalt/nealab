@@ -1470,7 +1470,7 @@
 			map.getCanvas().style.cursor = 'pointer';
 			const p = e.features![0].properties!;
 
-			const pers = parseInt(p.est_personas) || 0;
+			const pers = Math.round(parseFloat(p.est_personas)) || 0;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const redcode = p.redcode || null;
@@ -1538,7 +1538,7 @@
 			map.getCanvas().style.cursor = 'pointer';
 			const p = e.features![0].properties!;
 
-			const pers = parseInt(p.est_personas) || 0;
+			const pers = Math.round(parseFloat(p.est_personas)) || 0;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 			const redcode = p.redcode || null;
@@ -1581,7 +1581,7 @@
 				map.getCanvas().style.cursor = 'pointer';
 				const p = e.features![0].properties!;
 
-				const pers = parseInt(p.est_personas) || 0;
+				const pers = Math.round(parseFloat(p.est_personas)) || 0;
 				const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 				const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
 				const redcode = p.redcode || null;
