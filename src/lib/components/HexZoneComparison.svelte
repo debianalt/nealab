@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { HexStore, HexZone } from '$lib/stores/hex.svelte';
+	import type { HexStore, HexZone, DossierLayer } from '$lib/stores/hex.svelte';
 	import { i18n } from '$lib/stores/i18n.svelte';
 	import { unitLabel } from '$lib/utils/units';
 	import { formatDept } from '$lib/utils/format';
@@ -10,7 +10,8 @@
 		downloadGeoJsonFromHexList,
 	} from '$lib/utils/data-export';
 	import RequestDiagnostic from './RequestDiagnostic.svelte';
-	import { compareToRef, type RefCompare } from '$lib/utils/zoneStats';
+	import { compareToRef, type RefCompare, type RowAggregate } from '$lib/utils/zoneStats';
+	import type { HexVariable } from '$lib/config';
 	import { radioUnit, RADIO_SUPPORT, hasRadios } from '$lib/stores/radioUnit.svelte';
 
 	let {
@@ -50,6 +51,52 @@
 			case 'diff': return `${sign(c.value)}${fmtSmart(Math.abs(c.value))}${unit ? ` ${unitLabel(unit)}` : ''}`;
 			case 'share': return `${fmtNum(c.value, c.value < 1 ? 2 : 1)} % ${i18n.t('hexZone.ref.ofDept')}`;
 		}
+	}
+
+	// ── The zone across every layer of its department (hexStore.zoneDossier) ──
+	type Dossier = { key: string; done: number; total: number; layers: DossierLayer[] | null };
+	let dossiers: Record<string, Dossier> = $state({});
+	let openDossier: Record<string, boolean> = $state({});
+	const dossierKey = (z: HexZone) => `${z.id}|${z.dept}|${z.h3indices.length}|${z.h3indices[0]}`;
+	async function toggleDossier(zone: HexZone) {
+		openDossier[zone.id] = !openDossier[zone.id];
+		const key = dossierKey(zone);
+		if (!openDossier[zone.id] || dossiers[zone.id]?.key === key) return;
+		dossiers[zone.id] = { key, done: 0, total: 0, layers: null };
+		const layers = await hexStore.zoneDossier(zone, (done, total) => {
+			if (dossiers[zone.id]?.key === key) dossiers[zone.id] = { ...dossiers[zone.id], done, total };
+		});
+		if (dossiers[zone.id]?.key === key) dossiers[zone.id] = { ...dossiers[zone.id], layers };
+	}
+	function cmpFor(v: HexVariable, z: RowAggregate, d: RowAggregate, i: number): RefCompare | null {
+		return compareToRef(v, z.rawValues[i], d.rawValues[i], z.totals[i], d.totals[i]);
+	}
+	function fmtVal(v: HexVariable, a: RowAggregate, i: number): string {
+		const x = v.aggregation === 'sum' ? a.totals[i] : a.rawValues[i];
+		if (!Number.isFinite(x)) return '—';
+		return (v.aggregation === 'sum' ? Math.round(x).toLocaleString(i18n.locale) : fmtSmart(x)) + (v.unit ? ` ${unitLabel(v.unit)}` : '');
+	}
+	function downloadDossierCsv(zone: HexZone) {
+		const layers = dossiers[zone.id]?.layers;
+		if (!layers) return;
+		const rows: Record<string, unknown>[] = [];
+		for (const L of layers) {
+			if (L.skip || !L.zone || !L.dept) continue;
+			const zA = L.zone, dA = L.dept;
+			L.vars.forEach((v, i) => {
+				const isSum = v.aggregation === 'sum';
+				const c = cmpFor(v, zA, dA, i);
+				rows.push({
+					zone: zone.id, origin: zone.origin, layer: L.layerId, variable: v.col, label: i18n.t(v.labelKey),
+					unit: v.unit ?? '', aggregation: isSum ? 'total' : 'mean',
+					zone_value: isSum ? zA.totals[i] : zA.rawValues[i],
+					dept_value: isSum ? dA.totals[i] : dA.rawValues[i],
+					comparison: c?.kind ?? '', comparison_value: c ? c.value : null,
+					zone_cells_in_layer: L.zoneCells, zone_cells: zone.h3indices.length,
+				});
+			});
+		}
+		if (rows.length) downloadCsvFromRows(rows, Object.keys(rows[0]), `${zoneFilenameBase(zone)}_ficha.csv`);
 	}
 
 	// Small zones, by what the layer measures (7-nov-2026): a census cell repeats its radio's
@@ -245,6 +292,43 @@
 						<p class="zone-note" class:warn={note.warn}>{note.text}</p>
 					{/each}
 				{/if}
+				<div class="zone-dossier">
+					<button class="dossier-btn" aria-expanded={!!openDossier[zone.id]} onclick={() => toggleDossier(zone)}>
+						{openDossier[zone.id] ? '▾' : '▸'} {i18n.t('hexZone.dossier')}
+					</button>
+					{#if openDossier[zone.id] && dossiers[zone.id]}
+						{@const D = dossiers[zone.id]}
+						{#if !D.layers}
+							<p class="zone-note">{i18n.t('hexZone.dossierLoading').replace('{a}', String(D.done)).replace('{b}', D.total ? String(D.total) : '…')}</p>
+						{:else}
+							{@const wide = D.layers.filter(L => L.skip === 'territoryWide')}
+							{@const failed = D.layers.filter(L => L.skip === 'error' || L.skip === 'noDept')}
+							<p class="zone-note">{i18n.t('hexZone.dossierNote').replace('{d}', deptName)}</p>
+							{#each D.layers.filter(L => !L.skip) as L (L.layerId)}
+								<details class="dz-layer" open={L.layerId !== hexStore.activeLayer?.id} data-dossier-layer={L.layerId}>
+									<summary>{i18n.t(L.titleKey)}</summary>
+									{#if !L.zone || !L.dept || L.zone.cellsWithData === 0}
+										<p class="zone-note">{i18n.t('hexZone.noData')}</p>
+									{:else}
+										{@const zA = L.zone}
+										{@const dA = L.dept}
+										{#each L.vars as v, vi}
+											{@const c = cmpFor(v, zA, dA, vi)}
+											<div class="cd-row">
+												<span class="cd-label">{i18n.t(v.labelKey)}{#if v.aggregation === 'sum'}<span class="cd-total">{' · '}{i18n.t('hexZone.total')}</span>{/if}</span>
+												<span class="cd-val">{fmtVal(v, zA, vi)}</span>
+											</div>
+											<div class="cd-ref">{deptName}: {fmtVal(v, dA, vi)}{#if c}{' · '}<b>{fmtCmp(c, v.unit)}</b>{/if}</div>
+										{/each}
+									{/if}
+								</details>
+							{/each}
+							{#if wide.length}<p class="zone-note">{i18n.t('hexZone.dossierWide').replace('{l}', wide.map(L => `«${i18n.t(L.titleKey)}»`).join(', '))}</p>{/if}
+							{#if failed.length}<p class="zone-note">{i18n.t('hexZone.dossierFailed').replace('{l}', failed.map(L => i18n.t(L.titleKey)).join(', '))}</p>{/if}
+							<button class="hzc-dl-btn" onclick={() => downloadDossierCsv(zone)}>{i18n.t('hexZone.dossierCsv')}</button>
+						{/if}
+					{/if}
+				</div>
 				<div class="zone-dl">
 					<button class="hzc-dl-btn" title="Hexágonos CSV" onclick={() => downloadZoneHexesCsv(zone)}>csv</button>
 					<button class="hzc-dl-btn" title="Hexágonos GeoJSON" onclick={() => downloadZoneHexesGeoJson(zone)}>geo</button>
@@ -342,6 +426,10 @@
 	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 1 1 auto; min-width: 0; line-height: 1.3; }
 	.cd-val { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; flex: 0 0 auto; }
 	.zone-dl { display: flex; gap: 3px; margin-top: 4px; }
+	.zone-dossier { margin-top: 6px; }
+	.dossier-btn { background: none; border: none; padding: 2px 0; font: inherit; font-size: 12px; font-weight: 600; color: var(--c-accent); cursor: pointer; }
+	.dz-layer { margin: 6px 0 2px; padding-left: 6px; border-left: 2px solid rgba(var(--c-fg-rgb), 0.1); }
+	.dz-layer summary { font-size: 12px; font-weight: 600; color: var(--c-ink-1); cursor: pointer; margin-bottom: 3px; }
 	.cd-ref { font-size: 11px; color: var(--c-ink-3); text-align: right; margin: -1px 0 4px; }
 	.cd-ref b { color: var(--c-ink-2, inherit); font-weight: 600; }
 	.zone-note { font-size: 11.5px; line-height: 1.35; color: var(--c-ink-3); margin: 4px 0 0; }
