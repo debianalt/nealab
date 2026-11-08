@@ -10,6 +10,19 @@ día de lluvia) **a escala de municipio y día**. Sólo datos: la comparación c
 | `python pipeline/noticias/extraer.py` | Menciones por reglas (tipo, lugar, ruta, km, altura del río, fecha relativa), con la oración, → `noticias.menciones` |
 | `python pipeline/noticias/validar_noticias.py [--muestra]` | Muestra a anotar a mano e informe `validacion_noticias.md` |
 | `python pipeline/noticias/probar_utilidad.py` | Novedad de los medios sin API y prueba del río contra la RP2 |
+| `python pipeline/noticias/contraste.py [--haiku]` | Prensa contra lluvia IMERG y río (escalas INA, modelo RP2) por municipio y día → `noticias.contraste_municipio_dia` e informe `contraste_noticias.md` (P1–P6, reglas en el docstring) |
+| `python pipeline/noticias/clasificar_llm.py --ids …` | Juicio de Haiku (`claude -p`, suscripción) por oración: hecho, reciente, fuera, en el municipio, motivo; caché `noticias.clasificacion_llm` por modelo y versión |
+| `python pipeline/noticias/celdas_llm.py <semilla>` | Precisión por municipio-día de una muestra anotada, con reglas solas y con Haiku |
+
+- **Contraste (8-nov-2026, `contraste_noticias.md`)**: la prensa sirve como señal **agregada**. P1: la probabilidad
+  de corte por agua sube con la lluvia de 3 días en cada clase, 24 veces de < 5 mm a ≥ 150 mm (igual en 2012–2019 y
+  2020–2026). P2: con un puente de la RP2 cortado según el modelo hay corte en la prensa 73 veces más seguido. P4 no
+  pasa: la exposición del modelo del día de lluvia (fracción sin ruta) no ordena a los municipios como la prensa
+  (Spearman 0,02; ajustado por cobertura, nada). P3/P5: el 61 % de los días de corte en la prensa no tiene señal ese
+  día, y Haiku sostiene sólo el 36 % de esos días (68 % de los que tienen señal): son sobre todo ruido.
+- **Por celda no alcanza**: precisión por municipio-día 48 % y 42 % (semillas 16 y 17, regla 85 %); con Haiku v2
+  68 % fuera de muestra. Lo que queda: municipio mal asignado (contexto de la nota, Moconá en San Pedro) y fechas de
+  eventos que se estiran. No usar la matriz celda por celda (listas de días, «días que el modelo no ve») sin eso.
 
 - **Estado (7-nov-2026)**: 48.098 notas de 9 medios (2000–2026, denso desde 2017) y 29.143 menciones de cuatro
   tipos: corte de puente, corte de ruta o camino, crecida, evacuados o aislados.

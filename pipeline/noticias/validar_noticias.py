@@ -34,6 +34,11 @@ V3 = ROOT / 'pipeline' / 'noticias' / 'muestra_precision_v3.csv'
 V3_UBIC = ROOT / 'pipeline' / 'noticias' / 'muestra_ubicacion_v3.csv'
 SEMILLA_V3 = 15
 REGLAS_V3 = {'tipo_ok': 0.85, 'motivo_ok': 0.80, 'lugar_ok': 0.85}
+# 8-nov-2026: la unidad que usa el contraste (contraste.py) es el municipio-día; regla fijada antes de mirar: en ≥ 85 % de
+# 60 celdas al azar de la matriz (agua, 2012–) hay al menos un hecho real de agua en ese municipio ese día (±1)
+SEMILLA_CELDAS, REGLA_CELDAS = 16, 0.85
+CELDAS_DE = lambda k: ROOT / 'pipeline' / 'noticias' / f'muestra_celdas_v3_semilla{k}.csv'  # noqa: E731
+CELDAS = CELDAS_DE(SEMILLA_CELDAS)
 FINOS = ['cruce', 'cruce_inferido', 'puente', 'km', 'paraje', 'barrio', 'picada', 'escuela', 'nominatim', 'manual']
 DOMINIOS = {'misionesonline.net': 'misionesonline', 'primeraedicion.com.ar': 'primeraedicion',
             'elterritorio.com.ar': 'elterritorio', 'lavozdecataratas.com': 'lavozdecataratas',
@@ -54,6 +59,8 @@ def main() -> int:
     ap.add_argument('--medios', default='', help='sólo estos medios (coma); la muestra va a muestra_precision_nuevos.csv')
     ap.add_argument('--n', type=int, default=N)
     ap.add_argument('--muestra-v3', action='store_true', help='muestras de la v3: 60 menciones y 40 ubicaciones finas')
+    ap.add_argument('--muestra-celdas', type=int, default=0, metavar='SEMILLA',
+                    help='60 celdas municipio-día de la matriz (agua) con esa semilla')
     a = ap.parse_args()
     conn = connect(DB)
     q = lambda s, **kw: pd.read_sql(s, conn, **kw)  # noqa: E731
@@ -69,6 +76,20 @@ def main() -> int:
         f = f.sample(min(40, len(f)), random_state=SEMILLA_V3).sort_values('mencion_id').assign(punto_ok='', nota='')
         f.to_csv(V3_UBIC, index=False, encoding='utf-8')
         print(f'muestras v3: {V3} ({len(s)}), {V3_UBIC} ({len(f)}), semilla {SEMILLA_V3}')
+        return 0
+    if a.muestra_celdas:
+        c = q("""SELECT municipio_gid, municipio, dia, string_agg(DISTINCT tipo, ',') tipos, array_agg(DISTINCT x) eventos_id
+                 FROM noticias.v_matriz_municipio_dia, unnest(eventos_id) x
+                 WHERE dia >= '2012-01-01' AND municipio_gid IS NOT NULL AND (motivo = 'agua')
+                 GROUP BY 1, 2, 3""")
+        c = c.sample(60, random_state=a.muestra_celdas).sort_values(['dia', 'municipio'])
+        ev = q("""SELECT evento_id, string_agg(medio || ' ' || fecha_nota::date || ': ' || oracion, ' ‖ ' ORDER BY fecha_nota) txt
+                  FROM (SELECT DISTINCT ON (evento_id, oracion) * FROM noticias.evento_fuentes) f GROUP BY 1""")
+        ev = dict(zip(ev.evento_id, ev.txt))
+        c['oraciones'] = c.eventos_id.map(lambda ids: ' ‖‖ '.join(ev.get(i, '') for i in ids)[:2500])
+        c.drop(columns='eventos_id').assign(celda_ok='', nota='').to_csv(CELDAS_DE(a.muestra_celdas), index=False,
+                                                                       encoding='utf-8')
+        print(f'muestra de celdas: {CELDAS_DE(a.muestra_celdas)} (60, semilla {a.muestra_celdas})')
         return 0
     if a.muestra:
         m = q("""SELECT m.mencion_id, m.medio, m.fecha::date fecha, m.tipo, m.lugar_tipo, m.lugar_nombre, m.oracion
@@ -196,6 +217,21 @@ def main() -> int:
                   f'Regla: punto a ≤ 2 km del lugar real en ≥ 85 %. **{pu:.0%} ({"PASA" if pu >= 0.85 else "NO PASA"}).**', '',
                   tabla(u3.groupby('precision_lugar').agg(n=('punto_ok', 'size'), ok=('punto_ok', 'mean')).round(2).reset_index()),
                   '', 'Errores:', '', tabla(u3[u3.punto_ok.astype(int) == 0][['mencion_id', 'precision_lugar', 'lugar_nombre', 'nota']]), '']
+    semillas = sorted(int(p.stem.rsplit('semilla', 1)[1]) for p in CELDAS.parent.glob('muestra_celdas_v3_semilla*.csv'))
+    if semillas:
+        L += ['## 7. Precisión por municipio-día (la unidad del contraste; 60 celdas al azar de la matriz por agua)', '',
+              f'Regla fijada antes de mirar: ≥ {REGLA_CELDAS:.0%} de las celdas con al menos un hecho real de agua en ese '
+              'municipio ese día (±1). Con Haiku: `celdas_llm.py <semilla>` (v2 se escribió mirando la semilla 16; la 17 '
+              'es la prueba fuera de muestra): 16 → 48 % reglas, 81 % Haiku v2 (pierde 3 de 29 buenas); 17 → 42 % reglas, '
+              '68 % Haiku v2 (pierde 4 de 25). Lo que queda son municipios mal asignados y fechas de eventos que se '
+              'estiran: no son del tipo.', '']
+    for k in semillas:
+        ce = pd.read_csv(CELDAS_DE(k))
+        ce = ce[ce.celda_ok.notna()]
+        if len(ce):
+            pc = ce.celda_ok.astype(int).mean()
+            L += [f'### Semilla {k}: reglas solas {pc:.0%} ({"PASA" if pc >= REGLA_CELDAS else "NO PASA"})', '',
+                  'Errores:', '', tabla(ce[ce.celda_ok.astype(int) == 0][['municipio', 'dia', 'tipos', 'nota']]), '']
     MD.write_text('\n'.join(L), encoding='utf-8')
     print('\n'.join(L))
     conn.close()

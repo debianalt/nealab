@@ -284,3 +284,87 @@ Errores:
 | 10,715 | cruce_inferido | Ramón × camino | «Ruta Costera N° 02» no leída como RP 2: punto a 12 km, lejos del río |
 | 14,321 | puente | Rivadavia | «Rivadavia» es una calle, no el puente |
 | 19,684 | cruce_inferido | Acaraguá × camino | igual que 8158 |
+
+## 7. Precisión por municipio-día (la unidad del contraste; 60 celdas al azar de la matriz por agua)
+
+Regla fijada antes de mirar: ≥ 85% de las celdas con al menos un hecho real de agua en ese municipio ese día (±1). Con Haiku: `celdas_llm.py <semilla>` (v2 se escribió mirando la semilla 16; la 17 es la prueba fuera de muestra): 16 → 48 % reglas, 81 % Haiku v2 (pierde 3 de 29 buenas); 17 → 42 % reglas, 68 % Haiku v2 (pierde 4 de 25). Lo que queda son municipios mal asignados y fechas de eventos que se estiran: no son del tipo.
+
+### Semilla 16: reglas solas 48% (NO PASA)
+
+Errores:
+
+| municipio | dia | tipos | nota |
+|---|---|---|---|
+| Puerto Iguazú | 2014-06-24 | crecida | pasado: la crecida fue semanas antes |
+| Campo Ramón | 2015-01-06 | crecida | crónico, sin hecho |
+| Alba Posse | 2015-03-24 | evacuados_aislados | pasado (2014) |
+| Panambí | 2015-09-29 | crecida | pasado |
+| El Soberbio | 2016-02-01 | crecida | crónico |
+| San Antonio | 2016-10-04 | crecida | Cuba |
+| Veinticinco de Mayo | 2017-07-05 | corte_puente,corte_ruta_camino | obra |
+| San Vicente | 2017-10-12 | corte_ruta_camino | protesta |
+| Apóstoles | 2017-12-13 | corte_ruta_camino | protesta |
+| Santa María | 2018-02-06 | crecida,evacuados_aislados | Salta (Santa Victoria Este) |
+| San Vicente | 2018-03-09 | crecida | pasado |
+| El Soberbio | 2018-10-18 | crecida | pasado |
+| Santa María | 2020-04-16 | crecida | obra |
+| Garupá | 2020-09-07 | corte_puente | motivo no se lee: corte sin causa en la oración |
+| San Vicente | 2020-10-23 | crecida | obra / crónico |
+| Leandro N. Alem | 2020-10-27 | crecida | crónico |
+| Bonpland | 2022-06-22 | corte_ruta_camino | corte de energía, no agua ni vía |
+| Comandante Andresito | 2023-01-19 | corte_ruta_camino | Brasil (BR-376) |
+| Fachinal | 2023-03-14 | evacuados_aislados | barrio San Onofre de Posadas, no Fachinal |
+| Santa María | 2023-09-02 | crecida | resumen provincial |
+| Comandante Andresito | 2023-09-11 | crecida | Libia |
+| Santa María | 2023-10-19 | crecida,evacuados_aislados | Alba Posse y El Soberbio, no Santa María |
+| San Martín | 2024-05-05 | crecida | Rio Grande do Sul |
+| Garupá | 2024-11-18 | evacuados_aislados | tarifas |
+| San Pedro | 2025-03-12 | evacuados_aislados | Bahía Blanca |
+| Posadas | 2025-09-09 | crecida | Tacuaruzú (Profundidad), no Posadas |
+| Caraguatay | 2025-11-11 | crecida | genérico (cauce del Paraná) |
+| Santo Pipó | 2025-12-29 | crecida,evacuados_aislados | arroyo Tacuara de Puerto Iguazú, no Santo Pipó |
+| San Pedro | 2026-07-03 | corte_ruta_camino,evacuados_aislados | Rio Grande do Sul |
+| San Pedro | 2026-08-14 | corte_puente,corte_ruta_camino | acceso a Moconá (El Soberbio), no San Pedro |
+| Santa María | 2026-10-15 | corte_puente,corte_ruta_camino,crecida | resumen provincial |
+
+### Semilla 17: reglas solas 42% (NO PASA)
+
+Errores:
+
+| municipio | dia | tipos | nota |
+|---|---|---|---|
+| Bernardo de Irigoyen | 2013-03-24 | corte_ruta_camino | historia (Rosas) |
+| Puerto Iguazú | 2013-07-31 | crecida | pasado / aclaración |
+| El Soberbio | 2014-06-11 | corte_puente,corte_ruta_camino | puentes de la RN 12 por el Paraná, no El Soberbio |
+| Azara | 2014-07-16 | crecida | relevamiento posterior, provincial |
+| Colonia Aurora | 2014-08-06 | crecida | pasado |
+| Alba Posse | 2015-02-03 | crecida | entrega de casas |
+| Apóstoles | 2016-07-04 | crecida | cita bíblica |
+| San Pedro | 2016-09-04 | evacuados_aislados | crónico / propuesta |
+| Los Helechos | 2017-03-17 | evacuados_aislados | crónico (falta de puente) |
+| Garuhapé | 2017-06-05 | crecida,evacuados_aislados | Oberá, no Garuhapé |
+| Capioví | 2018-10-11 | crecida | pasado |
+| Capioví | 2018-10-12 | crecida | pasado |
+| San Vicente | 2019-03-14 | corte_ruta_camino | protesta en San José |
+| Guaraní | 2019-03-25 | evacuados_aislados | pronóstico (chaparrones aislados) |
+| Montecarlo | 2021-11-05 | evacuados_aislados | lluvias aisladas |
+| San Vicente | 2022-01-20 | evacuados_aislados | focos de incendio aislados |
+| Campo Viera | 2022-03-16 | corte_ruta_camino | protesta |
+| San Pedro | 2022-05-05 | crecida,evacuados_aislados | alerta provincial; San Pedro no está sobre el Uruguay |
+| Puerto Iguazú | 2022-06-09 | crecida | el cierre fue una semana antes |
+| Puerto Iguazú | 2022-10-07 | crecida | el cierre fue el 11–12 de octubre |
+| San Pedro | 2023-07-11 | crecida | acceso a Moconá (El Soberbio), no San Pedro |
+| Puerto Iguazú | 2023-07-20 | crecida | la crecida fue la semana anterior |
+| Puerto Iguazú | 2023-11-20 | crecida | el cierre ya había terminado |
+| Comandante Andresito | 2023-12-26 | corte_ruta_camino,crecida,evacuados_aislados | resumen del año |
+| San Vicente | 2024-01-11 | crecida,evacuados_aislados | Corrientes (Mercedes) |
+| Garupá | 2024-01-17 | crecida | resumen provincial |
+| Cerro Azul | 2024-05-02 | crecida | arroyo Mártires (RP 4/103), no Cerro Azul |
+| Comandante Andresito | 2024-10-29 | evacuados_aislados | incomunicado por corte de luz |
+| Pozo Azul | 2025-06-23 | corte_ruta_camino | árbol en la RP 17 en Santiago de Liniers, no Pozo Azul |
+| Montecarlo | 2026-01-14 | evacuados_aislados | pronóstico |
+| Leandro N. Alem | 2026-06-30 | crecida | genérico |
+| Eldorado | 2026-08-28 | crecida | preventivo |
+| Santa María | 2026-08-28 | crecida | riesgo, genérico |
+| Oberá | 2026-09-17 | crecida | crónico |
+| Apóstoles | 2026-10-24 | corte_puente,corte_ruta_camino | puentes del Cuña Pirú, no Apóstoles |
