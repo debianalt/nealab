@@ -910,6 +910,8 @@
 		void hexStore.analysisData;
 		void hexStore.activeLayer;
 		untrack(() => {
+			// The radios/cells clicked in the previous layer, with this layer's values.
+			if (hexStore.syncSelection()) hexStore.ensureProvincialAvgLoaded();
 			hexStore.syncZones().then((changed) => {
 				if (changed) refreshHighlights();
 				// Zones of a shared link: the department view leaves them small in a corner.
@@ -962,6 +964,10 @@
 	// outline survives the selectedDpto $effect because censo_temporal never sets
 	// selectedDpto; the list clears it (feature=null) on deselect/unmount.
 	function handleCensoDeptSelect(feature: any | null) {
+		// A click selection replaces the layer panel (and the list in it) with the comparison:
+		// that unmount is not a «close the department». Keep it, so the picked cells stay in
+		// their department and can follow to the next layer (hexStore.syncSelection).
+		if (!feature && hexStore.selectedHexes.size > 0 && hexStore.deptFilterName) return;
 		mapComponent?.setDeptOutline(feature ?? null);
 		mapComponent?.setHexClip(feature?.geometry ? feature : null);
 		if (!feature?.geometry) { hexStore.setDeptFilter(null); return; }
@@ -1820,6 +1826,7 @@
 		// A full reset (Escape, home) leaves the saved zones alone: only their ✕ or «Limpiar zonas»
 		// removes them (author, 8-nov-2026). The next layer opens on its ranking.
 		hexStore.workDept = null;
+		hexStore.dropSelectionCarry();   // Escape clears the clicked selection, as it always did
 		mapComponent?.clearRadioHighlight();
 		mapComponent?.setDistrictHighlight([]);
 		mapComponent?.clearAnalysisChoropleth();

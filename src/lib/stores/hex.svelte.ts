@@ -323,6 +323,8 @@ export class HexStore {
 	}
 
 	setLayer(layerId: string | null) {
+		// The radios/cells clicked in the open department follow to the new layer (syncSelection).
+		this.stashSelection();
 		this.deptFilter = null;
 		this.deptFilterName = null;
 		this._globalLoadState.clear(); // layer changed → allow regional/compare reloads for the new layer
@@ -1677,6 +1679,43 @@ export class HexStore {
 		this.colorIndex = 0;
 	}
 
+	// ── Clicked selection across layers (8-nov-2026) ─────────────────────
+	// Radios/cells clicked in a department stay picked when the layer or the lens changes:
+	// setLayer/clearAll put them aside with the department, and syncSelection gives them back
+	// with the new layer's rows once that department's cells are in. Another department, or
+	// the page reset (Escape), drops them. Kept in memory only (zones are what gets saved).
+	private selectionCarry: { key: string; hexes: [string, string][]; colorIndex: number } | null = null;
+
+	private stashSelection() {
+		const key = this.zoneDeptKey();
+		if (this.selectedHexes.size && key) {
+			this.selectionCarry = { key, hexes: [...this.selectedHexes].map(([h, s]) => [h, s.color]), colorIndex: this.colorIndex };
+		}
+		this.selectedHexes = new Map();
+		this.colorIndex = 0;
+	}
+
+	dropSelectionCarry() {
+		this.selectionCarry = null;
+	}
+
+	/** True when the carried selection was put back (the caller repaints nothing: the map
+	 *  highlight follows selectedHexes on its own). */
+	syncSelection(): boolean {
+		const c = this.selectionCarry;
+		const key = this.zoneDeptKey();
+		if (!c || !key || !this.activeLayer) return false;
+		if (c.key !== key) { this.selectionCarry = null; return false; }
+		if (this.chartData.size === 0 || (this.lodDeptActive && !this.analysisData)) return false;
+		this.selectionCarry = null;
+		if (this.selectedHexes.size) return false;   // already picking in the new layer
+		const m = new Map<string, HexSelectionData>();
+		for (const [h, color] of c.hexes) m.set(h, { color, data: this.zoneRow(h) ?? {} });
+		this.selectedHexes = m;
+		this.colorIndex = c.colorIndex;
+		return true;
+	}
+
 	// ── Choropleth entries ────────────────────────────────────────────────
 
 	// Private compute method (for type inference in memoization above)
@@ -2214,6 +2253,8 @@ export class HexStore {
 	}
 
 	clearAll() {
+		// A lens change goes through here: the clicked selection is kept aside, like in setLayer.
+		this.stashSelection();
 		this.activeLayer = null;
 		this.visibleData = new Map();
 		this.centroidCache = new Map();
