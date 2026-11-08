@@ -267,7 +267,7 @@ en Misiones y el NE de Corrientes, cruzar con `uso.h3_anio` antes de leerlo como
 |---|---|
 | `institucional.otbn` | Polígonos del OTBN (Ley 26.331). **Misiones:** IMIBIO, actualización 2017 (acreditada por la Res. 2/2021). **Corrientes, Chaco y Formosa:** compilación nacional de la SAyDS (`OTBN_SIG250nov2017`, WFS `geo2.ambiente.gob.ar`), que trae Chaco 2009 y Corrientes y Formosa 2010; la SAyDS avisa post-procesamiento y no incluye actualizaciones posteriores. Para Misiones la compilación nacional trae la versión 2010, ya reemplazada: no se usa |
 | `institucional.otbn_h3` | % de cada celda en las categorías I (rojo), II (amarillo) y III (verde); celda ausente = sin bosque zonificado |
-| `institucional.areas_protegidas`, `ap_h3` | Nacionales (SIFAP 2016), provinciales (2016) y sitios Ramsar que tocan el NEA argentino; celda × área con el % de la celda (se superponen: un Ramsar contiene parques) |
+| `institucional.areas_protegidas`, `ap_h3` | Las mismas áreas del mapa web (`exportar_ap_web.recolectar`): Misiones = Vida Silvestre 2026 (mapa de ANP de la Dirección de ANP, 2025), Corrientes = IDE Corrientes 2025, Chaco, Formosa y huecos = IGN; celda × área con el % de la celda (se superponen: Ramsar y biosfera contienen parques) |
 | `institucional.comunidades` | Listado del INAI (relevamiento Ley 26.160 con resolución y/o personería, oct-2025), con la celda del punto cuando trae coordenadas |
 | `institucional.v_h3` | Por celda: OTBN, categoría mayor, áreas protegidas y comunidades con punto en la celda |
 | `institucional.fuentes` | URL, fecha y sha256 de cada archivo bajado |

@@ -163,19 +163,16 @@ def num(x):
         return None
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--version', type=int, default=2)
-    ap.add_argument('--misiones', choices=['vidasilvestre', 'oficial'], default='vidasilvestre')
-    a = ap.parse_args()
-    hoy = dt.date.today().isoformat()
-    carpeta = FUENTES / hoy
+def recolectar(misiones: str, carpeta: Path) -> tuple[list, list, dict]:
+    """Baja las fuentes a `carpeta`, une y deduplica. Devuelve (áreas con geometría completa ordenadas por superficie,
+    registro de archivos bajados, áreas del IGN por provincia). La usan este script (GeoJSON web) y
+    build_hexoma_institucional.py (institucional.areas_protegidas): una sola fuente de verdad."""
     carpeta.mkdir(parents=True, exist_ok=True)
     reg: list = []
     areas: list = []
 
     # Misiones
-    if a.misiones == 'vidasilvestre':
+    if misiones == 'vidasilvestre':
         d = bajar(FVSA, 'misiones_vidasilvestre', carpeta, reg)
         for f in d['features']:
             p = f['properties']
@@ -230,8 +227,20 @@ def main() -> None:
         areas.append(area(p.get('fna') or p.get('nam'), p.get('gna') or '', '', norma_ign(p.get('fdc')), g, None, 'ign', donde))
         n_ign[donde] = n_ign.get(donde, 0) + 1
 
+    return sorted(areas, key=lambda x: -x['props']['ha']), reg, n_ign
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--version', type=int, default=2)
+    ap.add_argument('--misiones', choices=['vidasilvestre', 'oficial'], default='vidasilvestre')
+    a = ap.parse_args()
+    hoy = dt.date.today().isoformat()
+    carpeta = FUENTES / hoy
+    areas, reg, n_ign = recolectar(a.misiones, carpeta)
+
     feats = []
-    for x in sorted(areas, key=lambda x: -x['props']['ha']):
+    for x in areas:
         g = x['geom'].simplify(0.0003, preserve_topology=True)
         feats.append({'type': 'Feature', 'geometry': mapping(g), 'properties': {'id': len(feats) + 1, **x['props']}})
     OUT.mkdir(parents=True, exist_ok=True)

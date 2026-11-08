@@ -8,8 +8,11 @@ Fuentes (bajadas a %HEXOMA_FUENTES%/institucional/ con sha256 en institucional.f
   * Corrientes, Chaco y Formosa: compilación nacional de la SAyDS, WFS https://geo2.ambiente.gob.ar/geoserver/ows,
     capa ordenamiento:OTBN_SIG250nov2017 (escala 1:250.000, nov-2017). La SAyDS avisa que hubo post-procesamiento:
     no reproduce exactamente el OTBN aprobado por cada provincia ni las actualizaciones posteriores a 2017.
-- Áreas protegidas (mismo WFS): ordenamiento:apn_sifal2016 (nacionales, SIFAP 2016), ordenamiento:app_polig_2016b
-  (provinciales, 2016) y areas_protegidas:sitios_ramsar.
+- Áreas protegidas: las mismas que el mapa web, con exportar_ap_web.recolectar() (7-nov-2026; antes SIFAP 2016, que
+  quedó congelado). Misiones = Fundación Vida Silvestre Argentina (2026), sobre el mapa de ANP de la Dirección de
+  Áreas Naturales Protegidas de Misiones (2025); Corrientes = IDE Corrientes (2025, CC BY-NC-SA 4.0); Chaco, Formosa
+  y lo que falte en las otras dos = IGN ign:area_protegida (Ley 27.275). Se bajan siempre (carpeta
+  %HEXOMA_FUENTES%/institucional/areas_protegidas).
 - Comunidades indígenas: listado del INAI de comunidades con relevamiento territorial (Ley 26.160) con resolución
   y/o personería jurídica registrada, oct-2025 (datos.mininterior.gob.ar). Punto aproximado cuando lo trae.
 
@@ -39,7 +42,9 @@ import pandas as pd
 import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_hexoma import DB, connect, log  # noqa: E402
+from exportar_ap_web import recolectar  # noqa: E402
 
 FUENTES_DIR = Path(os.environ.get('HEXOMA_FUENTES', r'C:\Users\ant\hexoma-fuentes'))
 INS = FUENTES_DIR / 'institucional'
@@ -49,8 +54,7 @@ INAI = ('http://datos.mininterior.gob.ar/dataset/6a702e6f-3292-44fe-804f-16b8dee
         '3c2137d5-46d3-40cf-9e01-ee406746b27a/download/listado-de-comunidades-indigenas-20251112.csv')
 PROV = {'54': 'Misiones', '18': 'Corrientes', '22': 'Chaco', '34': 'Formosa'}
 OTBN_WFS_PROV = ['Corrientes', 'Chaco', 'Formosa']
-CAPAS_AP = {'nacional': 'ordenamiento:apn_sifal2016', 'provincial': 'ordenamiento:app_polig_2016b',
-            'ramsar': 'areas_protegidas:sitios_ramsar'}
+AREAS: list = []   # áreas protegidas de recolectar(), entre bajar() y cargar()
 # Superficie acreditada del OTBN de Misiones (Res. RESOL-2021-2-APN-SPARN#MAD), ha
 OTBN_MISIONES_OFICIAL = {'I': 233083, 'II': 901617, 'III': 477858}
 VALIDACION = Path(__file__).with_name('validacion_institucional.md')
@@ -115,11 +119,14 @@ def bajar(rebajar: bool) -> list[dict]:
             shutil.copy2(OTBN_MISIONES.with_suffix(ext), dm / OTBN_MISIONES.with_suffix(ext).name)
     reg('OTBN Misiones (IMIBIO, actualización 2017, acreditada Res. 2/2021)', str(OTBN_MISIONES), dm / OTBN_MISIONES.name,
         109378, 'copia local; ver OneDrive/gee/misiones/otbn/README_otbn.md')
-    for tipo, capa in CAPAS_AP.items():
-        f = INS / f'ap_{tipo}.geojson'
-        if rebajar or not f.exists():
-            wfs_todo(capa, f)
-        reg(f'Áreas protegidas {tipo} ({capa})', f'{WFS} {capa}', f, len(json.loads(f.read_text(encoding='utf-8'))['features']))
+    areas, reg_ap, _ = recolectar('vidasilvestre', INS / 'areas_protegidas')
+    AREAS[:] = areas
+    for r in reg_ap:
+        f = INS / 'areas_protegidas' / f"{r['nombre']}.geojson"
+        n = len(json.loads(f.read_text(encoding='utf-8')).get('features', []))
+        fuentes.append({'nombre': f"Áreas protegidas: {r['nombre']}", 'url': r['url'], 'archivo': f'areas_protegidas/{f.name}',
+                        'bytes': r['bytes'], 'sha256': r['sha256'], 'objetos': n, 'bajado': time.strftime('%Y-%m-%d'),
+                        'nota': 'exportar_ap_web.recolectar()'})
     f = INS / 'inai_comunidades_202510.csv'
     if rebajar or not f.exists():
         r = requests.get(INAI, headers=UA, timeout=300)
@@ -202,24 +209,19 @@ def cargar(fuentes: list[dict]) -> None:
     conn.commit()
 
     # Áreas protegidas
-    cur.execute("""CREATE TEMP TABLE a (tipo text, nombre text, categoria text, uicn text, provincia text, creacion text,
-                   instrumento text, sup_declarada_ha real, geom_wkb text)""")
-    for tipo in CAPAS_AP:
-        g = gpd.read_file(INS / f'ap_{tipo}.geojson')
-        if g.crs is None:
-            g = g.set_crs(4326)
-        g = g.to_crs(4326)
-        pick = lambda *cs: next((g[c] for c in cs if c in g.columns), pd.Series([None] * len(g)))  # noqa: E731
-        df = gpd.GeoDataFrame({
-            'tipo': tipo, 'nombre': pick('nombre').map(arreglar_texto), 'categoria': pick('categoria').map(arreglar_texto),
-            'uicn': pick('uicn_cat', 'categ_uicn'), 'provincia': pick('provincia').map(arreglar_texto),
-            'creacion': pick('creacion', 'fecha').astype(str), 'instrumento': pick('instrument').map(arreglar_texto),
-            'sup_declarada_ha': pd.to_numeric(pick('sup_total', 'superficie'), errors='coerce')}, geometry=g.geometry)
-        subir_wkb(df, 'a', ['tipo', 'nombre', 'categoria', 'uicn', 'provincia', 'creacion', 'instrumento', 'sup_declarada_ha'])
+    cols_ap = ['tipo', 'nombre', 'categoria', 'provincia', 'norma', 'sup_declarada_ha', 'fuente', 'licencia']
+    cur.execute("""CREATE TEMP TABLE a (tipo text, nombre text, categoria text, provincia text, norma text,
+                   sup_declarada_ha real, fuente text, licencia text, geom_wkb text)""")
+    assert AREAS, 'sin áreas protegidas: bajar() no corrió recolectar()'
+    df = gpd.GeoDataFrame([{**{k: x['props'][k] for k in ('tipo', 'nombre', 'categoria', 'norma', 'fuente', 'licencia')},
+                            'provincia': x['prov'],
+                            'sup_declarada_ha': x['props']['ha'] if x['props']['ha_declarada'] else None}
+                           for x in AREAS], geometry=[x['geom'] for x in AREAS], crs=4326)
+    subir_wkb(df, 'a', cols_ap)
     cur.execute("""CREATE TABLE institucional.areas_protegidas AS
-                   SELECT row_number() OVER () AS ap_id, tipo, nombre, categoria, uicn, provincia, creacion, instrumento,
-                          sup_declarada_ha,
-                          ST_Multi(ST_CollectionExtract(ST_MakeValid(ST_GeomFromWKB(decode(geom_wkb, 'hex'), 4326)), 3))::geometry(MultiPolygon, 4326) AS geom
+                   SELECT row_number() OVER () AS ap_id, tipo, nombre, categoria, provincia, norma, sup_declarada_ha,
+                          fuente, licencia,
+                          ST_Multi(ST_CollectionExtract(ST_MakeValid(ST_Force2D(ST_GeomFromWKB(decode(geom_wkb, 'hex'), 4326))), 3))::geometry(MultiPolygon, 4326) AS geom
                    FROM a WHERE geom_wkb IS NOT NULL""")
     # sólo las que tocan el NEA argentino cargado
     cur.execute("""DELETE FROM institucional.areas_protegidas p WHERE NOT EXISTS (
@@ -319,11 +321,13 @@ def comentar(conn) -> None:
         ('otbn_h3', None): '% de la superficie de cada celda en cada categoría del OTBN (intersección exacta con el polígono '
                            'de la celda, área geodésica). Celda ausente = sin bosque nativo zonificado',
         ('otbn_h3', 'fuente'): 'versión del OTBN usada en la celda',
-        ('areas_protegidas', None): 'Áreas protegidas que tocan el NEA argentino: nacionales (SIFAP 2016, apn_sifal2016), '
-                                    'provinciales (app_polig_2016b, 2016) y sitios Ramsar (WFS SAyDS). sup_declarada_ha = '
-                                    'superficie del atributo de la fuente',
+        ('areas_protegidas', None): 'Áreas protegidas del NEA argentino, las mismas del mapa web (exportar_ap_web.recolectar): '
+                                    'Misiones = Fundación Vida Silvestre Argentina 2026, sobre el mapa de ANP de la Dirección de '
+                                    'Áreas Naturales Protegidas de Misiones (2025); Corrientes = IDE Corrientes 2025 (CC BY-NC-SA '
+                                    '4.0); Chaco, Formosa y lo que falte = IGN ign:area_protegida (Ley 27.275). No dice qué se '
+                                    'puede hacer adentro: cada área tiene su norma',
         ('ap_h3', None): 'Celda × área protegida: % de la celda dentro del área (las áreas pueden superponerse: '
-                         'un sitio Ramsar contiene parques)',
+                         'un sitio Ramsar o una reserva de biosfera contiene parques y reservas privadas)',
         ('comunidades', None): 'Comunidades indígenas de Misiones, Corrientes, Chaco y Formosa del listado del INAI '
                                '(relevamiento Ley 26.160 con resolución y/o personería registrada, oct-2025). geom/h3 sólo '
                                'cuando la fuente trae coordenadas; son aproximadas. territorio_ok = el punto cae en una '
@@ -342,12 +346,16 @@ def comentar(conn) -> None:
         ('fuentes', 'bajado'): 'fecha de la bajada',
         ('v_h3', 'otbn_cat_mayor'): 'categoría con más superficie en la celda (NULL = sin OTBN)',
         ('v_h3', 'ap_pct'): '% de la celda en áreas protegidas (suma con tope 100: se superponen)',
-        ('v_h3', 'ap_nombres'): 'áreas protegidas que tocan la celda', ('v_h3', 'ap_tipos'): 'nacional, provincial o ramsar',
+        ('v_h3', 'ap_nombres'): 'áreas protegidas que tocan la celda', ('v_h3', 'ap_tipos'): 'nacional, provincial, municipal, privada, ramsar o biosfera',
         ('v_h3', 'n_comunidades'): 'comunidades del INAI con punto en la celda',
         ('ap_h3', 'ap_id'): 'área (institucional.areas_protegidas)', ('ap_h3', 'pct'): '% de la celda dentro del área',
-        ('areas_protegidas', 'ap_id'): 'identificador de la carga', ('areas_protegidas', 'uicn'): 'categoría UICN según la fuente',
-        ('areas_protegidas', 'creacion'): 'año (o fecha) de creación según la fuente', ('areas_protegidas', 'instrumento'): 'instrumento legal de creación',
-        ('areas_protegidas', 'sup_declarada_ha'): 'superficie del atributo de la fuente, ha (puede diferir del polígono)',
+        ('areas_protegidas', 'ap_id'): 'identificador de la carga',
+        ('areas_protegidas', 'tipo'): 'nacional, provincial, municipal, privada, ramsar o biosfera (de la categoría y el dominio)',
+        ('areas_protegidas', 'categoria'): 'categoría como la publica la fuente',
+        ('areas_protegidas', 'provincia'): 'provincia (fuente provincial, o punto representativo del polígono del IGN)',
+        ('areas_protegidas', 'norma'): 'norma de creación como la escribe la fuente (ley o decreto y año)',
+        ('areas_protegidas', 'sup_declarada_ha'): 'superficie declarada por la fuente, ha, sólo si coincide ± 50 % con la del polígono',
+        ('areas_protegidas', 'fuente'): 'fuente del polígono', ('areas_protegidas', 'licencia'): 'licencia o norma de acceso de la fuente',
     })
     for c, d in (('comunidad_id', 'código del INAI'), ('comunidad_nombre', 'nombre'), ('comunidad_pueblo', 'pueblo'),
                  ('provincia_id', 'código INDEC de provincia'), ('departamento_nombre', 'departamento'), ('localidad_nombre', 'localidad'),
@@ -388,7 +396,7 @@ def validar() -> None:
         L.append(f'| {prov} | {cat} | {ha:,.0f} | {(hc or 0):,.0f} | {100 * ((hc or 0) / ha - 1):+.1f} % | '
                  f'{f"{of:,}" if of else "—"} | {f"{100 * (ha / of - 1):+.1f} %" if of else "—"} |\n')
     # Áreas protegidas
-    cur.execute("""SELECT p.tipo, p.nombre, p.sup_declarada_ha, ST_Area(p.geom::geography) / 1e4,
+    cur.execute("""SELECT p.tipo, p.nombre || ' (' || split_part(p.fuente, ' (', 1) || ')', p.sup_declarada_ha, ST_Area(p.geom::geography) / 1e4,
                           (SELECT sum(a.pct * h3_cell_area(a.h3, 'm^2')) / 1e6 FROM institucional.ap_h3 a WHERE a.ap_id = p.ap_id)
                    FROM institucional.areas_protegidas p ORDER BY 1, 4 DESC""")
     L.append('\n## Áreas protegidas: declarada, polígono y celdas\n\nLas celdas cubren sólo el NEA argentino cargado; un área que '
