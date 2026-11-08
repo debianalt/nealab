@@ -1,11 +1,11 @@
 import { query, isReady } from '$lib/stores/duckdb';
-import { PARQUETS, HEX_LAYER_REGISTRY, ANALYSIS_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
+import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
 import { NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { aggregateRows, weightColOf } from '$lib/utils/zoneStats';
 import { urlOutline, type UrlZone } from '$lib/utils/zoneCodec';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
-import { loadDeptSummary, loadDeptList } from '$lib/utils/deptSummaries';
+import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
 import { cellToLatLng, cellToBoundary, polygonToCells, cellToParent } from 'h3-js';
 
@@ -130,20 +130,6 @@ export interface HexZoneStats {
 	 *  on low ground in the zone» reads right where the per-cell mean (37.8) does not. */
 	totals: number[];
 	normalizedValues: number[];
-}
-
-/** One layer of a zone's sheet across layers (hexStore.zoneDossier). */
-export interface DossierLayer {
-	layerId: string;
-	titleKey: string;
-	vars: HexVariable[];
-	zone: ReturnType<typeof aggregateRows> | null;
-	dept: ReturnType<typeof aggregateRows> | null;
-	/** Zone cells found in this layer's department file. */
-	zoneCells: number;
-	/** Why the layer is not in the sheet (no file for the department, a layer of the whole
-	 *  province, a failed read). */
-	skip?: 'territoryWide' | 'noDept' | 'error';
 }
 
 export interface HexZone {
@@ -1942,78 +1928,6 @@ export class HexStore {
 		const agg = aggregateRows(src.values(), this.numericVariables);
 		this._deptRef = { src, layerId: layer.id, agg };
 		return agg;
-	}
-
-	// ── A zone across every layer (7-nov-2026) ─────────────────────────
-	// The zone's cells read in each layer of its department without switching layer: the
-	// department file of each layer (small), aggregated for the zone and for the department
-	// with aggregateRows, the rule of the panel. Current values only (not baseline/change).
-
-	/** Layers of the sheet: per-department, published in this territory. censo_temporal (a
-	 *  territory-wide file narrowed by the department's outline) is listed as skipped. */
-	private dossierLayers(): HexLayerConfig[] {
-		const analyses = Object.values(ANALYSIS_REGISTRY) as any[];
-		return Object.values(HEX_LAYER_REGISTRY).filter(l => {
-			const a = analyses.find(x => x.id === l.id);
-			return a && a.status === 'available' && a.coverage?.[this.territoryId] !== 'unavailable'
-				&& (l as any).coverage?.[this.territoryId] !== 'unavailable';
-		});
-	}
-
-	async zoneDossier(zone: HexZone, onProgress?: (done: number, total: number) => void): Promise<DossierLayer[]> {
-		const prefix = this.territoryPrefix;
-		const deptName = zone.dept ? zone.dept.slice(zone.dept.indexOf('|') + 1) : null;
-		const layers = this.dossierLayers();
-		const cells = zone.h3indices;
-		let done = 0;
-		const one = async (layer: HexLayerConfig): Promise<DossierLayer> => {
-			const base = { layerId: layer.id, titleKey: layer.titleKey, vars: [] as HexVariable[], zone: null, dept: null, zoneCells: 0 };
-			try {
-				if (!layer.perDepartment) return { ...base, skip: 'territoryWide' as const };
-				if (!deptName) return { ...base, skip: 'noDept' as const };
-				const list = await loadDeptList(layer.id, prefix);
-				const d = list.find(x => HexStore.normName(x.name) === HexStore.normName(deptName))
-					?? (this.selectedParquetKey ? list.find(x => x.parquetKey === this.selectedParquetKey) : undefined);
-				if (!d) return { ...base, skip: 'noDept' as const };
-				const url = this.deptUrlFor(layer, d.parquetKey, prefix);
-				const actual = await getParquetCols(url);
-				const vars = layer.variables.filter(v => !NON_NUMERIC_COLS.has(v.col) && !v.hidden && actual.has(v.col));
-				const cols = [...new Set(['h3index', ...vars.flatMap(v => [v.col, weightColOf(v)])])]
-					.filter((c): c is string => !!c && actual.has(c));
-				const res = await query(`SELECT ${cols.map(c => `"${c}"`).join(', ')} FROM '${url}'`);
-				const rows = new Map<string, Record<string, any>>();
-				const h = res.getChild('h3index');
-				const vecs = cols.map(c => [c, res.getChild(c)] as const);
-				for (let i = 0; i < res.numRows; i++) {
-					const row: Record<string, any> = {};
-					for (const [c, vec] of vecs) {
-						if (c === 'h3index') continue;
-						const v = vec?.get(i);
-						row[c] = v === null || v === undefined ? null : Number(v);
-					}
-					rows.set(String(h?.get(i)), row);
-				}
-				const zoneRows = cells.map(c => rows.get(c));
-				return {
-					...base, vars,
-					zone: aggregateRows(zoneRows, vars),
-					dept: aggregateRows(rows.values(), vars),
-					zoneCells: zoneRows.filter(Boolean).length,
-				};
-			} catch (e) {
-				console.warn('[zoneDossier]', layer.id, e);
-				return { ...base, skip: 'error' as const };
-			} finally {
-				onProgress?.(++done, layers.length);
-			}
-		};
-		// A few at a time: DuckDB-WASM runs one query at a time, but the file fetches overlap.
-		const out: DossierLayer[] = new Array(layers.length);
-		let next = 0;
-		await Promise.all(Array.from({ length: Math.min(4, layers.length) }, async () => {
-			while (next < layers.length) { const k = next++; out[k] = await one(layers[k]); }
-		}));
-		return out;
 	}
 
 	// ── Zones across layers ──────────────────────────────────────────────
