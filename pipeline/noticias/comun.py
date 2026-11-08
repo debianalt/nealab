@@ -29,7 +29,8 @@ _PIE = re.compile(r'(?s)(?:Dejá un comentario\s*->|Suscribite a nuestro canal d
 _TITULO = r'[^\n]{0,220}?(?=\s*(?:Lee también|LEE TAMBIÉN|Leé también)|\n|$)'
 _MENU = re.compile(
     rf'{_INICIO}(?:Lee también|LEE TAMBIÉN|Leé también|LEÉ TAMBIÉN)\s*:?\s*{_TITULO}'
-    rf'|{_INICIO}(?:Tal vez te puede interesar|Te puede interesar|TE PUEDE INTERESAR|También te puede interesar)'
+    rf'|{_INICIO}(?:Tal vez te puede interesar|Te puede interesar|TE PUEDE INTERESAR|También te puede interesar|'
+    rf'Tal vez te interese leer)'
     rf'\s*:?[ \t]*(?:\n[ \t]*)?[^\n]{{0,220}}'
     rf'|{_INICIO}Mirá también\s*:?\s*[^\n]{{0,220}}'
     rf'|{_INICIO}Leé las últimas noticias sobre el coronavirus[^\n]*')

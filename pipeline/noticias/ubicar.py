@@ -171,6 +171,8 @@ class Ubicador:
         r = self.sql1(('cinf', cauce, ref.x, ref.y), """
             SELECT ST_X(geom), ST_Y(geom), id, coalesce(nombre_camino, ref_camino) FROM infra.cruces
             WHERE cauce_nombre = ANY(%(n)s)
+              -- v3.2: la oración habla de un puente; un cruce sin estructura conocida no lo es (semilla 15)
+              AND estructura IN ('puente', 'alcantarilla', 'vado')
               AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(%(x)s, %(y)s), 4326)::geography, 25000)
             ORDER BY geom <-> ST_SetSRID(ST_MakePoint(%(x)s, %(y)s), 4326) LIMIT 1""", {'n': nombres, 'x': ref.x, 'y': ref.y})
         if not r:

@@ -1,52 +1,54 @@
 # Validación del archivo de noticias (cortes de puentes y caminos, crecidas, evacuados)
 
-Generado por `pipeline/noticias/validar_noticias.py` el 2026-11-07. Datos: 6 medios con API de WordPress abierta, El Territorio y La Voz de Cataratas por sitemaps y HTML, MisionesCuatro por copias de la Wayback Machine (su sitio desafía a todo cliente que no sea un navegador) y el archivo completo de Misiones Online por sus sitemaps; extracción por reglas (`extraer.py`).
+Generado por `pipeline/noticias/validar_noticias.py` el 2026-11-08. Datos: 6 medios con API de WordPress abierta, El Territorio y La Voz de Cataratas por sitemaps y HTML, MisionesCuatro por copias de la Wayback Machine (su sitio desafía a todo cliente que no sea un navegador) y el archivo completo de Misiones Online por sus sitemaps; extracción por reglas (`extraer.py`).
 
 ## 1. Notas por medio
 
 | medio | via | notas | desde | hasta |
 |---|---|---|---|---|
-| primeraedicion | api_wp | 13,945 | 2012-04-01 | 2026-11-07 |
-| misionesonline | api_wp | 12,910 | 2000-04-06 | 2026-11-07 |
-| economis | api_wp | 6,460 | 2017-01-13 | 2026-11-07 |
-| canal12 | api_wp | 5,066 | 2017-09-08 | 2026-11-07 |
-| misionesopina | api_wp | 4,026 | 2015-01-17 | 2026-11-07 |
-| noticiasdel6 | api_wp | 2,924 | 2023-01-01 | 2026-11-07 |
+| primeraedicion | api_wp | 17,130 | 2012-04-01 | 2026-11-07 |
+| misionesonline | api_wp | 14,031 | 2000-04-05 | 2026-11-07 |
+| economis | api_wp | 7,067 | 2017-01-13 | 2026-11-07 |
+| canal12 | api_wp | 5,432 | 2017-09-08 | 2026-11-07 |
+| misionesopina | api_wp | 4,610 | 2015-01-17 | 2026-11-07 |
+| noticiasdel6 | api_wp | 3,148 | 2023-01-01 | 2026-11-07 |
 | lavozdecataratas | html | 2,132 | 2021-02-15 | 2026-11-07 |
-| misionescuatro | wayback | 351 | 2015-10-07 | 2026-10-13 |
-| elterritorio | html | 284 | 2007-05-21 | 2026-11-06 |
+| gobmisiones | api_wp | 1,040 | 2018-10-13 | 2026-11-07 |
+| elterritorio | html | 576 | 1970-01-01 | 2026-11-07 |
+| misionescuatro | wayback | 431 | 2015-10-07 | 2026-10-17 |
 
 Notas por año (todos los medios):
 
 | anio | notas |
 |---|---|
-| 2000 | 95 |
-| 2001 | 87 |
-| 2002 | 109 |
-| 2003 | 173 |
-| 2004 | 260 |
-| 2005 | 290 |
-| 2006 | 301 |
-| 2007 | 356 |
-| 2008 | 381 |
-| 2009 | 454 |
-| 2010 | 186 |
-| 2011 | 398 |
-| 2012 | 970 |
-| 2013 | 1,174 |
-| 2014 | 1,469 |
-| 2015 | 1,579 |
-| 2016 | 1,550 |
-| 2017 | 2,338 |
-| 2018 | 2,406 |
-| 2019 | 2,339 |
-| 2020 | 2,777 |
-| 2021 | 3,128 |
-| 2022 | 3,761 |
-| 2023 | 5,384 |
-| 2024 | 4,363 |
-| 2025 | 5,311 |
-| 2026 | 6,459 |
+| 1970 | 5 |
+| 2000 | 105 |
+| 2001 | 112 |
+| 2002 | 150 |
+| 2003 | 196 |
+| 2004 | 335 |
+| 2005 | 308 |
+| 2006 | 350 |
+| 2007 | 433 |
+| 2008 | 433 |
+| 2009 | 514 |
+| 2010 | 199 |
+| 2011 | 456 |
+| 2012 | 1,177 |
+| 2013 | 1,540 |
+| 2014 | 1,794 |
+| 2015 | 1,857 |
+| 2016 | 1,845 |
+| 2017 | 2,811 |
+| 2018 | 2,780 |
+| 2019 | 2,892 |
+| 2020 | 3,245 |
+| 2021 | 3,504 |
+| 2022 | 4,205 |
+| 2023 | 6,010 |
+| 2024 | 5,180 |
+| 2025 | 5,928 |
+| 2026 | 7,233 |
 
 ## 2. Cobertura sobre las notas del agente de la fase 3
 
@@ -73,44 +75,71 @@ Notas del agente de esos medios que no están (para revisar consultas):
 | 2024-05-05 | elterritorio | ruta provincial 2 sobre el puente del arroyo Ramón | https://www.elterritorio.com.ar/noticias/2024/05/05/825869-evacuados-el-uruguay-empieza-a-bajar-pero-sigue-alerta-por-lluvias |
 | 2025-06-30 | elterritorio | puente sobre el arroyo Pindaytí en la Ruta Costera N° 2 | https://www.elterritorio.com.ar/noticias/2025/06/30/858624-relevamiento-de-la-crecida-del-rio-uruguay-monitoreo-constante-y-pasos-fronterizos-cerrados |
 
-## 3. Menciones
+## 3. Menciones (patrones v3)
 
-| tipo | menciones | notas | % con lugar | % lugar ambiguo |
+| tipo | motivo | menciones | notas | % con lugar |
 |---|---|---|---|---|
-| crecida | 15,604 | 6,369 | 56.3 | 44.4 |
-| corte_ruta_camino | 7,162 | 4,078 | 46.3 | 68.6 |
-| evacuados_aislados | 3,646 | 2,058 | 46.1 | 47.7 |
-| corte_puente | 2,731 | 1,402 | 58.5 | 61.4 |
+| crecida | agua | 8,347 | 4,620 | 80.8 |
+| corte_ruta_camino | otro | 3,280 | 2,530 | 77.2 |
+| corte_ruta_camino | protesta | 2,720 | 1,853 | 81.7 |
+| corte_ruta_camino | agua | 1,721 | 1,323 | 85.0 |
+| evacuados_aislados | agua | 1,528 | 1,167 | 73.1 |
+| corte_puente | agua | 1,010 | 748 | 91.3 |
+| corte_puente | otro | 545 | 442 | 62.8 |
+| corte_puente | protesta | 230 | 193 | 58.3 |
+| corte_ruta_camino | obra | 190 | 177 | 70.0 |
+| corte_ruta_camino | accidente | 122 | 114 | 74.6 |
+| corte_puente | obra | 39 | 37 | 66.7 |
+| corte_puente | accidente | 29 | 27 | 62.1 |
 
-Lugares más mencionados en cortes de puente o camino:
+Precisión de la ubicación:
 
-| lugar_tipo | lugar_nombre | menciones | notas |
-|---|---|---|---|
-| municipio | Posadas | 335 | 281 |
-| hidrometro | Corrientes | 184 | 131 |
-| municipio | Montecarlo | 140 | 109 |
-| cauce | Tabay | 137 | 70 |
-| municipio | Eldorado | 135 | 98 |
-| cauce | Uruguay | 130 | 91 |
-| cauce | Garupá | 120 | 75 |
-| cauce | Yabotí | 119 | 79 |
-| municipio | Jardín América | 113 | 85 |
-| cauce | Ramón | 99 | 44 |
-| asentamiento | Piray | 97 | 54 |
-| municipio | El Soberbio | 95 | 73 |
-| municipio | Profundidad | 87 | 53 |
-| municipio | San Vicente | 85 | 70 |
-| municipio | Panambí | 83 | 43 |
-| municipio | Oberá | 83 | 68 |
-| municipio | Alba Posse | 80 | 47 |
-| municipio | San Antonio | 76 | 69 |
-| municipio | San Pedro | 72 | 59 |
-| cauce | Cuñá | 68 | 36 |
-| municipio | San Javier | 67 | 50 |
-| cauce | Piray Guazú | 63 | 33 |
-| municipio | Puerto Iguazú | 62 | 54 |
-| asentamiento | Domingo Savio | 62 | 47 |
-| municipio | Mártires | 62 | 46 |
+| precision_lugar | menciones |
+|---|---|
+| contexto_nota | 7,057 |
+| sin lugar | 4,021 |
+| asentamiento | 2,911 |
+| cauce_localidad | 1,293 |
+| hidrometro | 1,287 |
+| cauce | 1,215 |
+| ruta_localidad | 695 |
+| cruce | 537 |
+| cruce_inferido | 227 |
+| barrio | 130 |
+| paraje | 122 |
+| manual | 87 |
+| puente | 57 |
+| municipio | 52 |
+| km | 35 |
+| escuela | 15 |
+| nominatim | 12 |
+| picada | 8 |
+
+Fecha del evento:
+
+| fecha_evento_fuente | menciones |
+|---|---|
+| nota | 16,324 |
+| relativa | 2,894 |
+| explicita | 499 |
+| explicita_mes | 44 |
+
+## 3b. Eventos (`eventos.py`)
+
+| tipo | motivo | eventos | 2+ medios | con fuente oficial |
+|---|---|---|---|---|
+| crecida | agua | 2,613 | 665 | 75 |
+| corte_ruta_camino | otro | 1,525 | 228 | 28 |
+| corte_ruta_camino | protesta | 1,289 | 198 | 0 |
+| corte_ruta_camino | agua | 801 | 169 | 29 |
+| evacuados_aislados | agua | 699 | 112 | 14 |
+| corte_puente | agua | 472 | 105 | 21 |
+| corte_puente | otro | 213 | 33 | 5 |
+| corte_puente | protesta | 104 | 9 | 0 |
+| corte_ruta_camino | obra | 102 | 17 | 3 |
+| corte_ruta_camino | accidente | 78 | 6 | 0 |
+| corte_puente | obra | 22 | 1 | 0 |
+| corte_puente | accidente | 13 | 2 | 0 |
 
 ## 4a. Primera medición (patrones v1, semilla 7)
 
@@ -176,3 +205,82 @@ Regla fijada antes de mirar: tipo ≥ 80% (el HTML puede colar menús y títulos
 | 31,335 | lavozdecataratas | crecida | Tacuara | 0 | 1.0 | charla técnica, no evento |
 | 31,388 | lavozdecataratas | crecida |  | 0 |  | declaración genérica |
 | 31,729 | misionescuatro | corte_ruta_camino |  | 0 |  | texto vacío («corte de ruta» suelto) |
+
+## 5. Precisión de la v3 (muestra al azar de 60, semilla 15)
+
+Reglas fijadas antes de mirar. lugar_ok: el punto corresponde al lugar del hecho a la escala de su precisión (un contexto de nota cuenta como acierto si el hecho ocurrió en ese municipio).
+
+| medida | n | valor | regla | resultado |
+|---|---|---|---|---|
+| tipo_ok | 60 | 72% | ≥ 85% | NO PASA |
+| motivo_ok | 37 | 89% | ≥ 80% | PASA |
+| lugar_ok | 38 | 79% | ≥ 85% | NO PASA |
+| fuera_misiones | 60 | 3.3% | ≤ 5 % | PASA |
+| fecha_ok (sin regla) | 43 | 98% | — | — |
+
+Errores:
+
+| mencion_id | tipo | motivo | precision_lugar | lugar_nombre | nota |
+|---|---|---|---|---|---|
+| 34 | evacuados_aislados | agua | asentamiento | San Antonio | pronóstico («chaparrones muy aislados») |
+| 713 | crecida | agua | asentamiento | Tabay | arroyo Tabay × RP 7, no la localidad Tabay |
+| 2,627 | corte_ruta_camino | otro |  |  | vereda restringida por un edificio |
+| 2,722 | corte_puente | agua | cauce | Cuñá | obra («trabajos previstos»); «Cuñá» en vez de Cuñá Pirú II |
+| 3,363 | corte_ruta_camino | agua | contexto_nota | 1º de Mayo | Puerto Iguazú, no 1º de Mayo |
+| 3,613 | corte_ruta_camino | otro | contexto_nota | José Luis | opinión sobre los cortes |
+| 6,659 | crecida | agua | cauce_localidad | Iguazú | texto sin hecho |
+| 7,138 | corte_ruta_camino | accidente | cruce | Tunas × RP 2 | desborde del arroyo Las Tunas: motivo agua («evitar accidentes» manda) |
+| 8,028 | evacuados_aislados | agua | contexto_nota | San José | Garupá/Posadas (Fátima, Crucero del Norte), no San José |
+| 8,441 | crecida | agua | contexto_nota | Santa María | pronóstico («va a superar») |
+| 9,538 | evacuados_aislados | agua | contexto_nota | Bella Vista | Barranqueras (Chaco) |
+| 9,648 | crecida | agua | contexto_nota | Santa María | genérico (El Niño) |
+| 9,684 | crecida | agua | hidrometro | Panambí | «futura inundación» |
+| 11,512 | crecida | agua | contexto_nota | San Miguel | familias obereñas: Oberá, no San Miguel |
+| 11,777 | crecida | agua | cauce | Iguazú | genérico («las crecidas pueden elevarlo») |
+| 13,056 | crecida | agua | contexto_nota | San José | negación («no nos vimos tan complicados por las inundaciones») |
+| 13,710 | corte_ruta_camino | otro | asentamiento | San Vicente | menú «Tal vez te interese leer» |
+| 13,909 | corte_ruta_camino | otro | contexto_nota | Garupá | opinión sobre los cortes |
+| 14,270 | corte_ruta_camino | otro | asentamiento | Garupá | corte político: motivo protesta |
+| 15,344 | corte_ruta_camino | protesta | contexto_nota | Candelaria | marcha sin corte |
+| 15,621 | corte_ruta_camino | protesta | contexto_nota | Caraguatay | cortes en varios municipios |
+| 15,948 | corte_ruta_camino | protesta | contexto_nota | San Vicente | tema, no hecho |
+| 16,214 | corte_ruta_camino | otro | contexto_nota | Colonia Victoria | corte de protesta: motivo protesta |
+| 16,415 | corte_ruta_camino | protesta |  |  | opinión sobre los cortes |
+| 16,791 | corte_ruta_camino | otro | contexto_nota | 9 de Julio | política, no hecho |
+| 17,837 | crecida | agua | cauce_localidad | Uruguay | condicional («si no están visibles») |
+| 18,492 | crecida | agua |  |  | Sumatra |
+| 18,797 | evacuados_aislados | agua |  |  | condicional («si el río llega a 14 m») |
+| 19,174 | evacuados_aislados | agua | contexto_nota | Leandro N. Alem | evacuados de toda la provincia |
+| 20,834 | crecida | agua | contexto_nota | El Salto | Cataratas del Iguazú, no El Salto |
+
+## 6. Ubicaciones finas (40 al azar, semilla 15)
+
+Regla: punto a ≤ 2 km del lugar real en ≥ 85 %. **64% (NO PASA).**
+
+| precision_lugar | n | ok |
+|---|---|---|
+| barrio | 5 | 0.8 |
+| cruce | 16 | 0.9 |
+| cruce_inferido | 11 | 0.5 |
+| nominatim | 1 | 1.0 |
+| paraje | 4 | 0.0 |
+| puente | 2 | 0.0 |
+
+Errores:
+
+| mencion_id | precision_lugar | lugar_nombre | nota |
+|---|---|---|---|
+| 260 | cruce_inferido | Piray Miní × camino | cruce elegido sin puente OSM; el puente más cercano está a 2,7 km |
+| 4,407 | cruce | del Medio × RP 210 | el hecho es el arroyo Lata en Oberá; el punto queda a 20 km |
+| 4,567 | paraje | Santo Domingo Savio | paraje Santo Domingo Savio; el puente del Yabebiry está a 5 km |
+| 6,531 | paraje | Paraje San Roque | San Roque y Santa Lucía de Corrientes |
+| 7,698 | puente | Rivadavia | «Rivadavia» es una calle, no el puente |
+| 7,832 | paraje | Paraje Tambor de Tacuarí | «en este camino» (figurado) |
+| 8,158 | cruce_inferido | Acaraguá × camino | Acaraguá sin referencia: cruce sin puente, a 7 km del puente OSM más cercano |
+| 8,207 | barrio | Retiro | «bloqueos» de fumigación (dengue) |
+| 9,024 | cruce_inferido | Yabebiry × Ruta Nacional 12 | puente Mártires–Santo Domingo Savio, no el de la RN 12 |
+| 9,373 | paraje | Paraje Delicia | Delicia sobre la RN 12 (Puerto/Colonia Delicia), no Paraje Delicia a 10 km |
+| 9,518 | cruce_inferido | Soberbio × Picada Payeska | Arroyo El Soberbio × RP 2 («la misma ruta» = Costera 2), no Picada Payeska a 40 km |
+| 10,715 | cruce_inferido | Ramón × camino | «Ruta Costera N° 02» no leída como RP 2: punto a 12 km, lejos del río |
+| 14,321 | puente | Rivadavia | «Rivadavia» es una calle, no el puente |
+| 19,684 | cruce_inferido | Acaraguá × camino | igual que 8158 |

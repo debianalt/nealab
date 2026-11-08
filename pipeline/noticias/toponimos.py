@@ -92,7 +92,7 @@ def base(conn) -> list[dict]:
                               CASE WHEN nombre ~* '^puente' THEN nombre END) nombre, ST_AsText(ST_PointOnSurface(geom)) geom
                        FROM infra.visor_puentes""", conn)
     # v3.1: el alt_name de muchos puentes del visor es la ruta («Ruta Nacional 12», «Ruta Costera»): no es un nombre
-    p = p[p.nombre.notna() & ~p.nombre.str.match(r'(?i)^(ruta|avenida|av\.|calle|camino|acceso|autopista)\b')]
+    p = p[p.nombre.notna() & ~p.nombre.str.match(r'(?i)^(ruta|avenida|av\.|calle|camino|acceso|autopista)\b', na=False)]
     for r in p.itertuples():
         out.append(dict(clase='puente', nombre=r.nombre, fuente='infra.visor_puentes', ref=f'gid {r.gid}', geom=r.geom))
     return out

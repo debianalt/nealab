@@ -32,7 +32,7 @@ N, SEMILLA, REGLA = 60, 7, 0.80
 # punto a ≤ 2 km del lugar real en ≥ 85 % de 40 ubicaciones finas
 V3 = ROOT / 'pipeline' / 'noticias' / 'muestra_precision_v3.csv'
 V3_UBIC = ROOT / 'pipeline' / 'noticias' / 'muestra_ubicacion_v3.csv'
-SEMILLA_V3 = 12
+SEMILLA_V3 = 15
 REGLAS_V3 = {'tipo_ok': 0.85, 'motivo_ok': 0.80, 'lugar_ok': 0.85}
 FINOS = ['cruce', 'cruce_inferido', 'puente', 'km', 'paraje', 'barrio', 'picada', 'escuela', 'nominatim', 'manual']
 DOMINIOS = {'misionesonline.net': 'misionesonline', 'primeraedicion.com.ar': 'primeraedicion',
@@ -174,13 +174,13 @@ def main() -> int:
             filas = []
             for c, regla in REGLAS_V3.items():
                 x = s3[c].dropna().astype(int)
-                filas.append(dict(medida=c, n=len(x), valor=round(x.mean(), 2), regla=regla,
+                filas.append(dict(medida=c, n=len(x), valor=f'{x.mean():.0%}', regla=f'≥ {regla:.0%}',
                                   resultado='PASA' if x.mean() >= regla else 'NO PASA'))
             fu = s3.fuera_misiones.fillna(0).astype(int).mean()
-            filas.append(dict(medida='fuera_misiones', n=len(s3), valor=round(fu, 2), regla='≤ 0.05',
+            filas.append(dict(medida='fuera_misiones', n=len(s3), valor=f'{fu:.1%}', regla='≤ 5 %',
                               resultado='PASA' if fu <= 0.05 else 'NO PASA'))
             fe = s3.fecha_ok.dropna().astype(int)
-            filas.append(dict(medida='fecha_ok (sin regla)', n=len(fe), valor=round(fe.mean(), 2), regla='—', resultado='—'))
+            filas.append(dict(medida='fecha_ok (sin regla)', n=len(fe), valor=f'{fe.mean():.0%}', regla='—', resultado='—'))
             L += [f'## 5. Precisión de la v3 (muestra al azar de {N}, semilla {SEMILLA_V3})', '',
                   'Reglas fijadas antes de mirar. lugar_ok: el punto corresponde al lugar del hecho a la escala de su '
                   'precisión (un contexto de nota cuenta como acierto si el hecho ocurrió en ese municipio).', '',

@@ -60,41 +60,64 @@ VERBOS = (r'(cortad[oa]s?|cortes?\b|intransitables?|bajo (el )?agua|anegad[oa]s?
           r'cortaron|bloque\w*)')
 AGUA = (r'(\brio\b|\brios\b|arroyo|agua|lluvia|temporal|tormenta|crecida|creciente|desbord|inundac|anegad|precipitac|'
         r'cauce|damnificad)')
+# v3.2 (muestra semilla 14: 7 de 15 tipos errados eran negaciones): la negación cuenta sólo si niega la palabra del
+# tipo («continúa cortada la RP 204, aunque sin evacuados» sigue siendo un corte). «sin luz», «Sin Tierra», «no sólo»
+# no niegan nada.
+NEG = r'\b(?:no|sin|ningun\w*|nunca|tampoco)\s+(?!solo\b|luz\b|energia\b|tierra\b)(?:\w+\s+){0,2}?'
+NEG_CORTE = (NEG + r'(?:cortes?|cortad[oa]s?|cortaron|corto|interrumpid[oa]s?|interrump\w+)\b|'
+             r'\bno (?:se )?(?:vamos|van|va) a (?:llegar a )?cort|cortes? de rutas? no (?:vamos|van|va)\b|'
+             # v3.2 (semilla 15): el corte de ruta como tema u opinión; «bloqueos» de fumigación contra el dengue
+             r'\b(?:el|los) cortes? de rutas? (?:no es|no son|en general|como (?:metodo|herramienta|medida))|'
+             r'(?:contra|mano dura con) los cortes|derecho (?:de huelga|a la protesta|constitucional)|libre circulacion|'
+             r'protocolo antipiquete|casos de cortes|fumigac|pulverizac|dengue|descacharr')
 TIPOS = {   # nombre: (requiere, además requiere, excluye)
     'corte_puente': (re.compile(r'\b(puentes?|alcantarillas?|vados?|pasarelas?)\b'), re.compile(VERBOS),
-                     re.compile(r'(alumbrado|iluminacion|licitac|inaugur)')),
+                     re.compile(r'(alumbrado|iluminacion|licitac|inaugur)|' + NEG_CORTE)),
     'corte_ruta_camino': (re.compile(r'\b(rutas?|caminos?|calles?|tramos?|rp|rn|ruta costera|transito)\b'), re.compile(VERBOS),
                           re.compile(r'(licitac|inaugur|corte de cinta|cortes? de (luz|energia|agua potable|suministro)|'
                                      # v3.1: el corte de ruta como tema, no como hecho
                                      r'cortes? de rutas? (representan?|son un|afectan?|perjudican?|generan?)|'
-                                     r'son los cortes de ruta|problema de los cortes)')),
+                                     r'son los cortes de ruta|problema de los cortes)|' + NEG_CORTE)),
     'crecida': (re.compile(r'(crecida|creciente|desbord\w*|inundac\w*|anegad\w*)'),
                 re.compile(r'(\brio\b|\brios\b|arroyo|agua|lluvia|temporal|tormenta|cauce|calles|barrio|vecinos|familias|'
                            r'precipitac|nivel|altura|puente|ruta)'),
                 re.compile(r'(\bgol\b|pelota|partido|delanter|volante|arquero|cancha|\bclub\b|equipo|emocion|alegria|'
-                           r'creciente (necesidad|demanda|interes|preocupacion|numero|cantidad))')),
+                           r'creciente (necesidad|demanda|interes|preocupacion|numero|cantidad))|'
+                           + NEG + r'(?:desbord\w*|inundac\w*|anegad\w*|crecidas?)\b')),
     'evacuados_aislados': (re.compile(r'\b(evacuad\w*|aislad\w*|incomunicad\w*)'), re.compile(AGUA + r'|puente|camino|ruta'),
                            re.compile(r'(virus|covid|coronavirus|cuarentena|contagi|preso|carcel|penal|guerra|hamas|israel|'
                                       r'gaza|ucrania|(lluvias|tormentas|chaparrones|precipitaciones|lloviznas) aislad|'
                                       r'rafagas|casos aislad|hechos aislad|episodios aislad|acciones aislad|evacuo \d|'
                                       # v3.1: negaciones
                                       r'siniestros aislad|sin (registrarse )?(personas )?evacuad|no hay evacuad|'
-                                      r'ningun evacuad|no se registraron evacuad|no hubo evacuad)')),
+                                      r'ningun evacuad|no se registraron evacuad|no hubo evacuad)|'
+                                      + NEG + r'(?:evacuad\w*|aislad\w*)')),
 }
 MOTIVOS = [   # el primero que aparece manda
     ('protesta', re.compile(r'(protesta|manifestant|piquet|reclam|colonos|tareferos|medida de fuerza|moviliza|marcha\b|'
                             r'gremi|sindica|autoconvocad|docentes|acampe|cortaron la ruta en|asamblea|trabajadores de|'
                             r'productores (yerbateros|tabacaleros|tealeros)|cooperativistas|organizaciones sociales|'
-                            r'agrupaciones|movimiento teresa|\bmtr\b|polo obrero|ctep|barrios de pie|piqueter)')),
-    ('accidente', re.compile(r'(choque|chocaron|vuelco|volco|colision|accidente|siniestro vial|despiste|camion (volcado|'
+                            r'agrupaciones|movimiento teresa|\bmtr\b|polo obrero|ctep|barrios de pie|piqueter|'
+                            # v3.2: protestas sin la palabra (semilla 14)
+                            r'manifest\w*|\bdocente\b|frente docente|\bparo\b|cosecheros|justicia por|cese de los cortes|'
+                            r'(vecinos|familiares|damnificados|productores|trabajadores|pobladores)\s+(?:[\w,]+\s+){0,4}?'
+                            r'(cortaron|cortan|mantienen cortad\w*|realizan (un )?corte))')),
+    ('accidente', re.compile(r'(choque|chocaron|vuelco|volco|colision|(?<!evitar )(?<!prevenir )accidente|siniestro vial|despiste|rescate|pericias|'
+                             r'camion (volcado|'
                              r'atravesado|cruzado)|incendio de (un|una) (camion|vehiculo|auto)|'
                              r'(camion|unidad|acoplado|vehiculo) quedo (obstruyendo|atravesad|cruzad|varad))')),
-    ('agua', re.compile(AGUA + r'|socav|barro|desmoron|deslizamiento|alud|caudal|repunte|altura del|el nino|'
+    ('agua', re.compile(AGUA + r'|evacua|socav|barro|desmoron|deslizamiento|alud|caudal|repunte|altura del|el nino|'
                         r'fenomeno climatico')),
     ('obra', re.compile(r'(repavimentac|pavimentac|bacheo|\bobras?\b|trabajos de|mantenimiento|reparac|reconstruc|'
                         r'construcc|asfalt|ensanche|demolic|voladura)')),
 ]
-HIPOTETICO = re.compile(r'\b(podria|podrian|pudiera|posibles?|eventual(es|mente)?|prevenir|anticipar|en caso de|'
+HIPOTETICO = re.compile(r'\b(podria|podrian|pudiera|posibles?|eventual(es|mente)?|prevenir|anticipar|en caso del?|'
+                        # v3.2 (semilla 14)
+                        r'podemos llegar|podriamos|no descart\w*|'
+                        # v3.2 (semilla 15)
+                        r'si (?:el rio|el agua|el nivel|el arroyo) (?:llega|supera|alcanza|sigue)|deberan ser evacuad\w*|'
+                        r'futuras? (?:inundac|crecid)\w*|va a superar|pueden? elevar\w*|'
+                        r'para evitar (?:los |las |nuevos |nuevas |futuros |futuras )?(?:desbordes|inundaciones|anegamientos|crecidas)|'
                         r'fueran necesarios|pronostic\w*|se espera|se esperan|'
                         # v3.1 (muestra semilla 12: 15 de 60 eran temas, futuros o negaciones, no hechos)
                         r'posibilidad|pueden? (llegar|superar|provocar|generar|causar)|habra|habria|podra|podran|'
@@ -111,9 +134,17 @@ OTRA_REGION = re.compile(
     r'tucuman\w*|saltena?s?|jujen\w*|entrerrian\w*|formosen\w*|rionegrin\w*|catamarquen\w*|riojan\w*|'
     r'sanjuanin\w*|puntan[oa]s?|pampean\w*|fueguin\w*|santiaguen\w*|edenor|edesur|caba|conurbano|amba|'
     r'capital federal|comunidad valenciana|valencia|carcarana|epecuen|carhue|corrientes(?=\s*:)|'
-    r'en (la provincia de )?corrientes|itati|yacarei|scorza cue|iribu cua|texas|imola|paraibuna)\b')
+    r'en (la provincia de )?corrientes|itati|yacarei|scorza cue|iribu cua|texas|imola|paraibuna|'
+    r'apipe|china|chin[oa]s?|barranqueras|sumatra|indonesia|vietnam|filipinas|bangladesh|pakistan|tifon)\b')
+# v3.2: la oración que habla de toda la provincia no hereda el lugar más nombrado de la nota (semilla 14: 3 de 9
+# lugares errados)
+PROVINCIAL = re.compile(r'\b(toda la provincia|todo misiones|todo el territorio provincial|territorio provincial|'
+                        r'distintos puntos de la provincia|varios puntos de la provincia|en la provincia|rutas misioneras|'
+                        r'municipios afectados|toda la region)\b')
 MISIONES = re.compile(r'\b(misiones|misioner[oa]s?)\b')
 RE_RUTA = re.compile(r'\b(?:ruta\s+(provincial|nacional)|rp|rn)\s*(?:n(?:ro|°|º|\.)?\s*)?(\d{1,3})\b')
+RE_COSTERA2 = re.compile(r'\b(?:ruta\s+)?(?:provincial\s+)?costera\s*(?:n(?:ro|°|º|\.)?\s*)?0?2\b')
+MENU_SUELTO = re.compile(r'^\W*(?:tal vez )?te (?:puede )?interes\w* leer\b')
 RE_KM = re.compile(r'\bkm\.?\s*(\d{1,4}(?:[.,]\d+)?)')
 RE_ALTURA = re.compile(r'(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:metros|mts\.?|m)\b')
 RE_ALT_CTX = re.compile(r'\b(rio|arroyo|altura|nivel|escala|hidrometro|prefectura)\b')
@@ -236,7 +267,12 @@ def main() -> int:
     re_lug = regex_de(gaz[gaz.tipo != 'cauce'].clave)
     re_cau = regex_de(gaz[gaz.tipo == 'cauce'].clave,
                       r'(?:(?:arroio|rio|a°|aº)\s+(?:el\s+|la\s+|los\s+|las\s+)?|puentes?\s+(?:sobre\s+(?:el\s+)?)?)')
-    re_top = regex_de(top[top.clase.isin(['paraje', 'picada', 'puente'])].clave)
+    # v3.2: el nombre de un puente cuenta sólo detrás de «puente» («Rivadavia» suelto es la calle, semilla 15)
+    re_top = regex_de(top[top.clase.isin(['paraje', 'picada'])].clave)
+    re_pte = regex_de(top[top.clase == 'puente'].clave.str.replace(r'^puente\s+', '', regex=True),
+                      r'puentes?\s+(?:sobre\s+(?:el\s+)?)?(?:(?:arroyo|rio|a°|aº)\s+)?')
+    top_pte = {k: v for k, v in zip(top[top.clase == 'puente'].clave.str.replace(r'^puente\s+', '', regex=True),
+                                    top[top.clase == 'puente'].clave)}
     re_bar = regex_de(top[top.clase == 'barrio'].clave, r'(?:barrio|b°|bº)\s+')
     hid = set(gaz[gaz.tipo == 'hidrometro'].clave)
     conocidos = set(gaz.clave) | set(top.clave)
@@ -251,7 +287,7 @@ def main() -> int:
         for k, orig in enumerate(partes):
             orig = unicodedata.normalize('NFC', orig)
             t = norm(orig)
-            if HIPOTETICO.search(t):
+            if HIPOTETICO.search(t) or MENU_SUELTO.search(t):
                 continue
             tipos = [tp for tp, (a, b, x) in TIPOS.items()
                      if a.search(t) and (b is None or b.search(t)) and (x is None or not x.search(t))]
@@ -270,6 +306,8 @@ def main() -> int:
                 contexto = '' if nota_fuera else (c.most_common(1)[0][0] if c else '')
             rutas = [f"{'RN' if (m.group(1) == 'nacional' or m.group(0).startswith('rn')) else 'RP'} {m.group(2)}"
                      for m in RE_RUTA.finditer(t)]
+            if not rutas and RE_COSTERA2.search(t):   # v3.2: «Ruta Costera N° 02» es la RP 2 (semilla 15)
+                rutas = ['RP 2']
             km = RE_KM.search(t)
             alt = RE_ALTURA.search(t) if RE_ALT_CTX.search(t) else None
             cauces, tramos = [], []
@@ -283,6 +321,7 @@ def main() -> int:
             topo = [m.group(1) for m in re_top.finditer(tf)
                     if not any(a <= m.start(1) < b for a, b in tramos) and con_mayuscula(orig, m.start(1))
                     and not re.search(r'[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+\s+$', orig[max(0, m.start(1) - 25):m.start(1)])]
+            topo += [top_pte[m.group(1)] for m in re_pte.finditer(tf)]
             topo += [m.group(1) for m in re_bar.finditer(tf)]
             topo += [f'escuela {m.group(1)}' for m in RE_ESCUELA.finditer(t)]
             cand = []
@@ -304,7 +343,7 @@ def main() -> int:
                         hidrometro=next((x for x in lugares if x in hid), None),
                         cauces='|'.join(dict.fromkeys(cauces)) or None, lugares='|'.join(dict.fromkeys(lugares)) or None,
                         toponimos='|'.join(dict.fromkeys(topo)) or None, candidatos='|'.join(dict.fromkeys(cand)) or None,
-                        contexto=contexto or None)
+                        contexto=None if PROVINCIAL.search(t) else (contexto or None))
             for tp in tipos:
                 menciones.append(dict(base, tipo=tp, motivo='agua' if tp in ('crecida', 'evacuados_aislados') else motivo))
     men = pd.DataFrame(menciones)
