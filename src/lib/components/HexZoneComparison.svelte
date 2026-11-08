@@ -112,6 +112,7 @@
 			numericVars.forEach((v, i) => {
 				row[v.col] = z.stats.rawValues[i];
 				row[`${v.col}_norm`] = z.stats.normalizedValues[i];
+				if (v.aggregation === 'sum') row[`${v.col}_total`] = z.stats.totals[i];
 			});
 			return row;
 		});
@@ -163,10 +164,11 @@
 						<div class="zone-type">{getDominantType(zone)}</div>
 					{/if}
 					{#each numVars as v, vi}
-						{@const rv = zone.stats.rawValues[vi]}
+						{@const isSum = v.aggregation === 'sum'}
+						{@const rv = isSum ? zone.stats.totals[vi] : zone.stats.rawValues[vi]}
 						<div class="cd-row">
-							<span class="cd-label">{i18n.t(v.labelKey)}</span>
-							<span class="cd-val">{fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
+							<span class="cd-label">{i18n.t(v.labelKey)}{#if isSum}<span class="cd-total"> · {i18n.t('hexZone.total')}</span>{/if}</span>
+							<span class="cd-val">{isSum ? Math.round(rv).toLocaleString(i18n.locale) : fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
 						</div>
 					{/each}
 				{/if}
@@ -193,6 +195,7 @@
 
 <style>
 	.hzc-note { font-size: 12px; line-height: 1.4; color: var(--c-ink-3); margin: 2px 0 8px; }
+	.cd-total { color: var(--c-ink-3); font-weight: 400; }
 	.hzc-note b { color: var(--c-ink-2, inherit); font-weight: 600; }
 	.hzc { font-size: 12.5px; }
 	.hzc-header {
@@ -260,8 +263,8 @@
 	.zone-hex-count { font-size: 11.5px; color: rgba(var(--c-fg-rgb), 0.55); font-weight: 400; margin-left: auto; }
 	.zone-type { font-size: 12px; color: var(--c-ink-1); font-weight: 500; background: rgba(var(--c-fg-rgb), 0.08); display: inline-block; padding: 1px 6px; border-radius: 3px; margin-bottom: 4px; }
 	.cd-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 0 0 auto; min-width: 100px; }
-	.cd-val { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; }
+	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 1 1 auto; min-width: 0; line-height: 1.3; }
+	.cd-val { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; flex: 0 0 auto; }
 	.zone-dl { display: flex; gap: 3px; margin-top: 4px; }
 
 	.hzc-dl-btn { background: rgba(var(--c-fg-rgb), 0.04); border: 1px solid rgba(var(--c-fg-rgb), 0.1); color: var(--c-ink-3); font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }

@@ -124,6 +124,9 @@ export interface HexZoneStats {
 	/** Cells of the zone with at least one value in the layer (0 = layer has no data there). */
 	cellsWithData: number;
 	rawValues: number[];
+	/** Σ over the zone's cells, for count variables (aggregation 'sum'): «2269 buildings
+	 *  on low ground in the zone» reads right where the per-cell mean (37.8) does not. */
+	totals: number[];
 	normalizedValues: number[];
 }
 
@@ -1890,6 +1893,7 @@ export class HexStore {
 		const numVars = this.numericVariables;
 		const sums = new Array(numVars.length).fill(0);
 		const ns = new Array(numVars.length).fill(0);
+		const totals = new Array(numVars.length).fill(0);
 		let cellsWithData = 0;
 		for (const h3index of h3indices) {
 			const data = this.zoneRow(h3index);
@@ -1901,6 +1905,7 @@ export class HexStore {
 				const x = data[numVars[v].col];
 				if (typeof x !== 'number' || !Number.isFinite(x)) continue;
 				any = true;
+				totals[v] += x;
 				const bc = numVars[v].baseCol;
 				const w = bc ? Number(data[bc]) : 1;
 				if (bc && !(w > 0)) continue;
@@ -1913,6 +1918,7 @@ export class HexStore {
 			hexCount: h3indices.length,
 			cellsWithData,
 			rawValues,
+			totals,
 			normalizedValues: this.normalize(rawValues, provAvg),
 		};
 	}

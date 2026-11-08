@@ -918,6 +918,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hexZone.follow': { es: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', en: 'Switch layer or question in this department: the zones stay and are recomputed.', gn: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', pt: 'Troque de camada ou de pergunta neste departamento: as zonas ficam e são recalculadas.' }, // gn: pendiente
 	'hexZone.recomputing': { es: 'Recalculando con esta capa…', en: 'Recomputing with this layer…', gn: 'Recalculando con esta capa…', pt: 'Recalculando com esta camada…' }, // gn: pendiente
 	'hexZone.noData': { es: 'Esta capa no tiene datos dentro de la zona.', en: 'This layer has no data inside the zone.', gn: 'Esta capa no tiene datos dentro de la zona.', pt: 'Esta camada não tem dados dentro da zona.' }, // gn: pendiente
+	'hexZone.total': { es: 'total de la zona', en: 'zone total', gn: 'total de la zona', pt: 'total da zona' }, // gn: pendiente
 	'hex.petalRelative': { es: 'Flor (lectura relativa):', en: 'Flower (relative reading):', gn: 'Yvoty:', pt: 'Flor (leitura relativa):' },
 	'hex.avgOf': { es: 'promedio {ofRef}', en: 'average {ofRef}', gn: 'promedio {ofRef}', pt: 'média {ofRef}' },
 	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },
