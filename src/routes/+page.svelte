@@ -3,6 +3,7 @@
 	import MapComponent from '$lib/components/Map.svelte';
 	import MapLegend from '$lib/components/MapLegend.svelte';
 	import { SELLO_HEX } from '$lib/utils/sello';
+	import { encodeZones, decodeZones } from '$lib/utils/zoneCodec';
 	import Controls from '$lib/components/Controls.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import LensSelector from '$lib/components/LensSelector.svelte';
@@ -90,6 +91,10 @@
 		if (hexStore.temporalMode !== 'current') params.set('tm', hexStore.temporalMode);
 		if (hexStore.scaleMode !== 'provincial') params.set('escala', hexStore.scaleMode);
 		if (territoryStore.countryFilter && territoryStore.countryFilter !== 'ar') params.set('cf', territoryStore.countryFilter);
+		// Lasso zones (utils/zoneCodec.ts): a shared link brings them back. Last, so a long
+		// outline never pushes the layer and department out of a truncated link.
+		const zs = hexStore.urlZones;
+		if (zs.length) params.set('z', encodeZones(zs.map(z => ({ id: z.id, n: z.h3indices.length, outline: z.outline! }))));
 		const qs = params.toString();
 		window.history.replaceState({}, '', qs ? `?${qs}` : window.location.pathname);
 	}
@@ -103,6 +108,7 @@
 		const _deptF = hexStore.deptFilterName;
 		const _tm = hexStore.temporalMode;
 		const _escala = hexStore.scaleMode;
+		const _zones = hexStore.urlZones;
 		if (typeof window !== 'undefined') updateUrlState();
 	});
 
@@ -313,6 +319,9 @@
 			// dept summary gives back the parquetKey + centroid the click flow
 			// would have passed.
 			const dept = params.get('dept');
+			// Zones of the link: drawn by hexStore.syncZones once this department has its cells.
+			const urlZones = decodeZones(params.get('z'));
+			if (dept && urlZones.length && analysisId && HEX_LAYER_REGISTRY[analysisId]) hexStore.pendingUrlZones = { dept, zones: urlZones };
 			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
 				tick().then(async () => {
 					const summary = await loadDeptSummary(analysisId, hexStore.territoryPrefix);

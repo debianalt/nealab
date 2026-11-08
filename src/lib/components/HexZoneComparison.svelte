@@ -67,6 +67,10 @@
 	const personsEstimated = $derived(numVars.some(v => v.aggregation === 'sum' && v.unit === 'personas'));
 	function zoneNotes(zone: HexZone): { text: string; warn: boolean }[] {
 		const out: { text: string; warn: boolean }[] = [];
+		// Opened from a link whose cells no longer match (data or grid updated since).
+		if (zone.sharedN !== undefined && zone.sharedN !== zone.h3indices.length) {
+			out.push({ text: i18n.t('hexZone.sharedN').replace('{a}', String(zone.sharedN)).replace('{b}', String(zone.h3indices.length)), warn: true });
+		}
 		if (censusLayer) {
 			const n = radiosIn(zone);
 			if (n !== null && n > 0) {
@@ -252,6 +256,9 @@
 		{/each}
 	{/if}
 
+	{#if zones.some(z => !z.polygon)}
+		<p class="hzc-note">{i18n.t('hexZone.chartNotInLink')}</p>
+	{/if}
 	{#if zones.length > 0}
 		<div class="hzc-download-row">
 			<button class="hzc-download-btn" onclick={downloadZonesSummaryCsv}>

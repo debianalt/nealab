@@ -3,6 +3,7 @@ import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getS
 import { NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
 import { aggregateRows, weightColOf } from '$lib/utils/zoneStats';
+import { urlOutline, type UrlZone } from '$lib/utils/zoneCodec';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
@@ -145,6 +146,10 @@ export interface HexZone {
 	dept: string | null;
 	/** Layer whose variables `stats` holds; another active layer means «recompute». */
 	layerId: string;
+	/** The outline as the URL carries it (utils/zoneCodec.urlOutline); null for chart zones. */
+	outline: string | null;
+	/** Hexagons the zone had in the link it was opened from (absent when drawn here). */
+	sharedN?: number;
 }
 
 /** Hexagons picked in a chart (histogram, Moran, bivariate, profile…), not yet saved. */
@@ -1857,13 +1862,16 @@ export class HexStore {
 		return this.chartData.get(h3) ?? this.visibleData.get(h3);
 	}
 
-	async createHexZone(h3indices: string[], polygon: [number, number][] | null, origin: string): Promise<string | null> {
+	async createHexZone(h3indices: string[], polygon: [number, number][] | null, origin: string,
+		opts: { id?: string; sharedN?: number; outline?: string } = {}): Promise<string | null> {
 		if (h3indices.length === 0 || !this.activeLayer) return null;
 		if (!isReady()) return null;
 
-		// First free letter, so removing A and adding again never repeats B.
+		// First free letter, so removing A and adding again never repeats B; a zone from a
+		// link keeps its own letter («zona C» in a post stays C).
 		const used = new Set(this.hexZones.map(z => z.id));
-		const idx = ZONE_LABELS.findIndex(l => !used.has(l));
+		const asked = opts.id && !used.has(opts.id) ? ZONE_LABELS.indexOf(opts.id) : -1;
+		const idx = asked >= 0 ? asked : ZONE_LABELS.findIndex(l => !used.has(l));
 		const slot = idx >= 0 ? idx : this.hexZones.length % ZONE_COLORS.length;
 		const id = idx >= 0 ? ZONE_LABELS[idx] : String.fromCharCode(65 + this.hexZones.length);
 		const color = ZONE_COLORS[slot % ZONE_COLORS.length];
@@ -1879,6 +1887,9 @@ export class HexStore {
 				stats,
 				dept: this.zoneDeptKey(),
 				layerId: this.activeLayer.id,
+				// Computed now, while the cells it was drawn on are the ones in centroidCache.
+				outline: polygon ? (opts.outline ?? urlOutline(polygon, h3indices, (r) => this.findHexesInPolygon(r))) : null,
+				...(opts.sharedN !== undefined ? { sharedN: opts.sharedN } : {}),
 			};
 
 			this.hexZones = [...this.hexZones, zone];
@@ -1924,8 +1935,38 @@ export class HexStore {
 	// recomputed with the new layer's variables, once that layer has the
 	// department's cells. Opening another department, «Limpiar zonas» or the ✕
 	// drop it (7-nov-2026).
-	private zoneCarry: HexZone[] | null = null;
+	private zoneCarry: HexZone[] | null = $state.raw(null);
 	private _zoneSyncBusy = false;
+
+	/** Zones the URL carries: the ones on screen, or the ones kept aside while another layer
+	 *  loads (a layer change must not drop `z` from the link). Lasso zones only. */
+	get urlZones(): HexZone[] {
+		const zs = this.hexZones.length ? this.hexZones : (this.zoneCarry ?? []);
+		return zs.filter(z => z.outline);
+	}
+
+	/** Zones from a shared link, drawn once the link's department has its cells (syncZones). */
+	pendingUrlZones: { dept: string; zones: UrlZone[] } | null = null;
+	private static normName(s: string): string {
+		return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+	}
+
+	private async restoreUrlZones(key: string): Promise<boolean> {
+		const p = this.pendingUrlZones;
+		if (!p) return false;
+		const name = key.slice(key.indexOf('|') + 1);
+		// Another department opened before the link's one finished loading: drop them.
+		this.pendingUrlZones = null;
+		if (HexStore.normName(name) !== HexStore.normName(p.dept)) return false;
+		let any = false;
+		for (const z of p.zones) {
+			const cells = this.findHexesInPolygon(z.ring);
+			if (cells.length === 0) continue;
+			const id = await this.createHexZone(cells, z.ring, i18n.t('zone.origin.lasso'), { id: z.id, sharedN: z.n, outline: z.outline });
+			any = any || id !== null;
+		}
+		return any;
+	}
 
 	/** Territory + department the user has open, in any layer (per-department
 	 *  parquet or a territory-wide layer narrowed with its own list). */
@@ -1949,6 +1990,10 @@ export class HexStore {
 		// The department's cells of THIS layer: none yet while it loads, and a LOD
 		// department reads its res-9 cells from analysisData, not the coarse overview.
 		if (this.chartData.size === 0 || (this.lodDeptActive && !this.analysisData)) return false;
+		if (this.pendingUrlZones) {
+			this._zoneSyncBusy = true;
+			try { if (await this.restoreUrlZones(key)) return true; } finally { this._zoneSyncBusy = false; }
+		}
 		let changed = false;
 		if (this.hexZones.length === 0 && this.zoneCarry?.length) {
 			if (this.zoneCarry[0].dept !== key) return false;
