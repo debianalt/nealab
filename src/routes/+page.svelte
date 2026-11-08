@@ -647,6 +647,10 @@
 		if (lens) {
 			mapStore.clearRadios();
 			mapComponent?.clearRadioHighlight();
+			// Lasso zones of the base map are census radios, not cells: no layer reads
+			// them, and the sidebar put them above the lens's menu and layer.
+			lassoStore.clearZones();
+			mapComponent?.clearZoneHighlight();
 			mapComponent?.clearAnalysisChoropleth();
 		} else {
 			mapComponent?.clearAnalysisChoropleth();

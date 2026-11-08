@@ -1908,6 +1908,7 @@ export class HexStore {
 
 			this.hexZones = [...this.hexZones, zone];
 			this.zoneCarry = null;
+			this.zonesCreated++;
 			return id;
 		} catch (e) {
 			console.warn('Failed to create hex zone:', e);
@@ -2023,6 +2024,9 @@ export class HexStore {
 	// drop it (7-nov-2026).
 	private zoneCarry: HexZone[] | null = $state.raw(null);
 	private _zoneSyncBusy = false;
+	/** Zones made by createHexZone (lasso, chart pick, shared link); syncZones' restore does
+	 *  not count. The panel opens the zones block on a new zone, not on a layer change. */
+	zonesCreated = $state(0);
 
 	/** Zones the URL carries: the ones on screen, or the ones kept aside while another layer
 	 *  loads (a layer change must not drop `z` from the link). Lasso zones only. */

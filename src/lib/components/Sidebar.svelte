@@ -135,13 +135,19 @@
 		(ANALYSIS_REGISTRY.find(a => a.id === 'accessibility')?.coverage as Record<string, string> | undefined)?.[hexStore.territoryId] !== 'unavailable'
 	);
 	let chartsOpen = $state(true);
-	// Zones block above the charts: opens by itself when a zone is added.
+	// Zones block above the layer: opens by itself when a zone is made, folds on a
+	// layer change. Zones carried to the new layer would otherwise reopen it and push
+	// that layer's title, tabs and ranking below the fold (8-nov-2026).
 	let zonesOpen = $state(true);
-	let prevZoneCount = 0;
+	let prevZonesCreated = 0;
+	let prevZoneLayer: string | null = null;
 	$effect(() => {
-		const n = hexStore.hexZones.length;
-		if (n > prevZoneCount) zonesOpen = true;
-		prevZoneCount = n;
+		const made = hexStore.zonesCreated;
+		const layer = hexStore.activeLayer?.id ?? null;
+		if (layer !== prevZoneLayer) zonesOpen = false;
+		if (made > prevZonesCreated) zonesOpen = true;
+		prevZonesCreated = made;
+		prevZoneLayer = layer;
 	});
 
 	// Auto-open when actual results exist
