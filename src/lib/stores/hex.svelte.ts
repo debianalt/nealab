@@ -2,6 +2,7 @@ import { query, isReady } from '$lib/stores/duckdb';
 import { PARQUETS, HEX_LAYER_REGISTRY, TERRITORY_REGISTRY, getFloodDptoUrl, getSatDptoUrl, getSatGlobalUrl, getTemporalCol, type HexLayerConfig, type HexVariable, type TemporalMode, type ColorClasses, type MacizoFocus } from '$lib/config';
 import { NODATA_HEX, HARVEST_HEX } from '$lib/utils/sello';
 import { pointInPolygon } from '$lib/utils/geometry';
+import { aggregateRows, weightColOf } from '$lib/utils/zoneStats';
 import { findDeptFeature, ensureArBoundaries, ensureBrBoundaries, isArDeptTerritory } from '$lib/utils/deptBoundaries';
 import { loadDeptSummary } from '$lib/utils/deptSummaries';
 import { i18n } from '$lib/stores/i18n.svelte';
@@ -555,7 +556,7 @@ export class HexStore {
 		this.updatePrimaryOverride(layer, actualCols);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			'n_edificios', 'hogares_estimados',
-			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol]),
+			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol, v.weightCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])];
 		if (layer.temporal) {
 			for (const v of [...layer.variables.map(v => v.col), layer.primaryVariable]) {
@@ -689,9 +690,11 @@ export class HexStore {
 				const counts = new Map<string, Float64Array>();
 				const labels = new Map<string, Map<string, number>>();
 				// A census rate with a base column averages as Σ rate·base / Σ base in the coarse
-				// cell (a plain mean weighs each radio by its count of cells).
+				// cell (a plain mean weighs each radio by its count of cells); low_bld_pct, over
+				// the cell's buildings (weightCol).
 				const baseOf = numericCols.map((c: string) => {
-					const bc = layer.variables.find(v => v.col === c)?.baseCol;
+					const vv = layer.variables.find(v => v.col === c);
+					const bc = vv ? weightColOf(vv) : undefined;
 					return bc ? numericCols.indexOf(bc) : -1;
 				});
 				for (let i = 0; i < result.numRows; i++) {
@@ -1166,7 +1169,7 @@ export class HexStore {
 		const actualCols = await getParquetCols(url);
 		const wanted = ['h3index', layer.primaryVariable, 'type', 'type_label',
 			'n_edificios', 'hogares_estimados',
-			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol]),
+			...layer.variables.flatMap(v => [v.col, v.rawCol, `${v.col}_raw`, v.baseCol, v.weightCol]),
 			...(layer.petalVars?.map(v => v.col) ?? [])]
 			.filter((c): c is string => !!c && actualCols.has(c))
 			.filter((c, i, a) => a.indexOf(c) === i);
@@ -1756,9 +1759,12 @@ export class HexStore {
 				// A rate over a base (households, people) averages as Σ rate·base / Σ base, the
 				// department ranking's rule (build_layer_ranks.py): a plain AVG over cells weighs
 				// each census radio by its number of cells, not by its households.
-				const aggExprs = availableVars.map(v => v.baseCol && actualCols.has(v.baseCol)
-					? `SUM(${v.col} * ${v.baseCol}) / NULLIF(SUM(CASE WHEN ${v.col} IS NOT NULL THEN ${v.baseCol} END), 0) as avg_${v.col}`
-					: `AVG(${v.col}) as avg_${v.col}`).join(', ');
+				const aggExprs = availableVars.map(v => {
+					const wc = weightColOf(v);
+					return wc && actualCols.has(wc)
+						? `SUM(${v.col} * ${wc}) / NULLIF(SUM(CASE WHEN ${v.col} IS NOT NULL THEN ${wc} END), 0) as avg_${v.col}`
+						: `AVG(${v.col}) as avg_${v.col}`;
+				}).join(', ');
 				const whereClause = actualCols.has(layer.primaryVariable)
 					? `WHERE ${layer.primaryVariable} IS NOT NULL`
 					: '';
@@ -1884,43 +1890,32 @@ export class HexStore {
 		}
 	}
 
-	/** Mean of each numeric variable of the active layer over the zone's cells. */
+	/** Mean of each numeric variable of the active layer over the zone's cells
+	 *  (utils/zoneStats.aggregateRows: the same rule as the department reference). */
 	private async computeZoneStats(h3indices: string[]): Promise<HexZoneStats> {
 		const provAvg = await this.ensureProvincialAvg();
-
-		// Mean of each numeric variable over the cells that HAVE a value: a cell
-		// without data is not a zero (it pulled every zone mean down before).
-		const numVars = this.numericVariables;
-		const sums = new Array(numVars.length).fill(0);
-		const ns = new Array(numVars.length).fill(0);
-		const totals = new Array(numVars.length).fill(0);
-		let cellsWithData = 0;
-		for (const h3index of h3indices) {
-			const data = this.zoneRow(h3index);
-			if (!data) continue;
-			let any = false;
-			for (let v = 0; v < numVars.length; v++) {
-				// A rate with a base column is weighted by it (Σ rate·base / Σ base): the zone
-				// reads like the census radios it covers, not like a count of their cells.
-				const x = data[numVars[v].col];
-				if (typeof x !== 'number' || !Number.isFinite(x)) continue;
-				any = true;
-				totals[v] += x;
-				const bc = numVars[v].baseCol;
-				const w = bc ? Number(data[bc]) : 1;
-				if (bc && !(w > 0)) continue;
-				sums[v] += x * w; ns[v] += w;
-			}
-			if (any) cellsWithData++;
-		}
-		const rawValues = sums.map((t, v) => (ns[v] > 0 ? t / ns[v] : NaN));
+		const agg = aggregateRows(h3indices.map(h => this.zoneRow(h)), this.numericVariables);
 		return {
 			hexCount: h3indices.length,
-			cellsWithData,
-			rawValues,
-			totals,
-			normalizedValues: this.normalize(rawValues, provAvg),
+			cellsWithData: agg.cellsWithData,
+			rawValues: agg.rawValues,
+			totals: agg.totals,
+			normalizedValues: this.normalize(agg.rawValues, provAvg),
 		};
+	}
+
+	/** The open department (the cells the charts read: chartData) aggregated with the zones'
+	 *  rule, so each zone value reads next to its department's. Memoized per data snapshot. */
+	private _deptRef: { src: Map<string, Record<string, any>>; layerId: string; agg: ReturnType<typeof aggregateRows> } | null = null;
+	get zoneDeptRef(): ReturnType<typeof aggregateRows> | null {
+		const layer = this.activeLayer;
+		const src = this.chartData;
+		if (!layer || src.size === 0) return null;
+		const c = this._deptRef;
+		if (c && c.src === src && c.layerId === layer.id) return c.agg;
+		const agg = aggregateRows(src.values(), this.numericVariables);
+		this._deptRef = { src, layerId: layer.id, agg };
+		return agg;
 	}
 
 	// ── Zones across layers ──────────────────────────────────────────────

@@ -10,6 +10,8 @@
 		downloadGeoJsonFromHexList,
 	} from '$lib/utils/data-export';
 	import RequestDiagnostic from './RequestDiagnostic.svelte';
+	import { compareToRef, type RefCompare } from '$lib/utils/zoneStats';
+	import { radioUnit, RADIO_SUPPORT, hasRadios } from '$lib/stores/radioUnit.svelte';
 
 	let {
 		hexStore,
@@ -25,16 +27,67 @@
 	const variables = $derived(hexStore.activeLayer?.variables ?? []);
 	// numericVariables matches rawValues indexing (same filter as store)
 	const numVars = $derived(hexStore.numericVariables);
+	// The open department aggregated with the zones' rule (hexStore.zoneDeptRef).
+	const deptRef = $derived(hexStore.zoneDeptRef);
+	const deptName = $derived.by(() => {
+		const d = hexStore.selectedDpto ?? hexStore.deptFilterName;
+		return d ? formatDept(d) : territoryRef(hexStore.territoryId, i18n.locale);
+	});
+
+	function fmtNum(v: number, digits = 1): string {
+		return v.toLocaleString(i18n.locale, { maximumFractionDigits: digits, minimumFractionDigits: 0 });
+	}
+	function cmpOf(vi: number, zone: HexZone): RefCompare | null {
+		const r = deptRef;
+		if (!r) return null;
+		return compareToRef(numVars[vi], zone.stats.rawValues[vi], r.rawValues[vi], zone.stats.totals[vi], r.totals[vi]);
+	}
+	function fmtCmp(c: RefCompare, unit: string | undefined): string {
+		const sign = (x: number) => (x > 0 ? '+' : x < 0 ? '−' : '±');
+		switch (c.kind) {
+			case 'pts': return `${sign(c.value)}${fmtNum(Math.abs(c.value))} ${i18n.t('hexZone.ref.pts')}`;
+			case 'ratio': return `×${fmtNum(c.value, c.value < 10 ? 2 : 1)}`;
+			case 'diff': return `${sign(c.value)}${fmtSmart(Math.abs(c.value))}${unit ? ` ${unitLabel(unit)}` : ''}`;
+			case 'share': return `${fmtNum(c.value, c.value < 1 ? 2 : 1)} % ${i18n.t('hexZone.ref.ofDept')}`;
+		}
+	}
+
+	// Small zones, by what the layer measures (7-nov-2026): a census cell repeats its radio's
+	// rate, so what counts is how many radios the zone touches; a satellite cell is measured on
+	// its own, so what counts is how much one border cell (the centre-in-lasso rule) moves the mean.
+	const censusLayer = $derived(!!hexStore.activeLayer && hexStore.activeLayer.id in RADIO_SUPPORT && hasRadios(hexStore.territoryPrefix));
+	$effect(() => { if (censusLayer && zones.length) void radioUnit.ensure(hexStore.territoryPrefix); });
+	function radiosIn(zone: HexZone): number | null {
+		const t = radioUnit.loaded.get(hexStore.territoryPrefix);
+		if (!t) return null;
+		const ids = new Set<string>();
+		for (const h of zone.h3indices) { const r = t.cellToRadio.get(h); if (r) ids.add(r); }
+		return ids.size;
+	}
+	const personsEstimated = $derived(numVars.some(v => v.aggregation === 'sum' && v.unit === 'personas'));
+	function zoneNotes(zone: HexZone): { text: string; warn: boolean }[] {
+		const out: { text: string; warn: boolean }[] = [];
+		if (censusLayer) {
+			const n = radiosIn(zone);
+			if (n !== null && n > 0) {
+				const key = n < 3 ? (n === 1 ? 'hexZone.radiosFew1' : 'hexZone.radiosFew') : 'hexZone.radios';
+				out.push({ text: i18n.t(key).replace('{n}', String(n)), warn: n < 3 });
+			}
+		} else if (zone.stats.hexCount < 10) {
+			out.push({ text: i18n.t('hexZone.smallSat').replace('{n}', String(zone.stats.hexCount)).replace('{p}', String(Math.round(100 / zone.stats.hexCount))), warn: true });
+		}
+		if (personsEstimated) out.push({ text: i18n.t('hexZone.personsEst'), warn: false });
+		return out;
+	}
 
 	function fmtSmart(v: unknown): string {
 		if (typeof v !== 'number' || !Number.isFinite(v)) return '—';
 		if (v === 0) return '0';
 		const abs = Math.abs(v);
 		if (abs < 0.01) return v.toExponential(1);
-		if (abs < 1) return v.toFixed(2);
-		if (abs < 10) return v.toFixed(2);
-		if (abs < 100) return v.toFixed(1);
-		return v.toFixed(0);
+		// The locale's decimal mark, like the department line below each value.
+		const d = abs < 10 ? 2 : abs < 100 ? 1 : 0;
+		return v.toLocaleString(i18n.locale, { minimumFractionDigits: d, maximumFractionDigits: d });
 	}
 
 	function getDominantType(zone: HexZone): string | null {
@@ -113,6 +166,11 @@
 				row[v.col] = z.stats.rawValues[i];
 				row[`${v.col}_norm`] = z.stats.normalizedValues[i];
 				if (v.aggregation === 'sum') row[`${v.col}_total`] = z.stats.totals[i];
+				// The department the zone is read against, with the panel's comparison.
+				const r = deptRef;
+				row[`${v.col}_dept`] = r ? (v.aggregation === 'sum' ? r.totals[i] : r.rawValues[i]) : null;
+				const c = cmpOf(i, z);
+				row[`${v.col}_${c?.kind === 'pts' ? 'diff_pts' : c?.kind === 'diff' ? 'diff' : c?.kind === 'share' ? 'share_dept_pct' : 'ratio'}`] = c ? c.value : null;
 			});
 			return row;
 		});
@@ -131,6 +189,7 @@
 
 	{#if hexStore.activeLayer}
 		<p class="hzc-note">{i18n.t('hexZone.valuesOf')} <b>{i18n.t(hexStore.activeLayer.titleKey)}</b>. {i18n.t('hexZone.follow')}</p>
+		{#if deptRef}<p class="hzc-note">{i18n.t('hexZone.refNote').replace('{d}', deptName)}</p>{/if}
 	{/if}
 
 	<!-- Zone chips -->
@@ -166,10 +225,20 @@
 					{#each numVars as v, vi}
 						{@const isSum = v.aggregation === 'sum'}
 						{@const rv = isSum ? zone.stats.totals[vi] : zone.stats.rawValues[vi]}
+						{@const cmp = cmpOf(vi, zone)}
+						{@const dv = deptRef ? (isSum ? deptRef.totals[vi] : deptRef.rawValues[vi]) : NaN}
 						<div class="cd-row">
-							<span class="cd-label">{i18n.t(v.labelKey)}{#if isSum}<span class="cd-total"> · {i18n.t('hexZone.total')}</span>{/if}</span>
+							<span class="cd-label">{i18n.t(v.labelKey)}{#if isSum}<span class="cd-total">{' · '}{i18n.t('hexZone.total')}</span>{/if}</span>
 							<span class="cd-val">{isSum ? Math.round(rv).toLocaleString(i18n.locale) : fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
 						</div>
+						{#if Number.isFinite(dv)}
+							<div class="cd-ref" data-zone-ref={v.col}>
+								{deptName}: {isSum ? Math.round(dv).toLocaleString(i18n.locale) : fmtSmart(dv)}{v.unit ? ` ${unitLabel(v.unit)}` : ''}{#if cmp}{' · '}<b>{fmtCmp(cmp, v.unit)}</b>{/if}
+							</div>
+						{/if}
+					{/each}
+					{#each zoneNotes(zone) as note}
+						<p class="zone-note" class:warn={note.warn}>{note.text}</p>
 					{/each}
 				{/if}
 				<div class="zone-dl">
@@ -266,6 +335,10 @@
 	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 1 1 auto; min-width: 0; line-height: 1.3; }
 	.cd-val { font-size: 12px; font-weight: 600; color: var(--c-ink-1); text-align: right; margin-left: auto; white-space: nowrap; flex: 0 0 auto; }
 	.zone-dl { display: flex; gap: 3px; margin-top: 4px; }
+	.cd-ref { font-size: 11px; color: var(--c-ink-3); text-align: right; margin: -1px 0 4px; }
+	.cd-ref b { color: var(--c-ink-2, inherit); font-weight: 600; }
+	.zone-note { font-size: 11.5px; line-height: 1.35; color: var(--c-ink-3); margin: 4px 0 0; }
+	.zone-note.warn { color: var(--c-ink-1n); border-left: 2px solid rgba(var(--c-fg-rgb), 0.3); padding-left: 6px; }
 
 	.hzc-dl-btn { background: rgba(var(--c-fg-rgb), 0.04); border: 1px solid rgba(var(--c-fg-rgb), 0.1); color: var(--c-ink-3); font-size: 11px; padding: 1px 4px; border-radius: 3px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
 	.hzc-dl-btn:hover { background: rgba(var(--c-accent-rgb), 0.15); border-color: rgba(var(--c-accent-rgb), 0.4); color: var(--c-accent); }

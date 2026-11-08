@@ -60,7 +60,7 @@ db/                     # D1 schema + import scripts (seed.sql gitignored)
 
 ## Flood Risk Layer
 - **Lo que pinta el mapa**: exposición por relieve (HAND < 5 m, MERIT Hydro) con Google Open Buildings: pestañas % de edificios / edificios / % de tierra / edificios nuevos 2016–2023 (`pipeline/build_flood_rank.py`, columnas hex `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`; cada pestaña pinta la suya). En la llanura chaqueña (ranking saturado) pinta `jrc_occurrence` (JRC GSW 1984–2021). Sentinel-1 = extensión actual (`flood_extent_pct`). Sin score compuesto (`flood_risk_score` fuera de la UI en jun-2026 y del pipeline el 4-nov-2026).
-- **Parquet columns**: `h3index`, `jrc_occurrence`, `jrc_recurrence`, `jrc_seasonality`, `flood_extent_pct`, `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`
+- **Parquet columns**: `h3index`, `jrc_occurrence`, `jrc_recurrence`, `jrc_seasonality`, `flood_extent_pct`, `low_bld_pct`, `low_bld_n`, `low_land_pct`, `low_bld_new_n`, `bld_n` (edificios de la celda, denominador de `low_bld_pct`: una zona o un depto lee Σ bajos / Σ edificios, `weightCol` en config.ts; el promedio de % por celda daba 64 % en Chaco contra 93 % real)
 - **Pipeline**: `python pipeline/run_flood_update.py --skip-gee` (con rasters locales)
 
 ## Deployment

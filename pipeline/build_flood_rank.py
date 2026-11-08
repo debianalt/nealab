@@ -86,6 +86,7 @@ when a department is open, instead of JRC occurrence:
   low_bld_n      buildings at HAND < 5 m            (tab Edificios)
   low_land_pct   % of the land at HAND < 5 m        (tab % tierra; null over water)
   low_bld_new_n  buildings added there 2016–2023    (tab Cambio; linear trend × 7)
+  bld_n          buildings in the cell (≥ low_bld_n)  (denominator of low_bld_pct for zones)
 Written to output/<prefix>flood_hand_hex.parquet (split_flood_by_dpto.py joins it
 on full rebuilds). `--publish-hex` joins them into the parquets the CDN serves
 (territory + every department) by h3index, after a byte backup, checks rows and
@@ -448,7 +449,7 @@ def process_change(tid: str) -> None:
           f"low share {share[0]:.2f}→{share[-1]:.2f}% tilt {province['tilt_pts']} {label} {province['windows']} flips {flips}/{len(both)} · top: {top}")
 
 
-HEX_COLS = ['low_bld_pct', 'low_bld_n', 'low_land_pct', 'low_bld_new_n']
+HEX_COLS = ['low_bld_pct', 'low_bld_n', 'low_land_pct', 'low_bld_new_n', 'bld_n']
 
 
 def hex_path(tid: str) -> str:
@@ -479,6 +480,10 @@ def build_hex(tid: str) -> None:
     low = out.bld_low.fillna(0)
     bld = np.maximum(out.bld.fillna(0), low)
     out['low_bld_pct'] = np.where(out.low_bld_n >= 0.5, np.clip(np.round(100 * low / bld.where(bld > 0, 1), 1), 0.1, 100), 0.0)
+    # The denominator of low_bld_pct (7-nov-2026): a zone or a department reads
+    # Σ low_bld_n / Σ bld_n (weightCol in config.ts), not the mean of cell percentages
+    # — a cell of 3 buildings weighed like one of 300.
+    out['bld_n'] = bld.round(1)
     land = out.land_m2.fillna(0)
     out['low_land_pct'] = np.where(land > 0, np.round(100 * out.low_land_m2.fillna(0) / land.where(land > 0, 1), 1), np.nan)
     out['low_bld_new_n'] = out.low_bld_new_n.fillna(0)
@@ -501,7 +506,7 @@ def join_hand_hex(df: pd.DataFrame, t_prefix: str) -> pd.DataFrame:
         return df
     hx = pd.read_parquet(path)
     out = df.drop(columns=[c for c in HEX_COLS if c in df.columns]).merge(hx, on='h3index', how='left')
-    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n'):
+    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n', 'bld_n'):
         out[c] = out[c].fillna(0)
     return out
 
@@ -520,7 +525,7 @@ def _fetch(url: str, path: str) -> None:
 def _join_hex(df: pd.DataFrame, hx: pd.DataFrame, label: str) -> pd.DataFrame:
     base = df.drop(columns=[c for c in HEX_COLS if c in df.columns])
     out = base.merge(hx, on='h3index', how='left')
-    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n'):
+    for c in ('low_bld_pct', 'low_bld_n', 'low_bld_new_n', 'bld_n'):
         out[c] = out[c].fillna(0)
     if len(out) != len(df) or set(out.h3index) != set(df.h3index):
         sys.exit(f'{label}: row/h3index mismatch after join ({len(df)} -> {len(out)})')

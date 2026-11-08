@@ -107,7 +107,7 @@ export const TERRAIN_CONFIG = {
 
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
-		hex_flood_risk: '?v=41',   // 4-nov-2026: sin flood_risk_score
+		hex_flood_risk: '?v=42',   // 42: 7-nov-2026: bld_n, denominador de low_bld_pct (zonas = Σ bajos / Σ edificios); 41: 4-nov-2026: sin flood_risk_score
 		sat_agri_apt: '?v=2',   // 2: 7-nov-2026: techo de lluvia en S2 (ECOCROP RMAX, encima S3)
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=35',   // 35: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 34: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 33: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
@@ -129,7 +129,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 47;   // 47: 7-nov-2026: aptitud agrícola con techo de lluvia en S2 (sat_agri_apt); 46: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 45: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 48;   // 48: 7-nov-2026: inundación con bld_n (denominador de low_bld_pct); 47: 7-nov-2026: aptitud agrícola con techo de lluvia en S2 (sat_agri_apt); 46: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 45: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;
@@ -495,6 +495,10 @@ export interface HexVariable {
 	rawUnit?: string; // unit of the _raw physical value when it differs from `unit` (e.g. percentil display, hab/km² or min raw)
 	scale?: number;   // multiply the stored value for display (e.g. DW land-cover fractions 0–1 → % with scale 100)
 	baseCol?: string; // column with the households/people a % is computed over (e.g. pob_14_mas), shown in the hex panel's table
+	// Plain denominator of a % that is not a census base (low_bld_pct over the cell's buildings,
+	// bld_n): zones, departments and the provincial average read Σ x·w / Σ w (utils/zoneStats.ts).
+	// No census semantics: no «base chica» hatching, legend row or base column in the hex panel.
+	weightCol?: string;
 	hideIfZero?: boolean;
 	// Loaded with the layer (the map can paint it) but not listed in the hex panel,
 	// zone comparison: agri suitability classes 1–4 (S1…N).
@@ -1013,7 +1017,7 @@ export const HEX_LAYER_REGISTRY: Record<string, HexLayerConfig> = {
 			{ col: 'jrc_seasonality', labelKey: 'analysis.flood.jrcSeasonality', aggregation: 'mean', unit: 'meses' },
 			{ col: 'flood_extent_pct', labelKey: 'analysis.flood.currentExtent', aggregation: 'mean', unit: '%' },
 			// Relief (build_flood_rank.py --hex): painted from the ranking tabs.
-			{ col: 'low_bld_pct', labelKey: 'analysis.flood.lowBldPct', aggregation: 'mean', unit: '%' },
+			{ col: 'low_bld_pct', labelKey: 'analysis.flood.lowBldPct', aggregation: 'mean', unit: '%', weightCol: 'bld_n' },
 			{ col: 'low_bld_n', labelKey: 'analysis.flood.lowBld', aggregation: 'sum', unit: 'edificios' },
 			{ col: 'low_land_pct', labelKey: 'analysis.flood.lowLand', aggregation: 'mean', unit: '%' },
 			{ col: 'low_bld_new_n', labelKey: 'analysis.flood.lowBldNew', aggregation: 'sum', unit: 'edificios' },
