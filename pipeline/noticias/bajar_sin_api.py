@@ -54,6 +54,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'pipeline'))
 sys.path.insert(0, str(ROOT / 'pipeline' / 'noticias'))
 from bajar_notas import DIR, RESPALDO, texto_plano  # noqa: E402
+from comun import actualizar_fuentes, limpiar_texto  # noqa: E402
 from build_hexoma import DB, connect, log  # noqa: E402
 
 UA = {'User-Agent': 'spatia-pipeline/1.0 (+https://spatia.ar; investigacion CONICET)'}
@@ -129,10 +130,23 @@ def locs(s, url) -> list[str]:
     return re.findall(r'<loc>([^<]+)</loc>', r.text) if r is not None and r.status_code == 200 else []
 
 
-def cdx(s, url, match, cache: Path, filtro: str | None = None) -> list[tuple[str, str]]:
-    """(original, timestamp) de capturas 200 HTML de la Wayback Machine, página por página (cache por página)."""
+def cdx(s, url, match, cache: Path, filtro: str | None = None, desde: str | None = None) -> list[tuple[str, str]]:
+    """(original, timestamp) de capturas 200 HTML de la Wayback Machine, página por página (cache por página).
+    desde = AAAAMMDD: sólo capturas posteriores (actualización incremental)."""
     cache.mkdir(parents=True, exist_ok=True)
-    r = pedir(s, CDX, params={'url': url, 'matchType': match, 'filter': 'statuscode:200', 'showNumPages': 'true'})
+    if desde:   # incremental: un solo pedido sin paginar (con «from» la paginación igual recorre todo el histórico)
+        p = cache / 'todo.txt'
+        if not p.exists():
+            rr = pedir(s, CDX, params={'url': url, 'matchType': match, 'from': desde, 'fl': 'original,timestamp',
+                                       'collapse': 'urlkey', 'filter': ['statuscode:200', 'mimetype:text/html']
+                                       + ([filtro] if filtro else [])})
+            if rr is None or rr.status_code != 200:
+                log(f'    CDX {url} desde {desde}: sin respuesta')
+                return []
+            p.write_text(rr.text, encoding='utf-8')
+        return [tuple(x.split()) for x in p.read_text(encoding='utf-8').splitlines() if len(x.split()) == 2]
+    extra = {}
+    r = pedir(s, CDX, params={'url': url, 'matchType': match, 'filter': 'statuscode:200', 'showNumPages': 'true', **extra})
     filtros = ['statuscode:200', 'mimetype:text/html'] + ([filtro] if filtro else [])
     n = int(r.text.strip()) if r is not None and r.text.strip().isdigit() else 0
     out = []
@@ -140,7 +154,7 @@ def cdx(s, url, match, cache: Path, filtro: str | None = None) -> list[tuple[str
         p = cache / f'p{pg:04d}.txt'
         if not p.exists():
             rr = pedir(s, CDX, params={'url': url, 'matchType': match, 'filter': filtros,
-                                       'fl': 'original,timestamp', 'collapse': 'urlkey', 'page': pg})
+                                       'fl': 'original,timestamp', 'collapse': 'urlkey', 'page': pg, **extra})
             if rr is None or rr.status_code != 200:
                 log(f'    CDX {url} página {pg}: sin respuesta')
                 continue
@@ -162,6 +176,48 @@ def paginas_cache(cache: Path) -> list[tuple[str, str]]:
             if len(partes) == 2:
                 out.append((partes[0], partes[1]))
     return out
+
+
+INDICES = {'elterritorio': 'https://www.elterritorio.com.ar/sitemap.xml',
+           'lavozdecataratas': 'https://lavozdecataratas.com/sitemap_index.xml',
+           'misionesonline': 'https://misionesonline.net/sitemap.xml'}
+
+
+def recientes(s, medio: str, desde: dt.date) -> pd.DataFrame:
+    """Direcciones nuevas desde la última pasada: los sub-sitemaps con <lastmod> ≥ desde (El Territorio, La Voz,
+    Misiones Online) o las capturas de la Wayback posteriores a desde (MisionesCuatro)."""
+    filas = []
+    if medio == 'misionesonline':
+        # su índice de sitemaps marca los 627 sub-sitemaps como modificados en cada pedido: se lista por la API
+        # todo lo publicado desde la fecha (de a 100) y se filtra por la dirección como al resto
+        pagina = 1
+        while True:
+            r = pedir(s, 'https://misionesonline.net/wp-json/wp/v2/posts',
+                      params={'after': f'{desde:%Y-%m-%d}T00:00:00', 'per_page': 100, 'page': pagina, '_fields': 'link'})
+            if r is None or r.status_code != 200 or not r.json():
+                break
+            filas += [(x['link'], None) for x in r.json()]
+            if pagina >= int(r.headers.get('X-WP-TotalPages', 1)):
+                break
+            pagina += 1
+    elif medio in INDICES:
+        r = pedir(s, INDICES[medio])
+        texto = r.text if r is not None and r.status_code == 200 else ''
+        for bloque in re.findall(r'<sitemap>(.*?)</sitemap>', texto, re.S):
+            loc = re.search(r'<loc>([^<]+)</loc>', bloque)
+            mod = re.search(r'<lastmod>([^<]+)</lastmod>', bloque)
+            if not loc or (medio != 'elterritorio' and 'post-sitemap' not in loc.group(1)):
+                continue
+            if mod and mod.group(1)[:10] < f'{desde:%Y-%m-%d}':
+                continue
+            filas += [(u, None) for u in locs(s, loc.group(1))]
+    elif medio == 'misionescuatro':
+        for sec in SECCIONES_M4:
+            filas += cdx(s, f'misionescuatro.com/{sec}/', 'prefix',
+                         DIR / 'indices' / f'inc_{desde:%Y%m%d}' / f'cdx_misionescuatro_{sec}', FILTRO_CDX, f'{desde:%Y%m%d}')
+    d = pd.DataFrame(filas, columns=['url', 'captura'])
+    d['clave'] = d.url.map(url_norm)
+    return d.sort_values('captura').drop_duplicates('clave', keep='last')
 
 
 def descubrir(s, medio: str) -> pd.DataFrame:
@@ -255,10 +311,11 @@ def extraer_html(h: str) -> dict:
     return {'titulo': limpio(titulo), 'fecha': fecha, 'texto': limpio(cuerpo)}
 
 
-def bajar_medio(medio: str, ya: set[str]) -> int:
+def bajar_medio(medio: str, ya: set[str], desde: dt.date | None = None) -> int:
+    """desde: sólo lo nuevo (actualizar.py); si no, el índice completo de descubrir()"""
     s = requests.Session()
     s.headers.update(UA)
-    d = descubrir(s, medio)
+    d = recientes(s, medio, desde) if desde else descubrir(s, medio)
     d = d[d.url.map(lambda u: es_nota(medio, u)) & d.url.map(lambda u: pasa(slug_de(u)))]
     d = d[~d.clave.isin(ya)]
     log(f'{medio}: {len(d):,} notas a bajar (pasan el filtro y no están en el corpus)')
@@ -335,7 +392,7 @@ def bajar_mo(s, d: pd.DataFrame, dest: Path, total: int) -> int:
     return hechas
 
 
-def cargar() -> int:
+def cargar(respaldo: bool = True) -> int:
     filas = []
     for medio_dir in sorted((DIR / 'crudo_html').glob('*')):
         for p in medio_dir.glob('*.json'):
@@ -352,6 +409,7 @@ def cargar() -> int:
     df.loc[sin, 'wp_id'] = df.loc[sin, 'url'].map(lambda u: -int(hashlib.sha1(url_norm(u).encode()).hexdigest()[:12], 16))
     df['wp_id'] = df.wp_id.astype('int64')
     df = df.drop_duplicates(['medio', 'wp_id'])
+    df['texto'] = df.texto.map(limpiar_texto)
     conn = connect(DB)
     cur = conn.cursor()
     cur.execute('ALTER TABLE noticias.notas ADD COLUMN IF NOT EXISTS via text DEFAULT \'api_wp\'')
@@ -372,9 +430,12 @@ def cargar() -> int:
                           'filtro por la dirección (bajar_sin_api.py)', count(*), min(fecha), max(fecha)
                    FROM noticias.notas GROUP BY medio
                    ON CONFLICT (medio) DO UPDATE SET notas = EXCLUDED.notas, desde = EXCLUDED.desde, hasta = EXCLUDED.hasta""")
+    actualizar_fuentes(cur)
     conn.commit()
     conn.close()
     log(f'cargadas {nuevas:,} notas nuevas; por medio: {df.medio.value_counts().to_dict()}')
+    if not respaldo:      # actualizar.py hace su propio zip incremental
+        return 0
     z = shutil.make_archive(str(RESPALDO / f'crudo_html_{dt.date.today():%Y%m%d}'), 'zip', DIR / 'crudo_html')
     log(f'respaldo: {z} ({Path(z).stat().st_size / 1e6:,.1f} MB)')
     return 0

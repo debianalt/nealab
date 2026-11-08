@@ -51,9 +51,9 @@ def novedad(conn) -> None:
         WITH nv AS (SELECT m.* FROM noticias.menciones m JOIN _k USING (nota_id) WHERE m.geom IS NOT NULL),
         viejos AS (SELECT * FROM noticias.menciones
                    WHERE medio NOT IN ('elterritorio','lavozdecataratas','misionescuatro') AND geom IS NOT NULL)
-        SELECT nv.medio, nv.nota_id, nv.mencion_id, nv.tipo, nv.fecha::date fecha,
+        SELECT nv.medio, nv.nota_id, nv.mencion_id, nv.tipo, nv.fecha_evento fecha,
                EXISTS (SELECT 1 FROM viejos v WHERE v.tipo = nv.tipo
-                       AND abs(extract(epoch FROM v.fecha - nv.fecha)) <= 3 * 86400
+                       AND abs(v.fecha_evento - nv.fecha_evento) <= 3
                        AND ST_DWithin(v.geom::geography, nv.geom::geography, 15000)) conocida
         FROM nv""")
     r = d.groupby('medio').agg(menciones=('mencion_id', 'size'), nuevas=('conocida', lambda x: int((~x).sum())))
@@ -65,8 +65,8 @@ def novedad(conn) -> None:
 def prueba_a(conn) -> None:
     q = lambda s: pd.read_sql(s, conn)  # noqa: E731
     mod = q("SELECT fecha, bool_or(cortado) cortado FROM infra.rio_puente_diario WHERE fecha >= '2010-01-01' GROUP BY 1")
-    pren = q("""SELECT DISTINCT fecha::date fecha FROM noticias.menciones
-                WHERE tipo IN ('corte_puente','corte_ruta_camino') AND fecha >= '2010-01-01'
+    pren = q("""SELECT DISTINCT fecha_evento fecha FROM noticias.menciones
+                WHERE tipo IN ('corte_puente','corte_ruta_camino') AND fecha_evento >= '2010-01-01'
                   AND (ruta ~ '(^|\\D)2(\\D|$)' OR lower(lugar_nombre) ~ 'costera')""")
     mod['fecha'] = pd.to_datetime(mod.fecha)
     p = set(pd.to_datetime(pren.fecha))
@@ -79,11 +79,11 @@ def prueba_a(conn) -> None:
 
 def prueba_b(conn) -> None:
     q = lambda s, **k: pd.read_sql(s, conn, **k)  # noqa: E731
-    men = q("""SELECT DISTINCT ON (a.gid, m.fecha::date) a.gid, m.fecha::date fecha
+    men = q("""SELECT DISTINCT ON (a.gid, m.fecha_evento) a.gid, m.fecha_evento fecha
                FROM noticias.menciones m
                JOIN LATERAL (SELECT gid, geom FROM infra.asentamientos ORDER BY geom <-> m.geom LIMIT 1) a ON true
-               WHERE m.tipo = 'corte_luz' AND m.geom IS NOT NULL AND m.lugar_tipo IN ('asentamiento','municipio')
-                 AND m.fecha >= '2012-02-01' AND ST_DWithin(a.geom::geography, m.geom::geography, 3000)""")
+               WHERE m.tipo = 'corte_luz' AND m.geom IS NOT NULL AND m.precision_lugar IN ('asentamiento','municipio')
+                 AND m.fecha_evento >= '2012-02-01' AND ST_DWithin(a.geom::geography, m.geom::geography, 3000)""")
     if men.empty:
         print('B. sin menciones de corte de luz (salieron de la extracción el 7-nov-2026); resultado en el docstring')
         return
