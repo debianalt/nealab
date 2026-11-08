@@ -495,23 +495,32 @@ FUENTES = [
         scripts='pipeline/infra/lluvia_imerg.py', objetos=['infra.imerg_diaria', 'infra.imerg_pixel', 'infra.imerg_h3_pixel'],
         verificado='2026-11-07'),
     dict(
-        id='prensa_misiones', nombre='Notas de prensa de Misiones sobre cortes (6 medios, API WordPress)',
-        proveedor='Misiones Online, Primera Edición, Canal 12, Noticias del 6, Economis, Misiones Opina',
-        producto='/wp-json/wp/v2/posts?search=… (texto completo)', version='Bajadas el 7-nov-2026',
-        acceso='pipeline/noticias/bajar_notas.py (18 consultas fijas, pausa de 1 s por medio)', licencia='—',
-        cita='Cada nota con su medio y URL', doi='—', tipo_dato='texto periodístico', res_espacial='lugar mencionado',
-        res_temporal='fecha de la nota', periodo='según el archivo de cada medio', cobertura='Misiones',
-        variables='título, texto completo, fecha, URL; menciones por oración (tipo de evento, lugar, ruta, km, altura del río)',
-        procesamiento='Reglas transparentes (extraer.py) y nomenclador del Hexoma (municipios, BAHRA, arroyos, hidrómetros).',
+        id='prensa_misiones', nombre='Notas de prensa de Misiones sobre cortes por agua (9 medios)',
+        proveedor=('Misiones Online, Primera Edición, Canal 12, Noticias del 6, Economis, Misiones Opina (API WordPress); '
+                   'El Territorio y La Voz de Cataratas (sitemaps + HTML); MisionesCuatro (copias de la Wayback Machine)'),
+        producto='Texto completo de cada nota', version='Bajadas el 7-nov-2026',
+        acceso=('pipeline/noticias/bajar_notas.py (consultas fijas a /wp-json/wp/v2/posts) y bajar_sin_api.py (sitemaps, '
+                'índice CDX de la Wayback, filtro v2 por la dirección); pausa de 1 s por diario y 2 s en archive.org'),
+        licencia='—', cita='Cada nota con su medio y URL', doi='—', tipo_dato='texto periodístico',
+        res_espacial='lugar mencionado (municipio, asentamiento, cauce, hidrómetro)', res_temporal='fecha de la nota',
+        periodo='2000–2026; denso desde 2017', cobertura='Misiones',
+        variables=('título, texto completo, fecha, URL, vía (api_wp, html, wayback); menciones por oración: corte de puente, '
+                   'corte de ruta/camino, crecida, evacuados/aislados, con lugar, ruta, km y altura del río'),
+        procesamiento='Reglas transparentes (extraer.py, patrones v2) y nomenclador del Hexoma (municipios, BAHRA, arroyos, hidrómetros).',
         asignacion_celda='Punto del lugar mencionado (no la ubicación exacta del corte).',
-        validacion=('37.161 notas; 19 de 23 notas del agente de la fase 3 en el corpus; precisión del tipo 87 % y del lugar '
-                    '85 % en muestra nueva de 60 (patrones v2; la v1 dio 52 %). pipeline/noticias/validacion_noticias.md.'),
-        limitaciones=('Sin El Territorio, MisionesCuatro ni La Voz de Cataratas; el buscador de Misiones Online recorta por '
-                      'relevancia (falta listar su archivo completo); la prensa cubre lo que cubre (sesgo urbano y de eventos '
-                      'grandes); el lugar es el nombrado, no el punto del corte.'),
-        uso_recomendado='Verdad observada para validar escenarios de cortes.', uso_no_recomendado='Conteo exhaustivo de eventos.',
-        scripts='pipeline/noticias/bajar_notas.py; pipeline/noticias/extraer.py',
-        objetos=['noticias.notas', 'noticias.oraciones', 'noticias.menciones', 'noticias.fuentes'], verificado='2026-11-07'),
+        validacion=('48.098 notas, 29.143 menciones. Precisión del tipo 87 % y del lugar 85 % (muestra de 60, patrones v2); en '
+                    'los medios sin API, 80 % y 77 % (40). Utilidad (probar_utilidad.py): con la RP2 cortada según el modelo del '
+                    'río hay prensa de corte el 25 % de los días, contra 1,7 % el resto. Contra Black Marble los cortes de luz '
+                    'no dan señal (radiancia 0,90 de la mediana, 0,87 en control): salieron de la extracción.'),
+        limitaciones=('Escala de municipio y día: el lugar es el nombrado, no el punto del corte, y la mitad de las menciones '
+                      'no tiene lugar. Cobertura escasa antes de 2017. Se cuelan piquetes como cortes de ruta y homónimos de '
+                      'otras provincias. El Territorio y MisionesCuatro, sólo muestra al azar de 300 más lo bajado antes de un '
+                      'corte (aportan 11–18 % de eventos nuevos reales). Las alturas del río repiten las del INA.'),
+        uso_recomendado='Contrastar escenarios de río y arroyos contra cortes y evacuados por municipio y día.',
+        uso_no_recomendado='Contrastar cruces o hexágonos uno por uno; cortes de luz; conteo exhaustivo de eventos.',
+        scripts=('pipeline/noticias/bajar_notas.py; pipeline/noticias/bajar_sin_api.py; pipeline/noticias/extraer.py; '
+                 'pipeline/noticias/probar_utilidad.py'),
+        objetos=['noticias.notas', 'noticias.menciones', 'noticias.fuentes'], verificado='2026-11-07'),
 ]
 
 # ------------------------------------------------------------------ capas de la web (foto en public.capa_*)

@@ -16,8 +16,12 @@ resuelve el desafío de Cloudflare ni se finge ser un navegador.
                    espectáculos, cocina, internacionales ni cultura) y con el filtro de palabras del lado del servidor;
                    las páginas ya bajadas del índice de todo el dominio se suman.
 
+Estado (decisión del 7-nov-2026, ver probar_utilidad.py): La Voz y el archivo de Misiones Online, completos; El
+Territorio y MisionesCuatro, una muestra al azar de 300 (semilla 11) más lo bajado antes de un corte. No se completan:
+aportan 11-18 % de eventos nuevos reales y la prensa sirve a escala de municipio y día, no por volumen.
+
 Filtro: las palabras de la dirección (slug) contra un vocabulario fijo (`pasa()`, v2: agua, o vía con un estado
-de corte, o corte de luz concreto; La Voz se bajó entera con el amplio v1, FILTRO). Sólo se baja lo que pasa el filtro
+de corte; La Voz se bajó entera con el amplio v1, FILTRO). Sólo se baja lo que pasa el filtro
 y no está ya en noticias.notas. Crudos por nota en %HEXOMA_FUENTES%/noticias/crudo_html/<medio>/, índices en
 .../indices/. Reanudable. Al final se cargan a noticias.notas (columnas via y captura) y se actualiza el respaldo.
 
@@ -76,11 +80,11 @@ AGUA = re.compile(r'arroyo|(?:^|-)rio-|crecida|crece|creciente|desbord|inund|ane
 VIA = re.compile(r'(?:^|-)(?:ruta|rutas|puente|puentes|camino|caminos|alcantarill\w*|vialidad|vado|baden|balsa|paso)(?:-|$)')
 ESTADO = re.compile(r'corte|cortad|cortan|intransitable|clausur|inhabilit|interrump|habilit|cayo|caida|cedio|cedi|'
                     r'hundi|rotura|colaps|derrumb|socav|destru|anegad|tapad|cubiert|agua')
-LUZ = re.compile(r'apagon|sin-luz|corte-de-luz|cortes-de-luz|sin-energia|sin-servicio-electrico')
+# El corte de luz salió el 7-nov-2026 (sin señal contra Black Marble: probar_utilidad.py, prueba B).
 
 
 def pasa(slug: str) -> bool:
-    return bool(AGUA.search(slug) or (VIA.search(slug) and ESTADO.search(slug)) or LUZ.search(slug))
+    return bool(AGUA.search(slug) or (VIA.search(slug) and ESTADO.search(slug)))
 
 
 _ultimo: dict[str, float] = {}

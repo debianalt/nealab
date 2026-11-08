@@ -1,13 +1,12 @@
 """Oraciones y menciones de cortes en las notas de prensa (fase 6: sólo datos, reglas transparentes, sin modelo de lenguaje).
 
 Para cada nota de noticias.notas (patrones v2: ver el comentario de TIPOS):
-  1. oraciones (punto, signo o salto de línea seguido de mayúscula) → noticias.oraciones
+  1. oraciones (punto, signo o salto de línea seguido de mayúscula); sólo se guardan las que tienen mención, como
+     texto dentro de noticias.menciones (la tabla noticias.oraciones, 231 MB, se borró el 7-nov-2026)
   2. tipo de evento por patrones en la MISMA oración (puede haber varios por oración):
        corte_puente       puente/alcantarilla/vado + cortado, intransitable, bajo agua, anegado, tapado, colapso,
                           derrumbe, (in)habilitado, clausurado, interrumpido
        corte_ruta_camino  ruta/camino/calle/tramo/RP/RN + los mismos verbos
-       corte_luz          sin luz, sin energía, corte de energía/luz/suministro, restablecer el servicio, EMSA,
-                          tendido eléctrico, postes caídos
        crecida            crecida, creciente, desborde, nivel/altura del río, inundación
        evacuados_aislados evacuados, aislados, incomunicados
   3. lugar con el nomenclador del Hexoma (texto normalizado sin acentos; el nombre propio tiene que estar con
@@ -18,9 +17,11 @@ Para cada nota de noticias.notas (patrones v2: ver el comentario de TIPOS):
      («ayer», «anoche», día de la semana) como TEXTO: la fecha cierta es la de la nota.
 Una oración con evento y sin lugar también queda (lugar NULL).
 
-  noticias.oraciones   oracion_id, nota_id, n, texto
-  noticias.menciones   mencion_id, oracion_id, nota_id, medio, fecha, tipo, lugar_tipo, lugar_nombre, lugar_ref,
-                       ambiguo, ruta, km, altura_m, hidrometro, fecha_relativa, geom (punto del lugar)
+El corte de luz salió el 7-nov-2026: contra Black Marble no hay señal (probar_utilidad.py, prueba B; razón de
+radiancia 0,90 en días con corte en prensa contra 0,87 de control). Las notas siguen en noticias.notas.
+
+  noticias.menciones   mencion_id, nota_id, n_oracion, oracion, medio, fecha, tipo, lugar_tipo, lugar_nombre,
+                       lugar_ref, ambiguo, ruta, km, altura_m, hidrometro, fecha_relativa, geom (punto del lugar)
 
 Uso (desde neahub/, después de bajar_notas.py):
     python pipeline/noticias/extraer.py
@@ -54,11 +55,6 @@ TIPOS = {   # nombre: (requiere, además requiere, excluye)
     'corte_ruta_camino': (re.compile(r'\b(rutas?|caminos?|calles?|tramos?|rp|rn|ruta costera|transito)\b'), re.compile(VERBOS),
                           re.compile(r'(protesta|manifestant|piquet|reclam|colonos|tareferos|medida de fuerza|productores|'
                                      r'moviliza|marcha|gremi|sindica|repavimentac|pavimentac|bacheo|licitac)')),
-    'corte_luz': (re.compile(r'(sin luz|sin (el )?servicio (electrico|de energia|de luz)|sin energia|cortes? de (energia|luz|suministro)'
-                             r'|interrupcion\w* del (servicio|suministro)|postes? (caid|derrib)|cables? (caid|cortad)'
-                             r'|restablec\w* (el |del )?(servicio|suministro) (electric|de energia))'), None,
-                  re.compile(r'(sin cortes|minimizar|reducir (los )?cortes|evitar (los )?cortes|subsidio|tarifa|factura|'
-                             r'deuda|licitac|programa de gobierno|propuesta|candidat)')),
     'crecida': (re.compile(r'(crecida|creciente|desbord\w*|inundac\w*|anegad\w*)'),
                 re.compile(r'(\brio\b|\brios\b|arroyo|agua|lluvia|temporal|tormenta|cauce|calles|barrio|vecinos|familias|'
                            r'precipitac|nivel|altura|puente|ruta)'),
@@ -125,13 +121,13 @@ def main() -> int:
     por_clave = gaz.groupby('clave')
     log(f'nomenclador: {len(gaz):,} lugares ({gaz.tipo.value_counts().to_dict()}); notas {len(notas):,}')
 
-    oraciones, menciones = [], []
-    oid = 0
+    menciones = []
+    n_oraciones = 0
     for r in notas.itertuples():
         partes = [p.strip() for p in RE_ORACION.split(f'{r.titulo}.\n{r.texto}') if p and p.strip()]
+        n_oraciones += len(partes)
         for k, orig in enumerate(partes):
-            oid += 1
-            oraciones.append((oid, r.nota_id, k, orig))
+            texto_orig = orig
             orig = unicodedata.normalize('NFC', orig)
             t = norm(orig)
             if HIPOTETICO.search(t):
@@ -158,7 +154,7 @@ def main() -> int:
                     continue
                 hallados.append(('lugar', m.group(1)))
             hid = [c for _, c in hallados if (por_clave.get_group(c).tipo == 'hidrometro').any()]
-            base = dict(oracion_id=oid, nota_id=r.nota_id, medio=r.medio, fecha=r.fecha,
+            base = dict(nota_id=r.nota_id, n_oracion=k, oracion=texto_orig, medio=r.medio, fecha=r.fecha,
                         ruta=rutas[0] if rutas else None, km=km.group(1).replace(',', '.') if km else None,
                         altura_m=float(alt.group(1).replace(',', '.')) if alt else None,
                         hidrometro=hid[0] if hid else None, fecha_relativa=rel.group(0) if rel else None)
@@ -177,22 +173,15 @@ def main() -> int:
                     pref = gg.sort_values('tipo', key=lambda s: s.map({'municipio': 0, 'hidrometro': 1, 'asentamiento': 2, 'cauce': 3})).iloc[0]
                     menciones.append(dict(base, tipo=tp, lugar_tipo=pref.tipo, lugar_nombre=pref.nombre, lugar_ref=pref.ref,
                                           ambiguo=bool(pref.n_lugares > 1), lon=pref.lon, lat=pref.lat))
-    ora = pd.DataFrame(oraciones, columns=['oracion_id', 'nota_id', 'n', 'texto'])
     men = pd.DataFrame(menciones)
-    log(f'oraciones {len(ora):,}; menciones {len(men):,} ({time.time() - t0:.0f} s)')
+    log(f'oraciones {n_oraciones:,}; menciones {len(men):,} ({time.time() - t0:.0f} s)')
 
     cur = conn.cursor()
     cur.execute('DROP TABLE IF EXISTS noticias.menciones')
     cur.execute('DROP TABLE IF EXISTS noticias.oraciones')
-    cur.execute('CREATE TABLE noticias.oraciones (oracion_id int PRIMARY KEY, nota_id int, n int, texto text)')
-    buf = io.StringIO()
-    ora.to_csv(buf, index=False, header=False)
-    buf.seek(0)
-    cur.copy_expert('COPY noticias.oraciones FROM STDIN WITH (FORMAT csv)', buf)
-    cur.execute('CREATE INDEX ON noticias.oraciones (nota_id)')
-    cols = ['oracion_id', 'nota_id', 'medio', 'fecha', 'tipo', 'lugar_tipo', 'lugar_nombre', 'lugar_ref', 'ambiguo',
+    cols = ['nota_id', 'n_oracion', 'oracion', 'medio', 'fecha', 'tipo', 'lugar_tipo', 'lugar_nombre', 'lugar_ref', 'ambiguo',
             'ruta', 'km', 'altura_m', 'hidrometro', 'fecha_relativa', 'lon', 'lat']
-    cur.execute("""CREATE TABLE noticias.menciones (mencion_id serial PRIMARY KEY, oracion_id int, nota_id int, medio text,
+    cur.execute("""CREATE TABLE noticias.menciones (mencion_id serial PRIMARY KEY, nota_id int, n_oracion int, oracion text, medio text,
                    fecha timestamp, tipo text, lugar_tipo text, lugar_nombre text, lugar_ref text, ambiguo boolean,
                    ruta text, km text, altura_m real, hidrometro text, fecha_relativa text, lon double precision,
                    lat double precision)""")
@@ -204,8 +193,9 @@ def main() -> int:
     cur.execute('UPDATE noticias.menciones SET geom = ST_SetSRID(ST_MakePoint(lon, lat), 4326) WHERE lon IS NOT NULL')
     cur.execute('CREATE INDEX ON noticias.menciones USING gist (geom)')
     cur.execute('CREATE INDEX ON noticias.menciones (tipo, fecha)')
-    cur.execute("COMMENT ON TABLE noticias.menciones IS 'Menciones de cortes (puente, ruta/camino, luz), crecidas y "
-                "evacuados/aislados por oración, con lugar del nomenclador del Hexoma; reglas en pipeline/noticias/extraer.py'")
+    cur.execute("COMMENT ON TABLE noticias.menciones IS 'Menciones de cortes de puente y de ruta/camino, crecidas y "
+                "evacuados/aislados por oración (texto en oracion), con lugar del nomenclador del Hexoma (escala municipio "
+                "y día); reglas en pipeline/noticias/extraer.py'")
     conn.commit()
     conn.close()
     log(f'listo en {time.time() - t0:.0f} s; por tipo: {men.tipo.value_counts().to_dict()}; '

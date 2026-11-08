@@ -50,8 +50,8 @@ def main() -> int:
     conn = connect(DB)
     q = lambda s, **kw: pd.read_sql(s, conn, **kw)  # noqa: E731
     if a.muestra:
-        m = q("""SELECT m.mencion_id, m.medio, m.fecha::date fecha, m.tipo, m.lugar_tipo, m.lugar_nombre, o.texto oracion
-                 FROM noticias.menciones m JOIN noticias.oraciones o USING (oracion_id)""")
+        m = q("""SELECT m.mencion_id, m.medio, m.fecha::date fecha, m.tipo, m.lugar_tipo, m.lugar_nombre, m.oracion
+                 FROM noticias.menciones m""")
         destino = MUESTRA
         if a.medios:
             m = m[m.medio.isin(a.medios.split(','))]
@@ -64,7 +64,7 @@ def main() -> int:
         print(f'muestra: {destino} ({len(s)} menciones, semilla {a.semilla})')
         return 0
 
-    L = ['# Validación del archivo de noticias (cortes de puentes, caminos y luz)', '',
+    L = ['# Validación del archivo de noticias (cortes de puentes y caminos, crecidas, evacuados)', '',
          f'Generado por `pipeline/noticias/validar_noticias.py` el {dt.date.today().isoformat()}. Datos: 6 medios con '
          'API de WordPress abierta, El Territorio y La Voz de Cataratas por sitemaps y HTML, MisionesCuatro por copias '
          'de la Wayback Machine (su sitio desafía a todo cliente que no sea un navegador) y el archivo completo de '

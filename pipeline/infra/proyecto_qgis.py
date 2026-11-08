@@ -143,7 +143,6 @@ def construir():
                         'geom IS NOT NULL'), 'tipo', [
         ('corte_puente', punto('#1f6feb', 2.6, 'square'), 'Corte de puente'),
         ('corte_ruta_camino', punto('#bf8700', 2.4, 'square'), 'Corte de ruta o camino'),
-        ('corte_luz', punto('#f1c40f', 2.4, 'star'), 'Corte de luz'),
         ('crecida', punto('#00b4d8', 2.0), 'Crecida'),
         ('evacuados_aislados', punto('#cf222e', 2.0, 'triangle'), 'Evacuados o aislados')])
     grupo('Prensa', [pre], apagadas=(pre.name(),))
