@@ -2033,6 +2033,8 @@ export class HexStore {
 
 	/** Zones from a shared link, drawn once the link's department has its cells (syncZones). */
 	pendingUrlZones: { dept: string; zones: UrlZone[] } | null = null;
+	/** Set when restoreUrlZones drew the link's zones: the page flies to them once. */
+	zonesFromUrl = $state(false);
 	private static normName(s: string): string {
 		return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 	}
@@ -2051,6 +2053,7 @@ export class HexStore {
 			const id = await this.createHexZone(cells, z.ring, i18n.t('zone.origin.lasso'), { id: z.id, sharedN: z.n, outline: z.outline });
 			any = any || id !== null;
 		}
+		if (any) this.zonesFromUrl = true;
 		return any;
 	}
 

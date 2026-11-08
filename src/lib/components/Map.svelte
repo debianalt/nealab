@@ -2407,13 +2407,13 @@
 		});
 	}
 
-	export function flyToBbox(bbox: [number, number, number, number]) {
-		// bbox: [W, S, E, N]
+	export function flyToBbox(bbox: [number, number, number, number], opts: { maxZoom?: number; pitch?: number } = {}) {
+		// bbox: [W, S, E, N]. opts: the zones of a shared link want a closer, flat view.
 		map?.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
 			padding: 40,
-			pitch: 50,
+			pitch: opts.pitch ?? 50,
 			duration: 1500,
-			maxZoom: 10
+			maxZoom: opts.maxZoom ?? 10
 		});
 	}
 

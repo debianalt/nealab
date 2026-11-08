@@ -908,7 +908,19 @@
 		void hexStore.analysisData;
 		void hexStore.activeLayer;
 		untrack(() => {
-			hexStore.syncZones().then((changed) => { if (changed) refreshHighlights(); }).catch(() => {});
+			hexStore.syncZones().then((changed) => {
+				if (changed) refreshHighlights();
+				// Zones of a shared link: the department view leaves them small in a corner.
+				if (hexStore.zonesFromUrl) {
+					hexStore.zonesFromUrl = false;
+					let w = 180, s = 90, e = -180, n = -90;
+					for (const z of hexStore.hexZones) for (const [x, y] of z.polygon ?? []) {
+						if (x < w) w = x; if (x > e) e = x;
+						if (y < s) s = y; if (y > n) n = y;
+					}
+					if (w < e) mapComponent?.flyToBbox([w, s, e, n], { maxZoom: 14, pitch: 0 });
+				}
+			}).catch(() => {});
 		});
 	});
 	async function handleSaveChartSelection(): Promise<string | null> {
