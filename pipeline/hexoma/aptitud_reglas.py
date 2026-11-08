@@ -3,6 +3,7 @@
 Cada factor: (id, variable, tipo, parámetros, fuente). Clases: 1 = S1, 2 = S2, 3 = S3, 4 = N.
 Tipos:
     rango   s1 = (lo, hi), lim = (lo, hi): S1 dentro de s1; S2 dentro de lim; N fuera de lim. None = sin cota.
+            sobre = clase para los valores por encima de lim hi (por defecto N): la lluvia de los extensivos.
     min     s1 = valor mínimo para S1; s2 = mínimo para S2 (None = todo lo demás es S2).
     cero    S1 si el conteo es 0; si no, S2 (heladas por estado: las fuentes no dan un límite de exclusión).
     max_n   N si el valor ≥ umbral (anegamiento); si no, S1.
@@ -21,6 +22,11 @@ Decisiones de aplicación tomadas al codificar (se informan en la validación):
   S2 si alguno no tiene noches ≤ 15 °C; N si todos tienen alguna. Contar una sola noche fría en dos meses (primera
   versión) daba N en el 70–85 % de las campañas, igual que las estaciones, y contradecía las 95 mil ha sembradas.
 - Arroz, pendiente: S1 ≤ 1 % (RENARE); S2 ≤ 3 % (RENARE); S3 ≤ 30 %; N > 30 % (Sys excluye).
+- Lluvia de soja, maíz, algodón y girasol (7-nov-2026): techo del S2 = máximo absoluto de ECOCROP (1.800, 1.800,
+  1.500 y 1.600 mm); por encima, S3 (no N). Validado: con N o S3 el S1+S2 es el mismo; el techo sube el lift S1+S2
+  contra MapBiomas (soja 1,36→1,49; maíz 1,06→1,13; algodón 1,06→1,25) y baja la correlación por departamento con el
+  MAGyP; S3 porque N contradice lo observado (soja y maíz con 1.700–2.000 mm en el oeste de Paraná y Alto Paraná).
+  Pasturas sin cambio: las temperaturas medias de ECOCROP por especie no validan (lift S1 0,84–0,90).
 """
 INF = float('inf')
 
@@ -64,7 +70,7 @@ REGLAS = {
     ],
     'soja': [
         ('t_media', 'tm_nov_mar', 'rango', dict(s1=(20, 33), lim=(10, 38)), 'ECOCROP'),
-        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1500), lim=(450, None)), 'ECOCROP; INTA Las Breñas'),
+        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1500), lim=(450, 1800), sobre=3), 'ECOCROP; INTA Las Breñas'),
         ('libre_heladas', 'libre_heladas', 'min', dict(s1=130, s2=100), 'FAO Crop info (ciclo)'),
         ('ph', 'ph', 'rango', dict(s1=(6.0, 7.0), lim=(4.5, 7.5)), 'Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999); Vázquez et al. 2012, Ciencia del Suelo 30(1)'),
         ('arcilla', 'arcilla', 'rango', dict(s1=(20, 60), lim=(None, None)), 'Verdoodt & Van Ranst 2003'),
@@ -73,7 +79,7 @@ REGLAS = {
     ],
     'maiz': [
         ('t_media', 'tm_sep_feb', 'rango', dict(s1=(18, 33), lim=(10, 47)), 'ECOCROP'),
-        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1200), lim=(400, None)), 'ECOCROP'),
+        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1200), lim=(400, 1800), sobre=3), 'ECOCROP'),
         ('ph', 'ph', 'rango', dict(s1=(5.5, 7.0), lim=(5.0, 8.0)), 'Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
@@ -81,7 +87,7 @@ REGLAS = {
         ('t_media', 'tm_oct_mar', 'rango', dict(s1=(22, 36), lim=(15, 42)), 'ECOCROP'),
         ('grados_dia', 'gdd12_oct_mar', 'min', dict(s1=1645, s2=None), 'Colombo 2019 (INTA Reconquista)'),
         ('libre_heladas', 'libre_heladas', 'min', dict(s1=200, s2=None), 'FAO Crop info'),
-        ('lluvia', 'p_mm', 'rango', dict(s1=(750, 1200), lim=(450, None)), 'ECOCROP'),
+        ('lluvia', 'p_mm', 'rango', dict(s1=(750, 1200), lim=(450, 1500), sobre=3), 'ECOCROP'),
         ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(5.0, 9.5)), 'ECOCROP (regla 1 precisada: el 5,2–6,0 de la tabla UNLP no tiene ensayo local y contradice lo observado)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
@@ -89,7 +95,7 @@ REGLAS = {
         ('t_media', 'tm_ago_dic', 'rango', dict(s1=(17, 34), lim=(5, 45)), 'ECOCROP'),
         ('grados_dia', 'gdd7_ago_dic', 'min', dict(s1=1600, s2=None), 'ASAGIR'),
         ('helada_tardia', 'heladas5_oct', 'cero', {}, 'ASAGIR (6–8 hojas y botón)'),
-        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1000), lim=(300, None)), 'ECOCROP; INTA Las Breñas'),
+        ('lluvia', 'p_mm', 'rango', dict(s1=(600, 1000), lim=(300, 1600), sobre=3), 'ECOCROP; INTA Las Breñas'),
         ('ph', 'ph', 'rango', dict(s1=(6.0, 7.5), lim=(6.0, 7.5)), 'ECOCROP (óptimo; la tabla UNLP no da óptimo); Vázquez & Pagani 2018 (UNLP), Tabla 2 (de Porta et al. 1999) (tolerancia)'),
         ('pendiente', 'pendiente', 'pend', dict(s1=8, s2=16), 'Sys et al. 1993'),
     ],
@@ -130,6 +136,8 @@ def clasificar(tipo: str, p: dict, x, arcilla=None):
         c[ok] = 4
         c[ok & dentro(p['lim'])] = 2
         c[ok & dentro(p['s1'])] = 1
+        if p.get('sobre') and p['lim'][1] is not None:
+            c[ok & (x > p['lim'][1])] = p['sobre']
     elif tipo == 'min':
         c[ok] = 2 if p.get('s2') is None else 4
         if p.get('s2') is not None:

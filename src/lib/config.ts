@@ -107,7 +107,7 @@ export const TERRAIN_CONFIG = {
 export function getParquetUrl(name: string): string {
 	const busts: Record<string, string> = {
 		hex_flood_risk: '?v=41',   // 4-nov-2026: sin flood_risk_score
-		sat_agri_apt: '?v=1',
+		sat_agri_apt: '?v=2',   // 2: 7-nov-2026: techo de lluvia en S2 (ECOCROP RMAX, encima S3)
 		sat_forestry_aptitude: '?v=40',
 		sat_service_deprivation: '?v=35',   // 35: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 34: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 33: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
 		sat_health_access: '?v=33',   // 33: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 32: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 31: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py)
@@ -128,7 +128,7 @@ export function getParquetUrl(name: string): string {
 
 // Bump DEPT_V after any pipeline run that regenerates dept-split parquets.
 // Cloudflare CDN caches stable versioned URLs; a new version invalidates naturally.
-const DEPT_V = 46;   // 46: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 45: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
+const DEPT_V = 47;   // 47: 7-nov-2026: aptitud agrícola con techo de lluvia en S2 (sat_agri_apt); 46: 7-nov-2026 (tarde): Chaco y Formosa con GBA recargado y peso = personas estimadas (regrid_census.py); 45: 7-nov-2026: Misiones y Corrientes con peso = personas estimadas (regrid_census.py --keep-cells); 44: 6-nov-2026: Corrientes con las celdas del crosswalk de GBA completo (regrid_census_corrientes.py); 43: deforestation_dynamics con % del bosque por celda (5-nov-2026); 42: economic_activity restaurado (la 41 sirvió una copia del 2-nov unas horas, 5-nov-2026); 41: economic_activity con ocupados_est y tasa_desocupacion (5-nov-2026); 40: accesibilidad en minutos por camino (5-nov-2026); 38: education_capital con Censo 2010 y economic_activity con el respaldo areal 2010 (4-nov-2026); 37: economic_activity con columnas de año base
 
 export function getFloodDptoUrl(parquetKey: string, territoryPrefix = ''): string {
 	return `${getBase()}/data/${territoryPrefix}flood_dpto/hex_flood_${parquetKey}.parquet?v=${DEPT_V}`;

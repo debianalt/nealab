@@ -56,6 +56,34 @@ autor pidió corregirlos. Cada ajuste tiene su evidencia:
    arroz quedan con la tabla UNLP (no contradice lo observado: maíz igual, girasol y arroz mejoran levemente); la soja
    también, respaldada además por un ensayo argentino (Vázquez et al. 2012).
 
+## Ajustes del 7-nov-2026 (pedido del autor: techo de lluvia en S2 y revisar pasturas)
+6. **Techo de lluvia de los extensivos.** El límite de lluvia de soja, maíz, algodón y girasol no tenía cota superior:
+   el exceso nunca bajaba de S2 y en la parte húmeda del NEA soja, maíz y algodón daban el mismo mapa. Ahora el S2 llega
+   hasta el **máximo absoluto de ECOCROP**, que ya estaba en la evidencia (`umbrales_evidencia_extensivos.md`): soja
+   1.800, maíz 1.800, algodón 1.500 y girasol 1.600 mm. **Por encima, S3 (marginal), no N.** Con el techo como límite
+   de exclusión, el 99,7 % de Misiones (lluvia normal > 1.800 mm) quedaba N para soja y maíz, y el 61 % de Corrientes
+   para algodón. Eso contradice lo observado: hay maíz en Misiones, y soja y maíz con 1.700–2.000 mm en el oeste de
+   Paraná y en Alto Paraná.
+   Validación de tres corridas contra la de hoy (`validar_aptitud.py`; regla fijada antes de ver los números: N sólo
+   si no baja ninguna prueba):
+
+   | Cultivo | Lift S1+S2 (MapBiomas) hoy → con techo | Spearman S1+S2 por depto (MAGyP) hoy → con techo |
+   |---|---|---|
+   | Soja | 1,36 → 1,49 | 0,37 → 0,33 |
+   | Maíz | 1,06 → 1,13 | 0,26 → 0,20 |
+   | Algodón | 1,06 → 1,25 | 0,31 → 0,22 |
+   | Girasol | 1,28 → 1,29 | 0,52 → 0,29 |
+
+   Con N o con S3 el S1+S2 es el mismo (las pruebas no distinguen entre S3 y N). La correlación por departamento baja,
+   así que va S3. Los perennes ya tenían el techo fuera del rango del NEA (yerba 2.500, naranja 2.700, té 5.000 mm;
+   el máximo de Misiones es 2.333): no cambian.
+7. **Pasturas, temperatura: sin cambio.** El S1 de 28–35 °C (Veneciano et al. 2002) compila a Huss (1986) y Hernández
+   (1985) y es temperatura de crecimiento. Se probaron los óptimos de temperatura media de ECOCROP: *M. maximus* 19–30
+   (abs 6–35), *B. brizantha* 25–35 (15–38) y la unión de las tres especies (19–35; 6–38). Ninguna valida: S1 = 73 %,
+   33 % y 73 % de las celdas con pastura implantada, con lift 0,90, 0,84 y 0,90. La temperatura no explica dónde se
+   implantan las pasturas en el NEA. Queda como hallazgo: el óptimo térmico no se alcanza en la media sep–mar (25 °C) y
+   la clase de pasturas la deciden la lluvia y la pendiente.
+
 ## Cómo se armó
 - Tres búsquedas en paralelo (perennes; extensivos; arroz y pasturas), con cita completa, página o tabla, URL y cita
   textual por valor: la evidencia completa está en `umbrales_evidencia_*.md`.
@@ -125,7 +153,7 @@ pendiente de la regla 2.
 |---|---|---|---|---|
 | T media del ciclo (DEF) | 20–33 °C | 10–38 °C | [E] | regla 1 (antes FAO 66: 20–30) |
 | Calor en floración | — | — | FAO 66 p. 129 (aborto a 35 °C) | regla 5: se informa el conteo |
-| Agua (lluvia de la campaña) | 600–1.500 mm | ≥ 450 mm | [E]; INTA Las Breñas (demanda regional 650 mm) | |
+| Agua (lluvia de la campaña) | 600–1.500 mm | 450–1.800 mm (> 1.800: S3) | [E]; INTA Las Breñas (demanda regional 650 mm) | ajuste 6 |
 | Período libre de heladas | ≥ 130 días | ≥ 100 días | FAO CI (ciclo 100–130 d o más) | proxy: duración del ciclo |
 | pH | 6,0–7,0 | 4,5–7,5 | Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999; Vázquez et al. 2012, Ciencia del Suelo 30(1) pp. 48–49 | ajuste 4 (antes [E] 5,5–6,5) |
 | Arcilla | 20–60 % | — | Verdoodt & Van Ranst 2003 (Sys) | excluye suelos muy arenosos |
@@ -138,7 +166,7 @@ pendiente de la regla 2.
 | T media | 18–33 °C | 10–47 °C | [E] | regla 1 (antes FAO CI: > 15 °C) |
 | Grados-día | Tbase 8 °C, Tupper 30 °C | — | FAO 66 p. 119 | ECOCROP no tiene base; Bautista INTA 2.045 GD a madurez |
 | Calor en floración | — | — | INTA IIACS (> 35 °C) | regla 5 |
-| Agua (lluvia de la campaña) | 600–1.200 mm | ≥ 400 mm | [E] | |
+| Agua (lluvia de la campaña) | 600–1.200 mm | 400–1.800 mm (> 1.800: S3) | [E] | ajuste 6 |
 | pH | 5,5–7,0 | 5,0–8,0 | Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999 | ajuste 5 (antes [E] 5,0–7,0 / 4,5–8,5) |
 | Pendiente | Sys | Sys | Verdoodt & Van Ranst 2003 | |
 
@@ -149,7 +177,7 @@ pendiente de la regla 2.
 | Grados-día | Tbase 12 °C; 1.645–1.867 °C·d a 60 % de cápsulas abiertas | — | Colombo 2019 (INTA Reconquista), Fig. 8 | regional |
 | Período libre de heladas | ≥ 200 días | — | FAO CI | ECOCROP no lo tiene |
 | Calor reproductivo | — | — | Colombo 2019 p. 5 (> 33 °C) | regla 5 |
-| Agua (lluvia de la campaña) | 750–1.200 mm | ≥ 450 mm | [E] | |
+| Agua (lluvia de la campaña) | 750–1.200 mm | 450–1.500 mm (> 1.500: S3) | [E] | ajuste 6 |
 | pH | 6,0–7,5 | 5,0–9,5 | [E] | regla 1 precisada (ajuste 5): la tabla UNLP (5,2–6,0) se probó y se descartó |
 | Pendiente | Sys | Sys | — | |
 
@@ -160,7 +188,7 @@ pendiente de la regla 2.
 | Grados-día | Tbase 6–8 °C; 1.600–1.700 °C·d al ciclo | — | ASAGIR | regional |
 | Helada tardía (5 cm) | sin heladas a 5 cm con 6–8 hojas o botón (0 °C) | cotiledón sobrevive −5 °C | ASAGIR | INTA Las Breñas: siembra de agosto al 10-sep en el Chaco |
 | Calor en llenado | — | — | ASAGIR (> 35 °C baja el aceite) | regla 5 |
-| Agua (lluvia de la campaña) | 600–1.000 mm | ≥ 300 mm | [E]; INTA Las Breñas (360 mm de agua útil) | |
+| Agua (lluvia de la campaña) | 600–1.000 mm | 300–1.600 mm (> 1.600: S3) | [E]; INTA Las Breñas (360 mm de agua útil) | ajuste 6 |
 | pH | 6,0–7,5 | 6,0–7,5 | [E] (óptimo; la tabla UNLP no da óptimo); Vázquez & Pagani 2018 (UNLP), Tabla 2 p. 5, de Porta et al. 1999 (tolerancia) | ajuste 5 (antes límite [E] 5,5–8,0) |
 | Pendiente | Sys | Sys | — | |
 
@@ -177,7 +205,7 @@ pendiente de la regla 2.
 ### Pasturas megatérmicas implantadas
 | Factor | S1 | Límite | Fuente | Nota |
 |---|---|---|---|---|
-| T de crecimiento (media sep–mar) | 28–35 °C | se detiene < 15 °C | Veneciano et al. 2002 p. 2 (INTA San Luis) | ajuste 1; Tb 12–16 °C (Mendonça & Rassini 2006) |
+| T de crecimiento (media sep–mar) | 28–35 °C | se detiene < 15 °C | Veneciano et al. 2002 p. 2 (INTA San Luis) | ajuste 1; Tb 12–16 °C (Mendonça & Rassini 2006); ajuste 7: ECOCROP por especie probado y descartado |
 | Lluvia anual | Brachiaria y Setaria ≥ 800 mm; Gatton 500–1.000; Rhodes 600–1.500 | — | Pérego 1999; Mc Lean et al. 2015; INTA Las Breñas 2005; [E] Rhodes | por especie |
 | Heladas | — | Setaria −1 (crecimiento) / −4 (reposo); Rhodes −1 / −10 | [E] | Brachiaria, Pangola y Gatton: sin valor numérico |
 | Anegamiento | Setaria y Rhodes toleran (Rhodes hasta 15 días); Gatton no | — | INTA Las Breñas; Tropical Forages | proxy MapBiomas |
