@@ -54,6 +54,8 @@
 
 	let container: HTMLDivElement;
 	let hexLayerTitle = '';
+	// The pointer is on a hexagon: the buildings' leave timers (80 ms) must not hide the hexagon's tooltip.
+	let hexTipActive = false;
 	let hexLayerIsCategorical = false;
 	let hexClassesOrdinal: ColorClasses | null = null; // painted classes are codes (S1…N): tooltip shows the label
 	let hexLayerUnit = ''; // physical unit of the primary variable (tC/ha, min, %…); '' = no suffix
@@ -1527,7 +1529,7 @@
 		map.on('mouseleave', 'buildings-3d', () => {
 			leaveTimeout = setTimeout(() => {
 				if (!lassoActive) map.getCanvas().style.cursor = '';
-				tooltip.style.display = 'none';
+				if (!hexTipActive) tooltip.style.display = 'none';
 			}, 80);
 		});
 
@@ -1556,7 +1558,7 @@
 			map.on('mouseleave', lyr, () => {
 				leaveTimeout = setTimeout(() => {
 					if (!lassoActive) map.getCanvas().style.cursor = '';
-					tooltip.style.display = 'none';
+					if (!hexTipActive) tooltip.style.display = 'none';
 				}, 80);
 			});
 		}
@@ -1592,7 +1594,7 @@
 		map.on('mouseleave', 'corrientes-buildings-3d', () => {
 			leaveTimeout = setTimeout(() => {
 				if (!lassoActive) map.getCanvas().style.cursor = '';
-				tooltip.style.display = 'none';
+				if (!hexTipActive) tooltip.style.display = 'none';
 			}, 80);
 		});
 
@@ -1633,7 +1635,7 @@
 			map.on('mouseleave', blayer, () => {
 				leaveTimeout = setTimeout(() => {
 					if (!lassoActive) map.getCanvas().style.cursor = '';
-					tooltip.style.display = 'none';
+					if (!hexTipActive) tooltip.style.display = 'none';
 				}, 80);
 			});
 		}
@@ -1656,7 +1658,7 @@
 		map.on('mouseleave', 'itapua-buildings-3d', () => {
 			leaveTimeout = setTimeout(() => {
 				if (!lassoActive) map.getCanvas().style.cursor = '';
-				tooltip.style.display = 'none';
+				if (!hexTipActive) tooltip.style.display = 'none';
 			}, 80);
 		});
 
@@ -1678,7 +1680,7 @@
 		map.on('mouseleave', 'alto_parana-buildings-3d', () => {
 			leaveTimeout = setTimeout(() => {
 				if (!lassoActive) map.getCanvas().style.cursor = '';
-				tooltip.style.display = 'none';
+				if (!hexTipActive) tooltip.style.display = 'none';
 			}, 80);
 		});
 		// Alto Paraná district hover: pointer cursor (badge text is Phase 4 polish)
@@ -1933,6 +1935,7 @@
 			if (lassoActive) return;
 			const p = e.features![0].properties!;
 			if (!p.h3index) return;
+			hexTipActive = true;
 			map.getCanvas().style.cursor = 'pointer';
 
 			const titleLine = hexLayerTitle ? `<div style="color:rgba(var(--c-fg-rgb), 0.5);font-size:9px;margin-bottom:2px">${hexLayerTitle}</div>` : '';
@@ -1973,6 +1976,7 @@
 		});
 
 		map.on('mouseleave', 'hex-fill', () => {
+			hexTipActive = false;
 			if (!lassoActive) map.getCanvas().style.cursor = '';
 			tooltip.style.display = 'none';
 			setRadioHover(null);
@@ -2078,7 +2082,15 @@
 
 	}
 
+	/** The shared hover tooltip (built in onMount) holds the text of the last mousemove: a
+	 *  layer or tab change under a still mouse kept the old layer's title and value. */
+	function hideHoverTooltip() {
+		const t = typeof document !== 'undefined' ? document.getElementById('hover-tooltip') : null;
+		if (t) t.style.display = 'none';
+	}
+
 	export function setHexLayerInfo(title: string, isCategorical: boolean, unit: string = '') {
+		if (title !== hexLayerTitle || isCategorical !== hexLayerIsCategorical || unit !== hexLayerUnit) hideHoverTooltip();
 		hexLayerTitle = title;
 		hexLayerIsCategorical = isCategorical;
 		hexLayerUnit = unit;
@@ -3356,6 +3368,8 @@
 	}
 
 	export function clearHexChoropleth() {
+		hideHoverTooltip();   // no hexagons left under the mouse: nothing for it to describe
+		hexTipActive = false; // and no mouseleave will come from the emptied layer
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
