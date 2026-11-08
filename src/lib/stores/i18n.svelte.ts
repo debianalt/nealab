@@ -27,6 +27,8 @@ const dict: Record<string, Record<Locale, string>> = {
 
 	// Tooltip
 	'tip.building': { es: 'Edificación:', en: 'Building:', gn: 'Óga:', pt: 'Edificação:' },
+	'tip.residential': { es: 'residencial', en: 'residential', gn: 'residencial', pt: 'residencial' }, // gn: pendiente
+	'tip.nonResidential': { es: 'no residencial', en: 'non-residential', gn: 'no residencial', pt: 'não residencial' }, // gn: pendiente
 	'tip.height': { es: 'Altura', en: 'Height', gn: 'Yvate', pt: 'Altura' },
 	'tip.area': { es: 'Área', en: 'Area', gn: 'Yvy', pt: 'Área' },
 	'tip.radio': { es: 'Radio', en: 'Tract', gn: 'Radio', pt: 'Setor' },

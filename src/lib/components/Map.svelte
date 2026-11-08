@@ -590,6 +590,11 @@
 				type: 'fill-extrusion',
 				source: 'itapua-buildings',
 				'source-layer': 'buildings',
+				// The tileset spills over the river: it repeats the Argentine buildings across
+				// (Posadas in Itapúa's, Puerto Iguazú in Alto Paraná's), with no distrito. Drawn,
+				// they doubled the Misiones extrusions and their tooltip («non_residential», no
+				// census radio) covered the Misiones one. Every Paraguayan building has its distrito.
+				filter: ['!=', ['coalesce', ['get', 'distrito'], ''], ''],
 				layout: { visibility: 'none' },
 				paint: {
 					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
@@ -651,6 +656,11 @@
 				type: 'fill-extrusion',
 				source: 'alto_parana-buildings',
 				'source-layer': 'buildings',
+				// The tileset spills over the river: it repeats the Argentine buildings across
+				// (Posadas in Itapúa's, Puerto Iguazú in Alto Paraná's), with no distrito. Drawn,
+				// they doubled the Misiones extrusions and their tooltip («non_residential», no
+				// census radio) covered the Misiones one. Every Paraguayan building has its distrito.
+				filter: ['!=', ['coalesce', ['get', 'distrito'], ''], ''],
 				layout: { visibility: 'none' },
 				paint: {
 					'fill-extrusion-height': ['min', ['max', ['coalesce', ['get', 'best_height_m'], 5], 5], 300],
@@ -1648,7 +1658,7 @@
 			const p = e.features![0].properties!;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
-			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
+			const res = i18n.t(p.is_residential ? 'tip.residential' : 'tip.nonResidential');
 			const dist = p.distrito || '';
 			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m\u00B2 | ${res}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
@@ -1670,7 +1680,7 @@
 			const p = e.features![0].properties!;
 			const h = p.best_height_m != null ? parseFloat(p.best_height_m).toFixed(1) : '?';
 			const a = p.area_m2 != null ? Math.round(p.area_m2).toLocaleString() : '?';
-			const res = p.is_residential ? 'residencial' : (p.subtype || 'no residencial');
+			const res = i18n.t(p.is_residential ? 'tip.residential' : 'tip.nonResidential');
 			const dist = p.distrito || '';
 			tooltip.innerHTML = `<b style="color:var(--c-accent)">${i18n.t('tip.building')}</b> ${h} m | ${a} m² | ${res}${dist ? ` | ${formatDept(dist)}` : ''}`;
 			tooltip.style.display = 'block';
@@ -3370,6 +3380,10 @@
 	export function clearHexChoropleth() {
 		hideHoverTooltip();   // no hexagons left under the mouse: nothing for it to describe
 		hexTipActive = false; // and no mouseleave will come from the emptied layer
+		// Forget the painted cells too: setHexClip repaints lastHex, and a clip change after a
+		// reset (the closing layer's department list unmounting) brought the cleared layer
+		// back with no title — a ghost layer whose tooltip read a bare «0,0».
+		lastHex = null;
 		if (!map) return;
 		const src = map.getSource('hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
@@ -3444,6 +3458,7 @@
 	}
 
 	export function clearCompareHexChoropleth() {
+		lastCompareHex = null;   // same as clearHexChoropleth: a clip change must not repaint it
 		if (!map) return;
 		const src = map.getSource('compare-hexagons') as maplibregl.GeoJSONSource | undefined;
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
