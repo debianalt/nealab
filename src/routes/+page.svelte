@@ -918,7 +918,10 @@
 						if (x < w) w = x; if (x > e) e = x;
 						if (y < s) s = y; if (y > n) n = y;
 					}
-					if (w < e) mapComponent?.flyToBbox([w, s, e, n], { maxZoom: 14, pitch: 0 });
+					// Room for the lasso box (top left) and the legend (bottom); a phone gets a plain margin.
+					const wide = (mapContainer?.clientWidth ?? 0) >= 700;
+					const padding = wide ? { top: 70, bottom: 240, left: 190, right: 50 } : 30;
+					if (w < e) mapComponent?.flyToBbox([w, s, e, n], { maxZoom: 14, pitch: 0, padding });
 				}
 			}).catch(() => {});
 		});
