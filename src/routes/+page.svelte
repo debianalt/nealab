@@ -163,9 +163,16 @@
 	});
 
 	// Sync territory prefix + fly map + reload data whenever territory changes
+	// (and, through loadVisibleData's reads, on a layer change too).
+	let prevTerritoryEffectId: string | null = null;
 	$effect(() => {
 		const t = territoryStore.activeTerritory;
 		const isRegional = untrack(() => territoryStore.regionalMode);
+		// Same territory, a department being worked in: a layer change reopens it with the camera
+		// where the user left it (openDeptByName keepView), so no flight to the province here.
+		const sameT = prevTerritoryEffectId === t.id;
+		prevTerritoryEffectId = t.id;
+		const keepCam = sameT && untrack(() => hexStore.workDept?.prefix === t.parquetPrefix);
 		hexStore.setTerritoryPrefix(t.parquetPrefix);
 		// BR territories: pre-fetch municipality boundaries (fire-and-forget).
 		// First dept click after switch may render polygon outline with a brief lag
@@ -181,7 +188,7 @@
 			// Normal mode: fly to territory + clear cross-territory selections
 			// Skip fly when triggered by a building click (radios are selected) — don't zoom away from clicked point.
 			const hasRadios = untrack(() => mapStore.selectedRadios.size > 0);
-			if (!hasRadios) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 100);
+			if (!hasRadios && !keepCam) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 100);
 			mapStore.clearDistricts();
 			mapComponent?.setDistrictHighlight([]);
 		} else {
@@ -191,7 +198,7 @@
 			// reference the ranking had on the map, and they were off-screen.
 			const perDeptLayer = untrack(() => hexStore.activeLayer?.perDepartment);
 			const hasRadiosR = untrack(() => mapStore.selectedRadios.size > 0);
-			if (perDeptLayer && !hasRadiosR) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 150);
+			if (perDeptLayer && !hasRadiosR && !keepCam) setTimeout(() => mapComponent?.flyToBbox(t.bbox), 150);
 			// Regional mode: reload territories for current country filter
 			untrack(() => hexStore.clearCompareDept());
 			untrack(() => hexStore.clearRegionalData());
@@ -291,6 +298,8 @@
 
 		Promise.all([whenMapReady, whenDuckdb]).then(() => {
 			if (duckdbFailed) return;
+			// The tab's saved zones (sessionStorage) before the link's: a reload draws each once.
+			hexStore.loadSavedZones();
 			// Restore state from URL params (initialSearch: see capture note above)
 			const params = new URLSearchParams(initialSearch);
 			const cf = params.get('cf');
@@ -322,31 +331,7 @@
 			// Zones of the link: drawn by hexStore.syncZones once this department has its cells.
 			const urlZones = decodeZones(params.get('z'));
 			if (dept && urlZones.length && analysisId && HEX_LAYER_REGISTRY[analysisId]) hexStore.pendingUrlZones = { dept, zones: urlZones };
-			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]?.perDepartment) {
-				tick().then(async () => {
-					const summary = await loadDeptSummary(analysisId, hexStore.territoryPrefix);
-					const deps = summary?.departments as any[] | undefined;
-					const nameOf = (x: any) => x.dpto ?? x.distrito ?? x.municipio;
-					// Links shared before 2-nov-2026 carry GADM spellings ("Nueve de Julio");
-					// summaries now use INDEC's ("9 de Julio"): fall back to the normalized key.
-					const d = deps?.find((x) => nameOf(x) === dept)
-						?? deps?.find((x) => normDeptName(nameOf(x)) === normDeptName(dept));
-					if (d?.parquetKey && d?.centroid) {
-						handleSelectFloodDpto(nameOf(d), d.parquetKey, d.centroid as [number, number]);
-					}
-				});
-			} else if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]) {
-				// censo_temporal (no per-department files): its list opens the department,
-				// as on a map click. handleCensoDeptSelect picks the cells from centroidCache,
-				// so wait until the layer's hexagons are in (60 s at most).
-				tick().then(async () => {
-					const t0 = Date.now();
-					while ((hexStore.loading || hexStore.centroidCache.size === 0) && Date.now() - t0 < 60000) {
-						await new Promise((r) => setTimeout(r, 300));
-					}
-					if (lensStore.activeAnalysis?.id === analysisId) hexStore.requestDeptPick(dept, hexStore.territoryPrefix, !!params.get('tm'));
-				});
-			}
+			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]) tick().then(() => openDeptByName(analysisId, dept, { keepMode: !!params.get('tm'), keepView: urlZones.length > 0 }));
 		});
 
 		// Option A: map-click territory switching
@@ -737,7 +722,14 @@
 			mapComponent?.clearAnalysisChoropleth();
 			const layerCfg = HEX_LAYER_REGISTRY[analysis.id];
 			if (layerCfg) {
+				// The department the user was working in (a layer change, not a fresh start):
+				// the new layer opens there with the same camera instead of its ranking.
+				const wd = untrack(() => hexStore.workDept);
 				hexStore.setLayer(analysis.id);
+				const tNow = untrack(() => territoryStore.activeTerritory);
+				if (wd && wd.prefix === tNow.parquetPrefix && analysis.coverage?.[tNow.id] !== 'unavailable') {
+					tick().then(() => openDeptByName(analysis.id, wd.name, { keepView: true }));
+				}
 				hexStore.ensureColorDomain().catch(() => {});
 				mapStore.setActiveHexLayer(analysis.id);
 				mapComponent?.setHexLayerInfo(i18n.t(layerCfg.titleKey), layerCfg.colorScale === 'categorical', getHexPrimaryUnit(layerCfg, untrack(() => hexStore.effectivePrimary)));
@@ -915,12 +907,19 @@
 			hexStore.syncZones().then((changed) => {
 				if (changed) refreshHighlights();
 				// Zones of a shared link: the department view leaves them small in a corner.
-				if (hexStore.zonesFromUrl) {
-					hexStore.zonesFromUrl = false;
+				// Only once the zones of THAT department are on screen (a load in between keeps the request).
+				const fk = hexStore.flyToZonesKey;
+				if (fk && hexStore.hexZones.length && hexStore.zoneScopeKey() === fk) {
+					hexStore.flyToZonesKey = null;
 					let w = 180, s = 90, e = -180, n = -90;
-					for (const z of hexStore.hexZones) for (const [x, y] of z.polygon ?? []) {
+					const grow = (x: number, y: number) => {
 						if (x < w) w = x; if (x > e) e = x;
 						if (y < s) s = y; if (y > n) n = y;
+					};
+					for (const z of hexStore.hexZones) {
+						if (z.polygon) for (const [x, y] of z.polygon) grow(x, y);
+						// Chart zones have no outline: their cells' centres.
+						else for (const h of z.h3indices) { const [lat, lng] = cellToLatLng(h); grow(lng, lat); }
 					}
 					// Room for the lasso box (top left) and the legend (bottom); a phone gets a plain margin.
 					const wide = (mapContainer?.clientWidth ?? 0) >= 700;
@@ -967,6 +966,9 @@
 		const cells = new Set<string>();
 		for (const ring of outer) for (const h of hexStore.findHexesInPolygon(ring as [number, number][])) cells.add(h);
 		hexStore.setDeptFilter(cells, feature.properties?.nombre ?? null);
+		const keepView = keepViewOnce;
+		keepViewOnce = false;
+		if (keepView || hexStore.flyToZonesKey) return;
 		let w = 180, s = 90, e = -180, n = -90;
 		const polys = feature.geometry.type === 'Polygon'
 			? [feature.geometry.coordinates]
@@ -1683,6 +1685,62 @@
 		return layer && (colorScale === layer.colorScale || delta) ? hexStore.effectiveColorClasses : undefined;
 	}
 
+	// Set by a layer change that reopens the working department: the camera stays where the
+	// user was (Posadas centre stays Posadas centre), the department load does not refit it.
+	let keepViewOnce = false;
+
+	/** Open a department by name in a layer: per-department layers through their summary
+	 *  (parquetKey + centroid, as a ranking click), territory-wide ones (censo_temporal)
+	 *  through their own list once the layer's cells are in. Used by ?dept=, by a layer
+	 *  change with a department open (hexStore.workDept) and by «ir» on a saved zone.
+	 *  False when the layer has no such department (its ranking stays). */
+	async function openDeptByName(analysisId: string, dept: string, opts: { keepMode?: boolean; keepView?: boolean } = {}): Promise<boolean> {
+		const layer = HEX_LAYER_REGISTRY[analysisId];
+		if (!layer) return false;
+		if (layer.perDepartment) {
+			const summary = await loadDeptSummary(analysisId, hexStore.territoryPrefix);
+			if (lensStore.activeAnalysis?.id !== analysisId) return false;
+			const deps = summary?.departments as any[] | undefined;
+			const nameOf = (x: any) => x.dpto ?? x.distrito ?? x.municipio;
+			// Links shared before 2-nov-2026 carry GADM spellings ("Nueve de Julio");
+			// summaries now use INDEC's ("9 de Julio"): fall back to the normalized key.
+			const d = deps?.find((x) => nameOf(x) === dept)
+				?? deps?.find((x) => normDeptName(nameOf(x)) === normDeptName(dept));
+			if (!d?.parquetKey || !d?.centroid) return false;
+			keepViewOnce = !!opts.keepView;
+			handleSelectFloodDpto(nameOf(d), d.parquetKey, d.centroid as [number, number]);
+			return true;
+		}
+		// handleCensoDeptSelect picks the cells from centroidCache: wait for the layer's hexagons (60 s at most).
+		const t0 = Date.now();
+		while ((hexStore.loading || hexStore.centroidCache.size === 0) && Date.now() - t0 < 60000) {
+			await new Promise((r) => setTimeout(r, 300));
+		}
+		if (lensStore.activeAnalysis?.id !== analysisId) return false;
+		keepViewOnce = !!opts.keepView;
+		// The list may not have the department: a later click of the user's must still fly.
+		if (keepViewOnce) setTimeout(() => { keepViewOnce = false; }, 3000);
+		hexStore.requestDeptPick(dept, hexStore.territoryPrefix, !!opts.keepMode);
+		return true;
+	}
+
+	/** «ir» on a saved zone of another department: open it in the active layer and frame its zones. */
+	async function goToZoneDept(key: string) {
+		const i = key.indexOf('|');
+		const prefix = key.slice(0, i), name = key.slice(i + 1);
+		const a = lensStore.activeAnalysis;
+		if (!a || !name) return;
+		const tid = Object.values(TERRITORY_REGISTRY).find(t => t.parquetPrefix === prefix)?.id;
+		if (!tid || a.coverage?.[tid] === 'unavailable') return;
+		if (tid !== territoryStore.activeTerritory.id) {
+			territoryStore.setTerritory(tid);
+			hexStore.setTerritoryPrefix(prefix);
+			await tick();
+		}
+		hexStore.flyToZonesKey = key;
+		if (!(await openDeptByName(a.id, name))) hexStore.flyToZonesKey = null;
+	}
+
 	function handleSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
 		if (_deptDebounceTimer) clearTimeout(_deptDebounceTimer);
 		_deptDebounceTimer = setTimeout(() => {
@@ -1693,6 +1751,9 @@
 
 	async function _doSelectFloodDpto(dpto: string, parquetKey: string, centroid: [number, number]) {
 		const token = ++_deptToken;
+		// Read now: syncZones may frame the zones (and clear the request) before the render below.
+		const keepView = keepViewOnce || !!hexStore.flyToZonesKey;
+		keepViewOnce = false;
 		// Don't clear the map upfront — previous dept stays visible while new data loads.
 		mapComponent?.clearHexZoneHighlight();
 		mapStore.setActiveHexLayer(hexStore.activeLayer?.id ?? null);
@@ -1732,7 +1793,8 @@
 				if (hexStore.activeLayer?.temporal && hexStore.temporalMode === 'delta') colorScale = 'diverging';
 				mapComponent?.setHexChoropleth(entries, colorScale, hexStore.colorDomain ?? undefined, colorClassesFor(colorScale));
 				analysisDataLoaded = true;
-				if (hexStore.deptBbox) mapComponent?.fitBoundsDept(hexStore.deptBbox);
+				// Zones to frame (a saved zone's «ir», a link) or the camera kept: syncZones moves it.
+				if (hexStore.deptBbox && !keepView) mapComponent?.fitBoundsDept(hexStore.deptBbox);
 			} else if (hexStore.activeLayer?.macizos && hexStore.deptBbox) {
 				mapComponent?.clearHexChoropleth();
 				mapComponent?.fitBoundsDept(hexStore.deptBbox);
@@ -1749,7 +1811,9 @@
 		mapStore.clearHexState();
 		mapComponent?.setHexLayerInfo('', false);
 		hexStore.clearAll();
-		hexStore.clearHexZones();   // a full reset also drops the zones carried across layers
+		// A full reset (Escape, home) leaves the saved zones alone: only their ✕ or «Limpiar zonas»
+		// removes them (author, 8-nov-2026). The next layer opens on its ranking.
+		hexStore.workDept = null;
 		mapComponent?.clearRadioHighlight();
 		mapComponent?.setDistrictHighlight([]);
 		mapComponent?.clearAnalysisChoropleth();
@@ -1929,6 +1993,8 @@
 				onClearZones={handleClearZones}
 				onRemoveHexZone={handleRemoveHexZone}
 				onClearHexZones={handleClearHexZones}
+				onGoToZoneDept={goToZoneDept}
+				onClearSavedZones={(k) => { hexStore.clearSavedZones(k); refreshHighlights(); }}
 				onSelectFloodDpto={handleSelectFloodDpto}
 			onDownloadRadioCsv={downloadRadioCsv}
 			onDownloadRadioGeoJson={downloadRadioGeoJson}

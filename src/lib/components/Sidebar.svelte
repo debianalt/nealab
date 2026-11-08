@@ -9,6 +9,7 @@
 	import ZoneComparison from './ZoneComparison.svelte';
 	import HexComparison from './HexComparison.svelte';
 	import HexZoneComparison from './HexZoneComparison.svelte';
+	import SavedZonesList from './SavedZonesList.svelte';
 	import ComparisonPanel from './ComparisonPanel.svelte';
 	import { MapStore } from '$lib/stores/map.svelte';
 	import type { LensStore } from '$lib/stores/lens.svelte';
@@ -51,6 +52,8 @@
 		onClearZones,
 		onRemoveHexZone,
 		onClearHexZones,
+		onGoToZoneDept,
+		onClearSavedZones,
 		onSelectFloodDpto,
 		onDownloadRadioCsv,
 		onDownloadRadioGeoJson,
@@ -82,6 +85,8 @@
 		onClearZones: () => void;
 		onRemoveHexZone: (id: string) => void;
 		onClearHexZones: () => void;
+		onGoToZoneDept?: (key: string) => void;
+		onClearSavedZones?: (key: string) => void;
 		onSelectFloodDpto: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
 		onDownloadRadioCsv?: (redcode: string) => void;
 		onDownloadRadioGeoJson?: (redcode: string, properties: Record<string, any>) => void;
@@ -154,7 +159,7 @@
 	$effect(() => {
 		const hasContent =
 			showAbout ||
-			hexStore.hexZones.length > 0 ||
+			hexStore.savedZones.length > 0 ||
 			lassoStore.zones.length > 0 ||
 			hexStore.selectedHexes.size > 0 ||
 			(lensStore.activeLens && lensStore.activeAnalysis) ||
@@ -249,18 +254,28 @@
 			<ComparisonPanel {territoryStore} {lensStore} {hexStore} />
 		{/if}
 		<div class="chart-scroll">
-			{#if hexStore.hexZones.length > 0}
-				<button class="charts-divider charts-toggle zones-toggle" onclick={() => zonesOpen = !zonesOpen}>
-					{i18n.t('zone.block').replace('{n}', String(hexStore.hexZones.length))} {zonesOpen ? '▾' : '▸'}
-				</button>
-				{#if zonesOpen}
-					<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
-					<!-- One 1991→2022 trajectory per lasso zone (ac79774); ab11afb moved the
-					     zones into this block and left the panel out. -->
-					{#if hexStore.activeLayer?.id === 'censo_temporal'}
-						<CensoTemporalPanel {hexStore} />
+			<!-- Saved zones (8-nov-2026): the open department's, compared, and the others listed
+			     with a way back. Its own background, so the work block reads apart from the layer. -->
+			{#if hexStore.savedZones.length > 0}
+				{@const nOther = hexStore.savedZones.length - hexStore.hexZones.length}
+				<div class="zones-block">
+					<button class="charts-divider charts-toggle zones-toggle" onclick={() => zonesOpen = !zonesOpen}>
+						{#if hexStore.hexZones.length === 0}{i18n.t('zone.blockSaved').replace('{m}', String(nOther))}{:else}{i18n.t('zone.block').replace('{n}', String(hexStore.hexZones.length))}{#if nOther > 0}{i18n.t('zone.blockOthers').replace('{m}', String(nOther))}{/if}{/if} {zonesOpen ? '▾' : '▸'}
+					</button>
+					{#if zonesOpen}
+						<!-- First: a row per other department, short, above the long zone readout. -->
+						<SavedZonesList {hexStore} onGo={(k) => onGoToZoneDept?.(k)} onClear={(k) => onClearSavedZones?.(k)}
+							coverage={lensStore.activeAnalysis?.coverage as Record<string, string> | undefined} />
+						{#if hexStore.hexZones.length > 0}
+							<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
+							<!-- One 1991→2022 trajectory per lasso zone (ac79774); ab11afb moved the
+							     zones into this block and left the panel out. -->
+							{#if hexStore.activeLayer?.id === 'censo_temporal'}
+								<CensoTemporalPanel {hexStore} />
+							{/if}
+						{/if}
 					{/if}
-				{/if}
+				</div>
 			{/if}
 			<AnalysisView {lensStore} {mapStore} {hexStore} {territoryStore} onBack={handleBack} {onRemoveRadio} {onSelectFloodDpto} {onCensoDeptSelect} />
 			<!-- Above every chart (Evolución included) and outside the «Gráficos» fold:
@@ -559,6 +574,10 @@
 		padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
 	}
 	.charts-scope-all:hover { color: var(--s-ink-1); }
-	.zones-toggle { margin-top: 4px; }
+	.zones-toggle { margin-top: 0; }
+	.zones-block {
+		background: var(--c-zone-bg); border-left: 3px solid var(--c-zone-line);
+		border-radius: 4px; padding: 4px 8px 8px; margin: 4px 0 8px;
+	}
 	.charts-res-note { font-size: 12.5px; line-height: 1.45; color: rgba(var(--c-fg-rgb), 0.55); margin: 2px 2px 6px; }
 </style>

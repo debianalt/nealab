@@ -51,7 +51,11 @@ function estimateRes9Cells(ring: number[][]): number {
 
 // Zone identities, kept away from tierra (#c4572f), which marks the live chart selection.
 const ZONE_COLORS = ['#60a5fa', '#22c55e', '#eab308', '#a855f7', '#2dd4bf', '#f472b6'];
-const ZONE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+// Letters are unique across departments (the zone C of Oberá stays C next to Capital's A and B);
+// colours are picked among the zones of the same department.
+const ZONE_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+/** sessionStorage key of the saved zones: they outlive a reload, not the tab (author, 8-nov-2026). */
+const ZONES_STORAGE_KEY = 'spatia.zones.v1';
 
 // Persistent cache that survives clearAll() / layer toggling
 interface LayerCache {
@@ -196,10 +200,11 @@ export class HexStore {
 	deptFilterName: string | null = $state(null);
 	private _deptChart: { src: Map<string, Record<string, any>>; filter: Set<string>; out: Map<string, Record<string, any>> } | null = null;
 	setDeptFilter(h3s: Iterable<string> | null, name: string | null = null) {
-		// Zones belong to one department: opening another one in the layer's own list drops them.
+		// Another department in the layer's own list: its zones stay saved (savedZones) and
+		// syncZones brings back the ones of the department now open.
 		const key = h3s && name ? `${this.territoryPrefix}|${name}` : null;
-		if (key && this.hexZones.length && this.hexZones[0].dept !== key) this.clearHexZones();
-		if (key && this.zoneCarry && this.zoneCarry[0].dept !== key) this.zoneCarry = null;
+		if (key && this.hexZones.length && this.hexZones[0].dept !== key) this.stashZones();
+		if (key && name) this.workDept = { prefix: this.territoryPrefix, name };
 		this.deptFilter = h3s ? new Set(h3s) : null;
 		this.deptFilterName = h3s ? name : null;
 		this._deptChart = null;
@@ -594,7 +599,7 @@ export class HexStore {
 		this.analysisResLevel = null;
 		this.clearSelection();
 		this.stashZones();
-		if (this.zoneCarry && this.zoneCarry[0].dept !== this.zoneDeptKey()) this.zoneCarry = null;
+		this.workDept = { prefix: this.territoryPrefix, name: dpto };
 		this.chartSelection = null;
 		this.clearCompareDept();
 		this.clearRegionalData();
@@ -1507,6 +1512,8 @@ export class HexStore {
 		this.deptBbox = null;
 		this.clearSelection();
 		this.stashZones();
+		// «Volver a los departamentos» is the explicit way back to the ranking: the next layer opens there.
+		this.workDept = null;
 	}
 
 	async loadVisibleData() {
@@ -1867,14 +1874,17 @@ export class HexStore {
 		if (h3indices.length === 0 || !this.activeLayer) return null;
 		if (!isReady()) return null;
 
-		// First free letter, so removing A and adding again never repeats B; a zone from a
-		// link keeps its own letter («zona C» in a post stays C).
-		const used = new Set(this.hexZones.map(z => z.id));
+		// First free letter among all saved zones (every department), so removing A and adding
+		// again never repeats B; a zone from a link keeps its own letter («zona C» in a post stays C).
+		const dept = this.zoneScopeKey();
+		const used = new Set(this.savedZones.map(z => z.id));
 		const asked = opts.id && !used.has(opts.id) ? ZONE_LABELS.indexOf(opts.id) : -1;
 		const idx = asked >= 0 ? asked : ZONE_LABELS.findIndex(l => !used.has(l));
-		const slot = idx >= 0 ? idx : this.hexZones.length % ZONE_COLORS.length;
-		const id = idx >= 0 ? ZONE_LABELS[idx] : String.fromCharCode(65 + this.hexZones.length);
-		const color = ZONE_COLORS[slot % ZONE_COLORS.length];
+		const id = idx >= 0 ? ZONE_LABELS[idx] : `Z${this.savedZones.length + 1}`;
+		// Colour: the first one no zone of this department wears (they are compared side by side).
+		const deptColors = new Set(this.savedZones.filter(z => z.dept === dept).map(z => z.color));
+		const color = ZONE_COLORS.find(c => !deptColors.has(c))
+			?? ZONE_COLORS[this.savedZones.filter(z => z.dept === dept).length % ZONE_COLORS.length];
 
 		try {
 			const stats = await this.computeZoneStats(h3indices);
@@ -1885,7 +1895,7 @@ export class HexStore {
 				polygon,
 				origin,
 				stats,
-				dept: this.zoneDeptKey(),
+				dept,
 				layerId: this.activeLayer.id,
 				// Computed now, while the cells it was drawn on are the ones in centroidCache.
 				outline: polygon ? (opts.outline ?? urlOutline(polygon, h3indices, (r) => this.findHexesInPolygon(r))) : null,
@@ -1893,7 +1903,8 @@ export class HexStore {
 			};
 
 			this.hexZones = [...this.hexZones, zone];
-			this.zoneCarry = null;
+			this.savedZones = [...this.savedZones, zone];
+			this.persistZones();
 			this.zonesCreated++;
 			return id;
 		} catch (e) {
@@ -1930,31 +1941,54 @@ export class HexStore {
 		return agg;
 	}
 
-	// ── Zones across layers ──────────────────────────────────────────────
-	// A zone is drawn once and read in any layer of the same department: changing
-	// layer or lens keeps it aside (zoneCarry) and syncZones() brings it back,
-	// recomputed with the new layer's variables, once that layer has the
-	// department's cells. Opening another department, «Limpiar zonas» or the ✕
-	// drop it (7-nov-2026).
-	private zoneCarry: HexZone[] | null = $state.raw(null);
+	// ── Saved zones ──────────────────────────────────────────────────────
+	// A zone is drawn once and kept (savedZones) until the user removes it: across
+	// layers, lenses, departments and a reload of the tab (sessionStorage). hexZones
+	// holds the ones of the open department, recomputed with the active layer by
+	// syncZones() once that layer has the department's cells. The others are listed
+	// in the panel («Otras zonas guardadas») with a way back to them (8-nov-2026).
+	savedZones: HexZone[] = $state.raw([]);
 	private _zoneSyncBusy = false;
 	/** Zones made by createHexZone (lasso, chart pick, shared link); syncZones' restore does
 	 *  not count. The panel opens the zones block on a new zone, not on a layer change. */
 	zonesCreated = $state(0);
+	/** The department the user is working in, kept across layer changes: a new layer opens
+	 *  there instead of its ranking. Cleared by «Volver a los departamentos» and the full reset. */
+	workDept: { prefix: string; name: string } | null = $state(null);
+	get workDeptKey(): string | null {
+		return this.workDept ? `${this.workDept.prefix}|${this.workDept.name}` : null;
+	}
 
-	/** Zones the URL carries: the ones on screen, or the ones kept aside while another layer
-	 *  loads (a layer change must not drop `z` from the link). Lasso zones only. */
+	/** Saved zones outside the open department, grouped by department (panel list). */
+	get otherZoneGroups(): { key: string; prefix: string; name: string; zones: HexZone[] }[] {
+		const open = this.zoneScopeKey();
+		const groups = new Map<string, HexZone[]>();
+		for (const z of this.savedZones) {
+			if (!z.dept || z.dept === open) continue;
+			const g = groups.get(z.dept);
+			if (g) g.push(z); else groups.set(z.dept, [z]);
+		}
+		return [...groups.entries()].map(([key, zones]) => {
+			const i = key.indexOf('|');
+			return { key, prefix: key.slice(0, i), name: key.slice(i + 1), zones };
+		});
+	}
+
+	/** Zones the URL carries: the ones on screen, or the saved ones of the working department
+	 *  while the new layer loads (a layer change must not drop `z` from the link). Lasso zones only. */
 	get urlZones(): HexZone[] {
-		const zs = this.hexZones.length ? this.hexZones : (this.zoneCarry ?? []);
+		const key = this.zoneScopeKey() ?? this.workDeptKey;
+		const zs = this.hexZones.length ? this.hexZones : this.savedZones.filter(z => z.dept === key);
 		return zs.filter(z => z.outline);
 	}
 
 	/** Zones from a shared link, drawn once the link's department has its cells (syncZones). */
 	pendingUrlZones: { dept: string; zones: UrlZone[] } | null = null;
-	/** Set when restoreUrlZones drew the link's zones: the page flies to them once. */
-	zonesFromUrl = $state(false);
+	/** Zone scope (zoneScopeKey) whose zones the map frames once they are drawn: a shared
+	 *  link, «ir» on a saved zone. Null = leave the camera alone. */
+	flyToZonesKey: string | null = $state(null);
 	private static normName(s: string): string {
-		return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+		return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 	}
 
 	private async restoreUrlZones(key: string): Promise<boolean> {
@@ -1966,12 +2000,15 @@ export class HexStore {
 		if (HexStore.normName(name) !== HexStore.normName(p.dept)) return false;
 		let any = false;
 		for (const z of p.zones) {
+			// A reload carries in ?z= the zones this tab already saved: draw each one once
+			// (and still frame them, as any link does).
+			if (this.savedZones.some(s => s.dept === key && s.outline === z.outline)) { this.flyToZonesKey = key; continue; }
 			const cells = this.findHexesInPolygon(z.ring);
 			if (cells.length === 0) continue;
 			const id = await this.createHexZone(cells, z.ring, i18n.t('zone.origin.lasso'), { id: z.id, sharedN: z.n, outline: z.outline });
 			any = any || id !== null;
 		}
-		if (any) this.zonesFromUrl = true;
+		if (any) this.flyToZonesKey = key;
 		return any;
 	}
 
@@ -1982,36 +2019,41 @@ export class HexStore {
 		return name ? `${this.territoryPrefix}|${name}` : null;
 	}
 
-	/** Internal clears (layer, lens, department reload) keep the zones aside. */
+	/** Where a zone belongs: the open department, or the whole territory on a territory-wide
+	 *  layer (censo_temporal) with no department picked (`prefix|`, empty name). */
+	zoneScopeKey(): string | null {
+		const d = this.zoneDeptKey();
+		if (d) return d;
+		return this.activeLayer && !this.activeLayer.perDepartment ? `${this.territoryPrefix}|` : null;
+	}
+
+	/** Layer, lens or department changes: the zones leave the screen, they stay saved. */
 	private stashZones() {
-		if (this.hexZones.length) this.zoneCarry = this.hexZones;
 		this.hexZones = [];
 	}
 
-	/** Restore carried zones for the open department and recompute every zone whose
+	/** Bring back the saved zones of the open department and recompute every one whose
 	 *  stats belong to another layer. True when the zones changed (repaint them). */
 	async syncZones(): Promise<boolean> {
 		const layer = this.activeLayer;
-		const key = this.zoneDeptKey();
+		const key = this.zoneScopeKey();
 		if (!layer || !key || this._zoneSyncBusy) return false;
 		// The department's cells of THIS layer: none yet while it loads, and a LOD
 		// department reads its res-9 cells from analysisData, not the coarse overview.
 		if (this.chartData.size === 0 || (this.lodDeptActive && !this.analysisData)) return false;
-		if (this.pendingUrlZones) {
-			this._zoneSyncBusy = true;
-			try { if (await this.restoreUrlZones(key)) return true; } finally { this._zoneSyncBusy = false; }
-		}
-		let changed = false;
-		if (this.hexZones.length === 0 && this.zoneCarry?.length) {
-			if (this.zoneCarry[0].dept !== key) return false;
-			this.hexZones = this.zoneCarry;
-			this.zoneCarry = null;
-			changed = true;
-		}
-		const stale = this.hexZones.filter(z => z.layerId !== layer.id && z.dept === key);
-		if (stale.length === 0) return changed;
 		this._zoneSyncBusy = true;
 		try {
+			let changed = false;
+			const mine = this.savedZones.filter(z => z.dept === key);
+			const shown = new Set(this.hexZones.map(z => z.id));
+			if (mine.some(z => !shown.has(z.id)) || this.hexZones.some(z => z.dept !== key)) {
+				this.hexZones = mine;
+				changed = true;
+			}
+			// Saved first, then the link: a link zone already saved is not drawn twice.
+			if (this.pendingUrlZones && await this.restoreUrlZones(key)) changed = true;
+			const stale = this.hexZones.filter(z => z.layerId !== layer.id);
+			if (stale.length === 0) return changed;
 			const fresh = new Map<string, HexZoneStats>();
 			for (const z of stale) {
 				const s = await this.computeZoneStats(z.h3indices);
@@ -2020,10 +2062,12 @@ export class HexStore {
 				fresh.set(z.id, s);
 			}
 			if (this.activeLayer !== layer || fresh.size === 0) return changed;
-			this.hexZones = this.hexZones.map(z => {
+			const upd = (z: HexZone) => {
 				const s = fresh.get(z.id);
-				return s ? { ...z, stats: s, layerId: layer.id } : z;
-			});
+				return s && z.dept === key ? { ...z, stats: s, layerId: layer.id } : z;
+			};
+			this.hexZones = this.hexZones.map(upd);
+			this.savedZones = this.savedZones.map(upd);
 			return true;
 		} finally {
 			this._zoneSyncBusy = false;
@@ -2032,13 +2076,55 @@ export class HexStore {
 
 	removeHexZone(id: string) {
 		this.hexZones = this.hexZones.filter(z => z.id !== id);
-		if (this.hexZones.length === 0) this.zoneCarry = null;
+		this.savedZones = this.savedZones.filter(z => z.id !== id);
+		this.persistZones();
 	}
 
-	/** The user's «Limpiar zonas»: gone for good, not carried to the next layer. */
+	/** The user's «Limpiar zonas»: the open department's zones, gone for good. */
 	clearHexZones() {
+		const key = this.zoneScopeKey();
+		const ids = new Set(this.hexZones.map(z => z.id));
 		this.hexZones = [];
-		this.zoneCarry = null;
+		this.savedZones = this.savedZones.filter(z => !ids.has(z.id) && (key === null || z.dept !== key));
+		this.persistZones();
+	}
+
+	/** ✕ on a department of «Otras zonas guardadas». */
+	clearSavedZones(deptKey: string) {
+		this.savedZones = this.savedZones.filter(z => z.dept !== deptKey);
+		this.hexZones = this.hexZones.filter(z => z.dept !== deptKey);
+		this.persistZones();
+	}
+
+	/** Saved zones → sessionStorage. Stats are recomputed on the way back (layerId ''). */
+	private persistZones() {
+		try {
+			if (typeof sessionStorage === 'undefined') return;
+			if (this.savedZones.length === 0) { sessionStorage.removeItem(ZONES_STORAGE_KEY); return; }
+			sessionStorage.setItem(ZONES_STORAGE_KEY, JSON.stringify(this.savedZones.map(z => ({
+				id: z.id, color: z.color, h3indices: z.h3indices, polygon: z.polygon, origin: z.origin,
+				dept: z.dept, outline: z.outline, ...(z.sharedN !== undefined ? { sharedN: z.sharedN } : {}),
+			}))));
+		} catch { /* storage full or blocked: the zones live until the tab reloads */ }
+	}
+
+	/** The tab's saved zones, at page start. */
+	loadSavedZones() {
+		try {
+			if (typeof sessionStorage === 'undefined') return;
+			const raw = sessionStorage.getItem(ZONES_STORAGE_KEY);
+			if (!raw) return;
+			const arr = JSON.parse(raw);
+			if (!Array.isArray(arr)) return;
+			this.savedZones = arr
+				.filter((z: any) => z && typeof z.id === 'string' && Array.isArray(z.h3indices) && z.h3indices.length && typeof z.dept === 'string')
+				.map((z: any): HexZone => ({
+					id: z.id, color: z.color, h3indices: z.h3indices, polygon: z.polygon ?? null,
+					origin: z.origin ?? '', dept: z.dept, outline: z.outline ?? null, layerId: '',
+					stats: { hexCount: z.h3indices.length, cellsWithData: 0, rawValues: [], totals: [], normalizedValues: [] },
+					...(typeof z.sharedN === 'number' ? { sharedN: z.sharedN } : {}),
+				}));
+		} catch { /* unreadable: start without zones */ }
 	}
 
 	// ── Petal chart data ─────────────────────────────────────────────────

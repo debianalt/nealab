@@ -305,6 +305,14 @@ const dict: Record<string, Record<Locale, string>> = {
 	'zone.sel.clear': { es: 'Quitar la selección', en: 'Clear selection', gn: 'Quitar la selección', pt: 'Limpar seleção' }, // gn: pendiente
 	'zone.sel.saved': { es: '✓ guardada como zona {id} (arriba)', en: '✓ saved as zone {id} (above)', gn: '✓ guardada como zona {id} (arriba)', pt: '✓ salva como zona {id} (acima)' }, // gn: pendiente
 	'zone.block': { es: 'Zonas ({n})', en: 'Zones ({n})', gn: 'Zonas ({n})', pt: 'Zonas ({n})' }, // gn: pendiente
+	'zone.blockOthers': { es: ' · {m} en otros lugares', en: ' · {m} elsewhere', gn: ' · {m} en otros lugares', pt: ' · {m} em outros lugares' }, // gn: pendiente
+	'zone.blockSaved': { es: 'Zonas guardadas ({m})', en: 'Saved zones ({m})', gn: 'Zonas guardadas ({m})', pt: 'Zonas salvas ({m})' }, // gn: pendiente
+	'zone.saved.others': { es: 'Otras zonas guardadas', en: 'Other saved zones', gn: 'Otras zonas guardadas', pt: 'Outras zonas salvas' }, // gn: pendiente
+	'zone.saved.go': { es: 'ir', en: 'go', gn: 'ir', pt: 'ir' }, // gn: pendiente
+	'zone.saved.goTitle': { es: 'Abrir ese departamento en esta capa y encuadrar sus zonas', en: 'Open that department in this layer and frame its zones', gn: 'Abrir ese departamento en esta capa y encuadrar sus zonas', pt: 'Abrir esse departamento nesta camada e enquadrar suas zonas' }, // gn: pendiente
+	'zone.saved.clearTitle': { es: 'Borrar estas zonas', en: 'Delete these zones', gn: 'Borrar estas zonas', pt: 'Apagar estas zonas' }, // gn: pendiente
+	'zone.saved.whole': { es: 'Toda la capa', en: 'Whole layer', gn: 'Toda la capa', pt: 'Camada inteira' }, // gn: pendiente
+	'zone.saved.note': { es: 'Las zonas quedan guardadas en esta pestaña hasta que las borres.', en: 'Zones stay saved in this tab until you delete them.', gn: 'Las zonas quedan guardadas en esta pestaña hasta que las borres.', pt: 'As zonas ficam salvas nesta aba até você apagá-las.' }, // gn: pendiente
 	'zone.o.hist': { es: 'Distribución {lo}–{hi}', en: 'Distribution {lo}–{hi}', gn: 'Distribución {lo}–{hi}', pt: 'Distribuição {lo}–{hi}' }, // gn: pendiente
 	'zone.o.conc': { es: 'Concentración: el {p} % con más valor', en: 'Concentration: top {p} %', gn: 'Concentración: el {p} % con más valor', pt: 'Concentração: os {p} % com mais valor' }, // gn: pendiente
 	'zone.o.moran': { es: 'Moran: recuadro', en: 'Moran: box', gn: 'Moran: recuadro', pt: 'Moran: retângulo' }, // gn: pendiente
@@ -917,7 +925,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.comparison.mixed': { es: 'Radios y hexágonos seleccionados', en: 'Selected census tracts and hexagons', gn: 'Radios y hexágonos seleccionados', pt: 'Setores censitários e hexágonos selecionados' },
 	'hexZone.title': { es: 'Zonas hexagonales', en: 'Hex zones', gn: 'Hexágono zona', pt: 'Zonas hexagonais' },
 	'hexZone.valuesOf': { es: 'Valores de', en: 'Values from', gn: 'Valores de', pt: 'Valores de' }, // gn: pendiente
-	'hexZone.follow': { es: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', en: 'Switch layer or question in this department: the zones stay and are recomputed.', gn: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', pt: 'Troque de camada ou de pergunta neste departamento: as zonas ficam e são recalculadas.' }, // gn: pendiente
+	'hexZone.follow': { es: 'Cambiá de capa o de pregunta: el mapa se queda en este departamento y las zonas se recalculan. Quedan guardadas en esta pestaña hasta que las borres.', en: 'Switch layer or question: the map stays on this department and the zones are recomputed. They stay saved in this tab until you delete them.', gn: 'Cambiá de capa o de pregunta: el mapa se queda en este departamento y las zonas se recalculan. Quedan guardadas en esta pestaña hasta que las borres.', pt: 'Troque de camada ou de pergunta: o mapa fica neste departamento e as zonas são recalculadas. Ficam salvas nesta aba até você apagá-las.' }, // gn: pendiente
 	'hexZone.recomputing': { es: 'Recalculando con esta capa…', en: 'Recomputing with this layer…', gn: 'Recalculando con esta capa…', pt: 'Recalculando com esta camada…' }, // gn: pendiente
 	'hexZone.noData': { es: 'Esta capa no tiene datos dentro de la zona.', en: 'This layer has no data inside the zone.', gn: 'Esta capa no tiene datos dentro de la zona.', pt: 'Esta camada não tem dados dentro da zona.' }, // gn: pendiente
 	'hexZone.total': { es: 'total de la zona', en: 'zone total', gn: 'total de la zona', pt: 'total da zona' }, // gn: pendiente

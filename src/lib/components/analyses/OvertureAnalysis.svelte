@@ -327,6 +327,8 @@
 	}
 
 	function handleBackToDepts() {
+		// The explicit way back to the ranking: the next layer opens there too (saved zones stay).
+		hexStore.workDept = null;
 		hexStore.setLayer(analysis.id);
 	}
 
