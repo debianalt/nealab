@@ -5,7 +5,7 @@ import type { RequestDiagnosticText } from '$lib/content/requestDiagnostic';
 
 export const REQUEST_EMAIL = 'nealab@spatia.ar';
 
-export interface RequestZone { id: string; origin: string; hexCount: number }
+export interface RequestZone { id: string; origin: string; hexCount: number; name?: string }
 
 export interface RequestContext {
 	layer?: string;
@@ -22,7 +22,7 @@ export function buildRequestMailto(t: RequestDiagnosticText, ctx: RequestContext
 	if (ctx.layer) seen.push(`- ${t.layer}: ${ctx.layer}`);
 	if (ctx.place) seen.push(`- ${t.place}: ${ctx.place}`);
 	for (const z of ctx.zones ?? []) {
-		seen.push(`- ${t.zone} ${z.id}${z.origin ? ' · ' + z.origin : ''} · ${z.hexCount.toLocaleString(locale)} hex`);
+		seen.push(`- ${t.zone} ${z.id}${z.name ? ' · ' + z.name : ''}${z.origin ? ' · ' + z.origin : ''} · ${z.hexCount.toLocaleString(locale)} hex`);
 	}
 	if (ctx.h3) seen.push(`- ${t.hexagon}: ${ctx.h3}`);
 	if (ctx.href) seen.push(`- ${t.link}: ${ctx.href}`);

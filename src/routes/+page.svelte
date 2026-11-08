@@ -3,7 +3,7 @@
 	import MapComponent from '$lib/components/Map.svelte';
 	import MapLegend from '$lib/components/MapLegend.svelte';
 	import { SELLO_HEX } from '$lib/utils/sello';
-	import { encodeZones, decodeZones } from '$lib/utils/zoneCodec';
+	import { encodeZones, decodeZones, encodeZoneNames, decodeZoneNames } from '$lib/utils/zoneCodec';
 	import Controls from '$lib/components/Controls.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import LensSelector from '$lib/components/LensSelector.svelte';
@@ -95,6 +95,9 @@
 		// outline never pushes the layer and department out of a truncated link.
 		const zs = hexStore.urlZones;
 		if (zs.length) params.set('z', encodeZones(zs.map(z => ({ id: z.id, n: z.h3indices.length, outline: z.outline! }))));
+		// Names after the zones: a cut link loses the names before the places.
+		const zn = encodeZoneNames(zs);
+		if (zn) params.set('zn', zn);
 		const qs = params.toString();
 		window.history.replaceState({}, '', qs ? `?${qs}` : window.location.pathname);
 	}
@@ -330,7 +333,7 @@
 			const dept = params.get('dept');
 			// Zones of the link: drawn by hexStore.syncZones once this department has its cells.
 			const urlZones = decodeZones(params.get('z'));
-			if (dept && urlZones.length && analysisId && HEX_LAYER_REGISTRY[analysisId]) hexStore.pendingUrlZones = { dept, zones: urlZones };
+			if (dept && urlZones.length && analysisId && HEX_LAYER_REGISTRY[analysisId]) hexStore.pendingUrlZones = { dept, zones: urlZones, names: decodeZoneNames(params.get('zn')) };
 			if (dept && analysisId && HEX_LAYER_REGISTRY[analysisId]) tick().then(() => openDeptByName(analysisId, dept, { keepMode: !!params.get('tm'), keepView: urlZones.length > 0 }));
 		});
 
@@ -507,6 +510,9 @@
 		}) as EventListener);
 
 		document.addEventListener('keydown', (e) => {
+			// Typing in a field (a zone's name): Escape belongs to the field, not to the page reset.
+			const tgt = e.target as HTMLElement | null;
+			if (tgt && (tgt.tagName === 'INPUT' || tgt.tagName === 'TEXTAREA' || tgt.isContentEditable)) return;
 			if (e.key === 'Escape') {
 				if (lassoStore.drawing) {
 					lassoStore.cancelDraw();
@@ -894,7 +900,7 @@
 		if (lastHighlight) layers.push({ h3indices: hexStore.displayCells(lastHighlight.h3s), color: lastHighlight.color });
 		if (layers.length === 0) mapComponent?.clearHexZoneHighlight();
 		else mapComponent?.setHexZoneHighlight(layers, hexStore.boundaryCache);
-		mapComponent?.setHexZoneLabels(hexStore.hexZones.map(z => ({ id: z.id, color: z.color, h3indices: z.h3indices })));
+		mapComponent?.setHexZoneLabels(hexStore.hexZones.map(z => ({ id: z.id, color: z.color, h3indices: z.h3indices, name: z.name })));
 	}
 
 	// Zones cross layers: when the open department's cells of a new layer arrive,
@@ -1995,6 +2001,7 @@
 				onClearHexZones={handleClearHexZones}
 				onGoToZoneDept={goToZoneDept}
 				onClearSavedZones={(k) => { hexStore.clearSavedZones(k); refreshHighlights(); }}
+				onHexZoneRenamed={refreshHighlights}
 				onSelectFloodDpto={handleSelectFloodDpto}
 			onDownloadRadioCsv={downloadRadioCsv}
 			onDownloadRadioGeoJson={downloadRadioGeoJson}

@@ -43,7 +43,7 @@
 			<div class="szl-row">
 				<span class="szl-name">{label(g.prefix, g.name)}</span>
 				<span class="szl-ids">
-					{#each g.zones as z (z.id)}<span class="szl-id" style:color={z.color}>{z.id}</span>{/each}
+					{#each g.zones as z (z.id)}<span class="szl-id" style:color={z.color} title={z.name ?? ''}>{z.id}{#if z.name}<span class="szl-zname">{z.name}</span>{/if}</span>{/each}
 				</span>
 				{#if canGo(g.prefix, g.name)}
 					<button class="szl-go" onclick={() => onGo(g.key)} title={i18n.t('zone.saved.goTitle')}>{i18n.t('zone.saved.go')} →</button>
@@ -61,7 +61,9 @@
 	.szl-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-ink-3); margin-bottom: 4px; }
 	.szl-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; border-top: 1px solid var(--c-line); }
 	.szl-name { flex: 1; color: var(--c-ink-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-	.szl-ids { display: flex; gap: 4px; font-weight: 700; }
+	.szl-ids { display: flex; gap: 6px; font-weight: 700; min-width: 0; overflow: hidden; }
+	.szl-id { white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+	.szl-zname { font-weight: 400; color: var(--c-ink-2); margin-left: 3px; }
 	.szl-go, .szl-x {
 		background: none; border: 1px solid var(--c-line-2); border-radius: 4px;
 		color: var(--c-ink-3); font-size: 11.5px; padding: 1px 6px; cursor: pointer;

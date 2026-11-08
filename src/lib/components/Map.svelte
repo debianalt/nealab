@@ -3678,7 +3678,7 @@
 	// Placed on the zone's cell nearest to its mean centre, so it sits inside a
 	// concave zone too.
 	let zoneLabelMarkers: maplibregl.Marker[] = [];
-	export function setHexZoneLabels(zones: { id: string; color: string; h3indices: string[] }[]) {
+	export function setHexZoneLabels(zones: { id: string; color: string; h3indices: string[]; name?: string }[]) {
 		for (const m of zoneLabelMarkers) m.remove();
 		zoneLabelMarkers = [];
 		if (!map) return;
@@ -3692,11 +3692,22 @@
 				const d = (p[0] - lat) ** 2 + (p[1] - lng) ** 2;
 				if (d < bd) { bd = d; best = p; }
 			}
-			const el = document.createElement('div');
-			el.className = 'hex-zone-label';
-			el.textContent = z.id;
-			el.style.background = z.color;
-			zoneLabelMarkers.push(new maplibregl.Marker({ element: el }).setLngLat([best[1], best[0]]).addTo(map));
+			const disc = document.createElement('div');
+			disc.className = 'hex-zone-label';
+			disc.textContent = z.id;
+			disc.style.background = z.color;
+			// A named zone carries its name beside the letter (8-nov-2026); the letter stays on the point.
+			let el: HTMLElement = disc;
+			if (z.name) {
+				el = document.createElement('div');
+				el.className = 'hex-zone-tag';
+				const name = document.createElement('span');
+				name.className = 'hex-zone-name';
+				name.textContent = z.name;
+				el.append(disc, name);
+			}
+			zoneLabelMarkers.push(new maplibregl.Marker({ element: el, anchor: z.name ? 'left' : 'center', offset: z.name ? [-12, 0] : [0, 0] })
+				.setLngLat([best[1], best[0]]).addTo(map));
 		}
 	}
 
@@ -3922,6 +3933,15 @@
 <style>
 	/* Zone letter on the map (setHexZoneLabels): the zone colour with a white ring, like
 	   the zone chips in the panel. Never catches the pointer (the lasso draws over it). */
+	/* Named zone: letter disc on the point, the name in a panel-coloured tag to its right. */
+	:global(.hex-zone-tag) { display: flex; align-items: center; gap: 4px; pointer-events: none; }
+	:global(.hex-zone-name) {
+		background: rgba(var(--c-bg-rgb), 0.92); color: var(--c-ink-1);
+		font: 600 12px/18px 'IBM Plex Sans', system-ui, sans-serif;
+		padding: 1px 7px; border-radius: 4px; white-space: nowrap; max-width: 220px;
+		overflow: hidden; text-overflow: ellipsis; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+		pointer-events: none;
+	}
 	:global(.hex-zone-label) {
 		width: 24px;
 		height: 24px;

@@ -16,10 +16,13 @@
 		hexStore,
 		onRemoveHexZone,
 		onClearHexZones,
+		onRenamed,
 	}: {
 		hexStore: HexStore;
 		onRemoveHexZone: (id: string) => void;
 		onClearHexZones: () => void;
+		/** A name changed: the map labels repaint. */
+		onRenamed?: () => void;
 	} = $props();
 
 	const zones = $derived(hexStore.hexZones);
@@ -148,6 +151,24 @@
 		downloadGeoJsonFromPolygon(zone.polygon, props, `${zoneFilenameBase(zone)}_polygon.geojson`);
 	}
 
+	// Naming a zone (8-nov-2026): ✎ opens a field in place of the title; Enter or leaving it
+	// saves, Esc cancels. The letter stays the zone's short identity.
+	let editing: string | null = $state(null);
+	let draft = $state('');
+	function startRename(z: HexZone) { editing = z.id; draft = z.name ?? ''; }
+	function commitRename() {
+		if (editing === null) return;
+		const id = editing;
+		editing = null;
+		hexStore.renameHexZone(id, draft);
+		onRenamed?.();
+	}
+	function renameKey(e: KeyboardEvent) {
+		if (e.key === 'Enter') { e.preventDefault(); commitRename(); }
+		else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); editing = null; }
+	}
+	function focusOnMount(el: HTMLInputElement) { el.focus(); el.select(); }
+
 	// «Pedir un diagnóstico a medida» with the zones (origin + size, not H3 codes).
 
 	function downloadZonesSummaryCsv() {
@@ -156,6 +177,7 @@
 		const rows = zones.filter((z) => z.layerId === hexStore.activeLayer?.id).map((z) => {
 			const row: Record<string, unknown> = {
 				zone: z.id,
+				zone_name: z.name ?? '',
 				origin: z.origin,
 				hex_count: z.stats.hexCount,
 				layer: hexStore.activeLayer?.id ?? '',
@@ -196,7 +218,8 @@
 			<span class="hzc-chip">
 				<span class="hzc-dot" style:background={zone.color}></span>
 				<span class="hzc-chip-label">{zone.id}</span>
-				{#if zone.origin}<span class="hzc-chip-origin">{zone.origin}</span>{/if}
+				{#if zone.name}<span class="hzc-chip-name" title={zone.name}>{zone.name}</span>
+				{:else if zone.origin}<span class="hzc-chip-origin">{zone.origin}</span>{/if}
 				<button class="hzc-remove" onclick={() => onRemoveHexZone(zone.id)}>&#10005;</button>
 			</span>
 		{/each}
@@ -208,8 +231,17 @@
 			<div class="zone-block">
 				<div class="zone-id">
 					<span class="hzc-dot" style:background={zone.color}></span>
-					{i18n.t('zone.title')} {zone.id}
-					{#if zone.origin}<span class="zone-origin">· {zone.origin}</span>{/if}
+					{#if editing === zone.id}
+						<span class="zone-letter">{zone.id}</span>
+						<input class="zone-name-input" type="text" maxlength="40" bind:value={draft}
+							placeholder={i18n.t('zone.namePlaceholder')} aria-label={i18n.t('zone.rename')}
+							onkeydown={renameKey} onblur={commitRename} use:focusOnMount />
+					{:else}
+						{#if zone.name}<span class="zone-letter">{zone.id}</span> <span class="zone-name" title={zone.name}>{zone.name}</span>
+						{:else}{i18n.t('zone.title')} {zone.id}{/if}
+						<button class="zone-rename" onclick={() => startRename(zone)} title={i18n.t('zone.rename')} aria-label={i18n.t('zone.rename')}>✎</button>
+						{#if zone.origin}<span class="zone-origin">· {zone.origin}</span>{/if}
+					{/if}
 					<span class="zone-hex-count">{zone.stats.hexCount.toLocaleString(i18n.locale)} hex</span>
 				</div>
 				{#if zone.layerId !== hexStore.activeLayer?.id}
@@ -317,6 +349,18 @@
 		flex-shrink: 0;
 	}
 	.hzc-chip-label { font-weight: 600; }
+	.hzc-chip-name { color: var(--c-ink-1); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.zone-letter { font-weight: 700; }
+	.zone-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.zone-rename {
+		background: none; border: none; padding: 0 2px; cursor: pointer; font-size: 12px;
+		color: var(--c-ink-3); line-height: 1;
+	}
+	.zone-rename:hover { color: var(--c-accent); }
+	.zone-name-input {
+		flex: 1; min-width: 0; font: inherit; font-weight: 500; color: var(--c-ink-1);
+		background: var(--c-bg); border: 1px solid var(--c-accent); border-radius: 3px; padding: 1px 5px;
+	}
 	.hzc-chip-origin { color: var(--s-ink-2); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.zone-origin { font-weight: 400; color: var(--s-ink-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.hzc-remove {
@@ -332,7 +376,7 @@
 
 	.zone-block { margin: 8px 0; padding: 6px 0; border-top: 1px solid rgba(var(--c-fg-rgb), 0.06); }
 	.zone-id { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--c-ink-1); font-weight: 600; margin-bottom: 5px; }
-	.zone-hex-count { font-size: 11.5px; color: rgba(var(--c-fg-rgb), 0.55); font-weight: 400; margin-left: auto; }
+	.zone-hex-count { font-size: 11.5px; color: rgba(var(--c-fg-rgb), 0.55); font-weight: 400; margin-left: auto; white-space: nowrap; flex-shrink: 0; }
 	.zone-type { font-size: 12px; color: var(--c-ink-1); font-weight: 500; background: rgba(var(--c-fg-rgb), 0.08); display: inline-block; padding: 1px 6px; border-radius: 3px; margin-bottom: 4px; }
 	.cd-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
 	.cd-label { font-size: 11.5px; color: var(--c-ink-1n); flex: 1 1 auto; min-width: 0; line-height: 1.3; }

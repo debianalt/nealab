@@ -54,6 +54,7 @@
 		onClearHexZones,
 		onGoToZoneDept,
 		onClearSavedZones,
+		onHexZoneRenamed,
 		onSelectFloodDpto,
 		onDownloadRadioCsv,
 		onDownloadRadioGeoJson,
@@ -87,6 +88,7 @@
 		onClearHexZones: () => void;
 		onGoToZoneDept?: (key: string) => void;
 		onClearSavedZones?: (key: string) => void;
+		onHexZoneRenamed?: () => void;
 		onSelectFloodDpto: (dpto: string, parquetKey: string, centroid: [number, number]) => void;
 		onDownloadRadioCsv?: (redcode: string) => void;
 		onDownloadRadioGeoJson?: (redcode: string, properties: Record<string, any>) => void;
@@ -267,7 +269,7 @@
 						<SavedZonesList {hexStore} onGo={(k) => onGoToZoneDept?.(k)} onClear={(k) => onClearSavedZones?.(k)}
 							coverage={lensStore.activeAnalysis?.coverage as Record<string, string> | undefined} />
 						{#if hexStore.hexZones.length > 0}
-							<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} />
+							<HexZoneComparison {hexStore} {onRemoveHexZone} {onClearHexZones} onRenamed={onHexZoneRenamed} />
 							<!-- One 1991→2022 trajectory per lasso zone (ac79774); ab11afb moved the
 							     zones into this block and left the panel out. -->
 							{#if hexStore.activeLayer?.id === 'censo_temporal'}

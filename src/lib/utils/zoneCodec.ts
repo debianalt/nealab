@@ -111,6 +111,26 @@ export function encodeZones(zones: { id: string; n: number; outline: string }[])
 	return zones.map(z => `${z.id}.${z.n}.${z.outline}`).join('.');
 }
 
+// Zone names (8-nov-2026) ride in their own parameter, `zn`, so `z` and the links already
+// shared stay as they were: «A:Barrio Itaembé|B:Centro» (URLSearchParams escapes it). Names
+// never hold «|» (hexStore.cleanZoneName).
+export function encodeZoneNames(zones: { id: string; name?: string }[]): string {
+	return zones.filter(z => z.name).map(z => `${z.id}:${z.name}`).join('|');
+}
+
+/** Tolerant: an entry without «letter:» or with an empty name is skipped. */
+export function decodeZoneNames(s: string | null): Map<string, string> {
+	const out = new Map<string, string>();
+	if (!s) return out;
+	for (const part of s.split('|')) {
+		const m = /^([A-Z]):(.+)$/s.exec(part);
+		if (!m) continue;
+		const name = m[2].replace(/\s+/g, ' ').trim().slice(0, 40).trim();
+		if (name && !out.has(m[1])) out.set(m[1], name);
+	}
+	return out;
+}
+
 /** Tolerant: a malformed zone is skipped, not the whole parameter. */
 export function decodeZones(s: string | null): UrlZone[] {
 	if (!s) return [];

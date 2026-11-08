@@ -154,6 +154,13 @@ export interface HexZone {
 	outline: string | null;
 	/** Hexagons the zone had in the link it was opened from (absent when drawn here). */
 	sharedN?: number;
+	/** The user's name for it («Barrio Itaembé»); the letter stays its short identity. */
+	name?: string;
+}
+
+/** A zone name as kept and put in the link: trimmed, 40 characters, no «|» (the `zn` separator). */
+export function cleanZoneName(s: string): string {
+	return s.replace(/\|/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 40).trim();
 }
 
 /** Hexagons picked in a chart (histogram, Moran, bivariate, profile…), not yet saved. */
@@ -1983,7 +1990,7 @@ export class HexStore {
 	}
 
 	/** Zones from a shared link, drawn once the link's department has its cells (syncZones). */
-	pendingUrlZones: { dept: string; zones: UrlZone[] } | null = null;
+	pendingUrlZones: { dept: string; zones: UrlZone[]; names?: Map<string, string> } | null = null;
 	/** Zone scope (zoneScopeKey) whose zones the map frames once they are drawn: a shared
 	 *  link, «ir» on a saved zone. Null = leave the camera alone. */
 	flyToZonesKey: string | null = $state(null);
@@ -2000,12 +2007,19 @@ export class HexStore {
 		if (HexStore.normName(name) !== HexStore.normName(p.dept)) return false;
 		let any = false;
 		for (const z of p.zones) {
+			const linkName = p.names?.get(z.id);
 			// A reload carries in ?z= the zones this tab already saved: draw each one once
-			// (and still frame them, as any link does).
-			if (this.savedZones.some(s => s.dept === key && s.outline === z.outline)) { this.flyToZonesKey = key; continue; }
+			// (and still frame them, as any link does). The link's name wins over none.
+			const saved = this.savedZones.find(s => s.dept === key && s.outline === z.outline);
+			if (saved) {
+				this.flyToZonesKey = key;
+				if (linkName && !saved.name) this.renameHexZone(saved.id, linkName);
+				continue;
+			}
 			const cells = this.findHexesInPolygon(z.ring);
 			if (cells.length === 0) continue;
 			const id = await this.createHexZone(cells, z.ring, i18n.t('zone.origin.lasso'), { id: z.id, sharedN: z.n, outline: z.outline });
+			if (id && linkName) this.renameHexZone(id, linkName);
 			any = any || id !== null;
 		}
 		if (any) this.flyToZonesKey = key;
@@ -2089,6 +2103,19 @@ export class HexStore {
 		this.persistZones();
 	}
 
+	/** ✎ on a zone: its name, or none (back to the letter alone). */
+	renameHexZone(id: string, name: string) {
+		const n = cleanZoneName(name);
+		const upd = (z: HexZone): HexZone => {
+			if (z.id !== id) return z;
+			const { name: _old, ...rest } = z;
+			return n ? { ...rest, name: n } : rest;
+		};
+		this.hexZones = this.hexZones.map(upd);
+		this.savedZones = this.savedZones.map(upd);
+		this.persistZones();
+	}
+
 	/** ✕ on a department of «Otras zonas guardadas». */
 	clearSavedZones(deptKey: string) {
 		this.savedZones = this.savedZones.filter(z => z.dept !== deptKey);
@@ -2104,6 +2131,7 @@ export class HexStore {
 			sessionStorage.setItem(ZONES_STORAGE_KEY, JSON.stringify(this.savedZones.map(z => ({
 				id: z.id, color: z.color, h3indices: z.h3indices, polygon: z.polygon, origin: z.origin,
 				dept: z.dept, outline: z.outline, ...(z.sharedN !== undefined ? { sharedN: z.sharedN } : {}),
+				...(z.name ? { name: z.name } : {}),
 			}))));
 		} catch { /* storage full or blocked: the zones live until the tab reloads */ }
 	}
@@ -2123,6 +2151,7 @@ export class HexStore {
 					origin: z.origin ?? '', dept: z.dept, outline: z.outline ?? null, layerId: '',
 					stats: { hexCount: z.h3indices.length, cellsWithData: 0, rawValues: [], totals: [], normalizedValues: [] },
 					...(typeof z.sharedN === 'number' ? { sharedN: z.sharedN } : {}),
+					...(typeof z.name === 'string' && cleanZoneName(z.name) ? { name: cleanZoneName(z.name) } : {}),
 				}));
 		} catch { /* unreadable: start without zones */ }
 	}

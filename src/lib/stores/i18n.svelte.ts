@@ -306,6 +306,8 @@ const dict: Record<string, Record<Locale, string>> = {
 	'zone.sel.saved': { es: '✓ guardada como zona {id} (arriba)', en: '✓ saved as zone {id} (above)', gn: '✓ guardada como zona {id} (arriba)', pt: '✓ salva como zona {id} (acima)' }, // gn: pendiente
 	'zone.block': { es: 'Zonas ({n})', en: 'Zones ({n})', gn: 'Zonas ({n})', pt: 'Zonas ({n})' }, // gn: pendiente
 	'zone.blockOthers': { es: ' · {m} en otros lugares', en: ' · {m} elsewhere', gn: ' · {m} en otros lugares', pt: ' · {m} em outros lugares' }, // gn: pendiente
+	'zone.rename': { es: 'Cambiar nombre', en: 'Rename', gn: 'Cambiar nombre', pt: 'Renomear' }, // gn: pendiente
+	'zone.namePlaceholder': { es: 'Ponele un nombre (ej. barrio, paraje)', en: 'Give it a name (e.g. neighbourhood, place)', gn: 'Ponele un nombre (ej. barrio, paraje)', pt: 'Dê um nome (ex. bairro, lugar)' }, // gn: pendiente
 	'zone.blockSaved': { es: 'Zonas guardadas ({m})', en: 'Saved zones ({m})', gn: 'Zonas guardadas ({m})', pt: 'Zonas salvas ({m})' }, // gn: pendiente
 	'zone.saved.others': { es: 'Otras zonas guardadas', en: 'Other saved zones', gn: 'Otras zonas guardadas', pt: 'Outras zonas salvas' }, // gn: pendiente
 	'zone.saved.go': { es: 'ir', en: 'go', gn: 'ir', pt: 'ir' }, // gn: pendiente
