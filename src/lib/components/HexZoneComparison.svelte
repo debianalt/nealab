@@ -9,7 +9,6 @@
 		downloadGeoJsonFromPolygon,
 		downloadGeoJsonFromHexList,
 	} from '$lib/utils/data-export';
-	import RequestDiagnostic from './RequestDiagnostic.svelte';
 	import { compareToRef, type RefCompare } from '$lib/utils/zoneStats';
 	import { radioUnit, RADIO_SUPPORT, hasRadios } from '$lib/stores/radioUnit.svelte';
 
@@ -150,11 +149,6 @@
 	}
 
 	// «Pedir un diagnóstico a medida» with the zones (origin + size, not H3 codes).
-	const requestCtx = $derived({
-		layer: hexStore.activeLayer ? i18n.t(hexStore.activeLayer.titleKey) : undefined,
-		place: [hexStore.selectedDpto ? formatDept(hexStore.selectedDpto) : '', territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · '),
-		zones: zones.map(z => ({ id: z.id, origin: z.origin, hexCount: z.stats.hexCount })),
-	});
 
 	function downloadZonesSummaryCsv() {
 		if (zones.length === 0) return;
@@ -265,7 +259,9 @@
 				↓ Resumen comparativo (CSV)
 			</button>
 		</div>
-		<RequestDiagnostic ctx={requestCtx} />
+		<!-- No «Pedir un diagnóstico» here: the layer panel below has the site's one, and it
+		     carries these zones (OvertureAnalysis layerRequestCtx). Two showed one under the
+		     other in every layer with zones (8-nov-2026). -->
 	{/if}
 </div>
 

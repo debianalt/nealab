@@ -496,9 +496,12 @@
 	 */
 
 	// «Pedir un diagnóstico a medida»: this layer + the open department, or the territory.
+	// The panel's only «Pedir un diagnóstico»: with zones open it names them too (the zones
+	// block no longer has its own button).
 	const layerRequestCtx = $derived({
 		layer: i18n.t(analysis.titleKey),
 		place: [selectedDpto ? formatDept(selectedDpto) : '', territoryRef(hexStore.territoryId, i18n.locale)].filter(Boolean).join(' · '),
+		...(hexStore.hexZones.length ? { zones: hexStore.hexZones.map(z => ({ id: z.id, origin: z.origin, hexCount: z.stats.hexCount })) } : {}),
 	});
 
 </script>
