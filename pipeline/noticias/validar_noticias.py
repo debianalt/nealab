@@ -25,9 +25,12 @@ from validar_cruces import tabla  # noqa: E402
 
 MD = ROOT / 'pipeline' / 'noticias' / 'validacion_noticias.md'
 MUESTRA = ROOT / 'pipeline' / 'noticias' / 'muestra_precision.csv'
+NUEVOS = ROOT / 'pipeline' / 'noticias' / 'muestra_precision_nuevos.csv'
 PRENSA = ROOT / 'pipeline' / 'infra' / 'cortes_rp2_prensa.csv'
 N, SEMILLA, REGLA = 60, 7, 0.80
 DOMINIOS = {'misionesonline.net': 'misionesonline', 'primeraedicion.com.ar': 'primeraedicion',
+            'elterritorio.com.ar': 'elterritorio', 'lavozdecataratas.com': 'lavozdecataratas',
+            'misionescuatro.com': 'misionescuatro',
             'canal12misiones.com': 'canal12', 'noticiasdel6.com': 'noticiasdel6', 'economis.com.ar': 'economis',
             'misionesopina.com.ar': 'misionesopina'}
 
@@ -41,25 +44,34 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--muestra', action='store_true')
     ap.add_argument('--semilla', type=int, default=SEMILLA)
+    ap.add_argument('--medios', default='', help='sólo estos medios (coma); la muestra va a muestra_precision_nuevos.csv')
+    ap.add_argument('--n', type=int, default=N)
     a = ap.parse_args()
     conn = connect(DB)
     q = lambda s, **kw: pd.read_sql(s, conn, **kw)  # noqa: E731
     if a.muestra:
         m = q("""SELECT m.mencion_id, m.medio, m.fecha::date fecha, m.tipo, m.lugar_tipo, m.lugar_nombre, o.texto oracion
                  FROM noticias.menciones m JOIN noticias.oraciones o USING (oracion_id)""")
-        s = m.sample(N, random_state=a.semilla).sort_values('mencion_id')
+        destino = MUESTRA
+        if a.medios:
+            m = m[m.medio.isin(a.medios.split(','))]
+            destino = NUEVOS
+        s = m.sample(a.n, random_state=a.semilla).sort_values('mencion_id')
         s['tipo_ok'] = ''
         s['lugar_ok'] = ''
         s['nota'] = ''
-        s.to_csv(MUESTRA, index=False, encoding='utf-8')
-        print(f'muestra: {MUESTRA} ({len(s)} menciones, semilla {a.semilla})')
+        s.to_csv(destino, index=False, encoding='utf-8')
+        print(f'muestra: {destino} ({len(s)} menciones, semilla {a.semilla})')
         return 0
 
     L = ['# Validación del archivo de noticias (cortes de puentes, caminos y luz)', '',
          f'Generado por `pipeline/noticias/validar_noticias.py` el {dt.date.today().isoformat()}. Datos: 6 medios con '
-         'API de WordPress abierta; extracción por reglas (`extraer.py`).', '']
+         'API de WordPress abierta, El Territorio y La Voz de Cataratas por sitemaps y HTML, MisionesCuatro por copias '
+         'de la Wayback Machine (su sitio desafía a todo cliente que no sea un navegador) y el archivo completo de '
+         'Misiones Online por sus sitemaps; extracción por reglas (`extraer.py`).', '']
     L += ['## 1. Notas por medio', '', tabla(q("""
-        SELECT medio, notas, desde::date::text desde, hasta::date::text hasta FROM noticias.fuentes ORDER BY notas DESC""")), '',
+        SELECT medio, coalesce(via, 'api_wp') via, count(*)::int notas, min(fecha)::date::text desde,
+               max(fecha)::date::text hasta FROM noticias.notas GROUP BY 1, 2 ORDER BY 3 DESC""")), '',
           'Notas por año (todos los medios):', '', tabla(q("""
         SELECT extract(year FROM fecha)::int::text anio, count(*)::int notas FROM noticias.notas GROUP BY 1 ORDER BY 1""")), '']
 
@@ -116,6 +128,19 @@ def main() -> int:
                   'Errores (para ajustar patrones):', '',
                   tabla(s[(s.tipo_ok.astype(int) == 0) | (s.lugar_ok.fillna(1).astype(int) == 0)][
                       ['mencion_id', 'tipo', 'lugar_nombre', 'tipo_ok', 'lugar_ok', 'nota']]), '']
+    if NUEVOS.exists():
+        sn = pd.read_csv(NUEVOS)
+        sn = sn[sn.tipo_ok.notna()]
+        if len(sn):
+            pt = sn.tipo_ok.astype(int).mean()
+            sl = sn[sn.lugar_ok.notna()]
+            L += ['## 4c. Precisión en los medios nuevos (El Territorio, La Voz, MisionesCuatro; semilla 9)', '',
+                  f'Regla fijada antes de mirar: tipo ≥ {REGLA:.0%} (el HTML puede colar menús y títulos relacionados). '
+                  f'Anotadas {len(sn)}.', '',
+                  f'**Tipo: {pt:.0%} ({"PASA" if pt >= REGLA else "NO PASA"}).** Lugar ({len(sl)} con lugar): '
+                  f'{(sl.lugar_ok.astype(int).mean() if len(sl) else float("nan")):.0%}.', '',
+                  tabla(sn[(sn.tipo_ok.astype(int) == 0) | (sn.lugar_ok.fillna(1).astype(int) == 0)][
+                      ['mencion_id', 'medio', 'tipo', 'lugar_nombre', 'tipo_ok', 'lugar_ok', 'nota']]), '']
     MD.write_text('\n'.join(L), encoding='utf-8')
     print('\n'.join(L))
     conn.close()
