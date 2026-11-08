@@ -1250,10 +1250,10 @@
 			map.addLayer({ id: 'ap-casing', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
 				paint: { 'line-color': apT.halo, 'line-width': apCasing as any, 'line-opacity': 0.8 } }, firstSymbolId);
 			map.addLayer({ id: 'ap-line', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
-				filter: ['!=', ['get', 'tipo'], 'ramsar'],
+				filter: ['!', ['in', ['get', 'tipo'], ['literal', ['ramsar', 'biosfera']]]],
 				paint: { 'line-color': apT.protegida, 'line-width': apW as any } }, firstSymbolId);
 			map.addLayer({ id: 'ap-line-ramsar', type: 'line', source: 'areas-protegidas', layout: { visibility: 'none' },
-				filter: ['==', ['get', 'tipo'], 'ramsar'],
+				filter: ['in', ['get', 'tipo'], ['literal', ['ramsar', 'biosfera']]],
 				paint: { 'line-color': apT.protegida, 'line-width': apW as any, 'line-dasharray': [3, 2] } }, firstSymbolId);
 			applyHexHidden();   // a by-department reading may have been set before the map loaded
 			// Census radios of the open department (setRadioUnit): the unit a census rate is measured on.
@@ -2250,23 +2250,23 @@
 		if (!map?.getLayer('ap-hit') || map.getLayoutProperty('ap-hit', 'visibility') !== 'visible') return '';
 		const seen = new Set<number>();
 		const rows: string[] = [];
-		let ramsar = false, sifap = false;
+		const srcs = new Set<string>();
+		const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 		for (const f of map.queryRenderedFeatures(point, { layers: ['ap-hit'] })) {
 			const p = f.properties as any;
 			if (seen.has(p.id)) continue;
 			seen.add(p.id);
-			if (p.tipo === 'ramsar') ramsar = true; else sifap = true;
-			const cat = p.tipo === 'ramsar' ? i18n.t('map.ap.ramsar') : (p.categoria || i18n.t(`map.ap.${p.tipo}`));
-			const ha = Number(p.ha).toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { maximumFractionDigits: 0 });
+			const cat = p.categoria || i18n.t(`map.ap.${p.tipo}`);
+			const ha = Number(p.ha).toLocaleString(i18n.locale === 'en' ? 'en' : 'es', { maximumFractionDigits: 0, useGrouping: 'always' } as Intl.NumberFormatOptions);
 			const haLbl = p.ha_declarada === true || p.ha_declarada === 'true' ? i18n.t('map.ap.haDeclared') : i18n.t('map.ap.haPolygon');
-			const acto = [p.instrumento, p.creacion].filter(Boolean).join(' ');
-			rows.push(`<div style="margin-top:4px"><b style="color:var(--c-ink-1)">${p.nombre}</b><br>`
-				+ `<span style="color:var(--c-ink-2)">${cat} · ${ha} ${haLbl}${acto ? ` · ${acto}` : ''}</span></div>`);
+			rows.push(`<div style="margin-top:4px"><b style="color:var(--c-ink-1)">${esc(p.nombre)}</b><br>`
+				+ `<span style="color:var(--c-ink-2)">${esc(cat)} · ${ha} ${haLbl}${p.norma ? ` · ${esc(p.norma)}` : ''}</span></div>`);
+			srcs.add(p.licencia ? `${p.fuente} · ${p.licencia}` : p.fuente);
 		}
 		if (!rows.length) return '';
-		const src = [sifap ? i18n.t('map.ap.srcSifap') : '', ramsar ? i18n.t('map.ap.srcRamsar') : ''].filter(Boolean).join(' · ');
+		const src = `${i18n.t('map.ap.source')}: ${[...srcs].map(esc).join(' — ')}`;
 		return `<div style="border-top:1px solid rgba(var(--c-fg-rgb),0.15);margin-top:5px;padding-top:1px">${rows.join('')}`
-			+ `<div style="color:rgba(var(--c-fg-rgb),0.5);font-size:9px;margin-top:3px">${src}</div></div>`;
+			+ `<div style="color:rgba(var(--c-fg-rgb),0.5);font-size:9px;margin-top:3px;max-width:320px;white-space:normal">${src}</div></div>`;
 	}
 
 	export function updateColorExpr() {

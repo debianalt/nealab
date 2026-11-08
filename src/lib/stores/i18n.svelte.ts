@@ -269,10 +269,12 @@ const dict: Record<string, Record<Locale, string>> = {
 	'map.ap.ramsar': { es: 'Sitio Ramsar', en: 'Ramsar site', gn: 'Sitio Ramsar', pt: 'Sítio Ramsar' },
 	'map.ap.nacional': { es: 'Área protegida nacional', en: 'National protected area', gn: 'Área protegida nacional', pt: 'Área protegida nacional' },
 	'map.ap.provincial': { es: 'Área protegida provincial', en: 'Provincial protected area', gn: 'Área protegida provincial', pt: 'Área protegida provincial' },
+	'map.ap.municipal': { es: 'Área protegida municipal', en: 'Municipal protected area', gn: 'Área protegida municipal', pt: 'Área protegida municipal' },
+	'map.ap.privada': { es: 'Reserva privada', en: 'Private reserve', gn: 'Reserva privada', pt: 'Reserva privada' },
+	'map.ap.biosfera': { es: 'Reserva de biosfera', en: 'Biosphere reserve', gn: 'Reserva de biosfera', pt: 'Reserva da biosfera' },
+	'map.ap.source': { es: 'Fuente', en: 'Source', gn: 'Fuente', pt: 'Fonte' },
 	'map.ap.haDeclared': { es: 'ha declaradas', en: 'ha declared', gn: 'ha declaradas', pt: 'ha declarados' },
 	'map.ap.haPolygon': { es: 'ha (según el polígono)', en: 'ha (from the polygon)', gn: 'ha (según el polígono)', pt: 'ha (segundo o polígono)' },
-	'map.ap.srcSifap': { es: 'SIFAP 2016 (Ambiente de Nación): las áreas creadas después no figuran', en: 'SIFAP 2016 (national Environment ministry): areas created later are missing', gn: 'SIFAP 2016 (Ambiente de Nación): las áreas creadas después no figuran', pt: 'SIFAP 2016 (Ambiente da Nação argentino): as áreas criadas depois não aparecem' },
-	'map.ap.srcRamsar': { es: 'Ramsar (Ambiente de Nación)', en: 'Ramsar (national Environment ministry)', gn: 'Ramsar (Ambiente de Nación)', pt: 'Ramsar (Ambiente da Nação argentino)' },
 	'map.opacity': { es: 'Opacidad', en: 'Opacity', gn: 'Opacidad', pt: 'Opacidade' }, // gn: pendiente
 
 	// ── Analysis panel ──

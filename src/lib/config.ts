@@ -8,9 +8,10 @@ function getBase(): string {
 	return R2_PROD;
 }
 
-// Protected areas and Ramsar sites of the Argentine NEA (pipeline/hexoma/exportar_ap_web.py): borders on the map and
-// a hover line with name, category, area and act. SIFAP 2016 is the newest national release: later areas are missing.
-export const AP_OVERLAY_URL = `${R2_PROD}/data/overlays/areas_protegidas_v1.geojson`;
+// Protected areas of the Argentine NEA (pipeline/hexoma/exportar_ap_web.py): borders on the map and a hover line with
+// name, category, area, act and source. v2 (7-nov-2026): Misiones from Fundación Vida Silvestre (2026, on the provincial
+// ANP map of 2025), Corrientes from IDE Corrientes (2025, CC BY-NC-SA), Chaco, Formosa and the rest from the IGN.
+export const AP_OVERLAY_URL = `${R2_PROD}/data/overlays/areas_protegidas_v2.geojson`;
 
 export function getTilesUrl(name: 'buildings' | 'misiones_plantations' | 'corrientes_plantations' | 'chaco_plantations' | 'formosa_plantations' | 'itapua_buildings' | 'itapua_districts' | 'corrientes_buildings' | 'alto_parana_buildings' | 'alto_parana_districts' | 'chaco_buildings' | 'formosa_buildings' | 'parana_br_buildings' | 'santa_catarina_br_buildings' | 'rio_grande_sul_br_buildings' | 'radios' | 'terrain' | 'hexagons' | 'concepcion_py_buildings' | 'concepcion_py_districts' | 'san_pedro_py_buildings' | 'san_pedro_py_districts' | 'cordillera_py_buildings' | 'cordillera_py_districts' | 'guaira_py_buildings' | 'guaira_py_districts' | 'caaguazu_py_buildings' | 'caaguazu_py_districts' | 'caazapa_py_buildings' | 'caazapa_py_districts' | 'misiones_py_buildings' | 'misiones_py_districts' | 'paraguari_py_buildings' | 'paraguari_py_districts' | 'central_py_buildings' | 'central_py_districts' | 'neembucu_py_buildings' | 'neembucu_py_districts' | 'amambay_py_buildings' | 'amambay_py_districts' | 'canindeyu_py_buildings' | 'canindeyu_py_districts' | 'presidente_hayes_py_buildings' | 'presidente_hayes_py_districts' | 'boqueron_py_buildings' | 'boqueron_py_districts' | 'alto_paraguay_py_buildings' | 'alto_paraguay_py_districts'): string {
 	if (name === 'terrain') {
