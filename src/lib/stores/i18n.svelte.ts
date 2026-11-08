@@ -901,7 +901,7 @@ const dict: Record<string, Record<Locale, string>> = {
 	'source.buildings': { es: 'Edificaciones: Global Building Atlas + VIDA', en: 'Buildings: Global Building Atlas + VIDA', gn: 'Óga: Global Building Atlas + VIDA', pt: 'Edificações: Global Building Atlas + VIDA' },
 	'source.basemap': { es: 'Mapa: CARTO Positron / Dark Matter (© OpenStreetMap)', en: 'Basemap: CARTO Positron / Dark Matter (© OpenStreetMap)', gn: 'Mapa: CARTO Positron / Dark Matter (© OpenStreetMap)', pt: 'Mapa: CARTO Positron / Dark Matter (© OpenStreetMap)' },
 	'source.terrain': { es: 'Relieve: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)', en: 'Terrain: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, EU/ESA)', gn: 'Relieve: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)', pt: 'Relevo: Mapterhorn (Copernicus GLO-30, © DLR/Airbus, UE/ESA)' },
-	'lasso.hint': { es: 'Dibujá una zona arrastrando sobre el mapa. El cálculo tarda unos segundos.', en: 'Draw a zone by dragging on the map. Calculation takes a few seconds.', gn: "Embosako'i zona mapa ári. Ohasa segundos.", pt: 'Desenhe uma zona arrastando sobre o mapa. O cálculo leva alguns segundos.' },
+	'lasso.hint': { es: 'Dibujá una zona arrastrando sobre el mapa. Las zonas siguen si cambiás de capa o de pregunta en el mismo departamento.', en: 'Draw a zone by dragging on the map. Zones stay when you switch layer or question in the same department.', gn: 'Dibujá una zona arrastrando sobre el mapa. Las zonas siguen si cambiás de capa o de pregunta en el mismo departamento.', pt: 'Desenhe uma zona arrastando sobre o mapa. As zonas continuam se você trocar de camada ou de pergunta no mesmo departamento.' }, // gn: pendiente
 	'zone.title': { es: 'Zona', en: 'Zone', gn: 'Zona', pt: 'Zona' },
 	'zone.population': { es: 'Población', en: 'Population', gn: 'Yvypóra', pt: 'População' },
 	'zone.area': { es: 'Área km²', en: 'Area km²', gn: 'Yvy km²', pt: 'Área km²' },
@@ -914,6 +914,10 @@ const dict: Record<string, Record<Locale, string>> = {
 	'hex.comparison.radios': { es: 'Radios censales seleccionados', en: 'Selected census tracts', gn: 'Radios censales seleccionados', pt: 'Setores censitários selecionados' },
 	'hex.comparison.mixed': { es: 'Radios y hexágonos seleccionados', en: 'Selected census tracts and hexagons', gn: 'Radios y hexágonos seleccionados', pt: 'Setores censitários e hexágonos selecionados' },
 	'hexZone.title': { es: 'Zonas hexagonales', en: 'Hex zones', gn: 'Hexágono zona', pt: 'Zonas hexagonais' },
+	'hexZone.valuesOf': { es: 'Valores de', en: 'Values from', gn: 'Valores de', pt: 'Valores de' }, // gn: pendiente
+	'hexZone.follow': { es: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', en: 'Switch layer or question in this department: the zones stay and are recomputed.', gn: 'Cambiá de capa o de pregunta en este departamento: las zonas se quedan y se recalculan.', pt: 'Troque de camada ou de pergunta neste departamento: as zonas ficam e são recalculadas.' }, // gn: pendiente
+	'hexZone.recomputing': { es: 'Recalculando con esta capa…', en: 'Recomputing with this layer…', gn: 'Recalculando con esta capa…', pt: 'Recalculando com esta camada…' }, // gn: pendiente
+	'hexZone.noData': { es: 'Esta capa no tiene datos dentro de la zona.', en: 'This layer has no data inside the zone.', gn: 'Esta capa no tiene datos dentro de la zona.', pt: 'Esta camada não tem dados dentro da zona.' }, // gn: pendiente
 	'hex.petalRelative': { es: 'Flor (lectura relativa):', en: 'Flower (relative reading):', gn: 'Yvoty:', pt: 'Flor (leitura relativa):' },
 	'hex.avgOf': { es: 'promedio {ofRef}', en: 'average {ofRef}', gn: 'promedio {ofRef}', pt: 'média {ofRef}' },
 	'hex.magTable': { es: 'Magnitud y valores estimados', en: 'Magnitude & estimated values', gn: 'Tuichakue ha papapy', pt: 'Magnitude e valores estimados' },

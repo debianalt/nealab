@@ -121,6 +121,8 @@ export interface HexSelectionData {
 
 export interface HexZoneStats {
 	hexCount: number;
+	/** Cells of the zone with at least one value in the layer (0 = layer has no data there). */
+	cellsWithData: number;
 	rawValues: number[];
 	normalizedValues: number[];
 }
@@ -134,6 +136,11 @@ export interface HexZone {
 	/** Where the zone came from, shown next to its letter: «Lazo», «Moran: recuadro»… */
 	origin: string;
 	stats: HexZoneStats;
+	/** Department the zone was drawn in (territory prefix + name): it follows the user
+	 *  across layers and lenses while that department stays open. */
+	dept: string | null;
+	/** Layer whose variables `stats` holds; another active layer means «recompute». */
+	layerId: string;
 }
 
 /** Hexagons picked in a chart (histogram, Moran, bivariate, profile…), not yet saved. */
@@ -180,6 +187,10 @@ export class HexStore {
 	deptFilterName: string | null = $state(null);
 	private _deptChart: { src: Map<string, Record<string, any>>; filter: Set<string>; out: Map<string, Record<string, any>> } | null = null;
 	setDeptFilter(h3s: Iterable<string> | null, name: string | null = null) {
+		// Zones belong to one department: opening another one in the layer's own list drops them.
+		const key = h3s && name ? `${this.territoryPrefix}|${name}` : null;
+		if (key && this.hexZones.length && this.hexZones[0].dept !== key) this.clearHexZones();
+		if (key && this.zoneCarry && this.zoneCarry[0].dept !== key) this.zoneCarry = null;
 		this.deptFilter = h3s ? new Set(h3s) : null;
 		this.deptFilterName = h3s ? name : null;
 		this._deptChart = null;
@@ -317,12 +328,13 @@ export class HexStore {
 			this.temporalMode = 'current';
 			this.dataVersion++;
 			this.clearSelection();
-			this.clearHexZones();
+			this.stashZones();
 			this.chartSelection = null;
 			return;
 		}
 		const cfg = HEX_LAYER_REGISTRY[layerId];
 		if (!cfg) return;
+		this.stashZones();
 		this.activeLayer = cfg;
 		this.temporalMode = 'current';
 		this.scaleMode = 'provincial';
@@ -572,7 +584,8 @@ export class HexStore {
 		this.analysisData = null;
 		this.analysisResLevel = null;
 		this.clearSelection();
-		this.clearHexZones();
+		this.stashZones();
+		if (this.zoneCarry && this.zoneCarry[0].dept !== this.zoneDeptKey()) this.zoneCarry = null;
 		this.chartSelection = null;
 		this.clearCompareDept();
 		this.clearRegionalData();
@@ -1482,7 +1495,7 @@ export class HexStore {
 		this.lodDeptContext = null;
 		this.deptBbox = null;
 		this.clearSelection();
-		this.clearHexZones();
+		this.stashZones();
 	}
 
 	async loadVisibleData() {
@@ -1847,45 +1860,20 @@ export class HexStore {
 		const color = ZONE_COLORS[slot % ZONE_COLORS.length];
 
 		try {
-			const provAvg = await this.ensureProvincialAvg();
-
-			// Mean of each numeric variable over the cells that HAVE a value: a cell
-			// without data is not a zero (it pulled every zone mean down before).
-			const numVars = this.numericVariables;
-			const sums = new Array(numVars.length).fill(0);
-			const ns = new Array(numVars.length).fill(0);
-			for (const h3index of h3indices) {
-				const data = this.zoneRow(h3index);
-				if (!data) continue;
-				for (let v = 0; v < numVars.length; v++) {
-					// A rate with a base column is weighted by it (Σ rate·base / Σ base): the zone
-					// reads like the census radios it covers, not like a count of their cells.
-					const x = data[numVars[v].col];
-					if (typeof x !== 'number' || !Number.isFinite(x)) continue;
-					const bc = numVars[v].baseCol;
-					const w = bc ? Number(data[bc]) : 1;
-					if (bc && !(w > 0)) continue;
-					sums[v] += x * w; ns[v] += w;
-				}
-			}
-			const rawValues = sums.map((t, v) => (ns[v] > 0 ? t / ns[v] : NaN));
-
-		const normalizedValues = this.normalize(rawValues, provAvg);
-
+			const stats = await this.computeZoneStats(h3indices);
 			const zone: HexZone = {
 				id,
 				color,
 				h3indices,
 				polygon,
 				origin,
-				stats: {
-					hexCount: h3indices.length,
-					rawValues,
-					normalizedValues,
-				},
+				stats,
+				dept: this.zoneDeptKey(),
+				layerId: this.activeLayer.id,
 			};
 
 			this.hexZones = [...this.hexZones, zone];
+			this.zoneCarry = null;
 			return id;
 		} catch (e) {
 			console.warn('Failed to create hex zone:', e);
@@ -1893,18 +1881,118 @@ export class HexStore {
 		}
 	}
 
-	removeHexZone(id: string) {
-		this.hexZones = this.hexZones.filter(z => z.id !== id);
+	/** Mean of each numeric variable of the active layer over the zone's cells. */
+	private async computeZoneStats(h3indices: string[]): Promise<HexZoneStats> {
+		const provAvg = await this.ensureProvincialAvg();
+
+		// Mean of each numeric variable over the cells that HAVE a value: a cell
+		// without data is not a zero (it pulled every zone mean down before).
+		const numVars = this.numericVariables;
+		const sums = new Array(numVars.length).fill(0);
+		const ns = new Array(numVars.length).fill(0);
+		let cellsWithData = 0;
+		for (const h3index of h3indices) {
+			const data = this.zoneRow(h3index);
+			if (!data) continue;
+			let any = false;
+			for (let v = 0; v < numVars.length; v++) {
+				// A rate with a base column is weighted by it (Σ rate·base / Σ base): the zone
+				// reads like the census radios it covers, not like a count of their cells.
+				const x = data[numVars[v].col];
+				if (typeof x !== 'number' || !Number.isFinite(x)) continue;
+				any = true;
+				const bc = numVars[v].baseCol;
+				const w = bc ? Number(data[bc]) : 1;
+				if (bc && !(w > 0)) continue;
+				sums[v] += x * w; ns[v] += w;
+			}
+			if (any) cellsWithData++;
+		}
+		const rawValues = sums.map((t, v) => (ns[v] > 0 ? t / ns[v] : NaN));
+		return {
+			hexCount: h3indices.length,
+			cellsWithData,
+			rawValues,
+			normalizedValues: this.normalize(rawValues, provAvg),
+		};
 	}
 
+	// ── Zones across layers ──────────────────────────────────────────────
+	// A zone is drawn once and read in any layer of the same department: changing
+	// layer or lens keeps it aside (zoneCarry) and syncZones() brings it back,
+	// recomputed with the new layer's variables, once that layer has the
+	// department's cells. Opening another department, «Limpiar zonas» or the ✕
+	// drop it (7-nov-2026).
+	private zoneCarry: HexZone[] | null = null;
+	private _zoneSyncBusy = false;
+
+	/** Territory + department the user has open, in any layer (per-department
+	 *  parquet or a territory-wide layer narrowed with its own list). */
+	zoneDeptKey(): string | null {
+		const name = this.selectedDpto ?? this.deptFilterName;
+		return name ? `${this.territoryPrefix}|${name}` : null;
+	}
+
+	/** Internal clears (layer, lens, department reload) keep the zones aside. */
+	private stashZones() {
+		if (this.hexZones.length) this.zoneCarry = this.hexZones;
+		this.hexZones = [];
+	}
+
+	/** Restore carried zones for the open department and recompute every zone whose
+	 *  stats belong to another layer. True when the zones changed (repaint them). */
+	async syncZones(): Promise<boolean> {
+		const layer = this.activeLayer;
+		const key = this.zoneDeptKey();
+		if (!layer || !key || this._zoneSyncBusy) return false;
+		// The department's cells of THIS layer: none yet while it loads, and a LOD
+		// department reads its res-9 cells from analysisData, not the coarse overview.
+		if (this.chartData.size === 0 || (this.lodDeptActive && !this.analysisData)) return false;
+		let changed = false;
+		if (this.hexZones.length === 0 && this.zoneCarry?.length) {
+			if (this.zoneCarry[0].dept !== key) return false;
+			this.hexZones = this.zoneCarry;
+			this.zoneCarry = null;
+			changed = true;
+		}
+		const stale = this.hexZones.filter(z => z.layerId !== layer.id && z.dept === key);
+		if (stale.length === 0) return changed;
+		this._zoneSyncBusy = true;
+		try {
+			const fresh = new Map<string, HexZoneStats>();
+			for (const z of stale) {
+				const s = await this.computeZoneStats(z.h3indices);
+				// No cell of the zone found yet (data still arriving): try again on the next load.
+				if (s.cellsWithData === 0 && this.chartData.size < z.h3indices.length) continue;
+				fresh.set(z.id, s);
+			}
+			if (this.activeLayer !== layer || fresh.size === 0) return changed;
+			this.hexZones = this.hexZones.map(z => {
+				const s = fresh.get(z.id);
+				return s ? { ...z, stats: s, layerId: layer.id } : z;
+			});
+			return true;
+		} finally {
+			this._zoneSyncBusy = false;
+		}
+	}
+
+	removeHexZone(id: string) {
+		this.hexZones = this.hexZones.filter(z => z.id !== id);
+		if (this.hexZones.length === 0) this.zoneCarry = null;
+	}
+
+	/** The user's «Limpiar zonas»: gone for good, not carried to the next layer. */
 	clearHexZones() {
 		this.hexZones = [];
+		this.zoneCarry = null;
 	}
 
 	// ── Petal chart data ─────────────────────────────────────────────────
 
 	get petalLayers(): Array<{ values: number[]; color: string }> {
-		return this.hexZones.map(z => ({
+		// Only zones already recomputed with the active layer (a carried zone holds the old one's).
+		return this.hexZones.filter(z => z.layerId === this.activeLayer?.id).map(z => ({
 			values: z.stats.normalizedValues,
 			color: z.color,
 		}));
@@ -1971,7 +2059,7 @@ export class HexStore {
 		this.temporalMode = 'current';
 		this.dataVersion++;
 		this.selectedHexes = new Map();
-		this.hexZones = [];
+		this.stashZones();
 		this.chartSelection = null;
 		this.colorIndex = 0;
 		this.provincialAvg = null;

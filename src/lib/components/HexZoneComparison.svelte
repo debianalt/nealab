@@ -102,7 +102,7 @@
 	function downloadZonesSummaryCsv() {
 		if (zones.length === 0) return;
 		const numericVars = numVars;
-		const rows = zones.map((z) => {
+		const rows = zones.filter((z) => z.layerId === hexStore.activeLayer?.id).map((z) => {
 			const row: Record<string, unknown> = {
 				zone: z.id,
 				origin: z.origin,
@@ -128,6 +128,10 @@
 		</button>
 	</div>
 
+	{#if hexStore.activeLayer}
+		<p class="hzc-note">{i18n.t('hexZone.valuesOf')} <b>{i18n.t(hexStore.activeLayer.titleKey)}</b>. {i18n.t('hexZone.follow')}</p>
+	{/if}
+
 	<!-- Zone chips -->
 	<div class="hzc-chips">
 		{#each zones as zone}
@@ -150,16 +154,22 @@
 					{#if zone.origin}<span class="zone-origin">· {zone.origin}</span>{/if}
 					<span class="zone-hex-count">{zone.stats.hexCount.toLocaleString(i18n.locale)} hex</span>
 				</div>
-				{#if getDominantType(zone)}
-					<div class="zone-type">{getDominantType(zone)}</div>
+				{#if zone.layerId !== hexStore.activeLayer?.id}
+					<div class="zone-type">{i18n.t('hexZone.recomputing')}</div>
+				{:else if zone.stats.cellsWithData === 0}
+					<div class="zone-type">{i18n.t('hexZone.noData')}</div>
+				{:else}
+					{#if getDominantType(zone)}
+						<div class="zone-type">{getDominantType(zone)}</div>
+					{/if}
+					{#each numVars as v, vi}
+						{@const rv = zone.stats.rawValues[vi]}
+						<div class="cd-row">
+							<span class="cd-label">{i18n.t(v.labelKey)}</span>
+							<span class="cd-val">{fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
+						</div>
+					{/each}
 				{/if}
-				{#each numVars as v, vi}
-					{@const rv = zone.stats.rawValues[vi]}
-					<div class="cd-row">
-						<span class="cd-label">{i18n.t(v.labelKey)}</span>
-						<span class="cd-val">{fmtSmart(rv)}{v.unit ? ` ${unitLabel(v.unit)}` : ' /100'}</span>
-					</div>
-				{/each}
 				<div class="zone-dl">
 					<button class="hzc-dl-btn" title="Hexágonos CSV" onclick={() => downloadZoneHexesCsv(zone)}>csv</button>
 					<button class="hzc-dl-btn" title="Hexágonos GeoJSON" onclick={() => downloadZoneHexesGeoJson(zone)}>geo</button>
@@ -182,6 +192,8 @@
 </div>
 
 <style>
+	.hzc-note { font-size: 12px; line-height: 1.4; color: var(--c-ink-3); margin: 2px 0 8px; }
+	.hzc-note b { color: var(--c-ink-2, inherit); font-weight: 600; }
 	.hzc { font-size: 12.5px; }
 	.hzc-header {
 		display: flex;

@@ -5,7 +5,7 @@
 	import { themeStore } from '$lib/stores/theme.svelte';
 	import { makeHexClip, clipCell, type HexClip } from '$lib/utils/hexClip';
 	import { basemapStyle, applyBasemapTheme, normaliseBasemapOrder, layerAfterWater } from '$lib/utils/basemapTheme';
-	import { cellsToMultiPolygon } from 'h3-js';
+	import { cellsToMultiPolygon, cellToLatLng } from 'h3-js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { Protocol } from 'pmtiles';
 	import { getTilesUrl, AP_OVERLAY_URL, BASEMAP_STYLE, MAP_INIT, MAP_PROVINCE, TERRAIN_CONFIG, TERRAIN_DEM, colorForClass, MACIZO_SITUACION_CLASSES, type ColorClasses, type MacizoFocus } from '$lib/config';
@@ -3673,7 +3673,36 @@
 		outlineSrc?.setData({ type: 'FeatureCollection', features: outlines });
 	}
 
+	// Zone letters (A, B…) on the map, so a zone reads on any palette (a blue zone A
+	// vanished on the blue density ramp). HTML markers: no basemap glyphs needed.
+	// Placed on the zone's cell nearest to its mean centre, so it sits inside a
+	// concave zone too.
+	let zoneLabelMarkers: maplibregl.Marker[] = [];
+	export function setHexZoneLabels(zones: { id: string; color: string; h3indices: string[] }[]) {
+		for (const m of zoneLabelMarkers) m.remove();
+		zoneLabelMarkers = [];
+		if (!map) return;
+		for (const z of zones) {
+			if (z.h3indices.length === 0) continue;
+			const pts = z.h3indices.map(h => cellToLatLng(h));
+			const lat = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+			const lng = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+			let best = pts[0], bd = Infinity;
+			for (const p of pts) {
+				const d = (p[0] - lat) ** 2 + (p[1] - lng) ** 2;
+				if (d < bd) { bd = d; best = p; }
+			}
+			const el = document.createElement('div');
+			el.className = 'hex-zone-label';
+			el.textContent = z.id;
+			el.style.background = z.color;
+			zoneLabelMarkers.push(new maplibregl.Marker({ element: el }).setLngLat([best[1], best[0]]).addTo(map));
+		}
+	}
+
 	export function clearHexZoneHighlight() {
+		for (const m of zoneLabelMarkers) m.remove();
+		zoneLabelMarkers = [];
 		if (!map) return;
 		const src = map.getSource('hex-zones') as maplibregl.GeoJSONSource | undefined;
 		if (src) src.setData({ type: 'FeatureCollection', features: [] });
@@ -3701,11 +3730,16 @@
 	export function setLassoMode(active: boolean) {
 		lassoActive = active;
 		if (!map) return;
-		map.getCanvas().style.cursor = active ? 'crosshair' : '';
+		const canvas = map.getCanvas();
+		canvas.style.cursor = active ? 'crosshair' : '';
+		// A finger draws the lasso: no panning, pinch-zoom or page scroll meanwhile.
+		canvas.style.touchAction = active ? 'none' : '';
 		if (active) {
 			map.dragPan.disable();
+			map.touchZoomRotate.disable();
 		} else {
 			map.dragPan.enable();
+			map.touchZoomRotate.enable();
 		}
 	}
 
@@ -3886,6 +3920,20 @@
 <div bind:this={container} style="width:100%;height:100%;"></div>
 
 <style>
+	/* Zone letter on the map (setHexZoneLabels): the zone colour with a white ring, like
+	   the zone chips in the panel. Never catches the pointer (the lasso draws over it). */
+	:global(.hex-zone-label) {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		border: 2px solid #fff;
+		color: #fff;
+		font: 700 13px/20px 'IBM Plex Sans', system-ui, sans-serif;
+		text-align: center;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+		text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+		pointer-events: none;
+	}
 	/* Bottom-right control stack: force the zoom ABOVE the credit line, and pin the
 	   attribution flush to the corner. MapLibre injects this DOM, so :global() is required. */
 	:global(.maplibregl-ctrl-bottom-right) {

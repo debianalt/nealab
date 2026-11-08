@@ -527,29 +527,55 @@
 			}
 		});
 
-		// Lasso mouse events on the map container
-		mapContainer?.addEventListener('mousedown', (e: MouseEvent) => {
-			if (!lassoStore.active || e.button !== 0) return;
-			e.stopPropagation();
-			lassoStore.startDraw();
+		// Lasso pointer events on the map container (mouse, pen and touch).
+		// Coordinates are taken against the map canvas: e.offsetX/Y is relative to
+		// whatever element is under the cursor, so a stroke that crossed the legend
+		// or a panel jumped to another place of the map (fixed 7-nov-2026).
+		const lassoLngLat = (e: PointerEvent): [number, number] | null => {
 			const m = mapComponent?.getMap();
-			if (!m) return;
-			const lngLat = m.unproject([e.offsetX, e.offsetY]);
-			lassoStore.addPoint([lngLat.lng, lngLat.lat]);
+			if (!m) return null;
+			const r = m.getCanvas().getBoundingClientRect();
+			const ll = m.unproject([e.clientX - r.left, e.clientY - r.top]);
+			return [ll.lng, ll.lat];
+		};
+		let lassoPointer: number | null = null;
+
+		mapContainer?.addEventListener('pointerdown', (e: PointerEvent) => {
+			if (!lassoStore.active || e.button !== 0 || lassoStore.drawing) return;
+			// Only a stroke that starts on the map draws: a click on the legend, a
+			// panel or the «Lazo» button itself is left to that element.
+			const canvas = mapComponent?.getMap()?.getCanvas();
+			if (!canvas || e.target !== canvas) return;
+			e.stopPropagation();
+			e.preventDefault();
+			const p = lassoLngLat(e);
+			if (!p) return;
+			lassoPointer = e.pointerId;
+			// Capture: the stroke keeps drawing and closes even if released off the map.
+			try { canvas.setPointerCapture(e.pointerId); } catch { /* pointer already gone */ }
+			lassoStore.startDraw();
+			lassoStore.addPoint(p);
 		}, { capture: true });
 
-		mapContainer?.addEventListener('mousemove', (e: MouseEvent) => {
-			if (!lassoStore.drawing) return;
+		mapContainer?.addEventListener('pointermove', (e: PointerEvent) => {
+			if (!lassoStore.drawing || e.pointerId !== lassoPointer) return;
 			e.stopPropagation();
-			const m = mapComponent?.getMap();
-			if (!m) return;
-			const lngLat = m.unproject([e.offsetX, e.offsetY]);
-			lassoStore.addPoint([lngLat.lng, lngLat.lat]);
+			const p = lassoLngLat(e);
+			if (!p) return;
+			lassoStore.addPoint(p);
 			mapComponent?.updateLassoDraw(lassoStore.currentPolygon);
 		}, { capture: true });
 
-		mapContainer?.addEventListener('mouseup', async (e: MouseEvent) => {
-			if (!lassoStore.drawing) return;
+		mapContainer?.addEventListener('pointercancel', (e: PointerEvent) => {
+			if (e.pointerId !== lassoPointer) return;
+			lassoPointer = null;
+			lassoStore.cancelDraw();
+			mapComponent?.clearLassoDraw();
+		}, { capture: true });
+
+		mapContainer?.addEventListener('pointerup', async (e: PointerEvent) => {
+			if (!lassoStore.drawing || e.pointerId !== lassoPointer) return;
+			lassoPointer = null;
 			e.stopPropagation();
 			const polygon = lassoStore.finishDraw();
 			mapComponent?.clearLassoDraw();
@@ -863,7 +889,19 @@
 		if (lastHighlight) layers.push({ h3indices: hexStore.displayCells(lastHighlight.h3s), color: lastHighlight.color });
 		if (layers.length === 0) mapComponent?.clearHexZoneHighlight();
 		else mapComponent?.setHexZoneHighlight(layers, hexStore.boundaryCache);
+		mapComponent?.setHexZoneLabels(hexStore.hexZones.map(z => ({ id: z.id, color: z.color, h3indices: z.h3indices })));
 	}
+
+	// Zones cross layers: when the open department's cells of a new layer arrive,
+	// bring back the zones drawn in another layer and recompute them with this one.
+	$effect(() => {
+		void hexStore.dataVersion;
+		void hexStore.analysisData;
+		void hexStore.activeLayer;
+		untrack(() => {
+			hexStore.syncZones().then((changed) => { if (changed) refreshHighlights(); }).catch(() => {});
+		});
+	});
 	async function handleSaveChartSelection(): Promise<string | null> {
 		const sel = hexStore.chartSelection;
 		if (!sel) return null;
@@ -1683,6 +1721,7 @@
 		mapStore.clearHexState();
 		mapComponent?.setHexLayerInfo('', false);
 		hexStore.clearAll();
+		hexStore.clearHexZones();   // a full reset also drops the zones carried across layers
 		mapComponent?.clearRadioHighlight();
 		mapComponent?.setDistrictHighlight([]);
 		mapComponent?.clearAnalysisChoropleth();
